@@ -1,0 +1,43 @@
+import React, { Component } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+
+
+
+class NavBar extends Component {
+    state = { 
+        country: "United States",
+        treasury: 30,
+        prLevel: 6,
+        gameClock: "Paused"
+     }
+
+    render() {
+        
+        const { gameClock, prLevel, treasury, country } = this.state;
+        const clock = `Date: ${gameClock}`;
+        const statusBar =  `PR Level: ${prLevel} | Treasury: $M${treasury} | ${country}`;
+
+        return (
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <Link className="navbar-brand" to="/">West Coast Megagames</Link>
+            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/budget">Budget</NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/interceptions">Interceptions</NavLink>
+                    </li>
+                </ul>
+            </div>
+            <span className="navbar-text">{clock}</span>
+            <span className="navbar-text">{statusBar}</span>
+        </nav>
+        );
+    }
+}
+ 
+export default NavBar;
