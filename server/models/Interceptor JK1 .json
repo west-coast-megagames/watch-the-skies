@@ -27,14 +27,22 @@
                 "class" : "Weapon",
                 "type": "Conventional",
                 "Name": "Asmov Mk.XLII Cannon",
-                "Damage": 20
+                "Damage": 20,
+                "status": {
+                    "Damaged": true,
+                    "Destroyed": false
+                }
             },
             {
                 "_ID": 2,
                 "class" : "Sensor",
                 "type": "Radar",
                 "Name": "Polaris Sensor Suite Mk.I",
-                "effeciency": 0.2
+                "effeciency": 0.2,
+                "status": {
+                    "Damaged": true,
+                    "Destroyed": false
+                }
             }
         ],
     "interceptorUpgrades": {
@@ -48,16 +56,16 @@
     ]
     }
 },
-"base": {
-    "_ID": 4,
-    "name": "US Base Alpha",
-    "zone": "North America",
-    "country": "United States",
-    "poi": "New York",
-    "hanger": "A 1.1"
+    "base": {
+        "_ID": 4,
+        "name": "US Base Alpha",
+        "zone": "North America",
+        "country": "United States",
+        "poi": "New York",
+        "hanger": "A 1.1"
     },
-"log":[
-    {
+    "log":[
+        {
             "_ID": 5,
             "time": 0,
             "turn": "Spring 2020",
@@ -70,10 +78,9 @@
                     "_ID": 6,
                     "enemyDamaged": true,
                     "enemyDestroyed": false,
-                    "artifact": [
+                    "debris": [
                         {
                             "_ID": 7,
-                            "recoverable": true,
                             "class": "Resource",
                             "type": "Red Mercury",
                             "country": "New Zealand"
