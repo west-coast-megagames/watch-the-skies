@@ -1,0 +1,86 @@
+{
+    "_ID": 0,
+    "designation": "PAC Fed Beta",
+    "type": "PAC",
+    "location": {
+        "zone": "Africa", 
+        "country": "Kenya", 
+        "poi": "Mombasa"
+    },
+    "status": {
+        "Ready": true,
+        "Damaged": false,
+        "Upgrading": false,
+        "Deployed": true,
+        "Destroyed": false,
+        "repairing": false,
+        "Interceptable": true
+    },
+    "stats": {
+        "hull": 100,
+        "hullMax": 100,
+        "shield": 20,
+        "shieldMax": 20,
+        "systems": [
+            {
+                "_ID": 1,
+                "class" : "Weapon",
+                "type": "Photovoltaic",
+                "Name": "Phaser: 4 cell",
+                "Damage": 20
+            },
+            {
+                "_ID": 2,
+                "class" : "Sensor",
+                "type": "Radar",
+                "Name": "Interplantary Sensor 4",
+                "effeciency": 0.2
+            }
+        ],
+    "interceptorUpgrades": {
+        "upgraded": true,
+        "upgrades":    [
+        {
+            "_ID": 3,
+            "name" : "Envoy Tracking",
+            "description": "Built to increase supportive formations."
+        }
+    ]
+    }
+},
+"base": {
+    "_ID": 4,
+    "name": "Solaris Federation Outpost",
+    "zone": "Interplanetary",
+    "country": "Mars",
+    "poi": "southern hemisphere",
+    "hanger": "A 1.2"
+    },
+"log":[
+    {
+            "_ID": 5,
+            "time": 0,
+            "turn": "Spring 2020",
+            "type": "Interception",
+            "results": {
+                "interception": true,
+                "unitDamaged": false,
+                "unitDestroyed": false,
+                "enemy": {
+                    "_ID": 6,
+                    "enemyDamaged": true,
+                    "enemyDestroyed": false,
+                    "artifact": [
+                        {
+                            "_ID": 7,
+                            "recoverable": true,
+                            "class": "Resource",
+                            "type": "Human Artifact",
+                            "country": "New Zealand"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}
