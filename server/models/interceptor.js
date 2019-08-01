@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const InterceptorSchema = new Schema({
-  _ID: 0,
+  _ID: Number,
   designation: { type: String, required: true },
   type: { type: String, default: "Interceptor", required: true},
   team: String,
   location: { 
     zone: String, 
-    country: {type:String, required: true 
+    country: {type:String, required: true}, 
     poi: String
   },
   status: { 
@@ -21,22 +21,22 @@ const InterceptorSchema = new Schema({
     interceptable: { type: Boolean, default: false, required: true },
   },
   stats: {
-    hull: { type: Number, default: 100 },
-    hullMax: { type: Number, default: 100 },
-    shield: { type: Number, default: 20 },
-    ShieldMax: { type: Number, default: 20 },
+    hull: { type: Number, default: 100, required: true },
+    hullMax: { type: Number, default: 100, required: true },
+    shield: { type: Number, default: 20, required: true },
+    ShieldMax: { type: Number, default: 20, required: true },
     Systems: [
-      {_ID: 1,
+      {_ID: Number,
         class: "Weapon",
         type: {type: String, default: "Conventional"},
         Name: {type: String},
-        Damage: {type: Number, default: 20}
+        Damage: {type: Number, default: 20, required: true}
       }, 
-      {_ID: 2,
+      {_ID: Number,
         class: "Sensor",
         type: "Radar",
         Name: String,
-        effeciency: {type: Number}
+        effeciency: {type: Number, required: true}
       }
     ],
     interceptorUpgrades: {
@@ -44,33 +44,34 @@ const InterceptorSchema = new Schema({
     },
   },
 base: {
-    _ID: 3,
-    name: {type: String},
+    _ID: Number,
+    name: {type: String, required: true},
     zone: {type: String},
     country: {type:String},
     poi: {type:String},
     hanger: {type: String}
     },
 log: [
-  {_ID: 4,
-  time: {type: Number},
-  turn: {type: String},
-  type: {type: String},
+  {_ID: Number,
+  time: {type: Number, required: true},
+  turn: {type: String, required: true},
+  type: {type: String, required: true},
     results: {
-      interception: {type: Boolean, default: false},
+      interception: {type: Boolean, default: false, required: true},
       unitDamaged: {type: Boolean, default: false},
       unitDestroyed: {type: Boolean, default: false},
         enemy: {
-          _ID: 5,
-          enemyDamaged: {type: Boolean, default: false},
-          enemyDestroyed: {type: Boolean, default: false},
+          _ID: Number,
+          enemyDamaged: {type: Boolean, default: false, required: true},
+          enemyDestroyed: {type: Boolean, default: false, required: true},
           artifact: [
             {
-              _ID: 6,
+              _ID: Number,
               recoverable: {type: Boolean, default: false},
               class: {type: String},
               type: {type:String},
-              country: {type:String}
+              country: {type:String}, 
+              required: true
               }
             ]
           }
