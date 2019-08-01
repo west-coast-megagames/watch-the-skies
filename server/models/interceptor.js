@@ -5,11 +5,11 @@ const InterceptorSchema = new Schema({
   _ID: Number,
   designation: { type: String, required: true },
   type: { type: String, default: "Interceptor", required: true},
-  team: String,
+  team: { type: String },
   location: { 
-    zone: String, 
+    zone: { type: String }, 
     country: {type:String, required: true}, 
-    poi: String
+    poi: { type: String }
   },
   status: { 
     ready: { type: Boolean, default: true, required: true },
@@ -26,8 +26,9 @@ const InterceptorSchema = new Schema({
     shield: { type: Number, default: 20, required: true },
     ShieldMax: { type: Number, default: 20, required: true },
     Systems: [
-      {_ID: Number,
-        class: "Weapon",
+      {
+        _ID: Number,
+        class:{type: String, default: "Weapon"},
         type: {type: String, default: "Conventional"},
         Name: {type: String},
         Damage: {type: Number, default: 20, required: true},
@@ -37,9 +38,9 @@ const InterceptorSchema = new Schema({
         }
       }, 
       {_ID: Number,
-        class: "Sensor",
-        type: "Radar",
-        Name: String,
+        class: {type: String, default: "Sensor"},
+        type: {type: String, default: "Radar"},
+        Name: {type: String},
         effeciency: {type: Number, required: true},
         status: {
           Damaged: {type:Boolean, default: false},
@@ -78,7 +79,7 @@ const InterceptorSchema = new Schema({
               class: {type: String},
               type: {type:String},
               country: {type:String}, 
-              required: true
+              required: {type: Boolean, deffault: true}, 
               }
             ]
           }
