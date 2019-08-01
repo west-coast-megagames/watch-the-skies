@@ -8,17 +8,17 @@ const InterceptorSchema = new Schema({
   team: String,
   location: { 
     zone: String, 
-    country: String, 
+    country: {type:String, required: true 
     poi: String
   },
   status: { 
-    ready: { type: Boolean, default: true },
-    damaged: { type: Boolean, default: false },
-    upgrading: { type: Boolean, default: false },
-    deployed: { type: Boolean, default: false },
-    destroyed: { type: Boolean, default: false },
+    ready: { type: Boolean, default: true, required: true },
+    damaged: { type: Boolean, default: false, required: true},
+    upgrading: { type: Boolean, default: false},
+    deployed: { type: Boolean, default: false, required: true },
+    destroyed: { type: Boolean, default: false, required: true },
     repairing: {type: Boolean, default: false},
-    interceptable: { type: Boolean, default: false },
+    interceptable: { type: Boolean, default: false, required: true },
   },
   stats: {
     hull: { type: Number, default: 100 },
