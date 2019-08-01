@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix ../reactapp",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "John T. Cleveland",
   "license": "ISC",
