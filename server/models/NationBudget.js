@@ -1,18 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-  // budget brainstorming: 
-  //1. is player,
-  //2. country, 
-  //3. location, 
-  //4. Pr - Income, 
-  //5. Terror,  
-  //6. bases, 
-  //7. hangers and interceptors stored,  
-  //8. Budget divided how?, 
-  //9. Anything someone else needs to pull //
 
-const BudgetSchema = new Schema({
+const NationalSchema = new Schema({
   _ID: Number,
   designation: { type: String, required: true },
   type: { type: String, default: "Player Nation", required: true},
@@ -47,12 +37,6 @@ const BudgetSchema = new Schema({
         Income: {type:Number, required:true}
       },
       {PR: 8,
-        Income: {type:Number, required:true}
-      },
-      {PR: 9,
-        Income: {type:Number, required:true}
-      },
-      {PR: 10,
         Income: {type:Number, required:true}
       }
     ],
@@ -96,7 +80,16 @@ const BudgetSchema = new Schema({
         ]
 
         }
-    ]
+    ], 
+    budgeting: {
+      treasury: {type:Number, required:true},
+      allotment: {
+        military: {type:Number, required:true},
+        diplomacy: {type:Number, required:true},
+        science: {type:Number, required:true},
+        governance: {type:Number, required:true}
+      }
+    }
   } 
 )
   
