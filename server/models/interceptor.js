@@ -30,20 +30,28 @@ const InterceptorSchema = new Schema({
         class: "Weapon",
         type: {type: String, default: "Conventional"},
         Name: {type: String},
-        Damage: {type: Number, default: 20, required: true}
+        Damage: {type: Number, default: 20, required: true},
+        status: {
+          Damaged: {type:Boolean, default: false},
+          Destroyed: {type:Boolean, default:false}
+        }
       }, 
       {_ID: Number,
         class: "Sensor",
         type: "Radar",
         Name: String,
-        effeciency: {type: Number, required: true}
+        effeciency: {type: Number, required: true},
+        status: {
+          Damaged: {type:Boolean, default: false},
+          Destroyed: {type:Boolean, default:false}
+      }
       }
     ],
     interceptorUpgrades: {
       upgraded: {type: Boolean, default: false}
     },
   },
-base: {
+  base: {
     _ID: Number,
     name: {type: String, required: true},
     zone: {type: String},
@@ -51,11 +59,11 @@ base: {
     poi: {type:String},
     hanger: {type: String}
     },
-log: [
-  {_ID: Number,
-  time: {type: Number, required: true},
-  turn: {type: String, required: true},
-  type: {type: String, required: true},
+  log: [
+    {_ID: Number,
+    time: {type: Number, required: true},
+    turn: {type: String, required: true},
+    type: {type: String, required: true},
     results: {
       interception: {type: Boolean, default: false, required: true},
       unitDamaged: {type: Boolean, default: false},
@@ -64,10 +72,9 @@ log: [
           _ID: Number,
           enemyDamaged: {type: Boolean, default: false, required: true},
           enemyDestroyed: {type: Boolean, default: false, required: true},
-          artifact: [
+          debris: [
             {
               _ID: Number,
-              recoverable: {type: Boolean, default: false},
               class: {type: String},
               type: {type:String},
               country: {type:String}, 
