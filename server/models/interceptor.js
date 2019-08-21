@@ -2,77 +2,77 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const InterceptorSchema = new Schema({
-  _ID: Number,
+  _id: String,
   designation: { type: String, required: true },
-  type: { type: String, default: "Interceptor", required: true},
+  type: { type: String, default: "Interceptor"},
   team: { type: String },
   location: { 
     zone: { type: String }, 
-    country: {type:String, required: true}, 
+    country: {type:String}, 
     poi: { type: String }
   },
   status: { 
-    ready: { type: Boolean, default: true, required: true },
-    damaged: { type: Boolean, default: false, required: true},
-    upgrading: { type: Boolean, default: false},
-    deployed: { type: Boolean, default: false, required: true },
-    destroyed: { type: Boolean, default: false, required: true },
-    repairing: {type: Boolean, default: false},
-    interceptable: { type: Boolean, default: false, required: true },
+    ready: { type: Boolean, default: true },
+    damaged: { type: Boolean, default: false },
+    upgrading: { type: Boolean, default: false },
+    deployed: { type: Boolean, default: false },
+    destroyed: { type: Boolean, default: false },
+    repairing: { type: Boolean, default: false },
+    interceptable: { type: Boolean, default: false },
   },
   stats: {
-    hull: { type: Number, default: 100, required: true },
-    hullMax: { type: Number, default: 100, required: true },
-    shield: { type: Number, default: 20, required: true },
-    ShieldMax: { type: Number, default: 20, required: true },
+    hull: { type: Number,  },
+    hullMax: { type: Number, default: 100 },
+    shield: { type: Number, default: 20 },
+    ShieldMax: { type: Number, default: 20 },
     Systems: [
       {
         _ID: Number,
-        class:{type: String, default: "Weapon"},
-        type: {type: String, default: "Conventional"},
+        class:{type: String, default: "Weapon" },
+        type: {type: String, default: "Conventional" },
         Name: {type: String},
-        Damage: {type: Number, default: 20, required: true},
+        Damage: { type: Number, default: 20 },
         status: {
-          Damaged: {type:Boolean, default: false},
-          Destroyed: {type:Boolean, default:false}
+          Damaged: { type:Boolean, default: false },
+          Destroyed: { type:Boolean, default:false }
         }
       }, 
       {_ID: Number,
         class: {type: String, default: "Sensor"},
         type: {type: String, default: "Radar"},
         Name: {type: String},
-        effeciency: {type: Number, required: true},
+        effeciency: {type: Number},
         status: {
-          Damaged: {type:Boolean, default: false},
-          Destroyed: {type:Boolean, default:false}
+          Damaged: { type:Boolean },
+          Destroyed: { type:Boolean, default:false }
       }
       }
     ],
     interceptorUpgrades: {
-      upgraded: {type: Boolean, default: false}
+      upgraded: { type: Boolean, default: false }
     },
   },
   base: {
     _ID: Number,
-    name: {type: String, required: true},
-    zone: {type: String},
-    country: {type:String},
-    poi: {type:String},
-    hanger: {type: String}
+    name: { type: String },
+    zone: { type: String },
+    country: { type:String },
+    poi: { type:String },
+    hanger: { type: String }
     },
   log: [
     {_ID: Number,
-    time: {type: Number, required: true},
-    turn: {type: String, required: true},
-    type: {type: String, required: true},
+    time: {type: Number},
+    turn: {type: String},
+    type: {type: String},
     results: {
-      interception: {type: Boolean, default: false, required: true},
+      interception: {type: Boolean, default: false},
       unitDamaged: {type: Boolean, default: false},
       unitDestroyed: {type: Boolean, default: false},
         enemy: {
           _ID: Number,
-          enemyDamaged: {type: Boolean, default: false, required: true},
-          enemyDestroyed: {type: Boolean, default: false, required: true},
+          enemyDamaged: {type: Boolean, default: false},
+          enemyDestroyed: {type: Boolean, default: false},
           debris: [
             {
               _ID: Number,
