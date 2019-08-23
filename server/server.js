@@ -8,7 +8,7 @@ mongoose.set('useCreateIndex', true);
 
 // Routes
 const items = require('./routes/api/items')
-const Interceptor = require('./routes/api/interceptor')
+const interceptor = require('./routes/api/interceptor')
 const intercept = require('./routes/api/intercept')
 
 const app = express();
@@ -29,7 +29,7 @@ mongoose.connect(dbURI, mongoOptions)
 
 // Use Routes
 app.use('/api/items', items);
-app.use('/api/interceptor', Interceptor);
+app.use('/api/interceptor', interceptor);
 app.use('/api/intercept', intercept);
 
 const port = process.env.PORT || 5000;
