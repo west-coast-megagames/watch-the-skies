@@ -3,10 +3,13 @@ const Schema = mongoose.Schema;
 
 const InterceptorSchema = new Schema({
   designation: { type: String, required: true },
-  type: { type: String, default: "Interceptor"},
+  type: { type: String, default: "Interceptor"} ,
   team: { type: String },
-  hull: { type: Number, default: 2 },
-  hullMax: { type: Number, default: 2 },
+  stats: {
+    hull: { type: Number, default: 2 },
+    hullMax: { type: Number, default: 2 },
+    damage: { type: Number, default: 1 },
+  },
   location: { 
     zone: { type: String }, 
     country: {type:String }, 

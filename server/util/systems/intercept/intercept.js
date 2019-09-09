@@ -1,6 +1,7 @@
-const test = require('./test')
-const atkOutcome = require('./attacker')
-const defOutcome = require('./defender')
+const test = require('./test');
+const atkOutcome = require('./attacker');
+const defOutcome = require('./defender');
+const interceptDmg = require('./damage');
 
 // intercept(test.attacker, test.defender); // Test call of Interception Algorithm
 
@@ -8,25 +9,21 @@ const defOutcome = require('./defender')
 function intercept (attacker, defender) {
     console.log(`${attacker.designation} is attempting to engaged a ${defender.type} in ${attacker.location.country} airspace.`);
     
-    atkResult = atkOutcome(attacker);
-    defResult = defOutcome(defender);
+    let atkResult = atkOutcome(attacker);
+    let defResult = defOutcome(defender);
 
-    /*if (atkResult.hit == true) {
-        damageCalc(defResult.evade)
-    } 
-    
-    atkDmg =
-    defDmg = 
-    */
+    report = interceptDmg(attacker, defender, atkResult, defResult);
 
-    console.log(`${attacker.designation} got a ${atkResult.outcome}`);
-    console.log(`${defender.designation} got a ${defResult.outcome}`);
     result = {
         attackerReport: `${attacker.designation} got a ${atkResult.outcome}`,
         defenderReport: `${defender.designation} got a ${defResult.outcome}`,
     };
 
-    return result;
+    const finalReport = {...report, ...result}
+    console.log(result.attackerReport);
+    console.log(result.defenderReport);
+
+    return finalReport;
 };
 
 // Fake interception algorithm to test DB input to intercept system

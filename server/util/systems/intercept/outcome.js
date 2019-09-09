@@ -31,7 +31,6 @@ function aggroResult (unit, roll) {
         case (roll <= chances[2]):
             console.log(`${designation}'s outcome between ${chances[1] + 1} and ${chances[2]}`);
             result.outcome = `Neutral Result.`;
-            result.disengage = disengageAttempt(unit);
             break;
         case (roll <= chances[3]):
             console.log(`${designation}'s outcome between ${chances[2] +1 } and ${chances[3]}`);
