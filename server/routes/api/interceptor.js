@@ -14,6 +14,16 @@ router.get('/', (req, res) => {
         .then(interceptors => res.json(interceptors));
 });
 
+// @route   GET api/interceptor
+// @Desc    Get all Interceptors
+// @access  Public
+router.get('/contacts', (req, res) => {
+    console.log('Getting radar contacts...')
+    Interceptor.find()
+        .sort({team: 0})
+        .then(interceptors => res.json(interceptors));
+});
+
 // @route   POST api/interceptor
 // @Desc    Post a new interceptor
 // @access  Public

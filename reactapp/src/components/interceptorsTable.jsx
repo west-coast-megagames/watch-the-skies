@@ -7,7 +7,8 @@ class Interceptors extends Component {
     };
 
     async componentDidMount() {
-        const { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
+        let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
+        ships = ships.filter(s => s.team === 'US');
         this.setState({ ships })
     }
 
@@ -21,7 +22,7 @@ class Interceptors extends Component {
         const { length: count } = this.state.ships;
 
         if (count === 0)
-            return <p>You have interceptors availible.</p>
+            return <p>No interceptors currently availible.</p>
         return (
             <React.Fragment>
                 <p>You currently have {count} interceptors in base.</p>
@@ -44,7 +45,7 @@ class Interceptors extends Component {
                         <td>{ ship.location.poi }</td>
                         <td><button onClick={() => this.deploy(ship)} className="btn btn-success btn-sm">Deploy</button></td>
                     </tr>
-                    ))};
+                    ))}
                 </tbody>
             </table>
             </React.Fragment>
