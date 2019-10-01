@@ -31,6 +31,9 @@ class NavBar extends Component {
                     <li className="nav-item">
                         <NavLink className="nav-link" to="/interceptions">Operations</NavLink>
                     </li>
+                    <li className="nav-item">
+                        <NavLink className="nav-link" to="/login">Login</NavLink>
+                    </li>
                 </ul>
             </div>
             <span className="navbar-text">{clock}</span>
