@@ -9,8 +9,8 @@ const interceptDmg = require('./damage');
 function intercept (attacker, defender) {
     console.log(`${attacker.designation} is attempting to engaged a ${defender.type} in ${attacker.location.country} airspace.`);
     
-    let atkResult = atkOutcome(attacker);
-    let defResult = defOutcome(defender);
+    let atkResult = atkOutcome(attacker); // Gets Attacker Roll
+    let defResult = defOutcome(defender); // Gets Defender Roll
 
     report = interceptDmg(attacker, defender, atkResult, defResult);
 
