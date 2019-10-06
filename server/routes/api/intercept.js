@@ -8,7 +8,7 @@ const Interceptor = require('../../models/interceptor');
 // @route   GET api/intercept
 // @Desc    Find Attacker/Defender and activate intercept
 // @access  Public
-router.get('/', async function(req, res) {
+router.post('/', async function(req, res) {
     console.log(req.body);
     let atkId = req.body.attacker;
     console.log(atkId);

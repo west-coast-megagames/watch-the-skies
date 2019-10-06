@@ -10,14 +10,22 @@ class Contacts extends Component {
     async componentDidMount() {
         let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
         let contacts = ships.filter(s => s.team !== 'US');
-        let interceptors = ships.filter(s => s.team === 'US')
-        this.setState({ contacts, interceptors })
-    }
+        let interceptors = ships.filter(s => s.team === 'US');
+        this.setState({ contacts, interceptors });
+    };
 
-    deploy = (aircraft) => {
+
+    async deploy(aircraft) {
         console.log(aircraft)
         const contacts = this.state.contacts.filter(s => s._id !== aircraft._id);
         this.setState({ contacts })
+
+        let stats = {
+            attacker: "5d71b508c6402720243f1a66",
+            defender: aircraft._id
+        };
+
+        await axios.post('http://localhost:5000/api/intercept', stats);
     };
 
     render() {
