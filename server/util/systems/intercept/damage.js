@@ -1,3 +1,6 @@
+//Intercepter Model
+const Intercetor = require('../../../models/interceptor');
+
 function interceptDmg(attacker, defender, atkResult, defResult) {
     let defReport = {
         evade: defResult.evade,
@@ -25,8 +28,7 @@ function interceptDmg(attacker, defender, atkResult, defResult) {
         defStatus: defDmg.outcome,
         offense: atkDmg.dmgReport,
         atkStatus: atkDmg.outcome,
-        
-    }
+    };
 
     return dmgReport;
 };
@@ -51,21 +53,41 @@ function damageCalc(unit, report) {
         hullDmg = hullDmg - evade;
     };
 
-    console.log(`${unit.designation} takes ${hullDmg} damage!`)
+    console.log(`${unit.designation} takes ${hullDmg} damage!`);
 
     let dmgReport = {
+        unit: unit._id,
+        designation: unit.designation,
         dmgReport: `${unit.designation} takes ${hullDmg} damage!`,
         outcome: `${unit.designation} returns to base!`
     };
-    unit.stats.hull = unit.stats.hull - hullDmg
+    unit.stats.hull = unit.stats.hull - hullDmg;
 
     if (unit.stats.hull <= 0) {
         console.log(`${unit.designation} destroyed!`);
         unit.status.destroyed = true;
-        dmgReport.outcome = `${unit.designation} destroyed!`
+        dmgReport.outcome = `${unit.designation} destroyed!`;
     };
 
+    applyDmg(unit);
+
     return dmgReport;
+};
+
+//Update Interceptors with Damage
+async function applyDmg(unit) {
+    const update = await Intercetor.findById(unit._id);
+
+    update.stats.hull = unit.stats.hull;
+    update.status.destroyed = unit.status.destroyed;
+
+    if(unit.stats.hull != unit.stats.hullMax) {
+        update.status.damaged = true;
+    }
+
+    await update.save();
+
+    return 0;
 };
 
 module.exports = interceptDmg;

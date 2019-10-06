@@ -16,7 +16,7 @@ function intercept (attacker, defender) {
 
     result = {
         attackerReport: `${attacker.designation} got a ${atkResult.outcome}`,
-        defenderReport: `${defender.designation} got a ${defResult.outcome}`,
+        defenderReport: `${defender.designation} got a ${defResult.outcome}`
     };
 
     const finalReport = {...report, ...result}
@@ -30,9 +30,9 @@ function intercept (attacker, defender) {
 function interceptTest (attacker, defender) {
     // console.log(attacker)
     let atkStatus = "testing"
-    console.log(`${attacker.designation} confirmed as attacker!`)
-    console.log(`${defender.designation} confirmed as defender!`)
-    console.log(`${attacker.designation} is on an ${atkStatus} mission...`)
+    console.log(`${attacker.designation} confirmed as attacker!`);
+    console.log(`${defender.designation} confirmed as defender!`);
+    console.log(`${attacker.designation} is on an ${atkStatus} mission...`);
 };
 
 module.exports = intercept;
