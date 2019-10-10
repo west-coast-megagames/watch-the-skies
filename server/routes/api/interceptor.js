@@ -51,4 +51,23 @@ router.put('/:id', (req, res) => {
     .then(() => console.log(`Interceptor named ${req.body.designation}...`))
 });
 
+// @route   GET api/interceptor/resethull
+// @desc    Update all interceptors to max health
+// @access  Public
+router.get('/resethull', (req, res) => {
+    resetHull();
+
+    res.send("Interceptors succesfully reset!");
+});
+
+async function resetHull() {
+    for await (const interceptor of Interceptor.find()) {
+        console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
+        interceptor.stats.hull = interceptor.stats.hullMax;
+        console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
+        
+        await interceptor.save();
+    }
+};
+
 module.exports = router;
