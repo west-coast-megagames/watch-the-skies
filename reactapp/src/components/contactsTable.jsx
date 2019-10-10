@@ -16,9 +16,9 @@ class Contacts extends Component {
 
 
     async deploy(aircraft) {
-        console.log(aircraft)
+        console.log(aircraft);
         const contacts = this.state.contacts.filter(s => s._id !== aircraft._id);
-        this.setState({ contacts })
+        this.setState({ contacts });
 
         let stats = {
             attacker: "5d71b508c6402720243f1a66",
@@ -60,5 +60,5 @@ class Contacts extends Component {
         );
     }
 }
- 
+
 export default Contacts;
