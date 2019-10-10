@@ -1,13 +1,16 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const LogSchema = new mongoose.Schema({
-    type: String,
-    desc: String,
+const LogSchema = new Schema({
+    time: { type: Number, default: 0 },
+    turn: { type: String, default: "Test"},
+    type: { type: String }, 
+    desc: { type: String },
     date: { type: Date, defualt: Date.now },
-    isPublished: Boolean
+    isPublished: { type: Boolean }
 });
 
+module.exports = Log = mongoose.model('log', LogSchema)
 
 // log: [
 //     {_ID: Number,
