@@ -4,29 +4,70 @@ const router = express.Router();
 // Item Model
 const Interceptor = require('../../models/interceptor');
 
-// @route   GET api/items
-// @Desc    Get all Items
+// @route   GET api/interceptor
+// @Desc    Get all Interceptors
 // @access  Public
 router.get('/', (req, res) => {
+    console.log('Sending interceptors somewhere...')
     Interceptor.find()
         .sort({team: 1})
         .then(interceptors => res.json(interceptors));
 });
 
+// @route   GET api/interceptor
+// @Desc    Get all Interceptors
+// @access  Public
+router.get('/contacts', (req, res) => {
+    console.log('Getting radar contacts...')
+    Interceptor.find()
+        .sort({team: 0})
+        .then(interceptors => res.json(interceptors));
+});
 
-// @route   POST api/items
-// @Desc    Get all Items
+// @route   POST api/interceptor
+// @Desc    Post a new interceptor
 // @access  Public
 router.post('/', (req, res) => {
-    const newInterceptor = new Interceptor({
-        designation: req.body.designation,
-        team: req.body.team,
-        location: req.body.location
-    });
+    let { designation, team, location, stats } = req.body;
+    const newInterceptor = new Interceptor(
+        { designation, team, location, stats }
+    );
 
     newInterceptor.save()
-        .then(interceptor => res.json(interceptor))
+        .then(interceptor => res.json(interceptor)) 
         .then(() => console.log(`Interceptor ${req.body.designation} created...`))
 });
+
+// @route   PUT api/interceptor/:id
+// @Desc    Update an interceptor
+// @access  Public
+router.put('/:id', (req, res) => {
+    let { designation } = req.body;
+    const interceptor = Interceptor.findById(req.params.id);
+
+    interceptor.update({ designation })
+    .then(interceptor => res.json(interceptor))
+    .then(() => console.log(`Interceptor ${req.params.id} updated...`))
+    .then(() => console.log(`Interceptor named ${req.body.designation}...`))
+});
+
+// @route   GET api/interceptor/resethull
+// @desc    Update all interceptors to max health
+// @access  Public
+router.get('/resethull', (req, res) => {
+    resetHull();
+
+    res.send("Interceptors succesfully reset!");
+});
+
+async function resetHull() {
+    for await (const interceptor of Interceptor.find()) {
+        console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
+        interceptor.stats.hull = interceptor.stats.hullMax;
+        console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
+        
+        await interceptor.save();
+    }
+};
 
 module.exports = router;

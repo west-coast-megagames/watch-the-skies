@@ -1,11 +1,21 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
+// Routes
 const items = require('./routes/api/items')
-const wtsInterceptor = require('./routes/api/interceptor')
+const interceptor = require('./routes/api/interceptor')
+const intercept = require('./routes/api/intercept')
 
 const app = express();
+
+// Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
+app.use(cors());
 
 // Bodyparser Middleware
 app.use(bodyParser.json());
@@ -23,7 +33,8 @@ mongoose.connect(dbURI, mongoOptions)
 
 // Use Routes
 app.use('/api/items', items);
-app.use('/api/wts/interceptor', wtsInterceptor);
+app.use('/api/interceptor', interceptor);
+app.use('/api/intercept', intercept);
 
 const port = process.env.PORT || 5000;
 
