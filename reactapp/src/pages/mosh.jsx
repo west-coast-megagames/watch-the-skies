@@ -1,11 +1,11 @@
 import React from 'react';
-import Counter from './../components/mosh/counter';
+import Counters from './../components/mosh/counters';
 
 const MoshTest = () => {
     return (
         <React.Fragment>
             <h1>Mosh Testing</h1>
-            <Counter />
+            <Counters />
             <hr />
         </React.Fragment>
     );
