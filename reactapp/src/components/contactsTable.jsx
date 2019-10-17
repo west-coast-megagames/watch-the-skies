@@ -25,7 +25,7 @@ class Contacts extends Component {
             defender: aircraft._id
         };
 
-        await axios.post('http://localhost:5000/api/intercept', stats);
+        await axios.put('http://localhost:5000/api/intercept', stats);
     };
 
     render() {
