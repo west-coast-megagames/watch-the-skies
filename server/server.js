@@ -20,22 +20,22 @@ app.use(cors());
 // Bodyparser Middleware
 app.use(bodyParser.json());
 
-// DB Config | Saved in the config folder
+// DB Config | Saved in the config folder | Mogoose Key
 const dbURI = require('./config/keys').mongoURI;
 const mongoOptions =  {
     useNewUrlParser: true,
     dbName: 'test'};
 
-// Connect to Mongo
+// Connect to MongoDB with Mongoose
 mongoose.connect(dbURI, mongoOptions)
     .then(() => console.log('MongoDB Connected...'))
     .catch(err => console.warn(err));
 
-// Use Routes
-app.use('/api/items', items);
-app.use('/api/interceptor', interceptor);
-app.use('/api/intercept', intercept);
+// Express Routes - Inpoints to connect to through the browser.
+app.use('/api/items', items); // Test input for original schema [REMOVE LATER]
+app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
+app.use('/api/intercept', intercept); // Route for triggering an interception
 
+// Server entry point - Node Server
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => console.log(`WTS Server started on port ${port}...`));
