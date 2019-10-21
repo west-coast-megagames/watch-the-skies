@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-// Item Model
+// Interceptor Model - Using Mongoose Model
 const Interceptor = require('../../models/interceptor');
 
 // @route   GET api/interceptor
 // @Desc    Get all Interceptors
 // @access  Public
 router.get('/', (req, res) => {
-    console.log('Sending interceptors somewhere...')
+    console.log('Sending interceptors somewhere...');
     Interceptor.find()
         .sort({team: 1})
         .then(interceptors => res.json(interceptors));
@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 // @Desc    Get all Interceptors
 // @access  Public
 router.get('/contacts', (req, res) => {
-    console.log('Getting radar contacts...')
+    console.log('Getting radar contacts...');
     Interceptor.find()
         .sort({team: 0})
         .then(interceptors => res.json(interceptors));
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 
     newInterceptor.save()
         .then(interceptor => res.json(interceptor)) 
-        .then(() => console.log(`Interceptor ${req.body.designation} created...`))
+        .then(() => console.log(`Interceptor ${req.body.designation} created...`));
 });
 
 // @route   PUT api/interceptor/:id
@@ -48,7 +48,7 @@ router.put('/:id', (req, res) => {
     interceptor.update({ designation })
     .then(interceptor => res.json(interceptor))
     .then(() => console.log(`Interceptor ${req.params.id} updated...`))
-    .then(() => console.log(`Interceptor named ${req.body.designation}...`))
+    .then(() => console.log(`Interceptor named ${req.body.designation}...`));
 });
 
 // @route   GET api/interceptor/resethull
@@ -61,7 +61,7 @@ router.get('/resethull', (req, res) => {
 });
 
 async function resetHull() {
-    for await (const interceptor of Interceptor.find()) {
+    for await (const interceptor of Interceptor.find()) {    
         console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
         interceptor.stats.hull = interceptor.stats.hullMax;
         console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);

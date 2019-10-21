@@ -29,4 +29,4 @@ const InterceptorSchema = new Schema({
   }
 });
 
-module.exports = Interceptor = mongoose.model('interceptor', InterceptorSchema)
+module.exports = Interceptor = mongoose.model('interceptor', InterceptorSchema);
