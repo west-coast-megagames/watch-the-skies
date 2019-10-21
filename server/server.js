@@ -7,10 +7,11 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
-// Routes
-const items = require('./routes/api/items')
-const interceptor = require('./routes/api/interceptor')
-const intercept = require('./routes/api/intercept')
+// Routes - Using Express
+const items = require('./routes/api/items');
+const interceptor = require('./routes/api/interceptor');
+const intercept = require('./routes/api/intercept');
+const country = require('./routes/test/country');
 
 const app = express();
 
@@ -35,6 +36,7 @@ mongoose.connect(dbURI, mongoOptions)
 app.use('/api/items', items); // Test input for original schema [REMOVE LATER]
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
 app.use('/api/intercept', intercept); // Route for triggering an interception
+app.use('/test/country', country); // Route for testing country 
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

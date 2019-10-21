@@ -1,10 +1,11 @@
 // 10/20/2019 removed zone (obsolete)  JWQC
-//
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 const Joi = require('joi');
 
-const mongoose = require('mongoose');
 
-const Country = mongoose.model('Country', new mongoose.Schema({
+
+const CountrySchema = new Schema({
     code: {
         type: String,
         required: true,
@@ -26,9 +27,10 @@ const Country = mongoose.model('Country', new mongoose.Schema({
         type: Boolean,
         default: false
     }
-}));
+});
 
-function validateCountry(country) {
+
+CountrySchema.methods.validateCountry = function (country) {
   const schema = {
     name: Joi.string().min(3).max(255).required(),
     code: Joi.string().min(2).max(2).required(),
@@ -38,5 +40,4 @@ function validateCountry(country) {
   return Joi.validate(country, schema);
 }
   
-  exports.Country = Country; 
-  exports.validateCountry = validateCountry;
+module.exports = Country = mongoose.model('country', CountrySchema);
