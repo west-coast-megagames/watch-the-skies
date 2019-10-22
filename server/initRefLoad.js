@@ -6,7 +6,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const http = require('http');
-const {Country, validateCountry} = require('./models/country'); 
+
+// Country Model - Using Mongoose Model
+const Country = require('./models/country'); 
 
 const app = express();
 
@@ -32,35 +34,28 @@ for (i = 0; i < refDataIn.length; ++i ) {
   }
 };
 
-
-
-
 function loadCountry( cName, cCode, cActiveFlg){
   console.log("In loadCountry", cCode,cName,cActiveFlg);
   
+  let country = new Country({ 
+    code: cCode,
+    name: cName,
+    activeFlag: cActiveFlg
+    });
+  
   /*
-  const { error } = validateCountry(country.toObject()); 
+  const { error } = country.validateCountry(country); 
   if (error) {
-    console.log("Error Creating Country:",cCode,cName, error.details[0].message);
+    console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
     return
   }
   */
- let country = new Country({ 
-  code: cCode,
-  name: cName,
-  activeFlag: cActiveFlg
-  });
   console.log("before save", country.code, country.name, country.activeFlag);
-  
-  country.save(function (err, country) {
-    if (err) return console.error(err);
-    console.log(country.name + " saved to country collection.");
-  });
-  
-  /*
+  const { error } = country.save();
   if (error) {
-    console.log("Error Creating Country:",cCode,cName, error.name,error.details[0].message);
+    console.log("Save Error", country.code, country.name, country.activeFlag, error.message);
+    return
   }
-  */
- 
+  console.log(country.name + " saved to country collection.");
+
 }
