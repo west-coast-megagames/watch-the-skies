@@ -33,9 +33,16 @@ router.post('/', (req, res) => {
         { designation, team, location, stats }
     );
 
-    newInterceptor.save()
-        .then(interceptor => res.json(interceptor)) 
-        .then(() => console.log(`Interceptor ${req.body.designation} created...`));
+    Interceptor.find({ designation }, (err, docs) => {
+        if (!docs.length){
+            newInterceptor.save()
+            .then(interceptor => res.json(interceptor)) 
+            .then(() => console.log(`Interceptor ${req.body.designation} created...`));
+        } else {                
+            console.log(`Interceptor exists: ${designation}`);
+            res.send(`Interceptor ${designation} exists!`);
+        }
+    });
 });
 
 // @route   PUT api/interceptor/:id
