@@ -9,9 +9,9 @@ const CountrySchema = new Schema({
     code: {
         type: String,
         required: true,
-        //index: true,
+        index: true,
         trim: true,
-        //unique: true,
+        unique: true,
         minlength: 2,
         maxlength: 2
         //uppercase: true
