@@ -7,7 +7,7 @@ import Home from './pages/home'
 import NotFound from './pages/404'
 import LoginForm from './components/loginForm'
 
-import MoshTest from './pages/mosh' //Mosh test
+import MoshTest from './pages/mosh' // Mosh test
 
 import './App.css';
 

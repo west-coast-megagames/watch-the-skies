@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const intercept = require('../../util/systems/intercept/intercept');
 
-// Item Model
+// Interceptor Model - Using Mongoose Model
 const Interceptor = require('../../models/interceptor');
 
 // @route   PUT api/intercept   ... update
