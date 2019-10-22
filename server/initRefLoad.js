@@ -36,7 +36,7 @@ function loadCountry(cName, cCode, cActiveFlg){
     code: cCode,
     name: cName,
     activeFlag: cActiveFlg
-    });
+  });
   
   /*
   const { error } = country.validateCountry(country); 
