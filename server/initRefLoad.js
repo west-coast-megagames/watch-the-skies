@@ -3,15 +3,12 @@ const file = fs.readFileSync('./util/init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
 
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const http = require('http');
 
 // Country Model - Using Mongoose Model
 const Country = require('./models/country'); 
 
 const app = express();
-
 
 // Bodyparser Middleware
 app.use(express.json());
@@ -24,17 +21,15 @@ const logger = (err, result) =>
     console.log ('error:', err.message, error.name, err.stack)
 }
 
-var i; 
-for (i = 0; i < refDataIn.length; ++i ) {
-
-  if (refDataIn[i].type == "country") {
-
-     loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
-     
-  }
+function initLoad() {
+  for (let i = 0; i < refDataIn.length; ++i ) {
+    if (refDataIn[i].type == "country") {
+      loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
+    }
+  };
 };
 
-function loadCountry( cName, cCode, cActiveFlg){
+function loadCountry(cName, cCode, cActiveFlg){
   console.log("In loadCountry", cCode,cName,cActiveFlg);
   
   let country = new Country({ 
@@ -51,11 +46,10 @@ function loadCountry( cName, cCode, cActiveFlg){
   }
   */
   console.log("before save", country.code, country.name, country.activeFlag);
-  const { error } = country.save();
-  if (error) {
-    console.log("Save Error", country.code, country.name, country.activeFlag, error.message);
-    return
-  }
-  console.log(country.name + " saved to country collection.");
-
+  country.save((err, country) => {
+    if (err) return console.error(`Save Error: ${err}`);
+    console.log(country.name + " saved to country collection.");
+  });
 }
+
+ module.exports = initLoad;

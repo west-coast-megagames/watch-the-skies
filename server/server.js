@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const initLoad = require('./initRefLoad');
+
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
@@ -41,3 +43,6 @@ app.use('/test/country', country); // Route for testing country
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`WTS Server started on port ${port}...`));
+
+initLoad();
+

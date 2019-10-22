@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
-
-
 const CountrySchema = new Schema({
     code: {
         type: String,
