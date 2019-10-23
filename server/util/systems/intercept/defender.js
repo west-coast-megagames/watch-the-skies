@@ -1,4 +1,4 @@
-const d6 = require('./dice')
+const { d6 } = require('./dice')
 const { passive, aggressive } = require('./outcome')
 
 // Defender roll and outcome algorithm
