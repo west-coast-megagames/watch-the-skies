@@ -10,10 +10,17 @@ class Counters extends Component {
             { id: 4, value: 0, img: 'https://picsum.photos/40'},
         ],
      }
+
+     handleDelete = (counterId) => {
+         console.log('Deleted', counterId);
+         const counters = this.state.counters.filter(c => c.id !== counterId);
+         this.setState({ counters });
+     };
+
     render() { 
         return (
             <div>
-                { this.state.counters.map(counter => <Counter key={ counter.id } value={ counter.value } img={ counter.img } />) }
+                { this.state.counters.map(counter => (<Counter key={ counter.id } onDelete={ this.handleDelete } counter={ counter } />))}
             </div>
         );
     }
