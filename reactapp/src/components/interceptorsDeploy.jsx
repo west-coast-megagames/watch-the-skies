@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom'
 import axios from 'axios';
 
 var styles = {
@@ -15,7 +16,8 @@ var styles = {
 
 class InterceptorDeployForm extends Component {
   state = {
-      ships: []
+      ships: [],
+      isDelpoyed: true
   };
 
   test = () => {
@@ -42,7 +44,7 @@ class InterceptorDeployForm extends Component {
                 </select>
             </div>
             <button type="submit" className="btn btn-primary">Commit</button>
-            <button type="submit" className="btn btn-primary">Cancel</button>
+            <button type="submit" onClick={ this.props.doneDeploying } className="btn btn-primary">Cancel</button>
           </form>
       </React.Fragment>
     )
