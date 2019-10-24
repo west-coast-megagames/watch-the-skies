@@ -12,5 +12,5 @@ const Interception = () => {
         </React.Fragment>
     );
 }
- 
+
 export default Interception;

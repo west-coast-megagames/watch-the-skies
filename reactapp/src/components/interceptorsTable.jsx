@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios'
+import axios from 'axios';
 
 class Interceptors extends Component {
-    state = { 
+    state = {
         ships: []
     };
 
@@ -15,7 +15,7 @@ class Interceptors extends Component {
     deploy = (aircraft) => {
         console.log(aircraft)
         const ships = this.state.ships.filter(s => s._id !== aircraft._id);
-        this.setState({ ships })
+        this.setState({ ships });
     };
 
     render() {
@@ -43,7 +43,7 @@ class Interceptors extends Component {
                         <td>Someone</td>
                         <td>{ 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }%</td>
                         <td>{ ship.location.poi }</td>
-                        <td><button onClick={() => this.deploy(ship)} className="btn btn-success btn-sm">Deploy</button></td>
+                        <td><button onClick={ () => this.deploy(ship) } className="btn btn-success btn-sm">Deploy</button></td>
                     </tr>
                     ))}
                 </tbody>
@@ -52,5 +52,5 @@ class Interceptors extends Component {
         );
     }
 }
- 
+
 export default Interceptors;
