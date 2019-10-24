@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
-
+import { subscribeToTimer } from '../api';
 
 class NavBar extends Component {
     state = { 
@@ -10,6 +9,12 @@ class NavBar extends Component {
         prLevel: 6,
         gameClock: "Paused"
      }
+
+    constructor(props) {
+        super(props);
+
+        subscribeToTimer(1000, (err, timestamp) => this.setState({ gameClock: timestamp }));
+    }
 
     render() {
         
@@ -36,7 +41,7 @@ class NavBar extends Component {
                     </li>
                 </ul>
             </div>
-            <span className="navbar-text">{clock}</span>
+            <span className="navbar-text mr-md-5">{clock}</span>
             <span className="navbar-text">{statusBar}</span>
         </nav>
         );
