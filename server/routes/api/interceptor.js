@@ -40,7 +40,6 @@ router.post('/', async function (req, res) {
         console.log('Error:', err.message);
         res.send('Error:', err.message);
     }
-
 });
 
 // @route   PUT api/interceptor/:id
@@ -72,15 +71,13 @@ router.delete('/:id', async function (req, res) {
         } else {
             res.send(`No interceptor with the id ${id} exists!`);
         }
-        
     } catch (err) {
         console.log('Error:', err.message);
         res.send('Error:', err.message);
     }
-    
 });
 
-// @route   Patch api/interceptor/resethull
+// @route   PATCH api/interceptor/resethull
 // @desc    Update all interceptors to max health
 // @access  Public
 router.patch('/resethull', async function (req, res) {
