@@ -42,7 +42,7 @@ router.get('/id/:id', async (req, res) => {
         if (country != null) {
           res.json(country);
         } else {
-          res.status(404).send('The Country with the ID ${id} was not found!');
+          res.status(404).send(`The Country with the ID ${id} was not found!`);
         }
     } catch (err) {
         console.log('Error:', err.message);
@@ -57,13 +57,12 @@ router.get('/code/:code', async (req, res) => {
   let code = req.params.code;
   console.log("jeff in get countries by code", code);
   try {
-    const country = await Country.find({ code: code });
-console.log("jeff after find ... ", country != null);
-    if (country != null &&  
-        country != "[{}]") {
+    let country = await Country.find({ code });
+    console.log("jeff after find ... ", country);
+    if (country.length) {
       res.json(country);
     } else {
-      res.status(404).send('The Country with the code ${code} was not found!');
+      res.status(404).send(`The Country with the code ${code} was not found!`);
     }
   } catch (err) {
       console.log('Error:', err.message);
