@@ -11,8 +11,8 @@ const CountrySchema = new Schema({
         trim: true,
         unique: true,
         minlength: 2,
-        maxlength: 2
-        //uppercase: true
+        maxlength: 2,
+        uppercase: true
     },
     name: {
         type: String,
