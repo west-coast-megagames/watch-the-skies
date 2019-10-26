@@ -7,4 +7,8 @@ function subscribeToTimer (interval, cb) {
     socket.emit('subscribeToTimer', 1000);
 }
 
-export { subscribeToTimer };
+function subscribeToClock (interval, cb) {
+    socket.on('counter', count => cb(null, count));
+}
+
+export { subscribeToTimer, subscribeToClock };
