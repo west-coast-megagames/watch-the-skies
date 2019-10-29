@@ -15,7 +15,7 @@ var formStyle = {
 };
 
 var deployStyle = {
-  'position': 'absolute',
+  'position': 'fixed',
   'left': 0,
   'top': 0,
   'width': '100%',
@@ -25,10 +25,30 @@ var deployStyle = {
 }
 
 class InterceptorDeployForm extends Component {
-  state = {
+  constructor(props) {
+    super(props)
+    this.state = {
       ships: [],
-      isDelpoyed: true
-  };
+      contact: null
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({
+      contact: event.target.value
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    if ( this.state.contact === null ){
+      return;
+    }
+    this.props.deployState();
+  }
 
   async componentDidMount() {
       let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
@@ -41,17 +61,18 @@ class InterceptorDeployForm extends Component {
     return(
       <React.Fragment>
           <div id="deployForm" style={ deployStyle }>
-            <form style={ formStyle }>
+            <form name="deployForm" style={ formStyle } onSubmit={ this.handleSubmit   }>
               <div className="form-group">
                   <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact</label>
-                  <select className="form-control" id="exampleFormControlSelect1">
+                  <select className="form-control" onChange={ this.handleChange }>
+                    <option></option>
                     { this.state.ships.map(ship => (
-                        <option key={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
+                        <option key="value={ship._id}" value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
                     ))}
                   </select>
               </div>
-              <button type="submit" className="btn btn-primary">Commit</button>
-              <button type="submit" onClick={ this.props.deployState } className="btn btn-primary">Cancel</button>
+              <button type="submit" value="Submit" className="btn btn-primary">Commit</button>
+              <button type="cancel" value="Cancel" onClick={ this.props.deployState } className="btn btn-primary">Cancel</button>
             </form>
           </div>
       </React.Fragment>
