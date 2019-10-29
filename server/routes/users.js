@@ -2,26 +2,44 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const User = require('../models/user');
+const { User, validateUser } = require('../models/user');
 
-// @route   POST api/interceptor
+// @route   POST /user
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
     let { screenname, name, email, password, age, gender } = req.body;
-    const newUser = new User(
-        { screenname, name, email, password, age, gender }
-    );
     try {
-        let docs = await User.find({ email })
-        if (!docs.length) {
-            let user = await newUser.save();
-            res.json(user);
+        const { error } = validateUser(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+        
+        let user = await User.findOne({ email })
+        if (user) {
+            console.log(`User with the email: ${email} already registered...`);
+            return res.status(400).send(`User with the email: ${email} already registered...`);
+        } else {
+            let user = new User(
+                { screenname, name, email, password, age, gender }
+            );
+
+            user = await user.save();
             console.log(`User ${screenname} created...`);
-        } else {                
-            console.log(`User with the email: ${email} already exists...`);
-            res.send(`User with the email: ${email} already exists...`);
+            return res.json(user);            
         }
+    } catch (err) {
+        console.log('Error:', err.message);
+        res.send('Error:', err.message);
+    }
+});
+
+// @route   GET /user
+// @Desc    Get all Users
+// @access  Public
+router.get('/', async function (req, res) {
+    console.log('Getting the users...');
+    try {
+        let users = await User.find();
+        res.json(users);
     } catch (err) {
         console.log('Error:', err.message);
         res.send('Error:', err.message);
