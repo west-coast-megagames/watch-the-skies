@@ -13,6 +13,7 @@ mongoose.set('useCreateIndex', true);
 const interceptor = require('./routes/api/interceptor');
 const intercept = require('./routes/api/intercept');
 const country = require('./routes/api/country');
+const users = require('./routes/users');
 
 // Middleware - express and socketIo
 const app = express();
@@ -40,6 +41,7 @@ mongoose.connect(dbURI, mongoOptions)
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/country', country); // Route for inputing countries
+app.use('/user', users); // Route for dealing with Users
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
