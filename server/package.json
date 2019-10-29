@@ -12,6 +12,7 @@
   "author": "John T. Cleveland",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.1",
     "cors": "^2.8.5",
