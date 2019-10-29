@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import InterceptorDeployForm from '../components/interceptorsDeploy';
 import axios from 'axios';
 
 class Contacts extends Component {
     state = {
         contacts: [],
         interceptors: [],
-        isDeploying: false
     };
 
     async componentDidMount() {
@@ -15,12 +13,6 @@ class Contacts extends Component {
         let interceptors = ships.filter(s => s.team === 'US');
         this.setState({ contacts, interceptors });
     };
-
-    async toggleDeploy(){
-        this.setState({
-          isDeploying: !this.state.isDeploying
-        });
-    }
 
     async deploy(contact) {
         console.log( contact )
@@ -61,12 +53,11 @@ class Contacts extends Component {
                             <td>Small</td>
                             <td>Unknown</td>
                             <td>{ contact.location.country }</td>
-                            <td><button onClick={ this.toggleDeploy.bind(this) } className="btn btn-success btn-sm">Deploy</button></td>
+                            <td><button className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}
                     </tbody>
                 </table>
-                { this.state.isDeploying ? <InterceptorDeployForm doneDeploying={this.toggleDeploy.bind(this)} /> : null }
             </React.Fragment>
         );
     }

@@ -20,10 +20,6 @@ class InterceptorDeployForm extends Component {
       isDelpoyed: true
   };
 
-  test = () => {
-    console.log( 'hi' );
-  };
-
   async componentDidMount() {
       let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
       ships = ships.filter(s => s.team === 'US');
