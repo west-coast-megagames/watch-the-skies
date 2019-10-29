@@ -14,6 +14,12 @@ class Contacts extends Component {
         this.setState({ contacts, interceptors });
     };
 
+    async toggleDeploy(){
+        this.setState({
+          isDeploying: !this.state.isDeploying
+        });
+    }
+
     async deploy(contact) {
         console.log( contact )
 
@@ -53,7 +59,7 @@ class Contacts extends Component {
                             <td>Small</td>
                             <td>Unknown</td>
                             <td>{ contact.location.country }</td>
-                            <td><button className="btn btn-success btn-sm">Deploy</button></td>
+                            <td><button onClick={ this.props.deployState } className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}
                     </tbody>

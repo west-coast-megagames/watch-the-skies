@@ -40,7 +40,7 @@ class InterceptorDeployForm extends Component {
                 </select>
             </div>
             <button type="submit" className="btn btn-primary">Commit</button>
-            <button type="submit" onClick={ this.props.doneDeploying } className="btn btn-primary">Cancel</button>
+            <button type="submit" onClick={ this.props.deployState } className="btn btn-primary">Cancel</button>
           </form>
       </React.Fragment>
     )

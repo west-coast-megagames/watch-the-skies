@@ -12,11 +12,17 @@ class Interceptors extends Component {
         this.setState({ ships })
     }
 
-    deploy = (aircraft) => {
+    /*deploy = (aircraft) => {
         console.log(aircraft)
         const ships = this.state.ships.filter(s => s._id !== aircraft._id);
         this.setState({ ships });
-    };
+    };*/
+
+    retreiveStatus = (ship) => {
+      if ( !ship.status.deployed ) {
+        return 'Idle';
+      }
+    }
 
     render() {
         const { length: count } = this.state.ships;
@@ -32,8 +38,8 @@ class Interceptors extends Component {
                         <th>Aircraft</th>
                         <th>Pilot</th>
                         <th>Frame Damage</th>
-                        <th>Current Base</th>
-                        <th>Deploy</th>
+                        <th>Location</th>
+                        <th>Status</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +49,7 @@ class Interceptors extends Component {
                         <td>Someone</td>
                         <td>{ 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }%</td>
                         <td>{ ship.location.poi }</td>
-                        <td><button onClick={ () => this.deploy(ship) } className="btn btn-success btn-sm">Deploy</button></td>
+                        <td>{ this.retreiveStatus( ship ) }</td>
                     </tr>
                     ))}
                 </tbody>

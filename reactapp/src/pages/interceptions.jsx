@@ -20,10 +20,10 @@ class Interception extends Component {
     return (
         <React.Fragment>
             <h1>Operations Module - Interception Tab</h1>
-            <Contacts />
+            <Contacts deployState={ this.toggleDeploy.bind(this) } />
             <hr />
             <Interceptors />
-            { this.state.isDeploying ? <InterceptorDeployForm doneDeploying={this.toggleDeploy.bind(this) } /> : null }
+            { this.state.isDeploying ? <InterceptorDeployForm deployState={ this.toggleDeploy.bind(this) } /> : null }
         </React.Fragment>
     );
   };
