@@ -23,9 +23,6 @@ class Contacts extends Component {
     async deploy(contact) {
         console.log( contact )
 
-        // let's activate the deploy form
-
-
         /* const contacts = this.state.contacts.filter(s => s._id !== contact._id);
         this.setState({ contacts });
         let stats = {
@@ -47,7 +44,7 @@ class Contacts extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th>Contact Strangth</th>
+                            <th>Contact Strength</th>
                             <th>Transponder</th>
                             <th>Airspace</th>
                             <th>Deploy</th>

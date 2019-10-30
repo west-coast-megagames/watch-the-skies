@@ -36,6 +36,7 @@ class InterceptorDeployForm extends Component {
   }
 
   handleChange(event) {
+    console.log( this.props.deployData )
     this.setState({
       interceptor: event.target.value
     })
@@ -64,7 +65,7 @@ class InterceptorDeployForm extends Component {
           <div id="deployForm" style={ deployStyle }>
             <form name="deployForm" style={ formStyle } onSubmit={ this.handleSubmit   }>
               <div className="form-group">
-                  <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact</label>
+                  <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact { this.props.deployData.contact }</label>
                   <select className="form-control" onChange={ this.handleChange }>
                     <option></option>
                     { this.state.ships.map(ship => (
