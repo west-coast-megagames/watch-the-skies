@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const sockets = require('./config/sockets');
+const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -11,8 +13,12 @@ mongoose.set('useCreateIndex', true);
 const interceptor = require('./routes/api/interceptor');
 const intercept = require('./routes/api/intercept');
 const country = require('./routes/api/country');
+const users = require('./routes/users');
 
+// Middleware - express and socketIo
 const app = express();
+const server = http.createServer(app);
+sockets(server);
 
 // Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
 app.use(cors());
@@ -35,7 +41,8 @@ mongoose.connect(dbURI, mongoOptions)
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/country', country); // Route for inputing countries
+app.use('/user', users); // Route for dealing with Users
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`WTS Server started on port ${port}...`));
+server.listen(port, () => console.log(`WTS Server started on port ${port}...`));

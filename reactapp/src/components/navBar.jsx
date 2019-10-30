@@ -1,20 +1,27 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-
-
+import { subscribeToClock } from '../api';
 
 class NavBar extends Component {
     state = { 
         country: "United States",
         treasury: 30,
         prLevel: 6,
-        gameClock: "Paused"
+        minutes: 0,
+        seconds: 0,
      }
+
+    constructor(props) {
+        super(props);
+
+        //subscribeToTimer(1000, (err, timestamp) => this.setState({ gameClock: timestamp }));
+        subscribeToClock((err, count) => this.setState({ minutes: count.minutes, seconds: count.seconds }));
+    }
 
     render() {
         
-        const { gameClock, prLevel, treasury, country } = this.state;
-        const clock = `Date: ${gameClock}`;
+        const { minutes, seconds, prLevel, treasury, country } = this.state;
+        const clock = `Date: ${minutes}:${seconds}`;
         const statusBar =  `PR Level: ${prLevel} | Treasury: $M${treasury} | ${country}`;
 
         return (
@@ -36,7 +43,7 @@ class NavBar extends Component {
                     </li>
                 </ul>
             </div>
-            <span className="navbar-text">{clock}</span>
+            <span className="navbar-text mr-md-5">{clock}</span>
             <span className="navbar-text">{statusBar}</span>
         </nav>
         );
