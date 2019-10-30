@@ -22,6 +22,9 @@ class Interceptors extends Component {
       if ( !ship.status.deployed ) {
         return 'Idle';
       }
+      else if ( ship.status.deployed && ship.status.mission != false ){
+        return 'Intercepting contact';
+      }
     }
 
     render() {

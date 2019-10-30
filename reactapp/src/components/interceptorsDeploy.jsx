@@ -29,7 +29,7 @@ class InterceptorDeployForm extends Component {
     super(props)
     this.state = {
       ships: [],
-      contact: null
+      interceptor: null
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,17 +37,18 @@ class InterceptorDeployForm extends Component {
 
   handleChange(event) {
     this.setState({
-      contact: event.target.value
+      interceptor: event.target.value
     })
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    if ( this.state.contact === null ){
+    if ( this.state.interceptor === null ){
       return;
     }
-    this.props.deployState();
+    // want to update the database here?
+    this.props.deployInterceptors( 'deployed', null, this.state.interceptor );
   }
 
   async componentDidMount() {
@@ -72,7 +73,7 @@ class InterceptorDeployForm extends Component {
                   </select>
               </div>
               <button type="submit" value="Submit" className="btn btn-primary">Commit</button>
-              <button type="cancel" value="Cancel" onClick={ this.props.deployState } className="btn btn-primary">Cancel</button>
+              <button type="cancel" value="Cancel" onClick={ () => this.props.deployInterceptors( 'cancel' ) } className="btn btn-primary">Cancel</button>
             </form>
           </div>
       </React.Fragment>

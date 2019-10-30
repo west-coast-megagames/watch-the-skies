@@ -7,10 +7,30 @@ class Interception extends Component {
   state = {
       contacts: [],
       interceptors: [],
-      isDeploying: false
+      isDeploying: false,
+      deployData:{
+        contact: null,
+        interceptor: null
+      }
   };
 
-  async toggleDeploy(){
+  async deployInterceptors( context, contact=null, interceptor=null ){
+    this.toggleDeploy();
+
+    if ( context === 'cancel' ){
+      this.state.deployData.contact = null;
+      this.state.deployData.interceptor = null;
+      return;
+    }
+    else if ( context === 'deploying' ){
+      this.state.deployData.contact = contact;
+    }
+    else if ( context === 'deployed' ){
+      this.state.deployData.interceptor = interceptor;
+    }
+  }
+
+  toggleDeploy(){
       this.setState({
         isDeploying: !this.state.isDeploying
       });
@@ -20,10 +40,10 @@ class Interception extends Component {
     return (
         <React.Fragment>
             <h1>Operations Module - Interception Tab</h1>
-            <Contacts deployState={ this.toggleDeploy.bind(this) } />
+            <Contacts deployInterceptors={ this.deployInterceptors.bind(this) } />
             <hr />
             <Interceptors />
-            { this.state.isDeploying ? <InterceptorDeployForm deployState={ this.toggleDeploy.bind(this) } /> : null }
+            { this.state.isDeploying ? <InterceptorDeployForm deployInterceptors={ this.deployInterceptors.bind(this) } /> : null }
         </React.Fragment>
     );
   };

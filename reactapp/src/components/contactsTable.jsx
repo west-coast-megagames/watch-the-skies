@@ -59,7 +59,7 @@ class Contacts extends Component {
                             <td>Small</td>
                             <td>Unknown</td>
                             <td>{ contact.location.country }</td>
-                            <td><button onClick={ this.props.deployState } className="btn btn-success btn-sm">Deploy</button></td>
+                            <td><button onClick={ () => this.props.deployInterceptors( 'deploying', contact._id ) } className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}
                     </tbody>
