@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const LogSchema = new Schema({
-    time: { type: Number, default: 0 },
-    turn: { type: String, default: "Test"},
-    type: { type: String }, 
-    desc: { type: String },
     date: { type: Date, defualt: Date.now },
+    turn: { type: String, default: "Testing"},
+    type: { type: String },
+    desc: { type: String },
+
     isPublished: { type: Boolean }
 });
 
