@@ -3,17 +3,15 @@ const socketio = require('socket.io');
 function socketServer(server){
     let io = socketio.listen(server, () => console.log(`socket.io started on port ${ioport}...`));
 
+
     io.on('connection', (client) => {
         console.log('New client connected...');
-        let counter = 100;
-        let WinnerCountdown = setInterval(function(){
-          io.emit('counter', counter);
-          counter--
-          if (counter === 0) {
-            io.emit('counter', "Congratulations You WON!!");
-            clearInterval(WinnerCountdown);
-          }
-        }, 1000);
+
+        client.on('gameClock', () => {
+          setInterval(() => {
+            client.emit('roundTimer', getTimeRemaining());
+          });
+        })
 
         client.on('subscribeToTimer', (interval) => {
             console.log(`Client has subscribed to timer with interval ${interval}`);
@@ -26,26 +24,21 @@ function socketServer(server){
     });
 }
 
-// function setTimer(t) {
-//     let seconds = Math.floor( (t/1000) % 60 );
-//     let minutes = Math.floor( (t/1000/60) % 60 );
-// }
+let roundTime = 15;
+let currentTime = Date.parse(new Date());
+let deadline = new Date(currentTime + roundTime*60*1000);
 
-// function gameTimer(t) {
-//     let seconds = Math.floor( (t/1000) % 60 );
-//     let minutes = Math.floor( (t/1000/60) % 60 );
+function getTimeRemaining(){
+    let t = Date.parse(deadline) - Date.parse(new Date());
+    let seconds = Math.floor( (t/1000) % 60 );
+    let minutes = Math.floor( (t/1000/60) % 60 );
+    //let hours = Math.floor( (t/(1000*60*60)) % 24 );
+    //let days = Math.floor( t/(1000*60*60*24) );
 
-//     let time = setInterval(seconds, minutes, (seconds, minutes) => {
-//         if (seconds != 0) {
-//             seconds = seconds -1;
-//         } else {
-//             minutes = minutes -1;
-//             seconds = 59;
-//         }
-//         let time = `${minutes} : ${seconds}`;
-//         return time;
-//     }, 1000)
-//     return time;
-// }
+    return {
+      'minutes': minutes,
+      'seconds': seconds
+    };
+}
 
 module.exports = socketServer;

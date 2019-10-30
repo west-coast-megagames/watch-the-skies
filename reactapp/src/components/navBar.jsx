@@ -7,20 +7,21 @@ class NavBar extends Component {
         country: "United States",
         treasury: 30,
         prLevel: 6,
-        gameClock: "Paused"
+        minutes: 0,
+        seconds: 0,
      }
 
     constructor(props) {
         super(props);
 
         //subscribeToTimer(1000, (err, timestamp) => this.setState({ gameClock: timestamp }));
-        subscribeToClock(1000, (err, count) => this.setState({ gameClock: count }));
+        subscribeToClock((err, count) => this.setState({ minutes: count.minutes, seconds: count.seconds }));
     }
 
     render() {
         
-        const { gameClock, prLevel, treasury, country } = this.state;
-        const clock = `Date: ${gameClock}`;
+        const { minutes, seconds, prLevel, treasury, country } = this.state;
+        const clock = `Date: ${minutes}:${seconds}`;
         const statusBar =  `PR Level: ${prLevel} | Treasury: $M${treasury} | ${country}`;
 
         return (

@@ -7,8 +7,9 @@ function subscribeToTimer (interval, cb) {
     socket.emit('subscribeToTimer', 1000);
 }
 
-function subscribeToClock (interval, cb) {
-    socket.on('counter', count => cb(null, count));
+function subscribeToClock (cb) {
+    socket.on('roundTimer', count => cb(null, count));
+    socket.emit('gameClock');
 }
 
 export { subscribeToTimer, subscribeToClock };
