@@ -8,12 +8,15 @@ const cors = require('cors');
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
+mongoose.set('useUnifiedTopology', true);
+
 
 // Routes - Using Express
 const interceptor = require('./routes/api/interceptor');
 const intercept = require('./routes/api/intercept');
 const country = require('./routes/api/country');
 const users = require('./routes/users');
+const news = require('./routes/api/news');
 
 // Middleware - express and socketIo
 const app = express();
@@ -42,6 +45,7 @@ app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/country', country); // Route for inputing countries
 app.use('/user', users); // Route for dealing with Users
+app.use('/api/news', news); // Route for the news desks
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
