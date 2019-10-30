@@ -27,6 +27,7 @@ class Interception extends Component {
     }
     else if ( context === 'deployed' ){
       this.state.deployData.interceptor = interceptor;
+      //do something to update database and change table states
     }
   }
 
@@ -43,7 +44,7 @@ class Interception extends Component {
             <Contacts deployInterceptors={ this.deployInterceptors.bind(this) } />
             <hr />
             <Interceptors />
-            { this.state.isDeploying ? <InterceptorDeployForm deployInterceptors={ this.deployInterceptors.bind(this) } /> : null }
+            { this.state.isDeploying ? <InterceptorDeployForm deployInterceptors={ this.deployInterceptors.bind(this) } deployData={ this.state.deployData } /> : null }
         </React.Fragment>
     );
   };
