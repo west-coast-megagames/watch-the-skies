@@ -30,7 +30,6 @@ function initLoad() {
 };
 
 function loadCountry(cName, cCode, cActiveFlg){
-  console.log("In loadCountry", cCode,cName,cActiveFlg);
   
   let country = new Country({ 
     code: cCode,
@@ -38,14 +37,12 @@ function loadCountry(cName, cCode, cActiveFlg){
     activeFlag: cActiveFlg
   });
   
-  /*
   const { error } = country.validateCountry(country); 
   if (error) {
     console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
     return
   }
-  */
-  console.log("before save", country.code, country.name, country.activeFlag);
+
   country.save((err, country) => {
     if (err) return console.error(`Save Error: ${err}`);
     console.log(country.name + " saved to country collection.");

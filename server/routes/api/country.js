@@ -31,7 +31,7 @@ router.get('/all', async (req, res) => {
   } 
 });
 
-// @route   GET api/id/countrys
+// @route   GET api/countrys/id
 // @Desc    Get countrys by id
 // @access  Public
 router.get('/id/:id', async (req, res) => {
@@ -50,15 +50,13 @@ router.get('/id/:id', async (req, res) => {
     }
 });
 
-// @route   GET api/id/countrys
-// @Desc    Get countrys by id
+// @route   GET api/countrys/code
+// @Desc    Get countrys by Country Code
 // @access  Public
 router.get('/code/:code', async (req, res) => {
   let code = req.params.code;
-  console.log("jeff in get countries by code", code);
   try {
     let country = await Country.find({ code });
-    console.log("jeff after find ... ", country);
     if (country.length) {
       res.json(country);
     } else {
@@ -70,6 +68,9 @@ router.get('/code/:code', async (req, res) => {
   }
 });
 
+// @route   POST api/countrys
+// @Desc    Create New Country
+// @access  Public
 router.post('/', async (req, res) => {
   
   let country = new Country({ 
@@ -83,7 +84,7 @@ router.post('/', async (req, res) => {
 
   country = await country.save();
   
-  res.send(country);
+  res.json(country);
 });
 
 module.exports = router;
