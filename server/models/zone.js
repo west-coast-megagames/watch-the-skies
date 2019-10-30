@@ -16,7 +16,7 @@ const ZoneSchema = new Schema({
              required: true,
              minlength: 3,
              maxlength: 50},
-  zoneActive: {Boolean}
+  zoneActive: { type: Boolean, default: true }
 });
 
 ZoneSchema.methods.validateZone = function (zone) {
