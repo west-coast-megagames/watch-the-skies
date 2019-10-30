@@ -3,7 +3,6 @@ const socketio = require('socket.io');
 function socketServer(server){
     let io = socketio.listen(server, () => console.log(`socket.io started on port ${ioport}...`));
 
-
     io.on('connection', (client) => {
         console.log('New client connected...');
 
@@ -24,7 +23,7 @@ function socketServer(server){
     });
 }
 
-let roundTime = 15;
+let roundTime = 30;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + roundTime*60*1000);
 
