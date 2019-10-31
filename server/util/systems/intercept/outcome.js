@@ -1,5 +1,3 @@
-const disengageAttempt = require('./disengage')
-
 // Aggressive Interception Switch
 function aggroResult (unit, roll) {
     let chances = [3, 5, 8, 10, 12];
@@ -105,6 +103,12 @@ function passiveResult (unit, roll) {
             console.log(`The case does not work!`);
     }
     return result;
+};
+
+function disengageAttempt (unit) {
+    let { designation } = unit;
+    console.log(`${designation} attempted to bug-out.`)
+    return false;
 };
 
 module.exports = {

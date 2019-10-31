@@ -3,27 +3,21 @@ const router = express.Router();
 const intercept = require('../../util/systems/intercept/intercept');
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/interceptor');
+const Interceptor = require('../../models/operations/interceptor');
 
 // @route   PUT api/intercept   ... update
 // @Desc    Find Attacker/Defender and activate intercept
 // @access  Public
 router.put('/', async function (req, res) {
     try {
-        console.log(req.body);
-        let atkId = req.body.attacker;
-        console.log(atkId);
-        let defId = req.body.defender;
-        console.log(defId);
-        let attacker = await Interceptor.findById(atkId);
-        let defender = await Interceptor.findById(defId);
+        let attacker = await Interceptor.findById(req.body.attacker);
+        let defender = await Interceptor.findById(req.body.defender);
         result = intercept(attacker, defender);
         res.json(result);
     } catch (err) {
         console.log('Error:', err.message);
         res.send('Error:', err.message);
     }
-
 });
 
 module.exports = router;
