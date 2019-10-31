@@ -1,16 +1,33 @@
 const mongoose = require('mongoose');
+const log = require('./log');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 
-const LogSchema = new Schema({
-    date: { type: Date, defualt: Date.now },
-    turn: { type: String, default: "Testing"},
-    type: { type: String },
-    desc: { type: String },
-
-    isPublished: { type: Boolean }
+const InterceptionLog =  new Schema({
+    description: { type: String, required: true },
+    unit: {
+        _id: { type: ObjectId, required: true },
+        description: { type: String, required: true },
+        outcome: { 
+            frameDmg: { type: Boolean },
+            sysDmg: { type: Boolean },
+            evasion: { type: Boolean },
+            dmg: { type: Number },
+        }
+    },
+    opponent: {
+        _id: { type: ObjectId, required: true },
+        description: { type: String, required: true },
+        outcome: { 
+            frameDmg: { type: Boolean },
+            sysDmg: { type: Boolean },
+            evasion: { type: Boolean },
+            dmg: { type: Number },
+        }
+    }
 });
 
-module.exports = Log = mongoose.model('log', LogSchema)
+module.exports = log.discriminator('Interceptor', InterceptionLog);
 
 // log: [
 //     {_ID: Number,

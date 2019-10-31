@@ -1,5 +1,5 @@
 //Intercepter Model
-const Intercetor = require('../../../models/interceptor');
+const Intercetor = require('../../../models/operations/interceptor');
 
 function interceptDmg(attacker, defender, atkResult, defResult) {
     let defReport = {
@@ -24,10 +24,13 @@ function interceptDmg(attacker, defender, atkResult, defResult) {
     let atkDmg = damageCalc(attacker, atkReport);
 
     let dmgReport = {
-        defense: defDmg.dmgReport,
+        defDmg: defDmg.dmg,
+        defenseDesc: defDmg.dmgDesc,
         defStatus: defDmg.outcome,
-        offense: atkDmg.dmgReport,
-        atkStatus: atkDmg.outcome,
+        atkDmg: atkDmg.dmg,
+        
+        attackDesc: atkDmg.dmgDesc,
+        attackStatus: atkDmg.outcome
     };
 
     return dmgReport;
@@ -36,7 +39,6 @@ function interceptDmg(attacker, defender, atkResult, defResult) {
 function damageCalc(unit, report) {
     console.log(`Calculating ${unit.designation} damage now...`);
     let { evade, damage, sysDmg, hit, weaponDmg, sysHit } = report;
-
     console.log(report);
 
     let atkDmg = 0;
@@ -46,7 +48,6 @@ function damageCalc(unit, report) {
     };
 
     const hullDmg = atkDmg + damage;
-
     console.log(`${unit.designation} is hit for ${hullDmg} damage!`)
 
     if (hullDmg > 0 && evade > 0) {
@@ -58,7 +59,8 @@ function damageCalc(unit, report) {
     let dmgReport = {
         unit: unit._id,
         designation: unit.designation,
-        dmgReport: `${unit.designation} takes ${hullDmg} damage!`,
+        dmg: hullDmg,
+        dmgDesc: `${unit.designation} takes ${hullDmg} damage!`,
         outcome: `${unit.designation} returns to base!`
     };
     unit.stats.hull = unit.stats.hull - hullDmg;
@@ -70,7 +72,6 @@ function damageCalc(unit, report) {
     };
 
     applyDmg(unit);
-
     return dmgReport;
 };
 
@@ -86,7 +87,6 @@ async function applyDmg(unit) {
     }
 
     await update.save();
-
     return 0;
 };
 

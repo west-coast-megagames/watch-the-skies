@@ -9,6 +9,8 @@ const InterceptorSchema = new Schema({
     hull: { type: Number, default: 2 },
     hullMax: { type: Number, default: 2 },
     damage: { type: Number, default: 1 },
+    passiveRolls: [Number],
+    activeRolls: [Number]
   },
   location: { 
     zone: { type: String }, 

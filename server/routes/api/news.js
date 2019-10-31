@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Article Model - Using Mongoose Model
-const { Article, validateArticle } = require('../../models/article');
+const { Article, validateArticle } = require('../../models/news/article');
 
 // @route   GET api/news/gnn
 // @Desc    Get all Articles from GNN

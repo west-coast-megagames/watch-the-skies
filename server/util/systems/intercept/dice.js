@@ -3,7 +3,7 @@
 function d4() {
     let rand = 1 + Math.floor(Math.random() * 4);
     return rand;
-}
+};
 
 function d6() {
     let rand = 1 + Math.floor(Math.random() * 6);
