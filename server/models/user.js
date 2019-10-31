@@ -10,7 +10,14 @@ const UserSchema = new Schema({
   },
   email: { type: String, required: true, minlength: 5, maxlength: 255 },
   password: {type: String, required: true, minlength: 5, maxlength: 1024},
-  age: { type: Number, required: true },
+  address: {
+    street1: { type: String },
+    street2: { type: String },
+    city: { type: String },
+    state: { type: String, minlength: 2, maxlength: 2 },
+    zipcode: { type: String, minlength: 5, maxlength: 5 }
+  },
+  DoB: { type: Date },
   gender: { type: String, enum: ["Male", "Female", "Non-Binary"]},
 });
 
@@ -25,7 +32,14 @@ function validateUser(user) {
     },
     email: Joi.string().min(5).max(255).required().email(),
     password: Joi.string().min(5).max(1024).required(),
-    age: Joi.number().integer().min(14).max(99).required(), 
+    address: {
+      street1: Joi.string(),
+      street2: Joi.string(),
+      city: Joi.string(),
+      state: Joi.string().min(2).max(2),
+      zipcode: Joi.string().min(5).max(5)
+    },
+    DoB: Joi.Date().required(), 
     gender: Joi.string()
   };
 
