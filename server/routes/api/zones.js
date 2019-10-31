@@ -60,7 +60,7 @@ router.get('/id/:id', async (req, res) => {
 router.get('/code/:zoneCode', async (req, res) => {
     let zoneCode = req.params.zoneCode;
     try {
-      let zone = await zone.find({ zoneCode });
+      let zone = await Zone.find({ zoneCode });
       if (zone.length) {
         res.json(zone);
       } else {
@@ -106,7 +106,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     try {
-        const zone = await Zone.findByIdAndUpdate(id,
+        const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
           { zoneName: req.body.zoneName,
             zoneActive: req.body.zoneActive,
             zoneCode: req.body.zoneCode }, 
@@ -152,10 +152,10 @@ router.delete('/:id', async (req, res) => {
 router.patch('/deleteAll', async function (req, res) {
   try {
       for await (const zone of Zone.find()) {    
-          let id = zone.id;
+        let id = zone.id;
         try {
           const zoneDel = await Zone.findByIdAndRemove(id);
-          if (zone = null) {
+          if (zoneDel = null) {
             res.status(404).send(`The Zone with the ID ${id} was not found!`);
           }
         } catch (err) {
@@ -163,10 +163,10 @@ router.patch('/deleteAll', async function (req, res) {
           res.status(400).send(err.message);
         }
       }        
-      res.send("All Zones succesfully deleted!");
+      res.status(200).send("All Zones succesfully deleted!");
   } catch (err) {
       console.log('Error:', err.message);
-      res.send('Error:', err.message);
+      res.status(400).send('Error:', err.message);
   };
 });
 

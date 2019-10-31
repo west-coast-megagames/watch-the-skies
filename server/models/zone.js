@@ -16,7 +16,7 @@ const ZoneSchema = new Schema({
              required: true,
              minlength: 3,
              maxlength: 50},
-  zoneActive: {Boolean}
+  zoneActive: { type: Boolean, default: true }
 });
 
 ZoneSchema.methods.validateZone = function (zone) {
@@ -41,5 +41,4 @@ function validateZone(zone) {
   return Joi.validate(zone, schema);
 }
 
-//module.exports = Zone = mongoose.model('zone', ZoneSchema);
 module.exports = { Zone, validateZone };

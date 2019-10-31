@@ -1,11 +1,17 @@
 const fs = require('fs')
 const file = fs.readFileSync('./util/init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
+const mongoose = require('mongoose');
 
 const express = require('express');
 const bodyParser = require('body-parser');
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
 // Country Model - Using Mongoose Model
+const Zone = require('./models/zone');
 const Country = require('./models/country'); 
 
 const app = express();
@@ -23,30 +29,107 @@ const logger = (err, result) =>
 
 function initLoad() {
   for (let i = 0; i < refDataIn.length; ++i ) {
+    
+    if (refDataIn[i].type == "zone") {
+      loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
+    }
+
     if (refDataIn[i].type == "country") {
       loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
     }
   };
 };
 
-function loadCountry(cName, cCode, cActiveFlg){
-  
-  let country = new Country({ 
-    code: cCode,
-    name: cName,
-    activeFlag: cActiveFlg
-  });
-  
-  const { error } = country.validateCountry(country); 
-  if (error) {
-    console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
-    return
-  }
+function loadZone(zName, zCode, zActiveFlg){
+  try {
+console.log("jeff in zone load ... zCode", zCode);    
+    let docs = Zone.find( { zoneCode: zCode } );
+    if (!docs.length) {
+       // New Zone here
+       let zone = new Zone({ 
+           zoneCode: zCode,
+           zoneName: zName,
+           zoneActive: zActiveFlg
+        }); 
+      
+        let { error } = zone.validateZone(zone); 
+        if (error) {
+          console.log("New Zone Validate Error", zone.zoneCode, zone.zoneName, zone.zoneActive, error.message);
+          return
+        }
+        
+        zone.save((err, zone) => {
+          if (err) return console.error(`New Zone Save Error: ${err}`);
+          console.log(zone.zoneName + " add saved to zones collection.");
+        });
+    } else {       
+       // Existing Zone here ... update
+       let id = docs.id;
 
-  country.save((err, country) => {
-    if (err) return console.error(`Save Error: ${err}`);
-    console.log(country.name + " saved to country collection.");
-  });
+       const zone = Zone.findByIdAndUpdate({ _id: docs.id },
+         { zoneName: zName,
+           zoneActive: zActiveFlg,
+           zoneCode: zCode }, 
+         { new: true }
+       );
+   
+       if (zone != null) {
+         const { error } = zone.validateZone(zone); 
+         if (error) {
+           console.log("Zone Update Validate Error", zCode, zName, zActiveFlg, error.message);
+           return
+         }
+
+         zone.save((err, zone) => {
+           if (err) return console.error(`Zone Update Save Error: ${err}`);
+              console.log(zone.zoneName + " update saved to zones collection.");
+            });
+
+       } else {
+          console.log("Zone Update, ID Not Found ", zCode, zName, zActiveFlg);
+          return
+      }
+    }
+  } catch (err) {
+    console.log('Error:', err.message);
+    return
 }
 
- module.exports = initLoad;
+};
+
+function loadCountry(cName, cCode, cActiveFlg){
+  
+  try {
+    let docs = Country.find({ Code: cCode });
+console.log("jeff in country load ... docs.length", docs.length, cCode);        
+    if (!docs.length) {
+      // New Country here
+
+      let country = new Country({ 
+        code: cCode,
+        name: cName,
+        activeFlag: cActiveFlg
+      });
+  
+      const { error } = country.validateCountry(country); 
+      if (error) {
+        console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
+        return
+      }
+
+      country.save((err, country) => {
+        if (err) return console.error(`Save Error: ${err}`);
+        console.log(country.name + " saved to country collection.");
+      });
+    } else {       
+      // Existing Zone here ... update
+    }
+  } catch (err) {
+    console.log('Error:', err.message);
+    return
+  }    
+};
+
+ //module.exports = initLoad;
+
+ initLoad();
