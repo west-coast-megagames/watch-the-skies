@@ -11,7 +11,7 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 // Country Model - Using Mongoose Model
-const Zone = require('./models/zone');
+const { Zone } = require('./models/zone');
 const Country = require('./models/country'); 
 
 const app = express();
@@ -31,18 +31,20 @@ function initLoad() {
   for (let i = 0; i < refDataIn.length; ++i ) {
     
     if (refDataIn[i].type == "zone") {
+console.log("jeff calling loadZone", refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);      
       loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
     }
 
     if (refDataIn[i].type == "country") {
-      loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
+      // loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
+      console.log("Country load commented out", refDataIn[i].code);
     }
   };
 };
 
 function loadZone(zName, zCode, zActiveFlg){
   try {
-console.log("jeff in zone load ... zCode", zCode);    
+console.log("jeff in zone load ... zCode", zCode, zName, zActiveFlg);    
     let docs = Zone.find( { zoneCode: zCode } );
     if (!docs.length) {
        // New Zone here
@@ -52,9 +54,10 @@ console.log("jeff in zone load ... zCode", zCode);
            zoneActive: zActiveFlg
         }); 
       
-        let { error } = zone.validateZone(zone); 
+console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName, zone.zoneActive); 
+        let { error } = zone.validateZone(zone.toObject()); 
         if (error) {
-          console.log("New Zone Validate Error", zone.zoneCode, zone.zoneName, zone.zoneActive, error.message);
+          console.log("New Zone Validate Error", zone.zoneCode, error.message);
           return
         }
         
