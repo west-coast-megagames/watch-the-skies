@@ -38,7 +38,7 @@ function validateZone(zone) {
     zoneActive: Joi.boolean().default(true)
   };
 
-  return Joi.validate(zone, schema);
+  return Joi.validate(zone, schema, { "allowUnknown": true });
 }
 
 module.exports = { Zone, validateZone };

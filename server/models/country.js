@@ -54,7 +54,7 @@ CountrySchema.methods.validateCountry = function (country) {
     /* ,zoneId: Joi.objectId().required() */
   };
 
-  return Joi.validate(country, schema);
+  return Joi.validate(country, schema, { "allowUnknown": true });
 }
   
 module.exports = Country = mongoose.model('country', CountrySchema);

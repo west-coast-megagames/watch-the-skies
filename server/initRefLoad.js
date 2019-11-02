@@ -1,14 +1,14 @@
 const fs = require('fs')
 const file = fs.readFileSync('./util/init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 
 const express = require('express');
 const bodyParser = require('body-parser');
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
+//mongoose.set('useNewUrlParser', true);
+//mongoose.set('useFindAndModify', false);
+//mongoose.set('useCreateIndex', true);
 
 // Country Model - Using Mongoose Model
 const { Zone } = require('./models/zone');
@@ -77,7 +77,7 @@ console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName,
        );
    
        if (zone != null) {
-         const { error } = zone.validateZone(zone); 
+         const { error } = zone.validateZone(zone.toObject()); 
          if (error) {
            console.log("Zone Update Validate Error", zCode, zName, zActiveFlg, error.message);
            return
@@ -114,7 +114,7 @@ console.log("jeff in country load ... docs.length", docs.length, cCode);
         activeFlag: cActiveFlg
       });
   
-      const { error } = country.validateCountry(country); 
+      const { error } = country.validateCountry(country.toObject()); 
       if (error) {
         console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
         return
@@ -133,6 +133,6 @@ console.log("jeff in country load ... docs.length", docs.length, cCode);
   }    
 };
 
- //module.exports = initLoad;
+ module.exports = initLoad;
 
- initLoad();
+ //initLoad();
