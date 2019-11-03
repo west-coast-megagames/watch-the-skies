@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 
 // Country Model - Using Mongoose Model
 const { Zone } = require('./models/zone');
-const Country = require('./models/country'); 
+const { Country } = require('./models/country'); 
 
 const app = express();
 
@@ -30,22 +30,20 @@ const logger = (err, result) =>
 function initLoad() {
   for (let i = 0; i < refDataIn.length; ++i ) {
     
-    if (refDataIn[i].type == "zone") {
-console.log("jeff calling loadZone", refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);      
+    if (refDataIn[i].type == "zone") {     
       loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
     }
 
     if (refDataIn[i].type == "country") {
-      // loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
-      console.log("Country load commented out", refDataIn[i].code);
+      loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag, refDataIn[i].refOther);
     }
   };
 };
 
-function loadZone(zName, zCode, zActiveFlg){
-  try {
-console.log("jeff in zone load ... zCode", zCode, zName, zActiveFlg);    
-    let docs = Zone.find( { zoneCode: zCode } );
+async function loadZone(zName, zCode, zActiveFlg){
+  try {   
+    let docs = await Zone.find( { zoneCode: zCode } );
+console.log("jeff in loadzone ... docs.length", docs.length, zCode);    
     if (!docs.length) {
        // New Zone here
        let zone = new Zone({ 
@@ -54,11 +52,10 @@ console.log("jeff in zone load ... zCode", zCode, zName, zActiveFlg);
            zoneActive: zActiveFlg
         }); 
       
-console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName, zone.zoneActive); 
-        let { error } = zone.validateZone(zone.toObject()); 
+        let { error } = zone.validateZone(zone); 
         if (error) {
           console.log("New Zone Validate Error", zone.zoneCode, error.message);
-          return
+          return;
         }
         
         zone.save((err, zone) => {
@@ -69,7 +66,7 @@ console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName,
        // Existing Zone here ... update
        let id = docs.id;
 
-       const zone = Zone.findByIdAndUpdate({ _id: docs.id },
+       let zone = Zone.findByIdAndUpdate({ _id: docs.id },
          { zoneName: zName,
            zoneActive: zActiveFlg,
            zoneCode: zCode }, 
@@ -77,9 +74,9 @@ console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName,
        );
    
        if (zone != null) {
-         const { error } = zone.validateZone(zone.toObject()); 
+         const { error } = zone.validateZone(zone); 
          if (error) {
-           console.log("Zone Update Validate Error", zCode, zName, zActiveFlg, error.message);
+           console.log("Zone Update Validate Error", zCode, zName, zActiveFlg, zone.zoneCode, error.message);
            return
          }
 
@@ -95,43 +92,86 @@ console.log("jeff before zone validate ... zone ", zone.zoneCode, zone.zoneName,
     }
   } catch (err) {
     console.log('Error:', err.message);
-    return
+    return;
 }
 
 };
 
-function loadCountry(cName, cCode, cActiveFlg){
+function loadCountry(cName, cCode, cActiveFlg, zCode){
   
-  try {
-    let docs = Country.find({ Code: cCode });
-console.log("jeff in country load ... docs.length", docs.length, cCode);        
-    if (!docs.length) {
-      // New Country here
+  try {   
 
-      let country = new Country({ 
-        code: cCode,
-        name: cName,
-        activeFlag: cActiveFlg
-      });
-  
-      const { error } = country.validateCountry(country.toObject()); 
-      if (error) {
-        console.log("Validate Error", country.code, country.name, country.activeFlag, error.message);
-        return
-      }
-
-      country.save((err, country) => {
-        if (err) return console.error(`Save Error: ${err}`);
-        console.log(country.name + " saved to country collection.");
-      });
-    } else {       
-      // Existing Zone here ... update
+    let zone = Zone.find({ zoneCode: zCode });
+console.log("jeff here in load country after zone find: ", zCode, zone.length);    
+    if (zone.length) {
+      let zoneId = zone.id;
+      let zoneName = zone.zoneName;
+    } else {
+      console.log("Country Load Zone Error, Country:", cCode, " Zone: ", zCode);
     }
+      
+      let docs = Country.find( { code: cCode } );
+      if (!docs.length) {
+         // New Country here
+         let country = new Country({ 
+             code: cCode,
+             name: cName,
+             activeFlag: cActiveFlg,
+             zone: {
+                _id: zoneId,
+                zoneName: zoneName
+            }
+          }); 
+      
+         let { error } = Country.validateCountry(country.toObject()); 
+         if (error) {
+           console.log("New Country Validate Error", country.code, error.message);
+           return
+         }
+        
+         country.save((err, country) => {
+           if (err) return console.error(`New Country Save Error: ${err}`);
+           console.log(country.name + " add saved to country collection.");
+      });
+      } else {       
+         // Existing Country here ... update
+         let id = docs.id;
+
+         const country = Country.findByIdAndUpdate({ _id: docs.id },
+           { name: cName,
+             activeFlag: cActiveFlg,
+             code: cCode,
+             zone: {
+              _id: zoneId,
+              zoneName: zoneName} 
+           }, 
+           { new: true }
+         );
+   
+         if (country != null) {
+           const { error } = country.validateCountry(country.toObject()); 
+           if (error) {
+             console.log("Country Update Validate Error", cCode, cName, cActiveFlg, error.message);
+             return
+           }
+
+           country.save((err, country) => {
+             if (err) return console.error(`Country Update Save Error: ${err}`);
+                console.log(country.name + " update saved to country collection.");
+              });
+
+         } else {
+            console.log("Country Update, ID Not Found ", cCode, cName, cActiveFlg);
+            return;
+        }
+      }
+    
+  
   } catch (err) {
-    console.log('Error:', err.message);
-    return
-  }    
-};
+      console.log('Error:', err.message);
+      return;
+  }
+}
 
  module.exports = initLoad;
 

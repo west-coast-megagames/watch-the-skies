@@ -96,7 +96,7 @@ router.post('/', async (req, res) => {
       }
   } catch (err) {
       console.log('Error:', err.message);
-      res.send('Error:', err.message);
+      res.status(400).send(err.message);
   }
   });
   

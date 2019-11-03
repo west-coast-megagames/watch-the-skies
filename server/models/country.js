@@ -2,26 +2,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
+const JoiObjectId = require('joi-objectid')(Joi);
 
 const CountrySchema = new Schema({
-    /*
     zone: { 
       type: new mongoose.Schema({
-        name: {
+        zoneName: {
           type: String,
           required: true,
           minlength: 3,
-          maxlength: 3,
-         default: "UNA"           // unassigned
-      },
-      activeFlag: {
-          type: Boolean,
-          default: false
+          maxlength: 50,
+          default: "UN-Assigned"           // unassigned
       }
     }),
     required: true
     },
-    */
     code: {
         type: String,
         required: true,
@@ -37,7 +32,7 @@ const CountrySchema = new Schema({
         required: true,
         trim: true,
         minlength: 3,
-        maxlength: 255
+        maxlength: 75
     },
     activeFlag: {
         type: Boolean,
@@ -45,16 +40,28 @@ const CountrySchema = new Schema({
     }
 });
 
-
 CountrySchema.methods.validateCountry = function (country) {
   const schema = {
-    name: Joi.string().min(3).max(255).required(),
-    code: Joi.string().min(2).max(2).required(),
-    activeFlag: Joi.boolean()
-    /* ,zoneId: Joi.objectId().required() */
+    name: Joi.string().min(3).max(75).required(),
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    activeFlag: Joi.boolean().default(true),
+    zoneId: JoiObjectId()
   };
 
   return Joi.validate(country, schema, { "allowUnknown": true });
 }
-  
-module.exports = Country = mongoose.model('country', CountrySchema);
+
+let Country = mongoose.model('country', CountrySchema);
+
+function validateCountry(country) {
+  const schema = {
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    name: Joi.string().min(3).max(75).required(),
+    activeFlag: Joi.boolean().default(true),
+    zoneId: JoiObjectId()
+  };
+
+  return Joi.validate(country, schema, { "allowUnknown": true });
+}
+
+module.exports = { Country, validateCountry };

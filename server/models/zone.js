@@ -27,6 +27,7 @@ ZoneSchema.methods.validateZone = function (zone) {
   };
 
   return Joi.validate(zone, schema, { "allowUnknown": true });
+  //return Joi.schema.validate(zone, { "allowUnknown": true });
 }
 
 let Zone = mongoose.model('zone', ZoneSchema);
@@ -38,7 +39,8 @@ function validateZone(zone) {
     zoneActive: Joi.boolean().default(true)
   };
 
-  return Joi.validate(zone, schema, { "allowUnknown": true });
+  return Joi.schema.validate(zone, { "allowUnknown": true });
+  //return Joi.validate(zone, schema, { "allowUnknown": true });
 }
 
 module.exports = { Zone, validateZone };
