@@ -19,6 +19,7 @@ const country = require('./routes/api/country');
 const users = require('./routes/users');
 const news = require('./routes/api/news');
 const logs = require('./routes/api/log');
+const initRefLoad = require('./initRefLoad');
 
 // Middleware - express and socketIo
 const app = express();
