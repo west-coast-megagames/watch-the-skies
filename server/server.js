@@ -4,7 +4,9 @@ const sockets = require('./config/sockets');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const init = require('./initRefLoad')
+const initRun = require('./initRefLoad');
+
+initRun(false);
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -19,7 +21,6 @@ const country = require('./routes/api/country');
 const users = require('./routes/users');
 const news = require('./routes/api/news');
 const logs = require('./routes/api/log');
-const initRefLoad = require('./initRefLoad');
 
 // Middleware - express and socketIo
 const app = express();

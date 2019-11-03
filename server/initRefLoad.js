@@ -21,6 +21,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+function runLoad(runFlag){
+  if(runFlag) initLoad();
+};
+
 // logging utility for demos below
 const logger = (err, result) =>
 { if (err)
@@ -173,6 +177,4 @@ console.log("jeff here in load country after zone find: ", zCode, zone.length);
   }
 }
 
- module.exports = initLoad;
-
- //initLoad();
+ module.exports = runLoad;
