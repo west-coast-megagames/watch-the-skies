@@ -4,12 +4,12 @@ const sockets = require('./config/sockets');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+// const init = require('./initRefLoad')
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-
 
 // Routes - Using Express
 const interceptor = require('./routes/api/interceptor');
@@ -18,6 +18,7 @@ const zones = require('./routes/api/zones');
 const country = require('./routes/api/country');
 const users = require('./routes/users');
 const news = require('./routes/api/news');
+const logs = require('./routes/api/log');
 
 // Middleware - express and socketIo
 const app = express();
@@ -48,6 +49,7 @@ app.use('/api/zones', zones); // Route for inputing zones
 app.use('/api/country', country); // Route for inputing countries
 app.use('/user', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
+app.use('/api/logs', logs); // Route for logs
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
