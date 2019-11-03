@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const LogSchema = new Schema({
     logType: { type: String, enum: ['Interception', 'Unit Construction', 'Deployment', 'repair', 'upgrade', 'mission'] },
     timestamp: {
-        date: { type: Date, defualt: Date.now },
+        date: { type: Date, default: Date.now() },
         turn: { type: String, default: "Test Turn"},
         phase: { type: String, default: "Test Phase"},
     },
@@ -42,30 +42,3 @@ const LogSchema = new Schema({
 //const logOptions = { descriminatorKey: 'logType', collection: 'logs' }
 
 module.exports = Log = mongoose.model('log', LogSchema)
-
-// log: [
-//     {_ID: Number,
-//     time: {type: Number},
-//     turn: {type: String},
-//     type: {type: String},
-//     results: {
-//       interception: {type: Boolean, default: false},
-//       unitDamaged: {type: Boolean, default: false},
-//       unitDestroyed: {type: Boolean, default: false},
-//         enemy: {
-//           _ID: Number,
-//           enemyDamaged: {type: Boolean, default: false},
-//           enemyDestroyed: {type: Boolean, default: false},
-//           debris: [
-//             {
-//               _ID: Number,
-//               class: {type: String},
-//               type: {type:String},
-//               country: {type:String}, 
-//               required: {type: Boolean, deffault: true}, 
-//               }
-//             ]
-//           }
-//         }
-//       }
-//     ]

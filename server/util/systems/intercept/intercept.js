@@ -48,7 +48,9 @@ function intercept (attacker, defender) {
                 dmg: finalReport.defDmg
             }
         }
-    });        
+    });
+
+    atkLog.save();
 
     console.log(atkLog);
     console.log(result.defenderReport);
