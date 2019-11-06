@@ -1,14 +1,15 @@
 const socketio = require('socket.io');
+const TimeRemaining = require('../util/systems/gameClock/gameClock')
 
 function socketServer(server){
-    let io = socketio.listen(server, () => console.log(`socket.io started on port ${ioport}...`));
+    let io = socketio.listen(server, () => console.log(`socket.io listining...`));
 
     io.on('connection', (client) => {
         console.log('New client connected...');
 
         client.on('gameClock', () => {
           setInterval(() => {
-            client.emit('roundTimer', getTimeRemaining());
+            client.emit('roundTimer', TimeRemaining());
           });
         })
 
@@ -21,23 +22,6 @@ function socketServer(server){
 
         client.on('disconnect', () => console.log('Client Disconnected...'));
     });
-}
-
-let roundTime = 30;
-let currentTime = Date.parse(new Date());
-let deadline = new Date(currentTime + roundTime*60*1000);
-
-function getTimeRemaining(){
-    let t = Date.parse(deadline) - Date.parse(new Date());
-    let seconds = Math.floor( (t/1000) % 60 );
-    let minutes = Math.floor( (t/1000/60) % 60 );
-    //let hours = Math.floor( (t/(1000*60*60)) % 24 );
-    //let days = Math.floor( t/(1000*60*60*24) );
-
-    return {
-      'minutes': minutes,
-      'seconds': seconds
-    };
 }
 
 module.exports = socketServer;
