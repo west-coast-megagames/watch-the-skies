@@ -7,7 +7,12 @@ class Interceptors extends Component {
         ships: []
     };
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.fetchShips();
+        this.timer = setInterval(() => this.fetchShips(), 5000);
+    }
+
+    async fetchShips() {
         let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
         ships = ships.filter(s => s.team === 'US');
         this.setState({ ships })
