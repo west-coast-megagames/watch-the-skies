@@ -23,7 +23,7 @@ class Contacts extends Component {
     async deploy(contact) {
         console.log( contact )
 
-        /* const contacts = this.state.contacts.filter(s => s._id !== contact._id);
+        const contacts = this.state.contacts.filter(s => s._id !== contact._id);
         this.setState({ contacts });
         let stats = {
             attacker: "5d71b508c6402720243f1a66",
@@ -56,7 +56,7 @@ class Contacts extends Component {
                             <td>Small</td>
                             <td>Unknown</td>
                             <td>{ contact.location.country }</td>
-                            <td><button onClick={ () => this.props.deployInterceptors( 'deploying', contact._id ) } className="btn btn-success btn-sm">Deploy</button></td>
+                            <td><button onClick={ () => this.props.deployInterceptors( 'deploying', contact._id, undefined ) } className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}
                     </tbody>

@@ -53,8 +53,7 @@ class Interceptors extends Component {
                         <td>Someone</td>
                         <td>{ 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }%</td>
                         <td>{ ship.location.poi }</td>
-                        <td>{ this.retreiveStatus( ship ) }</td>
-
+                        <td>{ this.retreiveStatus(ship) }</td>
                     </tr>
                     ))}
                 </tbody>

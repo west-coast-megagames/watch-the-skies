@@ -15,7 +15,6 @@ class NavBar extends Component {
 
     constructor(props) {
         super(props);
-
         //subscribeToTimer(1000, (err, timestamp) => this.setState({ gameClock: timestamp }));
         subscribeToClock((err, clock) => this.setState({ minutes: clock.minutes, seconds: clock.seconds, phase: clock.phase, turn: clock.turn }));
     }

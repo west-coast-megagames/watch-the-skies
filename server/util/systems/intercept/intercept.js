@@ -40,7 +40,7 @@ function intercept (attacker, defender) {
         },
         opponent: {
             _id: defender._id,
-            description: attacker.designation,
+            description: defender.designation,
             outcome: { 
                 frameDmg: finalReport.defDmg,
                 sysDmg: false,

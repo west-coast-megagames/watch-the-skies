@@ -4,34 +4,37 @@ import Contacts from '../components/contactsTable';
 import InterceptorDeployForm from '../components/interceptorsDeploy';
 
 class Interception extends Component {
+
   state = {
       contacts: [],
       interceptors: [],
       isDeploying: false,
-      deployData:{
-        contact: null,
-        interceptor: null
-      }
-  };
+      contact: undefined,
+      interceptor: undefined
+      };
 
-  async deployInterceptors( context, contact=null, interceptor=null ){
+  deployInterceptors = async (context, contact, interceptor) =>{
     this.toggleDeploy();
 
     if ( context === 'cancel' ){
-      this.state.deployData.contact = null;
-      this.state.deployData.interceptor = null;
+      this.setState({
+        contact: undefined,
+        interceptor: undefined
+      });
       return;
-    }
-    else if ( context === 'deploying' ){
-      this.state.deployData.contact = contact;
-    }
-    else if ( context === 'deployed' ){
-      this.state.deployData.interceptor = interceptor;
+    } else if ( context === 'deploying' ){
+      this.setState({
+        contact
+      });
+    } else if ( context === 'deployed' ){
+      this.setState({
+        interceptor
+      });
       //do something to update database and change table states
     }
-  }
+  };
 
-  toggleDeploy(){
+  toggleDeploy = () => {
       this.setState({
         isDeploying: !this.state.isDeploying
       });
@@ -41,10 +44,10 @@ class Interception extends Component {
     return (
         <React.Fragment>
             <h1>Operations Module - Interception Tab</h1>
-            <Contacts deployInterceptors={ this.deployInterceptors.bind(this) } />
+            <Contacts deployInterceptors={ this.deployInterceptors } />
             <hr />
             <Interceptors />
-            { this.state.isDeploying ? <InterceptorDeployForm deployInterceptors={ this.deployInterceptors.bind(this) } deployData={ this.state.deployData } /> : null }
+            { this.state.isDeploying ? <InterceptorDeployForm deployInterceptors={ this.deployInterceptors } handleChange={ this.handleChange } interceptor={ this.state.interceptor } contact={this.state.contact}/> : null }
         </React.Fragment>
     );
   };

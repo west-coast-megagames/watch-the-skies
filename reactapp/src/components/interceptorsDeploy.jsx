@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom'
 import axios from 'axios';
 
 var formStyle = {
@@ -25,51 +24,59 @@ var deployStyle = {
 }
 
 class InterceptorDeployForm extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      ships: [],
-      interceptor: null
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+
+  state = {
+    ships: [],
+    interceptor: this.props.interceptor,
+    contact: this.props.contact
   }
 
-  handleChange(event) {
-    console.log( this.props.deployData )
-    this.setState({
-      interceptor: event.target.value
-    })
-  }
-
-  handleSubmit(event) {
+  handleSubmit = async event => {
     event.preventDefault();
 
-    if ( this.state.interceptor === null ){
-      return;
-    }
     // want to update the database here?
-    this.props.deployInterceptors( 'deployed', null, this.state.interceptor );
+    console.log('Submitting Interception');
+    this.props.deployInterceptors( 'deployed', this.state.contact, this.state.interceptor );
+
+    let stats = {
+      attacker: this.state.interceptor,
+      defender: this.state.contact
+    };
+
+    await axios.put('http://localhost:5000/api/intercept', stats);
   }
+
+  handleChange = event => {
+    let interceptor = this.state.interceptor;
+    interceptor = event.currentTarget.value;
+    this.setState({
+      interceptor
+    });
+    console.log( event.currentTarget.value );
+    console.log( this.state.interceptor )
+  }
+
 
   async componentDidMount() {
       let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
       ships = ships.filter(s => s.team === 'US');
       ships = ships.filter( s => s.status.deployed === false );
       this.setState({ ships });
+      this.setState({ interceptor: ships[0]._id });
   };
 
   render() {
+
     return(
       <React.Fragment>
           <div id="deployForm" style={ deployStyle }>
-            <form name="deployForm" style={ formStyle } onSubmit={ this.handleSubmit   }>
+            <form id="deployForm" style={ formStyle } onSubmit={ this.handleSubmit }>
               <div className="form-group">
-                  <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact { this.props.deployData.contact }</label>
-                  <select className="form-control" onChange={ this.handleChange }>
+                <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact { this.props.contact }</label>
+                  <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
                     <option></option>
                     { this.state.ships.map(ship => (
-                        <option key="value={ship._id}" value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
+                        <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
                     ))}
                   </select>
               </div>
