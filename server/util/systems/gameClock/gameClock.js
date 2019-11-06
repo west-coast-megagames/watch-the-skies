@@ -5,7 +5,7 @@ let roundTime = .1;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + roundTime*60*1000);
 
-let gamePhases = ['Test Phase', 'Team Phase', 'Action Pase', 'Free Phase'];
+let gamePhases = ['Team Phase', 'Action Phase', 'Free Phase'];
 let phaseNum = 0;
 let currentPhase = gamePhases[phaseNum];
 
@@ -24,8 +24,8 @@ if (gameActive) {
             currentTime = Date.parse(new Date());
             deadline = new Date(currentTime + roundTime*60*1000);
 
-            if (phaseNum == 3) {
-                phaseNum = 1;
+            if (phaseNum == 2) {
+                phaseNum = 0;
                 incrementTurn();
             } else {
                 phaseNum++
