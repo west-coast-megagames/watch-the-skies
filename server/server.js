@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dbDebugger = require('debug')('app:db');
+const supportsColor = require('supports-color');
 const sockets = require('./config/sockets');
 const http = require('http');
 const bodyParser = require('body-parser');
@@ -7,6 +9,8 @@ const cors = require('cors');
 const initRun = require('./initRefLoad');
 
 initRun(false);
+
+console.log(dbDebugger.color);
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -41,7 +45,7 @@ const mongoOptions =  {
 
 // Connect to MongoDB with Mongoose
 mongoose.connect(dbURI, mongoOptions)
-    .then(() => console.log('MongoDB Connected...'))
+    .then(() => dbDebugger('MongoDB Connected...'))
     .catch(err => console.warn(err));
 
 // Express Routes - Inpoints to connect to through the browser.

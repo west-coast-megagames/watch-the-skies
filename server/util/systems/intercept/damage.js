@@ -1,3 +1,5 @@
+const interceptDebugger = require('debug')('app:intercept');
+
 //Intercepter Model
 const Intercetor = require('../../../models/operations/interceptor');
 
@@ -37,9 +39,9 @@ function interceptDmg(attacker, defender, atkResult, defResult) {
 };
 
 function damageCalc(unit, report) {
-    console.log(`Calculating ${unit.designation} damage now...`);
+    interceptDebugger(`Calculating ${unit.designation} damage now...`);
     let { evade, damage, sysDmg, hit, weaponDmg, sysHit } = report;
-    console.log(report);
+    interceptDebugger(report);
 
     let atkDmg = 0;
 
@@ -48,13 +50,13 @@ function damageCalc(unit, report) {
     };
 
     const hullDmg = atkDmg + damage;
-    console.log(`${unit.designation} is hit for ${hullDmg} damage!`)
+    interceptDebugger(`${unit.designation} is hit for ${hullDmg} damage!`)
 
     if (hullDmg > 0 && evade > 0) {
         hullDmg = hullDmg - evade;
     };
 
-    console.log(`${unit.designation} takes ${hullDmg} damage!`);
+    interceptDebugger(`${unit.designation} takes ${hullDmg} damage!`);
 
     let dmgReport = {
         unit: unit._id,
@@ -66,7 +68,7 @@ function damageCalc(unit, report) {
     unit.stats.hull = unit.stats.hull - hullDmg;
 
     if (unit.stats.hull <= 0) {
-        console.log(`${unit.designation} destroyed!`);
+        interceptDebugger(`${unit.designation} destroyed!`);
         unit.status.destroyed = true;
         dmgReport.outcome = `${unit.designation} destroyed!`;
     };

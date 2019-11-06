@@ -1,5 +1,6 @@
 const { d6 } = require('./dice')
 const { passive, aggressive } = require('./outcome')
+const interceptDebugger = require('debug')('app:intercept');
 
 // Attacker Roll and outcome algorithm
 function atkRoll(unit) {    
@@ -7,10 +8,10 @@ function atkRoll(unit) {
     let { designation, status } = unit;
 
     if (status.aggressive == true) {
-        console.log(`${designation} attempts an aggressive intercept and rolled a ${roll}`);
+        interceptDebugger(`${designation} attempts an aggressive intercept and rolled a ${roll}`);
         atkResult = aggressive(unit, roll);        
     } else if (status.passive == true) {
-        console.log(`${designation} attempts a passive observation and rolled a ${roll}`);
+        interceptDebugger(`${designation} attempts a passive observation and rolled a ${roll}`);
         atkResult = passive(unit, roll);
     };
     return atkResult;
@@ -23,10 +24,10 @@ function defRoll(unit) {
     let { designation, status } = unit
 
     if (status.aggressive == true) {
-        console.log(`${designation} engages the intercepting craft and rolled a ${roll}`);
+        interceptDebugger(`${designation} engages the intercepting craft and rolled a ${roll}`);
         defResult = aggressive(unit, roll)        
     } else if (status.passive == true) {
-        console.log(`${designation} attempts to complete the mission and rolled a ${roll}`);
+        interceptDebugger(`${designation} attempts to complete the mission and rolled a ${roll}`);
         defResult = passive(unit, roll)
     };
     return defResult;
