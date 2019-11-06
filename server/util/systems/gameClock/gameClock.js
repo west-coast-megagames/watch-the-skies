@@ -1,7 +1,6 @@
-
 let gameActive = true;
 
-let roundTime = .1;
+let roundTime = .09;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + roundTime*60*1000);
 
@@ -19,20 +18,6 @@ if (gameActive) {
         let timeRemaining = getTimeRemaining();
         let { minutes, seconds, phase, turn } = timeRemaining;
         // console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
-
-        if(minutes == 0 && seconds == 0) {
-            currentTime = Date.parse(new Date());
-            deadline = new Date(currentTime + roundTime*60*1000);
-
-            if (phaseNum == 2) {
-                phaseNum = 0;
-                incrementTurn();
-            } else {
-                phaseNum++
-            };
-
-            currentPhase = gamePhases[phaseNum];
-        }
     }, 1000);
 }
 
@@ -42,6 +27,20 @@ function getTimeRemaining(){
     let minutes = Math.floor( (t/1000/60) % 60 );
     //let hours = Math.floor( (t/(1000*60*60)) % 24 );
     //let days = Math.floor( t/(1000*60*60*24) );
+    
+    if(minutes < 0 && seconds < 0) {
+        currentTime = Date.parse(new Date());
+        deadline = new Date(currentTime + roundTime*60*1000);
+
+        if (phaseNum == 2) {
+            phaseNum = 0;
+            incrementTurn();
+        } else {
+            phaseNum++
+        };
+
+        currentPhase = gamePhases[phaseNum];
+    }
 
     return {
       'minutes': minutes,
