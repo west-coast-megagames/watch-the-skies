@@ -6,8 +6,8 @@ const LogSchema = new Schema({
     logType: { type: String, enum: ['Interception', 'Unit Construction', 'Deployment', 'repair', 'upgrade', 'mission'] },
     timestamp: {
         date: { type: Date, default: Date.now() },
-        turn: { type: String, default: "Test Turn"},
-        phase: { type: String, default: "Test Phase"},
+        turn: { type: String },
+        phase: { type: String }
     },
     teamID: { type: String, },
     location: {

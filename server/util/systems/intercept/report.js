@@ -1,30 +1,47 @@
-let fs = require('fs');
-let os = require('os');
+const IntercptLog = require('../../../models/logs/log');
 
-let count = 0;
-
-console.log(log("Data"));
-console.log(log("More Data"));
-
-async function log (data) {
-    fs.appendFile('./log/log.txt', `--Log ${count}--` + os.EOL, 'utf8', (err) => {
-        if (err) throw err;
-
-    });
+ function atkLog(finalReport, attacker, defender, engaged) {
+    const gameClock = require('../gameClock/gameClock')
+    let { turn, phase } = gameClock();
     
-    fs.appendFile('./log/log.txt', data + os.EOL, 'utf8', (err) => {
-        if (err) throw err;
-    });
+    let atkLog = new IntercptLog({
+        logType: 'Interception',
+        timestamp: {
+            date: Date.now(),
+            turn,
+            phase
+        },
+        teamID: attacker.team,
+        location: {
+            zone: 'Test',
+            country: attacker.location.country
+        },
+        description: `${engaged} ${finalReport.attackDesc} ${finalReport.attackStatus}`,
+        unit: {
+            _id: attacker._id,
+            description: attacker.designation,
+            outcome: { 
+                frameDmg: finalReport.atkDmg > 0 ? true : false,
+                sysDmg: false,
+                evasion: false,
+                dmg: finalReport.atkDmg
+            }
+         },
+         opponent: {
+             _id: defender._id,
+             description: defender.designation,
+             outcome: { 
+                 frameDmg: finalReport.defDmg > 0 ? true : false,
+                 sysDmg: false,
+                 evasion: false,
+                 dmg: finalReport.defDmg
+             }
+         }
+     });
+    
+     atkLog.save();
 
-    let report = "We did the thing...";
+     return atkLog;
+ }
 
-    count++;
-
-    return report;
-}
-
-function final (data) {
-
-}
-
-module.exports = { log, final }
+ module.exports = atkLog;
