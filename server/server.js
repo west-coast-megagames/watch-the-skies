@@ -17,6 +17,7 @@ mongoose.set('useUnifiedTopology', true);
 
 // Routes - Using Express
 const interceptor = require('./routes/api/interceptor');
+const team = require('./routes/api/team');
 const intercept = require('./routes/api/intercept');
 const zones = require('./routes/api/zones');
 const country = require('./routes/api/country');
@@ -48,6 +49,7 @@ mongoose.connect(dbURI, mongoOptions)
 
 // Express Routes - Inpoints to connect to through the browser.
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
+app.use('/api/team', team); // Route for Teams
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/zones', zones); // Route for inputing zones
 app.use('/api/country', country); // Route for inputing countries

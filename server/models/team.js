@@ -2,36 +2,36 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
+const FinancesSchema = new Schema({
+  timestamp: { 
+    date: { type: Date, default: Date.now() },
+    quarter: { type: String, required: true },
+    year: { type: Number, required: true },
+    turnNum: { type: Number, required: true }
+  },
+  prScore: { type: Number, required: true },
+  treasury: { type: Number },
+  govAccount: {type: Number },
+  opsAccount: { type: Number },
+  sciAccount: { type: Number },
+  dipAccount: { type: Number },
+  unAccount: { type: Number }
+});
+
+const RoleSchema = new Schema({
+  role: { type: String },
+  type: { type: String, enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']},
+  userID: { type: String },  
+});
+
 const TeamSchema = new Schema({
-  name: { type: String, required: true, unique: true},
+  name: { type: String, required: true, unique: true },
   countryID: { type: String, required: true, minlength: 3, maxlength: 25 },
   roles: [RoleSchema],
-  finances: [FinancesSchema]
+  prTrack: [Number],
+  finances: [FinancesSchema],
 });
 
 let Team = mongoose.model('team', TeamSchema);
 
-function validateTeam(team) {
-  // const schema = {
-  //   screenname: Joi.string().min(5).max(15).required(),
-  //   name: {
-  //     first: Joi.string().min(3).max(25).required(),
-  //     last: Joi.string().min(3).max(50).required(), 
-  //   },
-  //   email: Joi.string().min(5).max(255).required().email(),
-  //   password: Joi.string().min(5).max(1024).required(),
-  //   address: {
-  //     street1: Joi.string(),
-  //     street2: Joi.string(),
-  //     city: Joi.string(),
-  //     state: Joi.string().min(2).max(2),
-  //     zipcode: Joi.string().min(5).max(5)
-  //   },
-  //   DoB: Joi.Date().required(), 
-  //   gender: Joi.string()
-  // };
-
-  return Joi.validate(team, schema);
-}
-
-module.exports = { Team, validateTeam };
+module.exports = Team;
