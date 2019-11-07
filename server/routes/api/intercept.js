@@ -15,8 +15,8 @@ router.put('/', async function (req, res) {
         result = intercept(attacker, defender);
         res.json(result);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 

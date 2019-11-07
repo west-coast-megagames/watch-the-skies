@@ -14,8 +14,8 @@ router.get('/', async function (req, res) {
         let teams = await Team.find().sort({team: 1});
         res.json(teams);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -38,8 +38,8 @@ router.post('/', async function (req, res) {
             res.status(400).send(`${name} team already exists!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.status('Error:').send(err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -55,8 +55,8 @@ router.put('/:id', async function (req, res) {
         res.json(team);
         console.log(`${role.role} added to ${team.name}!`);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -74,8 +74,8 @@ router.delete('/:id', async function (req, res) {
             res.send(`No team with the id ${id} exists!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 

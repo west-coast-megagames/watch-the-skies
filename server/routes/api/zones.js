@@ -15,8 +15,8 @@ router.get('/', async (req, res) => {
         let zones = await Zone.find({ zoneActive: true }).sort('zoneCode: 1');
         res.json(zones);
       } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
       } 
 });
 
@@ -29,8 +29,8 @@ router.get('/all', async (req, res) => {
       let zones = await Zone.find().sort({zoneCode: 1});
       res.json(zones);
     } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
     } 
   });
 
@@ -49,8 +49,8 @@ router.get('/id/:id', async (req, res) => {
           res.status(404).send(`The Zone with the ID ${id} was not found!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -67,8 +67,8 @@ router.get('/code/:zoneCode', async (req, res) => {
         res.status(404).send(`The Zone with the Zone Code ${zoneCode} was not found!`);
       }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
     }
   });
 
@@ -95,8 +95,8 @@ router.post('/', async (req, res) => {
           res.status(400).send(`Zone Code ${zoneCode} already exists!`);
       }
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
   }
   });
   
@@ -121,8 +121,8 @@ router.put('/:id', async (req, res) => {
           res.status(404).send(`The Zone with the ID ${id} was not found!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
     }
  });
   
@@ -141,8 +141,8 @@ router.delete('/:id', async (req, res) => {
           res.status(404).send(`The Zone with the ID ${id} was not found!`);
         } 
     } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
     }        
 });
 
@@ -165,8 +165,8 @@ router.patch('/deleteAll', async function (req, res) {
       }        
       res.status(200).send("All Zones succesfully deleted!");
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send('Error:', err.message);
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
   };
 });
 

@@ -65,8 +65,8 @@ router.get('/code/:code', async (req, res) => {
       res.status(404).send(`The Country with the code ${code} was not found!`);
     }
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+    console.log(`Error: ${err.message}`);
+    res.status(400).send(`Error: ${err.message}`);
   }
 });
 
@@ -103,8 +103,8 @@ router.post('/', async (req, res) => {
             res.status(400).send(`Country Code ${code} already exists!`);
         }
       } catch (err) {
-        console.log('Error:', err.message);
-        res.status(400).send(err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
       }
       break;   // only do 1 iteration
     }
@@ -134,8 +134,8 @@ router.put('/:id', async (req, res) => {
         res.status(404).send(`The Country with the ID ${id} was not found!`);
       }
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+    console.log(`Error: ${err.message}`);
+    res.status(400).send(`Error: ${err.message}`);
   }
 });
 
@@ -154,8 +154,8 @@ router.delete('/:id', async (req, res) => {
         res.status(404).send(`The Country with the ID ${id} was not found!`);
       } 
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+    console.log(`Error: ${err.message}`);
+    res.status(400).send(`Error: ${err.message}`);
   }        
 });
 
@@ -172,14 +172,14 @@ router.patch('/deleteAll', async function (req, res) {
             res.status(404).send(`The Country with the ID ${id} was not found!`);
           }
         } catch (err) {
-          console.log('Error:', err.message);
-          res.status(400).send(err.message);
+          console.log(`Error: ${err.message}`);
+          res.status(400).send(`Error: ${err.message}`);
         }
       }        
       res.status(200).send("All Countrys succesfully deleted!");
   } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
+    console.log(`Error: ${err.message}`);
+    res.status(400).send(`Error: ${err.message}`);
   };
 });
 

@@ -13,8 +13,8 @@ router.get('/gnn', async function (req, res) {
         let articles = await Article.find({ agency: 'GNN' });
         res.json(articles);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -27,8 +27,8 @@ router.get('/bnc', async function (req, res) {
         let articles = await Article.find({ agency: 'BNC' });
         res.json(articles);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -50,8 +50,8 @@ router.post('/', async function (req, res) {
             return res.json(article);            
 
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -65,8 +65,8 @@ router.put('/:id', async function (req, res) {
         res.json(article);
         console.log(`Article: ${headline} updated...`);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -84,8 +84,8 @@ router.delete('/:id', async function (req, res) {
             res.send(`No article with the id ${id} exists!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 

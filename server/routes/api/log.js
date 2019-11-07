@@ -13,8 +13,8 @@ router.get('/', async function (req, res) {
         let logs = await Log.find();
         res.json(logs);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
