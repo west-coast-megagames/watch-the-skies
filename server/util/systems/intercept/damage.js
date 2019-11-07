@@ -1,7 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept');
 
 //Intercepter Model
-const Intercetor = require('../../../models/operations/interceptor');
+const Intercetor = require('../../../models/ops/interceptor');
 
 function interceptDmg(attacker, defender, atkResult, defResult) {
     let defReport = {

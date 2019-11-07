@@ -3,7 +3,7 @@ const router = express.Router();
 const intercept = require('../../util/systems/intercept/intercept');
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/operations/interceptor');
+const Interceptor = require('../../models/ops/interceptor');
 
 // @route   PUT api/intercept   ... update
 // @Desc    Find Attacker/Defender and activate intercept

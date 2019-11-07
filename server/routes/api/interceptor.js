@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/operations/interceptor');
+const Interceptor = require('../../models/ops/interceptor');
 
 // @route   GET api/interceptor
 // @Desc    Get all Interceptors

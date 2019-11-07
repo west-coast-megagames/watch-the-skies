@@ -10,8 +10,6 @@ const initRun = require('./initRefLoad');
 
 initRun(false);
 
-console.log(dbDebugger.color);
-
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
