@@ -8,7 +8,8 @@ const { User, validateUser } = require('../models/user');
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
-    let { screenname, name, email, password, age, gender } = req.body;
+    let { screenname, name, email, password, age, gender, DoB, phone, discord } = req.body;
+    DoB = new Date(DoB);
     try {
         const { error } = validateUser(req.body);
         if (error) return res.status(400).send(error.details[0].message);
@@ -19,7 +20,7 @@ router.post('/', async function (req, res) {
             return res.status(400).send(`User with the email: ${email} already registered...`);
         } else {
             let user = new User(
-                { screenname, name, email, password, age, gender }
+                { screenname, name, email, password, age, gender, DoB, phone, discord }
             );
 
             user = await user.save();
@@ -27,8 +28,8 @@ router.post('/', async function (req, res) {
             return res.json(user);            
         }
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
@@ -41,8 +42,8 @@ router.get('/', async function (req, res) {
         let users = await User.find();
         res.json(users);
     } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
     }
 });
 
