@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTie, faShieldAlt } from '@fortawesome/free-solid-svg-icons';
 import { subscribeToClock } from '../api';
 
 class NavBar extends Component {
@@ -34,14 +36,14 @@ class NavBar extends Component {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/budget">Governance</NavLink>
+                        <NavLink className="nav-link" to="/budget"><FontAwesomeIcon icon={faUserTie} /> Governance</NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/interceptions">Operations</NavLink>
+                        <NavLink className="nav-link" to="/interceptions"><FontAwesomeIcon icon={faShieldAlt} /> Operations</NavLink>
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <NavLink className="nav-link" to="/login">Login</NavLink>
-                    </li>
+                    </li> */}
                 </ul>
             </div>
             <span className="navbar-text mr-md-5">{clock}</span>
