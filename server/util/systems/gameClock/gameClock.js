@@ -1,7 +1,9 @@
+const turnChange = require('./turnChange');
+
 let gameActive = true;
 
-let phaseTimes = [8, 12, 10];
-let phaseTime = 2;
+let phaseTimes = [.8, .12, .10];
+let phaseTime = .2;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + phaseTime*60*1000);
 
@@ -13,6 +15,7 @@ let quarters = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec'];
 let year = 2020;
 let quarter = -1;
 let currentTurn = 'Test Turn';
+let turnNum = 0;
 
 if (gameActive) {
     setInterval(() => {
@@ -49,20 +52,24 @@ function getTimeRemaining(){
     return {
       'minutes': minutes,
       'seconds': seconds,
-      'phase' : currentPhase,
-      'turn' : currentTurn
+      'phase': currentPhase,
+      'turn': currentTurn,
+      'turnNum': turnNum
     };
 }
 
 function incrementTurn() {
+    turnNum++;
     if (quarter == 3) {
         quarter = 0;
         year++;
     } else {
         quarter++;
+
     }
 
     currentTurn = `${quarters[quarter]} ${year}`
+    turnChange(currentTurn);
 
     return 0;
 };
