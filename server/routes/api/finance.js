@@ -51,4 +51,27 @@ router.post('/', async function (req, res) {
     }
 });
 
+// @route   PATCH api/finances/deleteAll
+// @desc    Delete All Financial Documents
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+  try {
+      for await (const doc of Finances.find()) {    
+        try {
+          const deleteFinance = await Finances.findByIdAndRemove(doc._id);
+          if (deleteFinance == null) {
+            res.status(404).send(`The financial log with the ID ${id} was not found!`);
+          }
+        } catch (err) {
+          console.log('Error:', err.message);
+          res.status(400).send(err.message);
+        }
+      }  
+      res.status(200).send("All financial documents succesfully deleted!");      
+  } catch (err) {
+      console.log(`Error: ${err.message}`);
+      res.status(400).send(`Error: ${err.message}`);
+  };
+});
+
 module.exports = router;
