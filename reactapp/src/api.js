@@ -8,8 +8,19 @@ function subscribeToTimer (interval, cb) {
 }
 
 function subscribeToClock (cb) {
-    socket.on('roundTimer', count => cb(null, count));
-    socket.emit('gameClock');
+    socket.on('gameClock', count => cb(null, count));
+    // socket.emit('gameClock');
 }
 
-export { subscribeToTimer, subscribeToClock };
+function updatePR (team) {
+    let update = setInterval(() => {
+        socket.emit('updatePR', team);
+        clearInterval(update);
+    }, 4000);
+}
+
+function prUpdate (cb) {
+    socket.on('prUpdate', data => cb(null, data));
+}
+
+export { subscribeToTimer, subscribeToClock, updatePR, prUpdate };
