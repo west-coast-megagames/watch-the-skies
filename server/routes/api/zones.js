@@ -2,6 +2,8 @@ const {Zone, validateZone} = require('../../models/zone');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
+const zoneDebugger = require('debug')('app:zone');
+const supportsColor = require('supports-color');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -77,6 +79,7 @@ router.get('/code/:zoneCode', async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
   let { zoneCode, zoneName, zoneActive } = req.body;
+  zoneDebugger("In Zone Post ... Code: ", zoneCode, "Name: ", zoneName, "Active: ", zoneActive);
   const newZone = new Zone(
       { zoneCode, zoneName, zoneActive }
   );
@@ -105,6 +108,7 @@ router.post('/', async (req, res) => {
 // @access  Public  
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
+    zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName, "Active: ", req.params.zoneActive);
     try {
         const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
           { zoneName: req.body.zoneName,

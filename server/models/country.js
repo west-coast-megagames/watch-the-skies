@@ -2,7 +2,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const JoiObjectId = require('joi-objectid')(Joi);
+const countryDebugger = require('debug')('app:country');
+const supportsColor = require('supports-color');
 
 const CountrySchema = new Schema({
     zone: { 
@@ -13,9 +14,9 @@ const CountrySchema = new Schema({
           minlength: 3,
           maxlength: 50,
           default: "UN-Assigned"           // unassigned
-      }
-    }),
-    required: true
+      },
+        zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
+    })
     },
     code: {
         type: String,
@@ -44,8 +45,7 @@ CountrySchema.methods.validateCountry = function (country) {
   const schema = {
     name: Joi.string().min(3).max(75).required(),
     code: Joi.string().min(2).max(2).required().uppercase(),
-    activeFlag: Joi.boolean().default(true),
-    zoneId: JoiObjectId()
+    activeFlag: Joi.boolean().default(true)
   };
 
   return Joi.validate(country, schema, { "allowUnknown": true });
@@ -57,8 +57,7 @@ function validateCountry(country) {
   const schema = {
     code: Joi.string().min(2).max(2).required().uppercase(),
     name: Joi.string().min(3).max(75).required(),
-    activeFlag: Joi.boolean().default(true),
-    zoneId: JoiObjectId()
+    activeFlag: Joi.boolean().default(true)
   };
 
   return Joi.validate(country, schema, { "allowUnknown": true });

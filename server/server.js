@@ -8,7 +8,12 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const initRun = require('./initRefLoad');
 
-initRun(false);
+//do we do initRefLoad?
+const doRefLoad = process.env.RUN_INIT_REF || false;
+if (doRefLoad) {
+    dbDebugger("Init Ref Load Was Requested");
+    initRun(doRefLoad);
+} else dbDebugger("Init Ref Load Was NOT Requested");
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
