@@ -2,10 +2,10 @@
 
 This is the project file for the Watch the Skies Prototype, made for project nexus.
 
-[-File Structure-]
--- reactapp - Front end React Applications
-        ~ src - Main source code
-                ~ components - All react components that make up the UI
+## File Structure
+#### reactapp - Front end React Applications
+##### src - Main source code
+##### components - All react components that make up the UI
                         ~ common - Reusable react components
                 ~ pages - All pages within the page routing hiarchy
 
@@ -25,13 +25,17 @@ This is the project file for the Watch the Skies Prototype, made for project nex
                         ~ gameClock - The main gameClock and turn/phase change processing for WTS
                         ~ intercept - The Interception system for WTS
 
-[-Scripts for running-]
--- Dev: npm run dev
-        ~ Runs the react development server and the node server concurrently with nodemon online.
+## Scripts
+In the server directory, you can run:
 
--- Add Enviornment Variable for DEBUG
-        ~ $env:DEBUG = "app:*"
-        ~ $env:DEBUG_COLORS='true'
+### npm run dev
+Runs the react development server and the node server concurrently with nodemon online.
+
+### $env:DEBUG = "app:*"
+Adds Enviornment Variable for DEBUG to run all namespaces
+
+### $env:DEBUG_COLORS='true'
+Adds Enviornment Variable for DEBUG to display each namespace with a seperate color
 
 -- Enviroment Variable to control running of initRefLoad
         ~ $env:RUN_INIT_REF = 'true'
