@@ -23,8 +23,7 @@ const FinancesSchema = new Schema({
 
 let Finances = mongoose.model('finances', FinancesSchema);
 
-module.exports = { Finances, createFinance };
-
+module.exports = { Finances, createFinance, getFinance };
 
 async function createFinance(finance, prChange, teamID) {
   const gameClock = require('../../util/systems/gameClock/gameClock');
@@ -44,7 +43,7 @@ async function createFinance(finance, prChange, teamID) {
   try {
     // validate here....
 
-    let finances = await Finances.find({ teamID, turnNum });
+    let finances = await Finances.find({ teamID, 'timestamp.turnNum': turnNum });
     console.log(finances);
     if (!finances.length) {
       finances = new Finances(newFinances);
@@ -56,6 +55,23 @@ async function createFinance(finance, prChange, teamID) {
       console.log(`Finances for ${turn} already exist for this team...`);
       return `Finances for ${turn} already exist for this team...`;
     }
+  } catch (err) {
+    console.log(`Error: ${err.message}`);
+  }
+};
+
+async function getFinance(teamID) {
+  const gameClock = require('../../util/systems/gameClock/gameClock');
+  let { turnNum } = gameClock();
+
+  console.log(`Trying to find Finances for ${teamID}`)
+
+  try {
+    let finances = await Finances.findOne({'timestamp.turnNum': turnNum}).select('treasury prScore');
+
+    console.log(finances);
+    let { treasury, prScore } = finances;
+    return { treasury, prScore };
   } catch (err) {
     console.log(`Error: ${err.message}`);
   }

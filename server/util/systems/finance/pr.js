@@ -8,7 +8,7 @@ function rollPR(currentPR, prTrack, prModifier) {
     console.log(`PR Roll: ${prRoll}`);
 
     if (prRoll < currentPR) {
-        prScore = currentPR + prModifier - Math.ceil(((currentPR - prRoll) / 2));
+        prScore = currentPR + prModifier - Math.floor(((currentPR - prRoll) / 1.5));
     } else if (prRoll > currentPR) {
         prScore = currentPR + prModifier + 1;
     } else {

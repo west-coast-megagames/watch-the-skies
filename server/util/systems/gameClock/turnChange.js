@@ -1,10 +1,12 @@
-const Team = require('../../../models/team');
-const { Finances, createFinance } = require('../../../models/gov/finance');
 const rollPR = require('../../systems/finance/pr');
 
+// Mongoose Object Models
+const Team = require('../../../models/team');
+const { Finances, createFinance } = require('../../../models/gov/finance');
+
 /* Things that happen on Turn Change
-    - PR is rolled (Finances)
-    - Income is given (Treasury, based on PR)
+    - PR is rolled (Finances) [Coded]
+    - Income is given (Treasury, based on PR) [coded]
     - Research Progresses
     - Military Maintenence
     - Upgrades Progress (Interceptors/Units)
@@ -35,8 +37,9 @@ async function updatePR() {
             let prChange = rollPR(finances.prScore, prTrack, 0);
 
             finances = createFinance(finances, prChange, _id);
-        }
+
         return 0;
+        }
     } catch (err) {
         console.log('Error:', err.message);
     };
