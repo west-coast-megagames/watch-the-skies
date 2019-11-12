@@ -3,10 +3,10 @@ This is the project file for the Watch the Skies Prototype, made for project nex
 
 ## File Structure
 * reactapp - Front end React Applications
-*       src - Main source code
-*       components - All react components that make up the UI
-*               common - Reusable react components
-*       pages - All pages within the page routing hiarchy
+        * src - Main source code
+        * components - All react components that make up the UI
+                * common - Reusable react components
+        * pages - All pages within the page routing hiarchy
 
 * server - Node.js Server
 *       config - Any keys or configuration files for the server
