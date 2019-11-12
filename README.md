@@ -16,7 +16,6 @@ This is the project file for the Watch the Skies Prototype, made for project nex
                 ~ logs - Models pertaining to the in-game logging documents
                 ~ news - Models pertaining to the news agencies
                 ~ ops - Models pertaining to the OPERATIONS sub-game
-
         ~ routes - All Express routes
                 ~ api - Currently the main routes folder (Unlear why)
         ~ util - Application functions
@@ -25,7 +24,6 @@ This is the project file for the Watch the Skies Prototype, made for project nex
                         ~ finance - The financial systems for WTS
                         ~ gameClock - The main gameClock and turn/phase change processing for WTS
                         ~ intercept - The Interception system for WTS
-
 
 [-Scripts for running-]
 -- Dev: npm run dev
