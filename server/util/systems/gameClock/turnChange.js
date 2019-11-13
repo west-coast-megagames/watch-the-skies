@@ -23,7 +23,7 @@ function turnChange(turn) {
 
 async function updatePR() {
     const gameClock = require('../gameClock/gameClock');
-    let { turnNum } = gameClock();
+    let { turnNum } = gameClock.getTimeRemaining();
     
     console.log(`Assingning turn ${turnNum} income!`);
     try {

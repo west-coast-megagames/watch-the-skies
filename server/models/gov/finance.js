@@ -30,7 +30,7 @@ async function createFinance(finance, prChange, teamID) {
 
   let { treasury, accounts } = finance;
   let { prScore, income } = prChange;
-  let { turn, phase, turnNum } = gameClock();
+  let { turn, phase, turnNum } = gameClock.getTimeRemaining();
   let date = new Date();
   let timestamp = { date, phase, turn, turnNum }
   
@@ -62,7 +62,7 @@ async function createFinance(finance, prChange, teamID) {
 
 async function getFinance(teamID) {
   const gameClock = require('../../util/systems/gameClock/gameClock');
-  let { turnNum } = gameClock();
+  let { turnNum } = gameClock.getTimeRemaining();
 
   console.log(`Trying to find Finances for ${teamID}`)
 

@@ -30,7 +30,6 @@ function interceptDmg(attacker, defender, atkResult, defResult) {
         defenseDesc: defDmg.dmgDesc,
         defStatus: defDmg.outcome,
         atkDmg: atkDmg.dmg,
-        
         attackDesc: atkDmg.dmgDesc,
         attackStatus: atkDmg.outcome
     };

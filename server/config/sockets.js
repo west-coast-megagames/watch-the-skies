@@ -1,4 +1,4 @@
-const TimeRemaining = require('../util/systems/gameClock/gameClock');
+const gameClock = require('../util/systems/gameClock/gameClock');
 
 // Mongoose Object Models
 const { getFinance } = require('../models/gov/finance');
@@ -6,7 +6,7 @@ const { getFinance } = require('../models/gov/finance');
 function connect(io){
 
   setInterval(() => {
-    io.emit('gameClock', TimeRemaining());
+    io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
 
   io.on('connection', (client) => {
@@ -18,15 +18,17 @@ function connect(io){
       console.log(prUpdate);
       client.emit('prUpdate', prUpdate);
     });
-      // client.on('subscribeToTimer', (interval) => {
-      //     console.log(`Client has subscribed to timer with interval ${interval}`);
-      //     setInterval(() => {
-      //     client.emit('timer', interval--);
-      //     }, interval);
-      // });
+
+    client.on('pauseGame', () => {
+      gameClock.pauseClock();
+    });
+
+    client.on('startGame', () => {
+      gameClock.startClock();
+    });
 
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
   });
-}
+};
 
 module.exports = connect;

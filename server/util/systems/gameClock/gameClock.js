@@ -1,9 +1,13 @@
 const turnChange = require('./turnChange');
 
-let gameActive = true;
+let gameActive = false;
 
-let phaseTimes = [.8, .12, .10];
-let phaseTime = .2;
+let minutes = 0;
+let seconds = 0;
+let hours = 0;
+
+let phaseTimes = [.08, .12, .10];
+let phaseTime = .5;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + phaseTime*60*1000);
 
@@ -14,25 +18,44 @@ let currentPhase = gamePhases[phaseNum];
 let quarters = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec'];
 let year = 2020;
 let quarter = -1;
-let currentTurn = 'Test Turn';
+let currentTurn = 'Pre-Game';
 let turnNum = 0;
 
-if (gameActive) {
-    setInterval(() => {
-        let timeRemaining = getTimeRemaining();
-        let { minutes, seconds, phase, turn } = timeRemaining;
-        // console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
-    }, 1000);
-}
+// setTimeout(startClock, 4000)
+// setTimeout(pauseClock, 15000)
+// setTimeout(startClock, 22000)
+
+function startClock() {
+    console.warn('Game has been started!');
+    gameActive = true;
+};
+
+function pauseClock() {
+    console.warn('Game has been paused!');
+    gameActive = false;
+    currentTime = Date.parse(new Date());
+    deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60));
+};
+
+// setInterval(() => {
+//     let timeRemaining = getTimeRemaining();
+//     let { minutes, seconds, phase, turn } = timeRemaining;
+//     console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
+// }, 1000);
 
 function getTimeRemaining(){
+    if(!gameActive) {
+        currentTime = Date.parse(new Date());
+        deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60))
+    };
+
     let t = Date.parse(deadline) - Date.parse(new Date());
-    let seconds = Math.floor( (t/1000) % 60 );
-    let minutes = Math.floor( (t/1000/60) % 60 );
-    //let hours = Math.floor( (t/(1000*60*60)) % 24 );
+    seconds = Math.floor( (t/1000) % 60 );
+    minutes = Math.floor( (t/1000/60) % 60 );
+    hours = Math.floor( (t/(1000*60*60)) % 24 );
     //let days = Math.floor( t/(1000*60*60*24) );
 
-    if(minutes < 0 && seconds < 0) {
+    if(minutes <= 0 && seconds <= 0 && gameActive) {
         currentTime = Date.parse(new Date());
         deadline = new Date(currentTime + phaseTime*60*1000);
 
@@ -74,4 +97,4 @@ function incrementTurn() {
     return 0;
 };
 
-module.exports = getTimeRemaining;
+module.exports = { getTimeRemaining, pauseClock, startClock };

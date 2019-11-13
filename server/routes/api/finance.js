@@ -23,7 +23,7 @@ router.post('/', async function (req, res) {
     const gameClock = require('../../util/systems/gameClock/gameClock');
 
     let { prScore, treasury, teamID, accounts } = req.body;
-    let { turn, phase, turnNum } = gameClock();
+    let { turn, phase, turnNum } = gameClock.getTimeRemaining();
     let date = new Date();
     let timestamp = { date, phase, turn, turnNum }
     
