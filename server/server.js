@@ -2,10 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dbDebugger = require('debug')('app:db');
 const supportsColor = require('supports-color');
-const sockets = require('./config/sockets');
+const connect = require('./config/sockets');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+<<<<<<< HEAD
+=======
+const initRun = require('./initRefLoad');
+
+//do we do initRefLoad?
+const doRefLoad = process.env.RUN_INIT_REF || "false";
+if (doRefLoad === "true") {
+    dbDebugger("Init Ref Load Was Requested");
+    initRun(doRefLoad);
+} else dbDebugger("Init Ref Load Was NOT Requested");
+>>>>>>> c32cd9dd20e5b5eecfe0726439087e96ca159437
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -14,6 +25,7 @@ mongoose.set('useUnifiedTopology', true);
 
 // Routes - Using Express
 const interceptor = require('./routes/api/interceptor');
+const finances = require('./routes/api/finance')
 const team = require('./routes/api/team');
 const intercept = require('./routes/api/intercept');
 const zones = require('./routes/api/zones');
@@ -25,7 +37,10 @@ const logs = require('./routes/api/log');
 // Middleware - express and socketIo
 const app = express();
 const server = http.createServer(app);
-sockets(server);
+const io = require('socket.io')(server);
+
+// Socket.io routes (Currently housed in config/sockets.js)
+connect(io);
 
 // Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
 app.use(cors());
@@ -44,8 +59,9 @@ mongoose.connect(dbURI, mongoOptions)
     .then(() => dbDebugger('MongoDB Connected...'))
     .catch(err => console.warn(err));
 
-// Express Routes - Inpoints to connect to through the browser.
+// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
+app.use('/api/finances', finances);
 app.use('/api/team', team); // Route for Teams
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/zones', zones); // Route for inputing zones
@@ -57,3 +73,5 @@ app.use('/api/logs', logs); // Route for logs
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`WTS Server started on port ${port}...`));
+
+module.exports = io;

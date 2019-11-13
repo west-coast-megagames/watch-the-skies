@@ -46,7 +46,7 @@ router.post('/', async function (req, res) {
 // @route   PUT api/team/roles/:id
 // @Desc    Add a role to a team
 // @access  Public
-router.put('/:id', async function (req, res) {
+router.put('/roles/:id', async function (req, res) {
     let { role } = req.body;
     try {
         let team = await Team.findById({ _id: req.params.id });

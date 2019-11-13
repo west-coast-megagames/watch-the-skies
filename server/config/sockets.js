@@ -1,27 +1,38 @@
-const socketio = require('socket.io');
-const TimeRemaining = require('../util/systems/gameClock/gameClock')
+const gameClock = require('../util/systems/gameClock/gameClock');
 
-function socketServer(server){
-    let io = socketio.listen(server, () => console.log(`socket.io listining...`));
+// Mongoose Object Models
+const { getFinance } = require('../models/gov/finance');
 
-    io.on('connection', (client) => {
-        console.log('New client connected...');
+function connect(io){
 
-        client.on('gameClock', () => {
-          setInterval(() => {
-            client.emit('roundTimer', TimeRemaining());
-          });
-        })
+  setInterval(() => {
+    io.emit('gameClock', gameClock.getTimeRemaining());
+  }, 1000);
 
-        client.on('subscribeToTimer', (interval) => {
-            console.log(`Client has subscribed to timer with interval ${interval}`);
-            setInterval(() => {
-            client.emit('timer', interval--);
-            }, interval);
-        });
+  io.on('connection', (client) => {
+    console.log(`New client connected... ${client.id}`);
 
-        client.on('disconnect', () => console.log('Client Disconnected...'));
+    client.on('updatePR', async (teamID) => {
+      console.log(`Got sent: ${teamID}`);
+      let prUpdate = await getFinance(teamID);
+      console.log(prUpdate);
+      client.emit('prUpdate', prUpdate);
     });
-}
 
-module.exports = socketServer;
+    client.on('pauseGame', () => {
+      gameClock.pauseClock();
+    });
+
+    client.on('startGame', () => {
+      gameClock.startClock();
+    });
+
+    client.on('resetClock', () => {
+      gameClock.resetClock();
+    });
+
+    client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
+  });
+};
+
+module.exports = connect;
