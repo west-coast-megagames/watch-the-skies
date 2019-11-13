@@ -2,7 +2,7 @@ const IntercptLog = require('../../../models/logs/log');
 
  function atkLog(finalReport, attacker, defender, engaged) {
     const gameClock = require('../gameClock/gameClock')
-    let { turn, phase } = gameClock();
+    let { turn, phase } = gameClock.getTimeRemaining();
     
     let atkLog = new IntercptLog({
         logType: 'Interception',
