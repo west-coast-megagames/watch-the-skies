@@ -6,17 +6,6 @@ const connect = require('./config/sockets');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-<<<<<<< HEAD
-=======
-const initRun = require('./initRefLoad');
-
-//do we do initRefLoad?
-const doRefLoad = process.env.RUN_INIT_REF || "false";
-if (doRefLoad === "true") {
-    dbDebugger("Init Ref Load Was Requested");
-    initRun(doRefLoad);
-} else dbDebugger("Init Ref Load Was NOT Requested");
->>>>>>> c32cd9dd20e5b5eecfe0726439087e96ca159437
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
