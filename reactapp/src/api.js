@@ -9,7 +9,6 @@ function subscribeToTimer (interval, cb) {
 
 function subscribeToClock (cb) {
     socket.on('gameClock', count => cb(null, count));
-    // socket.emit('gameClock');
 };
 
 function updatePR (team) {
@@ -31,4 +30,8 @@ function startGame () {
     socket.emit('startGame')
 };
 
-export { subscribeToTimer, subscribeToClock, updatePR, prUpdate, pauseGame, startGame };
+function resetClock () {
+    socket.emit('resetClock')
+};
+
+export { subscribeToTimer, subscribeToClock, updatePR, prUpdate, pauseGame, startGame, resetClock };

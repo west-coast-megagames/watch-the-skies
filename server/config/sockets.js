@@ -27,6 +27,10 @@ function connect(io){
       gameClock.startClock();
     });
 
+    client.on('resetClock', () => {
+      gameClock.resetClock();
+    });
+
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
   });
 };
