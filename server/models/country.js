@@ -5,7 +5,7 @@ const Joi = require('joi');
 const countryDebugger = require('debug')('app:country');
 const supportsColor = require('supports-color');
 
-const CountrySchema = new Schema({
+const CountrySchema = new Schema({ 
     zone: { 
       type: new mongoose.Schema({
         zoneName: {

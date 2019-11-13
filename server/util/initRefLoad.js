@@ -14,7 +14,7 @@ const bodyParser = require('body-parser');
 
 // Country Model - Using Mongoose Model
 const { Zone, validateZone } = require('./models/zone');
-const { Country, validateCountry } = require('./models/country'); 
+const { Country } = require('./models/country'); 
 
 const app = express();
 
@@ -30,18 +30,18 @@ function runLoad(runFlag){
   else return;
 };
 
-function initLoad(doLoad) {
+async function initLoad(doLoad) {
   
   if(!doLoad) return;
 
   for (let i = 0; i < refDataIn.length; ++i ) {
     
     if (refDataIn[i].type == "zone") {     
-      loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
+      await loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag);
     }
 
     if (refDataIn[i].type == "country") {
-      loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag, refDataIn[i].refOther);
+      await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].activeFlag, refDataIn[i].refOther);
     }
   };
 };
@@ -58,7 +58,7 @@ refLoadDebugger("jeff in loadzone ... docs.length", docs.length, zCode);
            zoneActive: zActiveFlg
         }); 
       
-        let { error } = zone.validateZone(zone); 
+        let { error } = validateZone(zone); 
         if (error) {
           refLoadDebugger("New Zone Validate Error", zone.zoneCode, error.message);
           return;
@@ -80,7 +80,7 @@ refLoadDebugger("jeff in loadzone ... docs.length", docs.length, zCode);
        );
    
        if (zone != null) {
-         const { error } = zone.validateZone(zone); 
+         const { error } = validateZone(zone); 
          if (error) {
            refLoadDebugger("Zone Update Validate Error", zCode, zName, zActiveFlg, zone.zoneCode, error.message);
            return
