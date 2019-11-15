@@ -15,7 +15,7 @@ function updatePR (team) {
     let update = setInterval(() => {
         socket.emit('updatePR', team);
         clearInterval(update);
-    }, 4000);
+    }, 1000);
 };
 
 function prUpdate (cb) {
@@ -32,6 +32,10 @@ function startGame () {
 
 function resetClock () {
     socket.emit('resetClock')
+};
+
+function moneyTransfer (transfer) {
+    socket.emit('moneyTransfer', transfer)
 };
 
 export { subscribeToTimer, subscribeToClock, updatePR, prUpdate, pauseGame, startGame, resetClock };
