@@ -21,11 +21,11 @@ let quarter = -1;
 let currentTurn = 'Pre-Game';
 let turnNum = 0;
 
-// setInterval(() => {
-//     let timeRemaining = getTimeRemaining();
-//     let { minutes, seconds, phase, turn } = timeRemaining;
-//     console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
-// }, 1000);
+setInterval(() => {
+    let timeRemaining = getTimeRemaining();
+    let { minutes, seconds, phase, turn } = timeRemaining;
+    console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
+}, 1000);
 
 function startClock() {
     console.warn('Game has been started!');

@@ -31,6 +31,7 @@ class NavBar extends Component {
                 turn: clock.turn,
                 turnNum: clock.turnNum
             })
+            console.log(`minutes: ${clock.minutes} | seconds: ${clock.seconds}`);
         });
 
         prUpdate((err, data) => {
@@ -40,8 +41,6 @@ class NavBar extends Component {
                 treasury: data.treasury
             })
         })
-        //recieveIncome((err, income) => this.setState({ prLevel: income.prLevel, treasury: income.treasury }));
-
     }
 
     render() {
