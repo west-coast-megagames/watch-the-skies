@@ -14,7 +14,7 @@ mongoose.set('useCreateIndex', true);
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        let zones = await Zone.find({ zoneActive: true }).sort('zoneCode: 1');
+        let zones = await Zone.find().sort('zoneCode: 1');
         res.json(zones);
       } catch (err) {
         console.log(`Error: ${err.message}`);
@@ -78,10 +78,10 @@ router.get('/code/:zoneCode', async (req, res) => {
 // @Desc    Create New Zone
 // @access  Public
 router.post('/', async (req, res) => {
-  let { zoneCode, zoneName, zoneActive } = req.body;
-  zoneDebugger("In Zone Post ... Code: ", zoneCode, "Name: ", zoneName, "Active: ", zoneActive);
+  let { zoneCode, zoneName } = req.body;
+  zoneDebugger("In Zone Post ... Code: ", zoneCode, "Name: ", zoneName);
   const newZone = new Zone(
-      { zoneCode, zoneName, zoneActive }
+      { zoneCode, zoneName }
   );
   try {
       let docs = await Zone.find({ zoneCode })
@@ -108,11 +108,10 @@ router.post('/', async (req, res) => {
 // @access  Public  
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
-    zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName, "Active: ", req.params.zoneActive);
+    zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName);
     try {
         const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
           { zoneName: req.body.zoneName,
-            zoneActive: req.body.zoneActive,
             zoneCode: req.body.zoneCode }, 
           { new: true }
           );
