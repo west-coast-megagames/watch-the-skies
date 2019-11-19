@@ -1,7 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept');
 
 //Intercepter Model
-const Intercetor = require('../../../models/ops/interceptor');
+const { Interceptor } = require('../../../models/ops/interceptor')
 
 function interceptDmg(attacker, defender, atkResult, defResult) {
     let defReport = {
@@ -78,7 +78,8 @@ function damageCalc(unit, report) {
 
 //Update Interceptors with Damage
 async function applyDmg(unit) {
-    const update = await Intercetor.findById(unit._id);
+
+    let update = await Interceptor.findById(unit._id);
 
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;

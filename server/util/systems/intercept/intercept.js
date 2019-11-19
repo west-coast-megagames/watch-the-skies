@@ -1,6 +1,33 @@
 const { atkRoll, defRoll } = require('./rolls');
+const interceptDebugger = require('debug')('app:intercept');
 const interceptDmg = require('./damage');
-const atkLog = require('./report')
+const atkLog = require('./report');
+
+const interceptor = require('../../../models/ops/interceptor');
+
+let interceptions = [];
+
+function launchInterception (attacker, defender) {
+    interceptDebugger(`${attacker.designation} en route to intercept...`)
+    let newIntercept = [{ attacker, defender }];
+    interceptions = [...interceptions, ...newIntercept];
+
+    interceptor.launch(attacker);
+
+    interceptDebugger(interceptions);
+
+    return interceptions;
+};
+
+function resolveInterceptions () {
+    for (const interception of interceptions) {
+        let { attacker, defender } = interception;
+
+        intercept(attacker, defender);
+
+        interceptions = [];
+    };
+}
 
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 function intercept (attacker, defender) {
@@ -20,10 +47,10 @@ function intercept (attacker, defender) {
 
     let log = atkLog(finalReport, attacker, defender, engaged);
 
-    console.log(log);
-    console.log(result.defenderReport);
+    interceptDebugger(log);
+    interceptDebugger(result.defenderReport);
 
     return log;
 };
 
-module.exports = intercept;
+module.exports = { launchInterception, resolveInterceptions };
