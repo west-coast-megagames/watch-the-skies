@@ -31,4 +31,33 @@ const InterceptorSchema = new Schema({
   }
 });
 
-module.exports = Interceptor = mongoose.model('interceptor', InterceptorSchema);
+let Interceptor = mongoose.model('interceptor', InterceptorSchema);
+
+const { getTeam } = require('../team');
+const banking = require('../../util/systems/banking/banking');
+
+
+async function launch (aircraft) {
+  try {
+    console.log(`Attempting to launch ${aircraft.designation}`)
+    aircraft.status.deployed = true;
+    aircraft.status.ready = false;
+    aircraft.status.mission = true;
+
+    console.log(aircraft);
+
+    let team = await getTeam('5dc3ba7d79f57e32c40bf6b4');
+
+    let account = banking.withdrawl(team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
+    team.accounts = account;
+
+    await team.save();
+    await aircraft.save();
+    console.log(`Aircraft ${aircraft.designation} deployed...`);
+    return 0;
+  } catch {
+
+  }
+}
+
+module.exports = { Interceptor, launch }
