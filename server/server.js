@@ -14,7 +14,6 @@ mongoose.set('useUnifiedTopology', true);
 
 // Routes - Using Express
 const interceptor = require('./routes/api/interceptor');
-const finances = require('./routes/api/finance')
 const team = require('./routes/api/team');
 const intercept = require('./routes/api/intercept');
 const zones = require('./routes/api/zones');
@@ -50,7 +49,6 @@ mongoose.connect(dbURI, mongoOptions)
 
 // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
-app.use('/api/finances', finances);
 app.use('/api/team', team); // Route for Teams
 app.use('/api/intercept', intercept); // Route for triggering an interception
 app.use('/api/zones', zones); // Route for inputing zones
