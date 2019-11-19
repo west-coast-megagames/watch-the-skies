@@ -1,63 +1,84 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
+import { updateAccounts, accountsUpdate, bankingTransfer } from '../api';
 
 class TransferForm extends Component {
     state = {
-        accounts: [
-        ],
-        teamID: "5dc3ba7d79f57e32c40bf6b4"
+        accounts: [],
+        transfer: { to: '', from: '', amount: 0, note: '', teamID: '5dc3ba7d79f57e32c40bf6b4'},
     }
 
-// async getAccounts(team) {
-//     let accounts = this.state.accounts;
-//     try {
-//         let finances = await axios.get('http://localhost:5000/api/finances/current/', {
-//             params: {
-//               id: team
-//             }
-//           });
-//         console.log(finances);
-//         accounts = [...finances.accounts]
-//         this.setState(accounts);
-//     } catch (err) {
-//         console.log('Error:', err.message);
-//     }
-// }
+    constructor(props) {
+        super(props);
+        
+        accountsUpdate(async (err, data) => {
+            let accounts = data;
+            this.setState({ accounts });
+        });
+    };
 
-// componentDidMount() {
-//     this.getAccounts(this.state.teamID);
-// };
+    handleSubmit = e => {
+        e.preventDefault();
+        // Validate
+        bankingTransfer(this.state.transfer);
+        console.log('Submitted');
+        updateAccounts(this.state.transfer.teamID);
+    };
+
+    handleChange = ({currentTarget: input}) => {
+        console.log(`Input Value: ${input.value}`);
+        const transfer = {...this.state.transfer};
+        transfer[input.name] = input.value;
+        this.setState({ transfer })
+    };
+
+    componentDidMount() {
+        updateAccounts(this.state.transfer.teamID);
+    };
 
     render() {
         let accounts = this.state.accounts;
 
         return (
-            <form className="form-inline">
-                <label className="my-1 mr-2" for="inlineFormCustomSelectPref">From:</label>
-                <select className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                    <option selected>Choose Witdrawl Account...</option>
+            <form className="form-inline" onSubmit={this.handleSubmit}>
+                <label className="my-1 mr-2" htmlFor="from">From:</label>
+                <select className="custom-select my-1 mr-sm-2" id="from" name='from' value={this.state.transfer.from} onChange={this.handleChange}>
+                    <option>Choose Witdrawl Account...</option>
                     { accounts.map(account => (
-                        <option key={account.id} value={account.name}>{ account.name }</option>
+                        <option 
+                            key={account._id}
+                            value={account.name}
+                        >{ account.name } | $M{ account.balance }</option>
                     ))}
                 </select>
 
-                <label className="my-1 mr-2" for="inlineFormCustomSelectPref">To:</label>
-                <select className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-                    <option selected>Choose Deposit Account...</option>
+                <label className="my-1 mr-2" htmlFor="to" value={this.state.transfer.to}>To:</label>
+                <select className="custom-select my-1 mr-sm-2" name="to" id="inlineFormCustomSelectPref" onChange={this.handleChange}>
+                    <option>Choose Deposit Account...</option>
                     { accounts.map(account => (
-                        <option key={account.id} value={account.name}>{ account.name }</option>
+                        <option
+                            key={account._id}
+                            value={account.name}
+                        >{ account.name } | $M{ account.balance }</option>
                     ))}
                 </select>
 
-                <label className="sr-only" for="inlineFormInputGroupAmount">Username</label>
                 <div className="input-group my-1 mr-sm-2">
                     <div className="input-group-prepend">
                     <div className="input-group-text"><FontAwesomeIcon icon={faMoneyBillAlt} /> $M</div>
                     </div>
-                    <input type="text" className="form-control" id="inlineFormInputGroupAmount" placeholder="Amount" />
+                    <input type="number" className="form-control" id="amount" name="amount" placeholder="Amount" value={this.state.transfer.amount} onChange={this.handleChange}/>
                 </div>
+
+                <div className="input-group my-1 mr-sm-2">
+                    <div className="input-group-prepend">
+                    <div className="input-group-text">Transfer Note:</div>
+                    </div>
+                    <input type="text" className="form-control" id="note" name="note" placeholder="Reason for transfer" value={this.state.transfer.note} onChange={this.handleChange}/>
+                </div>
+
+
 
                 <button type="submit" className="btn btn-primary my-1">Submit</button>
             </form>

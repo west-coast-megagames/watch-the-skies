@@ -45,8 +45,8 @@ function resetClock () {
     socket.emit('resetClock')
 };
 
-function moneyTransfer (transfer) {
-    socket.emit('moneyTransfer', transfer)
+function bankingTransfer (transfer) {
+    socket.emit('bankingTransfer', transfer)
 };
 
 export {
@@ -58,5 +58,6 @@ export {
     accountsUpdate,
     pauseGame,
     startGame,
-    resetClock
+    resetClock,
+    bankingTransfer
 };

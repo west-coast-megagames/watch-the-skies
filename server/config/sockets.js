@@ -1,4 +1,5 @@
 const gameClock = require('../util/systems/gameClock/gameClock');
+const banking = require('../util/systems/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
 
 // Mongoose Object Models
@@ -35,6 +36,11 @@ function connect(io){
 
     client.on('resetClock', () => {
       gameClock.resetClock();
+    });
+
+    client.on('bankingTransfer', (transfer) => {
+      let { to, from, amount, teamID, note } = transfer;
+      banking.transfer(teamID, to, from, amount, note);
     });
 
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));

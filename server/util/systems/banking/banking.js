@@ -1,7 +1,7 @@
 const bankDebugging = require('debug')('app:bankingSystem');
-const Team = require('../../../models/team')
+const { Team } = require('../../../models/team')
 
-async function transfer (teamID, to, from, amount, note) {    
+async function transfer (teamID, to, from, amount, note) {   
     try {
         let team = await Team.findOne({ _id: teamID });
         let { accounts } = team;
@@ -28,8 +28,8 @@ function deposit (accounts, account, amount, note) {
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to deposit into ${account}.`);
-
-    newAccounts[accountIndex].balance += amount;
+    bankDebugging(`Current amount in ${account}: ${accounts[accountIndex].balance}`);
+    newAccounts[accountIndex].balance += parseInt(amount);
 
     bankDebugging(`${amount} deposited into ${account}.`);
     bankDebugging(`Reason: ${note}`);
@@ -40,16 +40,19 @@ function deposit (accounts, account, amount, note) {
 };
 
 function withdrawl (accounts, account, amount, note) {
+    let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
+    bankDebugging(`Attempting to withdrawl from ${account}.`);
+    bankDebugging(`Current amount in ${account}: ${accounts[accountIndex].balance}`);
 
-    accounts[accountIndex].balance -= amount;
+    newAccounts[accountIndex].balance -= parseInt(amount);
 
     bankDebugging(`${amount} witdrawn from ${account}.`);
     bankDebugging(`Reason: ${note}`);
 
     // Create Withdrawl log
 
-    return accounts;
+    return newAccounts;
 };
 
 module.exports = {

@@ -19,7 +19,6 @@ class NavBar extends Component {
 
     constructor(props) {
         super(props);
-        //subscribeToTimer(1000, (err, timestamp) => this.setState({ gameClock: timestamp }));
         subscribeToClock((err, clock) => {
             if(this.state.turnNum !== clock.turnNum) {
                 updatePR(this.state.teamID);
@@ -46,7 +45,7 @@ class NavBar extends Component {
             console.log(`${account.name} has a balance of ${account.balance}.`);
             this.setState({ treasury: account.balance })
         });
-    }
+    };
 
     render() {
         const { minutes, seconds, prLevel, treasury, country, phase, turn } = this.state;

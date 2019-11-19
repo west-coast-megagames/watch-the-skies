@@ -37,7 +37,7 @@ class LiginForm extends Component {
         if (name === 'password') {
             if (value.trim() === "") return 'Password is required!';
         }
-    };B
+    };
 
     handleSubmit = e => {
         e.preventDefault();
