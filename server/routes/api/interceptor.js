@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/ops/interceptor');
+const { Interceptor } = require('../../models/ops/interceptor');
 
 // @route   GET api/interceptor
 // @Desc    Get all Interceptors
@@ -85,6 +85,7 @@ router.patch('/resethull', async function (req, res) {
         for await (const interceptor of Interceptor.find()) {    
             console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
             interceptor.stats.hull = interceptor.stats.hullMax;
+            interceptor.status.destroyed = false;
             console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
             await interceptor.save();
         }
@@ -94,5 +95,26 @@ router.patch('/resethull', async function (req, res) {
         res.send('Error:', err.message);
     };
 });
+
+// @route   PATCH api/interceptor/return
+// @desc    Update all interceptors to return to base
+// @access  Public
+router.patch('/return', async function (req, res) {
+    try {
+        for await (const interceptor of Interceptor.find()) {    
+            interceptor.status.deployed = false;
+            interceptor.status.ready = true;
+            interceptor.status.mission = false;
+            await interceptor.save();
+        }
+        res.send("Interceptors succesfully returned!");
+    } catch (err) {
+        console.log('Error:', err.message);
+        res.send('Error:', err.message);
+    };
+});
+
+
+
 
 module.exports = router;
