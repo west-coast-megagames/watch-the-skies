@@ -13,7 +13,7 @@ async function transfer (teamID, to, from, amount, note) {
 
         bankDebugging(`Saving ${team.name} object...`);
         team = await team.save();
-        bankDebugging(team);
+        bankDebugging(team.accounts);
         bankDebugging(`${team.name} transfer completed!`)
 
         // Create Transfer log
