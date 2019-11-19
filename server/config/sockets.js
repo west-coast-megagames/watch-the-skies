@@ -38,6 +38,10 @@ function connect(io){
       gameClock.resetClock();
     });
 
+    client.on('skipPhase', () => {
+      gameClock.skipPhase();
+    });
+
     client.on('bankingTransfer', (transfer) => {
       let { to, from, amount, teamID, note } = transfer;
       banking.transfer(teamID, to, from, amount, note);

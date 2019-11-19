@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faShieldAlt, faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { subscribeToClock, updatePR, prUpdate, updateAccounts, accountsUpdate } from '../api';
+import { clock, banking } from '../api';
 
 class NavBar extends Component {
     state = { 
@@ -19,10 +19,10 @@ class NavBar extends Component {
 
     constructor(props) {
         super(props);
-        subscribeToClock((err, clock) => {
+        clock.subscribeToClock((err, clock) => {
             if(this.state.turnNum !== clock.turnNum) {
-                updatePR(this.state.teamID);
-                updateAccounts(this.state.teamID);
+                banking.updatePR(this.state.teamID);
+                banking.updateAccounts(this.state.teamID);
             }
             this.setState({ 
                 minutes: clock.minutes,
@@ -34,12 +34,12 @@ class NavBar extends Component {
             console.log(`minutes: ${clock.minutes} | seconds: ${clock.seconds}`);
         });
 
-        prUpdate((err, data) => {
+        banking.prUpdate((err, data) => {
             console.log(`Got PR Level of ${data}`);
             this.setState({ prLevel: data })
         });
 
-        accountsUpdate(async (err, data) => {
+        banking.accountsUpdate(async (err, data) => {
             let accountIndex = data.findIndex((obj => obj.name === 'Treasury'));
             let account = data[accountIndex];
             console.log(`${account.name} has a balance of ${account.balance}.`);

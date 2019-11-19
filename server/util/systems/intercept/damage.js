@@ -1,7 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept');
 
 //Intercepter Model
-const { Interceptor } = require('../../../models/ops/interceptor')
+const { Interceptor } = require('../../../models/ops/interceptor');
 
 function interceptDmg(attacker, defender, atkResult, defResult) {
     let defReport = {
@@ -83,6 +83,9 @@ async function applyDmg(unit) {
 
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;
+    update.status.mission = false;
+    update.status.ready = true;
+    update.status.deployed = false;
 
     if(unit.stats.hull != unit.stats.hullMax) {
         update.status.damaged = true;

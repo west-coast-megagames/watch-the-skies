@@ -1,4 +1,4 @@
-const turnChange = require('./turnChange');
+const { teamPhase, actionPhase, freePhase } = require('./phaseChange');
 const clockDebugger = require('debug')('app:gameClock');
 
 let gameActive = false;
@@ -7,14 +7,14 @@ let minutes = .1;
 let seconds = 0;
 let hours = 0;
 
-let phaseTimes = [.08, .12, .10];
+let phaseTimes = [8, 12, 10];
 let phaseTime = 0;
 let currentTime = Date.parse(new Date());
 let deadline = new Date(currentTime + phaseTime*60*1000);
 
 let gamePhases = ['Team Phase', 'Action Phase', 'Free Phase'];
 let phaseNum = -1;
-let currentPhase = 'Breifing';
+let currentPhase = 'Briefing';
 
 let quarters = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec'];
 let year = 2020;
@@ -41,6 +41,11 @@ function pauseClock() {
     gameActive = false;
     currentTime = Date.parse(new Date());
     deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60));
+};
+
+function skipPhase() {
+    console.warn('Skipping to next phase');
+    incrementPhase();
 };
 
 function resetClock() {
@@ -99,6 +104,11 @@ function incrementPhase() {
     currentPhase = gamePhases[phaseNum];
     phaseTime = phaseTimes[phaseNum];
 
+    if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
+    if (currentPhase === 'Action Phase') actionPhase(currentTurn);
+    if (currentPhase === 'Free Phase') freePhase(currentTurn);
+
+
     currentTime = Date.parse(new Date());
     deadline = new Date(currentTime + phaseTime*60*1000);
 }
@@ -113,9 +123,7 @@ function incrementTurn() {
     }
 
     currentTurn = `${quarters[quarter]} ${year}`
-    turnChange(currentTurn);
-
     return 0;
 };
 
-module.exports = { getTimeRemaining, pauseClock, startClock, resetClock };
+module.exports = { getTimeRemaining, pauseClock, startClock, skipPhase, resetClock };
