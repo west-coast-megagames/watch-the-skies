@@ -1,5 +1,6 @@
 const rollPR = require('../banking/pr');
 const turnChangeDebugging = require('debug')('app:turnChange');
+const intercept = require('../intercept/intercept');
 const { transfer, deposit, withdrawl } = require('../banking/banking');
 
 // Mongoose Object Models
@@ -19,6 +20,7 @@ const { Team } = require('../../../models/team');
 function turnChange(turn) {
     turnChangeDebugging(`Now changing turn to ${turn}!`)
     updatePR();
+    intercept.resolveInterceptions();
     return 0;
 }
 
