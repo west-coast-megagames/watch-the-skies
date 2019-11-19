@@ -6,9 +6,10 @@ const InitRefSchema = new Schema({
   refType: { type: String, defualt: "Country", required: true },
   refName: { type: String, required: true },
   refCode: { type: String, required: true },
-  refActive: { type: Boolean, default: false },
-  refOther: { type: String, default: null }
-  },
+  refLoad: { type: Boolean, default: false },
+  refParent1: { type: String, default: null },
+  refParent2: { type: String, default: null }
+  }
 );
 
 module.exports = InitRef = mongoose.model('initRef', InitRefSchema)
