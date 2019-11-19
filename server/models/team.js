@@ -52,4 +52,9 @@ async function getAccounts(teamID) {
   }
 };
 
-module.exports = { Team, validateTeam, getPR, getAccounts };
+async function getTeam(teamID) {
+  let team = await Team.findOne({ _id: teamID });
+  return team;
+};
+
+module.exports = { Team, validateTeam, getPR, getAccounts, getTeam };
