@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { updateAccounts, accountsUpdate, bankingTransfer } from '../api';
+import { banking } from '../api';
 
 class TransferForm extends Component {
     state = {
@@ -12,7 +12,7 @@ class TransferForm extends Component {
     constructor(props) {
         super(props);
         
-        accountsUpdate(async (err, data) => {
+        banking.accountsUpdate(async (err, data) => {
             let accounts = data;
             this.setState({ accounts });
         });
@@ -21,9 +21,9 @@ class TransferForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         // Validate
-        bankingTransfer(this.state.transfer);
+        banking.bankingTransfer(this.state.transfer);
         console.log('Submitted');
-        updateAccounts(this.state.transfer.teamID);
+        banking.updateAccounts(this.state.transfer.teamID);
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -34,7 +34,7 @@ class TransferForm extends Component {
     };
 
     componentDidMount() {
-        updateAccounts(this.state.transfer.teamID);
+        banking.updateAccounts(this.state.transfer.teamID);
     };
 
     render() {

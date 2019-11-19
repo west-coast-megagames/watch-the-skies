@@ -9,14 +9,14 @@ let interceptions = [];
 
 function launchInterception (attacker, defender) {
     interceptDebugger(`${attacker.designation} en route to intercept...`)
-    let newIntercept = [{ attacker, defender }];
-    interceptions = [...interceptions, ...newIntercept];
+    let newIntercept = [{ attacker, defender }]; // Saves the Intercept combination
+    interceptions = [...interceptions, ...newIntercept]; // Adds Interception to be resolved
 
-    interceptor.launch(attacker);
+    interceptor.launch(attacker); // Changes attacker status
 
     interceptDebugger(interceptions);
 
-    return interceptions;
+    return `${attacker.designation} en route to intercept...`; 
 };
 
 function resolveInterceptions () {

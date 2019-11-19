@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { pauseGame, startGame, resetClock } from '../api';
+import { clock } from '../api';
 import { faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,18 +9,23 @@ class clockControls extends Component {
 
     startClock = () => {
         console.log('Clock started');
-        startGame();
+        clock.startGame();
     };
 
     stopClock = () => {
         console.log('Clock paused');
-        pauseGame();
+        clock.pauseGame();
     };
 
     resetClock = () => {
         console.log('Resetting Clock');
-        resetClock();
+        clock.resetClock();
     };
+
+    skipPhase = () => {
+        console.log('Skipping Phase');
+        clock.skipPhase();
+    }
 
     render() { 
         return (
@@ -28,7 +33,7 @@ class clockControls extends Component {
                 <button type="button" className="btn btn-secondary"><FontAwesomeIcon icon={faStepBackward} title="Rewind Phase"/></button>
                 <button type="button" className="btn btn-secondary" onClick={ () => this.stopClock() } title="Pause Game"><FontAwesomeIcon icon={faPause} /></button>
                 <button type="button" className="btn btn-secondary" onClick={ () => this.startClock() } title="Start Game"><FontAwesomeIcon icon={faPlay} /></button>
-                <button type="button" className="btn btn-secondary"><FontAwesomeIcon icon={faStepForward} title="Skip Phase"/></button>
+                <button type="button" className="btn btn-secondary" onClick={ () => this.skipPhase() }><FontAwesomeIcon icon={faStepForward} title="Skip Phase"/></button>
                 <button type="button" className="btn btn-secondary" onClick={ () => this.resetClock() } title="Reset Game">Reset Clock</button>
             </div>
         );

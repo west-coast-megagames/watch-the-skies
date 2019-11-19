@@ -2,11 +2,6 @@ import openSocket from 'socket.io-client';
 
 const socket = openSocket('http://localhost:5000');
 
-function subscribeToTimer (interval, cb) {
-    socket.on('timer', timestamp => cb(null, timestamp));
-    socket.emit('subscribeToTimer', 1000);
-};
-
 function subscribeToClock (cb) {
     socket.on('gameClock', count => cb(null, count));
 };
@@ -38,26 +33,35 @@ function pauseGame () {
 };
 
 function startGame () {
-    socket.emit('startGame')
+    socket.emit('startGame');
 };
 
 function resetClock () {
-    socket.emit('resetClock')
+    socket.emit('resetClock');
 };
+
+function skipPhase () {
+    socket.emit('skipPhase');
+}
 
 function bankingTransfer (transfer) {
-    socket.emit('bankingTransfer', transfer)
+    socket.emit('bankingTransfer', transfer);
 };
 
-export {
-    subscribeToTimer,
+let clock = {
     subscribeToClock,
+    pauseGame,
+    startGame,
+    resetClock,
+    skipPhase
+};
+
+let banking = {
     updatePR,
     updateAccounts,
     prUpdate,
     accountsUpdate,
-    pauseGame,
-    startGame,
-    resetClock,
     bankingTransfer
-};
+}
+
+export { clock, banking };
