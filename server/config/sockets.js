@@ -1,4 +1,5 @@
 const gameClock = require('../util/systems/gameClock/gameClock');
+const socketDebugger = require('debug')('app:sockets');
 
 // Mongoose Object Models
 const { getPR, getAccounts } = require('../models/team');
@@ -13,16 +14,14 @@ function connect(io){
     console.log(`New client connected... ${client.id}`);
 
     client.on('updatePR', async (teamID) => {
-      console.log(`${client.id} requested updated PR for ${teamID}`);
+      socketDebugger(`${client.id} requested updated PR for ${teamID}`);
       let prUpdate = await getPR(teamID);
-      console.log(prUpdate);
       client.emit('prUpdate', prUpdate);
     });
 
     client.on('updateAccounts', async (teamID) => {
-      console.log(`${client.id} requested updated accounts for ${teamID}`);
+      socketDebugger(`${client.id} requested updated accounts for ${teamID}`);
       let accounts = await getAccounts(teamID);
-      console.log(accounts);
       client.emit('accountsUpdate', accounts);
     });
 

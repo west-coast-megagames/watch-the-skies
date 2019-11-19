@@ -1,4 +1,5 @@
 const turnChange = require('./turnChange');
+const clockDebugger = require('debug')('app:gameClock');
 
 let gameActive = false;
 
@@ -24,7 +25,7 @@ let turnNum = 0;
 // setInterval(() => {
 //     let timeRemaining = getTimeRemaining();
 //     let { minutes, seconds, phase, turn } = timeRemaining;
-//     console.log(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
+//     clockDebugger(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
 // }, 1000);
 
 function startClock() {

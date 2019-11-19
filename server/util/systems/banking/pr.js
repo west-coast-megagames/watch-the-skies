@@ -1,11 +1,12 @@
 const { d8 } = require('../intercept/dice');
+const prDebugging = require('debug')('app:prSystem');
 
 function rollPR(currentPR, prTrack, prModifier) {
     let prRoll = d8();
     let prLevel = 0
 
-    console.log(`Current PR: ${currentPR}`)
-    console.log(`PR Roll: ${prRoll}`);
+    prDebugging(`Current PR: ${currentPR}`)
+    prDebugging(`PR Roll: ${prRoll}`);
 
     if (prRoll < currentPR) {
         prLevel = currentPR + prModifier - Math.floor(((currentPR - prRoll) / 1.5));
@@ -20,8 +21,8 @@ function rollPR(currentPR, prTrack, prModifier) {
 
     let income = prTrack[prLevel - 1];
 
-    console.log(`PR Level: ${prLevel}`);
-    console.log(`Income: ${income}`)
+    prDebugging(`PR Level: ${prLevel}`);
+    prDebugging(`Income: ${income}`)
 
     return { prLevel, income }
 }

@@ -1,4 +1,4 @@
-const bankDebugging = require('debug')('app:banking');
+const bankDebugging = require('debug')('app:bankingSystem');
 const Team = require('../../../models/team')
 
 async function transfer (teamID, to, from, amount, note) {    

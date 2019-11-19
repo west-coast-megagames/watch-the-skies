@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const gameClock = require('../util/systems/gameClock/gameClock');
+const modelDebugger = require('debug')('app:teamModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
@@ -27,27 +28,27 @@ const TeamSchema = new Schema({
 let Team = mongoose.model('team', TeamSchema);
 
 function validateTeam(team) {
-  console.log(`Validating ${team.name}...`);
+  modelDebugger(`Validating ${team.name}...`);
   return null;
 };
 
 async function getPR(teamID) {
-  console.log(`Trying to find PR for ${teamID}`)
+  modelDebugger(`Trying to find PR for ${teamID}`)
   try {
     let prLevel = await Team.findOne({ _id: teamID }).select('prLevel');
     return prLevel.prLevel;
   } catch (err) {
-    console.log(`Error: ${err.message}`);
+    modelDebugger(`Error: ${err.message}`);
   }
 };
 
 async function getAccounts(teamID) {
-  console.log(`Trying to find accounts for ${teamID}`)
+  modelDebugger(`Trying to find accounts for ${teamID}`)
   try {
     let accounts = await Team.findOne({ _id: teamID }).select('accounts');
     return accounts.accounts;
   } catch (err) {
-    console.log(`Error: ${err.message}`);
+    modelDebugger(`Error: ${err.message}`);
   }
 };
 
