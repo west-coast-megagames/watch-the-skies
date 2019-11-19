@@ -1,4 +1,4 @@
-const turnChange = require('./turnChange');
+const { teamPhase, actionPhase, freePhase } = require('./phaseChange');
 const clockDebugger = require('debug')('app:gameClock');
 
 let gameActive = false;
@@ -99,6 +99,11 @@ function incrementPhase() {
     currentPhase = gamePhases[phaseNum];
     phaseTime = phaseTimes[phaseNum];
 
+    if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
+    if (currentPhase === 'Action Phase') actionPhase(currentTurn);
+    if (currentPhase === 'Free Phase') freePhase(currentTurn);
+
+
     currentTime = Date.parse(new Date());
     deadline = new Date(currentTime + phaseTime*60*1000);
 }
@@ -113,8 +118,6 @@ function incrementTurn() {
     }
 
     currentTurn = `${quarters[quarter]} ${year}`
-    turnChange(currentTurn);
-
     return 0;
 };
 
