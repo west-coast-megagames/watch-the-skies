@@ -1,7 +1,7 @@
 const gameClock = require('../util/systems/gameClock/gameClock');
 
 // Mongoose Object Models
-const { getFinance } = require('../models/gov/finance');
+const { getPR, getAccounts } = require('../models/team');
 
 function connect(io){
 
@@ -13,10 +13,17 @@ function connect(io){
     console.log(`New client connected... ${client.id}`);
 
     client.on('updatePR', async (teamID) => {
-      console.log(`Got sent: ${teamID}`);
-      let prUpdate = await getFinance(teamID);
+      console.log(`${client.id} requested updated PR for ${teamID}`);
+      let prUpdate = await getPR(teamID);
       console.log(prUpdate);
       client.emit('prUpdate', prUpdate);
+    });
+
+    client.on('updateAccounts', async (teamID) => {
+      console.log(`${client.id} requested updated accounts for ${teamID}`);
+      let accounts = await getAccounts(teamID);
+      console.log(accounts);
+      client.emit('accountsUpdate', accounts);
     });
 
     client.on('pauseGame', () => {

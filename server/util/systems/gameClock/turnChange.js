@@ -1,8 +1,9 @@
-const rollPR = require('../../systems/finance/pr');
+const rollPR = require('../banking/pr');
+const turnChangeDebugging = require('debug')('app:turnChange');
+const { transfer, deposit, withdrawl } = require('../banking/banking');
 
 // Mongoose Object Models
-const Team = require('../../../models/team');
-const { Finances, createFinance } = require('../../../models/gov/finance');
+const { Team } = require('../../../models/team');
 
 /* Things that happen on Turn Change
     - PR is rolled (Finances) [Coded]
@@ -16,7 +17,7 @@ const { Finances, createFinance } = require('../../../models/gov/finance');
 */
 
 function turnChange(turn) {
-    console.log(`Now changing turn to ${turn}!`)
+    turnChangeDebugging(`Now changing turn to ${turn}!`)
     updatePR();
     return 0;
 }
@@ -25,23 +26,22 @@ async function updatePR() {
     const gameClock = require('../gameClock/gameClock');
     let { turnNum } = gameClock.getTimeRemaining();
     
-    console.log(`Assingning turn ${turnNum} income!`);
+    turnChangeDebugging(`Assingning turn ${turnNum} income!`);
     try {
-        for await (const team of Team.find().select('_id prTrack')) {   
-            let { _id, prTrack } = team;
-            let lastTurn = turnNum - 1;
-            let finances = await Finances.findOne({ teamID: `${_id}`, 'timestamp.turnNum': `${lastTurn}`  });
+        for await (let team of Team.find()) {   
+            let { _id, name, prTrack, prLevel, accounts } = team;
+            turnChangeDebugging(`Assigning income for ${name}...`);
 
-            console.log(finances);
-
-            let prChange = rollPR(finances.prScore, prTrack, 0);
-
-            finances = createFinance(finances, prChange, _id);
-
+            let prChange = rollPR(prLevel, prTrack, 0);
+            accounts = deposit(accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
+            team.prLevel = prChange.prLevel;
+            team.accounts = accounts;
+1
+            team = await team.save()
         return 0;
-        }
+        };
     } catch (err) {
-        console.log('Error:', err.message);
+        turnChangeDebugging('Error:', err.message);
     };
 }
 

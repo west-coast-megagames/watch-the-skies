@@ -11,16 +11,27 @@ function subscribeToClock (cb) {
     socket.on('gameClock', count => cb(null, count));
 };
 
+function updateAccounts (team) {
+    let updateAccounts = setInterval(() => {
+        socket.emit('updateAccounts', team);
+        clearInterval(updateAccounts);
+    }, 1000);
+};
+
 function updatePR (team) {
-    let update = setInterval(() => {
+    let updatePR = setInterval(() => {
         socket.emit('updatePR', team);
-        clearInterval(update);
+        clearInterval(updatePR);
     }, 1000);
 };
 
 function prUpdate (cb) {
     socket.on('prUpdate', data => cb(null, data));
 };
+
+function accountsUpdate (cb) {
+    socket.on('accountsUpdate', data => cb(null, data));
+}
 
 function pauseGame () {
     socket.emit('pauseGame');
@@ -38,4 +49,14 @@ function moneyTransfer (transfer) {
     socket.emit('moneyTransfer', transfer)
 };
 
-export { subscribeToTimer, subscribeToClock, updatePR, prUpdate, pauseGame, startGame, resetClock };
+export {
+    subscribeToTimer,
+    subscribeToClock,
+    updatePR,
+    updateAccounts,
+    prUpdate,
+    accountsUpdate,
+    pauseGame,
+    startGame,
+    resetClock
+};

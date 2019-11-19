@@ -9,13 +9,46 @@ const RoleSchema = new Schema({
   userID: { type: String },  
 });
 
+const AccountSchema = new Schema({
+  name: { type: String },
+  code: { type: String },
+  balance: { type: Number },
+});
+
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true },
   countryID: { type: String, required: true, minlength: 3, maxlength: 25 },
   roles: [RoleSchema],
-  prTrack: [Number]
+  prTrack: [Number],
+  prLevel: { type: Number, required: true },
+  accounts: [AccountSchema]
 });
 
 let Team = mongoose.model('team', TeamSchema);
 
-module.exports = Team;
+function validateTeam(team) {
+  console.log(`Validating ${team.name}...`);
+  return null;
+};
+
+async function getPR(teamID) {
+  console.log(`Trying to find PR for ${teamID}`)
+  try {
+    let prLevel = await Team.findOne({ _id: teamID }).select('prLevel');
+    return prLevel.prLevel;
+  } catch (err) {
+    console.log(`Error: ${err.message}`);
+  }
+};
+
+async function getAccounts(teamID) {
+  console.log(`Trying to find accounts for ${teamID}`)
+  try {
+    let accounts = await Team.findOne({ _id: teamID }).select('accounts');
+    return accounts.accounts;
+  } catch (err) {
+    console.log(`Error: ${err.message}`);
+  }
+};
+
+module.exports = { Team, validateTeam, getPR, getAccounts };

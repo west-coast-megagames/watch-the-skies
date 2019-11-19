@@ -4,36 +4,51 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 
 class TransferForm extends Component {
-    state = { accounts: {} }
-
-    async getAccounts(team) {
-        try {
-        let accounts = await axios.get('http://localhost:5000/api/finance');
-        this.setState( accounts );
-        } catch {
-        };
+    state = {
+        accounts: [
+        ],
+        teamID: "5dc3ba7d79f57e32c40bf6b4"
     }
 
-    componentDidMount() {
-    };
+// async getAccounts(team) {
+//     let accounts = this.state.accounts;
+//     try {
+//         let finances = await axios.get('http://localhost:5000/api/finances/current/', {
+//             params: {
+//               id: team
+//             }
+//           });
+//         console.log(finances);
+//         accounts = [...finances.accounts]
+//         this.setState(accounts);
+//     } catch (err) {
+//         console.log('Error:', err.message);
+//     }
+// }
 
-    render() { 
+// componentDidMount() {
+//     this.getAccounts(this.state.teamID);
+// };
+
+    render() {
+        let accounts = this.state.accounts;
+
         return (
             <form className="form-inline">
                 <label className="my-1 mr-2" for="inlineFormCustomSelectPref">From:</label>
                 <select className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
                     <option selected>Choose Witdrawl Account...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    { accounts.map(account => (
+                        <option key={account.id} value={account.name}>{ account.name }</option>
+                    ))}
                 </select>
 
                 <label className="my-1 mr-2" for="inlineFormCustomSelectPref">To:</label>
                 <select className="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
                     <option selected>Choose Deposit Account...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                    { accounts.map(account => (
+                        <option key={account.id} value={account.name}>{ account.name }</option>
+                    ))}
                 </select>
 
                 <label className="sr-only" for="inlineFormInputGroupAmount">Username</label>

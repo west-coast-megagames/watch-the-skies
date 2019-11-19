@@ -23,9 +23,12 @@ router.get('/', async function (req, res) {
 // @Desc    Post a new team
 // @access  Public
 router.post('/', async function (req, res) {
-    let { name, countryID, roles, prTrack, finances } = req.body;
+    let { name, countryID, roles, prTrack, prLevel, accounts } = req.body;
+    const { error } = validateTeam(req.body);
+        if (error) return res.status(400).send(error.details[0].message);
+
     const newTeam = new Team(
-        { name, countryID, roles, prTrack, finances }
+        { name, countryID, roles, prTrack, prLevel, accounts }
     );
     try {
         let docs = await Team.find({ name });
