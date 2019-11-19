@@ -1,5 +1,31 @@
 const { d8 } = require('../intercept/dice');
 const prDebugging = require('debug')('app:prSystem');
+const { deposit } = require('../banking/banking')
+
+const { Team } = require('../../../models/team');
+
+async function updatePR() {
+    const gameClock = require('../gameClock/gameClock');
+    let { turnNum } = gameClock.getTimeRemaining();
+    
+    prDebugging(`Assingning turn ${turnNum} income!`);
+    try {
+        for await (let team of Team.find()) {   
+            let { _id, name, prTrack, prLevel, accounts } = team;
+            prDebugging(`Assigning income for ${name}...`);
+
+            let prChange = rollPR(prLevel, prTrack, 0);
+            accounts = deposit(accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
+            team.prLevel = prChange.prLevel;
+            team.accounts = accounts;
+            
+            team = await team.save()
+        return 0;
+        };
+    } catch (err) {
+        prDebugging('Error:', err.message);
+    };
+}
 
 function rollPR(currentPR, prTrack, prModifier) {
     let prRoll = d8();
@@ -27,4 +53,4 @@ function rollPR(currentPR, prTrack, prModifier) {
     return { prLevel, income }
 }
 
-module.exports = rollPR;
+module.exports = { rollPR, updatePR };
