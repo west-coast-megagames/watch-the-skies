@@ -6,6 +6,7 @@ import Budget from './pages/budget'
 import Home from './pages/home'
 import NotFound from './pages/404'
 import LoginForm from './components/loginForm'
+import Toast from './components/toast'
 
 import MoshTest from './pages/mosh' // Mosh test
 
@@ -13,7 +14,6 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import 'react-rangeslider/lib/index.css'
 
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
         <Redirect from="/" exact to="home" />
         <Redirect to="/not-found" />
       </Switch>
+      <Toast />
       </main>
     </div>
   );
