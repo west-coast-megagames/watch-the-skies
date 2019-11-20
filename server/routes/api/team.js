@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const Team = require('../../models/team');
+const { Team } = require('../../models/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams
@@ -80,6 +80,32 @@ router.delete('/:id', async function (req, res) {
         console.log(`Error: ${err.message}`);
         res.status(400).send(`Error: ${err.message}`);
     }
+});
+
+// @route   PATCH api/team/accounts
+// @desc    Update all teams to base income and PR
+// @access  Public
+router.patch('/accounts', async function (req, res) {
+    try {
+        for await (let team of Team.find()) {
+            let { prLevel, accounts, name, prTrack } = team;
+            console.log(team);
+            console.log(`Resetting ${name}s accounts...`);  
+            prLevel = 5;
+            console.log(`PR Level set to ${prLevel}`);
+            for (let account of accounts) {
+                account.balance = 0;
+            };
+            let index = accounts.findIndex((obj => obj.name === 'Treasury'));
+            accounts[index].balance = prTrack[prLevel + 1];
+
+            await team.save();
+        };
+        res.send("Accounts succesfully reset!");
+    } catch (err) {
+        console.log('Error:', err.message);
+        res.send('Error:', err.message);
+    };
 });
 
 module.exports = router;
