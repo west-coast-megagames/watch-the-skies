@@ -17,19 +17,35 @@ const AccountSchema = new Schema({
 });
 
 const TeamSchema = new Schema({
-  name: { type: String, required: true, unique: true },
-  countryID: { type: String, required: true, minlength: 3, maxlength: 25 },
+  name: { type: String, required: true, unique: true, min: 2, maxlength: 50 },
+  teamCode: { type: String, required: true, unique: true, min: 2, maxlength: 3 },
+  countryID: { type: String, required: true, minlength: 2, maxlength: 50 },
   roles: [RoleSchema],
   prTrack: [Number],
-  prLevel: { type: Number, required: true },
+  prLevel: { type: Number, required: true, default: 4 },
   accounts: [AccountSchema]
 });
+
+TeamSchema.methods.validateTeam = function (team) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required(),
+    teamCode: Joi.string().min(2).max(3).required().uppercase()
+  };
+
+  return Joi.validate(team, schema, { "allowUnknown": true });
+}
 
 let Team = mongoose.model('team', TeamSchema);
 
 function validateTeam(team) {
   modelDebugger(`Validating ${team.name}...`);
-  return null;
+
+  const schema = {
+      teamCode: Joi.string().min(2).max(3).required().uppercase(),
+      name: Joi.string().min(2).max(50).required()
+    };
+  
+  return Joi.validate(team, schema, { "allowUnknown": true });
 };
 
 async function getPR(teamID) {
