@@ -1,0 +1,33 @@
+[ {
+"type" : "interceptor",
+"name" : "US Alpha",
+"code" : "undefined",
+"kind" : "atmofighter?",
+"stats": [ 
+    {"hull": 10 },
+    {"hullMax": 10 },
+    {"damage": 0 },
+    {"passiveRolls": 1 },
+    {"activeRolls": 1 }
+  ],
+"location": [ 
+    {"zone": "NA" }, 
+    {"country": "US" }, 
+    {"poi": "undefined" }
+  ],
+"status": [ 
+    {"aggressive": "true" },
+    {"passive": "false" },
+    {"disengage": "false" },
+    {"damaged": "false" },
+    {"deployed": "false" },
+    {"destroyed": "false" },
+    {"ready": "true" },
+    {"upgrade": "false" },
+    {"repair": "false" },
+    {"mission" : "false" }
+  ],
+"parent" : [ {"type" : "team", "code" : ["USA"]},
+            {"type" : "base", "code" : "undefined"}]
+}
+]
