@@ -20,7 +20,6 @@ async function updatePR() {
             team.accounts = accounts;
             
             team = await team.save()
-        return 0;
         };
     } catch (err) {
         prDebugging('Error:', err.message);
