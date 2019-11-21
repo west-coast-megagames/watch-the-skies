@@ -9,6 +9,10 @@ const CountrySchema = new Schema({
         zoneName: { type: String, required: true, minlength: 3, maxlength: 50, default: "UN-Assigned" },
         zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
     },
+    team: { 
+      teamName: { type: String, required: true, minlength: 2, maxlength: 50, default: "UN-Assigned" },
+      teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    },
     code: {
         type: String,
         required: true,

@@ -66,7 +66,7 @@ async function initLoad(doLoad) {
         await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       }
       else {
-        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1);
+        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2);
       }
     }
   };
@@ -224,7 +224,7 @@ async function deleteTeam(tName, tCode, tLoadFlg){
   }
 };
 
-async function loadCountry(cName, cCode, cLoadFlg, zCode){
+async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
   
   try {   
 
@@ -247,6 +247,17 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode){
         countryLoadDebugger("Country Load Zone Found, Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
       }      
       
+      if (tCode != ""){
+        let team = await Team.findOne({ teamCode: tCode });  
+        if (!team) {
+          countryLoadDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
+        } else {
+          country.team.teamId = team._id;
+          country.team.teamName = team.name;
+          countryLoadDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+        }
+      }      
+
       let { error } = validateCountry(country); 
       if (error) {
         countryLoadDebugger("New Country Validate Error", country.code, error.message);
@@ -272,6 +283,17 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode){
           country.zone.zoneName = zone.zoneName;
           countryLoadDebugger("Country Load Zone Found, Update Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
         }      
+
+        if (tCode != ""){
+          let team = await Team.findOne({ teamCode: tCode });  
+          if (!team) {
+            countryLoadDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
+          } else {
+            country.team.teamId = team._id;
+            country.team.teamName = team.name;
+            countryLoadDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+          }
+        }    
 
         const { error } = validateCountry(country); 
         if (error) {
