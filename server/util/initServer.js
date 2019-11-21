@@ -6,7 +6,8 @@ const supportsColor = require('supports-color');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const initRun = require('../util/initRefLoad');
+const runLoad = require('../util/initRefLoad');
+const runTeamLoad = require('../util/teamLoad');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -58,7 +59,8 @@ app.use('/user', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
 
-initRun(true);
+runLoad(true);   // load simple reference tables/documents from refdata.json
+runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
