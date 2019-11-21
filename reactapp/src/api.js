@@ -1,6 +1,7 @@
 import openSocket from 'socket.io-client';
 
 const socket = openSocket('http://localhost:5000');
+const alert = openSocket('http://localhost:5000/alert');
 
 function subscribeToClock (cb) {
     socket.on('gameClock', count => cb(null, count));
@@ -48,6 +49,10 @@ function bankingTransfer (transfer) {
     socket.emit('bankingTransfer', transfer);
 };
 
+function alertListen (cb) {
+    alert.on('alert', data => cb(null, data))
+}
+
 let clock = {
     subscribeToClock,
     pauseGame,
@@ -64,4 +69,8 @@ let banking = {
     bankingTransfer
 }
 
-export { clock, banking };
+let alerts = {
+    alertListen
+}
+
+export { clock, banking, alerts };
