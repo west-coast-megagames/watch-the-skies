@@ -7,7 +7,7 @@
   {"loadType": "zone", "name": "Antarctica", "code": "AN", "loadFlag": "true"},
   {"loadType": "zone", "name": "Arabstan", "code": "AS", "loadFlag": "true"},
   {"loadType": "team", "name": "United States of America", "code": "USA", "loadFlag": "true"},
-  {"loadType": "team", "name": "Rusian Federation", "code": "RFD", "loadFlag": "true"},
+  {"loadType": "team", "name": "Russian Federation", "code": "RFD", "loadFlag": "true"},
   {"loadType": "team", "name": "People's Republic of China", "code": "PRC", "loadFlag": "true"},
   {"loadType": "team", "name": "United Kingdom", "code": "TUK", "loadFlag": "true"},
   {"loadType": "team", "name": "The France Republic", "code": "TFR", "loadFlag": "true"},

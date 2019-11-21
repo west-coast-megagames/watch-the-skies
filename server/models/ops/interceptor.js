@@ -1,10 +1,14 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Joi = require('joi');
 
 const InterceptorSchema = new Schema({
-  designation: { type: String, required: true },
-  type: { type: String, default: "Interceptor"} ,
-  team: { type: String },
+  designation: { type: String, required: true, min: 2, maxlength: 50 },
+  type: { type: String, required: true, min: 2, maxlength: 50, default: "Interceptor"} ,
+  team: { 
+    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
+    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+  },
   stats: {
     hull: { type: Number, default: 2 },
     hullMax: { type: Number, default: 2 },
@@ -13,8 +17,14 @@ const InterceptorSchema = new Schema({
     activeRolls: [Number]
   },
   location: { 
-    zone: { type: String }, 
-    country: {type:String }, 
+    zone: { 
+      zoneName: { type: String, default: "UN-Assigned" },
+      zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
+    },
+    country: { 
+      countryName: { type: String, default: "UN-Assigned" },
+      countryId: { type: Schema.Types.ObjectId, ref: 'Country'}
+    },
     poi: { type: String }
   },
   status: {
@@ -31,11 +41,30 @@ const InterceptorSchema = new Schema({
   }
 });
 
+InterceptorSchema.methods.validateInterceptor = function (interceptor) {
+  const schema = {
+    designation: Joi.string().min(2).max(50).required(),
+    type: Joi.string().min(2).max(50).required(),
+  };
+
+  return Joi.validate(interceptor, schema, { "allowUnknown": true });
+}
+
 let Interceptor = mongoose.model('interceptor', InterceptorSchema);
+
+function validateInterceptor(interceptor) {
+  //modelDebugger(`Validating ${interceptor.designation}...`);
+
+  const schema = {
+      designation: Joi.string().min(2).max(50).required(),
+      type: Joi.string().min(2).max(50).required()
+    };
+  
+  return Joi.validate(interceptor, schema, { "allowUnknown": true });
+};
 
 const { getTeam } = require('../team');
 const banking = require('../../util/systems/banking/banking');
-
 
 async function launch (aircraft) {
   try {
@@ -60,4 +89,4 @@ async function launch (aircraft) {
   }
 }
 
-module.exports = { Interceptor, launch }
+module.exports = { Interceptor, launch, validateInterceptor }

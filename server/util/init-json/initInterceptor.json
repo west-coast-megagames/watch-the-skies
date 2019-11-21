@@ -2,450 +2,419 @@
 "type" : "interceptor",
 "name" : "USA Alpha",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 10 },
-    {"hullMax": 10 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12]}
-  ], 
-"location": [ 
-    {"zone": "NA" }, 
-    {"country": "US" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "USA", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 10,
+     "hullMax": 10,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12]},
+"location": 
+    {"zone": "NA", 
+     "country": "US", 
+     "poi": "undefined" },
+"status":
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "USA", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "USA Beta",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 20 },
-    {"hullMax": 20 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-    ],
-"location": [ 
-    {"zone": "NA" }, 
-    {"country": "US" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "USA", "parentCode2" : "undefined"
+"stats":
+    {"hull": 20,
+     "hullMax": 20,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":  
+    {"zone": "NA", 
+     "country": "US", 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "USA", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "USA Gamma",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 15 },
-    {"hullMax": 15 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "NA" }, 
-    {"country": "US" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
+"stats":  
+    {"hull": 15 , 
+    "hullMax": 15 ,
+    "damage": 0,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "NA", 
+     "country": "US", 
+     "poi": "undefined"},
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission": false},
 "parentCode1" : "USA", "parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "RFD Alpha",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 10 },
-    {"hullMax": 10 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "RF" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "RFD", "parentCode2" : "undefined"
+"stats":  
+    {"hull": 10,
+     "hullMax": 10,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "EU", 
+     "country": "RF" , 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "RFD", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "RFD Beta",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 20 },
-    {"hullMax": 20 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-    ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "RF" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "RFD", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 20,
+     "hullMax": 20,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "EU", 
+     "country": "RF", 
+     "poi": "undefined" },
+"status":
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "RFD", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "RFD Gamma",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 15 },
-    {"hullMax": 15 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "RF" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "FRD", "parentCode2" : "undefined"
+"stats":
+    {"hull": 15,
+     "hullMax": 15,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "EU", 
+     "country": "RF", 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false},
+"parentCode1" : "FRD", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "PRC Alpha",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 10 },
-    {"hullMax": 10 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "AU" }, 
-    {"country": "CN" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "PRC", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 10,
+    "hullMax": 10,
+    "damage": 0,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "AU", 
+    "country": "CN", 
+    "poi": "undefined"},
+"status": 
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
+"parentCode1" : "PRC", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "PRC Beta",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 20 },
-    {"hullMax": 20 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-    ],
-"location": [ 
-    {"zone": "AU" }, 
-    {"country": "CN" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "PRC", "parentCode2" : "undefined"
+"stats":
+    {"hull": 20,
+    "hullMax": 20,
+    "damage": 0,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "AU", 
+    "country": "CN", 
+    "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
+"parentCode1" : "PRC", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "PRC Gamma",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 15 },
-    {"hullMax": 15 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "AU" }, 
-    {"country": "CN" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "PRC", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 15,
+     "hullMax": 15,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "AU", 
+     "country": "CN", 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "PRC", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TFR Alpha",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 10 },
-    {"hullMax": 10 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "FR" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "TFR", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 10,
+     "hullMax": 10,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "EU", 
+     "country": "FR", 
+     "poi": "undefined" },
+"status":
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TFR", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TFR Beta",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 20 },
-    {"hullMax": 20 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-    ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "FR" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "TFR", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 20,
+     "hullMax": 20,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "EU", 
+     "country": "FR", 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TFR", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TFR Gamma",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 15 },
-    {"hullMax": 15 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "FR" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "TFR", "parentCode2" : "undefined"
+"stats":
+    {"hull": 15,
+     "hullMax": 15,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":  
+    {"zone": "EU", 
+     "country": "FR", 
+     "poi": "undefined" },
+"status": 
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TFR", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TUK Alpha",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 10 },
-    {"hullMax": 10 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "GB" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-   {"mission" : "false" }
-  ],
-"parentCode1" : "TKU", "parentCode2" : "undefined"
+"stats":
+    {"hull": 10,
+     "hullMax": 10,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "EU", 
+     "country": "GB", 
+     "poi": "undefined" },
+"status":
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TKU", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TUK Beta",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 20 },
-    {"hullMax": 20 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-    ],
-  "location": [ 
-    {"zone": "EU" }, 
-    {"country": "GB" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "TUK", "parentCode2" : "undefined"
+"stats": 
+    {"hull": 20,
+     "hullMax": 20,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+  "location": 
+    {"zone": "EU" , 
+     "country": "GB" , 
+     "poi": "undefined" },
+"status":  
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TUK", 
+"parentCode2" : "undefined"
 },
 {
 "type" : "interceptor",
 "name" : "TUK Gamma",
 "code" : "undefined",
-"stats": [ 
-    {"hull": 15 },
-    {"hullMax": 15 },
-    {"damage": 0 },
-    {"passiveRolls": [2,4,7,9,11,12] },
-    {"activeRolls": [3,5,8,10,12] }
-  ],
-"location": [ 
-    {"zone": "EU" }, 
-    {"country": "GB" }, 
-    {"poi": "undefined" }
-  ],
-"status": [ 
-    {"aggressive": "true" },
-    {"passive": "false" },
-    {"disengage": "false" },
-    {"damaged": "false" },
-    {"deployed": "false" },
-    {"destroyed": "false" },
-    {"ready": "true" },
-    {"upgrade": "false" },
-    {"repair": "false" },
-    {"mission" : "false" }
-  ],
-"parentCode1" : "TUK", "parentCode2" : "undefined"
+"stats":
+    {"hull": 15,
+     "hullMax": 15,
+     "damage": 0,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "EU", 
+     "country": "GB", 
+     "poi": "undefined" },
+"status":  
+    {"aggressive": true,
+     "passive": false,
+     "disengage": false,
+     "damaged": false,
+     "deployed": false,
+     "destroyed": false,
+     "ready": true,
+     "upgrade": false,
+     "repair": false,
+     "mission" : false },
+"parentCode1" : "TUK", 
+"parentCode2" : "undefined"
 }
 ]
