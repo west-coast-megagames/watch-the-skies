@@ -17,7 +17,7 @@ const InterceptorSchema = new Schema({
     country: {type:String }, 
     poi: { type: String }
   },
-  status: { 
+  status: {
     aggressive: { type: Boolean, default: true },
     passive: { type: Boolean, default: false },
     disengage: { type: Boolean, default: false },

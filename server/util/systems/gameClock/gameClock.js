@@ -3,7 +3,7 @@ const clockDebugger = require('debug')('app:gameClock');
 
 let gameActive = false;
 
-let minutes = .1;
+let minutes = 40;
 let seconds = 0;
 let hours = 0;
 
@@ -50,14 +50,14 @@ function skipPhase() {
 
 function resetClock() {
     gameActive = false;
-    minutes = .1;
+    minutes = 40;
     seconds = 0;
     
-    phaseNum = -1;
+    phaseNum = 0;
     currentPhase = 'Breifing';
 
     year = 2020;
-    quarter = -1;
+    quarter = 0;
     currentTurn = 'Pre-Game';
     turnNum = 0;
 };
@@ -88,26 +88,32 @@ function getTimeRemaining(){
       'turn': currentTurn,
       'turnNum': turnNum
     };
-}
+};
 
 function incrementPhase() {
-    if (currentPhase === 'Breifing') {
+    if (currentPhase === 'Breifing' || currentTurn === 'Pre-Game') {
+        console.log('Watch the Skies has begun!');
         quarter = 0;
         phaseNum = 0;
-        currentTurn = `${quarters[quarter]} ${year}`
-   } else if (phaseNum == 2) {
+        turnNum++;
+        currentTurn = `${quarters[quarter]} ${year}`;
+
+        currentPhase = gamePhases[phaseNum];
+        phaseTime = phaseTimes[phaseNum];
+    } else {
+       if (phaseNum == 2) {
         phaseNum = 0;
         incrementTurn();
-    } else {
-        phaseNum++
+        } else {
+            phaseNum++
+        };
+        currentPhase = gamePhases[phaseNum];
+        phaseTime = phaseTimes[phaseNum];
+
+        if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
+        if (currentPhase === 'Action Phase') actionPhase(currentTurn);
+        if (currentPhase === 'Free Phase') freePhase(currentTurn);
     };
-    currentPhase = gamePhases[phaseNum];
-    phaseTime = phaseTimes[phaseNum];
-
-    if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
-    if (currentPhase === 'Action Phase') actionPhase(currentTurn);
-    if (currentPhase === 'Free Phase') freePhase(currentTurn);
-
 
     currentTime = Date.parse(new Date());
     deadline = new Date(currentTime + phaseTime*60*1000);

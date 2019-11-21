@@ -7,10 +7,17 @@ class Contacts extends Component {
         interceptors: [],
     };
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.getShips();
+        setInterval(() => this.getShips(), 2000);
+    };
+
+    async getShips () {
         let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
         let contacts = ships.filter(s => s.team !== 'US');
+        contacts = contacts.filter(s => s.status.destroyed !== true);
         let interceptors = ships.filter(s => s.team === 'US');
+        interceptors = interceptors.filter(s => s.status.destroyed !== true);
         this.setState({ contacts, interceptors });
     };
 
