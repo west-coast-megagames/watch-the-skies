@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dbDebugger = require('debug')('app:db');
 const supportsColor = require('supports-color');
 const connect = require('./config/sockets');
+const alerts = require('./util/systems/notifications/alerts')
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -29,6 +30,7 @@ const io = require('socket.io')(server);
 
 // Socket.io routes (Currently housed in config/sockets.js)
 connect(io);
+alerts(io);
 
 // Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
 app.use(cors());
