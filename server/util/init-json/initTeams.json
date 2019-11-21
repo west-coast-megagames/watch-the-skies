@@ -123,6 +123,6 @@
     {"name" : "UNSC", "code" : "uns", "balance": 0}
 ],
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["FR"]}]
+"parent" : [{"type" : "country", "code" : ["GB"]}]
 }
 ]
