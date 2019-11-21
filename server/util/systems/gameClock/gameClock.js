@@ -46,6 +46,8 @@ function pauseClock() {
 function skipPhase() {
     console.warn('Skipping to next phase');
     incrementPhase();
+    minutes = phaseTimes[phaseNum]
+    seconds =  0;
 };
 
 function resetClock() {
