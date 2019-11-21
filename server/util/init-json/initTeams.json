@@ -24,12 +24,12 @@
     {"name" : "UNSC", "code" : "uns", "balance": 0}
 ],
 "loadFlag" : "true",
-"parent" : [ {"type" : "country", "code" : ["US", "UM", "PR"]}]
+"parent" : [ {"type" : "country", "code" : ["US"]}]
 },
 {
 "loadType" : "team", 
 "name": "Russian Federation", 
-"code" : "RF", 
+"code" : "RFD", 
 "roles" : [ 
     {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
     {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
