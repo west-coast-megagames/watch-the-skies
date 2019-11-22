@@ -1,15 +1,25 @@
+let outgoingAlerts = []
+
 function alerts (io) {
     io.of('/alert').on('connection', (USA) => {
         console.log(`United States ready to recieve alerts at ${USA.id}`);
 
-        USA.emit('alert', { 
-            title: 'Message Test',
-            body: 'This is a test of my understanding of Socket.io.... This is only a test.',
-            time: 'Now'
-        });
+        setInterval(() => {
+            for (let msg of outgoingAlerts) {
+                USA.emit('alert', { title: msg.title, body: msg.body, date: Date.now()})
+            }
+            outgoingAlerts = [];
+        }, 5000)
 
-        USA.on('disconnect', () => console.log(`USA disconnected ${client.id}`));
+        USA.on('disconnect', () => console.log(`USA disconnected ${USA.id}`));
     });
 };
 
-module.exports = alerts;
+function setAlert(msg) {
+    console.log(`Setting Alert ${msg.title}`);
+    let { team, title, body } = msg;
+    let newAlert = { title, body };
+    outgoingAlerts.push(newAlert);
+}
+
+module.exports = { alerts, setAlert };

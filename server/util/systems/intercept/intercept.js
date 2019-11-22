@@ -31,7 +31,7 @@ function resolveInterceptions () {
 
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 function intercept (attacker, defender) {
-    let engaged = `${attacker.designation} is attempting to engaged a ${defender.type} in ${attacker.location.country} airspace.`;
+    let engaged = `${attacker.designation} is attempting to engaged a ${defender.type} in ${defender.location.country.countryName} airspace.`;
     
     let atkResult = atkRoll(attacker); // Gets Attacker Roll
     let defResult = defRoll(defender); // Gets Defender Roll

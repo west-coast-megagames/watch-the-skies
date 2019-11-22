@@ -7,14 +7,21 @@ const LogSchema = new Schema({
     timestamp: {
         date: { type: Date, default: Date.now() },
         turn: { type: String },
-        phase: { type: String }
+        phase: { type: String },
+        turnNum: { type: Number }
     },
-    teamID: { type: String, },
+    teamId: { type: String, }
+});
+
+const Log = mongoose.model('log', LogSchema);
+
+const InterceptLog = Log.discriminator('InterceptLog', new Schema({
+    logType: { type: String, default: 'Interception' },
     location: {
         zone: { type: String, require: true },
         country: { type: String, require: true },
         city: { type: String },
-        poi: { type: String },
+        poi: { type: String }
     },
     description: { type: String, required: true },
     unit: {
@@ -24,7 +31,7 @@ const LogSchema = new Schema({
             frameDmg: { type: Boolean },
             sysDmg: { type: Boolean },
             evasion: { type: Boolean },
-            dmg: { type: Number },
+            dmg: { type: Number }
         }
     },
     opponent: {
@@ -37,8 +44,6 @@ const LogSchema = new Schema({
             dmg: { type: Number },
         }
     }
-});
+}));
 
-//const logOptions = { descriminatorKey: 'logType', collection: 'logs' }
-
-module.exports = Log = mongoose.model('log', LogSchema)
+module.exports = InterceptLog;
