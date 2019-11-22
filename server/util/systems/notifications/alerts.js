@@ -1,4 +1,9 @@
-let { Team } = require ('../../../models/team')
+const { Team } = require ('../../../models/team')
+const EventEmitter = require('events');
+
+class Event extends EventEmitter {}
+
+const alertEvent = new Event();
 
 let usaAlerts = [];
 let count = 0;
@@ -7,28 +12,29 @@ function alerts (io) {
     io.of('/alert').on('connection', (USA) => {
         console.log(`United States ready to recieve alerts at ${USA.id}`);
 
-        setInterval(() => {
+        alertEvent.on('alert', () => {
             for (let msg of usaAlerts) {
                 USA.emit('alert', msg)
             }
             usaAlerts = [];
-        }, 2000)
+          });
 
         USA.on('disconnect', () => console.log(`USA disconnected ${USA.id}`));
     });
 };
 
-async function setAlert({teamID, title, body }) {
+async function setAlert({ teamID, title, body }) {
+
     let team = await Team.findOne({ _id: teamID });
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let time = getTimeRemaining();
-    console.log(`Setting Alert ${title}`);
+    console.log(`Setting ${title} alert for ${team.teamCode}`);
     let newAlert = { id: count, title, body, time: `${time.turn}`, team };
 
     if (team.teamCode === 'USA') {
         usaAlerts.push(newAlert);
     }
-    
+    alertEvent.emit('alert');
     count++;
 }
 
