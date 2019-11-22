@@ -17,7 +17,6 @@ function atkRoll(unit) {
     return atkResult;
 };
 
-
 // Defender roll and outcome algorithm
 function defRoll(unit) {
     let roll = d6() + d6();

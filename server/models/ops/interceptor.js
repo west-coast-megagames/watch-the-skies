@@ -75,7 +75,7 @@ async function launch (aircraft) {
 
     console.log(aircraft);
 
-    let team = await getTeam('5dc3ba7d79f57e32c40bf6b4');
+    let team = await getTeam(aircraft.team.teamId);
 
     let account = banking.withdrawl(team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
     team.accounts = account;

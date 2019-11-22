@@ -114,6 +114,22 @@ router.patch('/return', async function (req, res) {
     };
 });
 
+// @route   PATCH api/interceptor/china
+// @desc    Update all interceptors to be deployed
+// @access  Public
+router.patch('/china', async function (req, res) {
+    try {
+        for await (const interceptor of Interceptor.find({ designation: /PRC/i })) {    
+            interceptor.status.deployed = true;
+            await interceptor.save();
+        }
+        res.send("China's interceptor deployed...");
+    } catch (err) {
+        console.log('Error:', err.message);
+        res.send('Error:', err.message);
+    };
+});
+
 
 
 

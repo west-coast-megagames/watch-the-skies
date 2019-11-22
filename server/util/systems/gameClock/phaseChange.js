@@ -9,7 +9,6 @@ const banking = require('../banking/banking');
 function teamPhase(turn) {
     phaseChangeDebugging(`Now changing to the team phase for ${turn}...`)
     updatePR(); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [coded]
-    intercept.resolveInterceptions(); // Resolve Interceptions that have been sent [coded]
     banking.automaticTransfer(); // Iterate through set-automatic transfers
     phaseChangeDebugging(`Done with team phase change for ${turn}!`)
     return 0;
@@ -17,6 +16,7 @@ function teamPhase(turn) {
 
 function actionPhase(turn) {
     phaseChangeDebugging(`Now changing to the action phase for ${turn}...`)
+    intercept.resolveInterceptions(); // Resolve Interceptions that have been sent [coded]
     phaseChangeDebugging(`Done with action phase change for ${turn}!`)
 };
 
