@@ -14,7 +14,7 @@ class Interceptors extends Component {
 
     async fetchShips() {
         let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-        ships = ships.filter(s => s.team === 'US');
+        ships = ships.filter(s => s.team.teamId === '5dc3ba7d79f57e32c40bf6b4');
         ships = ships.filter(s => s.status.destroyed !== true);
         this.setState({ ships })
     }

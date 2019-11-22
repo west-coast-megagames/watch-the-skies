@@ -14,8 +14,9 @@ class Contacts extends Component {
 
     async getShips () {
         let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-        let contacts = ships.filter(s => s.team !== 'US');
+        let contacts = ships.filter(s => s.team.teamId !== '5dc3ba7d79f57e32c40bf6b4');
         contacts = contacts.filter(s => s.status.destroyed !== true);
+        contacts = contacts.filter(s => s.status.deployed === true);
         let interceptors = ships.filter(s => s.team === 'US');
         interceptors = interceptors.filter(s => s.status.destroyed !== true);
         this.setState({ contacts, interceptors });
@@ -62,7 +63,7 @@ class Contacts extends Component {
                         <tr key={ contact._id }>
                             <td>Small</td>
                             <td>Unknown</td>
-                            <td>{ contact.location.country }</td>
+                            <td>{ contact.location.country.countryName }</td>
                             <td><button onClick={ () => this.props.deployInterceptors( 'deploying', contact._id, undefined ) } className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}

@@ -59,7 +59,8 @@ class InterceptorDeployForm extends Component {
 
   async componentDidMount() {
       let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-      ships = ships.filter(s => s.team === 'US');
+      ships = ships.filter(s => s.team.teamId === '5dc3ba7d79f57e32c40bf6b4');
+      ships = ships.filter(s => s.status.destroyed !== true);
       ships = ships.filter( s => s.status.deployed === false );
       this.setState({ ships });
       this.setState({ interceptor: ships[0]._id });
