@@ -77,7 +77,7 @@ async function launch (aircraft) {
 
     let team = await getTeam(aircraft.team.teamId);
 
-    let account = banking.withdrawl(team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
+    let account = banking.withdrawl(team._id, team.teamName, team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
     team.accounts = account;
 
     await team.save();

@@ -1,17 +1,18 @@
 const bankDebugging = require('debug')('app:bankingSystem');
-const { Team } = require('../../../models/team')
+const { Team } = require('../../../models/team');
+const alerts = require('../notifications/alerts');
 
 let autoTranfers = [];
 
 async function transfer (teamID, to, from, amount, note) {   
     try {
         let team = await Team.findOne({ _id: teamID });
-        let { accounts } = team;
+        let { accounts, name, teamCode } = team;
 
         bankDebugging(`${team.name} has initiated a transfer!`);
 
-        accounts = withdrawl(accounts, from, amount, note);
-        accounts = deposit(accounts, to, amount, note);
+        accounts = withdrawl(teamID, name, accounts, from, amount, note);
+        accounts = deposit(teamID, name, accounts, to, amount, note);
 
         bankDebugging(`Saving ${team.name} object...`);
         team = await team.save();
@@ -26,7 +27,7 @@ async function transfer (teamID, to, from, amount, note) {
     }    
 };
 
-function deposit (accounts, account, amount, note) {
+function deposit (teamID, team, accounts, account, amount, note) {
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to deposit into ${account}.`);
@@ -36,12 +37,18 @@ function deposit (accounts, account, amount, note) {
     bankDebugging(`${amount} deposited into ${account}.`);
     bankDebugging(`Reason: ${note}`);
 
+    alerts.setAlert({
+        teamID,
+        title: `${account} Deposit`,
+        body: `${amount} deposited into ${account}, for ${note}.`
+    });
+
     // Create Deposit log
 
     return newAccounts;
 };
 
-function withdrawl (accounts, account, amount, note) {
+function withdrawl (teamID, team, accounts, account, amount, note) {
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to withdrawl from ${account}.`);
@@ -51,6 +58,12 @@ function withdrawl (accounts, account, amount, note) {
 
     bankDebugging(`${amount} witdrawn from ${account}.`);
     bankDebugging(`Reason: ${note}`);
+
+    alerts.setAlert({
+        teamID: teamID,
+        title: `${account} Withdrawl`,
+        body: `${amount} withdrawn from ${account}, for ${note}.`
+    });
 
     // Create Withdrawl log
 

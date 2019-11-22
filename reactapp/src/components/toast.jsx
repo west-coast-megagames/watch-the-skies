@@ -4,10 +4,7 @@ import { alerts } from '../api';
 
 class Notification extends Component {
     state={
-        messages: [
-            { title: "Look Message!", body: "This is your message!", time: "Now"},
-            { title: "Another Message", body: "Rofl, linfosadgosjid", time: "Now"}
-        ]
+        messages: []
     };
 
     constructor(props) {
@@ -39,6 +36,7 @@ class Notification extends Component {
                 <MDBNotification
                     show
                     fade
+                    key={message.id}
                     icon="comment"
                     iconClassName="text-primary"
                     title={ message.title }

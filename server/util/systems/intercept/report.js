@@ -1,4 +1,4 @@
-const IntercptLog = require('../../../models/logs/log');
+const IntercptLog = require('../../../models/logs/intereptLog');
 const alert = require('../notifications/alerts');
 
 function atkLog(finalReport, attacker, defender, engaged) {
@@ -43,13 +43,12 @@ let atkLog = new IntercptLog({
         }
     });
 
-    let newAlert = {
+    alert.setAlert({
+        teamID: attacker.team.teamId,
         team: attacker.team.teamName,
         title: 'Interception!',
         body: atkLog.description
-    }
-
-    alert.setAlert(newAlert);
+    });
     
     
     atkLog.save();

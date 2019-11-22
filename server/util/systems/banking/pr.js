@@ -15,7 +15,7 @@ async function updatePR() {
             prDebugging(`Assigning income for ${name}...`);
 
             let prChange = rollPR(prLevel, prTrack, 0);
-            accounts = deposit(accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
+            accounts = deposit(_id, name, accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
             team.prLevel = prChange.prLevel;
             team.accounts = accounts;
             
