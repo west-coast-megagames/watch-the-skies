@@ -19,7 +19,7 @@
   {"loadType": "country", "name": "AndorrA", "code": "AD", "loadFlag": "false", "parentCode1": "EU", "parentCode2": ""}, 
   {"loadType": "country", "name": "Angola", "code": "AO", "loadFlag": "false", "parentCode1": "AF", "parentCode2": ""}, 
   {"loadType": "country", "name": "Anguilla", "code": "AI", "loadFlag": "false", "parentCode1": "SA", "parentCode2": ""}, 
-  {"loadType": "country", "name": "Antarctica", "code": "AQ", "loadFlag": "false", "parentCode1": "AN", "parentCode2": ""}, 
+  {"loadType": "country", "name": "Antarctica", "code": "AQ", "loadFlag": "true", "parentCode1": "AN", "parentCode2": ""}, 
   {"loadType": "country", "name": "Antigua and Barbuda", "code": "AG", "loadFlag": "false", "parentCode1": "SA", "parentCode2": ""}, 
   {"loadType": "country", "name": "Argentina", "code": "AR", "loadFlag": "false", "parentCode1": "SA", "parentCode2": ""}, 
   {"loadType": "country", "name": "Armenia", "code": "AM", "loadFlag": "false", "parentCode1": "AS", "parentCode2": ""}, 

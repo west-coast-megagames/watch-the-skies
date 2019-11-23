@@ -5,7 +5,7 @@
 "stats": 
     {"hull": 2,
      "hullMax": 2,
-     "damage": 0,
+     "damage": 1,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12]},
 "location": 
@@ -33,7 +33,7 @@
 "stats":
     {"hull": 3,
      "hullMax": 3,
-     "damage": 0,
+     "damage": 2,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location":  
@@ -61,7 +61,7 @@
 "stats":  
     {"hull": 5 , 
     "hullMax": 5 ,
-    "damage": 0,
+    "damage": 2.5,
     "passiveRolls": [2,4,7,9,11,12],
     "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -88,7 +88,7 @@
 "stats":  
     {"hull": 2,
      "hullMax": 2,
-     "damage": 0,
+     "damage": 1.5,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -116,7 +116,7 @@
 "stats": 
     {"hull": 3,
      "hullMax": 3,
-     "damage": 0,
+     "damage": 3,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location":
@@ -144,7 +144,7 @@
 "stats":
     {"hull": 5,
      "hullMax": 5,
-     "damage": 0,
+     "damage": 3,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -172,7 +172,7 @@
 "stats": 
     {"hull": 2,
     "hullMax": 2,
-    "damage": 0,
+    "damage": 1,
     "passiveRolls": [2,4,7,9,11,12],
     "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -200,7 +200,7 @@
 "stats":
     {"hull": 3,
     "hullMax": 3,
-    "damage": 0,
+    "damage": 2,
     "passiveRolls": [2,4,7,9,11,12],
     "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -228,7 +228,7 @@
 "stats": 
     {"hull": 5,
      "hullMax": 5,
-     "damage": 0,
+     "damage": 1,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -256,7 +256,7 @@
 "stats": 
     {"hull": 2,
      "hullMax": 2,
-     "damage": 0,
+     "damage": 2,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location":
@@ -284,7 +284,7 @@
 "stats": 
     {"hull": 3,
      "hullMax": 3,
-     "damage": 0,
+     "damage": 2.5,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location": 
@@ -312,7 +312,7 @@
 "stats":
     {"hull": 5,
      "hullMax": 5,
-     "damage": 0,
+     "damage": 1.5,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location":  
@@ -340,7 +340,7 @@
 "stats":
     {"hull": 2,
      "hullMax": 2,
-     "damage": 0,
+     "damage": 1,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
 "location":
@@ -368,7 +368,7 @@
 "stats": 
     {"hull": 3,
      "hullMax": 3,
-     "damage": 0,
+     "damage": 2,
      "passiveRolls": [2,4,7,9,11,12],
      "activeRolls": [3,5,8,10,12] },
   "location": 
@@ -396,9 +396,9 @@
 "stats":
     {"hull": 5,
      "hullMax": 5,
-     "damage": 0,
+     "damage": 3,
      "passiveRolls": [2,4,7,9,11,12],
-     "activeRolls": [3,5,8,10,12] },
+     "activeRolls": [3,5,8,10,12]},
 "location":
     {"zone": "EU", 
      "country": "GB", 
@@ -415,6 +415,90 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TUK", 
+"parentCode2" : "undefined"
+},
+{
+"type" : "interceptor",
+"name" : "FFG Prime",
+"code" : "transport",
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "AN", 
+    "country": "AQ", 
+    "poi": "undefined" },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
+"parentCode1" : "FFG", 
+"parentCode2" : "undefined"
+},
+{
+"type" : "PAC",
+"name" : "FFG Pioneer",
+"code" : "undefined",
+"stats": 
+    {"hull": 3,
+    "hullMax": 3,
+    "damage": 3,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location": 
+    {"zone": "AN" , 
+    "country": "AQ" , 
+    "poi": "undefined" },
+"status":  
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
+"parentCode1" : "FFG", 
+"parentCode2" : "undefined"
+},
+{
+"type" : "SSU",
+"name" : "FFG Civil Technician",
+"code" : "undefined",
+"stats":
+    {"hull": 5,
+    "hullMax": 5,
+    "damage": 1.5,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12]},
+"location":
+    {"zone": "AN", 
+    "country": "AQ", 
+    "poi": "undefined" },
+"status":  
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+"mission" : false },
+"parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 }
 ]

@@ -124,5 +124,23 @@
 ],
 "loadFlag" : "true",
 "parent" : [{"type" : "country", "code" : ["GB"]}]
+},
+{
+"loadType" : "team",
+"name" : "Federation",
+"code" : "FFG",
+"roles" : [
+    {"role" : "Frontier Guild Leader", "type": "Head of State", "userID": "undefined", "loadFlag": "true"}, 
+    {"role" : "Frontier Envoy", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Frontier Logistics Officer", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 27},
+    {"name" : "Governance", "code" : "gov", "balance" : 0},
+    {"name": "Operations", "code": "ops", "balance" : 0},
+    {"name" : "Political", "code": "pol", "balance": 0},
+    {"name" : "UNSC", "code" : "uns", "balance": 0}
+],
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["AQ"]}]
 }
 ]
