@@ -1,0 +1,103 @@
+[
+{"loadType" : "user",
+"screenname" : "HOS USA",
+"name" : [ {"first" : "Derik"}, {"last" : "Johnson" }],
+"email" : "Megagamesareamazing@gmail.com",
+"phone" : "9167584621",
+"password" : "Lolz4Life",
+"address" : [
+    {"street1" : "458 Rosebud Way"},
+    {"street2" : "undefined"},
+    {"city" : "Rosefield"},
+    {"state" : "CA"},
+    {"zipcode" : "97534"}
+],
+"DoB" : "1281997",
+"gender" : "Female",
+"discord" : "Rawr"
+},
+{ 
+"loadType" : "user",
+"screenname" : "HOS Russia",
+"name" : [ {"first" : "Patrick"}, {"last" : "Doors" }],
+"email" : "PRlevelsStartAt5@gmail.com",
+"password" : "AllTheMegaBucks",
+"address" : [
+    {"street1" : "856 Easy St"},
+    {"street2" : "undefined"},
+    {"city" : "Luxury Town"},
+    {"state" : "CA"},
+    {"zipcode" : "45792"}
+],
+"DoB" : "05081994",
+"gender" : "Female",
+"discord" : "Money"
+},
+{
+"loadType" : "user",
+"screenname" : "HOS China",
+"name" : [ {"first" : "George"}, {"last" : "Of the Jungle" }],
+"email" : "FastAsICanBe@hotmail.com",
+"password" : "LookOutForThatTree",
+"address" : [
+    {"street1" : "9540 Mt. Access Road"},
+    {"street2" : "undefined"},
+    {"city" : "Hang Town"},
+    {"state" : "CA"},
+    {"zipcode" : "64825"}
+],
+"DoB" : "10582013",
+"gender" : "Male",
+"discord" : "Jungle"
+},
+{
+"loadType" : "user",
+"screenname": "HOS France",
+"name" : [ {"first" : "Romeo"}, {"last" : "Davison" }],
+"email" : "LoveBeforeAll@yahoo.com",
+"password" : "All Is Fair In Love and War",
+"address" : [
+    {"street1" : "523 Come With Me way"},
+    {"street2" : "undefined"},
+    {"city" : "Paris"},
+    {"state" : "NA"},
+    {"zipcode" : "45766"}
+],
+"DoB" : "11321613",
+"gender" : "Non-Binary",
+"discord" : "Free"
+},
+{
+"loadType" : "user",
+"screenname" : "HOS UK",
+"name" : [ {"first" : "Lisa"}, {"last" : "Frank" }],
+"email" : "Art@gmail.com",
+"password" : "Rainbow",
+"address" : [
+    {"street1" : "15 Craft way"},
+    {"street2" : "undefined"},
+    {"city" : "Zoo"},
+    {"state" : "AZ"},
+    {"zipcode" : "12345"}
+],
+"DoB" : "08031492",
+"gender" : "Non-Binary",
+"discord" : "Pretty"
+},
+{
+"loadType" : "user",
+"screenname" : "HOS Fed",
+"name" : [ {"first" : "Unknown"}, {"last" : "Unknown" }],
+"password" : "Must Explore",
+"address" : [
+    {"street1" : "2nd st"},
+    {"street2" : "undefined"},
+    {"city" : "Base Camp"},
+    {"state" : "AQ"},
+    {"zipcode" : "12345"}
+],
+"DoB" : "02031342",
+"gender" : "Non-Binary",
+"discord" : "Federation"
+}
+]
