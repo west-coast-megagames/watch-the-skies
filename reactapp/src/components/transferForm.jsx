@@ -7,6 +7,7 @@ class TransferForm extends Component {
     state = {
         accounts: [],
         transfer: { to: '', from: '', amount: 0, note: '', teamID: '5dc3ba7d79f57e32c40bf6b4'},
+        schedule: false
     }
 
     constructor(props) {
@@ -21,9 +22,15 @@ class TransferForm extends Component {
     handleSubmit = e => {
         e.preventDefault();
         // Validate
-        banking.bankingTransfer(this.state.transfer);
-        console.log('Submitted');
-        banking.updateAccounts(this.state.transfer.teamID);
+        if (this.state.schedule === false) {
+            banking.bankingTransfer(this.state.transfer);
+            console.log('Submitted transfer');
+            banking.updateAccounts(this.state.transfer.teamID);
+        } else {
+            banking.autoTransfer(this.state.transfer);
+            console.log('Submitted automatic transfer');
+            banking.updateAccounts(this.state.transfer.teamID);
+        }
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -31,6 +38,13 @@ class TransferForm extends Component {
         const transfer = {...this.state.transfer};
         transfer[input.name] = input.value;
         this.setState({ transfer })
+    };
+
+    handleClick = ({currentTarget: input}) => {
+        console.log(`Input Value: ${input.value}`);
+        let schedule = this.state.schedule;
+        input.value === 'true' ? schedule = true : schedule = false 
+        this.setState({ schedule })
     };
 
     componentDidMount() {
@@ -78,7 +92,12 @@ class TransferForm extends Component {
                     <input type="text" className="form-control" id="note" name="note" placeholder="Reason for transfer" value={this.state.transfer.note} onChange={this.handleChange}/>
                 </div>
 
-
+                <div className="form-check mb-2 mr-sm-2">
+                    <input className="form-check-input" type="checkbox" id="schedule" name="schedule" value={!this.state.schedule} onClick={this.handleClick}/>
+                    <label className="form-check-label" htmlFor="inlineFormCheck" >
+                    Schedule
+                    </label>
+                </div>
 
                 <button type="submit" className="btn btn-primary my-1">Submit</button>
             </form>

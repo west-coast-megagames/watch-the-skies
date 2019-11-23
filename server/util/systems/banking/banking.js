@@ -1,6 +1,7 @@
 const bankDebugging = require('debug')('app:bankingSystem');
 const { Team } = require('../../../models/team');
 const alerts = require('../notifications/alerts');
+const transactionLog = require('../../../models/logs/transactionLog')
 
 let autoTranfers = [];
 
@@ -19,8 +20,6 @@ async function transfer (teamID, to, from, amount, note) {
         bankDebugging(team.accounts);
         bankDebugging(`${team.name} transfer completed!`)
 
-        // Create Transfer log
-
         return team.accounts;
     } catch (err) {
         console.log(`Error: ${err.message}`);
@@ -34,7 +33,7 @@ function deposit (teamID, team, accounts, account, amount, note) {
     bankDebugging(`Current amount in ${account}: ${accounts[accountIndex].balance}`);
     newAccounts[accountIndex].balance += parseInt(amount);
 
-    bankDebugging(`${amount} deposited into ${account}.`);
+    bankDebugging(`${amount} deposited into ${team}'s ${account}.`);
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
@@ -43,7 +42,26 @@ function deposit (teamID, team, accounts, account, amount, note) {
         body: `${amount} deposited into ${account}, for ${note}.`
     });
 
-    // Create Deposit log
+    let { getTimeRemaining } = require('../gameClock/gameClock')
+
+    let { turn, phase, turnNum } = getTimeRemaining();
+    let log = new transactionLog({
+        timestamp: {
+            date: Date.now(),
+            turn,
+            phase,
+            turnNum
+        },
+        teamId: teamID,
+        transaction: 'deposit',
+        account,
+        amount,
+        note
+    });
+
+    log.save();
+
+    bankDebugging('Deposit log created...')
 
     return newAccounts;
 };
@@ -56,7 +74,7 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
 
     newAccounts[accountIndex].balance -= parseInt(amount);
 
-    bankDebugging(`${amount} witdrawn from ${account}.`);
+    bankDebugging(`${amount} witdrawn from ${team}'s ${account}.`);
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
@@ -65,7 +83,26 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
         body: `${amount} withdrawn from ${account}, for ${note}.`
     });
 
-    // Create Withdrawl log
+    const { getTimeRemaining } = require('../gameClock/gameClock')
+
+    let { turn, phase, turnNum } = getTimeRemaining();
+    let log = new transactionLog({
+        timestamp: {
+            date: Date.now(),
+            turn,
+            phase,
+            turnNum
+        },
+        teamId: teamID,
+        transaction: 'withdrawl',
+        account,
+        amount,
+        note
+    });
+
+    log.save();
+
+    bankDebugging('Withdrawl log created...')
 
     return newAccounts;
 };
@@ -86,8 +123,8 @@ async function setAutoTransfer (teamID, to, from, amount, note) {
 };
 
 function automaticTransfer() {
-    for (let transfer of autoTranfers) {
-        let { teamID, to, from, amount, note } = transfer;
+    for (let autoTransfer of autoTranfers) {
+        let { teamID, to, from, amount, note } = autoTransfer;
         
         transfer(teamID, to, from, amount, note);
     }

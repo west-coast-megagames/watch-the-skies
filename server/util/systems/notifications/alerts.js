@@ -29,13 +29,13 @@ async function setAlert({ teamID, title, body }) {
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let time = getTimeRemaining();
     console.log(`Setting ${title} alert for ${team.teamCode}`);
+    count++;
     let newAlert = { id: count, title, body, time: `${time.turn}`, team };
 
     if (team.teamCode === 'USA') {
         usaAlerts.push(newAlert);
     }
     alertEvent.emit('alert');
-    count++;
 }
 
 module.exports = { alerts, setAlert };

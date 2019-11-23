@@ -47,6 +47,11 @@ function connect(io){
       banking.transfer(teamID, to, from, amount, note);
     });
 
+    client.on('autoTransfer', (transfer) => {
+      let { to, from, amount, teamID, note } = transfer;
+      banking.setAutoTransfer(teamID, to, from, amount, note);
+    });
+
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
   });
 };

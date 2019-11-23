@@ -50,7 +50,6 @@ let atkLog = new IntercptLog({
         body: atkLog.description
     });
     
-    
     atkLog.save();
 
      return atkLog;

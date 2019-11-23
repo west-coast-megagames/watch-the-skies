@@ -49,6 +49,10 @@ function bankingTransfer (transfer) {
     socket.emit('bankingTransfer', transfer);
 };
 
+function autoTransfer (transfer) {
+    socket.emit('autoTransfer', transfer);
+};
+
 function alertListen (cb) {
     alert.on('alert', data => cb(null, data))
 }
@@ -66,7 +70,8 @@ let banking = {
     updateAccounts,
     prUpdate,
     accountsUpdate,
-    bankingTransfer
+    bankingTransfer,
+    autoTransfer
 }
 
 let alerts = {
