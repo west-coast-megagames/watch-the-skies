@@ -26,11 +26,19 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runinterceptorLoad(runFlag){
-  //interceptorLoadDebugger("Jeff in runinterceptorLoad", runFlag);    
-  if (!runFlag) return;
-  if (runFlag) initLoad(runFlag);
-  else return;
+async function runinterceptorLoad(runFlag){
+  try {  
+    //interceptorLoadDebugger("Jeff in runinterceptorLoad", runFlag);    
+    if (!runFlag) return;
+    if (runFlag) {
+      await deleteAllInterceptors(runFlag);
+      await initLoad(runFlag);
+    }
+    else return;
+  } catch (err) {
+    interceptorLoadDebugger('Catch runinterceptorLoad Error:', err.message);
+    return; 
+  }
 };
 
 async function initLoad(doLoad) {
@@ -165,5 +173,27 @@ async function loadInterceptor(iData){
 
 };
 
+async function deleteAllInterceptors(doLoad) {
+  
+  interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
+  if (!doLoad) return;
+
+  try {
+    for await (const interceptor of Interceptor.find()) {    
+      let id = interceptor._id;
+      try {
+        let interceptorDel = await Interceptor.findByIdAndRemove(id);
+        if (interceptorDel = null) {
+          interceptorLoadDebugger(`The Zone with the ID ${id} was not found!`);
+        }
+      } catch (err) {
+        interceptorLoadDebugger('Interceptor Delete All Error:', err.message);
+      }
+    }        
+    interceptorLoadDebugger("All Interceptors succesfully deleted!");
+  } catch (err) {
+    interceptorLoadDebugger(`Delete All Interceptors Catch Error: ${err.message}`);
+  }
+};  
 
 module.exports = runinterceptorLoad;
