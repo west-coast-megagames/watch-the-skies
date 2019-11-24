@@ -134,6 +134,7 @@
     {"role" : "Frontier Envoy", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
     {"role" : "Frontier Logistics Officer", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
+"prLevel" : 0,
 "accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
     {"name" : "Governance", "code" : "gov", "balance" : 0},
     {"name": "Operations", "code": "ops", "balance" : 0},

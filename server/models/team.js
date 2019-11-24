@@ -19,7 +19,6 @@ const AccountSchema = new Schema({
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, min: 2, maxlength: 50 },
   teamCode: { type: String, required: true, unique: true, min: 2, maxlength: 3 },
-  countryID: { type: String, required: true, minlength: 2, maxlength: 50 },
   roles: [RoleSchema],
   prTrack: [Number],
   prLevel: { type: Number, required: true, default: 4 },

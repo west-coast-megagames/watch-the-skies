@@ -58,12 +58,11 @@ async function loadTeam(tData){
     let team = await Team.findOne( { teamCode: tData.code } );
     if (!team) {
        // New Team here
-       if (tLoadFlg === "false") return;   // don't load if not true
        let team = new Team({ 
-           teamCode: tData.teamCode,
+           teamCode: tData.code,
            name: tData.name,
-           countryID: tData.name
         }); 
+
 
         let { error } = validateTeam(team); 
         if (error) {
@@ -84,9 +83,8 @@ async function loadTeam(tData){
        // Existing Team here ... update
        let id = team._id;
       
-       team.name = tData.name;
+       team.name     = tData.name;
        team.teamCode = tData.code;
-       team.countryID = tData.code;
        team.prTrack  = tData.prTrack;
        team.roles    = tData.roles;
        team.prLevel  = tData.prLevel;
