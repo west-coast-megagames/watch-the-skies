@@ -22,7 +22,7 @@ class Interceptors extends Component {
         const { length: count } = this.props.aircrafts;
 
         if (count === 0)
-            return <p>No interceptors currently availible.</p>
+            return <h4>No interceptors currently availible.</h4>
         return (
             <React.Fragment>
                 <p>You currently have {count} interceptors in base.</p>

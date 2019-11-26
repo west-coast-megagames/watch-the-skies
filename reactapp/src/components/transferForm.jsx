@@ -41,6 +41,9 @@ class TransferForm extends Component {
 
     render() {
         let accounts = this.props.team.accounts;
+        
+        if (this.props.team.name === "Select Team")
+        return <h4>No accounts availible for transfer, select a team to use the application!</h4>
 
         return (
             <form className="form-inline" onSubmit={this.handleSubmit}>

@@ -12,7 +12,7 @@ class Contacts extends Component {
         const { length: count } = this.props.contacts;
 
         if (count === 0)
-            return <p>No radar contacts decending from or flying in high orbit</p>
+            return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (
             <React.Fragment>
                 <p>Currently {count} high orbit radar contacts.</p>
