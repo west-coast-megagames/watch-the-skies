@@ -9,13 +9,8 @@ const { Interceptor } = require('../../models/ops/interceptor');
 // @access  Public
 router.get('/', async function (req, res) {
     console.log('Sending interceptors somewhere...');
-    try {
-        let interceptors = await Interceptor.find().sort({team: 1});
-        res.json(interceptors);
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
-    }
+    let interceptors = await Interceptor.find().sort({team: 1});
+    res.json(interceptors);
 });
 
 // @route   POST api/interceptor
@@ -26,19 +21,14 @@ router.post('/', async function (req, res) {
     const newInterceptor = new Interceptor(
         { designation, team, location, stats }
     );
-    try {
-        let docs = await Interceptor.find({ designation })
-        if (!docs.length) {
-            let interceptor = await newInterceptor.save();
-            res.json(interceptor);
-            console.log(`Interceptor ${req.body.designation} created...`);
-        } else {                
-            console.log(`Interceptor already exists: ${designation}`);
-            res.send(`Interceptor ${designation} already exists!`);
-        }
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+    let docs = await Interceptor.find({ designation })
+    if (!docs.length) {
+        let interceptor = await newInterceptor.save();
+        res.json(interceptor);
+        console.log(`Interceptor ${req.body.designation} created...`);
+    } else {                
+        console.log(`Interceptor already exists: ${designation}`);
+        res.send(`Interceptor ${designation} already exists!`);
     }
 });
 
@@ -47,15 +37,10 @@ router.post('/', async function (req, res) {
 // @access  Public
 router.put('/:id', async function (req, res) {
     let { designation } = req.body;
-    try {
-        const interceptor = await Interceptor.findOneAndUpdate({ _id: req.params.id }, { designation }, { new: true });
-        res.json(interceptor);
-        console.log(`Interceptor ${req.params.id} updated...`);
-        console.log(`Interceptor named ${interceptor.designation}...`);
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
-    }
+    const interceptor = await Interceptor.findOneAndUpdate({ _id: req.params.id }, { designation }, { new: true });
+    res.json(interceptor);
+    console.log(`Interceptor ${req.params.id} updated...`);
+    console.log(`Interceptor named ${interceptor.designation}...`);
 });
 
 // @route   DELETE api/interceptor/:id
@@ -63,17 +48,12 @@ router.put('/:id', async function (req, res) {
 // @access  Public
 router.delete('/:id', async function (req, res) {
     let id = req.params.id;
-    try {
-        const interceptor = await Interceptor.findByIdAndRemove(id);
-        if (interceptor != null) {
-            console.log(`${interceptor.designation} with the id ${id} was deleted!`);
-            res.send(`${interceptor.designation} with the id ${id} was deleted!`);
-        } else {
-            res.send(`No interceptor with the id ${id} exists!`);
-        }
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
+    const interceptor = await Interceptor.findByIdAndRemove(id);
+    if (interceptor != null) {
+        console.log(`${interceptor.designation} with the id ${id} was deleted!`);
+        res.send(`${interceptor.designation} with the id ${id} was deleted!`);
+    } else {
+        res.send(`No interceptor with the id ${id} exists!`);
     }
 });
 
@@ -81,56 +61,38 @@ router.delete('/:id', async function (req, res) {
 // @desc    Update all interceptors to max health
 // @access  Public
 router.patch('/resethull', async function (req, res) {
-    try {
-        for await (const interceptor of Interceptor.find()) {    
-            console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
-            interceptor.stats.hull = interceptor.stats.hullMax;
-            interceptor.status.destroyed = false;
-            console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
-            await interceptor.save();
-        }
-        res.send("Interceptors succesfully reset!");
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
-    };
+    for await (const interceptor of Interceptor.find()) {    
+        console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
+        interceptor.stats.hull = interceptor.stats.hullMax;
+        interceptor.status.destroyed = false;
+        console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
+        await interceptor.save();
+    }
+    res.send("Interceptors succesfully reset!");
 });
 
 // @route   PATCH api/interceptor/return
 // @desc    Update all interceptors to return to base
 // @access  Public
 router.patch('/return', async function (req, res) {
-    try {
-        for await (const interceptor of Interceptor.find()) {    
-            interceptor.status.deployed = false;
-            interceptor.status.ready = true;
-            interceptor.status.mission = false;
-            await interceptor.save();
-        }
-        res.send("Interceptors succesfully returned!");
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
-    };
+    for await (const interceptor of Interceptor.find()) {    
+        interceptor.status.deployed = false;
+        interceptor.status.ready = true;
+        interceptor.status.mission = false;
+        await interceptor.save();
+    }
+    res.send("Interceptors succesfully returned!");
 });
 
 // @route   PATCH api/interceptor/china
 // @desc    Update all interceptors to be deployed
 // @access  Public
 router.patch('/china', async function (req, res) {
-    try {
-        for await (const interceptor of Interceptor.find({ designation: /PRC/i })) {    
-            interceptor.status.deployed = true;
-            await interceptor.save();
-        }
-        res.send("China's interceptor deployed...");
-    } catch (err) {
-        console.log('Error:', err.message);
-        res.send('Error:', err.message);
-    };
+    for await (const interceptor of Interceptor.find({ designation: /PRC/i })) {    
+        interceptor.status.deployed = true;
+        await interceptor.save();
+    }
+    res.send("China's interceptor deployed...");
 });
-
-
-
 
 module.exports = router;

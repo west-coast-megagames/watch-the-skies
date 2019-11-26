@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const error = require('./middleware/error')
 const dbDebugger = require('debug')('app:db');
 const supportsColor = require('supports-color');
 const connect = require('./config/sockets');
@@ -7,6 +8,7 @@ const { alerts } = require('./util/systems/notifications/alerts')
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+require('express-async-errors')
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -58,6 +60,8 @@ app.use('/api/country', country); // Route for inputing countries
 app.use('/user', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
+
+app.use(error);
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
