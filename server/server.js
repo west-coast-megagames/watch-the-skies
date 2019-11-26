@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const error = require('./middleware/error')
 const dbDebugger = require('debug')('app:db');
 const supportsColor = require('supports-color');
 const connect = require('./config/sockets');
@@ -8,7 +7,10 @@ const { alerts } = require('./util/systems/notifications/alerts')
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('express-async-errors')
+
+// Error handling and Logging
+const error = require('./middleware/error');
+require('express-async-errors');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);

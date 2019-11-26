@@ -23,7 +23,8 @@
     "mongodb": "^3.2.7",
     "mongoose": "^5.7.5",
     "socket.io": "^2.3.0",
-    "supports-color": "^7.1.0"
+    "supports-color": "^7.1.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
