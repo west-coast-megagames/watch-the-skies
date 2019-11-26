@@ -1,11 +1,17 @@
-import React from 'react';
+import React from 'react'; // React import
 import TransferForm from '../components/transferForm';
+import ChartsPage from '../components/graph';
 
-const Budget = () => {
+const Budget = (props) => {
     return (
         <React.Fragment>
             <h1>Governance Module - Budget Tab</h1>
-            <TransferForm />
+            <TransferForm
+                team={props.team}
+            />
+            <ChartsPage
+                team={props.team}
+            />
         </React.Fragment>
     );
 }

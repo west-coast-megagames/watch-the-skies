@@ -8,7 +8,7 @@ const { Interceptor } = require('../../models/ops/interceptor');
 // @Desc    Get all Interceptors
 // @access  Public
 router.get('/', async function (req, res) {
-    //console.log('Sending interceptors somewhere...');
+    console.log('Sending interceptors somewhere...');
     try {
         let interceptors = await Interceptor.find().sort({team: 1});
         res.json(interceptors);

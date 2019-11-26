@@ -1,26 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class Contacts extends Component {
-    state = {
-        contacts: [],
-        interceptors: [],
-    };
-
-    componentDidMount() {
-        this.getShips();
-        setInterval(() => this.getShips(), 2000);
-    };
-
-    async getShips () {
-        let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-        let contacts = ships.filter(s => s.team.teamId !== '5dc3ba7d79f57e32c40bf6b4');
-        contacts = contacts.filter(s => s.status.destroyed !== true);
-        contacts = contacts.filter(s => s.status.deployed === true);
-        let interceptors = ships.filter(s => s.team === 'US');
-        interceptors = interceptors.filter(s => s.status.destroyed !== true);
-        this.setState({ contacts, interceptors });
-    };
 
     async toggleDeploy(){
         this.setState({
@@ -28,21 +8,8 @@ class Contacts extends Component {
         });
     }
 
-    async deploy(contact) {
-        console.log( contact )
-
-        const contacts = this.state.contacts.filter(s => s._id !== contact._id);
-        this.setState({ contacts });
-        let stats = {
-            attacker: "5d71b508c6402720243f1a66",
-            defender: contact._id
-        };
-
-        await axios.put('http://localhost:5000/api/intercept', stats);
-    };
-
     render() {
-        const { length: count } = this.state.contacts;
+        const { length: count } = this.props.contacts;
 
         if (count === 0)
             return <p>No radar contacts decending from or flying in high orbit</p>
@@ -59,7 +26,7 @@ class Contacts extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                    { this.state.contacts.map(contact => (
+                    { this.props.contacts.map(contact => (
                         <tr key={ contact._id }>
                             <td>Small</td>
                             <td>Unknown</td>

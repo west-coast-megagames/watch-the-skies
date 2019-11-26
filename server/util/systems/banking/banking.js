@@ -43,8 +43,12 @@ function deposit (teamID, team, accounts, account, amount, note) {
     });
 
     let { getTimeRemaining } = require('../gameClock/gameClock')
-
     let { turn, phase, turnNum } = getTimeRemaining();
+
+    newAccounts[accountIndex].deposits[turnNum - 1] += amount;
+
+    console.log(`${newAccounts}`);
+
     let log = new transactionLog({
         timestamp: {
             date: Date.now(),

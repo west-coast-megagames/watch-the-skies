@@ -15,11 +15,12 @@ async function updatePR() {
             prDebugging(`Assigning income for ${name}...`);
 
             let prChange = rollPR(prLevel, prTrack, 0);
-            accounts = deposit(_id, name, accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
+            team.accounts = await deposit(_id, name, accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
             team.prLevel = prChange.prLevel;
-            team.accounts = accounts;
-            
+
             team = await team.save()
+            console.log(`${team.name} has ${team.prLevel}`)
+            console.log(team.accounts)
         };
     } catch (err) {
         prDebugging('Error:', err.message);
@@ -44,7 +45,7 @@ function rollPR(currentPR, prTrack, prModifier) {
     prLevel = prLevel > 8 ? 8 : prLevel;
     prLevel = prLevel < 1 ? 1 : prLevel;
 
-    let income = prTrack[prLevel - 1];
+    let income = prTrack[prLevel];
 
     prDebugging(`PR Level: ${prLevel}`);
     prDebugging(`Income: ${income}`)

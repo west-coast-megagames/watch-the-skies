@@ -3,7 +3,8 @@ const banking = require('../util/systems/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
 
 // Mongoose Object Models
-const { getPR, getAccounts } = require('../models/team');
+const { getPR, getTeam } = require('../models/team');
+const { getAircrafts } = require('../models/ops/interceptor');
 
 function connect(io){
 
@@ -20,10 +21,10 @@ function connect(io){
       client.emit('prUpdate', prUpdate);
     });
 
-    client.on('updateAccounts', async (teamID) => {
-      socketDebugger(`${client.id} requested updated accounts for ${teamID}`);
-      let accounts = await getAccounts(teamID);
-      client.emit('accountsUpdate', accounts);
+    client.on('updateTeam', async (teamID) => {
+      socketDebugger(`${client.id} requested updated team information for ${teamID}`);
+      let team = await getTeam(teamID);
+      client.emit('teamUpdate', team);
     });
 
     client.on('pauseGame', () => {
@@ -50,6 +51,12 @@ function connect(io){
     client.on('autoTransfer', (transfer) => {
       let { to, from, amount, teamID, note } = transfer;
       banking.setAutoTransfer(teamID, to, from, amount, note);
+    });
+
+    client.on('updateAircrafts', async () => {
+      socketDebugger(`${client.id} requested updated aircrafts...`);
+      let aircrafts = await getAircrafts();
+      client.emit('currentAircrafts', aircrafts);
     });
 
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));

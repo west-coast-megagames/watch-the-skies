@@ -56,16 +56,6 @@ class InterceptorDeployForm extends Component {
     console.log( this.state.interceptor )
   }
 
-
-  async componentDidMount() {
-      let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-      ships = ships.filter(s => s.team.teamId === '5dc3ba7d79f57e32c40bf6b4');
-      ships = ships.filter(s => s.status.destroyed !== true);
-      ships = ships.filter( s => s.status.deployed === false );
-      this.setState({ ships });
-      this.setState({ interceptor: ships[0]._id });
-  };
-
   render() {
 
     return(
@@ -76,7 +66,7 @@ class InterceptorDeployForm extends Component {
                 <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact { this.props.contact }</label>
                   <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
                     <option></option>
-                    { this.state.ships.map(ship => (
+                    { this.props.aircrafts.map(ship => (
                         <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
                     ))}
                   </select>

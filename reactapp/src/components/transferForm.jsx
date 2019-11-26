@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { banking } from '../api';
+import { banking, teamEvents } from '../api';
 
 class TransferForm extends Component {
     state = {
-        accounts: [],
-        transfer: { to: '', from: '', amount: 0, note: '', teamID: '5dc3ba7d79f57e32c40bf6b4'},
+        transfer: { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id},
         schedule: false
     }
-
-    constructor(props) {
-        super(props);
-        
-        banking.accountsUpdate(async (err, data) => {
-            let accounts = data;
-            this.setState({ accounts });
-        });
-    };
 
     handleSubmit = e => {
         e.preventDefault();
@@ -25,12 +15,14 @@ class TransferForm extends Component {
         if (this.state.schedule === false) {
             banking.bankingTransfer(this.state.transfer);
             console.log('Submitted transfer');
-            banking.updateAccounts(this.state.transfer.teamID);
+            teamEvents.updateTeam(this.props.team._id);
         } else {
             banking.autoTransfer(this.state.transfer);
             console.log('Submitted automatic transfer');
-            banking.updateAccounts(this.state.transfer.teamID);
+            teamEvents.updateTeam(this.props.team._id);
         }
+        let transfer = { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id}
+        this.setState({ transfer });
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -47,12 +39,8 @@ class TransferForm extends Component {
         this.setState({ schedule })
     };
 
-    componentDidMount() {
-        banking.updateAccounts(this.state.transfer.teamID);
-    };
-
     render() {
-        let accounts = this.state.accounts;
+        let accounts = this.props.team.accounts;
 
         return (
             <form className="form-inline" onSubmit={this.handleSubmit}>
@@ -68,7 +56,7 @@ class TransferForm extends Component {
                 </select>
 
                 <label className="my-1 mr-2" htmlFor="to" value={this.state.transfer.to}>To:</label>
-                <select className="custom-select my-1 mr-sm-2" name="to" id="inlineFormCustomSelectPref" onChange={this.handleChange}>
+                <select className="custom-select my-1 mr-sm-2" name="to" id="to" value={this.state.transfer.to} onChange={this.handleChange}>
                     <option>Choose Deposit Account...</option>
                     { accounts.map(account => (
                         <option

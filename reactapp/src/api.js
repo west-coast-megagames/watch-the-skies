@@ -1,33 +1,27 @@
 import openSocket from 'socket.io-client';
 
+// Socket Routes
 const socket = openSocket('http://localhost:5000');
 const alert = openSocket('http://localhost:5000/alert');
 
+// Update Socket Events and Event Listners
+function updateTeam (teamID) {
+    let updateTeam = setInterval(() => {
+        socket.emit('updateTeam', teamID);
+        clearInterval(updateTeam);
+    }, 1000);
+};
+
+function teamUpdate (cb) {
+    socket.on('teamUpdate', data => cb(null, data));
+};
+
+let teamEvents = { updateTeam, teamUpdate };
+
+// Clock Socket Events and Event Listners
 function subscribeToClock (cb) {
-    socket.on('gameClock', count => cb(null, count));
+    socket.on('gameClock', clock => cb(null, clock));
 };
-
-function updateAccounts (team) {
-    let updateAccounts = setInterval(() => {
-        socket.emit('updateAccounts', team);
-        clearInterval(updateAccounts);
-    }, 1000);
-};
-
-function updatePR (team) {
-    let updatePR = setInterval(() => {
-        socket.emit('updatePR', team);
-        clearInterval(updatePR);
-    }, 1000);
-};
-
-function prUpdate (cb) {
-    socket.on('prUpdate', data => cb(null, data));
-};
-
-function accountsUpdate (cb) {
-    socket.on('accountsUpdate', data => cb(null, data));
-}
 
 function pauseGame () {
     socket.emit('pauseGame');
@@ -43,8 +37,11 @@ function resetClock () {
 
 function skipPhase () {
     socket.emit('skipPhase');
-}
+};
 
+let gameClock = { subscribeToClock, pauseGame, startGame, resetClock, skipPhase };
+
+// Banking Socket Events and Event Listners
 function bankingTransfer (transfer) {
     socket.emit('bankingTransfer', transfer);
 };
@@ -53,29 +50,23 @@ function autoTransfer (transfer) {
     socket.emit('autoTransfer', transfer);
 };
 
+let banking = { bankingTransfer, autoTransfer };
+
+// Notification Socket Events and Event Listners
 function alertListen (cb) {
     alert.on('alert', data => cb(null, data))
-}
-
-let clock = {
-    subscribeToClock,
-    pauseGame,
-    startGame,
-    resetClock,
-    skipPhase
 };
 
-let banking = {
-    updatePR,
-    updateAccounts,
-    prUpdate,
-    accountsUpdate,
-    bankingTransfer,
-    autoTransfer
+let alerts = { alertListen };
+
+function updateAircrafts () {
+    console.log('Reciving updating aircrafts...');
+    socket.emit('updateAircrafts');
 }
 
-let alerts = {
-    alertListen
-}
+function currentAircrafts (cb) {
+    console.log('Listning for current aircrafts...')
+    socket.on('currentAircrafts', data => cb(null, data));
+};
 
-export { clock, banking, alerts };
+export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAircrafts };

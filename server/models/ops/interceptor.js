@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const modelDebugger = require('debug')('app:interceptorModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
@@ -63,6 +64,16 @@ function validateInterceptor(interceptor) {
   return Joi.validate(interceptor, schema, { "allowUnknown": true });
 };
 
+async function getAircrafts() {
+  modelDebugger('Retriving all aircraft documents...');
+  try {
+      let interceptors = await Interceptor.find();
+      return interceptors;
+  } catch (err) {
+      modelDebugger('Error:', err.message);
+  }
+};
+
 const { getTeam } = require('../team');
 const banking = require('../../util/systems/banking/banking');
 
@@ -89,4 +100,4 @@ async function launch (aircraft) {
   }
 }
 
-module.exports = { Interceptor, launch, validateInterceptor }
+module.exports = { Interceptor, launch, validateInterceptor, getAircrafts }

@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faShieldAlt, faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { clock, banking } from '../api';
+import { gameClock, teamEvents } from '../api';
+import TeamSelect from './common/teamSelect';
 
 class NavBar extends Component {
     state = { 
-        country: "United States",
-        teamID: "5dc3ba7d79f57e32c40bf6b4",
-        treasury: 30,
-        prLevel: 6,
         minutes: 0,
         seconds: 0,
         phase: 'Test Phase',
@@ -19,10 +16,9 @@ class NavBar extends Component {
 
     constructor(props) {
         super(props);
-        clock.subscribeToClock((err, clock) => {
-            if(this.state.turnNum !== clock.turnNum) {
-                banking.updatePR(this.state.teamID);
-                banking.updateAccounts(this.state.teamID);
+        gameClock.subscribeToClock((err, clock) => {
+            if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum) {
+                teamEvents.updateTeam(this.props.team._id);
             }
             this.setState({ 
                 minutes: clock.minutes,
@@ -31,28 +27,21 @@ class NavBar extends Component {
                 turn: clock.turn,
                 turnNum: clock.turnNum
             })
-            console.log(`minutes: ${clock.minutes} | seconds: ${clock.seconds}`);
-        });
-
-        banking.prUpdate((err, data) => {
-            console.log(`Got PR Level of ${data}`);
-            this.setState({ prLevel: data })
-        });
-
-        banking.accountsUpdate(async (err, data) => {
-            let accountIndex = data.findIndex((obj => obj.name === 'Treasury'));
-            let account = data[accountIndex];
-            console.log(`${account.name} has a balance of ${account.balance}.`);
-            this.setState({ treasury: account.balance })
+            // console.log(`minutes: ${clock.minutes} | seconds: ${clock.seconds}`);
         });
     };
 
     render() {
-        const { minutes, seconds, prLevel, treasury, country, phase, turn } = this.state;
+        let megabucks = 0;
+        if (this.props.team.name !== "Select Team") {
+            let accountIndex = this.props.team.accounts.findIndex((account => account.name === 'Treasury'));
+            megabucks = this.props.team.accounts[accountIndex].balance
+        }
+
+        const { minutes, seconds, phase, turn } = this.state;
         const clock = `${minutes}:${seconds}`;
-        const pr =  `PR Level: ${prLevel} | `
-        const finance = ` $M${treasury} | `
-        const team = `${country}`;
+        const pr = this.props.team.name !== "Select Team" ? `PR Level: ${this.props.team.prLevel} | ` : 'PR Level: Unknown |'
+        const megabuckDisplay = ` $M${megabucks} | `
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -75,9 +64,10 @@ class NavBar extends Component {
             </div>
             <span className="navbar-text mr-md-5">{phase} {clock} <FontAwesomeIcon icon={faClock} /> | {turn}</span>
             <span className="navbar-text mr-1">{pr}</span>
-            <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {finance}</span>
-            <span className="navbar-text mr-1"> {team}</span>
-        </nav>
+            <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span>
+            <span className="navbar-text mr-1"> {this.props.team.name} </span>
+            <TeamSelect teams={this.props.teams} onChange={ this.props.onChange } />
+            </nav>
         );
     }
 }

@@ -1,23 +1,6 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 class Interceptors extends Component {
-
-    state = {
-        ships: []
-    };
-
-    componentDidMount() {
-        this.fetchShips();
-        this.timer = setInterval(() => this.fetchShips(), 2000);
-    }
-
-    async fetchShips() {
-        let { data: ships } = await axios.get('http://localhost:5000/api/interceptor');
-        ships = ships.filter(s => s.team.teamId === '5dc3ba7d79f57e32c40bf6b4');
-        ships = ships.filter(s => s.status.destroyed !== true);
-        this.setState({ ships })
-    }
 
     /*deploy = (aircraft) => {
         console.log(aircraft)
@@ -25,17 +8,18 @@ class Interceptors extends Component {
         this.setState({ ships });
     };*/
 
-    retreiveStatus = (ship) => {
-      if ( !ship.status.deployed ) {
+    retreiveStatus = (aircraft) => {
+      if (!aircraft.status.deployed) {
         return 'Idle';
-      }
-      else if ( ship.status.deployed && ship.status.mission !== false ){
+      } else if (aircraft.status.deployed && aircraft.status.mission !== false ){
         return 'Intercepting contact';
+      } else if (aircraft.status.ready) {
+        return 'Ready';
       }
     }
 
     render() {
-        const { length: count } = this.state.ships;
+        const { length: count } = this.props.aircrafts;
 
         if (count === 0)
             return <p>No interceptors currently availible.</p>
@@ -53,13 +37,13 @@ class Interceptors extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                { this.state.ships.map(ship => (
-                    <tr key={ ship._id }>
-                        <td>{ ship.designation }</td>
+                { this.props.aircrafts.map(aircraft => (
+                    <tr key={ aircraft._id }>
+                        <td>{ aircraft.designation }</td>
                         <td>Someone</td>
-                        <td>{ 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }%</td>
-                        <td>{ ship.location.poi }</td>
-                        <td>{ this.retreiveStatus(ship) }</td>
+                        <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
+                        <td>{ aircraft.location.poi }</td>
+                        <td>{ this.retreiveStatus(aircraft) }</td>
                     </tr>
                     ))}
                 </tbody>

@@ -14,15 +14,17 @@ const AccountSchema = new Schema({
   name: { type: String },
   code: { type: String },
   balance: { type: Number },
+  deposits: [Number],
+  withdrawls: [Number]
 });
 
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, min: 2, maxlength: 50 },
   teamCode: { type: String, required: true, unique: true, min: 2, maxlength: 3 },
-  countryID: { type: String, required: true, minlength: 2, maxlength: 50 },
+  countryID: { type: String, minlength: 2, maxlength: 50 },
   roles: [RoleSchema],
   prTrack: [Number],
-  prLevel: { type: Number, required: true, default: 4 },
+  prLevel: { type: Number },
   accounts: [AccountSchema]
 });
 

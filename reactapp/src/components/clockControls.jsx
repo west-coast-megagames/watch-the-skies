@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { clock } from '../api';
+import { gameClock } from '../api';
 import { faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -8,23 +8,23 @@ class clockControls extends Component {
     state = {  }
 
     startClock = () => {
-        console.log('Clock started');
-        clock.startGame();
+        console.log('Game Clock started');
+        gameClock.startGame();
     };
 
     stopClock = () => {
-        console.log('Clock paused');
-        clock.pauseGame();
+        console.log('Game Clock paused');
+        gameClock.pauseGame();
     };
 
     resetClock = () => {
-        console.log('Resetting Clock');
-        clock.resetClock();
+        console.log('Resetting game clock');
+        gameClock.resetClock();
     };
 
     skipPhase = () => {
         console.log('Skipping Phase');
-        clock.skipPhase();
+        gameClock.skipPhase();
     }
 
     render() { 

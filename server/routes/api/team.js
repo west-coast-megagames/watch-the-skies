@@ -19,6 +19,20 @@ router.get('/', async function (req, res) {
     }
 });
 
+// @route   GET api/team/:id
+// @Desc    Get all single team
+// @access  Public
+router.get('/:id', async function (req, res) {
+    routeDebugger('Looking up a team...');
+    try {
+        let team = await Team.findById({ _id: req.params.id });
+        res.json(team);
+    } catch (err) {
+        console.log(`Error: ${err.message}`);
+        res.status(400).send(`Error: ${err.message}`);
+    }
+});
+
 // @route   POST api/team
 // @Desc    Post a new team
 // @access  Public
@@ -89,22 +103,25 @@ router.patch('/accounts', async function (req, res) {
     try {
         for await (let team of Team.find()) {
             let { prLevel, accounts, name, prTrack } = team;
-            console.log(team);
+            console.log(`${name} | PR: ${prLevel}`);
             console.log(`Resetting ${name}s accounts...`);  
-            prLevel = 5;
+            team.prLevel = 2;
             console.log(`PR Level set to ${prLevel}`);
             for (let account of accounts) {
                 account.balance = 0;
             };
-            let index = accounts.findIndex((obj => obj.name === 'Treasury'));
-            accounts[index].balance = prTrack[prLevel + 1];
+            team.accounts = accounts;
+            let index = team.accounts.findIndex((obj => obj.name === 'Treasury'));
+            team.accounts[index].balance = prTrack[prLevel];
+            console.log(`${team.name} | PR: ${team.prLevel} | Treasury: ${team.accounts[index].balance}`);
 
             await team.save();
+            console.log(`${name}s accounts reset...`);  
         };
         res.send("Accounts succesfully reset!");
     } catch (err) {
         console.log('Error:', err.message);
-        res.send('Error:', err.message);
+        res.status(400).send(`Error: ${err.message}`);
     };
 });
 
