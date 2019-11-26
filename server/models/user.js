@@ -16,11 +16,15 @@ const UserSchema = new Schema({
     street2: { type: String },
     city: { type: String },
     state: { type: String, minlength: 2, maxlength: 2 },
-    zipcode: { type: String, minlength: 5, maxlength: 5 }
+    zipcode: { type: String, minlength: 5, maxlength: 10 }
   },
   DoB: { type: Date },
   gender: { type: String, enum: ["Male", "Female", "Non-Binary"]},
-  discord: { type: String }
+  discord: { type: String },
+  team: { 
+    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
+    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+  }
 });
 
 let User = mongoose.model('user', UserSchema);
@@ -40,14 +44,14 @@ function validateUser(user) {
       street2: Joi.string(),
       city: Joi.string(),
       state: Joi.string().min(2).max(2),
-      zipcode: Joi.string().min(5).max(5)
+      zipcode: Joi.string().min(5).max(10)
     },
     gender: Joi.string(),
     DoB: Joi.date(),
     discord: Joi.string()
   };
 
-  return Joi.validate(user, schema);
+  return Joi.validate(user, schema, { "allowUnknown": true });
 }
 
 module.exports = { User, validateUser };
