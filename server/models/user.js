@@ -5,8 +5,8 @@ const Joi = require('joi');
 const UserSchema = new Schema({
   screenname: { type: String, required: true, unique: true, minlength: 5, maxlength: 15 },
   name: {
-    first: { type: String, required: true, minlength: 3, maxlength: 25 },
-    last: { type: String, required: true, minlength: 3, maxlength: 50 }
+    first: { type: String, required: true, minlength: 1, maxlength: 25 },
+    last: { type: String, required: true, minlength: 1, maxlength: 50 }
   },
   email: { type: String, required: true, minlength: 5, maxlength: 255 },
   phone: { type: String, required: true, minlength: 10, maxlength: 14 },
@@ -33,8 +33,8 @@ function validateUser(user) {
   const schema = {
     screenname: Joi.string().min(5).max(15).required(),
     name: {
-      first: Joi.string().min(2).max(25).required(),
-      last: Joi.string().min(2).max(50).required(), 
+      first: Joi.string().min(1).max(25).required(),
+      last: Joi.string().min(1).max(50).required(), 
     },
     email: Joi.string().min(5).max(255).required().email(),
     phone: Joi.string().min(10).max(14).required(),

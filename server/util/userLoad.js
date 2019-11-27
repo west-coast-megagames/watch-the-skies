@@ -59,18 +59,21 @@ async function loadUser(iData){
     let user = await User.findOne( { screenname: iData.screenname } );
     if (!user) {
        // New User here
+       let convDate = Date(iData.Dob);
        let user = new User({ 
            screenname: iData.screenname,
            email: iData.email,
            phone: iData.phone,
-           Dob: iData.Dob,
            gender: iData.gender,
            discord: iData.discord,
-           password: iData.password
+           password: iData.password,
+           Dob: convDate,
+           name: iData.name,
+           address: iData.address
         }); 
        
-        user.name = iData.name;
-        user.address = iData.address;
+        
+        userLoadDebugger("New user.name", user.name, "address", user.address, user.Dob);
 
         let { error } = validateUser(user); 
         if (error) {
@@ -96,16 +99,16 @@ async function loadUser(iData){
     } else {       
       // Existing User here ... update
       let id = user._id;
-      
+      let convDate = Date(iData.Dob);
       user.screenname  = iData.screenname;
       user.name        = iData.name;
       user.phone       = iData.phone;
       user.email       = iData.email;
       user.address     = iData.address;
-      user.Dob         = iData.Dob;
       user.gender      = iData.gender;
       user.discord     = iData.discord;
       user.password    = iData.password;
+      user.Dob         = convDate;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
@@ -118,6 +121,8 @@ async function loadUser(iData){
         }
       }
       
+      userLoadDebugger("Update user.name", user.name, "address", user.address, user.Dob);
+
       const { error } = validateUser(user); 
       if (error) {
         userLoadDebugger("User Update Validate Error", iData.screenname, error.message);
