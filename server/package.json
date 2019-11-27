@@ -9,6 +9,9 @@
     "client": "npm start --prefix ../reactapp",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "author": "John T. Cleveland",
   "license": "ISC",
   "dependencies": {
