@@ -1,5 +1,7 @@
+const config = require('config');
 const express = require('express');
 const mongoose = require('mongoose');
+const bootDebugger = require('debug')('app:bootup');
 const dbDebugger = require('debug')('app:db');
 const supportsColor = require('supports-color');
 const connect = require('./config/sockets');
@@ -7,6 +9,11 @@ const { alerts } = require('./util/systems/notifications/alerts')
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+if (!config.get('jwtPrivateKey')) {
+    bootDebugger('FATAL ERROR: jwtPrivateKey is not defined...');
+    process.exit(1);
+}
 
 // Error handling and Logging
 const error = require('./middleware/error');
@@ -18,6 +25,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 
 // Routes - Using Express
+const auth = require('./routes/api/auth');
 const interceptor = require('./routes/api/interceptor');
 const team = require('./routes/api/team');
 const intercept = require('./routes/api/intercept');
@@ -54,6 +62,7 @@ mongoose.connect(dbURI, mongoOptions)
     .catch(err => console.warn(err));
 
 // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
+app.use('/api/auth', auth);
 app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
 app.use('/api/team', team); // Route for Teams
 app.use('/api/intercept', intercept); // Route for triggering an interception
