@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { updateAircrafts } from '../api'
 import axios from 'axios';
 
 var formStyle = {
@@ -34,7 +35,6 @@ class InterceptorDeployForm extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    // want to update the database here?
     console.log('Submitting Interception');
     this.props.deployInterceptors( 'deployed', this.state.contact, this.state.interceptor );
 

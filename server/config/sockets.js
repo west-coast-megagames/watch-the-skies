@@ -2,9 +2,17 @@ const gameClock = require('../util/systems/gameClock/gameClock');
 const banking = require('../util/systems/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
 
+const events = require('events')
+const eventListner = new events.EventEmitter();
+
 // Mongoose Object Models
 const { getPR, getTeam } = require('../models/team');
-const { getAircrafts } = require('../models/ops/interceptor');
+const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
+
+Interceptor.watch().on('change', data =>{
+      socketDebugger(new Date(), data)
+      eventListner.emit('updateAircrafts')
+});
 
 function connect(io){
 
@@ -55,9 +63,15 @@ function connect(io){
 
     client.on('updateAircrafts', async () => {
       socketDebugger(`${client.id} requested updated aircrafts...`);
-      let aircrafts = await getAircrafts();
-      client.emit('currentAircrafts', aircrafts);
+      eventListner.emit('updateAircrafts');
     });
+
+    eventListner.on('updateAircrafts', async () => {
+      let aircrafts = await getAircrafts();
+      socketDebugger('Sending Aircrafts!');
+      client.emit('currentAircrafts', aircrafts);
+    })
+    
 
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
   });
