@@ -14,6 +14,10 @@ Interceptor.watch().on('change', data =>{
       eventListner.emit('updateAircrafts')
 });
 
+Team.watch().on('change', data =>{
+  socketDebugger(data)
+});
+
 function connect(io){
 
   setInterval(() => {
