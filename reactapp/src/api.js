@@ -60,9 +60,9 @@ function alertListen (cb) {
 let alerts = { alertListen };
 
 function updateAircrafts () {
-    console.log('Reciving updating aircrafts...');
+    console.log('Requesting aircraft update...');
     socket.emit('updateAircrafts');
-}
+};
 
 function currentAircrafts (cb) {
     console.log('Listning for current aircrafts...')
