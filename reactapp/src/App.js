@@ -41,6 +41,7 @@ class App extends Component {
     });
 
     currentAircrafts((err, aircrafts) => {
+      console.log('Reciving aircrafts...')
       this.setState({ aircrafts })
     });
   }
@@ -66,6 +67,7 @@ class App extends Component {
             <Route path="/budget" render={() => (
               <Budget 
                 team = { this.state.team }
+                handleUpdate = { this.getTeams }
               />
             )}/>
             <Route path="/mosh" component={ MoshTest } />
@@ -85,10 +87,15 @@ class App extends Component {
     this.setState({ teams })
   }
 
+  updateTeam = async (team) => {
+    console.log(`${team.name} Updating...`);
+    teamEvents.updateTeam(team._id)
+  };
+
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);
     teamEvents.updateTeam(team._id)
-    updateAircrafts()
+    updateAircrafts();
   }
 }
 
