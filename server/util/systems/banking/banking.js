@@ -15,7 +15,7 @@ async function transfer (teamID, to, from, amount, note) {
         accounts = withdrawl(teamID, name, accounts, from, amount, note);
         accounts = deposit(teamID, name, accounts, to, amount, note);
 
-        bankDebugging(`Saving ${team.name} object...`);
+        bankDebugging(`Saving ${team.name} information...`);
         team = await team.save();
         bankDebugging(team.accounts);
         bankDebugging(`${team.name} transfer completed!`)
@@ -45,9 +45,9 @@ function deposit (teamID, team, accounts, account, amount, note) {
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let { turn, phase, turnNum } = getTimeRemaining();
 
-    newAccounts[accountIndex].deposits[turnNum - 1] += amount;
-
-    console.log(`${newAccounts}`);
+    bankDebugging(newAccounts[accountIndex].deposits[turnNum])
+    newAccounts[accountIndex].deposits[turnNum] += parseInt(amount);
+    bankDebugging(newAccounts[accountIndex].deposits[turnNum]);
 
     let log = new transactionLog({
         timestamp: {
