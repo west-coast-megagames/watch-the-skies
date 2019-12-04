@@ -61,6 +61,7 @@ async function loadTeam(tData){
        let team = new Team({ 
            teamCode: tData.code,
            name: tData.name,
+           shortName: tData.shortName
         }); 
 
 
@@ -83,12 +84,13 @@ async function loadTeam(tData){
        // Existing Team here ... update
        let id = team._id;
       
-       team.name     = tData.name;
-       team.teamCode = tData.code;
-       team.prTrack  = tData.prTrack;
-       team.roles    = tData.roles;
-       team.prLevel  = tData.prLevel;
-       team.accounts = tData.accounts;
+       team.name      = tData.name;
+       team.shortName = tDate.shortName;
+       team.teamCode  = tData.code;
+       team.prTrack   = tData.prTrack;
+       team.roles     = tData.roles;
+       team.prLevel   = tData.prLevel;
+       team.accounts  = tData.accounts;
 
        const { error } = validateTeam(team); 
        if (error) {

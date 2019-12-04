@@ -3,11 +3,11 @@
 "name" : "USA Base Alpha",
 "code" : "undefined",
 "baseDefenses" : false,
-"Facilities" :  [
+"facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
-    { "type" : "hangar" , "name" : "Hangar A", "bays" : [ 
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
         {"inUse": true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
@@ -22,11 +22,11 @@
 "name" : "RFD Base Alpha",
 "code" : "undefined",
 "baseDefenses" : false,
-"Facilities" :  [
+"facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
-    { "type" : "hangar" , "name" : "Hangar A", "bays" : [ 
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
         {"inUse": true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
@@ -34,18 +34,18 @@
         {"inUse" : false, "unitID" : "undefined"} ]
     }
 ],
-"parentCode1" : "RF",
+"parentCode1" : "RU",
 "parentCode2" : "RFD"
 },
 {"loadType" : "base",
 "name" : "PRC Base Alpha",
 "code" : "undefined",
 "baseDefenses" : false,
-"Facilities" :  [
+"facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
-    { "type" : "hangar" , "name" : "Hangar A", "bays" : [ 
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
         {"inUse": true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
@@ -60,11 +60,11 @@
 "name" : "TFR Base Alpha",
 "code" : "undefined",
 "baseDefenses" : false,
-"Facilities" :  [
+"facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
-    { "type" : "hangar" , "name" : "Hangar A", "bays" : [ 
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
         {"inUse": true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},
@@ -79,11 +79,11 @@
 "name" : "TUK Base Alpha",
 "code" : "undefined",
 "baseDefenses" : false,
-"Facilities" :  [
+"facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
-    { "type" : "hangar" , "name" : "Hangar A", "bays" : [ 
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
         {"inUse": true, "unitID" : "undefined" },
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : true, "unitID" : "undefined"},

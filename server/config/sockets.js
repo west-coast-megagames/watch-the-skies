@@ -20,7 +20,6 @@ Team.watch().on('change', data => {
 });
 
 module.exports = function (io){
-
   setInterval(() => {
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
