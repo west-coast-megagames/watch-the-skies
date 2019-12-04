@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { updateAircrafts } from '../api'
 import axios from 'axios';
 
 var formStyle = {
