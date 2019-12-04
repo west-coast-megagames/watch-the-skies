@@ -6,12 +6,16 @@ const events = require('events')
 const eventListner = new events.EventEmitter();
 
 // Mongoose Object Models
-const { getPR, getTeam } = require('../models/team');
+const { Team, getPR, getTeam } = require('../models/team');
 const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
 
-Interceptor.watch().on('change', data =>{
-      socketDebugger(new Date(), data)
-      eventListner.emit('updateAircrafts')
+Interceptor.watch().on('change', data => {
+  socketDebugger(new Date(), data);
+  eventListner.emit('updateAircrafts');
+});
+
+Team.watch().on('change', data => {
+  socketDebugger(data);
 });
 
 function connect(io){
@@ -70,7 +74,7 @@ function connect(io){
       let aircrafts = await getAircrafts();
       socketDebugger('Sending Aircrafts!');
       client.emit('currentAircrafts', aircrafts);
-    })
+    });
     
 
     client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
