@@ -1,6 +1,7 @@
 const gameClock = require('../util/systems/gameClock/gameClock');
 const banking = require('../util/systems/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
+const { logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 const events = require('events')
 const eventListner = new events.EventEmitter();
@@ -18,14 +19,14 @@ Team.watch().on('change', data => {
   socketDebugger(data);
 });
 
-function connect(io){
+module.exports = function (io){
 
   setInterval(() => {
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
 
   io.on('connection', (client) => {
-    console.log(`New client connected... ${client.id}`);
+    logger.info(`New client connected... ${client.id}`);
 
     client.on('updatePR', async (teamID) => {
       socketDebugger(`${client.id} requested updated PR for ${teamID}`);
@@ -77,8 +78,6 @@ function connect(io){
     });
     
 
-    client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
+    client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
   });
 };
-
-module.exports = connect;

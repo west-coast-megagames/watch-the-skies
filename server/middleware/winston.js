@@ -2,7 +2,6 @@ const errorDebugger = require('debug')('app:error')
 const winston = require('winston');
 require ('winston-mongodb');
 
-
 const { createLogger, format, transports } = winston;
 
 const logger = createLogger({
