@@ -1,13 +1,17 @@
+let autoTranfers = [];
+
 const bankDebugging = require('debug')('app:bankingSystem');
-const { Team } = require('../../../models/team');
 const alerts = require('../notifications/alerts');
 const transactionLog = require('../../../models/logs/transactionLog')
 
-let autoTranfers = [];
+const { Team } = require('../../../models/team');
+const { Interceptor } = require('../../../models/ops/interceptor')
 
-async function transfer (teamID, to, from, amount, note) {   
-    try {
-        let team = await Team.findOne({ _id: teamID });
+async function transfer (teamID, to, from, amount, note) {
+        const { Team } = require('../../../models/team');
+        console.log(Team);
+        console.log(Interceptor);
+        let team = await Team.findById({ _id: teamID });
         let { accounts, name, teamCode } = team;
 
         bankDebugging(`${team.name} has initiated a transfer!`);
@@ -15,18 +19,17 @@ async function transfer (teamID, to, from, amount, note) {
         accounts = withdrawl(teamID, name, accounts, from, amount, note);
         accounts = deposit(teamID, name, accounts, to, amount, note);
 
-        bankDebugging(`Saving ${team.name} object...`);
+        bankDebugging(`Saving ${team.name} information...`);
         team = await team.save();
         bankDebugging(team.accounts);
         bankDebugging(`${team.name} transfer completed!`)
 
         return team.accounts;
-    } catch (err) {
-        console.log(`Error: ${err.message}`);
-    }    
 };
 
 function deposit (teamID, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
+
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to deposit into ${account}.`);
@@ -45,9 +48,9 @@ function deposit (teamID, team, accounts, account, amount, note) {
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let { turn, phase, turnNum } = getTimeRemaining();
 
-    newAccounts[accountIndex].deposits[turnNum - 1] += amount;
-
-    console.log(`${newAccounts}`);
+    bankDebugging(newAccounts[accountIndex].deposits[turnNum])
+    newAccounts[accountIndex].deposits[turnNum] += parseInt(amount);
+    bankDebugging(newAccounts[accountIndex].deposits[turnNum]);
 
     let log = new transactionLog({
         timestamp: {
@@ -71,6 +74,8 @@ function deposit (teamID, team, accounts, account, amount, note) {
 };
 
 function withdrawl (teamID, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
+
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to withdrawl from ${account}.`);

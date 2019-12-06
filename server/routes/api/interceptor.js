@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../../middleware/auth')
+
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
 
@@ -60,7 +62,7 @@ router.delete('/:id', async function (req, res) {
 // @route   PATCH api/interceptor/resethull
 // @desc    Update all interceptors to max health
 // @access  Public
-router.patch('/resethull', async function (req, res) {
+router.patch('/resethull', auth, async function (req, res) {
     for await (const interceptor of Interceptor.find()) {    
         console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
         interceptor.stats.hull = interceptor.stats.hullMax;

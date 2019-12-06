@@ -19,8 +19,9 @@ const AccountSchema = new Schema({
 });
 
 const TeamSchema = new Schema({
-  name: { type: String, required: true, unique: true, min: 2, maxlength: 50 },
-  teamCode: { type: String, required: true, unique: true, min: 2, maxlength: 3 },
+  name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
+  shortName: { type: String, unique: true, minlength: 2, maxlength: 30 },
+  teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },
   countryID: { type: String, minlength: 2, maxlength: 50 },
   roles: [RoleSchema],
   prTrack: [Number],
@@ -31,6 +32,7 @@ const TeamSchema = new Schema({
 TeamSchema.methods.validateTeam = function (team) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
+    shortName: Joi.string().min(2).max(30),
     teamCode: Joi.string().min(2).max(3).required().uppercase()
   };
 
@@ -44,7 +46,8 @@ function validateTeam(team) {
 
   const schema = {
       teamCode: Joi.string().min(2).max(3).required().uppercase(),
-      name: Joi.string().min(2).max(50).required()
+      name: Joi.string().min(2).max(50).required(),
+      shortName: Joi.string().min(2).max(30)
     };
   
   return Joi.validate(team, schema, { "allowUnknown": true });
@@ -75,4 +78,4 @@ async function getTeam(teamID) {
   return team;
 };
 
-module.exports = { Team, validateTeam, getPR, getAccounts, getTeam };
+module.exports = { Team, validateTeam, getPR, getAccounts, getTeam }

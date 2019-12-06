@@ -1,19 +1,31 @@
 const gameClock = require('../util/systems/gameClock/gameClock');
 const banking = require('../util/systems/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
+const { logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+
+const events = require('events')
+const eventListner = new events.EventEmitter();
 
 // Mongoose Object Models
-const { getPR, getTeam } = require('../models/team');
-const { getAircrafts } = require('../models/ops/interceptor');
+const { Team, getPR, getTeam } = require('../models/team');
+const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
 
-function connect(io){
+Interceptor.watch().on('change', data => {
+  socketDebugger(new Date(), data);
+  eventListner.emit('updateAircrafts');
+});
 
+Team.watch().on('change', data => {
+  socketDebugger(data);
+});
+
+module.exports = function (io){
   setInterval(() => {
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
 
   io.on('connection', (client) => {
-    console.log(`New client connected... ${client.id}`);
+    logger.info(`New client connected... ${client.id}`);
 
     client.on('updatePR', async (teamID) => {
       socketDebugger(`${client.id} requested updated PR for ${teamID}`);
@@ -45,6 +57,7 @@ function connect(io){
 
     client.on('bankingTransfer', (transfer) => {
       let { to, from, amount, teamID, note } = transfer;
+      socketDebugger(transfer);
       banking.transfer(teamID, to, from, amount, note);
     });
 
@@ -55,12 +68,16 @@ function connect(io){
 
     client.on('updateAircrafts', async () => {
       socketDebugger(`${client.id} requested updated aircrafts...`);
-      let aircrafts = await getAircrafts();
-      client.emit('currentAircrafts', aircrafts);
+      eventListner.emit('updateAircrafts');
     });
 
-    client.on('disconnect', () => console.log(`Client Disconnected... ${client.id}`));
+    eventListner.on('updateAircrafts', async () => {
+      let aircrafts = await getAircrafts();
+      socketDebugger('Sending Aircrafts!');
+      client.emit('currentAircrafts', aircrafts);
+    });
+    
+
+    client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
   });
 };
-
-module.exports = connect;

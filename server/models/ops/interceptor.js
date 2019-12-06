@@ -79,12 +79,12 @@ const banking = require('../../util/systems/banking/banking');
 
 async function launch (aircraft) {
   try {
-    console.log(`Attempting to launch ${aircraft.designation}`)
+    modelDebugger(`Attempting to launch ${aircraft.designation}`)
     aircraft.status.deployed = true;
     aircraft.status.ready = false;
     aircraft.status.mission = true;
 
-    console.log(aircraft);
+    modelDebugger(aircraft);
 
     let team = await getTeam(aircraft.team.teamId);
 
@@ -95,8 +95,8 @@ async function launch (aircraft) {
     await aircraft.save();
     console.log(`Aircraft ${aircraft.designation} deployed...`);
     return 0;
-  } catch {
-
+  } catch (err) {
+    modelDebugger('Error:', err.message);
   }
 }
 

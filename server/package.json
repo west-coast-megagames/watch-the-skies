@@ -10,7 +10,8 @@
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "engines": {
-    "node": "10.15.3"
+    "node": "10.15.3",
+    "npm": "6.x"
   },
   "author": "John T. Cleveland",
   "license": "ISC",
@@ -18,16 +19,20 @@
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.1",
+    "config": "^3.2.4",
     "cors": "^2.8.5",
     "debug": "^4.1.1",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "helmet": "^3.21.2",
     "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.2.7",
     "mongoose": "^5.7.5",
     "socket.io": "^2.3.0",
     "supports-color": "^7.1.0",
-    "winston": "^3.2.1"
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"

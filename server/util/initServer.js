@@ -10,6 +10,7 @@ const runLoad = require('../util/initRefLoad');
 const runTeamLoad = require('../util/teamLoad');
 const runInterceptorLoad = require('../util/interceptorLoad');
 const runUserLoad = require('../util/userLoad');
+const runBaseLoad = require('../util/baseLoad');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -61,10 +62,11 @@ app.use('/users', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
 
-//runLoad(true);   // load simple reference tables/documents from refdata.json
-//runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
-//runInterceptorLoad(true);  // load expanded interceptor fields
+runLoad(true);   // load simple reference tables/documents from refdata.json
+runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
+runInterceptorLoad(true);  // load expanded interceptor fields
 runUserLoad(true);  // load expanded User fields
+runBaseLoad(true);  // load expanded Base fields
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

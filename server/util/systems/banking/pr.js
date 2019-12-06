@@ -1,6 +1,6 @@
 const { d8 } = require('../intercept/dice');
 const prDebugging = require('debug')('app:prSystem');
-const { deposit } = require('../banking/banking')
+const { deposit } = require('../banking/banking');
 
 const { Team } = require('../../../models/team');
 
@@ -15,12 +15,12 @@ async function updatePR() {
             prDebugging(`Assigning income for ${name}...`);
 
             let prChange = rollPR(prLevel, prTrack, 0);
-            team.accounts = await deposit(_id, name, accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`)
+            team.accounts = await deposit(_id, name, accounts, 'Treasury', prChange.income, `Turn ${turnNum} income.`);
             team.prLevel = prChange.prLevel;
 
             team = await team.save()
-            console.log(`${team.name} has ${team.prLevel}`)
-            console.log(team.accounts)
+            prDebugging(`${team.name} has PR Level of ${team.prLevel}`);
+            prDebugging(team.accounts);
         };
     } catch (err) {
         prDebugging('Error:', err.message);
@@ -29,9 +29,9 @@ async function updatePR() {
 
 function rollPR(currentPR, prTrack, prModifier) {
     let prRoll = d8();
-    let prLevel = 0
+    let prLevel = 0;
 
-    prDebugging(`Current PR: ${currentPR}`)
+    prDebugging(`Current PR: ${currentPR}`);
     prDebugging(`PR Roll: ${prRoll}`);
 
     if (prRoll < currentPR) {
@@ -39,7 +39,7 @@ function rollPR(currentPR, prTrack, prModifier) {
     } else if (prRoll > currentPR) {
         prLevel = currentPR + prModifier + 1;
     } else {
-        prLevel = currentPR + prModifier
+        prLevel = currentPR + prModifier;
     }
 
     prLevel = prLevel > 8 ? 8 : prLevel;
@@ -48,9 +48,9 @@ function rollPR(currentPR, prTrack, prModifier) {
     let income = prTrack[prLevel];
 
     prDebugging(`PR Level: ${prLevel}`);
-    prDebugging(`Income: ${income}`)
+    prDebugging(`Income: ${income}`);
 
-    return { prLevel, income }
+    return { prLevel, income };
 }
 
 module.exports = { rollPR, updatePR };

@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 
 class Interceptors extends Component {
 
-    /*deploy = (aircraft) => {
-        console.log(aircraft)
-        const ships = this.state.ships.filter(s => s._id !== aircraft._id);
-        this.setState({ ships });
-    };*/
-
     retreiveStatus = (aircraft) => {
       if (!aircraft.status.deployed) {
         return 'Idle';

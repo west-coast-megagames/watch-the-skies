@@ -1,5 +1,6 @@
 const errorDebugger = require('debug')('app:error')
 const winston = require('winston');
+require ('winston-mongodb');
 
 const { createLogger, format, transports } = winston;
 
@@ -13,14 +14,15 @@ const logger = createLogger({
       format.splat(),
       format.json()
     ),
-    defaultMeta: { service: 'your-service-name' },
+    defaultMeta: { service: 'Default Log:' },
     transports: [
       //
       // - Write to all logs with level `info` and below to `quick-start-combined.log`.
       // - Write all logs error (and below) to `quick-start-error.log`.
       //
-      new transports.File({ filename: 'quick-start-error.log', level: 'error' }),
-      new transports.File({ filename: 'quick-start-combined.log' })
+      new transports.File({ filename: 'prototype-error.log', level: 'error' }),
+      new transports.File({ filename: 'prototype-combined.log' }),
+      new transports.MongoDB({ db: 'mongodb+srv://Admin:u8A7WZzz80uLT5we@cluster0-dvbtk.azure.mongodb.net/test?retryWrites=true&w=majority'})
     ]
   });
 
@@ -31,9 +33,11 @@ const logger = createLogger({
     )
   }));
 
-module.exports = (err, req, res, next) => {
-    logger.info(err.message, err);
+  function routeError (err, req, res, next) {
+    logger.error(err);
 
     errorDebugger('Error:', err.message);
     res.status(500).send(`Error: ${err.message}`);
 };
+
+module.exports = { routeError, logger }
