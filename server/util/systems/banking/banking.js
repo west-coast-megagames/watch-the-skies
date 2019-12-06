@@ -1,13 +1,17 @@
+let autoTranfers = [];
+
 const bankDebugging = require('debug')('app:bankingSystem');
-const { Team } = require('../../../models/team');
 const alerts = require('../notifications/alerts');
 const transactionLog = require('../../../models/logs/transactionLog')
 
-let autoTranfers = [];
+const { Team } = require('../../../models/team');
+const { Interceptor } = require('../../../models/ops/interceptor')
 
-async function transfer (teamID, to, from, amount, note) {   
-    try {
-        let team = await Team.findOne({ _id: teamID });
+async function transfer (teamID, to, from, amount, note) {
+        const { Team } = require('../../../models/team');
+        console.log(Team);
+        console.log(Interceptor);
+        let team = await Team.findById({ _id: teamID });
         let { accounts, name, teamCode } = team;
 
         bankDebugging(`${team.name} has initiated a transfer!`);
@@ -21,12 +25,11 @@ async function transfer (teamID, to, from, amount, note) {
         bankDebugging(`${team.name} transfer completed!`)
 
         return team.accounts;
-    } catch (err) {
-        console.log(`Error: ${err.message}`);
-    }    
 };
 
 function deposit (teamID, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
+
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to deposit into ${account}.`);
@@ -71,6 +74,8 @@ function deposit (teamID, team, accounts, account, amount, note) {
 };
 
 function withdrawl (teamID, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
+
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
     bankDebugging(`Attempting to withdrawl from ${account}.`);

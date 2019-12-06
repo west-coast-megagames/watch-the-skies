@@ -57,6 +57,7 @@ module.exports = function (io){
 
     client.on('bankingTransfer', (transfer) => {
       let { to, from, amount, teamID, note } = transfer;
+      socketDebugger(transfer);
       banking.transfer(teamID, to, from, amount, note);
     });
 

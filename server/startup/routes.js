@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 
 // Error handling and Logging
 const error = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const cors = require('cors');
 
 // Routes - Using Express
 const auth = require('../routes/api/auth');
@@ -17,6 +18,9 @@ const logs = require('../routes/api/log');
 module.exports = function(app) {
     // Bodyparser Middleware
     app.use(bodyParser.json());
+
+    // Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
+    app.use(cors());
 
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
     app.use('/api/auth', auth);

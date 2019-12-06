@@ -3,7 +3,6 @@ const http = require('http');
 const { logger } = require('./middleware/winston');
 
 require('supports-color');
-const cors = require('cors');
 
 // Import of the temparary Alert socket route for v0.1.1
 const { alerts } = require('./util/systems/notifications/alerts');
@@ -21,9 +20,6 @@ const io = require('socket.io')(server); // Creation of websocket Server
 // Socket.io routes (Currently housed in config/sockets.js)
 require('./config/sockets')(io); // Main websocket routes
 alerts(io); // Temp alert route for v0.1.1
-
-// Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
-app.use(cors());
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

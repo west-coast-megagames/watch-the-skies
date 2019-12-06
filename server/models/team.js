@@ -78,4 +78,4 @@ async function getTeam(teamID) {
   return team;
 };
 
-module.exports = { Team, validateTeam, getPR, getAccounts, getTeam };
+module.exports = { Team, validateTeam, getPR, getAccounts, getTeam }

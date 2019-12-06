@@ -34,7 +34,7 @@ const logger = createLogger({
   }));
 
   function routeError (err, req, res, next) {
-    logger.error(err.message, err);
+    logger.error(err);
 
     errorDebugger('Error:', err.message);
     res.status(500).send(`Error: ${err.message}`);

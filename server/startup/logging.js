@@ -5,13 +5,13 @@ module.exports = function () {
 
     // Add in Error handling for uncought exceptions
     process.on('uncaughtException', (err) => {
-        error.logger.error(err.message, err);
+        error.logger.error(err);
         process.exit(1);
     });
 
     // Add in Error handling for unhandled Promise rejections
     process.on('unhandledRejection', (err) => {
-        error.logger.error(err.message, err);
+        error.logger.error(err);
         process.exit(1);
     });
 }
