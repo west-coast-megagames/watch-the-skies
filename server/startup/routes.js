@@ -5,6 +5,7 @@ const error = require('../middleware/winston'); // middleware/error.js which is 
 const cors = require('cors');
 
 // Routes - Using Express
+const home = require('../routes/api/home');
 const auth = require('../routes/api/auth');
 const interceptor = require('../routes/api/interceptor');
 const team = require('../routes/api/team');
@@ -23,6 +24,7 @@ module.exports = function(app) {
     app.use(cors());
 
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
+    app.use('/', home);
     app.use('/api/auth', auth);
     app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
     app.use('/api/team', team); // Route for Teams

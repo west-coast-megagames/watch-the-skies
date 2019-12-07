@@ -83,7 +83,7 @@ class App extends Component {
 
   // Axios call to server for all teams
   async getTeams () {
-    let { data: teams } = await axios.get('http://localhost:5000/api/team');
+    let { data: teams } = await axios.get('https://project-nexus-prototype.herokuapp.com/api/team');
     this.setState({ teams })
   }
 

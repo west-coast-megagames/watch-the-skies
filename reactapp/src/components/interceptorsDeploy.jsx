@@ -42,7 +42,7 @@ class InterceptorDeployForm extends Component {
       defender: this.state.contact
     };
 
-    await axios.put('http://localhost:5000/api/intercept', stats);
+    await axios.put('https://project-nexus-prototype.herokuapp.com/api/intercept', stats);
   }
 
   handleChange = event => {
