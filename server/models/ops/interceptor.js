@@ -74,10 +74,9 @@ async function getAircrafts() {
   }
 };
 
-const { getTeam } = require('../team');
-const banking = require('../../util/systems/banking/banking');
-
 async function launch (aircraft) {
+  const { getTeam } = require('../team');
+  const banking = require('../../wts/banking/banking');
   try {
     modelDebugger(`Attempting to launch ${aircraft.designation}`)
     aircraft.status.deployed = true;

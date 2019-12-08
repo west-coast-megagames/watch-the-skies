@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const routeDebugger = require('debug')('app:routes');
-const intercept = require('../../util/systems/intercept/intercept');
+const intercept = require('../../wts/intercept/intercept');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');

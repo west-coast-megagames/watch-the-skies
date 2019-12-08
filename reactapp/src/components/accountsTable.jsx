@@ -22,7 +22,7 @@ const accountsTable = (props) => {
                 { props.accounts.map(account => (
                     <tr key={ account._id }>
                         <td>{ account.name }</td>
-                        <td>{ account.balance }</td>
+                        <td>$M { account.balance }</td>
                     </tr>
                 ))}
             </MDBTableBody>

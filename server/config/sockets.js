@@ -1,5 +1,5 @@
-const gameClock = require('../util/systems/gameClock/gameClock');
-const banking = require('../util/systems/banking/banking');
+const gameClock = require('../wts/gameClock/gameClock');
+const banking = require('../wts/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
 const { logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 

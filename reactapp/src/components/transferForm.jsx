@@ -5,7 +5,8 @@ import { banking, teamEvents } from '../api';
 
 class TransferForm extends Component {
     state = {
-        transfer: { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id},
+        transfer: { to: '', from: '', amount: 0, note: '', teamID: ''},
+        account: {},
         schedule: false
     }
 
@@ -26,9 +27,22 @@ class TransferForm extends Component {
     };
 
     handleChange = ({currentTarget: input}) => {
+        if (input.name === 'from') {
+            let accountIndex = this.props.team.accounts.findIndex((account => account.name === input.value));
+            let account = this.props.team.accounts[accountIndex];
+            this.setState({ account });
+        }
+
+        if (input.value < 0 && input.name === 'amount') {
+            input.value = 0;
+        } else if (input.value > this.state.account.balance && input.name === 'amount') {
+            input.value = this.state.account.balance;
+        }
+
         console.log(`Input Value: ${input.value}`);
         const transfer = {...this.state.transfer};
         transfer[input.name] = input.value;
+        transfer.teamID = this.props.team._id
         this.setState({ transfer })
     };
 
@@ -38,6 +52,11 @@ class TransferForm extends Component {
         input.value === 'true' ? schedule = true : schedule = false 
         this.setState({ schedule })
     };
+
+    componentDidMount() {
+        let transfer = { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id}
+        this.setState({ transfer });
+    }
 
     render() {
         let accounts = this.props.team.accounts;

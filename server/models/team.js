@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const gameClock = require('../util/systems/gameClock/gameClock');
+const gameClock = require('../wts/gameClock/gameClock');
 const modelDebugger = require('debug')('app:teamModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');

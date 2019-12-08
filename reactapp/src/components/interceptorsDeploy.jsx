@@ -62,10 +62,11 @@ class InterceptorDeployForm extends Component {
           <div id="deployForm" style={ deployStyle }>
             <form id="deployForm" style={ formStyle } onSubmit={ this.handleSubmit }>
               <div className="form-group">
-                <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept contact { this.props.contact }</label>
+                <p>Current Position: { this.props.contact.location.country.countryName }</p>
+                <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept { this.props.contact.designation }</label>
                   <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
-                    <option></option>
-                    { this.props.aircrafts.map(ship => (
+                    <option>Select an interceptor!</option>
+                    { this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true).map(ship => (
                         <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
                     ))}
                   </select>
