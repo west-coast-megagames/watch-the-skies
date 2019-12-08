@@ -1,7 +1,7 @@
 const { atkRoll, defRoll } = require('./rolls');
 const interceptDebugger = require('debug')('app:intercept');
 const interceptDmg = require('./damage');
-const atkLog = require('./report');
+const report = require('./report');
 
 const interceptor = require('../../models/ops/interceptor');
 
@@ -36,21 +36,16 @@ function intercept (attacker, defender) {
     let atkResult = atkRoll(attacker); // Gets Attacker Roll
     let defResult = defRoll(defender); // Gets Defender Roll
 
-    report = interceptDmg(attacker, defender, atkResult, defResult);
+    let interceptReport = interceptDmg(attacker, defender, atkResult, defResult);
 
-    result = {
+    let result = {
         attackerReport: `${attacker.designation} got a ${atkResult.outcome}`,
         defenderReport: `${defender.designation} got a ${defResult.outcome}`
     };
     
-    const finalReport = {...report, ...result}
+    const finalReport = {...interceptReport, ...result}
 
-    let log = atkLog(finalReport, attacker, defender, engaged);
-
-    interceptDebugger(log);
-    interceptDebugger(result.defenderReport);
-
-    return log;
+   report(finalReport, attacker, defender, engaged);
 };
 
 module.exports = { launchInterception, resolveInterceptions };
