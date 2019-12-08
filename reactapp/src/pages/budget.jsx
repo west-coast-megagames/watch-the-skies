@@ -29,6 +29,11 @@ const Budget = (props) => {
                     />
                 </MDBCol>
             </MDBRow>
+            <MDBRow>
+                <MDBCol>
+                    <h4>Automatic Transfers</h4>
+                </MDBCol>
+            </MDBRow>
         </MDBContainer>
     );
 }
