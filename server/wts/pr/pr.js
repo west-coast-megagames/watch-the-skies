@@ -1,11 +1,10 @@
-const { d8 } = require('../intercept/dice');
+const { d8 } = require('../../util/systems/dice');
 const prDebugging = require('debug')('app:prSystem');
 const { deposit } = require('../banking/banking');
 
-const { Team } = require('../../../models/team');
-
 async function updatePR() {
     const gameClock = require('../gameClock/gameClock');
+    const { Team } = require('../../models/team');
     let { turnNum } = gameClock.getTimeRemaining();
     
     prDebugging(`Assingning turn ${turnNum} income!`);

@@ -1,4 +1,3 @@
-const { Team } = require ('../../../models/team')
 const EventEmitter = require('events');
 
 class Event extends EventEmitter {}
@@ -24,9 +23,10 @@ function alerts (io) {
 };
 
 async function setAlert({ teamID, title, body }) {
+    const { Team } = require ('../../../models/team')
 
     let team = await Team.findOne({ _id: teamID });
-    let { getTimeRemaining } = require('../gameClock/gameClock')
+    let { getTimeRemaining } = require('../../../wts/gameClock/gameClock')
     let time = getTimeRemaining();
     console.log(`Setting ${title} alert for ${team.teamCode}`);
     count++;

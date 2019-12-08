@@ -1,4 +1,4 @@
-const { d6 } = require('./dice')
+const { d6 } = require('../../util/systems/dice')
 const { passive, aggressive } = require('./outcome')
 const interceptDebugger = require('debug')('app:intercept');
 

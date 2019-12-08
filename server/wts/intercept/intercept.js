@@ -3,7 +3,7 @@ const interceptDebugger = require('debug')('app:intercept');
 const interceptDmg = require('./damage');
 const atkLog = require('./report');
 
-const interceptor = require('../../../models/ops/interceptor');
+const interceptor = require('../../models/ops/interceptor');
 
 let interceptions = [];
 
