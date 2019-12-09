@@ -66,12 +66,8 @@ function validateInterceptor(interceptor) {
 
 async function getAircrafts() {
   modelDebugger('Retriving all aircraft documents...');
-  try {
-      let interceptors = await Interceptor.find();
-      return interceptors;
-  } catch (err) {
-      modelDebugger('Error:', err.message);
-  }
+  let interceptors = await Interceptor.find();
+  return interceptors;
 };
 
 async function launch (aircraft) {

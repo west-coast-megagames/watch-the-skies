@@ -1,25 +1,28 @@
-let autoTranfers = [];
+const bankDebugging = require('debug')('app:bankingSystem'); // Debug console log
 
-const bankDebugging = require('debug')('app:bankingSystem');
-const alerts = require('../../util/systems/notifications/alerts');
-const transactionLog = require('../../models/logs/transactionLog')
+const alerts = require('../../util/systems/notifications/alerts'); // Alert system [Depreciated]
+const transactionLog = require('../../models/logs/transactionLog') // WTS Game log function
 
-const { Team } = require('../../models/team');
-const { Interceptor } = require('../../models/ops/interceptor')
+const { Team } = require('../../models/team'); // Mongoose Model - Team
+const { Interceptor } = require('../../models/ops/interceptor') // Mongoose Model - Interceptor
 
+// FUNCTION - transfer [async]
+// IN: Transfer Object { teamID, to, from, amount, note }
+// OUT: Modified Accounts Object - From the Team Object
+// PROCESS: Takes the Transfer object and initiates the correct Deposit and Withdrawl
 async function transfer (teamID, to, from, amount, note) {
         const { Team } = require('../../models/team');
-        console.log(Team);
-        console.log(Interceptor);
+
         let team = await Team.findById({ _id: teamID });
         let { accounts, name, teamCode } = team;
 
         bankDebugging(`${team.name} has initiated a transfer!`);
 
-        accounts = withdrawl(teamID, name, accounts, from, amount, note);
-        accounts = deposit(teamID, name, accounts, to, amount, note);
+        accounts = await withdrawl(teamID, name, accounts, from, amount, note);
+        accounts = await deposit(teamID, name, accounts, to, amount, note);
 
         bankDebugging(`Saving ${team.name} information...`);
+        team.markModified('accounts');
         team = await team.save();
         bankDebugging(team.accounts);
         bankDebugging(`${team.name} transfer completed!`)
@@ -48,9 +51,7 @@ function deposit (teamID, team, accounts, account, amount, note) {
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let { turn, phase, turnNum } = getTimeRemaining();
 
-    bankDebugging(newAccounts[accountIndex].deposits[turnNum])
-    newAccounts[accountIndex].deposits[turnNum] += parseInt(amount);
-    bankDebugging(newAccounts[accountIndex].deposits[turnNum]);
+    newAccounts[accountIndex] = trackTransaction(newAccounts[accountIndex], amount, 'deposit');
 
     let log = new transactionLog({
         timestamp: {
@@ -93,8 +94,10 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
     });
 
     const { getTimeRemaining } = require('../gameClock/gameClock')
-
     let { turn, phase, turnNum } = getTimeRemaining();
+
+    newAccounts[accountIndex] = trackTransaction(newAccounts[accountIndex], amount, 'withdrawl');
+    
     let log = new transactionLog({
         timestamp: {
             date: Date.now(),
@@ -117,26 +120,48 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
 };
 
 async function setAutoTransfer (teamID, to, from, amount, note) {
-    try {
+        const { Team } = require('../../models/team');
         let team = await Team.findOne({ _id: teamID });
+        let transfer = { to, from, amount, note }
+
         bankDebugging(`${team.name} is setting up an automatic payment!`);
+        
+        team.transfers.push(transfer);
 
-        let newTransfer = [{ teamID, to, from, amount, note }];
-
-        autoTranfers = [...autoTranfers, ...newTransfer];
-
+        await team.save();
         return `New autotransfer created`;
-    } catch (err) {
-        console.log(`Error: ${err.message}`);
-    }    
 };
 
-function automaticTransfer() {
-    for (let autoTransfer of autoTranfers) {
-        let { teamID, to, from, amount, note } = autoTransfer;
-        
-        transfer(teamID, to, from, amount, note);
+async function automaticTransfer() {
+    const { Team } = require('../../models/team');
+    let teams = await Team.find();
+    for (let team of teams) {
+        for (let transaction of team.transfers) {
+            let { to, from, amount, note } = transaction;
+            let { accounts, name, _id } = team;            
+            transfer(team._id, to, from, amount, note);
+            
+
+            bankDebugging(`${team.name} has initiated a transfer!`);
+    
+            accounts = await withdrawl(_id, name, accounts, from, amount, note);
+            accounts = await deposit(_id, name, accounts, to, amount, note);
+        }
+        team.markModified('accounts');
+        team = await team.save();
     }
+};
+
+function trackTransaction(account, amount, type) {
+    let { getTimeRemaining } = require('../gameClock/gameClock')
+    let { turnNum } = getTimeRemaining();
+    amount = parseInt(amount)
+    if (type === 'deposit') {
+        account.deposits[turnNum] += amount;
+    } else if (type === 'withdrawl') {
+        account.withdrawls[turnNum] += amount;
+    }
+    return account;
 }
 
 module.exports = {
