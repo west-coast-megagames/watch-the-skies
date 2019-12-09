@@ -2,6 +2,8 @@ const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
 
+const { logger } = require('../../middleware/winston');
+
 // Interceptor Model - Using Mongoose Model
 const { Team } = require('../../models/team');
 
@@ -38,7 +40,7 @@ router.post('/', async function (req, res) {
     if (!docs.length) {
         let team = await newTeam.save();
         res.json(team);
-        console.log(`The ${name} team created...`);
+        routeDebugger(`The ${name} team created...`);
     } else {                
         console.log(`${name} team already exists!`);
         res.status(400).send(`${name} team already exists!`);
@@ -64,7 +66,7 @@ router.delete('/:id', async function (req, res) {
     let id = req.params.id;
     const team = await team.findByIdAndRemove(id);
     if (team != null) {
-        console.log(`${team.name} with the id ${id} was deleted!`);
+        logger.info(`${team.name} with the id ${id} was deleted!`);
         res.send(`${team.name} with the id ${id} was deleted!`);
     } else {
         res.send(`No team with the id ${id} exists!`);
@@ -83,7 +85,10 @@ router.patch('/accounts', async function (req, res) {
         console.log(`PR Level set to ${prLevel}`);
         for (let account of accounts) {
             account.balance = 0;
+            account.deposits = [0, 0, 0, 0, 0];
+            account.withdrawls = [0, 0, 0, 0, 0];
         };
+
         team.accounts = accounts;
         let index = team.accounts.findIndex((obj => obj.name === 'Treasury'));
         team.accounts[index].balance = prTrack[prLevel];
