@@ -5,10 +5,10 @@ import { MDBContainer } from "mdbreact";
 class ChartsPage extends React.Component {
   state = {
     dataLine: {
-      labels: ["Q1 2020", "Q2 2020", "Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021", "Q3 2021", "Q4 2021"],
+      labels: ["Q1 2020", "Q2 2020", "Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021", "Q3 2021", "Q4 2021", "Q1 2022", "Q2 2022", "Q3 2022", "Q4 2022", ],
       datasets: [
         {
-          label: "Income/Turn",
+          label: "Treasury",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(225, 204,230, .3)",
@@ -26,10 +26,10 @@ class ChartsPage extends React.Component {
           pointHoverBorderWidth: 2,
           pointRadius: 1,
           pointHitRadius: 10,
-          data: [30, 36, 44, 23, 12, 6, 0]
+          data: [15, 22, 10, 12, 11, 22, 26, 0]
         },
         {
-          label: "Spending/turn",
+          label: "Income/turn",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(184, 185, 210, .3)",
@@ -53,7 +53,39 @@ class ChartsPage extends React.Component {
     }
   };
 
+  componentDidMount() {
+    if (this.props.team.name !== "Select Team") {
+      let accountIndex = this.props.team.accounts.findIndex(account => account.name === 'Treasury');
+      let account = this.props.team.accounts[accountIndex];
+      let { dataLine } = this.state;
+      console.log(account);
+      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Treasury');
+      dataLine.datasets[datasetIndex].data = account.withdrawls;
+      this.setState({ dataLine });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.team !== prevProps.team) {
+            let accountIndex = this.props.team.accounts.findIndex(account => account.name === 'Treasury');
+      let account = this.props.team.accounts[accountIndex];
+      let { dataLine } = this.state;
+      console.log(account);
+      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Treasury');
+      dataLine.datasets[datasetIndex].data = account.withdrawls;
+      this.setState({ dataLine });
+    }
+  }
+
   render() {
+    if (this.props.team.name === "Select Team") {
+      return(
+        <div>
+          <p>No Chart Availible</p>
+        </div>
+      )
+    };
+
     return (
       <MDBContainer>
         <Line data={this.state.dataLine} options={{ responsive: true }} />

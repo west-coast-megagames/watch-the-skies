@@ -24,9 +24,7 @@ const Budget = (props) => {
                     <AccountsTable accounts={ props.team.accounts } />
                 </MDBCol>
                 <MDBCol size="5">
-                    <ChartsPage
-                        team={ props.team }
-                    />
+                    <ChartsPage team={ props.team } />
                 </MDBCol>
             </MDBRow>
             <MDBRow>
