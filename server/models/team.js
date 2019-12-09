@@ -18,6 +18,13 @@ const AccountSchema = new Schema({
   withdrawls: [Number]
 });
 
+const TransferSchema = new Schema({
+  to: { type: String },
+  from: { type: String },
+  amount: { type: Number },
+  note: { type: String }
+})
+
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, unique: true, minlength: 2, maxlength: 30 },
@@ -26,7 +33,8 @@ const TeamSchema = new Schema({
   roles: [RoleSchema],
   prTrack: [Number],
   prLevel: { type: Number },
-  accounts: [AccountSchema]
+  accounts: [AccountSchema],
+  transfers: [TransferSchema]
 });
 
 TeamSchema.methods.validateTeam = function (team) {
