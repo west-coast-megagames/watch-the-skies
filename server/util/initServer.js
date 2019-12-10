@@ -62,11 +62,11 @@ app.use('/users', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
 
-runLoad(true);   // load simple reference tables/documents from refdata.json
+//runLoad(true);   // load simple reference tables/documents from refdata.json
 runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
-runInterceptorLoad(true);  // load expanded interceptor fields
-runUserLoad(true);  // load expanded User fields
-runBaseLoad(true);  // load expanded Base fields
+//runInterceptorLoad(true);  // load expanded interceptor fields
+//runUserLoad(true);  // load expanded User fields
+//runBaseLoad(true);  // load expanded Base fields
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

@@ -39,18 +39,13 @@ teamLoadDebugger("Jeff in initLoad", doLoad, teamDataIn.length);
     
     teamLoadDebugger("Jeff in runTeamLoad loop", i, teamDataIn[i].loadType );    
     if (teamDataIn[i].loadType == "team") {     
-        if (teamDataIn[i].loadFlag == "false") {
-          /* no longer skipping this
-          if (teamDataIn[i].code == "USA") {
-            teamLoadDebugger("Skipping Delete Of USA for now", teamDataIn[i].code);  
-            continue;    // next loop 
-          }
-          */
-          await deleteTeam(teamDataIn[i]);
-        }
-        else {
-          await loadTeam(teamDataIn[i]);
-        }
+      
+      // delete old data
+      await deleteTeam(teamDataIn[i]);
+
+      if (teamDataIn[i].loadFlag == "true") {
+        await loadTeam(teamDataIn[i]);
+      }
     }
   }
 };
