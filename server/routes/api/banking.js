@@ -17,6 +17,46 @@ router.get('/accounts', async function (req, res) {
     res.json(accounts);
 });
 
+// @route   POST api/banking/account
+// @Desc    Post a new account
+// @access  Public
+router.post('/account', async function (req, res) {
+    let { team_id, name, code, balance, deposits, withdrawls, autoTransfers } = req.body;
+    const newAccount = new Account(
+        { team_id, name, code, balance, deposits, withdrawls, autoTransfers }
+    );
+    let docs = await Account.find({ team_id, name })
+    if (!docs.length) {
+        let account = await newAccount.save();
+        res.json(account);
+        console.log(`${name} account created...`);
+    } else {                
+        console.log(`${name} account already exists for this team... `);
+        res.send(`${name} account already exists for this team... `);
+    }
+});
+
+// @route   POST api/banking/accounts
+// @Desc    Post a new account
+// @access  Public
+router.post('/accounts', async function (req, res) {
+    for (let account in res.body) {
+        const newAccount = new Account(
+            { account }
+        );
+        let { team_id, name } = newAccount;
+        let docs = await Account.find({ team_id, name })
+        if (!docs.length) {
+            let account = await newAccount.save();
+            res.json(account);
+            console.log(`${name} account created...`);
+        } else {                
+            console.log(`${name} account already exists for this team... `);
+            res.send(`${name} account already exists for this team... `);
+        }
+    }
+});
+
 // @route   GET api/banking/accounts/:id
 // @Desc    Get a single account by id
 // @access  Public
@@ -47,5 +87,13 @@ router.patch('/banking/accounts', async function (req, res) {
     };
     res.send("Accounts succesfully reset!");
 });
+
+router.put('/accounts', async function (req, res) {
+    let { team_id } = req.body;
+    routeDebugger('Looking up accounts...');
+    let accounts = await Account.find({ team_id })
+    res.json(accounts);
+});
+
 
 module.exports = router;

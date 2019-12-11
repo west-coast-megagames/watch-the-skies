@@ -71,8 +71,9 @@ async function getAircrafts() {
 };
 
 async function launch (aircraft) {
-  const { getTeam } = require('../team');
   const banking = require('../../wts/banking/banking');
+  const { Account } = require('../gov/account');
+
   try {
     modelDebugger(`Attempting to launch ${aircraft.designation}`)
     aircraft.status.deployed = true;
@@ -81,15 +82,14 @@ async function launch (aircraft) {
 
     modelDebugger(aircraft);
 
-    let team = await getTeam(aircraft.team.team_id);
+    let account = await Account.findOne({ name: 'Operations', team_id: aircraft.team.team_id });
+    console.log(account)
 
-    let account = banking.withdrawl(team._id, team.teamName, team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
-    team.accounts = account;
+    account = banking.withdrawl(account, 1, `Deployment of ${aircraft.designation}`)
 
-    await team.save();
+    await account.save();
     await aircraft.save();
     console.log(`Aircraft ${aircraft.designation} deployed...`);
-    return 0;
   } catch (err) {
     modelDebugger('Error:', err.message);
   }
