@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 function runTeamLoad(runFlag){
-teamLoadDebugger("Jeff in runTeamLoad", runFlag);    
   if (!runFlag) return;
   if (runFlag) initLoad(runFlag);
   else return;
@@ -32,12 +31,10 @@ teamLoadDebugger("Jeff in runTeamLoad", runFlag);
 
 async function initLoad(doLoad) {
   
-teamLoadDebugger("Jeff in initLoad", doLoad, teamDataIn.length);    
   if (!doLoad) return;
 
   for (let i = 0; i < teamDataIn.length; ++i ) {
     
-    teamLoadDebugger("Jeff in runTeamLoad loop", i, teamDataIn[i].loadType );    
     if (teamDataIn[i].loadType == "team") {     
       
       // delete old data
@@ -71,7 +68,8 @@ async function loadTeam(tData){
         team.prTrack  = tData.prTrack;
         team.roles    = tData.roles;
         team.prLevel  = tData.prLevel;
-        team.accounts = tData.accounts;
+
+        //team.accounts = tData.accounts;   ... moved to it's own load
 
         team.save((err, team) => {
           if (err) return console.error(`New Team Save Error: ${err}`);
@@ -87,7 +85,8 @@ async function loadTeam(tData){
        team.prTrack   = tData.prTrack;
        team.roles     = tData.roles;
        team.prLevel   = tData.prLevel;
-       team.accounts  = tData.accounts;
+
+       //team.accounts  = tData.accounts;  ... moved to it's own load
 
        const { error } = validateTeam(team); 
        if (error) {

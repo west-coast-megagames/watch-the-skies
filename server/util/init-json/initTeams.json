@@ -17,15 +17,7 @@
 ],
 "prTrack" : [0, 6, 12, 18, 24, 30, 36, 42, 48],
 "prLevel" : 5,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-    {"name" : "Governance", "code" : "gov", "balance" : 0},
-    {"name": "Operations", "code": "ops", "balance" : 0},
-    {"name" : "Science", "code" : "sci", "balance" : 0},
-    {"name" : "Political", "code": "pol", "balance": 0},
-    {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
-"loadFlag" : "true",
-"parent" : [ {"type" : "country", "code" : ["US"]}]
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -43,15 +35,7 @@
 ],
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-    {"name" : "Governance", "code" : "gov", "balance" : 0},
-    {"name": "Operations", "code": "ops", "balance" : 0},
-    {"name" : "Science", "code" : "sci", "balance" : 0},
-    {"name" : "Political", "code": "pol", "balance": 0},
-    {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
-"loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["RU"]}]
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -70,15 +54,7 @@
 ],
 "prTrack" : [0, 5, 10, 16, 21, 27, 32, 37, 43],
 "prLevel" : 5,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-            {"name" : "Governance", "code" : "gov", "balance" : 0},
-            {"name": "Operations", "code": "ops", "balance" : 0},
-            {"name" : "Science", "code" : "sci", "balance" : 0},
-            {"name" : "Political", "code": "pol", "balance": 0},
-            {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
-"loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["CN"]}]
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -95,15 +71,7 @@
 ],
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-    {"name" : "Governance", "code" : "gov", "balance" : 0},
-    {"name": "Operations", "code": "ops", "balance" : 0},
-    {"name" : "Science", "code" : "sci", "balance" : 0},
-    {"name" : "Political", "code": "pol", "balance": 0},
-    {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
-"loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["FR"]}]
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -120,13 +88,6 @@
 ],
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-    {"name" : "Governance", "code" : "gov", "balance" : 0},
-    {"name": "Operations", "code": "ops", "balance" : 0},
-    {"name" : "Science", "code" : "sci", "balance" : 0},
-    {"name" : "Political", "code": "pol", "balance": 0},
-    {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
 "loadFlag" : "true",
 "parent" : [{"type" : "country", "code" : ["GB"]}]
 },
@@ -141,13 +102,6 @@
     {"role" : "Frontier Logistics Officer", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
 "prLevel" : 0,
-"accounts" : [{"name": "Treasury", "code" : "tre", "balance" : 0},
-    {"name" : "Governance", "code" : "gov", "balance" : 0},
-    {"name": "Operations", "code": "ops", "balance" : 0},
-    {"name" : "Political", "code": "pol", "balance": 0},
-    {"name" : "UNSC", "code" : "uns", "balance": 0}
-],
-"loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["AQ"]}]
+"loadFlag" : "true"
 }
 ]

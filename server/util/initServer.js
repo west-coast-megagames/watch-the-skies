@@ -11,6 +11,7 @@ const runTeamLoad = require('../util/teamLoad');
 const runInterceptorLoad = require('../util/interceptorLoad');
 const runUserLoad = require('../util/userLoad');
 const runBaseLoad = require('../util/baseLoad');
+const runAccountLoad = require('../util/accountLoad');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -26,6 +27,7 @@ const country = require('../routes/api/country');
 const users = require('../routes/users');
 const news = require('../routes/api/news');
 const logs = require('../routes/api/log');
+const account = require('../routes/api/accounts');
 
 // Middleware - express and socketIo
 const app = express();
@@ -61,12 +63,14 @@ app.use('/api/country', country); // Route for inputing countries
 app.use('/users', users); // Route for dealing with Users
 app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
+app.use('/api/accounts', account); // Route for Team Accounts
 
-runLoad(true);   // load simple reference tables/documents from refdata.json
+//runLoad(true);   // load simple reference tables/documents from refdata.json
 //runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
 //runInterceptorLoad(true);  // load expanded interceptor fields
 //runUserLoad(true);  // load expanded User fields
 //runBaseLoad(true);  // load expanded Base fields
+runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
