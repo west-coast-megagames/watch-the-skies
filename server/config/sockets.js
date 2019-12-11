@@ -9,6 +9,7 @@ const eventListner = new events.EventEmitter();
 // Mongoose Object Models
 const { Team, getPR, getTeam } = require('../models/team');
 const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
+const { Account } = require('../models/gov/account');
 
 Interceptor.watch().on('change', data => {
   socketDebugger(new Date(), data);
@@ -17,6 +18,14 @@ Interceptor.watch().on('change', data => {
 
 Team.watch().on('change', data => {
   socketDebugger(data);
+});
+
+Account.watch().on('change', async data => {
+  socketDebugger(data);
+  let id = data.documentKey._id;
+  let account = await Account.findById(id);
+  let team = await Team.findById(account.team_id);
+  eventListner.emit('updateAccounts', team);
 });
 
 module.exports = function (io){
@@ -56,14 +65,14 @@ module.exports = function (io){
     });
 
     client.on('bankingTransfer', (transfer) => {
-      let { to, from, amount, team_id, note } = transfer;
+      let { to, from, amount, note } = transfer;
       socketDebugger(transfer);
-      banking.transfer(team_id, to, from, amount, note);
+      banking.transfer(to, from, amount, note);
     });
 
     client.on('autoTransfer', (transfer) => {
-      let { to, from, amount, team_id, note } = transfer;
-      banking.setAutoTransfer(team_id, to, from, amount, note);
+      let { to, from, amount, note } = transfer;
+      banking.setAutoTransfer(to, from, amount, note);
     });
 
     client.on('updateAircrafts', async () => {
@@ -76,6 +85,10 @@ module.exports = function (io){
       socketDebugger('Sending Aircrafts!');
       client.emit('currentAircrafts', aircrafts);
     });
+
+    eventListner.on('updateAccounts', team => {
+      client.emit('updateAccounts', team);
+    })
     
 
     client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
