@@ -79,13 +79,13 @@ router.post('/', async (req, res) => {
 
   try {
     for await (const zone of Zone.find({ zoneCode })) {
-      let zoneId = zone.id;
+      let zoneID   = zone.id;
       let zoneName = zone.zoneName;
 
       const newCountry = new Country(
         { code, name, activeFlag,
           zone: {
-            _id: zoneId,
+            _id: zoneID,
             zoneName: zoneName
           }
         });
