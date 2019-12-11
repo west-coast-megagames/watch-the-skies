@@ -8,7 +8,7 @@ const InterceptorSchema = new Schema({
   type: { type: String, required: true, min: 2, maxlength: 50, default: "Interceptor"} ,
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    teamID: { type: Schema.Types.ObjectId, ref: 'Team'}
   },
   stats: {
     hull: { type: Number, default: 2 },
@@ -20,11 +20,11 @@ const InterceptorSchema = new Schema({
   location: { 
     zone: { 
       zoneName: { type: String, default: "UN-Assigned" },
-      zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
+      zoneID: { type: Schema.Types.ObjectId, ref: 'Zone'}
     },
     country: { 
       countryName: { type: String, default: "UN-Assigned" },
-      countryId: { type: Schema.Types.ObjectId, ref: 'Country'}
+      countryID: { type: Schema.Types.ObjectId, ref: 'Country'}
     },
     poi: { type: String }
   },
@@ -81,7 +81,7 @@ async function launch (aircraft) {
 
     modelDebugger(aircraft);
 
-    let team = await getTeam(aircraft.team.teamId);
+    let team = await getTeam(aircraft.team.teamID);
 
     let account = banking.withdrawl(team._id, team.teamName, team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
     team.accounts = account;
