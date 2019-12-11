@@ -81,7 +81,7 @@ async function launch (aircraft) {
 
     modelDebugger(aircraft);
 
-    let team = await getTeam(aircraft.team.teamId);
+    let team = await getTeam(aircraft.team.team_id);
 
     let account = banking.withdrawl(team._id, team.teamName, team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
     team.accounts = account;

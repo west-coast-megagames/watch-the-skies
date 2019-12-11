@@ -1,25 +1,25 @@
 const bankDebugging = require('debug')('app:bankingSystem'); // Debug console log
 
-const alerts = require('../../util/systems/notifications/alerts'); // Alert system [Depreciated]
+const alerts = require('../notifications/alerts'); // Alert system [Depreciated]
 const transactionLog = require('../../models/logs/transactionLog') // WTS Game log function
 
 const { Team } = require('../../models/team'); // Mongoose Model - Team
 const { Interceptor } = require('../../models/ops/interceptor') // Mongoose Model - Interceptor
 
 // FUNCTION - transfer [async]
-// IN: Transfer Object { teamID, to, from, amount, note }
+// IN: Transfer Object { team_id, to, from, amount, note }
 // OUT: Modified Accounts Object - From the Team Object
 // PROCESS: Takes the Transfer object and initiates the correct Deposit and Withdrawl
-async function transfer (teamID, to, from, amount, note) {
+async function transfer (team_id, to, from, amount, note) {
         const { Team } = require('../../models/team');
 
-        let team = await Team.findById({ _id: teamID });
+        let team = await Team.findById({ _id: team_id });
         let { accounts, name, teamCode } = team;
 
         bankDebugging(`${team.name} has initiated a transfer!`);
 
-        accounts = await withdrawl(teamID, name, accounts, from, amount, note);
-        accounts = await deposit(teamID, name, accounts, to, amount, note);
+        accounts = await withdrawl(team_id, name, accounts, from, amount, note);
+        accounts = await deposit(team_id, name, accounts, to, amount, note);
 
         bankDebugging(`Saving ${team.name} information...`);
         team.markModified('accounts');
@@ -30,8 +30,8 @@ async function transfer (teamID, to, from, amount, note) {
         return team.accounts;
 };
 
-function deposit (teamID, team, accounts, account, amount, note) {
-    const alerts = require('../../util/systems/notifications/alerts');
+function deposit (team_id, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
 
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
@@ -43,7 +43,7 @@ function deposit (teamID, team, accounts, account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
-        teamID,
+        team_id,
         title: `${account} Deposit`,
         body: `${amount} deposited into ${account}, for ${note}.`
     });
@@ -60,7 +60,7 @@ function deposit (teamID, team, accounts, account, amount, note) {
             phase,
             turnNum
         },
-        teamId: teamID,
+        team_id,
         transaction: 'deposit',
         account,
         amount,
@@ -74,8 +74,8 @@ function deposit (teamID, team, accounts, account, amount, note) {
     return newAccounts;
 };
 
-function withdrawl (teamID, team, accounts, account, amount, note) {
-    const alerts = require('../../util/systems/notifications/alerts');
+function withdrawl (team_id, team, accounts, account, amount, note) {
+    const alerts = require('../notifications/alerts');
 
     let newAccounts = accounts;
     let accountIndex = accounts.findIndex((obj => obj.name === account));
@@ -88,7 +88,7 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
-        teamID: teamID,
+        team_id: team_id,
         title: `${account} Withdrawl`,
         body: `${amount} withdrawn from ${account}, for ${note}.`
     });
@@ -105,7 +105,7 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
             phase,
             turnNum
         },
-        teamId: teamID,
+        team_id,
         transaction: 'withdrawl',
         account,
         amount,
@@ -119,9 +119,9 @@ function withdrawl (teamID, team, accounts, account, amount, note) {
     return newAccounts;
 };
 
-async function setAutoTransfer (teamID, to, from, amount, note) {
+async function setAutoTransfer (team_id, to, from, amount, note) {
         const { Team } = require('../../models/team');
-        let team = await Team.findOne({ _id: teamID });
+        let team = await Team.findOne({ _id: team_id });
         let transfer = { to, from, amount, note }
 
         bankDebugging(`${team.name} is setting up an automatic payment!`);

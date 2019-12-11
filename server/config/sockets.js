@@ -27,15 +27,15 @@ module.exports = function (io){
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
 
-    client.on('updatePR', async (teamID) => {
-      socketDebugger(`${client.id} requested updated PR for ${teamID}`);
-      let prUpdate = await getPR(teamID);
+    client.on('updatePR', async (team_id) => {
+      socketDebugger(`${client.id} requested updated PR for ${team_id}`);
+      let prUpdate = await getPR(team_id);
       client.emit('prUpdate', prUpdate);
     });
 
-    client.on('updateTeam', async (teamID) => {
-      socketDebugger(`${client.id} requested updated team information for ${teamID}`);
-      let team = await getTeam(teamID);
+    client.on('updateTeam', async (team_id) => {
+      socketDebugger(`${client.id} requested updated team information for ${team_id}`);
+      let team = await getTeam(team_id);
       client.emit('teamUpdate', team);
     });
 
@@ -56,14 +56,14 @@ module.exports = function (io){
     });
 
     client.on('bankingTransfer', (transfer) => {
-      let { to, from, amount, teamID, note } = transfer;
+      let { to, from, amount, team_id, note } = transfer;
       socketDebugger(transfer);
-      banking.transfer(teamID, to, from, amount, note);
+      banking.transfer(team_id, to, from, amount, note);
     });
 
     client.on('autoTransfer', (transfer) => {
-      let { to, from, amount, teamID, note } = transfer;
-      banking.setAutoTransfer(teamID, to, from, amount, note);
+      let { to, from, amount, team_id, note } = transfer;
+      banking.setAutoTransfer(team_id, to, from, amount, note);
     });
 
     client.on('updateAircrafts', async () => {
