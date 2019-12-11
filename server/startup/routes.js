@@ -14,6 +14,7 @@ const country = require('../routes/api/country');
 const users = require('../routes/users');
 const news = require('../routes/api/news');
 const logs = require('../routes/api/log');
+const banking = require('../routes/api/banking');
 
 module.exports = function(app) {
     // Bodyparser Middleware
@@ -32,6 +33,7 @@ module.exports = function(app) {
     app.use('/user', users); // Route for dealing with Users
     app.use('/api/news', news); // Route for the news desks
     app.use('/api/logs', logs); // Route for logs
+    app.use('/api/banking', banking); // Route for banking functions
 
     app.use(error.routeError);
 }

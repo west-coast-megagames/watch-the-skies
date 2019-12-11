@@ -5,7 +5,7 @@ const { logger } = require('./middleware/winston');
 require('supports-color');
 
 // Import of the temparary Alert socket route for v0.1.1
-const { alerts } = require('./util/systems/notifications/alerts');
+const { alerts } = require('./wts/notifications/alerts');
 
 // Start up proceesses
 const app = express();

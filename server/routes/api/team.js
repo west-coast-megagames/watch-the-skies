@@ -73,26 +73,18 @@ router.delete('/:id', async function (req, res) {
     }
 });
 
-// @route   PATCH api/team/accounts
-// @desc    Update all teams to base income and PR
+// @route   PATCH api/team/pr
+// @desc    Update all teams to base PR
 // @access  Public
-router.patch('/accounts', async function (req, res) {
+router.patch('/pr', async function (req, res) {
     for await (let team of Team.find()) {
-        let { prLevel, accounts, name, prTrack } = team;
+        let { prLevel, name } = team;
         console.log(`${name} | PR: ${prLevel}`);
         console.log(`Resetting ${name}s accounts...`);  
         team.prLevel = 2;
         console.log(`PR Level set to ${prLevel}`);
-        for (let account of accounts) {
-            account.balance = 0;
-            account.deposits = [0, 0, 0, 0, 0];
-            account.withdrawls = [0, 0, 0, 0, 0];
-        };
 
-        team.accounts = accounts;
-        let index = team.accounts.findIndex((obj => obj.name === 'Treasury'));
-        team.accounts[index].balance = prTrack[prLevel];
-        console.log(`${team.name} | PR: ${team.prLevel} | Treasury: ${team.accounts[index].balance}`);
+        console.log(`${team.name} | PR: ${team.prLevel}`);
 
         await team.save();
         console.log(`${name}s accounts reset...`);  
