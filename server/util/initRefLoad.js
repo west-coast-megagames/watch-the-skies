@@ -242,7 +242,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
       if (!zone) {
         countryLoadDebugger("Country Load Zone Error, New Country:", cCode, " Zone: ", zCode);
       } else {
-        country.zone.zoneId = zone._id;
+        country.zone.zoneID = zone._id;
         country.zone.zoneName = zone.zoneName;
         countryLoadDebugger("Country Load Zone Found, Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
       }      
@@ -252,7 +252,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
         if (!team) {
           countryLoadDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
         } else {
-          country.team.teamId = team._id;
+          country.team.teamID = team._id;
           country.team.teamName = team.name;
           countryLoadDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
         }
@@ -279,7 +279,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
         if (!zone) {
           countryLoadDebugger("Country Load Zone Error, Update Country:", cCode, " Zone: ", zCode);
         } else {
-          country.zone.zoneId = zone._id;
+          country.zone.zoneID = zone._id;
           country.zone.zoneName = zone.zoneName;
           countryLoadDebugger("Country Load Zone Found, Update Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
         }      
@@ -289,7 +289,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
           if (!team) {
             countryLoadDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
           } else {
-            country.team.teamId = team._id;
+            country.team.teamID = team._id;
             country.team.teamName = team.name;
             countryLoadDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
           }
