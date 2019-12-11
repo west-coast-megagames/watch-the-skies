@@ -16,15 +16,20 @@ const Budget = (props) => {
                 <MDBCol>
                     <TransferForm
                         team={ props.team }
+                        accounts={ props.accounts }
+                        handleUpdate={ props.handleUpdate }
                     />
                 </MDBCol>
             </MDBRow>
             <MDBRow>
                 <MDBCol size="2">
-                    <AccountsTable accounts={ props.team.accounts } />
+                    <AccountsTable accounts={ props.accounts } />
                 </MDBCol>
                 <MDBCol size="5">
-                    <ChartsPage team={ props.team } />
+                    <ChartsPage
+                        team ={ props.team }
+                        accounts={ props.accounts }
+                    />
                 </MDBCol>
             </MDBRow>
             <MDBRow>

@@ -32,16 +32,10 @@ class NavBar extends Component {
     };
 
     render() {
-        let megabucks = 0;
-        if (this.props.team.name !== "Select Team") {
-            let accountIndex = this.props.team.accounts.findIndex((account => account.name === 'Treasury'));
-            megabucks = this.props.team.accounts[accountIndex].balance
-        }
-
         const { minutes, seconds, phase, turn } = this.state;
         const clock = `${minutes}:${seconds}`;
         const pr = this.props.team.name !== "Select Team" ? `PR Level: ${this.props.team.prLevel} | ` : 'PR Level: Unknown |'
-        const megabuckDisplay = ` $M${megabucks} | `
+        const megabuckDisplay = ` $M${this.props.megabucks} | `
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

@@ -8,7 +8,7 @@ class ChartsPage extends React.Component {
       labels: ["Q1 2020", "Q2 2020", "Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021", "Q3 2021", "Q4 2021", "Q1 2022", "Q2 2022", "Q3 2022", "Q4 2022", ],
       datasets: [
         {
-          label: "Treasury",
+          label: "Income/Turn",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(225, 204,230, .3)",
@@ -29,7 +29,7 @@ class ChartsPage extends React.Component {
           data: [15, 22, 10, 12, 11, 22, 26, 0]
         },
         {
-          label: "Income/turn",
+          label: "Expenses/Turn",
           fill: true,
           lineTension: 0.3,
           backgroundColor: "rgba(184, 185, 210, .3)",
@@ -53,32 +53,36 @@ class ChartsPage extends React.Component {
     }
   };
 
-  componentDidMount() {
-    if (this.props.team.name !== "Select Team") {
-      let accountIndex = this.props.team.accounts.findIndex(account => account.name === 'Treasury');
-      let account = this.props.team.accounts[accountIndex];
+  componentDidMount () {
+      if (this.props.accounts.length > 0) {
+      let accountIndex = this.props.accounts.findIndex(account => account.name === 'Treasury');
+      let account = this.props.accounts[accountIndex];
       let { dataLine } = this.state;
       console.log(account);
-      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Treasury');
+      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
+      dataLine.datasets[datasetIndex].data = account.deposits;
+      datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Expenses/Turn');
       dataLine.datasets[datasetIndex].data = account.withdrawls;
       this.setState({ dataLine });
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.team !== prevProps.team) {
-            let accountIndex = this.props.team.accounts.findIndex(account => account.name === 'Treasury');
-      let account = this.props.team.accounts[accountIndex];
+    if (this.props.accounts !== prevProps.accounts && this.props.accounts.length > 0) {
+      let accountIndex = this.props.accounts.findIndex(account => account.name === 'Treasury');
+      let account = this.props.accounts[accountIndex];
       let { dataLine } = this.state;
       console.log(account);
-      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Treasury');
+      let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
+      dataLine.datasets[datasetIndex].data = account.deposits;
+      datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Expenses/Turn');
       dataLine.datasets[datasetIndex].data = account.withdrawls;
       this.setState({ dataLine });
     }
   }
 
   render() {
-    if (this.props.team.name === "Select Team") {
+    if (this.props.team.name === "Select Team" || this.props.accounts.length <= 0) {
       return(
         <div>
           <p>No Chart Availible</p>

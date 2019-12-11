@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { teamEvents, updateAircrafts, currentAircrafts } from './api'
+import { teamEvents, updateAircrafts, currentAircrafts, updateAccounts } from './api'
 import axios from 'axios';
 
 // Components
@@ -28,6 +28,8 @@ class App extends Component {
     user: {},
     teams: [],
     aircrafts: [],
+    accounts: [],
+    megabucks: 0,
     team: {
       name: "Select Team",
       _id: "rawr"
@@ -44,6 +46,19 @@ class App extends Component {
       console.log('Reciving aircrafts...')
       this.setState({ aircrafts })
     });
+
+    updateAccounts((err, team) => {
+      console.log(team);
+      if (this.state.team.name === team.name) {
+        this.updateAccounts(this.state.team);
+      }
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.team !== this.state.team) {
+        this.updateAccounts(this.state.team);
+    }
   }
 
   render() {
@@ -52,6 +67,7 @@ class App extends Component {
         <NavBar 
           team={ this.state.team }
           teams={ this.state.teams }
+          megabucks={ this.state.megabucks }
           onChange={ this.handleLogin }
         />
           <main>
@@ -67,7 +83,8 @@ class App extends Component {
             <Route path="/budget" render={() => (
               <Budget 
                 team = { this.state.team }
-                handleUpdate = { this.getTeams }
+                accounts = { this.state.accounts }
+                handleUpdate = { this.updateAccounts }
               />
             )}/>
             <Route path="/mosh" component={ MoshTest } />
@@ -91,6 +108,16 @@ class App extends Component {
     console.log(`${team.name} Updating...`);
     teamEvents.updateTeam(team._id)
   };
+
+  updateAccounts = async (team) => {
+    console.log(`${team.name} Accounts update...`);
+    let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
+    console.log(accounts)
+    let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+    let megabucks = 0;
+    accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+    this.setState({ accounts, megabucks })
+  }
 
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);

@@ -5,9 +5,9 @@ const socket = openSocket('http://localhost:5000');
 const alert = openSocket('http://localhost:5000/alert');
 
 // Update Socket Events and Event Listners
-function updateTeam (teamID) {
+function updateTeam (team_id) {
     let updateTeam = setInterval(() => {
-        socket.emit('updateTeam', teamID);
+        socket.emit('updateTeam', team_id);
         clearInterval(updateTeam);
     }, 1000);
 };
@@ -69,4 +69,9 @@ function currentAircrafts (cb) {
     socket.on('currentAircrafts', data => cb(null, data));
 };
 
-export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAircrafts };
+function updateAccounts (cb) {
+    socket.on('updateAccounts', data => cb(null, data))
+}
+
+
+export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAircrafts, updateAccounts };
