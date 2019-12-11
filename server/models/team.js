@@ -7,34 +7,17 @@ const Joi = require('joi');
 const RoleSchema = new Schema({
   role: { type: String },
   type: { type: String, enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']},
-  userID: { type: String },  
+  user_id: { type: String },  
 });
-
-const AccountSchema = new Schema({
-  name: { type: String },
-  code: { type: String },
-  balance: { type: Number },
-  deposits: [Number],
-  withdrawls: [Number]
-});
-
-const TransferSchema = new Schema({
-  to: { type: String },
-  from: { type: String },
-  amount: { type: Number },
-  note: { type: String }
-})
 
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, unique: true, minlength: 2, maxlength: 30 },
   teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },
-  countryID: { type: String, minlength: 2, maxlength: 50 },
+  country_id: { type: String, minlength: 2, maxlength: 50 },
   roles: [RoleSchema],
   prTrack: [Number],
   prLevel: { type: Number },
-  accounts: [AccountSchema],
-  transfers: [TransferSchema]
 });
 
 TeamSchema.methods.validateTeam = function (team) {
@@ -61,29 +44,19 @@ function validateTeam(team) {
   return Joi.validate(team, schema, { "allowUnknown": true });
 };
 
-async function getPR(teamID) {
-  modelDebugger(`Trying to find PR for ${teamID}`)
+async function getPR(team_id) {
+  modelDebugger(`Trying to find PR for ${team_id}`)
   try {
-    let prLevel = await Team.findOne({ _id: teamID }).select('prLevel');
+    let prLevel = await Team.findOne({ _id: team_id }).select('prLevel');
     return prLevel.prLevel;
   } catch (err) {
     modelDebugger(`Error: ${err.message}`);
   }
 };
 
-async function getAccounts(teamID) {
-  modelDebugger(`Trying to find accounts for ${teamID}`)
-  try {
-    let accounts = await Team.findOne({ _id: teamID }).select('accounts');
-    return accounts.accounts;
-  } catch (err) {
-    modelDebugger(`Error: ${err.message}`);
-  }
-};
-
-async function getTeam(teamID) {
-  let team = await Team.findOne({ _id: teamID });
+async function getTeam(team_id) {
+  let team = await Team.findOne({ _id: team_id });
   return team;
 };
 
-module.exports = { Team, validateTeam, getPR, getAccounts, getTeam }
+module.exports = { Team, validateTeam, getPR, getTeam }

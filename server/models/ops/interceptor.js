@@ -8,7 +8,7 @@ const InterceptorSchema = new Schema({
   type: { type: String, required: true, min: 2, maxlength: 50, default: "Interceptor"} ,
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
   },
   stats: {
     hull: { type: Number, default: 2 },
@@ -20,11 +20,11 @@ const InterceptorSchema = new Schema({
   location: { 
     zone: { 
       zoneName: { type: String, default: "UN-Assigned" },
-      zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
+      zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'}
     },
     country: { 
       countryName: { type: String, default: "UN-Assigned" },
-      countryId: { type: Schema.Types.ObjectId, ref: 'Country'}
+      country_id: { type: Schema.Types.ObjectId, ref: 'Country'}
     },
     poi: { type: String }
   },
