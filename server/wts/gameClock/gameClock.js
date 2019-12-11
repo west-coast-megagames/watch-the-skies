@@ -127,11 +127,11 @@ function incrementPhase() {
         };
         currentPhase = gamePhases[phaseNum];
         phaseTime = phaseTimes[phaseNum];
-
-        if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
-        if (currentPhase === 'Action Phase') actionPhase(currentTurn);
-        if (currentPhase === 'Free Phase') freePhase(currentTurn);
     };
+
+    if (currentPhase === 'Team Phase') teamPhase(currentTurn); 
+    if (currentPhase === 'Action Phase') actionPhase(currentTurn);
+    if (currentPhase === 'Free Phase') freePhase(currentTurn);
 
     currentTime = Date.parse(new Date());
     deadline = new Date(currentTime + phaseTime*60*1000);

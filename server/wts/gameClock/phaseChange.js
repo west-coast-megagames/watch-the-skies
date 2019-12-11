@@ -8,10 +8,10 @@ const { logger } = require('../../middleware/winston'); // IMPORT - Winston erro
 /* This file handles all the events triggered on phase change.
     Each phase has a function that handles that phase. */
 
-function teamPhase(turn) {
+async function teamPhase(turn) {
     phaseChangeDebugging(`Now changing to the team phase for ${turn}...`);
-    updatePR(); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
-    banking.automaticTransfer(); // Iterate through set-automatic transfers [Implemented]
+    await updatePR(); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
+    await banking.automaticTransfer(); // Iterate through set-automatic transfers [Implemented]
     phaseChangeDebugging(`Done with team phase change for ${turn}!`);
     logger.info(`Turn ${turn} team phase has begun...`);
     return 0;
