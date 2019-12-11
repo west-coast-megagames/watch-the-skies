@@ -25,7 +25,7 @@ const UserSchema = new Schema({
   discord: { type: String },
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
   }
 });
 
