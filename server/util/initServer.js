@@ -68,8 +68,8 @@ app.use('/api/accounts', account); // Route for Team Accounts
 //runLoad(true);   // load simple reference tables/documents from refdata.json
 //runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
 //runInterceptorLoad(true);  // load expanded interceptor fields
-runUserLoad(true);  // load expanded User fields
-//runBaseLoad(true);  // load expanded Base fields
+//runUserLoad(true);  // load expanded User fields
+runBaseLoad(true);  // load expanded Base fields
 //runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
 
 // Server entry point - Node Server

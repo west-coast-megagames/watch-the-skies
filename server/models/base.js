@@ -20,11 +20,11 @@ const BaseSchema = new Schema({
   baseDefenses: { type: Boolean, default: false },
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
   },
   country: { 
     countryName: { type: String, default: "UN-Assigned" },
-    countryId: { type: Schema.Types.ObjectId, ref: 'Country'}
+    country_id: { type: Schema.Types.ObjectId, ref: 'Country'}
   },
   facilities: [FacilitySchema]
 
