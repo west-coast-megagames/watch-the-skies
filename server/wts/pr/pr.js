@@ -32,7 +32,7 @@ function rollPR(currentPR, prTrack, prModifier) {
     const gameClock = require('../gameClock/gameClock');
     let { turnNum } = gameClock.getTimeRemaining();
     let prRoll = d8();
-    let prLevel = 0;
+    let prLevel = currentPR;
 
     prDebugging(`Current PR: ${currentPR}`);
     prDebugging(`PR Roll: ${prRoll}`);
