@@ -38,7 +38,7 @@ async function initLoad(doLoad) {
     if (teamDataIn[i].loadType == "team") {     
       
       // delete old data
-      await deleteTeam(teamDataIn[i]);
+      //await deleteTeam(teamDataIn[i]);   will cause previously loaded team record id's to change
 
       if (teamDataIn[i].loadFlag == "true") {
         await loadTeam(teamDataIn[i]);
