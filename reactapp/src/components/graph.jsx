@@ -5,7 +5,7 @@ import { MDBContainer } from "mdbreact";
 class ChartsPage extends React.Component {
   state = {
     dataLine: {
-      labels: ["Q1 2020", "Q2 2020", "Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021", "Q3 2021", "Q4 2021", "Q1 2022", "Q2 2022", "Q3 2022", "Q4 2022", ],
+      labels: ["Pre-game", "Q1 2020", "Q2 2020", "Q3 2020", "Q4 2020", "Q1 2021", "Q2 2021", "Q3 2021", "Q4 2021", "Q1 2022", "Q2 2022", "Q3 2022", "Q4 2022", ],
       datasets: [
         {
           label: "Income/Turn",
@@ -62,7 +62,7 @@ class ChartsPage extends React.Component {
       let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
       dataLine.datasets[datasetIndex].data = account.deposits;
       datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Expenses/Turn');
-      dataLine.datasets[datasetIndex].data = account.withdrawls;
+      dataLine.datasets[datasetIndex].data = account.withdrawals;
       this.setState({ dataLine });
     }
   }
@@ -76,7 +76,7 @@ class ChartsPage extends React.Component {
       let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
       dataLine.datasets[datasetIndex].data = account.deposits;
       datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Expenses/Turn');
-      dataLine.datasets[datasetIndex].data = account.withdrawls;
+      dataLine.datasets[datasetIndex].data = account.withdrawals;
       this.setState({ dataLine });
     }
   }

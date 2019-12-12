@@ -2,7 +2,9 @@ import React from 'react'; // React import
 import TransferForm from '../components/transferForm';
 import ChartsPage from '../components/graph';
 import AccountsTable from '../components/accountsTable'
+import AutoTransfers from './../components/transfersTable';
 import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
+
 
 const Budget = (props) => {
     return (
@@ -35,6 +37,13 @@ const Budget = (props) => {
             <MDBRow>
                 <MDBCol>
                     <h4>Automatic Transfers</h4>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol>
+                    <AutoTransfers
+                        accounts={ props.accounts }
+                    />
                 </MDBCol>
             </MDBRow>
         </MDBContainer>

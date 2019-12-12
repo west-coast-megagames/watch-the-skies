@@ -40,21 +40,21 @@ router.post('/account', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/accounts', async function (req, res) {
-    for (let account in res.body) {
-        const newAccount = new Account(
-            { account }
+    for (let account of req.body.accounts) {
+        console.log(account)
+        let newAccount = new Account(
+            account
         );
-        let { team_id, name } = newAccount;
-        let docs = await Account.find({ team_id, name })
+        let docs = await Account.find({ name: newAccount.name, team_id: newAccount.team_id })
+        console.log(docs);
         if (!docs.length) {
-            let account = await newAccount.save();
-            res.json(account);
-            console.log(`${name} account created...`);
+            await newAccount.save();
+            console.log(`${newAccount.owner} created ${newAccount.name} account...`);
         } else {                
-            console.log(`${name} account already exists for this team... `);
-            res.send(`${name} account already exists for this team... `);
+            console.log(`${newAccount.name} account already exists for this team... `);
         }
     }
+    return res.status(200).send(`Accounts Created...`);
 });
 
 // @route   GET api/banking/accounts/:id
