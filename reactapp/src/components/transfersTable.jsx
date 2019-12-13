@@ -41,7 +41,7 @@ class AutoTransfers extends Component {
         let request = { account_id: account._id , transfer_id: transfer._id }
         console.log(transfer);
         console.log(request);
-        await axios.put('http://localhost:5000/api/banking/transfer', request);
+        await axios.put('https://project-nexus-prototype.herokuapp.com/api/banking/transfer', request);
     }
 
     render() {

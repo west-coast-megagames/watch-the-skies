@@ -111,7 +111,7 @@ class App extends Component {
 
   updateAccounts = async (team) => {
     console.log(`${team.name} Accounts update...`);
-    let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
+    let { data: accounts } = await axios.put('https://project-nexus-prototype.herokuapp.com/api/banking/accounts', { "team_id": team._id });
     console.log(accounts)
     let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
     let megabucks = 0;
