@@ -22,11 +22,11 @@ function alerts (io) {
     });
 };
 
-async function setAlert({ teamID, title, body }) {
-    const { Team } = require ('../../../models/team')
+async function setAlert({ team_id, title, body }) {
+    const { Team } = require ('../../models/team')
 
-    let team = await Team.findOne({ _id: teamID });
-    let { getTimeRemaining } = require('../../../wts/gameClock/gameClock')
+    let team = await Team.findOne({ _id: team_id });
+    let { getTimeRemaining } = require('../gameClock/gameClock')
     let time = getTimeRemaining();
     console.log(`Setting ${title} alert for ${team.teamCode}`);
     count++;

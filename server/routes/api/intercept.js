@@ -13,6 +13,10 @@ router.put('/', async (req, res) => {
     routeDebugger('Accepting Interception...')
     let attacker = await Interceptor.findById(req.body.attacker);
     let defender = await Interceptor.findById(req.body.defender);
+
+    attacker.location = defender.location
+    
+    await attacker.save()
     result = intercept.launchInterception(attacker, defender);
     res.json(result);
 });

@@ -9,7 +9,7 @@ const LogSchema = new Schema({
         phase: { type: String },
         turnNum: { type: Number }
     },
-    teamId: { type: String, }
+    team_id: { type: String, }
 });
 
 module.exports = Log = mongoose.model('log', LogSchema);

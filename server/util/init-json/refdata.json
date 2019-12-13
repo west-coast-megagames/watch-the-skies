@@ -11,6 +11,7 @@
   {"loadType": "team", "name": "People's Republic of China", "code": "PRC", "loadFlag": "true"},
   {"loadType": "team", "name": "United Kingdom", "code": "TUK", "loadFlag": "true"},
   {"loadType": "team", "name": "The France Republic", "code": "TFR", "loadFlag": "true"},
+  {"loadType": "team", "name": "Federation", "code": "FFG", "loadFlag": "true"},
   {"loadType": "country", "name": "Afghanistan", "code": "AF", "loadFlag": "false", "parentCode1": "AU", "parentCode2": ""},
   {"loadType": "country", "name": "Åland Islands", "code": "AX", "loadFlag": "false", "parentCode1": "EU", "parentCode2": ""},
   {"loadType": "country", "name": "Albania", "code": "AL", "loadFlag": "false", "parentCode1": "EU", "parentCode2": ""},

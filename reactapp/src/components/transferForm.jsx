@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { banking, teamEvents } from '../api';
+import { banking } from '../api';
 
 class TransferForm extends Component {
     state = {
-        transfer: { to: '', from: '', amount: 0, note: '', teamID: ''},
+        transfer: { to: '', from: '', amount: 0, note: '' },
         account: {},
         schedule: false
     }
@@ -16,20 +16,19 @@ class TransferForm extends Component {
         if (this.state.schedule === false) {
             banking.bankingTransfer(this.state.transfer);
             console.log('Submitted transfer');
-            teamEvents.updateTeam(this.props.team._id);
         } else {
             banking.autoTransfer(this.state.transfer);
             console.log('Submitted automatic transfer');
-            teamEvents.updateTeam(this.props.team._id);
         }
-        let transfer = { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id}
+        this.props.handleUpdate(this.props.team);
+        let transfer = { to: '', from: '', amount: 0, note: '' }
         this.setState({ transfer });
     };
 
     handleChange = ({currentTarget: input}) => {
         if (input.name === 'from') {
-            let accountIndex = this.props.team.accounts.findIndex((account => account.name === input.value));
-            let account = this.props.team.accounts[accountIndex];
+            let accountIndex = this.props.accounts.findIndex((account => account._id === input.value));
+            let account = this.props.accounts[accountIndex];
             this.setState({ account });
         }
 
@@ -42,7 +41,7 @@ class TransferForm extends Component {
         console.log(`Input Value: ${input.value}`);
         const transfer = {...this.state.transfer};
         transfer[input.name] = input.value;
-        transfer.teamID = this.props.team._id
+        console.log(transfer);
         this.setState({ transfer })
     };
 
@@ -54,14 +53,14 @@ class TransferForm extends Component {
     };
 
     componentDidMount() {
-        let transfer = { to: '', from: '', amount: 0, note: '', teamID: this.props.team._id}
+        let transfer = { to: '', from: '', amount: 0, note: '' }
         this.setState({ transfer });
     }
 
     render() {
-        let accounts = this.props.team.accounts;
+        let accounts = this.props.accounts;
         
-        if (this.props.team.name === "Select Team")
+        if (this.props.accounts.length <= 0)
         return <h4>No accounts availible for transfer, select a team to use the application!</h4>
 
         return (
@@ -72,7 +71,7 @@ class TransferForm extends Component {
                     { accounts.map(account => (
                         <option 
                             key={account._id}
-                            value={account.name}
+                            value={account._id}
                         >{ account.name } | $M{ account.balance }</option>
                     ))}
                 </select>
@@ -83,7 +82,7 @@ class TransferForm extends Component {
                     { accounts.map(account => (
                         <option
                             key={account._id}
-                            value={account.name}
+                            value={account._id}
                         >{ account.name } | $M{ account.balance }</option>
                     ))}
                 </select>

@@ -24,7 +24,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 function runTeamLoad(runFlag){
-teamLoadDebugger("Jeff in runTeamLoad", runFlag);    
   if (!runFlag) return;
   if (runFlag) initLoad(runFlag);
   else return;
@@ -32,23 +31,18 @@ teamLoadDebugger("Jeff in runTeamLoad", runFlag);
 
 async function initLoad(doLoad) {
   
-teamLoadDebugger("Jeff in initLoad", doLoad, teamDataIn.length);    
   if (!doLoad) return;
 
   for (let i = 0; i < teamDataIn.length; ++i ) {
     
-    teamLoadDebugger("Jeff in runTeamLoad loop", i, teamDataIn[i].loadType );    
     if (teamDataIn[i].loadType == "team") {     
-        if (teamDataIn[i].loadFlag == "false") {
-          if (teamDataIn[i].code == "USA") {
-            teamLoadDebugger("Skipping Delete Of USA for now", teamDataIn[i].code);  
-            continue;    // next loop 
-          }
-          await deleteTeam(teamDataIn[i]);
-        }
-        else {
-          await loadTeam(teamDataIn[i]);
-        }
+      
+      // delete old data
+      //await deleteTeam(teamDataIn[i]);   will cause previously loaded team record id's to change
+
+      if (teamDataIn[i].loadFlag == "true") {
+        await loadTeam(teamDataIn[i]);
+      }
     }
   }
 };
@@ -74,7 +68,8 @@ async function loadTeam(tData){
         team.prTrack  = tData.prTrack;
         team.roles    = tData.roles;
         team.prLevel  = tData.prLevel;
-        team.accounts = tData.accounts;
+
+        //team.accounts = tData.accounts;   ... moved to it's own load
 
         team.save((err, team) => {
           if (err) return console.error(`New Team Save Error: ${err}`);
@@ -90,7 +85,8 @@ async function loadTeam(tData){
        team.prTrack   = tData.prTrack;
        team.roles     = tData.roles;
        team.prLevel   = tData.prLevel;
-       team.accounts  = tData.accounts;
+
+       //team.accounts  = tData.accounts;  ... moved to it's own load
 
        const { error } = validateTeam(team); 
        if (error) {

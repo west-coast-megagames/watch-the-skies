@@ -80,7 +80,7 @@ async function loadInterceptor(iData){
           if (!team) {
             interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
           } else {
-            interceptor.team.teamId   = team._id;
+            interceptor.team.team_id   = team._id;
             interceptor.team.teamName = team.name;
             interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
           }
@@ -91,7 +91,7 @@ async function loadInterceptor(iData){
           if (!zone) {
             interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.location.zone);
           } else {
-            interceptor.location.zone.zoneId   = zone._id;
+            interceptor.location.zone.zone_id   = zone._id;
             interceptor.location.zone.zoneName = zone.zoneName;
             interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
           }      
@@ -102,7 +102,7 @@ async function loadInterceptor(iData){
           if (!country) {
             interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.location.country);
           } else {
-            interceptor.location.country.countryId   = country._id;
+            interceptor.location.country.country_id   = country._id;
             interceptor.location.country.countryName = country.name;
             interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
           }      
@@ -127,7 +127,7 @@ async function loadInterceptor(iData){
         if (!team) {
           interceptorLoadDebugger("Interceptor Load Team Error, Update Interceptor:", iData.name, " Team: ", iData.parentCode1);
         } else {
-          interceptor.team.teamId   = team._id;
+          interceptor.team.team_id   = team._id;
           interceptor.team.teamName = team.name;
           interceptorLoadDebugger("Interceptor Load Update Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
         }
@@ -138,7 +138,7 @@ async function loadInterceptor(iData){
         if (!zone) {
           interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.location.zone);
         } else {
-          interceptor.location.zone.zoneId   = zone._id;
+          interceptor.location.zone.zone_id   = zone._id;
           interceptor.location.zone.zoneName = zone.zoneName;
           interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
         }      
@@ -149,7 +149,7 @@ async function loadInterceptor(iData){
         if (!country) {
           interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.location.country);
         } else {
-          interceptor.location.country.countryId   = country._id;
+          interceptor.location.country.country_id   = country._id;
           interceptor.location.country.countryName = country.name;
           interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
         }      

@@ -59,7 +59,7 @@ async function loadUser(iData){
     let user = await User.findOne( { screenname: iData.screenname } );
     if (!user) {
        // New User here
-       let convDate = Date(iData.Dob);
+       //let convDate = Date(iData.DoB);
        let user = new User({ 
            screenname: iData.screenname,
            email: iData.email,
@@ -67,61 +67,67 @@ async function loadUser(iData){
            gender: iData.gender,
            discord: iData.discord,
            password: iData.password,
-           Dob: convDate,
-           name: iData.name,
-           address: iData.address
+           address: iData.address,
+           DoB: iData.DoB
         }); 
        
-        
-        userLoadDebugger("New user.name", user.name, "address", user.address, user.Dob);
+        user.name.first = iData.name.first;
+        user.name.last  = iData.name.last;
+
+        //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
 
         let { error } = validateUser(user); 
         if (error) {
           userLoadDebugger("New User Validate Error", user.screenname, error.message);
           return;
         }
+
+        //userLoadDebugger("After Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
         
         if (iData.teamCode != ""){
           let team = await Team.findOne({ teamCode: iData.teamCode });  
           if (!team) {
             userLoadDebugger("User Load Team Error, New User:", iData.screenname, " Team: ", iData.teamCode);
           } else {
-            user.team.teamId   = team._id;
+            user.team.team_id  = team._id;
             user.team.teamName = team.name;
             userLoadDebugger("User Load Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }
+        
+        //userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
 
         user.save((err, user) => {
           if (err) return console.error(`New User Save Error: ${err}`);
-          userLoadDebugger(user.screenname + " add saved to user collection.");
+          userLoadDebugger(user.screenname + " saved to user collection.");
         });
     } else {       
       // Existing User here ... update
       let id = user._id;
-      let convDate = Date(iData.Dob);
+      //let convDate     = Date(iData.DoB);
       user.screenname  = iData.screenname;
-      user.name        = iData.name;
+      user.name.first  = iData.name.first;
+      user.name.last   = iData.name.last;
       user.phone       = iData.phone;
       user.email       = iData.email;
       user.address     = iData.address;
       user.gender      = iData.gender;
       user.discord     = iData.discord;
       user.password    = iData.password;
-      user.Dob         = convDate;
+      user.DoB         = iData.DoB;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
           userLoadDebugger("User Load Team Error, Update User:", iData.screenname, " Team: ", iData.teamCode);
         } else {
-          user.team.teamId   = team._id;
+          user.team.team_id  = team._id;
           user.team.teamName = team.name;
           userLoadDebugger("User Load Update Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }
       
-      userLoadDebugger("Update user.name", user.name, "address", user.address, user.Dob);
+      userLoadDebugger("Update user.name", user.name, "address", user.address, user.DoB);
 
       const { error } = validateUser(user); 
       if (error) {

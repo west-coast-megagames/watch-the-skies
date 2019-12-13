@@ -8,7 +8,7 @@ const InterceptorSchema = new Schema({
   type: { type: String, required: true, min: 2, maxlength: 50, default: "Interceptor"} ,
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
   },
   stats: {
     hull: { type: Number, default: 2 },
@@ -20,11 +20,11 @@ const InterceptorSchema = new Schema({
   location: { 
     zone: { 
       zoneName: { type: String, default: "UN-Assigned" },
-      zoneId: { type: Schema.Types.ObjectId, ref: 'Zone'}
+      zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'}
     },
     country: { 
       countryName: { type: String, default: "UN-Assigned" },
-      countryId: { type: Schema.Types.ObjectId, ref: 'Country'}
+      country_id: { type: Schema.Types.ObjectId, ref: 'Country'}
     },
     poi: { type: String }
   },
@@ -66,17 +66,14 @@ function validateInterceptor(interceptor) {
 
 async function getAircrafts() {
   modelDebugger('Retriving all aircraft documents...');
-  try {
-      let interceptors = await Interceptor.find();
-      return interceptors;
-  } catch (err) {
-      modelDebugger('Error:', err.message);
-  }
+  let interceptors = await Interceptor.find();
+  return interceptors;
 };
 
 async function launch (aircraft) {
-  const { getTeam } = require('../team');
   const banking = require('../../wts/banking/banking');
+  const { Account } = require('../gov/account');
+
   try {
     modelDebugger(`Attempting to launch ${aircraft.designation}`)
     aircraft.status.deployed = true;
@@ -85,15 +82,14 @@ async function launch (aircraft) {
 
     modelDebugger(aircraft);
 
-    let team = await getTeam(aircraft.team.teamId);
+    let account = await Account.findOne({ name: 'Operations', team_id: aircraft.team.team_id });
+    console.log(account)
 
-    let account = banking.withdrawl(team._id, team.teamName, team.accounts, 'Operations', 1, `Deployment of ${aircraft.designation}`)
-    team.accounts = account;
+    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
 
-    await team.save();
+    await account.save();
     await aircraft.save();
     console.log(`Aircraft ${aircraft.designation} deployed...`);
-    return 0;
   } catch (err) {
     modelDebugger('Error:', err.message);
   }

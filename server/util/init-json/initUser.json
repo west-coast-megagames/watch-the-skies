@@ -7,11 +7,11 @@
 "password" : "Lolz4Life",
 "address" : 
     {"street1" : "458 Rosebud Way",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Rosefield",
      "state" : "CA",
      "zipcode" : "97534"},
-"DoB" : "1997-12-08",
+"DoB" : 19971208,
 "gender" : "Female",
 "discord" : "Rawr",
 "teamCode" : "USA"
@@ -25,11 +25,11 @@
 "password" : "AllTheMegaBucks",
 "address" : 
     {"street1" : "856 Easy St",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Luxury Town",
      "state" : "CA",
      "zipcode" : "45792"},
-"DoB" : "1994-05-08",
+"DoB" : 19940508,
 "gender" : "Female",
 "discord" : "Money",
 "teamCode" : "RFD"
@@ -43,11 +43,11 @@
 "password" : "LookOutForThatTree",
 "address" : 
     {"street1" : "9540 Mt. Access Road",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Hang Town",
      "state" : "CA",
      "zipcode" : "64825"},
-"DoB" : "2013-10-03",
+"DoB" : 20131003,
 "gender" : "Male",
 "discord" : "Jungle",
 "teamCode" : "PRC"
@@ -61,11 +61,11 @@
 "password" : "All Is Fair In Love and War",
 "address" : 
     {"street1" : "523 Come With Me way",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Paris",
      "state" : "NA",
      "zipcode" : "45766"},
-"DoB" : "1994-03-12",
+"DoB" : 19940312,
 "gender" : "Non-Binary",
 "discord" : "Free",
 "teamCode" : "TFR"
@@ -79,11 +79,11 @@
 "password" : "Rainbow",
 "address" : 
     {"street1" : "15 Craft way",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Zoo",
      "state" : "AZ",
      "zipcode" : "12345"},
-"DoB" : "1992-08-03",
+"DoB" : 19920803,
 "gender" : "Non-Binary",
 "discord" : "Pretty",
 "teamCode" : "TUK"
@@ -97,12 +97,13 @@
 "password" : "Must Explore",
 "address" : 
     {"street1" : "2nd st",
-     "street2" : "undefined",
+     "street2" : "",
      "city" : "Base Camp",
      "state" : "AQ",
      "zipcode" : "12345"},
-"DoB" : "1987-09-06",
+"DoB" : 19870906,
 "gender" : "Non-Binary",
-"discord" : "Federation"
+"discord" : "Federation",
+"teamCode" : "FFG"
 }
 ]

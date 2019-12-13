@@ -17,10 +17,10 @@ class Interception extends Component {
     this.radarSweep = setInterval(() => {
       let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
 
-      let contacts = data.filter(aircraft => aircraft.team.teamId !== this.props.team._id);
+      let contacts = data.filter(aircraft => aircraft.team.team_id !== this.props.team._id);
       contacts = contacts.filter(aircraft => aircraft.status.deployed === true);
 
-      let aircrafts = data.filter(aircraft => aircraft.team.teamId === this.props.team._id);;
+      let aircrafts = data.filter(aircraft => aircraft.team.team_id === this.props.team._id);
 
       this.setState({ contacts, aircrafts });
       // console.log('Contacts and Aircrafts set...');
@@ -59,22 +59,22 @@ class Interception extends Component {
 
   render(){
     return (
-        <React.Fragment>
-            <h1>Operations Module - Interception Tab</h1>
-            <Contacts 
-              deployInterceptors={ this.deployInterceptors }
-              contacts={this.state.contacts}
-            />
-            <hr />
-            <Interceptors aircrafts={this.state.aircrafts} />
-            { this.state.isDeploying ? <InterceptorDeployForm 
-              aircrafts={ this.state.aircrafts }
-              deployInterceptors={ this.deployInterceptors }
-              handleChange={ this.handleChange }
-              interceptor={ this.state.interceptor }
-              contact={this.state.contact}
-            /> : null }
-        </React.Fragment>
+      <React.Fragment>
+          <h1>Operations Module - Interception Tab</h1>
+          <Contacts 
+            deployInterceptors={ this.deployInterceptors }
+            contacts={this.state.contacts}
+          />
+          <hr />
+          <Interceptors aircrafts={this.state.aircrafts} />
+          { this.state.isDeploying ? <InterceptorDeployForm 
+            aircrafts={ this.state.aircrafts }
+            deployInterceptors={ this.deployInterceptors }
+            handleChange={ this.handleChange }
+            interceptor={ this.state.interceptor }
+            contact={this.state.contact}
+          /> : null }
+      </React.Fragment>
     );
   };
 }

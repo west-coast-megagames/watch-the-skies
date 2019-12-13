@@ -6,10 +6,15 @@ class Interceptors extends Component {
       if (!aircraft.status.deployed) {
         return 'Idle';
       } else if (aircraft.status.deployed && aircraft.status.mission !== false ){
-        return 'Intercepting contact';
-      } else if (aircraft.status.ready) {
-        return 'Ready';
+        return 'Intercepting Target...';
+      } else if (aircraft.status.deployed) {
+        return 'On mission...';
       }
+    }
+
+    getLocation = (aircraft) => {
+        let location = aircraft.location.poi !== undefined ? aircraft.location.poi : aircraft.location.country.countryName;
+        return location;
     }
 
     render() {
@@ -36,7 +41,7 @@ class Interceptors extends Component {
                         <td>{ aircraft.designation }</td>
                         <td>Someone</td>
                         <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
-                        <td>{ aircraft.location.poi }</td>
+                        <td>{ this.getLocation(aircraft) }</td>
                         <td>{ this.retreiveStatus(aircraft) }</td>
                     </tr>
                     ))}

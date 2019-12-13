@@ -25,7 +25,7 @@ const UserSchema = new Schema({
   discord: { type: String },
   team: { 
     teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    teamId: { type: Schema.Types.ObjectId, ref: 'Team'}
+    team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
   }
 });
 
@@ -39,26 +39,28 @@ let User = mongoose.model('user', UserSchema);
 function validateUser(user) {
   const schema = {
     screenname: Joi.string().min(5).max(15).required(),
-    name: {
-      first: Joi.string().min(1).max(25).required(),
-      last: Joi.string().min(1).max(50).required(), 
-    },
     email: Joi.string().min(5).max(255).required().email(),
     phone: Joi.string().min(10).max(14).required(),
     password: Joi.string().min(5).max(1024).required(),
-    address: {
+    gender: Joi.string(),
+    discord: Joi.string()
+  };
+
+  return Joi.validate(user, schema, { "allowUnknown": true });
+}
+
+/*
+name: {
+      first: Joi.string().min(1).max(25).required(),
+      last: Joi.string().min(1).max(50).required(), 
+    },
+address: {
       street1: Joi.string(),
       street2: Joi.string(),
       city: Joi.string(),
       state: Joi.string().min(2).max(2),
       zipcode: Joi.string().min(5).max(10)
     },
-    gender: Joi.string(),
-    DoB: Joi.date(),
-    discord: Joi.string()
-  };
-
-  return Joi.validate(user, schema, { "allowUnknown": true });
-}
+*/
 
 module.exports = { User, validateUser };
