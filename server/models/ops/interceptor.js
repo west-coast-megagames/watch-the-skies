@@ -85,7 +85,7 @@ async function launch (aircraft) {
     let account = await Account.findOne({ name: 'Operations', team_id: aircraft.team.team_id });
     console.log(account)
 
-    account = banking.withdrawl(account, 1, `Deployment of ${aircraft.designation}`)
+    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
 
     await account.save();
     await aircraft.save();

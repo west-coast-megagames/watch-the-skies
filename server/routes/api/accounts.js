@@ -47,18 +47,6 @@ router.post('/', async function (req, res) {
     }
 });
 
-// @route   PUT api/account/roles/:id
-// @Desc    Add a role to a account
-// @access  Public
-router.put('/roles/:id', async function (req, res) {
-    let { role } = req.body;
-    let account = await Account.findById({ _id: req.params.id });
-    account.roles.push(role);
-    account = await account.save();
-    res.json(account);
-    console.log(`${role.role} added to ${account.name}!`);
-});
-
 // @route   DELETE api/account/:id
 // @Desc    Delete a account
 // @access  Public
@@ -71,25 +59,6 @@ router.delete('/:id', async function (req, res) {
     } else {
         res.send(`No account with the id ${id} exists!`);
     }
-});
-
-// @route   PATCH api/account/pr
-// @desc    Update all accounts to base PR
-// @access  Public
-router.patch('/pr', async function (req, res) {
-    for await (let account of Account.find()) {
-        let { prLevel, name } = account;
-        console.log(`${name} | PR: ${prLevel}`);
-        console.log(`Resetting ${name}s accounts...`);  
-        account.prLevel = 2;
-        console.log(`PR Level set to ${prLevel}`);
-
-        console.log(`${account.name} | PR: ${account.prLevel}`);
-
-        await account.save();
-        console.log(`${name}s accounts reset...`);  
-    };
-    res.send("Accounts succesfully reset!");
 });
 
 module.exports = router;

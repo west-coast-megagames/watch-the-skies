@@ -72,14 +72,14 @@ router.get('/accounts/:id', async function (req, res) {
 router.patch('/banking/accounts', async function (req, res) {
     for await (let account of accounts.find()) {{
             account.balance = 0;
-            account.deposits = [0, 0, 0, 0, 0];
-            account.withdrawls = [0, 0, 0, 0, 0];
+            account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            account.withdrawls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         };
 
-        if (account.name === 'Treasury') {
-            let team = await Team.findById(account.team_id);
-            account.balance = team.prTrack[team.prLevel];
-        }
+        // if (account.name === 'Treasury') {
+        //     let team = await Team.findById(account.team_id);
+        //     account.balance = team.prTrack[team.prLevel];
+        // }
         console.log(`${team.name} | PR: ${team.prLevel} | Treasury: ${account.balance}`);
 
         await account.save();
@@ -95,5 +95,19 @@ router.put('/accounts', async function (req, res) {
     res.json(accounts);
 });
 
+router.put('/transfer', async function (req, res){
+    console.log(req.body)
+    let { account_id, transfer_id } = req.body;
+    let account = await Account.findOne({ _id: account_id });
+    console.log(account.autoTransfers)
+    let indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
+    console.log(indexOf)
+    delete account.autoTransfers[indexOf];
+    console.log(account.autoTransfers.length)
+
+    account.markModified('autoTransfers');
+    await account.save();
+    res.status(200).send('Automatic transfer deleted!');
+});
 
 module.exports = router;

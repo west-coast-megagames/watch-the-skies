@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class AutoTransfers extends Component {
     state = {
@@ -32,6 +33,17 @@ class AutoTransfers extends Component {
         this.setState({ transfers })
     }
 
+    cancelTransfer = async (transfer) => {
+        let accounts = this.props.accounts;
+        let indexOf = accounts.findIndex((account => account.name === transfer.from));
+        let account = accounts[indexOf];
+
+        let request = { account_id: account._id , transfer_id: transfer._id }
+        console.log(transfer);
+        console.log(request);
+        await axios.put('http://localhost:5000/api/banking/transfer', request);
+    }
+
     render() {
         const { length: count } = this.state.transfers;
 
@@ -57,7 +69,7 @@ class AutoTransfers extends Component {
                             <td>{ transfer.to }</td>
                             <td>{ transfer.amount }</td>
                             <td>{ transfer.note }</td>
-                            <td><button onClick={ () => console.log(`Deleting ${transfer._id}`) } className="btn btn-danger btn-sm disabled">Cancel</button></td>
+                            <td><button onClick={ () => console.log('You tried to delete!') } className="btn btn-danger btn-sm">Cancel</button></td>
                         </tr>
                         ))}
                     </tbody>
