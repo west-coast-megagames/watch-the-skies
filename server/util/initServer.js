@@ -47,6 +47,7 @@ app.use(bodyParser.json());
 const dbURI = require('../config/keys').mongoURI;
 const mongoOptions =  {
     useNewUrlParser: true,
+    useUnifiedTopology: true,
     dbName: 'test'};
 
 // Connect to MongoDB with Mongoose
@@ -69,8 +70,8 @@ app.use('/api/accounts', account); // Route for Team Accounts
 //runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
 //runInterceptorLoad(true);  // load expanded interceptor fields
 //runUserLoad(true);  // load expanded User fields
-runBaseLoad(true);  // load expanded Base fields
-//runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
+//runBaseLoad(true);  // load expanded Base fields
+runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
