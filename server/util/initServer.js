@@ -67,6 +67,7 @@ app.use('/api/logs', logs); // Route for logs
 app.use('/api/accounts', account); // Route for Team Accounts
 
 async function fullInit(){
+  
   let initDone = await runLoad(true);   // load simple reference tables/documents from refdata.json
   console.log("Ref Init Done:", initDone);
   
@@ -81,7 +82,7 @@ async function fullInit(){
 
   let baseDone = await runBaseLoad(true);  // load expanded Base fields
   console.log("Base Load Done: ", baseDone);
-
+  
   let accountsDone = await runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
   console.log("Accunts Load Done: ", accountsDone);
   
