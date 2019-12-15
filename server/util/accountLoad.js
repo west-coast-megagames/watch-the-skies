@@ -56,6 +56,7 @@ async function initLoad(doLoad) {
         } else {
           found_team_id       = team._id;
           found_teamShortName = team.shortName;
+          found_teamCode      = team.teamCode;
         }  
       } else {
         accountLoadDebugger("Account Load Blank Team:", accountDataIn[i].name, " Team: ", accountDataIn[i].parentCode1);
@@ -63,13 +64,13 @@ async function initLoad(doLoad) {
       }
 
       if (accountDataIn[i].loadFlag == "true") {
-        await loadAccount(found_team_id, found_teamShortName, accountDataIn[i]);
+        await loadAccount(found_team_id, found_teamShortName, found_teamCode, accountDataIn[i]);
       }
     }
   }
 };
 
-async function loadAccount(t_id, tName, aData){
+async function loadAccount(t_id, tName, tCode, aData){
   try {   
     let bigCode = aData.code.toUpperCase();
     let account = await Account.findOne({ team_id: t_id, code: bigCode });
@@ -93,7 +94,8 @@ async function loadAccount(t_id, tName, aData){
           return;
         }
         
-        account.team_id  = t_id;
+        account.team.team_id  = t_id;
+        account.team.teamCode = tCode;
 
         //accountLoadDebugger("Account before new save ... code", account.code, "t_id", t_id);
         //account.markModified('code');
@@ -115,8 +117,9 @@ async function loadAccount(t_id, tName, aData){
        account.balance       = aData.balance;
        account.deposits      = aData.deposits;
        account.withdrawals   = aData.withdrawals;
-       account.team_id       = t_id;
        account.owner         = tName;
+       account.team.team_id  = t_id;
+       account.team.teamCode = tCode;
 
        const { error } = validateAccount(account); 
        if (error) {
