@@ -24,9 +24,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runAccountLoad(runFlag){
+async function runAccountLoad(runFlag){
   if (!runFlag) return false;
-  if (runFlag) initLoad(runFlag);
+  if (runFlag) await initLoad(runFlag);
   return true;
 };
 
@@ -44,7 +44,7 @@ async function initLoad(doLoad) {
   for (let i = 0; i < accountDataIn.length; ++i ) {
     
     //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].parentCode1, accountDataIn[i].name);    
-    await countAccount();   // how many records
+    //await countAccount();   // how many records
 
     if (accountDataIn[i].loadType == "accounts") {     
       

@@ -18,24 +18,25 @@ const { Team, validateTeam } = require('../models/team');
 
 const app = express();
 
+/*
 Team.watch().on('change', data => {
   teamLoadDebugger(data);
 });
+*/
 
 // Bodyparser Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runTeamLoad(runFlag){
+async function runTeamLoad(runFlag){
   if (!runFlag) return false;
-  if (runFlag) initLoad(runFlag);
+  if (runFlag) await initLoad(runFlag);
   return true;
 };
 
 async function initLoad(doLoad) {
   
-  teamLoadDebugger("Jeff here in teamLoad ... initLoad", doLoad);
   if (!doLoad) return;
 
   for (let i = 0; i < teamDataIn.length; ++i ) {
@@ -56,7 +57,7 @@ async function loadTeam(tData){
   try {   
     let team = await Team.findOne( { teamCode: tData.code } );
 
-    teamLoadDebugger("Jeff here in loadTeam ... Code", tData.code);
+    //teamLoadDebugger("Jeff here in loadTeam ... Code", tData.code);
 
     if (!team) {
        // New Team here

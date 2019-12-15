@@ -35,7 +35,7 @@ TeamSchema.methods.validateTeam = function (team) {
 let Team = mongoose.model('team', TeamSchema);
 
 function validateTeam(team) {
-  modelDebugger(`Validating ${team.name}...`);
+  //modelDebugger(`Validating ${team.name}...`);
 
   const schema = {
       teamCode: Joi.string().min(2).max(3).required().uppercase(),

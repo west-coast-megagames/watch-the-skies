@@ -93,7 +93,7 @@
      "activeRolls": [3,5,8,10,12] },
 "location": 
     {"zone": "EU", 
-     "country": "RF" , 
+     "country": "RU" , 
      "poi": "undefined" },
 "status": 
     {"aggressive": true,
@@ -121,7 +121,7 @@
      "activeRolls": [3,5,8,10,12] },
 "location":
     {"zone": "EU", 
-     "country": "RF", 
+     "country": "RU", 
      "poi": "undefined" },
 "status":
     {"aggressive": true,
@@ -149,7 +149,7 @@
      "activeRolls": [3,5,8,10,12] },
 "location": 
     {"zone": "EU", 
-     "country": "RF", 
+     "country": "RU", 
      "poi": "undefined" },
 "status": 
     {"aggressive": true,

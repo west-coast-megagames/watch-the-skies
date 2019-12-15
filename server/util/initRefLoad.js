@@ -2,9 +2,9 @@ const fs = require('fs')
 const file = fs.readFileSync('./init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
-const zoneInitDebugger = require('debug')('app:zoneLoad');
-const teamInitDebugger = require('debug')('app:teamLoad');
-const countryInitDebugger = require('debug')('app:teamLoad');
+const zoneInitDebugger = require('debug')('app:zoneInit');
+const teamInitDebugger = require('debug')('app:teamInit');
+const countryInitDebugger = require('debug')('app:countryInit');
 
 const supportsColor = require('supports-color');
 
@@ -27,9 +27,9 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runLoad(runFlag){
+async function runLoad(runFlag){
   if (!runFlag) return false;
-  if (runFlag) initLoad(runFlag);
+  if (runFlag) await initLoad(runFlag);
   return true;
 };
 
@@ -69,6 +69,7 @@ async function initLoad(doLoad) {
       }
     }
   };
+  return;
 };
 
 async function loadZone(zName, zCode, zLoadFlg){
