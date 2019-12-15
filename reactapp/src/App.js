@@ -105,8 +105,10 @@ class App extends Component {
   }
 
   updateTeam = async (team) => {
-    console.log(`${team.name} Updating...`);
-    teamEvents.updateTeam(team._id)
+    if (team.id !== undefined) {
+      console.log(`${team.name} Updating...`);
+      teamEvents.updateTeam(team._id);
+    };
   };
 
   updateAccounts = async (team) => {
