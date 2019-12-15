@@ -40,32 +40,31 @@ async function initLoad(doLoad) {
   for (let i = 0; i < refDataIn.length; ++i ) {
     
     if (refDataIn[i].loadType == "zone") {     
-      if (refDataIn[i].loadFlag === "false") {
-        await deleteZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
-      }
-      else {
+      
+      //Delete now regardless of loadFlag
+      await deleteZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      
+      if (refDataIn[i].loadFlag === "true") {
         await loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       }
     }
 
     if (refDataIn[i].loadType == "team") {     
-      if (refDataIn[i].loadFlag == "false") {
-        if (refDataIn[i].code == "USA") {
-          teamLoadDebugger("Skipping Delete Of USA for now", refDataIn[i].code);  
-          continue;    // next loop 
-        }
-        await deleteTeam(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
-      }
-      else {
+      // Delete now regardless of loadFlag
+      await deleteTeam(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      
+      if (refDataIn[i].loadFlag == "true") {
         await loadTeam(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       }
+      
     }
 
     if (refDataIn[i].loadType == "country") {
-      if (refDataIn[i].loadFlag === "false") {
-        await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
-      }
-      else {
+      
+      //Delete now regardless of loadFlag
+      await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      
+      if (refDataIn[i].loadFlag === "true") {
         await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2);
       }
     }
@@ -119,8 +118,6 @@ async function loadZone(zName, zCode, zLoadFlg){
 };
 
 async function deleteZone(zName, zCode, zLoadFlg){
-
-  if (zLoadFlg === "true") return;   // shouldn't be here if flagged for load
 
   try {
     let delErrorFlag = false;
@@ -196,8 +193,6 @@ async function loadTeam(tName, tCode, tLoadFlg){
 };
 
 async function deleteTeam(tName, tCode, tLoadFlg){
-
-  if (tLoadFlg === "true") return;   // shouldn't be here if flagged for load
 
   try {
     let delErrorFlag = false;
@@ -313,8 +308,6 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
 }
 
 async function deleteCountry(cName, cCode, cLoadFlg){
-
-  if (cLoadFlg === "true") return;   // shouldn't be here if flagged for load
 
   try {
     let delErrorFlag = false;
