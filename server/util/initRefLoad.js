@@ -2,9 +2,9 @@ const fs = require('fs')
 const file = fs.readFileSync('./init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
-const zoneLoadDebugger = require('debug')('app:zoneLoad');
-const teamLoadDebugger = require('debug')('app:teamLoad');
-const countryLoadDebugger = require('debug')('app:teamLoad');
+const zoneInitDebugger = require('debug')('app:zoneLoad');
+const teamInitDebugger = require('debug')('app:teamLoad');
+const countryInitDebugger = require('debug')('app:teamLoad');
 
 const supportsColor = require('supports-color');
 
@@ -28,9 +28,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 function runLoad(runFlag){
-  if (!runFlag) return;
+  if (!runFlag) return false;
   if (runFlag) initLoad(runFlag);
-  else return;
+  return true;
 };
 
 async function initLoad(doLoad) {
@@ -84,13 +84,13 @@ async function loadZone(zName, zCode, zLoadFlg){
 
         let { error } = validateZone(zone); 
         if (error) {
-          zoneLoadDebugger("New Zone Validate Error", zone.zoneCode, error.message);
+          zoneInitDebugger("New Zone Validate Error", zone.zoneCode, error.message);
           return;
         }
         
-        zone.save((err, zone) => {
+        await zone.save((err, zone) => {
           if (err) return console.error(`New Zone Save Error: ${err}`);
-          zoneLoadDebugger(zone.zoneName + " add saved to zones collection.");
+          zoneInitDebugger(zone.zoneName + " add saved to zones collection.");
         });
     } else {       
        // Existing Zone here ... update
@@ -101,17 +101,17 @@ async function loadZone(zName, zCode, zLoadFlg){
 
        const { error } = validateZone(zone); 
        if (error) {
-         zoneLoadDebugger("Zone Update Validate Error", zCode, zName, zLoadFlg, error.message);
+         zoneInitDebugger("Zone Update Validate Error", zCode, zName, zLoadFlg, error.message);
          return
        }
    
-       zone.save((err, zone) => {
+       await zone.save((err, zone) => {
        if (err) return console.error(`Zone Update Save Error: ${err}`);
-          zoneLoadDebugger(zone.zoneName + " update saved to zones collection.");
+          zoneInitDebugger(zone.zoneName + " update saved to zones collection.");
        });
     }
   } catch (err) {
-    zoneLoadDebugger('Load Zone Catch Error:', err.message);
+    zoneInitDebugger('Load Zone Catch Error:', err.message);
     return;
 }
 
@@ -126,21 +126,21 @@ async function deleteZone(zName, zCode, zLoadFlg){
         let delId = zone._id;
         let zoneDel = await Zone.findByIdAndRemove(delId);
         if (zoneDel = null) {
-          zoneLoadDebugger(`deleteZone: Zone with the ID ${delId} was not found!`);
+          zoneInitDebugger(`deleteZone: Zone with the ID ${delId} was not found!`);
           let delErrorFlag = true;
         }
       } catch (err) {
-        zoneLoadDebugger('deleteZone Error 1:', err.message);
+        zoneInitDebugger('deleteZone Error 1:', err.message);
         let delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       zoneLoadDebugger("All Zones succesfully deleted for Code:", zCode);
+       zoneInitDebugger("All Zones succesfully deleted for Code:", zCode);
     } else {
-       zoneLoadDebugger("Some Error In Zones delete for Code:", zCode);
+       zoneInitDebugger("Some Error In Zones delete for Code:", zCode);
     }
   } catch (err) {
-    zoneLoadDebugger(`deleteZone Error 2: ${err.message}`);
+    zoneInitDebugger(`deleteZone Error 2: ${err.message}`);
   }
 };
 
@@ -158,13 +158,13 @@ async function loadTeam(tName, tCode, tLoadFlg){
 
         let { error } = validateTeam(team); 
         if (error) {
-          teamLoadDebugger("New Team Validate Error", team.teamCode, error.message);
+          teamInitDebugger("New Team Validate Error", team.teamCode, error.message);
           return;
         }
         
-        team.save((err, team) => {
+        await team.save((err, team) => {
           if (err) return console.error(`New Team Save Error: ${err}`);
-          teamLoadDebugger(team.name + " add saved to teams collection.");
+          teamInitDebugger(team.name + " add saved to teams collection.");
         });
     } else {       
        // Existing Team here ... update
@@ -176,17 +176,17 @@ async function loadTeam(tName, tCode, tLoadFlg){
 
        const { error } = validateTeam(team); 
        if (error) {
-         teamLoadDebugger("Team Update Validate Error", tCode, tName, tLoadFlg, error.message);
+         teamInitDebugger("Team Update Validate Error", tCode, tName, tLoadFlg, error.message);
          return
        }
    
-       team.save((err, team) => {
+       await team.save((err, team) => {
        if (err) return console.error(`Team Update Save Error: ${err}`);
-       teamLoadDebugger(team.name + " update saved to teams collection.");
+       teamInitDebugger(team.name + " update saved to teams collection.");
        });
     }
   } catch (err) {
-    teamLoadDebugger('Catch Team Error:', err.message);
+    teamInitDebugger('Catch Team Error:', err.message);
     return;
 }
 
@@ -201,21 +201,21 @@ async function deleteTeam(tName, tCode, tLoadFlg){
         let delId = team._id;
         let teamDel = await Team.findByIdAndRemove(delId);
         if (teamDel = null) {
-          teamLoadDebugger(`deleteTeam: Team with the ID ${delId} was not found!`);
+          teamInitDebugger(`deleteTeam: Team with the ID ${delId} was not found!`);
           let delErrorFlag = true;
         }
       } catch (err) {
-        teamLoadDebugger('deleteTeam Error 1:', err.message);
+        teamInitDebugger('deleteTeam Error 1:', err.message);
         let delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       teamLoadDebugger("All Teams succesfully deleted for Code:", tCode);
+       teamInitDebugger("All Teams succesfully deleted for Code:", tCode);
     } else {
-       teamLoadDebugger("Some Error In Teams delete for Code:", tCode);
+       teamInitDebugger("Some Error In Teams delete for Code:", tCode);
     }
   } catch (err) {
-    teamLoadDebugger(`deleteTeam Error 2: ${err.message}`);
+    teamInitDebugger(`deleteTeam Error 2: ${err.message}`);
   }
 };
 
@@ -235,33 +235,33 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
 
       let zone = await Zone.findOne({ zoneCode: zCode });  
       if (!zone) {
-        countryLoadDebugger("Country Load Zone Error, New Country:", cCode, " Zone: ", zCode);
+        countryInitDebugger("Country Load Zone Error, New Country:", cCode, " Zone: ", zCode);
       } else {
         country.zone.zone_id = zone._id;
         country.zone.zoneName = zone.zoneName;
-        countryLoadDebugger("Country Load Zone Found, Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
+        countryInitDebugger("Country Load Zone Found, Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
       }      
       
       if (tCode != ""){
         let team = await Team.findOne({ teamCode: tCode });  
         if (!team) {
-          countryLoadDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
+          countryInitDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
         } else {
           country.team.team_id = team._id;
           country.team.teamName = team.name;
-          countryLoadDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+          countryInitDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
         }
       }      
 
       let { error } = validateCountry(country); 
       if (error) {
-        countryLoadDebugger("New Country Validate Error", country.code, error.message);
+        countryInitDebugger("New Country Validate Error", country.code, error.message);
         return
       }
         
-      country.save((err, country) => {
+      await country.save((err, country) => {
         if (err) return console.error(`New Country Save Error: ${err}`);
-        countryLoadDebugger(country.name + " add saved to country collection.");
+        countryInitDebugger(country.name + " add saved to country collection.");
       });
       } else {       
         // Existing Country here ... update
@@ -272,37 +272,37 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
 
         let zone = await Zone.findOne({ zoneCode: zCode });  
         if (!zone) {
-          countryLoadDebugger("Country Load Zone Error, Update Country:", cCode, " Zone: ", zCode);
+          countryInitDebugger("Country Load Zone Error, Update Country:", cCode, " Zone: ", zCode);
         } else {
           country.zone.zone_id = zone._id;
           country.zone.zoneName = zone.zoneName;
-          countryLoadDebugger("Country Load Zone Found, Update Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
+          countryInitDebugger("Country Load Zone Found, Update Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
         }      
 
         if (tCode != ""){
           let team = await Team.findOne({ teamCode: tCode });  
           if (!team) {
-            countryLoadDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
+            countryInitDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
           } else {
             country.team.team_id = team._id;
             country.team.teamName = team.name;
-            countryLoadDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+            countryInitDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
           }
         }    
 
         const { error } = validateCountry(country); 
         if (error) {
-          countryLoadDebugger("Country Update Validate Error", cCode, cName, cLoadFlg, error.message);
+          countryInitDebugger("Country Update Validate Error", cCode, cName, cLoadFlg, error.message);
           return
         }
 
-        country.save((err, country) => {
+        await country.save((err, country) => {
         if (err) return console.error(`Country Update Save Error: ${err}`);
-        countryLoadDebugger(country.name + " update saved to country collection.");
+        countryInitDebugger(country.name + " update saved to country collection.");
       });
     }
   } catch (err) {
-      countryLoadDebugger('Error:', err.message);
+      countryInitDebugger('Error:', err.message);
       return;
   }
 }
@@ -316,21 +316,21 @@ async function deleteCountry(cName, cCode, cLoadFlg){
         let delId = country._id;
         let countryDel = await Country.findByIdAndRemove(delId);
         if (countryDel = null) {
-          countryLoadDebugger(`deleteCountry: Country with the ID ${delId} was not found!`);
+          countryInitDebugger(`deleteCountry: Country with the ID ${delId} was not found!`);
           let delErrorFlag = true;
         }
       } catch (err) {
-        countryLoadDebugger('deleteCountry Error 1:', err.message);
+        countryInitDebugger('deleteCountry Error 1:', err.message);
         let delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       countryLoadDebugger("All Country succesfully deleted for Code:", cCode);
+       countryInitDebugger("All Country succesfully deleted for Code:", cCode);
     } else {
-       countryLoadDebugger("Some Error In Country delete for Code:", cCode);
+       countryInitDebugger("Some Error In Country delete for Code:", cCode);
     }
   } catch (err) {
-    countryLoadDebugger(`deleteCountry Error 2: ${err.message}`);
+    countryInitDebugger(`deleteCountry Error 2: ${err.message}`);
   }
 };
 

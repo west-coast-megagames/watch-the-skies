@@ -27,12 +27,12 @@ app.use(bodyParser.json());
 async function runUserLoad(runFlag){
   try {  
     //userLoadDebugger("Jeff in runUserLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllUsers(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     userLoadDebugger('Catch runUserLoad Error:', err.message);
     return; 
@@ -97,7 +97,7 @@ async function loadUser(iData){
         
         //userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
 
-        user.save((err, user) => {
+        await user.save((err, user) => {
           if (err) return console.error(`New User Save Error: ${err}`);
           userLoadDebugger(user.screenname + " saved to user collection.");
         });
@@ -135,7 +135,7 @@ async function loadUser(iData){
         return
       }
    
-      user.save((err, user) => {
+      await user.save((err, user) => {
       if (err) return console.error(`User Update Save Error: ${err}`);
       userLoadDebugger(user.screenname + " update saved to user collection.");
       });

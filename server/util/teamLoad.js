@@ -28,9 +28,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 function runTeamLoad(runFlag){
-  if (!runFlag) return;
+  if (!runFlag) return false;
   if (runFlag) initLoad(runFlag);
-  else return;
+  return true;
 };
 
 async function initLoad(doLoad) {
