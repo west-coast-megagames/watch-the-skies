@@ -8,6 +8,7 @@ const supportsColor = require('supports-color');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 //mongoose.set('useNewUrlParser', true);
 //mongoose.set('useFindAndModify', false);
@@ -55,6 +56,9 @@ async function initLoad(doLoad) {
 
 async function loadUser(iData){
   try {   
+    
+    const salt    = await bcrypt.genSalt(10);
+
     //userLoadDebugger("UserLoad ... Screenname", iData.screenname, "name", iData.name, "address", iData.address);
     let user = await User.findOne( { screenname: iData.screenname } );
     if (!user) {
@@ -66,10 +70,11 @@ async function loadUser(iData){
            phone: iData.phone,
            gender: iData.gender,
            discord: iData.discord,
-           password: iData.password,
            address: iData.address,
            DoB: convDate
         }); 
+
+        user.password = await bcrypt.hash(iData.password, salt);
        
         user.name.first = iData.name.first;
         user.name.last  = iData.name.last;
@@ -114,8 +119,9 @@ async function loadUser(iData){
       user.address     = iData.address;
       user.gender      = iData.gender;
       user.discord     = iData.discord;
-      user.password    = iData.password;
       user.DoB         = convDate;
+
+      user.password = await bcrypt.hash(iData.password, salt);
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
