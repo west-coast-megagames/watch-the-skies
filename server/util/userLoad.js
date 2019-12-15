@@ -90,7 +90,8 @@ async function loadUser(iData){
             userLoadDebugger("User Load Team Error, New User:", iData.screenname, " Team: ", iData.teamCode);
           } else {
             user.team.team_id  = team._id;
-            user.team.teamName = team.name;
+            user.team.teamName = team.shortName;
+            user.team.teamCode = team.teamCode;
             userLoadDebugger("User Load Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }
@@ -122,7 +123,8 @@ async function loadUser(iData){
           userLoadDebugger("User Load Team Error, Update User:", iData.screenname, " Team: ", iData.teamCode);
         } else {
           user.team.team_id  = team._id;
-          user.team.teamName = team.name;
+          user.team.teamName = team.shortName;
+          user.team.teamCode = team.teamCode;
           userLoadDebugger("User Load Update Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }
