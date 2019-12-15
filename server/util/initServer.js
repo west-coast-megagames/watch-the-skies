@@ -74,10 +74,8 @@ async function fullInit(){
   let teamDone = await runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
   console.log("Team Load Done:", teamDone);
 
-  /*
   let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
   console.log("Interceptor Load Done: ", interceptorDone);
-  */
 
   let userDone = await runUserLoad(true);  // load expanded User fields
   console.log("User Load Done: ", userDone );
