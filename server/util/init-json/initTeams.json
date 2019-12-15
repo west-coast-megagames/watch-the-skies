@@ -2,6 +2,7 @@
 "loadType" : "team", 
 "name": "United States of America", 
 "shortName" : "United States",
+"teamType" : "N",
 "code" : "USA", 
 "roles" : [ 
     {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
@@ -23,6 +24,7 @@
 "loadType" : "team", 
 "name": "Russian Federation", 
 "shortName" : "Russia",
+"teamType" : "N",
 "code" : "RFD", 
 "roles" : [ 
     {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
@@ -41,6 +43,7 @@
 "loadType" : "team", 
 "name": "People's Republic of China",
 "shortName" : "China", 
+"teamType" : "N",
 "code" : "PRC", 
 "roles" : [ 
     {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
@@ -60,6 +63,7 @@
 "loadType" : "team", 
 "name": "The France Republic", 
 "shortName" : "France",
+"teamType" : "N",
 "code" : "TFR", 
 "roles" : [
     {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
@@ -77,6 +81,7 @@
 "loadType" : "team", 
 "name": "United Kingdom", 
 "shortName" : "UK",
+"teamType" : "N",
 "code" : "TUK", 
 "roles" : [
     {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
@@ -95,6 +100,7 @@
 "loadType" : "team",
 "name" : "Federation",
 "shortName" : "Aliens",
+"teamType" : "A",
 "code" : "FFG",
 "roles" : [
     {"role" : "Frontier Guild Leader", "type": "Head of State", "userID": "undefined", "loadFlag": "true"}, 

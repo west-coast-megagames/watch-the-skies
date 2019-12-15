@@ -24,10 +24,10 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runAccountLoad(runFlag){
-  if (!runFlag) return;
-  if (runFlag) initLoad(runFlag);
-  else return;
+async function runAccountLoad(runFlag){
+  if (!runFlag) return false;
+  if (runFlag) await initLoad(runFlag);
+  return true;
 };
 
 async function initLoad(doLoad) {
@@ -35,16 +35,16 @@ async function initLoad(doLoad) {
   if (!doLoad) return;
 
   // delete ALL old data
-  accountLoadDebugger("Jeff before delete ");
-  await countAccount();   // how many records
+  //accountLoadDebugger("Jeff before delete ");
+  //await countAccount();   // how many records
   await deleteAccount();
-  accountLoadDebugger("Jeff after delete ");
-  await countAccount();   // how many records
+  //accountLoadDebugger("Jeff after delete ");
+  //await countAccount();   // how many records
 
   for (let i = 0; i < accountDataIn.length; ++i ) {
     
-    accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].parentCode1, accountDataIn[i].name);    
-    await countAccount();   // how many records
+    //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].parentCode1, accountDataIn[i].name);    
+    //await countAccount();   // how many records
 
     if (accountDataIn[i].loadType == "accounts") {     
       
@@ -74,7 +74,7 @@ async function loadAccount(t_id, tName, aData){
     let bigCode = aData.code.toUpperCase();
     let account = await Account.findOne({ team_id: t_id, code: bigCode });
 
-    accountLoadDebugger("Account Load function ... code", aData.code, bigCode, "t_id", t_id, (!account));
+    //accountLoadDebugger("Account Load function ... code", aData.code, bigCode, "t_id", t_id, (!account));
 
     if (!account) {
        // New Account here
@@ -95,16 +95,16 @@ async function loadAccount(t_id, tName, aData){
         
         account.team_id  = t_id;
 
-        accountLoadDebugger("Account before new save ... code", account.code, "t_id", t_id);
-        account.markModified('code');
+        //accountLoadDebugger("Account before new save ... code", account.code, "t_id", t_id);
+        //account.markModified('code');
       
         await account.save((err, account) => {
           if (err) return console.error(`New Account Save Error: ${err}`);
           accountLoadDebugger(account.owner + ", " + account.name + " New add saved to accounts collection.");
         });
         
-        accountLoadDebugger("Account after new save ... code", account.code, "t_id", account.team_id);
-        await countAccount();   // how many records
+        //accountLoadDebugger("Account after new save ... code", account.code, "t_id", account.team_id);
+        //await countAccount();   // how many records
 
     } else {       
        // Existing Account here ... update
@@ -123,16 +123,16 @@ async function loadAccount(t_id, tName, aData){
          accountLoadDebugger("Account Update Validate Error", aData.code, aData.name, aData.loadFlg, error.message);
          return
        }
-       account.markModified('code');
-       accountLoadDebugger("Account before Update save ... code", account.code, "t_id", t_id);
+       //account.markModified('code');
+       //accountLoadDebugger("Account before Update save ... code", account.code, "t_id", t_id);
 
        await account.save((err, account) => {
        if (err) return console.error(`Account Update Save Error: ${err}`);
        accountLoadDebugger(account.owner + ", " + account.name + " update saved to accounts collection. ");
        });
 
-       accountLoadDebugger("Account After Update save ... code", account.code, "t_id", account.team_id);
-       await countAccount();   // how many records
+       //accountLoadDebugger("Account After Update save ... code", account.code, "t_id", account.team_id);
+       //await countAccount();   // how many records
 
     }
   } catch (err) {

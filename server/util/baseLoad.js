@@ -28,12 +28,12 @@ app.use(bodyParser.json());
 async function runBaseLoad(runFlag){
   try {  
     //baseLoadDebugger("Jeff in runbaseLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllBases(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     baseLoadDebugger('Catch runbaseLoad Error:', err.message);
     return; 
@@ -95,7 +95,7 @@ async function loadBase(iData){
           }      
         }
         
-        base.save((err, base) => {
+        await base.save((err, base) => {
           if (err) return console.error(`New Base Save Error: ${err}`);
           baseLoadDebugger(base.baseName + " add saved to base collection.");
         });
@@ -136,7 +136,7 @@ async function loadBase(iData){
         return
       }
    
-      base.save((err, base) => {
+      await base.save((err, base) => {
       if (err) return console.error(`Base Update Save Error: ${err}`);
       baseLoadDebugger(base.baseName + " update saved to base collection.");
       });

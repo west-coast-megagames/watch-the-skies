@@ -29,15 +29,15 @@ app.use(bodyParser.json());
 async function runinterceptorLoad(runFlag){
   try {  
     //interceptorLoadDebugger("Jeff in runinterceptorLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllInterceptors(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     interceptorLoadDebugger('Catch runinterceptorLoad Error:', err.message);
-    return; 
+    return false; 
   }
 };
 
@@ -108,7 +108,7 @@ async function loadInterceptor(iData){
           }      
         }
         
-        interceptor.save((err, interceptor) => {
+        await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
           interceptorLoadDebugger(interceptor.designation + " add saved to interceptor collection.");
         });
@@ -161,7 +161,7 @@ async function loadInterceptor(iData){
         return
       }
    
-      interceptor.save((err, interceptor) => {
+      await interceptor.save((err, interceptor) => {
       if (err) return console.error(`Interceptor Update Save Error: ${err}`);
       interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
       });

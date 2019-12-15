@@ -18,15 +18,21 @@ const { Team, validateTeam } = require('../models/team');
 
 const app = express();
 
+/*
+Team.watch().on('change', data => {
+  teamLoadDebugger(data);
+});
+*/
+
 // Bodyparser Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-function runTeamLoad(runFlag){
-  if (!runFlag) return;
-  if (runFlag) initLoad(runFlag);
-  else return;
+async function runTeamLoad(runFlag){
+  if (!runFlag) return false;
+  if (runFlag) await initLoad(runFlag);
+  return true;
 };
 
 async function initLoad(doLoad) {
@@ -50,12 +56,16 @@ async function initLoad(doLoad) {
 async function loadTeam(tData){
   try {   
     let team = await Team.findOne( { teamCode: tData.code } );
+
+    //teamLoadDebugger("Jeff here in loadTeam ... Code", tData.code);
+
     if (!team) {
        // New Team here
        let team = new Team({ 
            teamCode: tData.code,
            name: tData.name,
-           shortName: tData.shortName
+           shortName: tData.shortName,
+           teamType: tData.teamType
         }); 
 
 
@@ -71,16 +81,18 @@ async function loadTeam(tData){
 
         //team.accounts = tData.accounts;   ... moved to it's own load
 
-        team.save((err, team) => {
+        await team.save((err, team) => {
           if (err) return console.error(`New Team Save Error: ${err}`);
-          teamLoadDebugger(team.name + " add saved to teams collection.");
+          //teamLoadDebugger(team.name, " add saved to teams collection.", "type: ", team.teamType);
+          teamLoadDebugger(`${team.name} add saved to teams collection. type: ${team.teamType}`);
         });
     } else {       
        // Existing Team here ... update
        let id = team._id;
       
        team.name      = tData.name;
-       team.shortName = tDate.shortName;
+       team.shortName = tData.shortName;
+       team.teamType  = tData.teamType;
        team.teamCode  = tData.code;
        team.prTrack   = tData.prTrack;
        team.roles     = tData.roles;
@@ -94,9 +106,10 @@ async function loadTeam(tData){
          return
        }
    
-       team.save((err, team) => {
+       await team.save((err, team) => {
        if (err) return console.error(`Team Update Save Error: ${err}`);
-       teamLoadDebugger(team.name + " update saved to teams collection.");
+       teamLoadDebugger(team.name, " update saved to teams collection.", "type: ", team.teamType);
+
        });
     }
   } catch (err) {

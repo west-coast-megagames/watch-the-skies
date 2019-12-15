@@ -7,11 +7,13 @@ const countryDebugger = require('debug')('app:country');
 const CountrySchema = new Schema({ 
     zone: { 
         zoneName: { type: String, required: true, minlength: 3, maxlength: 50, default: "UN-Assigned" },
-        zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'}
+        zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
+        zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
     },
     team: { 
-      teamName: { type: String, required: true, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-      team_id: { type: Schema.Types.ObjectId, ref: 'Team'}
+      teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
+      team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
+      teamCode: { type: String, minlength: 2, maxlength: 3 }
     },
     code: {
         type: String,

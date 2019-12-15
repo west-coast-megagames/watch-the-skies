@@ -27,12 +27,12 @@ app.use(bodyParser.json());
 async function runUserLoad(runFlag){
   try {  
     //userLoadDebugger("Jeff in runUserLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllUsers(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     userLoadDebugger('Catch runUserLoad Error:', err.message);
     return; 
@@ -59,7 +59,7 @@ async function loadUser(iData){
     let user = await User.findOne( { screenname: iData.screenname } );
     if (!user) {
        // New User here
-       //let convDate = Date(iData.DoB);
+       let convDate = new Date(iData.DoB);
        let user = new User({ 
            screenname: iData.screenname,
            email: iData.email,
@@ -68,7 +68,7 @@ async function loadUser(iData){
            discord: iData.discord,
            password: iData.password,
            address: iData.address,
-           DoB: iData.DoB
+           DoB: convDate
         }); 
        
         user.name.first = iData.name.first;
@@ -90,21 +90,22 @@ async function loadUser(iData){
             userLoadDebugger("User Load Team Error, New User:", iData.screenname, " Team: ", iData.teamCode);
           } else {
             user.team.team_id  = team._id;
-            user.team.teamName = team.name;
+            user.team.teamName = team.shortName;
+            user.team.teamCode = team.teamCode;
             userLoadDebugger("User Load Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }
         
         //userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
 
-        user.save((err, user) => {
+        await user.save((err, user) => {
           if (err) return console.error(`New User Save Error: ${err}`);
           userLoadDebugger(user.screenname + " saved to user collection.");
         });
     } else {       
       // Existing User here ... update
       let id = user._id;
-      //let convDate     = Date(iData.DoB);
+      let convDate     = new Date(iData.DoB);
       user.screenname  = iData.screenname;
       user.name.first  = iData.name.first;
       user.name.last   = iData.name.last;
@@ -114,7 +115,7 @@ async function loadUser(iData){
       user.gender      = iData.gender;
       user.discord     = iData.discord;
       user.password    = iData.password;
-      user.DoB         = iData.DoB;
+      user.DoB         = convDate;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
@@ -122,7 +123,8 @@ async function loadUser(iData){
           userLoadDebugger("User Load Team Error, Update User:", iData.screenname, " Team: ", iData.teamCode);
         } else {
           user.team.team_id  = team._id;
-          user.team.teamName = team.name;
+          user.team.teamName = team.shortName;
+          user.team.teamCode = team.teamCode;
           userLoadDebugger("User Load Update Team Found, User:", iData.screenname, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }
@@ -135,7 +137,7 @@ async function loadUser(iData){
         return
       }
    
-      user.save((err, user) => {
+      await user.save((err, user) => {
       if (err) return console.error(`User Update Save Error: ${err}`);
       userLoadDebugger(user.screenname + " update saved to user collection.");
       });
