@@ -80,7 +80,7 @@ async function loadTeam(tData){
        let id = team._id;
       
        team.name      = tData.name;
-       team.shortName = tDate.shortName;
+       team.shortName = tData.shortName;
        team.teamCode  = tData.code;
        team.prTrack   = tData.prTrack;
        team.roles     = tData.roles;

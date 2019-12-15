@@ -59,7 +59,7 @@ async function loadUser(iData){
     let user = await User.findOne( { screenname: iData.screenname } );
     if (!user) {
        // New User here
-       //let convDate = Date(iData.DoB);
+       let convDate = new Date(iData.DoB);
        let user = new User({ 
            screenname: iData.screenname,
            email: iData.email,
@@ -68,7 +68,7 @@ async function loadUser(iData){
            discord: iData.discord,
            password: iData.password,
            address: iData.address,
-           DoB: iData.DoB
+           DoB: convDate
         }); 
        
         user.name.first = iData.name.first;
@@ -104,7 +104,7 @@ async function loadUser(iData){
     } else {       
       // Existing User here ... update
       let id = user._id;
-      //let convDate     = Date(iData.DoB);
+      let convDate     = new Date(iData.DoB);
       user.screenname  = iData.screenname;
       user.name.first  = iData.name.first;
       user.name.last   = iData.name.last;
@@ -114,7 +114,7 @@ async function loadUser(iData){
       user.gender      = iData.gender;
       user.discord     = iData.discord;
       user.password    = iData.password;
-      user.DoB         = iData.DoB;
+      user.DoB         = convDate;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  

@@ -11,7 +11,7 @@
      "city" : "Rosefield",
      "state" : "CA",
      "zipcode" : "97534"},
-"DoB" : 19971208,
+"DoB" : "1997-12-08",
 "gender" : "Female",
 "discord" : "Rawr",
 "teamCode" : "USA"
@@ -29,7 +29,7 @@
      "city" : "Luxury Town",
      "state" : "CA",
      "zipcode" : "45792"},
-"DoB" : 19940508,
+"DoB" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
 "teamCode" : "RFD"
@@ -47,7 +47,7 @@
      "city" : "Hang Town",
      "state" : "CA",
      "zipcode" : "64825"},
-"DoB" : 20131003,
+"DoB" : "2013-10-03",
 "gender" : "Male",
 "discord" : "Jungle",
 "teamCode" : "PRC"
@@ -65,7 +65,7 @@
      "city" : "Paris",
      "state" : "NA",
      "zipcode" : "45766"},
-"DoB" : 19940312,
+"DoB" : "1994-03-12",
 "gender" : "Non-Binary",
 "discord" : "Free",
 "teamCode" : "TFR"
@@ -83,7 +83,7 @@
      "city" : "Zoo",
      "state" : "AZ",
      "zipcode" : "12345"},
-"DoB" : 19920803,
+"DoB" : "1992-08-03",
 "gender" : "Non-Binary",
 "discord" : "Pretty",
 "teamCode" : "TUK"
@@ -101,7 +101,7 @@
      "city" : "Base Camp",
      "state" : "AQ",
      "zipcode" : "12345"},
-"DoB" : 19870906,
+"DoB" : "1987-09-06",
 "gender" : "Non-Binary",
 "discord" : "Federation",
 "teamCode" : "FFG"
