@@ -79,7 +79,8 @@ async function loadBase(iData){
             baseLoadDebugger("Base Load Team Error, New Base:", iData.name, " Team: ", iData.parentCode2);
           } else {
             base.team.team_id  = team._id;
-            base.team.teamName = team.name;
+            base.team.teamName = team.shortName;
+            base.team.teamCode = team.teamCode;
             baseLoadDebugger("Base Load Team Found, Base:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
           }
         }      
@@ -91,6 +92,7 @@ async function loadBase(iData){
           } else {
             base.country.country_id  = country._id;
             base.country.countryName = country.name;
+            base.country.countryCode = country.code;
             baseLoadDebugger("Base Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
           }      
         }
@@ -114,7 +116,8 @@ async function loadBase(iData){
           baseLoadDebugger("Base Load Team Error, Update Base:", iData.name, " Team: ", iData.parentCode2);
         } else {
           base.team.team_id  = team._id;
-          base.team.teamName = team.name;
+          base.team.teamName = team.shortName;
+          base.team.teamCode = team.teamCode;
           baseLoadDebugger("Base Load Update Team Found, Base:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
         }
       }  
@@ -126,6 +129,7 @@ async function loadBase(iData){
         } else {
           base.country.country_id  = country._id;
           base.country.countryName = country.name;
+          base.country.countryCode = country.code;
           baseLoadDebugger("Base Load Country Found, Update Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
       }
