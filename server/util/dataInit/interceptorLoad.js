@@ -1,5 +1,6 @@
 const fs = require('fs')
-const file = fs.readFileSync('./init-json/initinterceptor.json', 'utf8');
+const config = require('config');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initinterceptor.json', 'utf8');
 const interceptorDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const interceptorLoadDebugger = require('debug')('app:interceptorLoad');
@@ -14,10 +15,10 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Interceptor Model - Using Mongoose Model
-const { Interceptor, validateInterceptor } = require('../models/ops/interceptor');
-const { Zone, validateZone } = require('../models/zone');
-const { Country, validateCountry } = require('../models/country'); 
-const { Team, validateTeam } = require('../models/team');
+const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
+const { Zone, validateZone } = require('../../models/zone');
+const { Country, validateCountry } = require('../../models/country'); 
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 
@@ -29,15 +30,15 @@ app.use(bodyParser.json());
 async function runinterceptorLoad(runFlag){
   try {  
     //interceptorLoadDebugger("Jeff in runinterceptorLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllInterceptors(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     interceptorLoadDebugger('Catch runinterceptorLoad Error:', err.message);
-    return; 
+    return false; 
   }
 };
 
@@ -80,8 +81,9 @@ async function loadInterceptor(iData){
           if (!team) {
             interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
           } else {
-            interceptor.team.team_id   = team._id;
-            interceptor.team.teamName = team.name;
+            interceptor.team.team_id  = team._id;
+            interceptor.team.teamName = team.shortName;
+            interceptor.team.teamCode = team.teamCode;
             interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
           }
         }      
@@ -91,8 +93,9 @@ async function loadInterceptor(iData){
           if (!zone) {
             interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.location.zone);
           } else {
-            interceptor.location.zone.zone_id   = zone._id;
+            interceptor.location.zone.zone_id  = zone._id;
             interceptor.location.zone.zoneName = zone.zoneName;
+            interceptor.location.zone.zoneCode = zone.zoneCode;
             interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
           }      
         }
@@ -102,13 +105,14 @@ async function loadInterceptor(iData){
           if (!country) {
             interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.location.country);
           } else {
-            interceptor.location.country.country_id   = country._id;
+            interceptor.location.country.country_id  = country._id;
             interceptor.location.country.countryName = country.name;
+            interceptor.location.country.countryCode = country.code;
             interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
           }      
         }
         
-        interceptor.save((err, interceptor) => {
+        await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
           interceptorLoadDebugger(interceptor.designation + " add saved to interceptor collection.");
         });
@@ -127,8 +131,9 @@ async function loadInterceptor(iData){
         if (!team) {
           interceptorLoadDebugger("Interceptor Load Team Error, Update Interceptor:", iData.name, " Team: ", iData.parentCode1);
         } else {
-          interceptor.team.team_id   = team._id;
-          interceptor.team.teamName = team.name;
+          interceptor.team.team_id  = team._id;
+          interceptor.team.teamName = team.shortName;
+          interceptor.team.teamCode = team.teamCode;
           interceptorLoadDebugger("Interceptor Load Update Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
         }
       }  
@@ -138,8 +143,9 @@ async function loadInterceptor(iData){
         if (!zone) {
           interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.location.zone);
         } else {
-          interceptor.location.zone.zone_id   = zone._id;
+          interceptor.location.zone.zone_id  = zone._id;
           interceptor.location.zone.zoneName = zone.zoneName;
+          interceptor.location.zone.zoneCode = zone.zoneCode;
           interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
         }      
       }
@@ -149,8 +155,9 @@ async function loadInterceptor(iData){
         if (!country) {
           interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.location.country);
         } else {
-          interceptor.location.country.country_id   = country._id;
+          interceptor.location.country.country_id  = country._id;
           interceptor.location.country.countryName = country.name;
+          interceptor.location.country.countryCode = country.code;
           interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
         }      
       }
@@ -161,7 +168,7 @@ async function loadInterceptor(iData){
         return
       }
    
-      interceptor.save((err, interceptor) => {
+      await interceptor.save((err, interceptor) => {
       if (err) return console.error(`Interceptor Update Save Error: ${err}`);
       interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
       });

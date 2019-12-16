@@ -18,6 +18,7 @@ function teamUpdate (cb) {
 
 let teamEvents = { updateTeam, teamUpdate };
 
+
 // Clock Socket Events and Event Listners
 function subscribeToClock (cb) {
     socket.on('gameClock', clock => cb(null, clock));
@@ -41,6 +42,7 @@ function skipPhase () {
 
 let gameClock = { subscribeToClock, pauseGame, startGame, resetClock, skipPhase };
 
+
 // Banking Socket Events and Event Listners
 function bankingTransfer (transfer) {
     socket.emit('bankingTransfer', transfer);
@@ -52,17 +54,13 @@ function autoTransfer (transfer) {
 
 let banking = { bankingTransfer, autoTransfer };
 
+
 // Notification Socket Events and Event Listners
 function alertListen (cb) {
     alert.on('alert', data => cb(null, data))
 };
 
 let alerts = { alertListen };
-
-function updateAircrafts () {
-    console.log('Requesting aircraft update...');
-    socket.emit('updateAircrafts');
-};
 
 function currentAircrafts (cb) {
     console.log('Listning for current aircrafts...')
@@ -74,4 +72,4 @@ function updateAccounts (cb) {
 }
 
 
-export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAircrafts, updateAccounts };
+export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAccounts };

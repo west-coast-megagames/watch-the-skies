@@ -91,7 +91,7 @@ router.patch('/banking/accounts', async function (req, res) {
 router.put('/accounts', async function (req, res) {
     let { team_id } = req.body;
     routeDebugger('Looking up accounts...');
-    let accounts = await Account.find({ team_id })
+    let accounts = await Account.find({ 'team.team_id': team_id })
     res.json(accounts);
 });
 

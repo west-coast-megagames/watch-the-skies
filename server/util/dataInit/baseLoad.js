@@ -1,5 +1,6 @@
-const fs = require('fs')
-const file = fs.readFileSync('./init-json/initbase.json', 'utf8');
+const fs = require('fs');
+const config = require('config');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initbase.json', 'utf8');
 const baseDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const baseLoadDebugger = require('debug')('app:baseLoad');
@@ -14,9 +15,9 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Base Model - Using Mongoose Model
-const { Base, validateBase } = require('../models/base');
-const { Country, validateCountry } = require('../models/country'); 
-const { Team, validateTeam } = require('../models/team');
+const { Base, validateBase } = require('../../models/base');
+const { Country, validateCountry } = require('../../models/country'); 
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 
@@ -28,12 +29,12 @@ app.use(bodyParser.json());
 async function runBaseLoad(runFlag){
   try {  
     //baseLoadDebugger("Jeff in runbaseLoad", runFlag);    
-    if (!runFlag) return;
+    if (!runFlag) return false;
     if (runFlag) {
       await deleteAllBases(runFlag);
       await initLoad(runFlag);
     }
-    else return;
+    return true;
   } catch (err) {
     baseLoadDebugger('Catch runbaseLoad Error:', err.message);
     return; 
@@ -79,7 +80,8 @@ async function loadBase(iData){
             baseLoadDebugger("Base Load Team Error, New Base:", iData.name, " Team: ", iData.parentCode2);
           } else {
             base.team.team_id  = team._id;
-            base.team.teamName = team.name;
+            base.team.teamName = team.shortName;
+            base.team.teamCode = team.teamCode;
             baseLoadDebugger("Base Load Team Found, Base:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
           }
         }      
@@ -91,11 +93,12 @@ async function loadBase(iData){
           } else {
             base.country.country_id  = country._id;
             base.country.countryName = country.name;
+            base.country.countryCode = country.code;
             baseLoadDebugger("Base Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
           }      
         }
         
-        base.save((err, base) => {
+        await base.save((err, base) => {
           if (err) return console.error(`New Base Save Error: ${err}`);
           baseLoadDebugger(base.baseName + " add saved to base collection.");
         });
@@ -114,7 +117,8 @@ async function loadBase(iData){
           baseLoadDebugger("Base Load Team Error, Update Base:", iData.name, " Team: ", iData.parentCode2);
         } else {
           base.team.team_id  = team._id;
-          base.team.teamName = team.name;
+          base.team.teamName = team.shortName;
+          base.team.teamCode = team.teamCode;
           baseLoadDebugger("Base Load Update Team Found, Base:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
         }
       }  
@@ -126,6 +130,7 @@ async function loadBase(iData){
         } else {
           base.country.country_id  = country._id;
           base.country.countryName = country.name;
+          base.country.countryCode = country.code;
           baseLoadDebugger("Base Load Country Found, Update Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
       }
@@ -136,7 +141,7 @@ async function loadBase(iData){
         return
       }
    
-      base.save((err, base) => {
+      await base.save((err, base) => {
       if (err) return console.error(`Base Update Save Error: ${err}`);
       baseLoadDebugger(base.baseName + " update saved to base collection.");
       });

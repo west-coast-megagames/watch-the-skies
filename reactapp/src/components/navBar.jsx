@@ -3,7 +3,6 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faShieldAlt, faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import { gameClock, teamEvents } from '../api';
-import TeamSelect from './common/teamSelect';
 
 class NavBar extends Component {
     state = { 
@@ -60,7 +59,6 @@ class NavBar extends Component {
             <span className="navbar-text mr-1">{pr}</span>
             <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span>
             <span className="navbar-text mr-1"> {this.props.team.name} </span>
-            <TeamSelect teams={this.props.teams} onChange={ this.props.onChange } />
             </nav>
         );
     }
