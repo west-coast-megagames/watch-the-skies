@@ -1,12 +1,13 @@
 import React from "react";
-import { MDBDropdown, MDBDropdownToggle, MDBBtnGroup, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
+import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 
 const TeamSelect = (props) => {
   return (
-    <MDBBtnGroup>
-      <MDBDropdown size="sm"> 
-        <MDBDropdownToggle caret color="dark" />
-        <MDBDropdownMenu right color="white">
+      <MDBDropdown size="sm">
+        <MDBDropdownToggle caret color="white">
+          Select Team 
+        </MDBDropdownToggle>
+        <MDBDropdownMenu right>
           {props.teams.map(team => (
             <MDBDropdownItem
                 onClick={ () => props.onChange(team) }
@@ -15,7 +16,7 @@ const TeamSelect = (props) => {
           ))}
         </MDBDropdownMenu>
       </MDBDropdown>
-    </MDBBtnGroup>
+ 
   );
 }
 

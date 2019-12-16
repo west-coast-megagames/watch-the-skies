@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { teamEvents, updateAircrafts, currentAircrafts, updateAccounts } from './api'
+import { teamEvents, currentAircrafts, updateAccounts } from './api'
 import axios from 'axios';
 
 // Components
@@ -12,6 +12,7 @@ import LoginForm from './components/loginForm'
 import Interception from './pages/interceptions'
 import Budget from './pages/budget'
 import Home from './pages/home'
+import Control from './pages/control';
 import NotFound from './pages/404'
 import MoshTest from './pages/mosh' // Mosh test
 
@@ -19,6 +20,7 @@ import MoshTest from './pages/mosh' // Mosh test
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+
 
 // React App Component
 class App extends Component {
@@ -31,8 +33,7 @@ class App extends Component {
     accounts: [],
     megabucks: 0,
     team: {
-      name: "Select Team",
-      _id: "rawr"
+      name: "Select Team"
     },
   }
 
@@ -66,14 +67,18 @@ class App extends Component {
       <div className="App">
         <NavBar 
           team={ this.state.team }
-          teams={ this.state.teams }
           megabucks={ this.state.megabucks }
-          onChange={ this.handleLogin }
         />
           <main>
           <Switch>
             <Route path="/login" component={ LoginForm } />
-            <Route path="/home" component={ Home } />
+            <Route path="/home" render={() => (
+              <Home
+                login={ this.state.login }
+                teams={ this.state.teams }
+                onChange={ this.handleLogin }
+              />
+            )} />
             <Route path="/interceptions" render={() => (
               <Interception 
                 team={ this.state.team }
@@ -88,6 +93,7 @@ class App extends Component {
               />
             )}/>
             <Route path="/mosh" component={ MoshTest } />
+            <Route path="/control" component={ Control }/>
             <Route path="/not-found" component={ NotFound } />
             <Redirect from="/" exact to="home" />
             <Redirect to="/not-found" />
@@ -121,10 +127,17 @@ class App extends Component {
     this.setState({ accounts, megabucks })
   }
 
+  updateAircrafts = async () => {
+    let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
+    console.log(aircrafts);
+    this.setState({ aircrafts })
+  }
+
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);
+    this.setState({ login: true })
     teamEvents.updateTeam(team._id)
-    updateAircrafts();
+    this.updateAircrafts();
   }
 }
 
