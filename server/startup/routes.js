@@ -16,7 +16,7 @@ const users = require('../routes/users');
 const news = require('../routes/api/news');
 const logs = require('../routes/api/log');
 const banking = require('../routes/api/banking');
-const initData = require('../routes/api/initData');
+//const initData = require('../routes/api/initData');
 
 
 module.exports = function(app) {
@@ -38,7 +38,7 @@ module.exports = function(app) {
     app.use('/api/news', news); // Route for the news desks
     app.use('/api/logs', logs); // Route for logs
     app.use('/api/banking', banking); // Route for banking functions
-    app.use('/api/initData', initData); // Route for Init Data functions
+    //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use(error.routeError);
 }
