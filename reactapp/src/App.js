@@ -128,7 +128,7 @@ class App extends Component {
   }
 
   updateAircrafts = async () => {
-    let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
+    let { data: aircrafts } = await axios.get('https://project-nexus-prototype.herokuapp.com/api/interceptor');
     console.log(aircrafts);
     this.setState({ aircrafts })
   }
