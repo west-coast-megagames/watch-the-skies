@@ -1,5 +1,6 @@
-const fs = require('fs')
-const file = fs.readFileSync('./init-json/initTeams.json', 'utf8');
+const fs = require('fs');
+const config = require('config');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initTeams.json', 'utf8');
 const teamDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const teamLoadDebugger = require('debug')('app:teamLoad');

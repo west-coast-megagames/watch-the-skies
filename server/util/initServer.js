@@ -6,17 +6,7 @@ const supportsColor = require('supports-color');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const runLoad = require('../util/initRefLoad');
-const runTeamLoad = require('../util/teamLoad');
-const runInterceptorLoad = require('../util/interceptorLoad');
-const runUserLoad = require('../util/userLoad');
-const runBaseLoad = require('../util/baseLoad');
-const runAccountLoad = require('../util/accountLoad');
-
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
+const initLoadAll = require('./initLoadAll');
 
 // Routes - Using Express
 const interceptor = require('../routes/api/interceptor');
@@ -28,6 +18,7 @@ const users = require('../routes/users');
 const news = require('../routes/api/news');
 const logs = require('../routes/api/log');
 const account = require('../routes/api/accounts');
+const config = require('config');
 
 // Middleware - express and socketIo
 const app = express();
@@ -48,7 +39,9 @@ const dbURI = require('../config/keys').mongoURI;
 const mongoOptions =  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'test'};
+    useFindAndModify: false,
+    useCreateIndex: true,
+    dbName: config.get('dbName')};
 
 // Connect to MongoDB with Mongoose
 mongoose.connect(dbURI, mongoOptions)
@@ -66,33 +59,7 @@ app.use('/api/news', news); // Route for the news desks
 app.use('/api/logs', logs); // Route for logs
 app.use('/api/accounts', account); // Route for Team Accounts
 
-async function fullInit(){
-  
-  /*
-  let initDone = await runLoad(true);   // load simple reference tables/documents from refdata.json
-  console.log("Ref Init Done:", initDone);
-  
-  let teamDone = await runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
-  console.log("Team Load Done:", teamDone);
-
-  let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
-  console.log("Interceptor Load Done: ", interceptorDone);
-  */
-
-  let userDone = await runUserLoad(true);  // load expanded User fields
-  console.log("User Load Done: ", userDone );
-
-  /*
-  let baseDone = await runBaseLoad(true);  // load expanded Base fields
-  console.log("Base Load Done: ", baseDone);
-
-  let accountsDone = await runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
-  console.log("Accunts Load Done: ", accountsDone);
-  */
-
-}
-
-fullInit();
+initLoadAll();
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

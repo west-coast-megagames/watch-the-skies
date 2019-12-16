@@ -1,5 +1,4 @@
 {
-    "jwtPrivateKey": "jwtPrivateKey",
     "initPath": "initDataDir",
     "dbName": "dbName"
 }

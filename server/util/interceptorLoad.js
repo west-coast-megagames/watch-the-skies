@@ -1,5 +1,6 @@
 const fs = require('fs')
-const file = fs.readFileSync('./init-json/initinterceptor.json', 'utf8');
+const config = require('config');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initinterceptor.json', 'utf8');
 const interceptorDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const interceptorLoadDebugger = require('debug')('app:interceptorLoad');

@@ -1,5 +1,6 @@
-const fs = require('fs')
-const file = fs.readFileSync('./init-json/initAccounts.json', 'utf8');
+const fs = require('fs');
+const config = require('config');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initAccounts.json', 'utf8');
 const accountDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const accountLoadDebugger = require('debug')('app:accountLoad');
