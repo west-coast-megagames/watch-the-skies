@@ -86,11 +86,6 @@ module.exports = function (io){
       client.emit('currentAircrafts', aircrafts);
     });
 
-    eventListner.on('updateAccounts', team => {
-      client.emit('updateAccounts', team);
-    })
-    
-
     client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
   });
 };
