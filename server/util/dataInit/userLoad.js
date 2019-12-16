@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs');
 const config = require('config');
 const file = fs.readFileSync(config.get('initPath') + 'init-json/initUser.json', 'utf8');
 const userDataIn = JSON.parse(file);
@@ -16,8 +16,8 @@ const bcrypt = require('bcrypt');
 //mongoose.set('useCreateIndex', true);
 
 // User Model - Using Mongoose Model
-const { User, validateUser } = require('../models/user');
-const { Team, validateTeam } = require('../models/team');
+const { User, validateUser } = require('../../models/user');
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 

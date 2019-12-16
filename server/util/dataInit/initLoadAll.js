@@ -1,9 +1,9 @@
-const runLoad = require('../util/initRefLoad');
-const runTeamLoad = require('../util/teamLoad');
-const runInterceptorLoad = require('../util/interceptorLoad');
-const runUserLoad = require('../util/userLoad');
-const runBaseLoad = require('../util/baseLoad');
-const runAccountLoad = require('../util/accountLoad');
+const runLoad = require('../dataInit/initRefLoad');
+const runTeamLoad = require('../dataInit/teamLoad');
+const runInterceptorLoad = require('../dataInit/interceptorLoad');
+const runUserLoad = require('../dataInit/userLoad');
+const runBaseLoad = require('../dataInit/baseLoad');
+const runAccountLoad = require('../dataInit/accountLoad');
 
 async function fullInit(){
   

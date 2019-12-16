@@ -17,9 +17,9 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Country Model - Using Mongoose Model
-const { Zone, validateZone } = require('../models/zone');
-const { Country, validateCountry } = require('../models/country'); 
-const { Team, validateTeam } = require('../models/team');
+const { Zone, validateZone } = require('../../models/zone');
+const { Country, validateCountry } = require('../../models/country'); 
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 
