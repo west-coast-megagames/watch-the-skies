@@ -40,7 +40,7 @@ function deposit (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
-        team_id: account.team_id,
+        team_id: account.team.team_id,
         teamName: account.owner,
         title: `${account.name} Deposit`,
         body: `${amount} deposited into ${account.name} for ${note}.`
@@ -58,7 +58,7 @@ function deposit (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team_id,
+        team_id: account.team.team_id,
         transaction: 'deposit',
         account: account.name,
         amount,
@@ -84,7 +84,7 @@ function withdrawal (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     alerts.setAlert({
-        team_id: account.team_id,
+        team_id: account.team.team_id,
         teamName: account.owner,
         title: `${account.name} withdrawal`,
         body: `${amount} withdrawn from ${account.name} for ${note}.`
@@ -102,7 +102,7 @@ function withdrawal (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team_id,
+        team_id: account.team.team_id,
         transaction: 'withdrawal',
         account: account.name,
         amount,
