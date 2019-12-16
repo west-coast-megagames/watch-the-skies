@@ -15,10 +15,10 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Interceptor Model - Using Mongoose Model
-const { Interceptor, validateInterceptor } = require('../models/ops/interceptor');
-const { Zone, validateZone } = require('../models/zone');
-const { Country, validateCountry } = require('../models/country'); 
-const { Team, validateTeam } = require('../models/team');
+const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
+const { Zone, validateZone } = require('../../models/zone');
+const { Country, validateCountry } = require('../../models/country'); 
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 

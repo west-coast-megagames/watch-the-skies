@@ -15,8 +15,8 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Account Model - Using Mongoose Model
-const { Account, validateAccount } = require('../models/gov/account');
-const { Team, validateTeam } = require('../models/team');
+const { Account, validateAccount } = require('../../models/gov/account');
+const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
 
