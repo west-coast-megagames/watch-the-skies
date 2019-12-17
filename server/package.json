@@ -4,7 +4,7 @@
   "description": "Server for West Coast Megagames Watch the Skies Prototype.",
   "main": "server.js",
   "directories": {
-     "test": "tests"
+    "test": "tests"
   },
   "scripts": {
     "start": "node server.js",
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "jest": "^24.9.0",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "supertest": "^4.0.2"
   }
 }
