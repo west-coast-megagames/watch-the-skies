@@ -1,5 +1,9 @@
 {
   "name": "wts-server",
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  },
   "version": "1.0.0",
   "description": "Server for West Coast Megagames Watch the Skies Prototype.",
   "main": "server.js",
@@ -11,7 +15,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix ../reactapp",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "jest --verbose"
+    "test": "jest --detectOpenHandles"
   },
   "engines": {
     "node": "10.15.3",
