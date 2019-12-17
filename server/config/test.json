@@ -1,0 +1,5 @@
+{
+    "jwtPrivateKey": "rawr",
+    "initPath": "./util/dataInit/",
+    "dbName": "auto-test"
+}

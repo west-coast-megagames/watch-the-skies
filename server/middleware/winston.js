@@ -1,5 +1,6 @@
 const errorDebugger = require('debug')('app:error')
 const winston = require('winston');
+// may need to comment out line below if we have problems with integration testing
 require ('winston-mongodb');
 
 const { createLogger, format, transports } = winston;

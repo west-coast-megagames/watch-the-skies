@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "Server for West Coast Megagames Watch the Skies Prototype.",
   "main": "server.js",
+  "directories": {
+     "test": "tests"
+  },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../reactapp",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest --verbose"
   },
   "engines": {
     "node": "10.15.3",
@@ -35,6 +39,7 @@
     "winston-mongodb": "^5.0.1"
   },
   "devDependencies": {
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4"
   }
 }
