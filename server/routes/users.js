@@ -46,8 +46,8 @@ router.post('/', async function (req, res) {
 // @Desc    Get all Users
 // @access  Public
 router.get('/me', auth, async function (req, res) {
-    const user = await User.findById(req.user._id).select('username email name')
-    console.log(`Verifying ${user.username}`);
+    const user = await User.findById(req.user._id).select('screenname email name')
+    console.log(`Verifying ${user.screenname}`);
     res.json(user);
 });
 
@@ -59,5 +59,19 @@ router.get('/', async function (req, res) {
         let users = await User.find();
         res.json(users);
 });
+
+// @route   GET /user/id
+// @Desc    Get users by id
+// @access  Public
+router.get('/id/:id', async (req, res) => {
+    let id = req.params.id;
+    console.log('Jeff here in users/id', id);
+    const users = await User.findById(id);
+    if (users != null) {
+      res.json(users);
+    } else {
+      res.status(404).send(`The User with the ID ${id} was not found!`);
+    }
+  });
 
 module.exports = router;
