@@ -20,7 +20,9 @@ import MoshTest from './pages/mosh' // Mosh test
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import AlertPage from './components/common/alert';
 
+let idCount = 0;
 
 // React App Component
 class App extends Component {
@@ -35,12 +37,20 @@ class App extends Component {
     team: {
       name: "Select Team"
     },
+    alerts: []
   }
 
   componentDidMount() {
     this.getTeams(); //Get all teams in DB and store to state
+    this.addAlert({ 
+      id: this.state.idCount,
+      type: 'error',
+      title: 'Test Alert',
+      body: 'No alert input!'
+    })
     teamEvents.teamUpdate((err, team) => {
       this.setState({ team });
+
     });
 
     currentAircrafts((err, aircrafts) => {
@@ -98,6 +108,7 @@ class App extends Component {
             <Redirect from="/" exact to="home" />
             <Redirect to="/not-found" />
           </Switch>
+          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
           <Toast />
           </main>
         </div>
@@ -129,6 +140,7 @@ class App extends Component {
 
   updateAircrafts = async () => {
     let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
+    this.addAlert({type: 'succeess', title: 'Aircrafts updated', body: `The aircrafts for ${this.state.team.name} have been updated...`})
     console.log(aircrafts);
     this.setState({ aircrafts })
   }
@@ -136,9 +148,23 @@ class App extends Component {
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);
     this.setState({ login: true })
+    this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
     teamEvents.updateTeam(team._id)
     this.updateAircrafts();
   }
+
+  addAlert = (alert) => {
+    let alerts = this.state.alerts
+    console.log(`ID: ${idCount}`)
+    alert.id = idCount++;;
+    alerts.push(alert);
+    this.setState({ alerts });
+  };
+
+  deleteAlert = alertId => {
+    const alerts = this.state.alerts.filter(a => a.id !== alertId);
+    this.setState({ alerts });
+  };
 }
 
 export default App
