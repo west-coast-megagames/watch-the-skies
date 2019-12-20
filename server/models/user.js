@@ -50,7 +50,8 @@ function validateUser(user) {
   return Joi.validate(user, schema, { "allowUnknown": true });
 }
 
-/*
+/* was in validateUser ... this was causing the fields to not be written to mongo DB 
+   need to investigate why
 name: {
       first: Joi.string().min(1).max(25).required(),
       last: Joi.string().min(1).max(50).required(), 
