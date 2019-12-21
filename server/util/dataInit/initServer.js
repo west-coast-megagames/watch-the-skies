@@ -41,7 +41,7 @@ const mongoOptions =  {
 
 // Connect to MongoDB with Mongoose
 mongoose.connect(dbURI, mongoOptions)
-    .then(() => dbDebugger('MongoDB Connected...'))
+    .then(() => dbDebugger(`MongoDB Connected ${config.get('dbName')} ...`))
     .catch(err => console.warn(err));
 
 // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)

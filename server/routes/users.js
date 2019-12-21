@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt')
 const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
 const { User, validateUser } = require('../models/user');
@@ -63,9 +64,10 @@ router.get('/', async function (req, res) {
 // @route   GET /user/id
 // @Desc    Get users by id
 // @access  Public
-router.get('/id/:id', async (req, res) => {
+router.get('/id/:id', validateObjectId, async (req, res) => {
+    
     let id = req.params.id;
-    console.log('Jeff here in users/id', id);
+
     const users = await User.findById(id);
     if (users != null) {
       res.json(users);

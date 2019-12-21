@@ -10,6 +10,7 @@ describe('/users/', () => {
     await User.deleteOne({ screenname: 'Utest1'});
     await User.deleteOne({ screenname: 'Utest2'});
     await User.deleteOne({ screenname: 'Utest3'});
+    await User.deleteOne({ screenname: 'Utest4'});
   });
 
   describe('Get /', () => {
@@ -17,7 +18,8 @@ describe('/users/', () => {
       await User.collection.insertMany([
         { first: 'John', 
           last: 'Doe', 
-          email: 'testing.gmail.com', 
+          DoB: "1991-01-01",
+          email: 'testing@gmail.com', 
           screenname: 'Utest1', 
           phone: '9161112222', 
           gender: 'Male',
@@ -25,7 +27,8 @@ describe('/users/', () => {
           discord: 'Dtest1' },
          { first: 'Jane', 
            last: 'Doe', 
-           email: 'testing2.gmail.com', 
+           DoB: "1991-02-01",
+           email: 'testing2@gmail.com', 
            screenname: 'Utest2', 
            phone: '9161112223', 
            gender: 'Female',
@@ -44,23 +47,96 @@ describe('/users/', () => {
   describe('Get /:id', () => {
     it('should return a user if valid id is passed', async () => {
       const user = new User(
-        { email: 'testing3.gmail.com', 
+        { email: 'testing3@gmail.com', 
           screenname: 'Utest3', 
           phone: '9161112222', 
           gender: 'Male',
           password: 'PWtest23',
+          DoB: "1991-03-01",
           discord: 'Dtest3' 
         });
         user.name.first = 'John';
         user.name.last  = 'Doe';
         await user.save();
 
-        console.log('User ID', user._id);
         const res = await request(server).get('/users/id/' + user._id);
         expect(res.status).toBe(200);
         expect(res.body).toHaveProperty('screenname', user.screenname);
     });
+
+    it('should return 404 if invalid id is passed', async () => {
+        // pass in invalid id ... don't need to create a record
+        const res = await request(server).get('/users/id/1');
+        expect(res.status).toBe(404);
+    });
   });  
 
+  describe('POST /', () => {
+  
+    /* following test assumes middleware auth is part of POST to test if user is logged in
+    it('should return 401 if client is not logged in', async () => {
+      const res = await request(server).post('/users').send({ screenname: 'Utest1'});
+      expect(res.status).toBe(401);
+    });
+    */
+ 
+    it('should return 400 if user screenname is less than 5 characters', async () => {
+      /* if auth was part of post
+      const token = new User().generateAuthToken();
+
+      and add to const res below between .post and .send
+      .set('x-auth-token', token)
+      */
+
+      const res = await request(server).post('/users').send({ screenname: '1234'});
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if user screenname is more than 15 characters', async () => {
+
+      // generate a string from array number of elements minus 1 ... so 16 chars > 15 in joi validation
+      const testScreenname = new Array(17).join('a');
+      const res = await request(server).post('/users').send({ screenname: testScreenname});
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if user email is already used (in database)', async () => {
+
+      const res = await request(server).post('/users').send({ email: 'Art@gmail.com'});
+      expect(res.status).toBe(400);
+    });
+
+    it('should save the user if it is valid', async () => {
+
+      const res = await request(server).post('/users').send({ screenname: 'Utest3'});
+
+      const user = await User.find({ screenname: 'Utest3' });
+
+      expect(user).not.toBeNull();
+    });
+
+    it('should return the user email if it is valid', async () => {
+
+      const res = await request(server).post('/users').send({ email: 'testing4@gmail.com', 
+        screenname: 'Utest4', 
+        phone: '9161112230', 
+        gender: 'Male',
+        password: 'PWtest30',
+        discord: 'Dtest4',
+        DoB: "1991-04-01",
+        "name":
+          {"first": "Jack",
+          "last": "Sprat"
+        }
+     });
+
+      expect(res.status).toBe(200); 
+      //don't care what _id is ... just that we got one
+      expect(res.body).toHaveProperty('_id');   
+      //testing for specific screenname
+      expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
+    });
+
+  });
 
 });
