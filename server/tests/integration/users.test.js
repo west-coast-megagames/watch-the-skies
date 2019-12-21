@@ -18,6 +18,7 @@ describe('/users/', () => {
       await User.collection.insertMany([
         { first: 'John', 
           last: 'Doe', 
+          DoB: "1991-01-01",
           email: 'testing@gmail.com', 
           screenname: 'Utest1', 
           phone: '9161112222', 
@@ -26,6 +27,7 @@ describe('/users/', () => {
           discord: 'Dtest1' },
          { first: 'Jane', 
            last: 'Doe', 
+           DoB: "1991-02-01",
            email: 'testing2@gmail.com', 
            screenname: 'Utest2', 
            phone: '9161112223', 
@@ -50,6 +52,7 @@ describe('/users/', () => {
           phone: '9161112222', 
           gender: 'Male',
           password: 'PWtest23',
+          DoB: "1991-03-01",
           discord: 'Dtest3' 
         });
         user.name.first = 'John';
@@ -112,7 +115,6 @@ describe('/users/', () => {
       expect(user).not.toBeNull();
     });
 
-    /*
     it('should return the user email if it is valid', async () => {
 
       const res = await request(server).post('/users').send({ email: 'testing4@gmail.com', 
@@ -121,16 +123,19 @@ describe('/users/', () => {
         gender: 'Male',
         password: 'PWtest30',
         discord: 'Dtest4',
-        first: "Jack",
-        last: "Sprat"
+        DoB: "1991-04-01",
+        "name":
+          {"first": "Jack",
+          "last": "Sprat"
+        }
      });
 
+      expect(res.status).toBe(200); 
       //don't care what _id is ... just that we got one
-      expect(res.header).toHaveProperty('_id');   
+      expect(res.body).toHaveProperty('_id');   
       //testing for specific screenname
-      expect(res.header).toHaveProperty('email', 'testing4@gmail.com'); 
+      expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
     });
-    */
 
   });
 
