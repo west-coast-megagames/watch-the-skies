@@ -42,12 +42,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getTeams(); //Get all teams in DB and store to state
-    this.addAlert({ 
-      id: this.state.idCount,
-      type: 'error',
-      title: 'Test Alert',
-      body: 'No alert input!'
-    })
     teamEvents.teamUpdate((err, team) => {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
@@ -59,16 +53,17 @@ class App extends Component {
       this.setState({ aircrafts })
     });
 
-    updateAccounts((err, team) => {
-      console.log(team);
-      if (this.state.team.name === team.name) {
-        this.updateAccounts(this.state.team);
-      }
+    updateAccounts((err, accounts) => {
+      accounts = accounts.filter(a => a.team.team_id === this.state.team._id);
+      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+      let megabucks = 0;
+      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+      this.setState({ accounts, megabucks })
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.team !== this.state.team) {
+    if (prevState.team !== this.state.team && this.state.team.name !== 'Updating...') {
         this.updateAccounts(this.state.team);
     }
   }
@@ -94,6 +89,7 @@ class App extends Component {
               <Interception 
                 team={ this.state.team }
                 aircrafts={ this.state.aircrafts }
+                alert = { this.addAlert } 
               /> 
             )} />
             <Route path="/budget" render={() => (
