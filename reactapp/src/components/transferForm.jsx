@@ -32,7 +32,7 @@ class TransferForm extends Component {
             this.setState({ account });
         }
 
-        if (input.value < 0 && input.name === 'amount') {
+        if ((input.value < 0 && input.name === 'amount') || this.state.account.balance === undefined) {
             input.value = 0;
         } else if (input.value > this.state.account.balance && input.name === 'amount') {
             input.value = this.state.account.balance;

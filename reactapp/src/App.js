@@ -49,8 +49,9 @@ class App extends Component {
       body: 'No alert input!'
     })
     teamEvents.teamUpdate((err, team) => {
-      this.setState({ team });
-
+      if(this.state.team.name !== "Select Team") {
+        this.setState({ team });
+      }
     });
 
     currentAircrafts((err, aircrafts) => {
@@ -103,7 +104,11 @@ class App extends Component {
               />
             )}/>
             <Route path="/mosh" component={ MoshTest } />
-            <Route path="/control" component={ Control }/>
+            <Route path="/control" render={() => (
+              <Control
+                alert = { this.addAlert } 
+              />
+            )}/>
             <Route path="/not-found" component={ NotFound } />
             <Redirect from="/" exact to="home" />
             <Redirect to="/not-found" />
@@ -131,7 +136,7 @@ class App extends Component {
   updateAccounts = async (team) => {
     console.log(`${team.name} Accounts update...`);
     let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
-    console.log(accounts)
+    this.addAlert({type: 'succeess', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
     let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
     let megabucks = 0;
     accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
@@ -140,14 +145,14 @@ class App extends Component {
 
   updateAircrafts = async () => {
     let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
-    this.addAlert({type: 'succeess', title: 'Aircrafts updated', body: `The aircrafts for ${this.state.team.name} have been updated...`})
+    this.addAlert({type: 'succeess', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
     console.log(aircrafts);
     this.setState({ aircrafts })
   }
 
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);
-    this.setState({ login: true })
+    this.setState({ login: true, team: { name: "Updating..."} })
     this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
     teamEvents.updateTeam(team._id)
     this.updateAircrafts();
