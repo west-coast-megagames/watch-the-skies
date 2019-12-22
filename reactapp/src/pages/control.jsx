@@ -16,11 +16,21 @@ class Control extends Component {
                         <MDBBtn color="info" size="sm" onClick={ () => this.deployAliens() }>
                             Deploy Aliens
                         </MDBBtn>
-                        <MDBBtn color="info" size="sm">
+                        <MDBBtn color="info" size="sm" onClick={ () => this.repairAll() }>
                             Repair all 
                         </MDBBtn>
                         <MDBBtn color="info" size="sm" onClick={ () => this.returnAliens() }>
                             Return Aliens
+                        </MDBBtn>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.returnAll() }>
+                            Return Interceptors
+                        </MDBBtn>
+                    </MDBBtnGroup>
+                </div>
+                <div>
+                    <MDBBtnGroup>
+                        <MDBBtn color="info" size="sm">
+                            Reset Accounts
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
@@ -45,6 +55,25 @@ class Control extends Component {
             this.props.alert({type: 'error', title: 'Aliens failed to return to Base', body: `${err.response.data} - ${err.message}` })
         };
     }
+
+    returnAll = async () => {
+        try {
+            const response = await axios.patch('http://localhost:5000/api/interceptor/return')
+            this.props.alert({type: 'succeess', title: 'Interceptors returned to Base', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Interceptors failed to return to Base', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    repairAll = async () => {
+        try {
+            const response = await axios.patch('http://localhost:5000/api/control/resethull')
+            this.props.alert({type: 'succeess', title: 'Reset all ships hulls', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
 }
 
  
