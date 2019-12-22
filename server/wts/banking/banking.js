@@ -145,12 +145,12 @@ async function automaticTransfer() {
 
                 bankDebugging(`${account.owner} has initiated a transfer!`);
         
-                withdrawalsAccount = await withdrawal(withdrawalAccount, amount, note);
+                withdrawalAccount = await withdrawal(withdrawalAccount, amount, note);
                 depositAccount = await deposit(depositAccount, amount, note);
 
-                await depositAccount.save();
+                await depositAccount.updateOne();
             }
-            account = await withdrawalsAccount.save();
+            account = await withdrawalAccount.updateOne();
         }
     }
 };
