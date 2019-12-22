@@ -143,14 +143,16 @@ async function automaticTransfer() {
                 let depositAccount = await Account.findOne({ _id: to });
                 withdrawalAccount = await Account.findOne({ _id: from })
 
-                bankDebugging(`${account.owner} has initiated a transfer!`);
+                if (amount < withdrawalAccount.balance) {
+                    bankDebugging(`${account.owner} has initiated a transfer!`);
         
-                withdrawalAccount = await withdrawal(withdrawalAccount, amount, note);
-                depositAccount = await deposit(depositAccount, amount, note);
-
-                await depositAccount.updateOne();
+                    withdrawalAccount = await withdrawal(withdrawalAccount, amount, note);
+                    depositAccount = await deposit(depositAccount, amount, note);
+    
+                    await depositAccount.save();
+                }
             }
-            account = await withdrawalAccount.updateOne();
+            account = await withdrawalAccount.save();
         }
     }
 };

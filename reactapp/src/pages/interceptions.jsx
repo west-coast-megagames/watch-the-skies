@@ -73,6 +73,7 @@ class Interception extends Component {
             handleChange={ this.handleChange }
             interceptor={ this.state.interceptor }
             contact={this.state.contact}
+            alert = { this.props.alert } 
           /> : null }
       </React.Fragment>
     );

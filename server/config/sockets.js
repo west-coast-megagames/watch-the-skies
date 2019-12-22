@@ -86,6 +86,12 @@ module.exports = function (io){
       client.emit('currentAircrafts', aircrafts);
     });
 
+    eventListner.on('updateAccounts', async () => {
+      let accounts = await Account.find();
+      socketDebugger('Sending Accounts!');
+      client.emit('updateAccounts', accounts);
+    });
+
     client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
   });
 };
