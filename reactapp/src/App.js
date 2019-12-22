@@ -20,7 +20,9 @@ import MoshTest from './pages/mosh' // Mosh test
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import AlertPage from './components/common/alert';
 
+let idCount = 0;
 
 // React App Component
 class App extends Component {
@@ -35,12 +37,15 @@ class App extends Component {
     team: {
       name: "Select Team"
     },
+    alerts: []
   }
 
   componentDidMount() {
     this.getTeams(); //Get all teams in DB and store to state
     teamEvents.teamUpdate((err, team) => {
-      this.setState({ team });
+      if(this.state.team.name !== "Select Team") {
+        this.setState({ team });
+      }
     });
 
     currentAircrafts((err, aircrafts) => {
@@ -48,16 +53,17 @@ class App extends Component {
       this.setState({ aircrafts })
     });
 
-    updateAccounts((err, team) => {
-      console.log(team);
-      if (this.state.team.name === team.name) {
-        this.updateAccounts(this.state.team);
-      }
+    updateAccounts((err, accounts) => {
+      accounts = accounts.filter(a => a.team.team_id === this.state.team._id);
+      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+      let megabucks = 0;
+      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+      this.setState({ accounts, megabucks })
     });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.team !== this.state.team) {
+    if (prevState.team !== this.state.team && this.state.team.name !== 'Updating...') {
         this.updateAccounts(this.state.team);
     }
   }
@@ -83,6 +89,7 @@ class App extends Component {
               <Interception 
                 team={ this.state.team }
                 aircrafts={ this.state.aircrafts }
+                alert = { this.addAlert } 
               /> 
             )} />
             <Route path="/budget" render={() => (
@@ -93,11 +100,16 @@ class App extends Component {
               />
             )}/>
             <Route path="/mosh" component={ MoshTest } />
-            <Route path="/control" component={ Control }/>
+            <Route path="/control" render={() => (
+              <Control
+                alert = { this.addAlert } 
+              />
+            )}/>
             <Route path="/not-found" component={ NotFound } />
             <Redirect from="/" exact to="home" />
             <Redirect to="/not-found" />
           </Switch>
+          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
           <Toast />
           </main>
         </div>
@@ -120,7 +132,7 @@ class App extends Component {
   updateAccounts = async (team) => {
     console.log(`${team.name} Accounts update...`);
     let { data: accounts } = await axios.put('https://project-nexus-prototype.herokuapp.com/api/banking/accounts', { "team_id": team._id });
-    console.log(accounts)
+    this.addAlert({type: 'succeess', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
     let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
     let megabucks = 0;
     accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
@@ -129,16 +141,30 @@ class App extends Component {
 
   updateAircrafts = async () => {
     let { data: aircrafts } = await axios.get('https://project-nexus-prototype.herokuapp.com/api/interceptor');
-    console.log(aircrafts);
+    this.addAlert({type: 'succeess', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
     this.setState({ aircrafts })
   }
 
   handleLogin = async (team) => {
     console.log(`${team.name} login Submitted`);
-    this.setState({ login: true })
+    this.setState({ login: true, team: { name: "Updating..."} })
+    this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
     teamEvents.updateTeam(team._id)
     this.updateAircrafts();
   }
+
+  addAlert = (alert) => {
+    let alerts = this.state.alerts
+    console.log(`ID: ${idCount}`)
+    alert.id = idCount++;;
+    alerts.push(alert);
+    this.setState({ alerts });
+  };
+
+  deleteAlert = alertId => {
+    const alerts = this.state.alerts.filter(a => a.id !== alertId);
+    this.setState({ alerts });
+  };
 }
 
 export default App

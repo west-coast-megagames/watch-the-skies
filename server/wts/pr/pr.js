@@ -11,17 +11,19 @@ async function updatePR() {
     prDebugging(`Assingning turn ${turnNum} income!`);
     try {
         for await (let team of Team.find()) {   
-            let { _id, name, prTrack, prLevel } = team;
-            prDebugging(`Assigning income for ${name}...`);
-            let account = await Account.findOne({ name: 'Treasury', team_id: _id });
+            if (team.teamType === 'N') {
+                let { _id, prTrack, prLevel } = team;
+                prDebugging(`Assigning income for ${team.shortName}...`);
+                let account = await Account.findOne({ name: 'Treasury', 'team.team_id': _id });
 
-            let prChange = rollPR(prLevel, prTrack, 0);
-            account = await deposit(account, prChange.income, `Turn ${turnNum} income.`);
-            team.prLevel = prChange.prLevel;
-            account = await account.save();
-            team = await team.save();
-            prDebugging(`${team.name} has PR Level of ${team.prLevel}`);
-            prDebugging(account);
+                let prChange = rollPR(prLevel, prTrack, 0);
+                account = await deposit(account, prChange.income, `Turn ${turnNum} income.`);
+                team.prLevel = prChange.prLevel;
+                account = await account.save();
+                team = await team.save();
+                prDebugging(`${team.shortName} has PR Level of ${team.prLevel}`);
+                prDebugging(account);
+            }
         };
     } catch (err) {
         prDebugging('Error:', err.message);

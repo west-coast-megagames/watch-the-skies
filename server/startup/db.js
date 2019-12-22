@@ -15,5 +15,5 @@ const mongoOptions =  {
 module.exports = function () {
     // Connect to MongoDB with Mongoose
     mongoose.connect(dbURI, mongoOptions)
-    .then(() => logger.info('MongoDB Connected...'))
+    .then(() => logger.info(`MongoDB Connected to ${config.get('dbName')}...`));
 }

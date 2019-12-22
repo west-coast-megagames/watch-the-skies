@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt')
 const auth = require('../middleware/auth');
+const validateObjectId = require('../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
 const { User, validateUser } = require('../models/user');
@@ -46,8 +47,8 @@ router.post('/', async function (req, res) {
 // @Desc    Get all Users
 // @access  Public
 router.get('/me', auth, async function (req, res) {
-    const user = await User.findById(req.user._id).select('username email name')
-    console.log(`Verifying ${user.username}`);
+    const user = await User.findById(req.user._id).select('screenname email name')
+    console.log(`Verifying ${user.screenname}`);
     res.json(user);
 });
 
@@ -59,5 +60,20 @@ router.get('/', async function (req, res) {
         let users = await User.find();
         res.json(users);
 });
+
+// @route   GET /user/id
+// @Desc    Get users by id
+// @access  Public
+router.get('/id/:id', validateObjectId, async (req, res) => {
+    
+    let id = req.params.id;
+
+    const users = await User.findById(id);
+    if (users != null) {
+      res.json(users);
+    } else {
+      res.status(404).send(`The User with the ID ${id} was not found!`);
+    }
+  });
 
 module.exports = router;

@@ -23,4 +23,7 @@ alerts(io); // Temp alert route for v0.1.1
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
+//export server object for integration testing
 server.listen(port, () => logger.info(`WTS Server started on port ${port}...`));
+
+module.exports = server;

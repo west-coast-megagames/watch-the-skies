@@ -7,12 +7,13 @@ const interceptor = require('../../models/ops/interceptor');
 
 let interceptions = [];
 
-function launchInterception (attacker, defender) {
+async function launchInterception (attacker, defender) {
     interceptDebugger(`${attacker.designation} en route to intercept...`)
+
+    await interceptor.launch(attacker); // Changes attacker status
+
     let newIntercept = [{ attacker, defender }]; // Saves the Intercept combination
     interceptions = [...interceptions, ...newIntercept]; // Adds Interception to be resolved
-
-    interceptor.launch(attacker); // Changes attacker status
 
     interceptDebugger(interceptions);
 

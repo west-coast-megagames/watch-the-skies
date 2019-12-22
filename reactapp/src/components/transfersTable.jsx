@@ -23,9 +23,11 @@ class AutoTransfers extends Component {
         for (let account of this.props.accounts) {
             console.log(account)
             for (let transfer of account.autoTransfers) {
-                if (!this.state.transfers.find( t => t._id === transfer._id)) {
-                    transfer.to = this.props.accounts.find(account => account._id === transfer.to).name;
-                    transfer.from = this.props.accounts.find(account => account._id === transfer.from).name;
+                if (transfer !== null && !this.state.transfers.find( t => t._id === transfer._id)) {
+                    let toAccount = this.props.accounts.find(account => account._id === transfer.to);
+                    transfer.to = toAccount.name;
+                    let fromAccount = this.props.accounts.find(account => account._id === transfer.from);
+                    transfer.from = fromAccount.name;
                     transfers.push(transfer);
                 }
             }
@@ -69,7 +71,7 @@ class AutoTransfers extends Component {
                             <td>{ transfer.to }</td>
                             <td>{ transfer.amount }</td>
                             <td>{ transfer.note }</td>
-                            <td><button onClick={ () => console.log('You tried to delete!') } className="btn btn-danger btn-sm">Cancel</button></td>
+                            <td><button onClick={ () => this.cancelTransfer(transfer) } className="btn btn-danger btn-sm">Cancel</button></td>
                         </tr>
                         ))}
                     </tbody>
