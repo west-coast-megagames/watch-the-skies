@@ -14,11 +14,11 @@ router.put('/', async (req, res) => {
     let attacker = await Interceptor.findById(req.body.attacker);
     let defender = await Interceptor.findById(req.body.defender);
 
-    attacker.location = defender.location
+    attacker.location.country.countryName = defender.location.country.countryName
     
     await attacker.save()
-    result = intercept.launchInterception(attacker, defender);
-    res.json(result);
+    let result = await intercept.launchInterception(attacker, defender);
+    res.status(200).send(result);
 });
 
 module.exports = router;

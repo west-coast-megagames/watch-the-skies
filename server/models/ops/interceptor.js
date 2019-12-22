@@ -85,7 +85,7 @@ async function launch (aircraft) {
 
     modelDebugger(aircraft);
 
-    let account = await Account.findOne({ name: 'Operations', team_id: aircraft.team.team_id });
+    let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
     console.log(account)
 
     account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
@@ -93,6 +93,9 @@ async function launch (aircraft) {
     await account.save();
     await aircraft.save();
     console.log(`Aircraft ${aircraft.designation} deployed...`);
+
+    return;
+
   } catch (err) {
     modelDebugger('Error:', err.message);
   }

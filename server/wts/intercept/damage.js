@@ -78,14 +78,19 @@ function damageCalc(unit, report) {
 
 //Update Interceptors with Damage
 async function applyDmg(unit) {
+    const { Country } = require('../../models/country');
 
     let update = await Interceptor.findById(unit._id);
+    let country_id = update.location.country.country_id;
+    let location = await Country.findById(country_id);
 
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;
     update.status.mission = false;
     update.status.ready = true;
     update.status.deployed = false;
+    update.location.country.countryName = location.name;
+
 
     if(unit.stats.hull != unit.stats.hullMax) {
         update.status.damaged = true;
