@@ -5,6 +5,7 @@ const error = require('../middleware/winston'); // middleware/error.js which is 
 const cors = require('cors');
 
 // Routes - Using Express
+const home = require('../routes/api/home');
 const auth = require('../routes/api/auth');
 const interceptor = require('../routes/api/interceptor');
 const team = require('../routes/api/team');
@@ -15,7 +16,7 @@ const users = require('../routes/users');
 const news = require('../routes/api/news');
 const logs = require('../routes/api/log');
 const banking = require('../routes/api/banking');
-const initData = require('../routes/api/initData');
+//const initData = require('../routes/api/initData');
 
 const control = require('../routes/api/control');
 
@@ -28,6 +29,7 @@ module.exports = function(app) {
     app.use(cors());
 
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
+    app.use('/', home);
     app.use('/api/auth', auth);
     app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
     app.use('/api/team', team); // Route for Teams
@@ -38,7 +40,7 @@ module.exports = function(app) {
     app.use('/api/news', news); // Route for the news desks
     app.use('/api/logs', logs); // Route for logs
     app.use('/api/banking', banking); // Route for banking functions
-    app.use('/api/initData', initData); // Route for Init Data functions
+    //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use('/api/control', control)
 
