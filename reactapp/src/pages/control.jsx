@@ -29,7 +29,7 @@ class Control extends Component {
                 </div>
                 <div>
                     <MDBBtnGroup>
-                        <MDBBtn color="info" size="sm">
+                        <MDBBtn color="info" size="sm" onClick={ () => this.resetAccounts() }>
                             Reset Accounts
                         </MDBBtn>
                     </MDBBtnGroup>
@@ -74,6 +74,15 @@ class Control extends Component {
         };
     }
 
+    resetAccounts = async () => {
+        try {
+            const response = await axios.patch('http://localhost:5000/api/banking/accounts')
+            this.props.alert({type: 'succeess', title: 'Accounts Reset', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to reset accounts', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+    
 }
 
  
