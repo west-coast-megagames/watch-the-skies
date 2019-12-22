@@ -20,9 +20,9 @@ class TransferForm extends Component {
             banking.autoTransfer(this.state.transfer);
             console.log('Submitted automatic transfer');
         }
-        this.props.handleUpdate(this.props.team);
-        let transfer = { to: '', from: '', amount: 0, note: '' }
-        this.setState({ transfer });
+        let transfer = { to: '', from: '', amount: 0, note: '' };
+        let account = {};
+        this.setState({ transfer, account });
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -32,12 +32,13 @@ class TransferForm extends Component {
             this.setState({ account });
         }
 
-        if ((input.value < 0 && input.name === 'amount') || this.state.account.balance === undefined) {
-            input.value = 0;
-        } else if (input.value > this.state.account.balance && input.name === 'amount') {
-            input.value = this.state.account.balance;
+        if (input.name === 'amount') {
+            if (input.value < 0 || this.state.account.balance === undefined || this.state.account.balance < 0) {
+            input.value = 0; } 
+            else if (input.value > this.state.account.balance) {
+            input.value = this.state.account.balance; }
         }
-
+        
         console.log(`Input Value: ${input.value}`);
         const transfer = {...this.state.transfer};
         transfer[input.name] = input.value;
@@ -77,7 +78,7 @@ class TransferForm extends Component {
                 </select>
 
                 <label className="my-1 mr-2" htmlFor="to" value={this.state.transfer.to}>To:</label>
-                <select className="custom-select my-1 mr-sm-2" name="to" id="to" value={this.state.transfer.to} onChange={this.handleChange}>
+                <select className="custom-select my-1 mr-sm-2" id="to" name="to" value={this.state.transfer.to} onChange={this.handleChange}>
                     <option>Choose Deposit Account...</option>
                     { accounts.map(account => (
                         <option
