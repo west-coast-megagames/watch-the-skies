@@ -16,14 +16,15 @@ const AlertPage = (props) => {
                 key={ alert.id }
                 color={ alert.type === 'error' ? 'danger' : 'success' }
                 >
-                <h5>{ alert.title }</h5>
-                <hr />
-                { alert.body }
+                <h5>{ alert.title }
                 <MDBBadge
                     className="ml-2 float-right"
                     onClick={() => props.handleDelete(alert.id)}
                     >X
                 </MDBBadge>
+                </h5>
+                <hr />
+                { alert.body }
             </MDBAlert>
             ))};
         </MDBContainer>
