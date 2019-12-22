@@ -17,6 +17,8 @@ const logs = require('../routes/api/log');
 const banking = require('../routes/api/banking');
 const initData = require('../routes/api/initData');
 
+const control = require('../routes/api/control');
+
 
 module.exports = function(app) {
     // Bodyparser Middleware
@@ -37,6 +39,8 @@ module.exports = function(app) {
     app.use('/api/logs', logs); // Route for logs
     app.use('/api/banking', banking); // Route for banking functions
     app.use('/api/initData', initData); // Route for Init Data functions
+
+    app.use('/api/control', control)
 
     app.use(error.routeError);
 }
