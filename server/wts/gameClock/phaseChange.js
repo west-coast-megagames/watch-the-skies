@@ -32,12 +32,16 @@ function freePhase(turn) {
 };
 
 /* Things that still need to be coded for phase changes
+
     - Research Progresses [SCIENCE SYSTEM - v0.1.3]
+    - Generation of the Gray market [SCIENCE SYSTEM v0.1.3]
+
     - Military Maintenence [GLOBAL CONFLICT SYSTEM - vUNKNOWN]
     - Upgrades Progress (Interceptors/Units) - [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
     - Repair Units - [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
     - Building Progress (Interceptors/Bases) [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
-    - Generation of the Gray market [SCIENCE SYSTEM v0.1.3]
+
+
 */
 
 module.exports = { teamPhase, actionPhase, freePhase };
