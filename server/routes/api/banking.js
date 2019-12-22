@@ -69,21 +69,15 @@ router.get('/accounts/:id', async function (req, res) {
 // @route   PATCH api/banking/accounts
 // @desc    Update all teams to base income and PR
 // @access  Public
-router.patch('/banking/accounts', async function (req, res) {
-    for await (let account of accounts.find()) {{
+router.patch('/accounts', async function (req, res) {
+    for await (let account of Account.find()) {{
             account.balance = 0;
             account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            account.withdrawls = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         };
 
-        // if (account.name === 'Treasury') {
-        //     let team = await Team.findById(account.team_id);
-        //     account.balance = team.prTrack[team.prLevel];
-        // }
-        console.log(`${team.name} | PR: ${team.prLevel} | Treasury: ${account.balance}`);
-
         await account.save();
-        console.log(`${team.name} ${account.name} reset...`);  
+        console.log(`${account.owner}'s ${account.name} reset...`);  
     };
     res.send("Accounts succesfully reset!");
 });
