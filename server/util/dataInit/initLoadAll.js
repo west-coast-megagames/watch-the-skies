@@ -23,7 +23,7 @@ async function fullInit(){
   console.log("Base Load Done: ", baseDone);
 
   let accountsDone = await runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
-  console.log("Accunts Load Done: ", accountsDone);
+  console.log("Accounts Load Done: ", accountsDone);
 
 }
 
