@@ -15,7 +15,7 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix ../reactapp",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles --coverage"
   },
   "engines": {
     "node": "10.15.3",

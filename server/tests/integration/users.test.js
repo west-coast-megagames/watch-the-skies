@@ -1,5 +1,6 @@
 const request = require('supertest');
 const {User}  = require('../../models/user');
+const mongoose = require('mongoose');
 
 let server;
 
@@ -11,6 +12,7 @@ describe('/users/', () => {
     await User.deleteOne({ screenname: 'Utest2'});
     await User.deleteOne({ screenname: 'Utest3'});
     await User.deleteOne({ screenname: 'Utest4'});
+    await User.deleteOne({ screenname: 'Utest7'});
   });
 
   describe('Get /', () => {
@@ -69,23 +71,50 @@ describe('/users/', () => {
         const res = await request(server).get('/users/id/1');
         expect(res.status).toBe(404);
     });
+
+    it('should return 404 if no user with given id exists', async () => {
+      const id = mongoose.Types.ObjectId();
+      const res = await request(server).get('/users/id/' + id);
+
+      expect(res.status).toBe(404);
+    });
+
   });  
 
   describe('POST /', () => {
   
+    /* sample of re-usable function from MOSH course ... we are not using AUTH same way here
+       so only here as an example of what we might use in the future
+
+    let token;   // define token var to be used in exec calls to vary
+    let screenname;
+    const exec = async () => {
+      return await request(server)
+      .post('/users')
+      .set('x-auth-token', token)
+      .send({ screenname: screenname });
+    }  
+
+    beforeEach(() => {
+      token = new User().generateAuthToken();
+      screenname = 'Utest4';
+    });
+    */
+
     /* following test assumes middleware auth is part of POST to test if user is logged in
     it('should return 401 if client is not logged in', async () => {
-      const res = await request(server).post('/users').send({ screenname: 'Utest1'});
+      token = '';   // not logged in as token is empty
+      screenname = 'Utest1';
+      const res = await exec();
+      //const res = await request(server).post('/users').send({ screenname: screenname });
       expect(res.status).toBe(401);
     });
     */
  
     it('should return 400 if user screenname is less than 5 characters', async () => {
-      /* if auth was part of post
-      const token = new User().generateAuthToken();
-
-      and add to const res below between .post and .send
-      .set('x-auth-token', token)
+      /* if auth was part of post ... using the exec function defined above
+      screenname = '1234';
+      const res = await exec(); ... this instead of the const res below
       */
 
       const res = await request(server).post('/users').send({ screenname: '1234'});
@@ -102,7 +131,19 @@ describe('/users/', () => {
 
     it('should return 400 if user email is already used (in database)', async () => {
 
-      const res = await request(server).post('/users').send({ email: 'Art@gmail.com'});
+      const res = await request(server).post('/users').send({ email: 'Art@gmail.com', 
+        screenname: 'Utest7', 
+        phone: '9161112237', 
+        gender: 'Male',
+        password: 'PWtest37',
+        discord: 'Dtest7',
+        DoB: "1997-07-01",
+        "name":
+          {"first": "Jorge",
+          "last": "Sport"
+        }
+      });
+
       expect(res.status).toBe(400);
     });
 
@@ -116,6 +157,11 @@ describe('/users/', () => {
     });
 
     it('should return the user email if it is valid', async () => {
+
+      /* sample of AUTH and exec function if it was done the same way in User routes 
+      const token = new User().generateAuthToken();
+      await exec();
+      */
 
       const res = await request(server).post('/users').send({ email: 'testing4@gmail.com', 
         screenname: 'Utest4', 
@@ -136,6 +182,10 @@ describe('/users/', () => {
       //testing for specific screenname
       expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
     });
+
+
+
+
 
   });
 
