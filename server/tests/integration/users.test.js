@@ -13,6 +13,13 @@ describe('/users/', () => {
     await User.deleteOne({ screenname: 'Utest3'});
     await User.deleteOne({ screenname: 'Utest4'});
     await User.deleteOne({ screenname: 'Utest7'});
+    await User.deleteOne({ screenname: 'Putuser1'});
+    await User.deleteOne({ screenname: 'Putuser2'});
+    await User.deleteOne({ screenname: 'Putuser3'});
+    await User.deleteOne({ screenname: 'Putuser4'});
+    await User.deleteOne({ screenname: 'UpdPutUser4'});
+    await User.deleteOne({ screenname: 'Putuser5'});
+    await User.deleteOne({ screenname: 'UpdPutUser5'});
   });
 
   describe('Get /', () => {
@@ -182,11 +189,182 @@ describe('/users/', () => {
       //testing for specific screenname
       expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
     });
+  });
 
+  describe('PUT /:id', () => {
+    
+    /*
+    it('should return 401 if client is not logged in', async () => {
+      token = ''; 
+  
+      const res = await exec();
+  
+      expect(res.status).toBe(401);
+    });
+    */
 
+    it('should return 400 if user is less than 5 characters', async () => {
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser1',
+        email: 'puttest1@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      id = user._id;   
+      newScreenname = '1234'; 
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(400);
+    });
 
+    it('should return 400 if user is more than 15 characters', async () => {
 
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser2',
+        email: 'puttest2@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      id = user._id;   
+      newScreenname = new Array(17).join('a');
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 404 if id is invalid', async () => {
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser3',
+        email: 'puttest3@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      let id = 1;   
+      newScreenname = user.screenname;
+        
+      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if user with the given id was not found', async () => {
+      id = mongoose.Types.ObjectId();
+      newScreenname = "HOS USA";
+  
+      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname,
+        email: "PutUser99@hotmail.com",
+        phone: '9161112237', 
+        gender: 'Male',
+        password: 'PWtest37',
+        discord: 'Dtest7',
+        DoB: "1997-07-01",
+        "name":
+          {"first": "Jorge",
+          "last": "Sport"
+        }
+      });
+  
+      expect(res.status).toBe(404);
+    });
+    
+    it('should update the user if input is valid', async () => {
+    
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser4',
+        email: 'puttest4@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      newScreenname = "UpdPutUser4";
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+        email: user.email,
+        phone: user.phone, 
+        gender: user.gender,
+        password: user.password,
+        discord: user.discord,
+        DoB: user.DoB,
+        "name":
+          {"first": user.name.first,
+          "last": user.name.last
+        }      
+      });      
+  
+      const updatedUser = await User.findById(user._id);
+  
+      expect(updatedUser.screenname).toBe(newScreenname);
+    });
+
+    it('should return the updated user if it is valid', async () => {
+      
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser5',
+        email: 'puttest5@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      newScreenname = "UpdPutUser5";
+  
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+        email: user.email,
+        phone: user.phone, 
+        gender: user.gender,
+        password: user.password,
+        discord: user.discord,
+        DoB: user.DoB,
+        "name":
+          {"first": user.name.first,
+          "last": user.name.last
+        }      
+      });
+  
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('screenname', newScreenname);
+    });
 
   });
+
 
 });

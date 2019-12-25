@@ -83,6 +83,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName);
+    
+    const { error } = zone.validateZone(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
+    
     const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
       { zoneName: req.body.zoneName,
         zoneCode: req.body.zoneCode }, 
@@ -90,8 +94,6 @@ router.put('/:id', async (req, res) => {
       );
 
     if (zone != null) {
-      const { error } = zone.validateZone(req.body); 
-      if (error) return res.status(400).send(error.details[0].message);
       res.json(zone);
     } else {
       res.status(404).send(`The Zone with the ID ${id} was not found!`);

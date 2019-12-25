@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 
-// Interceptor Model - Using Mongoose Model
+// User Model - Using Mongoose Model
 const { User, validateUser } = require('../models/user');
 
 // @route   POST /user
@@ -74,6 +74,34 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     } else {
       res.status(404).send(`The User with the ID ${id} was not found!`);
     }
+  });
+
+// @route   PUT users/id
+// @Desc    Update Existing User
+// @access  Public  
+router.put('/:id', validateObjectId, async (req, res) => {
+    const { error } = validateUser(req.body); 
+    if (error) {       
+      return res.status(400).send(error.details[0].message);
+    } 
+  
+//console.log("jeff here in user Put ... new screenname", req.body.screenname);    
+    const user = await User.findByIdAndUpdate(req.params.id, 
+      { screenname: req.body.screenname,
+        email: req.body.email, 
+        phone: req.body.phone, 
+        gender: req.body.gender,
+        DoB: new Date(req.body.DoB),
+        discord: req.body.discord 
+      },  
+      {
+        new: true
+    });
+  
+    if (!user) return res.status(404).send('The user with the given ID was not found.');
+    
+//console.log("jeff here in user Put 2... screenname", user.screenname);        
+    res.send(user);
   });
 
 module.exports = router;
