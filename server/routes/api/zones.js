@@ -83,7 +83,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName);
-    
+
     const { error } = zone.validateZone(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
     
@@ -121,7 +121,7 @@ router.patch('/deleteAll', async function (req, res) {
     for await (const zone of Zone.find()) {    
       let id = zone.id;
       try {
-        const zoneDel = await Zone.findByIdAndRemove(id);
+        zoneDel = await Zone.findByIdAndRemove(id);
         if (zoneDel = null) {
           res.status(404).send(`The Zone with the ID ${id} was not found!`);
         }
@@ -129,7 +129,7 @@ router.patch('/deleteAll', async function (req, res) {
         console.log('Error:', err.message);
         res.status(400).send(err.message);
       }
-    }        S
+    }        
     res.status(200).send("All Zones succesfully deleted!");
 });
 

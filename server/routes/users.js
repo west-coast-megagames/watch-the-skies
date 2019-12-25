@@ -110,4 +110,23 @@ router.put('/:id', validateObjectId, async (req, res) => {
     res.send(user);
   });
 
+  // @route   PATCH /users/deleteAll
+  // @desc    Delete All Users
+  // @access  Public
+  router.patch('/deleteAll', async function (req, res) {
+    for await (const user of User.find()) {    
+      let id = user.id;
+      try {
+        userDel = await User.findByIdAndRemove(id);
+        if (userDel = null) {
+          res.status(404).send(`The User with the ID ${id} was not found!`);
+        }
+      } catch (err) {
+        console.log('DeleteAll User Error:', err.message);
+        res.status(400).send(err.message);
+      }
+    }        
+    res.status(200).send("All Users succesfully deleted!");
+  });
+
 module.exports = router;

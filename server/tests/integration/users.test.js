@@ -431,4 +431,18 @@ describe('/users/', () => {
     
   });  
 
+  describe('Patch /User/DeleteAll', () => {
+    
+    it('should be no users if successful', async () => {
+
+      const res = await request(server).patch('/users/deleteAll');
+
+      expect(res.status).toBe(200);
+      
+      //const userAny = await User.find();
+      //expect(userAny).toBeNull();
+    });    
+
+  });
+
 });
