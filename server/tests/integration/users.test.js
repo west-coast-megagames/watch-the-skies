@@ -20,6 +20,7 @@ describe('/users/', () => {
     await User.deleteOne({ screenname: 'UpdPutUser4'});
     await User.deleteOne({ screenname: 'Putuser5'});
     await User.deleteOne({ screenname: 'UpdPutUser5'});
+    await User.deleteOne({ screenname: 'Deluser1'});
   });
 
   describe('Get /', () => {
@@ -366,5 +367,68 @@ describe('/users/', () => {
 
   });
 
+  describe('DELETE /:id', () => {
+    let token; 
+    let user; 
+    let id; 
+
+    const exec = async () => {
+      return await request(server)
+        .delete('/users/' + id)
+        .set('x-auth-token', token)
+        .send();
+    }
+
+    beforeEach(async () => {
+      // Before each test we need to create a user and 
+      // put it in the database.      
+      user = new User({ screenname: 'Deluser1',
+        email: 'deltest2@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+      
+      id = user._id; 
+      token = new User().generateAuthToken();     
+    })
+
+    it('should return 404 if id is invalid', async () => {
+      id = 1; 
+      
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if no user with the given id was found', async () => {
+      id = mongoose.Types.ObjectId();
+
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should delete the user if input is valid', async () => {
+      await exec();
+
+      const userInDb = await User.findById(id);
+
+      expect(userInDb).toBeNull();
+    });
+
+    it('should return the removed user', async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('_id', user._id.toHexString());
+      expect(res.body).toHaveProperty('screenname', user.screenname);
+    });
+    
+  });  
 
 });

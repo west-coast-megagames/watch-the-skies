@@ -85,7 +85,6 @@ router.put('/:id', validateObjectId, async (req, res) => {
       return res.status(400).send(error.details[0].message);
     } 
   
-//console.log("jeff here in user Put ... new screenname", req.body.screenname);    
     const user = await User.findByIdAndUpdate(req.params.id, 
       { screenname: req.body.screenname,
         email: req.body.email, 
@@ -100,7 +99,14 @@ router.put('/:id', validateObjectId, async (req, res) => {
   
     if (!user) return res.status(404).send('The user with the given ID was not found.');
     
-//console.log("jeff here in user Put 2... screenname", user.screenname);        
+    res.send(user);
+  });
+
+  router.delete('/:id', validateObjectId, async (req, res) => {
+    const user = await User.findByIdAndRemove(req.params.id);
+  
+    if (!user) return res.status(404).send('The user with the given ID was not found.');
+  
     res.send(user);
   });
 
