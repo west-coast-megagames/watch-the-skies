@@ -10,22 +10,12 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 // @route   GET api/zones
-// @Desc    Get all Active zones
+// @Desc    Get all zones
 // @access  Public
 router.get('/', async (req, res) => {
       let zones = await Zone.find().sort('zoneCode: 1');
       res.json(zones);
 });
-
-// @route   GET api/zones/all
-// @Desc    Get all zones
-// @access  Public
-//does not have to be active here
-router.get('/all', async (req, res) => {
-    let zones = await Zone.find().sort({zoneCode: 1});
-    res.json(zones);
-  });
-
 
 // @route   GET api/zones/id
 // @Desc    Get zones by id
