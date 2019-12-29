@@ -13,6 +13,7 @@ require('./startup/logging')(); // Bootup for error handling
 require('./startup/routes')(app); // Bootup for Express routes
 require('./startup/db')(); // Bootup of MongoDB through Mongoose
 require('./startup/config')(); // Bootup for special configurations
+require('./startup/prod')(app); // Production compression and middleware
 
 const server = http.createServer(app); // Creation of an HTTP server
 const io = require('socket.io')(server); // Creation of websocket Server
