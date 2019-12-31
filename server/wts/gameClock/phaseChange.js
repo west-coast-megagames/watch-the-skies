@@ -37,11 +37,10 @@ function freePhase(turn) {
     - Generation of the Gray market [SCIENCE SYSTEM v0.1.3]
 
     - Military Maintenence [GLOBAL CONFLICT SYSTEM - vUNKNOWN]
+    
     - Upgrades Progress (Interceptors/Units) - [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
     - Repair Units - [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
     - Building Progress (Interceptors/Bases) [GOVERNANCE BUILDING SYSTEM - vUNKNOWN]
-
-
 */
 
 module.exports = { teamPhase, actionPhase, freePhase };
