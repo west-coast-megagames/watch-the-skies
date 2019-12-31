@@ -89,7 +89,7 @@ class App extends Component {
               <Interception 
                 team={ this.state.team }
                 aircrafts={ this.state.aircrafts }
-                alert = { this.addAlert } 
+                alert={ this.addAlert } 
               /> 
             )} />
             <Route path="/budget" render={() => (

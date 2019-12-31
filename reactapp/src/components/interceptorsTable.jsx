@@ -33,6 +33,7 @@ class Interceptors extends Component {
                         <th>Frame Damage</th>
                         <th>Location</th>
                         <th>Status</th>
+                        <th>Unit Info</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@ class Interceptors extends Component {
                         <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
                         <td>{ this.getLocation(aircraft) }</td>
                         <td>{ this.retreiveStatus(aircraft) }</td>
+                        <td><button type="info" value="Info" onClick={ () => this.props.onClick('info', aircraft) } className="btn btn-info">Info</button></td>
                     </tr>
                     ))}
                 </tbody>
