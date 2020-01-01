@@ -20,6 +20,7 @@ import MoshTest from './pages/mosh' // Mosh test
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+
 import AlertPage from './components/common/alert';
 
 let idCount = 0;
@@ -68,6 +69,57 @@ class App extends Component {
     }
   }
 
+    // Axios call to server for all teams
+    async getTeams () {
+      let { data: teams } = await axios.get('http://localhost:5000/api/team');
+      this.setState({ teams })
+    }
+  
+    updateTeam = async (team) => {
+      if (team.id !== undefined) {
+        console.log(`${team.name} Updating...`);
+        teamEvents.updateTeam(team._id);
+      };
+    };
+  
+    updateAccounts = async (team) => {
+      console.log(`${team.name} Accounts update...`);
+      let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
+      this.addAlert({type: 'succeess', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
+      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+      let megabucks = 0;
+      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+      this.setState({ accounts, megabucks })
+    }
+  
+    updateAircrafts = async () => {
+      let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
+      this.addAlert({type: 'succeess', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
+      this.setState({ aircrafts })
+    }
+  
+    handleLogin = async (team) => {
+      console.log(`${team.name} login Submitted`);
+      this.setState({ login: true, team: { name: "Updating..."} })
+      this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
+      teamEvents.updateTeam(team._id)
+      this.updateAircrafts();
+    }
+  
+    deleteAlert = alertId => {
+      const alerts = this.state.alerts.filter(a => a.id !== alertId);
+      this.setState({ alerts });
+    };
+  
+    addAlert = async (alert) => {
+      let alerts = this.state.alerts
+      console.log(`ID: ${idCount}`)
+      alert.id = idCount++;;
+      alerts.push(alert);
+      setTimeout(() => this.deleteAlert(alert.id), 5000)
+      this.setState({ alerts });
+    };
+
   render() {
     return(
       <div className="App">
@@ -76,95 +128,45 @@ class App extends Component {
           megabucks={ this.state.megabucks }
         />
           <main>
-          <Switch>
-            <Route path="/login" component={ LoginForm } />
-            <Route path="/home" render={() => (
-              <Home
-                login={ this.state.login }
-                teams={ this.state.teams }
-                onChange={ this.handleLogin }
-              />
-            )} />
-            <Route path="/interceptions" render={() => (
-              <Interception 
-                team={ this.state.team }
-                aircrafts={ this.state.aircrafts }
-                alert={ this.addAlert } 
-              /> 
-            )} />
-            <Route path="/budget" render={() => (
-              <Budget 
-                team = { this.state.team }
-                accounts = { this.state.accounts }
-                handleUpdate = { this.updateAccounts }
-              />
-            )}/>
-            <Route path="/mosh" component={ MoshTest } />
-            <Route path="/control" render={() => (
-              <Control
-                alert = { this.addAlert } 
-              />
-            )}/>
-            <Route path="/not-found" component={ NotFound } />
-            <Redirect from="/" exact to="home" />
-            <Redirect to="/not-found" />
-          </Switch>
-          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
-          <Toast />
+              <Switch>
+                <Route path="/login" component={ LoginForm } />
+                <Route path="/home" render={() => (
+                  <Home
+                    login={ this.state.login }
+                    teams={ this.state.teams }
+                    onChange={ this.handleLogin }
+                  />
+                )} />
+                <Route path="/interceptions" render={() => (
+                  <Interception 
+                    team={ this.state.team }
+                    aircrafts={ this.state.aircrafts }
+                    alert={ this.addAlert } 
+                  /> 
+                )} />
+                <Route path="/budget" render={() => (
+                  <Budget 
+                    team = { this.state.team }
+                    accounts = { this.state.accounts }
+                    handleUpdate = { this.updateAccounts }
+                  />
+                )}/>
+                <Route path="/mosh" component={ MoshTest } />
+                <Route path="/control" render={() => (
+                  <Control
+                    alert = { this.addAlert } 
+                  />
+                )}/>
+                <Route path="/not-found" component={ NotFound } />
+                <Redirect from="/" exact to="home" />
+                <Redirect to="/not-found" />
+              </Switch>
+              <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
+              <Toast />
           </main>
         </div>
     );
   }
-
-  // Axios call to server for all teams
-  async getTeams () {
-    let { data: teams } = await axios.get('http://localhost:5000/api/team');
-    this.setState({ teams })
-  }
-
-  updateTeam = async (team) => {
-    if (team.id !== undefined) {
-      console.log(`${team.name} Updating...`);
-      teamEvents.updateTeam(team._id);
-    };
-  };
-
-  updateAccounts = async (team) => {
-    console.log(`${team.name} Accounts update...`);
-    let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
-    this.addAlert({type: 'succeess', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
-    let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-    let megabucks = 0;
-    accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-    this.setState({ accounts, megabucks })
-  }
-
-  updateAircrafts = async () => {
-    let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
-    this.addAlert({type: 'succeess', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
-    this.setState({ aircrafts })
-  }
-
-  handleLogin = async (team) => {
-    console.log(`${team.name} login Submitted`);
-    this.setState({ login: true, team: { name: "Updating..."} })
-    this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
-    teamEvents.updateTeam(team._id)
-    this.updateAircrafts();
-  }
-
-  addAlert = (alert) => {
-    let alerts = this.state.alerts
-    console.log(`ID: ${idCount}`)
-    alert.id = idCount++;;
-    alerts.push(alert);
-    this.setState({ alerts });
-  };
-
-  deleteAlert = alertId => {
-    const alerts = this.state.alerts.filter(a => a.id !== alertId);
-    this.setState({ alerts });
-  };
 }
 
 export default App

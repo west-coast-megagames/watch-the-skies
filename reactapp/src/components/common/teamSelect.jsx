@@ -3,7 +3,7 @@ import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from
 
 const TeamSelect = (props) => {
   return (
-      <MDBDropdown size="sm">
+      <MDBDropdown>
         <MDBDropdownToggle caret color="white">
           Select Team 
         </MDBDropdownToggle>
