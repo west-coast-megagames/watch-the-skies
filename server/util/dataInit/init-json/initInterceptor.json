@@ -456,8 +456,8 @@
     "passiveRolls": [2,4,7,9,11,12],
     "activeRolls": [3,5,8,10,12] },
 "location": 
-    {"zone": "AN" , 
-    "country": "AQ" , 
+    {"zone": "NA" , 
+    "country": "US" , 
     "poi": "undefined" },
 "status":  
     {"aggressive": true,
@@ -484,8 +484,8 @@
     "passiveRolls": [2,4,7,9,11,12],
     "activeRolls": [3,5,8,10,12]},
 "location":
-    {"zone": "AN", 
-    "country": "AQ", 
+    {"zone": "EU", 
+    "country": "GB", 
     "poi": "undefined" },
 "status":  
     {"aggressive": true,
@@ -498,6 +498,62 @@
     "upgrade": false,
     "repair": false,
 "mission" : false },
+"parentCode1" : "FFG", 
+"parentCode2" : "undefined"
+},
+{
+"type" : "interceptor",
+"name" : "FFG Secundo",
+"code" : "transport",
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "NA", 
+    "country": "CA", 
+    "poi": "undefined" },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
+"parentCode1" : "FFG", 
+"parentCode2" : "undefined"
+},
+{
+"type" : "interceptor",
+"name" : "FFG Tristar",
+"code" : "transport",
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"location":
+    {"zone": "NA", 
+    "country": "MX", 
+    "poi": "undefined" },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : false },
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 }

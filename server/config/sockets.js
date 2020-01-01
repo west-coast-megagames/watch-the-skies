@@ -29,12 +29,18 @@ Account.watch().on('change', async data => {
 });
 
 module.exports = function (io){
+  /*
   setInterval(() => {
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
+  */
 
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
+
+    let gClock = setInterval(() => {
+      client.emit('gameClock', gameClock.getTimeRemaining());
+    }, 1000);
 
     client.on('updatePR', async (team_id) => {
       socketDebugger(`${client.id} requested updated PR for ${team_id}`);
@@ -92,6 +98,9 @@ module.exports = function (io){
       client.emit('updateAccounts', accounts);
     });
 
-    client.on('disconnect', () => logger.info(`Client Disconnected... ${client.id}`));
+    client.on('disconnect', () => {
+      logger.info(`Client Disconnected... ${client.id}`);
+      clearInterval(gClock);
+    });
   });
 };

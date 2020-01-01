@@ -1,8 +1,8 @@
 import openSocket from 'socket.io-client';
 
 // Socket Routes
-const socket = openSocket('https://project-nexus-prototype.herokuapp.com');
-const alert = openSocket('https://project-nexus-prototype.herokuapp.com/alert');
+const socket = openSocket('http://localhost:5000');
+const alert = openSocket('http://localhost:5000/alert');
 
 // Update Socket Events and Event Listners
 function updateTeam (team_id) {

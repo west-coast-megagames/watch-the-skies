@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Interceptors from '../components/interceptorsTable';
 import Contacts from '../components/contactsTable';
 import InterceptorDeployForm from '../components/interceptorsDeploy';
+import InterceptorInfo from './../components/interceptorInfo';
 
 class Interception extends Component {
 
@@ -10,6 +11,7 @@ class Interception extends Component {
     aircrafts: [],
     isDeploying: false,
     contact: undefined,
+    showInfo: false,
     interceptor: undefined
   };
 
@@ -29,7 +31,39 @@ class Interception extends Component {
 
   componentWillUnmount() {
     clearInterval(this.radarSweep);
-  }
+  };
+
+  render(){
+    return (
+      <React.Fragment>
+          <h1>Operations Module - Interception Tab</h1>
+          <Contacts 
+            deployInterceptors={ this.deployInterceptors }
+            contacts={this.state.contacts}
+          />
+          <hr />
+          <Interceptors
+            aircrafts={this.state.aircrafts}
+            onClick={ this.showInfo }
+          />
+
+          { this.state.showInfo ? <InterceptorInfo
+            interceptor={ this.state.interceptor }
+            onClick={ this.showInfo }
+            alert={ this.props.alert }
+            /> : null }
+
+          { this.state.isDeploying ? <InterceptorDeployForm 
+            aircrafts={ this.state.aircrafts }
+            deployInterceptors={ this.deployInterceptors }
+            handleChange={ this.handleChange }
+            interceptor={ this.state.interceptor }
+            contact={this.state.contact}
+            alert={ this.props.alert } 
+          /> : null }
+      </React.Fragment>
+    );
+  };
 
   deployInterceptors = async (context, contact, interceptor) =>{
     this.toggleDeploy();
@@ -51,33 +85,29 @@ class Interception extends Component {
     }
   };
 
+  showInfo = async (context, interceptor) =>{
+    this.setState({
+      showInfo: !this.state.showInfo
+    });
+
+    if ( context === 'cancel' ){
+      this.setState({
+        interceptor: undefined
+      });
+      return;
+    } else if ( context === 'info' ){
+      this.setState({
+        interceptor
+      });
+    }
+  };
+
   toggleDeploy = () => {
       this.setState({
         isDeploying: !this.state.isDeploying
       });
   };
 
-  render(){
-    return (
-      <React.Fragment>
-          <h1>Operations Module - Interception Tab</h1>
-          <Contacts 
-            deployInterceptors={ this.deployInterceptors }
-            contacts={this.state.contacts}
-          />
-          <hr />
-          <Interceptors aircrafts={this.state.aircrafts} />
-          { this.state.isDeploying ? <InterceptorDeployForm 
-            aircrafts={ this.state.aircrafts }
-            deployInterceptors={ this.deployInterceptors }
-            handleChange={ this.handleChange }
-            interceptor={ this.state.interceptor }
-            contact={this.state.contact}
-            alert = { this.props.alert } 
-          /> : null }
-      </React.Fragment>
-    );
-  };
 }
 
 export default Interception;

@@ -10,22 +10,12 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 // @route   GET api/zones
-// @Desc    Get all Active zones
+// @Desc    Get all zones
 // @access  Public
 router.get('/', async (req, res) => {
       let zones = await Zone.find().sort('zoneCode: 1');
       res.json(zones);
 });
-
-// @route   GET api/zones/all
-// @Desc    Get all zones
-// @access  Public
-//does not have to be active here
-router.get('/all', async (req, res) => {
-    let zones = await Zone.find().sort({zoneCode: 1});
-    res.json(zones);
-  });
-
 
 // @route   GET api/zones/id
 // @Desc    Get zones by id
@@ -83,6 +73,10 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName);
+
+    const { error } = zone.validateZone(req.body); 
+    if (error) return res.status(400).send(error.details[0].message);
+    
     const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
       { zoneName: req.body.zoneName,
         zoneCode: req.body.zoneCode }, 
@@ -90,8 +84,6 @@ router.put('/:id', async (req, res) => {
       );
 
     if (zone != null) {
-      const { error } = zone.validateZone(req.body); 
-      if (error) return res.status(400).send(error.details[0].message);
       res.json(zone);
     } else {
       res.status(404).send(`The Zone with the ID ${id} was not found!`);
@@ -119,7 +111,7 @@ router.patch('/deleteAll', async function (req, res) {
     for await (const zone of Zone.find()) {    
       let id = zone.id;
       try {
-        const zoneDel = await Zone.findByIdAndRemove(id);
+        zoneDel = await Zone.findByIdAndRemove(id);
         if (zoneDel = null) {
           res.status(404).send(`The Zone with the ID ${id} was not found!`);
         }
@@ -127,7 +119,7 @@ router.patch('/deleteAll', async function (req, res) {
         console.log('Error:', err.message);
         res.status(400).send(err.message);
       }
-    }        S
+    }        
     res.status(200).send("All Zones succesfully deleted!");
 });
 

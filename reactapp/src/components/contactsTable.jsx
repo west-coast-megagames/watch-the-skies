@@ -22,7 +22,7 @@ class Contacts extends Component {
                             <th>Contact Strength</th>
                             <th>Transponder</th>
                             <th>Airspace</th>
-                            <th>Deploy</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

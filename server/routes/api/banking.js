@@ -96,7 +96,7 @@ router.put('/transfer', async function (req, res){
     console.log(account.autoTransfers)
     let indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
     console.log(indexOf)
-    delete account.autoTransfers[indexOf];
+    account.autoTransfers.splice(indexOf, 1);
     console.log(account.autoTransfers.length)
 
     account.markModified('autoTransfers');

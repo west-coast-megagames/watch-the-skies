@@ -1,5 +1,6 @@
 const request = require('supertest');
 const {User}  = require('../../models/user');
+const mongoose = require('mongoose');
 
 let server;
 
@@ -11,6 +12,15 @@ describe('/users/', () => {
     await User.deleteOne({ screenname: 'Utest2'});
     await User.deleteOne({ screenname: 'Utest3'});
     await User.deleteOne({ screenname: 'Utest4'});
+    await User.deleteOne({ screenname: 'Utest7'});
+    await User.deleteOne({ screenname: 'Putuser1'});
+    await User.deleteOne({ screenname: 'Putuser2'});
+    await User.deleteOne({ screenname: 'Putuser3'});
+    await User.deleteOne({ screenname: 'Putuser4'});
+    await User.deleteOne({ screenname: 'UpdPutUser4'});
+    await User.deleteOne({ screenname: 'Putuser5'});
+    await User.deleteOne({ screenname: 'UpdPutUser5'});
+    await User.deleteOne({ screenname: 'Deluser1'});
   });
 
   describe('Get /', () => {
@@ -69,23 +79,50 @@ describe('/users/', () => {
         const res = await request(server).get('/users/id/1');
         expect(res.status).toBe(404);
     });
+
+    it('should return 404 if no user with given id exists', async () => {
+      const id = mongoose.Types.ObjectId();
+      const res = await request(server).get('/users/id/' + id);
+
+      expect(res.status).toBe(404);
+    });
+
   });  
 
   describe('POST /', () => {
   
+    /* sample of re-usable function from MOSH course ... we are not using AUTH same way here
+       so only here as an example of what we might use in the future
+
+    let token;   // define token var to be used in exec calls to vary
+    let screenname;
+    const exec = async () => {
+      return await request(server)
+      .post('/users')
+      .set('x-auth-token', token)
+      .send({ screenname: screenname });
+    }  
+
+    beforeEach(() => {
+      token = new User().generateAuthToken();
+      screenname = 'Utest4';
+    });
+    */
+
     /* following test assumes middleware auth is part of POST to test if user is logged in
     it('should return 401 if client is not logged in', async () => {
-      const res = await request(server).post('/users').send({ screenname: 'Utest1'});
+      token = '';   // not logged in as token is empty
+      screenname = 'Utest1';
+      const res = await exec();
+      //const res = await request(server).post('/users').send({ screenname: screenname });
       expect(res.status).toBe(401);
     });
     */
  
     it('should return 400 if user screenname is less than 5 characters', async () => {
-      /* if auth was part of post
-      const token = new User().generateAuthToken();
-
-      and add to const res below between .post and .send
-      .set('x-auth-token', token)
+      /* if auth was part of post ... using the exec function defined above
+      screenname = '1234';
+      const res = await exec(); ... this instead of the const res below
       */
 
       const res = await request(server).post('/users').send({ screenname: '1234'});
@@ -102,7 +139,19 @@ describe('/users/', () => {
 
     it('should return 400 if user email is already used (in database)', async () => {
 
-      const res = await request(server).post('/users').send({ email: 'Art@gmail.com'});
+      const res = await request(server).post('/users').send({ email: 'Art@gmail.com', 
+        screenname: 'Utest7', 
+        phone: '9161112237', 
+        gender: 'Male',
+        password: 'PWtest37',
+        discord: 'Dtest7',
+        DoB: "1997-07-01",
+        "name":
+          {"first": "Jorge",
+          "last": "Sport"
+        }
+      });
+
       expect(res.status).toBe(400);
     });
 
@@ -116,6 +165,11 @@ describe('/users/', () => {
     });
 
     it('should return the user email if it is valid', async () => {
+
+      /* sample of AUTH and exec function if it was done the same way in User routes 
+      const token = new User().generateAuthToken();
+      await exec();
+      */
 
       const res = await request(server).post('/users').send({ email: 'testing4@gmail.com', 
         screenname: 'Utest4', 
@@ -136,6 +190,258 @@ describe('/users/', () => {
       //testing for specific screenname
       expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
     });
+  });
+
+  describe('PUT /:id', () => {
+    
+    /*
+    it('should return 401 if client is not logged in', async () => {
+      token = ''; 
+  
+      const res = await exec();
+  
+      expect(res.status).toBe(401);
+    });
+    */
+
+    it('should return 400 if user is less than 5 characters', async () => {
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser1',
+        email: 'puttest1@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      id = user._id;   
+      newScreenname = '1234'; 
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if user is more than 15 characters', async () => {
+
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser2',
+        email: 'puttest2@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      id = user._id;   
+      newScreenname = new Array(17).join('a');
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(400);
+    });
+
+    it('should return 404 if id is invalid', async () => {
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser3',
+        email: 'puttest3@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      let id = 1;   
+      newScreenname = user.screenname;
+        
+      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname});
+  
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if user with the given id was not found', async () => {
+      id = mongoose.Types.ObjectId();
+      newScreenname = "HOS USA";
+  
+      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname,
+        email: "PutUser99@hotmail.com",
+        phone: '9161112237', 
+        gender: 'Male',
+        password: 'PWtest37',
+        discord: 'Dtest7',
+        DoB: "1997-07-01",
+        "name":
+          {"first": "Jorge",
+          "last": "Sport"
+        }
+      });
+  
+      expect(res.status).toBe(404);
+    });
+    
+    it('should update the user if input is valid', async () => {
+    
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser4',
+        email: 'puttest4@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      newScreenname = "UpdPutUser4";
+        
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+        email: user.email,
+        phone: user.phone, 
+        gender: user.gender,
+        password: user.password,
+        discord: user.discord,
+        DoB: user.DoB,
+        "name":
+          {"first": user.name.first,
+          "last": user.name.last
+        }      
+      });      
+  
+      const updatedUser = await User.findById(user._id);
+  
+      expect(updatedUser.screenname).toBe(newScreenname);
+    });
+
+    it('should return the updated user if it is valid', async () => {
+      
+      token = new User().generateAuthToken();    
+      //create a user 
+      user = new User({ screenname: 'Putuser5',
+        email: 'puttest5@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+  
+      newScreenname = "UpdPutUser5";
+  
+      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+        email: user.email,
+        phone: user.phone, 
+        gender: user.gender,
+        password: user.password,
+        discord: user.discord,
+        DoB: user.DoB,
+        "name":
+          {"first": user.name.first,
+          "last": user.name.last
+        }      
+      });
+  
+      expect(res.body).toHaveProperty('_id');
+      expect(res.body).toHaveProperty('screenname', newScreenname);
+    });
+
+  });
+
+  describe('DELETE /:id', () => {
+    let token; 
+    let user; 
+    let id; 
+
+    const exec = async () => {
+      return await request(server)
+        .delete('/users/' + id)
+        .set('x-auth-token', token)
+        .send();
+    }
+
+    beforeEach(async () => {
+      // Before each test we need to create a user and 
+      // put it in the database.      
+      user = new User({ screenname: 'Deluser1',
+        email: 'deltest2@gmail.com', 
+        phone: '9161112240', 
+        gender: 'Male',
+        password: 'PWtest40',
+        DoB: "1991-12-01",
+        discord: 'Dtest40' 
+      });
+      user.name.first = 'Alan';
+      user.name.last  = 'Atwood';
+      await user.save();
+      
+      id = user._id; 
+      token = new User().generateAuthToken();     
+    })
+
+    it('should return 404 if id is invalid', async () => {
+      id = 1; 
+      
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if no user with the given id was found', async () => {
+      id = mongoose.Types.ObjectId();
+
+      const res = await exec();
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should delete the user if input is valid', async () => {
+      await exec();
+
+      const userInDb = await User.findById(id);
+
+      expect(userInDb).toBeNull();
+    });
+
+    it('should return the removed user', async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty('_id', user._id.toHexString());
+      expect(res.body).toHaveProperty('screenname', user.screenname);
+    });
+    
+  });  
+
+  describe('Patch /User/DeleteAll', () => {
+    
+    it('should be no users if successful', async () => {
+
+      const res = await request(server).patch('/users/deleteAll');
+
+      expect(res.status).toBe(200);
+      
+      //const userAny = await User.find();
+      //expect(userAny).toBeNull();
+    });    
 
   });
 

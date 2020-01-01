@@ -43,7 +43,7 @@ class InterceptorDeployForm extends Component {
     };
 
     try {
-    let response = await axios.put('https://project-nexus-prototype.herokuapp.com/api/intercept', stats);
+      let response = await axios.put('http://localhost:5000/api/intercept', stats);
       this.props.alert({type: 'succeess', title: 'Interceptor Launch...', body: response.data })
     } catch (err) {
       this.props.alert({type: 'error', title: 'Launch Failed', body: `${err.data} - ${err.message}` })
@@ -68,8 +68,7 @@ class InterceptorDeployForm extends Component {
           <div id="deployForm" style={ deployStyle }>
             <form id="deployForm" style={ formStyle } onSubmit={ this.handleSubmit }>
               <div className="form-group">
-                <p>Current Position: { this.props.contact.location.country.countryName }</p>
-                <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept { this.props.contact.designation }</label>
+                <label htmlFor="exampleFormControlSelect1">Scramble vehicle to intercept over { this.props.contact.location.country.countryName }</label>
                   <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
                     <option>Select an interceptor!</option>
                     { this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true).map(ship => (
