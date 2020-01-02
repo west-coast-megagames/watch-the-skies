@@ -20,6 +20,7 @@ import MoshTest from './pages/mosh' // Mosh test
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
+import 'rsuite/dist/styles/rsuite-default.css'
 
 import AlertPage from './components/common/alert';
 
@@ -85,7 +86,7 @@ class App extends Component {
     updateAccounts = async (team) => {
       console.log(`${team.name} Accounts update...`);
       let { data: accounts } = await axios.put('http://localhost:5000/api/banking/accounts', { "team_id": team._id });
-      this.addAlert({type: 'succeess', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
+      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
       accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
@@ -94,14 +95,14 @@ class App extends Component {
   
     updateAircrafts = async () => {
       let { data: aircrafts } = await axios.get('http://localhost:5000/api/interceptor');
-      this.addAlert({type: 'succeess', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
+      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
       this.setState({ aircrafts })
     }
   
     handleLogin = async (team) => {
       console.log(`${team.name} login Submitted`);
       this.setState({ login: true, team: { name: "Updating..."} })
-      this.addAlert({type: 'succeess', title: 'Team Login', body: `Logged in as ${team.name}...`})
+      this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${team.name}...`})
       teamEvents.updateTeam(team._id)
       this.updateAircrafts();
     }

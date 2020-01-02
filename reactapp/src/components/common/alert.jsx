@@ -1,30 +1,26 @@
 import React from "react";
-import { MDBContainer, MDBAlert } from 'mdbreact';
+import { Message } from 'rsuite';
 
 const AlertPage = (props) => {
 
     return (
-        <MDBContainer
+        <div
             style={{
-            position: "fixed",
-            bottom: "5px",
-            zIndex: 9999
-        }}>
+                position: "fixed",
+                bottom: "5px",
+                zIndex: 9999
+            }}
+        >
             { props.alerts.map(alert => (
-                <MDBAlert 
-                    fluid
-                    key={ alert.id }
-                    color={ alert.type === 'error' ? 'danger' : 'success' }
-                    dismiss
-                    onClose={ () => props.handleDelete(alert.id)}
-                    >
-                    <h5>{ alert.title }</h5>
-                    <hr />
-                    { alert.body }
-                </MDBAlert>
-            ))};
-        </MDBContainer>
+                <Message
+                    showIcon
+                    type={ alert.type }
+                    title={ alert.title }
+                    description={ alert.body}
+                />
+            ))}
+        </div>        
     );
-    };
+};
 
 export default AlertPage;
