@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
+import { InputNumber } from 'rsuite';
 import { banking } from '../api';
 
 class TransferForm extends Component {
@@ -26,17 +27,10 @@ class TransferForm extends Component {
     };
 
     handleChange = ({currentTarget: input}) => {
-        if (input.name === 'from') {
+        if (input.id === 'from') {
             let accountIndex = this.props.accounts.findIndex((account => account._id === input.value));
             let account = this.props.accounts[accountIndex];
             this.setState({ account });
-        }
-
-        if (input.name === 'amount') {
-            if (input.value < 0 || this.state.account.balance === undefined || this.state.account.balance < 0) {
-            input.value = 0; } 
-            else if (input.value > this.state.account.balance) {
-            input.value = this.state.account.balance; }
         }
         
         console.log(`Input Value: ${input.value}`);
@@ -45,6 +39,19 @@ class TransferForm extends Component {
         console.log(transfer);
         this.setState({ transfer })
     };
+
+    handleAmount = (value) => {
+        if (value < 0 || this.state.account.balance === undefined || this.state.account.balance < 0) {
+            value = 0;
+        } else if (value > this.state.account.balance) {
+            value = this.state.account.balance;
+        }
+
+        const transfer = {...this.state.transfer};
+        transfer.amount = value;
+        console.log(transfer);
+        this.setState({ transfer })
+    }
 
     handleClick = ({currentTarget: input}) => {
         console.log(`Input Value: ${input.value}`);
@@ -60,9 +67,10 @@ class TransferForm extends Component {
 
     render() {
         let accounts = this.props.accounts;
+        let max = this.state.account.balance !== undefined ? this.state.account.balance : 0;
         
         if (this.props.accounts.length <= 0)
-        return <h4>No accounts availible for transfer, select a team to use the application!</h4>
+        return <h4>No accounts available for transfer, select a team to use the application!</h4>
 
         return (
             <form className="form-inline" onSubmit={this.handleSubmit}>
@@ -88,11 +96,9 @@ class TransferForm extends Component {
                     ))}
                 </select>
 
-                <div className="input-group my-1 mr-sm-2">
-                    <div className="input-group-prepend">
-                    <div className="input-group-text"><FontAwesomeIcon icon={faMoneyBillAlt} /> $M</div>
-                    </div>
-                    <input type="number" className="form-control" id="amount" name="amount" placeholder="Amount" value={this.state.transfer.amount} onChange={this.handleChange}/>
+                <div style={{ width: 120 }}>
+                    <InputNumber prefix="$M" id="amount" max={ max } min={0} value={this.state.transfer.amount} onChange={this.handleAmount} step={1}/>
+                    {/* <input type="number" className="form-control" id="amount" name="amount" placeholder="Amount" value={this.state.transfer.amount} onChange={this.handleChange}/> */}
                 </div>
 
                 <div className="input-group my-1 mr-sm-2">

@@ -11,11 +11,6 @@ const Budget = (props) => {
         <MDBContainer fluid>
             <MDBRow>
                 <MDBCol>
-                    <h1>Governance Module - Budget Tab</h1>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol>
                     <TransferForm
                         team={ props.team }
                         accounts={ props.accounts }

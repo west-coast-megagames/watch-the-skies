@@ -17,8 +17,7 @@ class AutoTransfers extends Component {
     }
 
     updateAuto = () => {
-        let transfers = this.state.transfers;
-        transfers = [];
+        let transfers = [];
     
         for (let account of this.props.accounts) {
             console.log(account)

@@ -14,6 +14,7 @@ const AlertPage = (props) => {
             { props.alerts.map(alert => (
                 <Message
                     showIcon
+                    key={ alert.id }
                     type={ alert.type }
                     title={ alert.title }
                     description={ alert.body}

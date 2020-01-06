@@ -1,20 +1,12 @@
 import React, { Component } from 'react'; // React
-import { Route, Switch, Redirect } from 'react-router-dom';
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import { Container, Header, Content, Footer } from 'rsuite';
 import axios from 'axios';
 
 // Components
 import NavBar from './components/navBar';
+import ContentArea from './pages/main';
 import Toast from './components/toast'
-
-// Pages
-import LoginForm from './components/loginForm'
-import Interception from './pages/interceptions'
-import Budget from './pages/budget'
-import Home from './pages/home'
-import Control from './pages/control';
-import NotFound from './pages/404'
-import MoshTest from './pages/mosh' // Mosh test
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome
 import './App.css';
@@ -23,6 +15,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'
 
 import AlertPage from './components/common/alert';
+
 
 let idCount = 0;
 
@@ -124,48 +117,34 @@ class App extends Component {
   render() {
     return(
       <div className="App">
-        <NavBar 
-          team={ this.state.team }
-          megabucks={ this.state.megabucks }
-        />
-          <main>
-              <Switch>
-                <Route path="/login" component={ LoginForm } />
-                <Route path="/home" render={() => (
-                  <Home
-                    login={ this.state.login }
-                    teams={ this.state.teams }
-                    onChange={ this.handleLogin }
-                  />
-                )} />
-                <Route path="/interceptions" render={() => (
-                  <Interception 
-                    team={ this.state.team }
-                    aircrafts={ this.state.aircrafts }
-                    alert={ this.addAlert } 
-                  /> 
-                )} />
-                <Route path="/budget" render={() => (
-                  <Budget 
-                    team = { this.state.team }
-                    accounts = { this.state.accounts }
-                    handleUpdate = { this.updateAccounts }
-                  />
-                )}/>
-                <Route path="/mosh" component={ MoshTest } />
-                <Route path="/control" render={() => (
-                  <Control
-                    alert = { this.addAlert } 
-                  />
-                )}/>
-                <Route path="/not-found" component={ NotFound } />
-                <Redirect from="/" exact to="home" />
-                <Redirect to="/not-found" />
-              </Switch>
-              <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
-              <Toast />
-          </main>
-        </div>
+        <Container>
+          <Header>
+            <NavBar 
+              team={ this.state.team }
+              megabucks={ this.state.megabucks }
+            />
+          </Header>
+          <Container>
+            <Content>
+              <ContentArea
+                login={ this.state.login }
+                teams={ this.state.teams }
+                team={ this.state.team }
+                accounts={ this.state.accounts }
+                handleUpdate={ this.updateAccounts }
+                aircrafts={ this.state.aircrafts }
+                addAlert={ this.addAlert }
+                handleLogin={ this.handleLogin }
+                updateAccounts={ this.updateAccounts }
+              />
+            </Content>
+          </Container>
+          <Footer>
+            <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
+            <Toast />
+          </Footer>
+        </Container>
+      </div>
     );
   }
 }
