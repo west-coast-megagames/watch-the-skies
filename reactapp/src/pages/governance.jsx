@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React import
 import { Nav, Container, Header, Content, Icon } from 'rsuite';
-import Budget from './budget';
+import Budget from './tabs/budget';
 
 class Governance extends Component {
     constructor() {
@@ -12,12 +12,12 @@ class Governance extends Component {
     }
 
     getActive(element) {
-        return element === this.state.tab ? '' : 'hidden'
+        return element === this.state.tab ? '' : 'hidden';
     }
 
     handleSelect(activeKey) {
         this.setState({ tab: activeKey })
-    }
+    };
 
     render() {
         const { tab } = this.state; 
