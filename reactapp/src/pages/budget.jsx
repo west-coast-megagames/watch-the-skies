@@ -3,45 +3,37 @@ import TransferForm from '../components/transferForm';
 import ChartsPage from '../components/graph';
 import AccountsTable from '../components/accountsTable'
 import AutoTransfers from './../components/transfersTable';
-import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
-
+import { Container, Header, Content, Footer, Sidebar } from 'rsuite';
 
 const Budget = (props) => {
     return (
-        <MDBContainer fluid>
-            <MDBRow>
-                <MDBCol>
-                    <TransferForm
-                        team={ props.team }
-                        accounts={ props.accounts }
-                        handleUpdate={ props.handleUpdate }
-                    />
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol size="2">
+        <Container className="budget-tab">
+            <Header className="transfers">
+                <TransferForm
+                    team={ props.team }
+                    accounts={ props.accounts }
+                    handleUpdate={ props.handleUpdate }
+                    alert={ props.alert }
+                />
+            </Header>
+            <Container className="transfers">
+                <Sidebar>
                     <AccountsTable accounts={ props.accounts } />
-                </MDBCol>
-                <MDBCol size="5">
+                </Sidebar>
+                <Content>
                     <ChartsPage
                         team ={ props.team }
                         accounts={ props.accounts }
                     />
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol>
-                    <h4>Automatic Transfers</h4>
-                </MDBCol>
-            </MDBRow>
-            <MDBRow>
-                <MDBCol>
-                    <AutoTransfers
+                </Content>
+            </Container>
+            <Footer>
+                <h4>Automatic Transfers</h4>
+                <AutoTransfers
                         accounts={ props.accounts }
-                    />
-                </MDBCol>
-            </MDBRow>
-        </MDBContainer>
+                />
+            </Footer>
+        </Container>
     );
 }
  

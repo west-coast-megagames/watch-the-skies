@@ -10,16 +10,6 @@ import Home from './home'
 import Control from './control';
 import NotFound from './404'
 import MoshTest from './mosh' // Mosh test
-
-const headerStyles = {
-    padding: 18,
-    fontSize: 16,
-    height: 56,
-    background: '#34c3ff',
-    color: ' #fff',
-    whiteSpace: 'nowrap',
-    overflow: 'hidden'
-  };
   
   const iconStyles = {
     width: 56,
@@ -99,7 +89,7 @@ const headerStyles = {
               >
                 <Sidenav.Body>
                   <Nav >
-                    <NavLink to="/budget" >
+                    <NavLink to="/gov" >
                       <Nav.Item eventKey="1" icon={<Icon icon="bank" />}>
                         Governance
                       </Nav.Item>
@@ -146,11 +136,12 @@ const headerStyles = {
                         alert={ this.props.addAlert } 
                     /> 
                     )} />
-                    <Route path="/budget" render={() => (
+                    <Route path="/gov" render={() => (
                     <Governance 
                         team = { this.props.team }
                         accounts = { this.props.accounts }
                         handleUpdate = { this.updateAccounts }
+                        alert={ this.props.addAlert }
                     />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />

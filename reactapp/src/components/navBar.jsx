@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTie, faShieldAlt, faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
+import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import { gameClock, teamEvents } from '../api';
 
 class NavBar extends Component {

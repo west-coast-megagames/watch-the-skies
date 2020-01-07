@@ -8,11 +8,12 @@ import NavBar from './components/navBar';
 import ContentArea from './pages/main';
 import Toast from './components/toast'
 
-// Cascading Style Sheets - App.js | Bootstrap | Fontawesome
+// Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'
+//import 'rsuite/dist/styles/rsuite-dark.css'
 
 import AlertPage from './components/common/alert';
 
