@@ -43,8 +43,9 @@ class InterceptorDeployForm extends Component {
     };
 
     try {
-      let response = await axios.put('http://localhost:5000/api/intercept', stats);
-      this.props.alert({type: 'success', title: 'Interceptor Launch...', body: response.data })
+      let response = await axios.put('https://project-nexus-prototype.herokuapp.com/api/intercept', stats);
+      this.props.alert({type: 'succeess', title: 'Interceptor Launch...', body: response.data })
+
     } catch (err) {
       this.props.alert({type: 'error', title: 'Launch Failed', body: `${err.data} - ${err.message}` })
     };
