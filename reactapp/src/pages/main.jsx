@@ -1,15 +1,22 @@
-import React, { Component } from "react";
+import React, { Component, Link } from "react";
 import { Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTie } from '@fortawesome/free-solid-svg-icons'
 
 // Pages
 import Governance from './governance';
-import LoginForm from '../components/loginForm'
-import Interception from './interceptions'
-import Home from './home'
+import LoginForm from '../components/loginForm';
+import Home from './home';
 import Control from './control';
-import NotFound from './404'
-import MoshTest from './mosh' // Mosh test
+import NotFound from './404';
+import MoshTest from './mosh'; // Mosh test
+import Operations from "./operations";
+import Science from './science';
+import Diplomacy from './diplomacy';
+import Chat from './chat';
+import News from './news';
+
   
   const iconStyles = {
     width: 56,
@@ -73,7 +80,9 @@ import MoshTest from './mosh' // Mosh test
     render() {
       const { expand } = this.state;
       const { active } = this.state;
+
       return (
+          
           <Container>
             <Sidebar
               style={{ display: 'flex', flexDirection: 'column' }}
@@ -88,32 +97,14 @@ import MoshTest from './mosh' // Mosh test
                 onSelect={this.handleSelect}
               >
                 <Sidenav.Body>
-                  <Nav >
-                    <NavLink to="/gov" >
-                      <Nav.Item eventKey="1" icon={<Icon icon="bank" />}>
-                        Governance
-                      </Nav.Item>
-                    </NavLink>
-                    <NavLink to="/interceptions">
-                      <Nav.Item eventKey="2" to="/interceptions" icon={<Icon icon="globe2" />}>
-                        Operations
-                      </Nav.Item>
-                    </NavLink>
-                    <Nav.Item eventKey="3" icon={<Icon icon="flask" />}>
-                      Science
-                    </Nav.Item>
-                    <Nav.Item eventKey="4" icon={<Icon icon="handshake-o" />}>
-                      Diplomacy
-                    </Nav.Item>
-                    <Nav.Item eventKey="5" icon={<Icon icon="comments" />}>
-                      Comms
-                    </Nav.Item>
-                    <Nav.Item eventKey="6" icon={<Icon icon="newspaper-o" />}>
-                      News
-                    </Nav.Item>
-                    <Nav.Item eventKey="7" icon={<Icon icon="info-circle" />}>
-                      Info
-                    </Nav.Item>
+                  <Nav>
+                    <Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
+                    <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
+                    <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
+                    <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
+                    <Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>
+                    <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
+                    <Nav.Item eventKey="7" to="/control" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   </Nav>
                 </Sidenav.Body>
               </Sidenav>
@@ -123,33 +114,52 @@ import MoshTest from './mosh' // Mosh test
                 <Switch>
                     <Route path="/login" component={ LoginForm } />
                     <Route path="/home" render={() => (
-                    <Home
-                        login={ this.props.login }
-                        teams={ this.props.teams }
-                        onChange={ this.props.handleLogin }
-                    />
+                      <Home
+                          login={ this.props.login }
+                          teams={ this.props.teams }
+                          onChange={ this.props.handleLogin }
+                      />
                     )} />
-                    <Route path="/interceptions" render={() => (
-                    <Interception 
+                    <Route path="/ops" render={() => (
+                      <Operations
                         team={ this.props.team }
                         aircrafts={ this.props.aircrafts }
                         alert={ this.props.addAlert } 
-                    /> 
+                      />
                     )} />
                     <Route path="/gov" render={() => (
-                    <Governance 
+                      <Governance 
+                          team = { this.props.team }
+                          accounts = { this.props.accounts }
+                          handleUpdate = { this.updateAccounts }
+                          alert={ this.props.addAlert }
+                      />
+                    )}/>
+                    <Route path="/sci" render={() => (
+                      <Science 
+                          team = { this.props.team }
+                          alert={ this.props.addAlert }
+                      />
+                    )}/>
+                    <Route path="/dip" render={() => (
+                      <Diplomacy
+                          team = { this.props.team }
+                          alert={ this.props.addAlert }
+                      />
+                    )}/>
+                    <Route path="/comms" render={() => (
+                      <Chat
                         team = { this.props.team }
-                        accounts = { this.props.accounts }
-                        handleUpdate = { this.updateAccounts }
                         alert={ this.props.addAlert }
-                    />
+                      />
+                    )}/>
+                    <Route path="/news" component={ News } />
+                    <Route path="/control" render={() => (
+                      <Control
+                          alert = { this.props.addAlert } 
+                      />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
-                    <Route path="/control" render={() => (
-                    <Control
-                        alert = { this.props.addAlert } 
-                    />
-                    )}/>
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
