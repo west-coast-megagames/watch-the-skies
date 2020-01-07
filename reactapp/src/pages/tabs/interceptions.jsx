@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Interceptors from '../components/interceptorsTable';
-import Contacts from '../components/contactsTable';
-import InterceptorDeployForm from '../components/interceptorsDeploy';
-import InterceptorInfo from './../components/interceptorInfo';
+import Interceptors from '../../components/interceptorsTable';
+import Contacts from '../../components/contactsTable';
+import InterceptorDeployForm from '../../components/interceptorsDeploy';
+import InterceptorInfo from '../../components/interceptorInfo';
 
 class Interception extends Component {
 
@@ -36,7 +36,6 @@ class Interception extends Component {
   render(){
     return (
       <React.Fragment>
-          <h1>Operations Module - Interception Tab</h1>
           <Contacts 
             deployInterceptors={ this.deployInterceptors }
             contacts={this.state.contacts}
