@@ -1,32 +1,64 @@
 import React, { Component } from 'react'; // React import
-import { Container, Content, Sidebar } from 'rsuite';
+import { Container, Content, Button, FormGroup, Form, FormControl } from 'rsuite';
+import { socket } from '../api'
+
+let chatKey = 0;
 
 class Chat extends Component {
     constructor() {
         super();
         this.state = {
-          tab: 'dashboard'
+            message: '',
+            chat: []
         };
-        this.handleSelect = this.handleSelect.bind(this);
+        socket.on('new msg', (data) => {
+            let chat = this.state.chat;
+            chat.push(data);
+            this.setState({ chat })
+        })
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleKeyPress = this.handleKeyPress.bind(this);
     }
 
-    getActive(element) {
-        return element === this.state.tab ? '' : 'hidden'
-    }
+    handleChange = e => {        
+        this.setState({ message: e.target.value })
+    };
 
-    handleSelect(activeKey) {
-        this.setState({ tab: activeKey })
+
+    handleSubmit = e => {
+        e.preventDefault();
+        let chatMsg = {
+            name: this.props.team.name,
+            body: this.state.message
+        }
+        socket.emit('chat msg', chatMsg);
+        console.log(`${this.state.message} sent`);
+        this.setState({ message: '' });
+    };
+
+    handleKeyPress = e => {
+        if (e.key === 'Enter') {
+            this.handleSubmit(e);
+        }
     }
 
     render() {
-        const { tab } = this.state; 
-
          return (
         <Container>
-            <Sidebar style={{ paddingLeft: 20 }}>
-            </Sidebar>
             <Content>
-                <h5>The chat system has not been created!</h5>
+                <div style={{ height: '70%' }}>
+                    { this.state.chat.map(msg => (
+                    <p key={ msg.key }>{msg.name}: {msg.body}</p>
+                    ))}
+                </div>
+                <hr />
+                <form style={{ padding: 10 }} onSubmit={this.handleSubmit} >
+                    <div className="mb-3">
+                        <textarea className="form-control" id="Textarea" placeholder="Enter chat message" value={this.state.message} onChange={this.handleChange} onKeyPress={this.handleKeyPress} required></textarea>
+                    </div>
+                    <Button style={{ position: 'relative', float: 'right' }} appearance="primary" type="submit" >Send</Button>
+                </form>
             </Content>
         </Container>
          );

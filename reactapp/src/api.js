@@ -72,4 +72,4 @@ function updateAccounts (cb) {
 }
 
 
-export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAccounts };
+export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAccounts, socket };

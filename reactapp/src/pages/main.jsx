@@ -1,8 +1,6 @@
-import React, { Component, Link } from "react";
-import { Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav } from 'rsuite';
+import React, { Component } from "react";
+import { Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTie } from '@fortawesome/free-solid-svg-icons'
 
 // Pages
 import Governance from './governance';
@@ -110,7 +108,7 @@ import News from './news';
               </Sidenav>
               <NavToggle expand={expand} onChange={this.handleToggle} />
             </Sidebar>
-            <Container>
+            <Content style={{ display: 'flex', flexDirection: 'column' }}>
                 <Switch>
                     <Route path="/login" component={ LoginForm } />
                     <Route path="/home" render={() => (
@@ -164,7 +162,7 @@ import News from './news';
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
                 </Switch>
-            </Container>
+            </Content>
         </Container>
         );
     }
