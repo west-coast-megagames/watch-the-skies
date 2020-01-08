@@ -151,7 +151,11 @@ import News from './news';
                         alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/news" component={ News } />
+                    <Route path="/news" render={() => (
+                      <News
+                        news={ this.props.news }
+                      />
+                    )}/>
                     <Route path="/control" render={() => (
                       <Control
                           alert = { this.props.addAlert } 
