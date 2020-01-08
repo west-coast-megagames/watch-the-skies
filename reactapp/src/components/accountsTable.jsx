@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'rsuite';
-const { Column, HeaderCell, Cell, Pagination } = Table;
+const { Column, HeaderCell, Cell } = Table;
 
 class AccountsTable extends Component {
     constructor(props) {

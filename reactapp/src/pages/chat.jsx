@@ -1,8 +1,6 @@
 import React, { Component } from 'react'; // React import
-import { Container, Content, Button, FormGroup, Form, FormControl } from 'rsuite';
+import { Container, Content, Button } from 'rsuite';
 import { socket } from '../api'
-
-let chatKey = 0;
 
 class Chat extends Component {
     constructor() {

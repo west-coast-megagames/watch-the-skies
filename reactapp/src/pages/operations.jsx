@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content } from 'rsuite';
 import Interception from './tabs/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
