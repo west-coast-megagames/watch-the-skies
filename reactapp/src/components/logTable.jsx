@@ -11,7 +11,7 @@ class InterceptorLogs extends Component {
     async getLogs() {
         try {
             console.log(this.props.interceptor._id)
-            let res = await axios.get('https://project-nexus-prototype.herokuapp.com/api/logs');
+            let res = await axios.get('http://localhost:5000/api/logs');
             let logs = res.data; 
             logs = logs.filter(l => l.logType === 'Interception');
             logs = logs.filter(l => l.unit._id === this.props.interceptor._id);
