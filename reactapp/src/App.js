@@ -140,6 +140,5 @@ class App extends Component {
         </Container>
     );
   }
-}
 
 export default App
