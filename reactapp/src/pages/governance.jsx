@@ -1,5 +1,8 @@
 import React, { Component } from 'react'; // React import
 import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
+
 import Budget from './tabs/budget';
 
 class Governance extends Component {
@@ -30,6 +33,7 @@ class Governance extends Component {
                     <Nav.Item eventKey="budget" icon={<Icon icon="money" />}>Budget</Nav.Item>
                     <Nav.Item eventKey="espionage" icon={<Icon icon="user-secret" />}>Espionage</Nav.Item>
                     <Nav.Item eventKey="ratification" icon={<Icon icon="order-form" />}>Treaty Ratification</Nav.Item>
+                    <Nav.Item eventKey="unrest" icon={<FontAwesomeIcon icon={faFistRaised} />}> Unrest</Nav.Item>
                 </Nav>
             </Header>
             <Content style={{ paddingLeft: 20 }}>
@@ -49,6 +53,9 @@ class Governance extends Component {
                 </div>
                 <div className="ratification" hidden={ this.getActive('ratification') }>
                     <h5>The treaty system for the Governance Module has not been created!</h5>
+                </div>
+                <div className="unrest" hidden={ this.getActive('unrest') }>
+                    <h5>The unrest system for the Governance Module has not been created!</h5>
                 </div>
             </Content>
         </Container>
