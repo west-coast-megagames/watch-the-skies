@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
-import { Container, Header, Content, Footer } from 'rsuite';
+import { Container, Header } from 'rsuite';
 import axios from 'axios';
 
 // Components
@@ -117,35 +117,27 @@ class App extends Component {
 
   render() {
     return(
-      <div className="App">
-        <Container>
+        <Container className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
             <NavBar 
               team={ this.state.team }
               megabucks={ this.state.megabucks }
             />
           </Header>
-          <Container>
-            <Content>
-              <ContentArea
-                login={ this.state.login }
-                teams={ this.state.teams }
-                team={ this.state.team }
-                accounts={ this.state.accounts }
-                handleUpdate={ this.updateAccounts }
-                aircrafts={ this.state.aircrafts }
-                addAlert={ this.addAlert }
-                handleLogin={ this.handleLogin }
-                updateAccounts={ this.updateAccounts }
-              />
-            </Content>
-          </Container>
-          <Footer>
-            <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
-            <Toast />
-          </Footer>
+          <ContentArea
+            login={ this.state.login }
+            teams={ this.state.teams }
+            team={ this.state.team }
+            accounts={ this.state.accounts }
+            handleUpdate={ this.updateAccounts }
+            aircrafts={ this.state.aircrafts }
+            addAlert={ this.addAlert }
+            handleLogin={ this.handleLogin }
+            updateAccounts={ this.updateAccounts }
+          />
+          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
+          <Toast />
         </Container>
-      </div>
     );
   }
 }

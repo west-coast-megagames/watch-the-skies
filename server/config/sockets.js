@@ -11,6 +11,9 @@ const { Team, getPR, getTeam } = require('../models/team');
 const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
 const { Account } = require('../models/gov/account');
 
+let connections = [];
+let msgKey = 0;
+
 Interceptor.watch().on('change', data => {
   socketDebugger(new Date(), data);
   eventListner.emit('updateAircrafts');
@@ -37,10 +40,18 @@ module.exports = function (io){
 
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
-
+    connections.push(client);
+    logger.info(`${connections.length} ${connections.length === 1 ? 'client' : 'clients'} connected...`);
+    
     let gClock = setInterval(() => {
       client.emit('gameClock', gameClock.getTimeRemaining());
     }, 1000);
+
+    client.on('chat msg', (data) => {
+      data.key = msgKey;
+      msgKey++;
+      io.sockets.emit('new msg', data);
+    })
 
     client.on('updatePR', async (team_id) => {
       socketDebugger(`${client.id} requested updated PR for ${team_id}`);
@@ -100,6 +111,8 @@ module.exports = function (io){
 
     client.on('disconnect', () => {
       logger.info(`Client Disconnected... ${client.id}`);
+      connections.splice(connections.indexOf(client), 1);
+      console.log( `${connections.length} clients connected`);
       clearInterval(gClock);
     });
   });
