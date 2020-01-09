@@ -1,8 +1,10 @@
 import openSocket from 'socket.io-client';
+import { gameServer } from './config';
+
 
 // Socket Routes
-const socket = openSocket('http://localhost:5000/');
-const alert = openSocket('http://localhost:5000/alert');
+const socket = openSocket(gameServer);
+const alert = openSocket(`${gameServer}alert`);
 
 // Update Socket Events and Event Listners
 function updateTeam (team_id) {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { gameServer } from '../config';
 
 class AutoTransfers extends Component {
     state = {
@@ -42,7 +43,7 @@ class AutoTransfers extends Component {
         let request = { account_id: account._id , transfer_id: transfer._id }
         console.log(transfer);
         console.log(request);
-        await axios.put('http://localhost:5000/api/banking/transfer', request);
+        await axios.put(`${gameServer}api/banking/transfer`, request);
     }
 
     render() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Avatar } from 'rsuite'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import { gameClock, teamEvents } from '../api';
@@ -59,6 +60,7 @@ class NavBar extends Component {
             <span className="navbar-text mr-1">{pr}</span>
             <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span>
             <span className="navbar-text mr-1"> {this.props.team.name} </span>
+            <Avatar size="sm" circle src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-3d-round-250.png">USA</Avatar>
             </nav>
         );
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
 import { Container, Header } from 'rsuite';
+import { gameServer } from './config';
 import axios from 'axios';
 
 // Components
@@ -17,9 +18,7 @@ import 'rsuite/dist/styles/rsuite-default.css'
 
 import AlertPage from './components/common/alert';
 
-
 let idCount = 0;
-let gameServer = 'http://localhost:5000';
 
 // React App Component
 class App extends Component {
@@ -72,13 +71,13 @@ class App extends Component {
 
     // Axios call to server for all teams
     async getTeams () {
-      let { data: teams } = await axios.get(`${gameServer}/api/team`);
+      let { data: teams } = await axios.get(`${gameServer}api/team`);
       this.setState({ teams })
     }
 
     async getNews () {
-      let { data: bnc } = await axios.get(`${gameServer}/api/news/bnc`);
-      let { data: gnn } = await axios.get(`${gameServer}/api/news/gnn`);
+      let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
+      let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
       let news = {
         bnc,
         gnn
@@ -95,7 +94,7 @@ class App extends Component {
   
     updateAccounts = async (team) => {
       console.log(`${team.name} Accounts update...`);
-      let { data: accounts } = await axios.put(`${gameServer}/api/banking/accounts`, { "team_id": team._id });
+      let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team_id": team._id });
       this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
@@ -104,7 +103,7 @@ class App extends Component {
     }
   
     updateAircrafts = async () => {
-      let { data: aircrafts } = await axios.get(`${gameServer}/api/interceptor`);
+      let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`);
       this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
       this.setState({ aircrafts })
     }

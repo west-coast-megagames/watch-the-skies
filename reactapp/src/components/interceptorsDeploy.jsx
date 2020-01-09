@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { gameServer } from '../config';
 
 var formStyle = {
   'position': 'fixed',
@@ -43,7 +44,7 @@ class InterceptorDeployForm extends Component {
     };
 
     try {
-      let response = await axios.put('http://localhost:5000/api/intercept', stats);
+      let response = await axios.put(`${gameServer}api/intercept`, stats);
       this.props.alert({type: 'succeess', title: 'Interceptor Launch...', body: response.data })
 
     } catch (err) {
