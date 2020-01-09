@@ -14,6 +14,7 @@ import Science from './science';
 import Diplomacy from './diplomacy';
 import Chat from './chat';
 import News from './news';
+import Registration from './../components/registration';
 
   
   const iconStyles = {
@@ -162,6 +163,7 @@ import News from './news';
                       />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
+                    <Route path="/reg" component={ Registration } />
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
