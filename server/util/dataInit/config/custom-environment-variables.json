@@ -1,4 +1,5 @@
 {
     "initPath": "initDataDir",
-    "dbName": "dbName"
+    "dbName": "dbName",
+    "loadSel": "loadSel"
 }

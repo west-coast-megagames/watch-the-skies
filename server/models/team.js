@@ -7,7 +7,7 @@ const Joi = require('joi');
 const RoleSchema = new Schema({
   role: { type: String },
   type: { type: String, enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']},
-  user_id: { type: String },  
+  user_id: { type: String }  
 });
 
 //teamType is (N)ational, (A)lien or (M)edia
@@ -18,7 +18,7 @@ const TeamSchema = new Schema({
   teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M'] },
   roles: [RoleSchema],
   prTrack: [Number],
-  prLevel: { type: Number },
+  prLevel: { type: Number }
 });
 
 TeamSchema.methods.validateTeam = function (team) {

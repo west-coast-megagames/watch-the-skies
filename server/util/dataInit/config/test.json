@@ -1,4 +1,5 @@
 {
     "initPath": "./",
-    "dbName": "auto-test"
+    "dbName": "auto-test",
+    "loadSel": "All"
 }

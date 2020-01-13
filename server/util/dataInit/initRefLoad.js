@@ -46,7 +46,7 @@ async function initLoad(doLoad) {
       await deleteZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       
       if (refDataIn[i].loadFlag === "true") {
-        await loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+        await loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].refNumber1);
       }
     }
 
@@ -66,14 +66,14 @@ async function initLoad(doLoad) {
       await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       
       if (refDataIn[i].loadFlag === "true") {
-        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2);
+        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2, refDataIn[i].refNumber1);
       }
     }
   };
   return;
 };
 
-async function loadZone(zName, zCode, zLoadFlg){
+async function loadZone(zName, zCode, zLoadFlg, zTerror){
   try {   
     let zone = await Zone.findOne( { zoneCode: zCode } );
     if (!zone) {
@@ -81,7 +81,8 @@ async function loadZone(zName, zCode, zLoadFlg){
        if (zLoadFlg === "false") return;   // don't load if not true
        let zone = new Zone({ 
            zoneCode: zCode,
-           zoneName: zName
+           zoneName: zName,
+           terror: zTerror
         }); 
 
         let { error } = validateZone(zone); 
@@ -100,6 +101,7 @@ async function loadZone(zName, zCode, zLoadFlg){
       
        zone.zoneName = zName;
        zone.zoneCode = zCode;
+       zone.terror   = zTerror;
 
        const { error } = validateZone(zone); 
        if (error) {
@@ -221,7 +223,7 @@ async function deleteTeam(tName, tCode, tLoadFlg){
   }
 };
 
-async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
+async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
   
   try {   
 
@@ -232,7 +234,8 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
 
       let country = new Country({ 
           code: cCode,
-          name: cName
+          name: cName,
+          unrest: cUnrest
       }); 
 
       let zone = await Zone.findOne({ zoneCode: zCode });  
@@ -271,8 +274,9 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode){
         // Existing Country here ... update
         let id = country._id;
           
-        country.name = cName;
-        country.code = cCode;
+        country.name   = cName;
+        country.code   = cCode;
+        country.unrest = cUnrest;
 
         let zone = await Zone.findOne({ zoneCode: zCode });  
         if (!zone) {
