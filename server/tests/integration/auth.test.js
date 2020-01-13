@@ -5,7 +5,7 @@ describe('auth middleware', () => {
 
   beforeEach(() => { server = require('../../server'); });
   afterEach(async () => { 
-    await User.deleteOne({ screenname: 'Utest5'});
+    await User.deleteOne({ username: 'Utest5'});
     server.close(); 
   });
 
@@ -16,7 +16,7 @@ describe('auth middleware', () => {
         .post('/users')
         .set('x-auth-token', token)
         .send({ email: 'testing5@gmail.com', 
-          screenname: 'Utest5', 
+          username: 'Utest5', 
           phone: '9161112230', 
           gender: 'Male',
           password: 'PWtest31',

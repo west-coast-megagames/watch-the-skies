@@ -15,6 +15,15 @@ class Interception extends Component {
     interceptor: undefined
   };
 
+  close = () => {
+    this.setState({
+      showInfo: false
+    });
+  }
+  toggleDrawer = () => {
+    this.setState({ showInfo: true });
+  }
+
   componentDidMount() {
     this.radarSweep = setInterval(() => {
       let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
@@ -48,13 +57,16 @@ class Interception extends Component {
 
           { this.state.showInfo ? <InterceptorInfo
             interceptor={ this.state.interceptor }
-            onClick={ this.showInfo }
+            show={ this.showInfo }
+            close={ this.close }
+            toggleDrawer={ this.toggleDrawer }
             alert={ this.props.alert }
             /> : null }
 
           { this.state.isDeploying ? <InterceptorDeployForm 
             aircrafts={ this.state.aircrafts }
             deployInterceptors={ this.deployInterceptors }
+            show={ this.state.isDeploying }
             handleChange={ this.handleChange }
             interceptor={ this.state.interceptor }
             contact={this.state.contact}

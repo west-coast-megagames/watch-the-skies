@@ -14,6 +14,7 @@ import Science from './science';
 import Diplomacy from './diplomacy';
 import Chat from './chat';
 import News from './news';
+import Registration from './../components/registration';
 
   
   const iconStyles = {
@@ -151,13 +152,22 @@ import News from './news';
                         alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/news" component={ News } />
+                    <Route path="/news" render={() => (
+                      <News
+                        news={ this.props.news }
+                      />
+                    )}/>
                     <Route path="/control" render={() => (
                       <Control
                           alert = { this.props.addAlert } 
                       />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
+                    <Route path="/reg" render={() => (
+                      <Registration
+                        addAlert = { this.props.addAlert }
+                      />
+                    )}/>
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />

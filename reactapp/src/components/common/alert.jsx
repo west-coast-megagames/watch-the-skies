@@ -8,6 +8,7 @@ const AlertPage = (props) => {
             style={{
                 position: "fixed",
                 bottom: "5px",
+                left: "5px",
                 zIndex: 9999
             }}
         >

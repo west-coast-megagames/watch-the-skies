@@ -1,8 +1,11 @@
 import openSocket from 'socket.io-client';
+import { gameServer } from './config';
+
 
 // Socket Routes
-const socket = openSocket('https://project-nexus-prototype.herokuapp.com/');
-const alert = openSocket('https://project-nexus-prototype.herokuapp.com/alert');
+const socket = openSocket(gameServer);
+const alert = openSocket(`${gameServer}alert`);
+
 
 // Update Socket Events and Event Listners
 function updateTeam (team_id) {

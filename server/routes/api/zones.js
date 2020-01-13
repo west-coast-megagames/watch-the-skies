@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const zoneDebugger = require('debug')('app:zone');
 const supportsColor = require('supports-color');
+const validateObjectId = require('../../middleware/validateObjectId');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -20,7 +21,7 @@ router.get('/', async (req, res) => {
 // @route   GET api/zones/id
 // @Desc    Get zones by id
 // @access  Public
-router.get('/id/:id', async (req, res) => {
+router.get('/id/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
       const zone = await Zone.findById(id);
       if (zone != null) {
@@ -70,30 +71,33 @@ router.post('/', async (req, res) => {
 // @route   PUT api/zones/id
 // @Desc    Update Existing Zone
 // @access  Public  
-router.put('/:id', async (req, res) => {
+router.put('/:id', validateObjectId, async (req, res) => {
+  try {
     let id = req.params.id;
-    zoneDebugger("In Zone Put ... Code: ", req.params.zoneCode, "Name: ", req.params.zoneName);
 
-    const { error } = zone.validateZone(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
-    
-    const zone = await Zone.findByIdAndUpdate({ _id: req.params.id },
+    const zone = await Zone.findByIdAndUpdate( req.params.id,
       { zoneName: req.body.zoneName,
         zoneCode: req.body.zoneCode }, 
       { new: true }
-      );
+    );
 
     if (zone != null) {
-      res.json(zone);
+      const { error } = zone.validateZone(req.body); 
+      if (error) return res.status(400).send(error.details[0].message);
+        res.json(zone);
     } else {
-      res.status(404).send(`The Zone with the ID ${id} was not found!`);
+        res.status(404).send(`The Zone with the ID ${id} was not found!`);
     }
-  });
+  } catch (err) {
+      console.log(`Zone Put Error: ${err.message}`);
+      res.status(400).send(`Zone Put Error: ${err.message}`);
+    }
+});
   
 // @route   DELETE api/zones/id
 // @Desc    Update Existing Zone
 // @access  Public   
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
       const zone = await Zone.findByIdAndRemove(req.params.id);
 

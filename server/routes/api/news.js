@@ -1,5 +1,8 @@
+const { getTimeRemaining } = require('../../wts/gameClock/gameClock')
+
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
+
 const router = express.Router();
 
 // Article Model - Using Mongoose Model
@@ -30,9 +33,17 @@ router.post('/', async function (req, res) {
     let { agency, turn, date, location, headline, body, imageSrc } = req.body;
     const { error } = validateArticle(req.body);
     if (error) return res.status(400).send(error.details[0].message);
+
+    let gameTime = getTimeRemaining();
+
+    let timestamp = {
+        turn: gameTime.turn,
+        phase: gameTime.phase,
+        date: Date.now()
+    }
     
     let article = new Article(
-        { agency, turn, date, location, headline, body, imageSrc }
+        { agency, timestamp, location, headline, body, imageSrc }
     );
 
     article = await article.save();

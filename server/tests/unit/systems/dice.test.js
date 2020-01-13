@@ -33,7 +33,7 @@ describe('dice d6', () => {
     let foundFour  = false;
     let foundFive  = false;
     let foundSix   = false;
-    for (i = 0; i < 24; i++) {  
+    for (i = 0; i < 36; i++) {  
       let dieRoll = d6();
       if (dieRoll == 1) foundOne = true;
       if (dieRoll == 2) foundTwo = true;
