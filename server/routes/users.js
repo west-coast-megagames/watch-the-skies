@@ -11,11 +11,11 @@ const { User, validateUser } = require('../models/user');
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
-    let { screenname, name, email, password, age, gender, DoB, phone, discord } = req.body;
-    DoB = new Date(DoB);
+    console.log('Someone is trying to make a user...', req.body)
+    let { username, name, email, password, dob } = req.body;
 
-    const { error } = validateUser(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    // const { error } = validateUser(req.body);
+    // if (error) return res.status(400).send(`Woo! ${error.details[0].message}`);
     
     let user = await User.findOne({ email })
     if (user) {
@@ -23,7 +23,7 @@ router.post('/', async function (req, res) {
         return res.status(400).send(`User with the email: ${email} already registered...`);
     } else {
         let user = new User(
-            { screenname, name, email, password, age, gender, DoB, phone, discord }
+            { username, name , email, password, dob }
         );
 
         const salt = await bcrypt.genSalt(10);
@@ -35,11 +35,12 @@ router.post('/', async function (req, res) {
         let sendUser = {
             _id: user._id,
             email: user.email,
-            name: `${user.name.first} ${user.name.last}`
+            name: `${user.name.first} ${user.name.last}`,
+            username
         };
 
-        console.log(`User ${screenname} created...`);
-        return res.header('x-auth-token', token).json(sendUser);
+        console.log(`User ${username} created...`);
+        return res.status(200).header('x-auth-token', token).json(sendUser);
     }
 });
 
@@ -47,8 +48,8 @@ router.post('/', async function (req, res) {
 // @Desc    Get all Users
 // @access  Public
 router.get('/me', auth, async function (req, res) {
-    const user = await User.findById(req.user._id).select('screenname email name')
-    console.log(`Verifying ${user.screenname}`);
+    const user = await User.findById(req.user._id).select('username email name')
+    console.log(`Verifying ${user.username}`);
     res.json(user);
 });
 
@@ -86,7 +87,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
     } 
   
     const user = await User.findByIdAndUpdate(req.params.id, 
-      { screenname: req.body.screenname,
+      { username: req.body.username,
         email: req.body.email, 
         phone: req.body.phone, 
         gender: req.body.gender,

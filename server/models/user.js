@@ -5,13 +5,13 @@ const config = require('config');
 const Joi = require('joi');
 
 const UserSchema = new Schema({
-  screenname: { type: String, required: true, unique: true, minlength: 5, maxlength: 15 },
+  username: { type: String, required: true, unique: true, minlength: 5, maxlength: 15 },
   name: {
     first: { type: String, required: true, minlength: 1, maxlength: 25 },
     last: { type: String, required: true, minlength: 1, maxlength: 50 }
   },
   email: { type: String, required: true, minlength: 5, maxlength: 255 },
-  phone: { type: String, required: true, minlength: 10, maxlength: 14 },
+  phone: { type: String, minlength: 10, maxlength: 14 },
   password: {type: String, required: true, minlength: 5, maxlength: 1024},
   address: {
     street1: { type: String },
@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     state: { type: String, minlength: 2, maxlength: 2 },
     zipcode: { type: String, minlength: 5, maxlength: 10 }
   },
-  DoB: { type: Date },
+  dob: { type: Date },
   gender: { type: String, enum: ["Male", "Female", "Non-Binary"]},
   discord: { type: String },
   team: { 
@@ -40,9 +40,9 @@ let User = mongoose.model('user', UserSchema);
 
 function validateUser(user) {
   const schema = {
-    screenname: Joi.string().min(5).max(15).required(),
+    username: Joi.string().min(5).max(15).required(),
     email: Joi.string().min(5).max(255).required().email(),
-    phone: Joi.string().min(10).max(14).required(),
+    phone: Joi.string().min(10).max(14),
     password: Joi.string().min(5).max(1024).required(),
     gender: Joi.string(),
     discord: Joi.string()
