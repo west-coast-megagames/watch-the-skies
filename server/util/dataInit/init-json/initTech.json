@@ -180,7 +180,7 @@
       ],
       "effect": 
         {"cost": 5,
-        "desc":"Launches a program to train farm managers in effective methods and implementation of newer technology."}
+        "desc":"Launches a program to train farm managers in effective methods and implementation of newer nology."}
   },
   {   
     "field": "Super Adaptable Crops",
@@ -299,7 +299,7 @@
       ],
       "effect": {
         "cost": 12,
-        "desc":"(A) +1 PR Level (B) Develops synthesizer tech until it can be deployed as mobile and consumer units."
+        "desc":"(A) +1 PR Level (B) Develops synthesizer  until it can be deployed as mobile and consumer units."
     }
   },
   {   
@@ -384,7 +384,7 @@
       ],
       "effect": {
         "cost": 5,
-        "desc":"(A) Pay $M2 to reduce construction time 1 turn, (B) Develops new fabrication techniques and infrastructure."
+        "desc":"(A) Pay $M2 to reduce construction time 1 turn, (B) Develops new fabrication niques and infrastructure."
     }
   },
   {   
@@ -396,7 +396,7 @@
       ],
       "effect": {
         "cost": 5,
-        "desc":"(A) -5 Regional Terror (B) Develops viable green personal transport technology."
+        "desc":"(A) -5 Regional Terror (B) Develops viable green personal transport nology."
     }
   },
   {   
@@ -408,7 +408,7 @@
       ],
       "effect": {
         "cost": 0,
-        "desc":"(A) Build Satellite (B) Develops viable green personal transport technology."
+        "desc":"(A) Build Satellite (B) Develops viable green personal transport nology."
     }
   },
   {   
@@ -594,7 +594,7 @@
       ],
       "effect": {
         "cost": 4,
-        "desc":"(A) Required Red Mercury (B) Adds Fusion Reactor to a unit/facility. (C) Develops viable fusion reactor technology for Fusion Power."
+        "desc":"(A) Required Red Mercury (B) Adds Fusion Reactor to a unit/facility. (C) Develops viable fusion reactor nology for Fusion Power."
     }
   },
   {   
@@ -749,7 +749,7 @@
       ],
       "effect": {
         "cost": 0,
-        "desc":"(A) Instant (B) All Global Corps Deployment costs -$M1/unit (C) Improves logistics via tech integration."
+        "desc":"(A) Instant (B) All Global Corps Deployment costs -$M1/unit (C) Improves logistics via  integration."
     }
   },
   {   
@@ -907,7 +907,7 @@
       ],
       "effect": {
         "cost": 0,
-        "desc":"(A) $M10/Unit (B) 7 Attack | 7 Defense (C) Develops an equipment package to upgrade a Modern Tech. Corp unit."
+        "desc":"(A) $M10/Unit (B) 7 Attack | 7 Defense (C) Develops an equipment package to upgrade a Modern . Corp unit."
     }
   },
   {   
@@ -969,7 +969,7 @@
       ],
       "effect": {
         "cost": 0,
-        "desc":"(A) $M6/System (B) Better ABM Defense (C) Improves existing Laser Tech. and deploys ground based missile defense platform."
+        "desc":"(A) $M6/System (B) Better ABM Defense (C) Improves existing Laser . and deploys ground based missile defense platform."
     }
   },
   {   
@@ -1018,7 +1018,7 @@
       ],
       "effect": {
         "cost": 3,
-        "desc":"Develops new tech and methods for drug deployment."
+        "desc":"Develops new  and methods for drug deployment."
     }
   },
   {   
@@ -1031,7 +1031,7 @@
       ],
       "effect": { 
         "cost": 5,
-        "desc":"(A) -10 Regional Terror (B) Develops new trauma center methods and pain management techniques."
+        "desc":"(A) -10 Regional Terror (B) Develops new trauma center methods and pain management niques."
     }
   },
   {   
@@ -1150,7 +1150,7 @@
       ],
       "effect": {
         "cost": 8,
-        "desc":"(A) Have +1 Lab Die for all future Biomedical Research (B) Develops nanite technology for future biomedical research."
+        "desc":"(A) Have +1 Lab Die for all future Biomedical Research (B) Develops nanite nology for future biomedical research."
     }
   },
   {   
@@ -1165,7 +1165,7 @@
       ],
       "effect": {
         "cost": 0,
-        "desc":"(A) Instant (B) Develops process and technology for cold-sleep and cryonics."
+        "desc":"(A) Instant (B) Develops process and nology for cold-sleep and cryonics."
     }
   },
   {   
@@ -1271,7 +1271,7 @@
       ],
       "effect": {
         "cost": 15,
-        "desc":"(A) -10 Regional Terror (B) Develops methods for an automated medical system using a large suite of technology."
+        "desc":"(A) -10 Regional Terror (B) Develops methods for an automated medical system using a large suite of nology."
     }
   },
   {   
@@ -1323,7 +1323,7 @@
       ],
       "effect": {
         "cost": 5,
-        "desc":"(A) -5 Regional Terror (B) Develops new art styles based on alien technology and designs."
+        "desc":"(A) -5 Regional Terror (B) Develops new art styles based on alien nology and designs."
     }
   },
   {   
@@ -1336,7 +1336,7 @@
       ],
       "effect": {
         "cost": 5,
-        "desc":"(A) -5 Regional Terror (B) Develops new instruments based on alien technology."
+        "desc":"(A) -5 Regional Terror (B) Develops new instruments based on alien nology."
     }
   },
   {   
@@ -1446,7 +1446,7 @@
       ],
       "effect": {
         "cost": 8,
-        "desc":"(A) -1 PR -5 Regional Terror (B) Develops flying car technology and infrastructure for national deployment."
+        "desc":"(A) -1 PR -5 Regional Terror (B) Develops flying car nology and infrastructure for national deployment."
     }
   },
   {   
@@ -1455,7 +1455,7 @@
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
         {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
-        {"_id": "Object id", "name": "Alien Prisoner", "level": 1}
+        {"_id": "Object id", "name": "Alien Prisoner Cooperation", "level": 1}
       ],
       "effect": {
         "cost": 0,
@@ -1542,7 +1542,7 @@
       ],
       "effect": {
         "cost": 20,
-        "desc":"(A) -20 Regional Terror (B) Develops the tech to transfer human neural information into the bio-network"
+        "desc":"(A) -20 Regional Terror (B) Develops the  to transfer human neural information into the bio-network"
     }
   },
   {   
@@ -1577,6 +1577,381 @@
         "desc":"(A) +2 PR -50 Regional Terror Construction times reduced Deployment Costs Reduced (B) Times reduced by 1 Turn (not below 1Turn); Deployment Cost reduce by $M1 (not below $M1) (C) Develops integrated bio-networked society that functions as an interconnected unit and can respond to various situations and crises at the speed of the network."
     }
   },
-
-
+  {   
+    "field": "Alien Prisoner Cooperation",
+    "level": 1,
+    "prereq": [
+        {"_id": "Object id", "name": "Alien Prisoner", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Can be used for Advanced Xeno-Language (B) Alien can turn into Dead Alien for Autopsy."
+    }
+  },
+  {   
+    "field": "Personal Weapon Analysis",
+    "level": 1,
+    "prereq": [
+        {"_id": "Object id", "name": "Alien Autopsy", "level": 3},
+        {"_id": "Object id", "name": "Personal Weapon", "level": 0},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 3}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc":""
+    }
+  },
+  {   
+    "field": "Xeno-Food Analysis",
+    "level": 1,
+    "prereq": [
+        {"_id": "Object id", "name": "Biology", "level": 1},
+        {"_id": "Object id", "name": "Psychology", "level": 1},
+        {"_id": "Object id", "name": "Social Science", "level": 1},
+        {"_id": "Object id", "name": "Xeno Food", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc":"Must be discarded after successful research."
+    }
+  },
+  {   
+    "field": "Alien Autopsy",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Biology", "level": 2},
+        {"_id": "Object id", "name": "Dead Alien", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Alien Entertainment Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Electronics", "level": 1},
+        {"_id": "Object id", "name": "Engineering", "level": 2},
+        {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+        {"_id": "Object id", "name": "Cultural Artifact Analysis", "level": 2},
+        {"_id": "Object id", "name": "Alien Entertainment System", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc":"Can be used as a Bio-Networking Helmet"
+    }
+  },
+  {   
+    "field": "Combat Armor Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Combat Armor", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Comm. System Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Electronics", "level": 2},
+        {"_id": "Object id", "name": "Psychology", "level": 2},
+        {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+        {"_id": "Object id", "name": "Comm. System", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Communication Log Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Electronics", "level": 1},
+        {"_id": "Object id", "name": "Psychology", "level": 1},
+        {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+        {"_id": "Object id", "name": "Communication Log", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Cultural Artifact Anaylsis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Social Science", "level": 2},
+        {"_id": "Object id", "name": "Psychology", "level": 2},
+        {"_id": "Object id", "name": "Beginning Xeno Language", "level": 2},
+        {"_id": "Object id", "name": "Cultural Artifact", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Database Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Software & Processes", "level": 2},
+        {"_id": "Object id", "name": "Biology", "level": 3},
+        {"_id": "Object id", "name": "Database", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Environmental System Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Engineering", "level": 2},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Environmental System", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "High Energy Laser (HEL) Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
+        {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+        {"_id": "Object id", "name": "High Energy Laser (HEL)", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Mysterious Gray Goo Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Software & Processes", "level": 2},
+        {"_id": "Object id", "name": "Electronics", "level": 1},
+        {"_id": "Object id", "name": "Mysterious Gray Goo", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": "Must be discarded after successful research"
+    }
+  },
+  {   
+    "field": "Strange Material Analysis",
+    "level": 2,
+    "prereq": [
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
+        {"_id": "Object id", "name": "Materials", "level": 2},
+        {"_id": "Object id", "name": "Strange Material", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": "Can be sold for $M1"
+    }
+  },
+  {   
+    "field": "Flight Systems Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Software & Processes", "level": 3},
+        {"_id": "Object id", "name": "Electronics", "level": 4},
+        {"_id": "Object id", "name": "Comm. System Analysis", "level": 2},
+        {"_id": "Object id", "name": "Flight Systems", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Hover Tank (Damaged) Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Electronics", "level": 3},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+        {"_id": "Object id", "name": "Hover Tank (Damaged)", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Political Data Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Social Science", "level": 3},
+        {"_id": "Object id", "name": "Psychology", "level": 3},
+        {"_id": "Object id", "name": "Electronics", "level": 2},
+        {"_id": "Object id", "name": "Advanced Xeno-Language", "level": 3},
+        {"_id": "Object id", "name": "Political Data", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Red Mercury Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Materials", "level": 3},
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
+        {"_id": "Object id", "name": "Red Mercury", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Scanning Systems Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Engineering", "level": 2},
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 3},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Scanning Systems", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Smart Robots Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Software & Processes", "level": 2},
+        {"_id": "Object id", "name": "Electronics", "level": 3},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Smart Robots", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Stellar Navigation Chart Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Astrophysics", "level": 3},
+        {"_id": "Object id", "name": "Electronics", "level": 2},
+        {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
+        {"_id": "Object id", "name": "Stellar Navigation Chart", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Xeno-Logic Circuit Analysis",
+    "level": 3,
+    "prereq": [
+        {"_id": "Object id", "name": "Software & Processes", "level": 3},
+        {"_id": "Object id", "name": "Electronics", "level": 2},
+        {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
+        {"_id": "Object id", "name": "Xeno-Logic Circuit", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Fusion Thruster Analysis",
+    "level": 4,
+    "prereq": [
+        {"_id": "Object id", "name": "Engineering", "level": 4},
+        {"_id": "Object id", "name": "Red Mercury Analysis", "level": 3},
+        {"_id": "Object id", "name": "Fusion Thruster", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Kimyona Zairyo Analysis",
+    "level": 4,
+    "prereq": [
+        {"_id": "Object id", "name": "Materials", "level": 4},
+        {"_id": "Object id", "name": "Merkwurdige Materialien Analysis", "level": 4},
+        {"_id": "Object id", "name": "Kimyona Zairyo", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": "(A) Can be translated to Outlandish or Quirky Material (B) Can be sold for $M3"
+    }
+  },
+  {   
+    "field": "Merkwurdige Materialien Analysis",
+    "level": 4,
+    "prereq": [
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Merkwurdige Materialien", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": "(A) Can be translated to Curious or Unlikely Material (B) Can be sold for $M2"
+    }
+  },
+  {   
+    "field": "Space Fighter (Damaged) Analysis",
+    "level": 4,
+    "prereq": [
+        {"_id": "Object id", "name": "Engineering", "level": 4},
+        {"_id": "Object id", "name": "Astrophysics", "level": 2},
+        {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+        {"_id": "Object id", "name": "Space Fighter (Damaged)", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Hyperspace Drive Analysis",
+    "level": 5,
+    "prereq": [
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 5},
+        {"_id": "Object id", "name": "Astrophysics", "level": 5},
+        {"_id": "Object id", "name": "Hyperlinium Alloy Analysis", "level": 5},
+        {"_id": "Object id", "name": "Hyperspace Drive", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  },
+  {   
+    "field": "Plasma Cannon Analysis",
+    "level": 5,
+    "prereq": [
+        {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
+        {"_id": "Object id", "name": "Engineering", "level": 4},
+        {"_id": "Object id", "name": "Plasma Cannon", "level": 0}
+      ],
+      "effect": {
+        "cost": 0,
+        "desc": ""
+    }
+  }
 ]
