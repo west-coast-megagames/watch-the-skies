@@ -78,6 +78,7 @@ describe('/users/', () => {
         // pass in invalid id ... don't need to create a record
         const res = await request(server).get('/users/id/1');
         expect(res.status).toBe(404);
+        expect(res.text).toMatch(/Invalid ID/);
     });
 
     it('should return 404 if no user with given id exists', async () => {
@@ -127,6 +128,7 @@ describe('/users/', () => {
 
       const res = await request(server).post('/users').send({ screenname: '1234'});
       expect(res.status).toBe(400);
+      expect(res.text).toMatch(/length must be/);
     });
 
     it('should return 400 if user screenname is more than 15 characters', async () => {
@@ -135,6 +137,7 @@ describe('/users/', () => {
       const testScreenname = new Array(17).join('a');
       const res = await request(server).post('/users').send({ screenname: testScreenname});
       expect(res.status).toBe(400);
+      expect(res.text).toMatch(/length must be/);
     });
 
     it('should return 400 if user email is already used (in database)', async () => {
@@ -153,6 +156,7 @@ describe('/users/', () => {
       });
 
       expect(res.status).toBe(400);
+      expect(res.text).toMatch(/already registered/);
     });
 
     it('should save the user if it is valid', async () => {
@@ -225,6 +229,7 @@ describe('/users/', () => {
       const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
   
       expect(res.status).toBe(400);
+      expect(res.text).toMatch(/length must be/);
     });
 
     it('should return 400 if user is more than 15 characters', async () => {
@@ -249,6 +254,7 @@ describe('/users/', () => {
       const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
   
       expect(res.status).toBe(400);
+      expect(res.text).toMatch(/length must be/);
     });
 
     it('should return 404 if id is invalid', async () => {
@@ -272,6 +278,7 @@ describe('/users/', () => {
       const res = await request(server).put('/users/' + id).send({ screenname: newScreenname});
   
       expect(res.status).toBe(404);
+      expect(res.text).toMatch(/Invalid ID/);
     });
 
     it('should return 404 if user with the given id was not found', async () => {
@@ -404,6 +411,7 @@ describe('/users/', () => {
       const res = await exec();
 
       expect(res.status).toBe(404);
+      expect(res.text).toMatch(/Invalid ID/);
     });
 
     it('should return 404 if no user with the given id was found', async () => {
@@ -412,6 +420,7 @@ describe('/users/', () => {
       const res = await exec();
 
       expect(res.status).toBe(404);
+      expect(res.text).toMatch(/was not found/);
     });
 
     it('should delete the user if input is valid', async () => {
@@ -439,8 +448,8 @@ describe('/users/', () => {
 
       expect(res.status).toBe(200);
       
-      //const userAny = await User.find();
-      //expect(userAny).toBeNull();
+      const userAny = await User.find();
+      expect(userAny.length).toEqual(0);
     });    
 
   });
