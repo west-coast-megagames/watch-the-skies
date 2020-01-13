@@ -55,7 +55,12 @@ app.use('../../api/news', news); // Route for the news desks
 app.use('../../api/logs', logs); // Route for logs
 app.use('../../api/accounts', account); // Route for Team Accounts
 
-initLoadAll();
+let loadSel = config.get('loadSel');
+if (loadSel == "") { 
+  loadSel = "All"; 
+}
+
+initLoadAll(loadSel);
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;

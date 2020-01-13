@@ -30,13 +30,20 @@ const CountrySchema = new Schema({
         trim: true,
         minlength: 3,
         maxlength: 75
+    },
+    unrest: {
+        type: Number,
+        min: 0,
+        max: 250,
+        default: 0
     }
 });
 
 CountrySchema.methods.validateCountry = function (country) {
   const schema = {
     name: Joi.string().min(3).max(75).required(),
-    code: Joi.string().min(2).max(2).required().uppercase()
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    unrest: Joi.number().min(0).max(250)
   };
 
   return Joi.validate(country, schema, { "allowUnknown": true });
@@ -47,7 +54,8 @@ let Country = mongoose.model('country', CountrySchema);
 function validateCountry(country) {
   const schema = {
     code: Joi.string().min(2).max(2).required().uppercase(),
-    name: Joi.string().min(3).max(75).required()
+    name: Joi.string().min(3).max(75).required(),
+    unrest: Joi.number().min(0).max(250)
   };
 
   return Joi.validate(country, schema, { "allowUnknown": true });

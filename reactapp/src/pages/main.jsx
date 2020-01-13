@@ -4,7 +4,6 @@ import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 
 // Pages
 import Governance from './governance';
-import LoginForm from '../components/loginForm';
 import Home from './home';
 import Control from './control';
 import NotFound from './404';
@@ -16,7 +15,6 @@ import Chat from './chat';
 import News from './news';
 import Registration from './../components/registration';
 
-  
   const iconStyles = {
     width: 56,
     height: 56,
@@ -36,9 +34,10 @@ import Registration from './../components/registration';
                 return <Icon style={iconStyles} icon="cog" />;
               }}
             >
-              <Dropdown.Item>Help</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Sign out</Dropdown.Item>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
+              <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
             </Dropdown>
           </Nav>
   
@@ -103,7 +102,7 @@ import Registration from './../components/registration';
                     <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
                     <Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>
                     <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
-                    <Nav.Item eventKey="7" to="/control" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
+                    <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   </Nav>
                 </Sidenav.Body>
               </Sidenav>
@@ -111,7 +110,11 @@ import Registration from './../components/registration';
             </Sidebar>
             <Content style={{ display: 'flex', flexDirection: 'column' }}>
                 <Switch>
-                    <Route path="/login" component={ LoginForm } />
+                    <Route path="/login" render={() => (
+                      <Registration
+                        addAlert = { this.props.addAlert }
+                      />
+                    )}/>
                     <Route path="/home" render={() => (
                       <Home
                           login={ this.props.login }
@@ -163,13 +166,8 @@ import Registration from './../components/registration';
                       />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
-                    <Route path="/reg" render={() => (
-                      <Registration
-                        addAlert = { this.props.addAlert }
-                      />
-                    )}/>
                     <Route path="/not-found" component={ NotFound } />
-                    <Redirect from="/" exact to="home" />
+                    <Redirect from="/" exact to="login" />
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>
