@@ -163,7 +163,11 @@ import Registration from './../components/registration';
                       />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
-                    <Route path="/reg" component={ Registration } />
+                    <Route path="/reg" render={() => (
+                      <Registration
+                        addAlert = { this.props.addAlert }
+                      />
+                    )}/>
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
