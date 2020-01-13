@@ -6,6 +6,7 @@ import { gameServer } from './config';
 const socket = openSocket(gameServer);
 const alert = openSocket(`${gameServer}alert`);
 
+
 // Update Socket Events and Event Listners
 function updateTeam (team_id) {
     let updateTeam = setInterval(() => {

@@ -71,6 +71,7 @@ class App extends Component {
 
     // Axios call to server for all teams
     async getTeams () {
+
       let { data: teams } = await axios.get(`${gameServer}api/team`);
       this.setState({ teams })
     }
