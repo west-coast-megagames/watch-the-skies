@@ -2,935 +2,932 @@
 {
     "field": "Improved Fish Farms",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Software & Processes", "level": 1}
       ],
-    "effect": [
-        {"cost": 2},
-        {"de1sc": "Improves national fish yields."}
-    ]
+    "effect": 
+        {"cost": 2,
+        "desc": "Improves national fish yields."}
   },
   {
     "field": "Improved Agriculture",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Genetics", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc": "Improves national agriculture yields."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc": "Improves national agriculture yields."}
   }, 
   {
     "field": "Improved Recycling",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
         {"_id": "Object id", "name": "Engineering", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"Improves national recycling capacity."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"Improves national recycling capacity."
+      }
   },
   {
     "field": "Improved Processing",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
         {"_id": "Object id", "name": "Engineering", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"Improves national capacity for food processing."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"Improves national capacity for food processing."
+    }
   },
   {
     "field": "Improved Preservation",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Materials", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"Improves national capacity for food processing."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"Improves national capacity for food processing."
+    }
   },
   {
     "field": "Literature Research on Food & Agriculture",
     "level": 1,
-    "rereq": [ 
+    "prereq": [ 
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"(A) Deploy: lab session. (B) One time gift of 1 Research Die to any scientist you share research with."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"(A) Deploy: lab session. (B) One time gift of 1 Research Die to any scientist you share research with."
+    } 
   },
  {   
     "field": "Commercial Sea Farms",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Fish Farms", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":" (A) Required: Coastal nation. (B) Have +1 Fish/Turn (C)Further increased fishing yields due to ocean fishing."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":" (A) Required: Coastal nation. (B) Have +1 Fish/Turn (C)Further increased fishing yields due to ocean fishing."
+    } 
   },
   {   
       "field": "Advanced Agriculture",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Agriculture", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":" (A) Have +1 Fish/Turn (B)Further improves national agriculture yields."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":" (A) Have +1 Fish/Turn (B)Further improves national agriculture yields."
+    }
   },
   {   
     "field": "Advanced Pesticides",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": " Genetics", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Reduces risk of to the national agricultural infrastructure."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"Reduces risk of to the national agricultural infrastructure."
+    }
   },
   {   
     "field": "Advanced GM Crops",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Genetics", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Nation can rapidly modify crops to meet many needs."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"Nation can rapidly modify crops to meet many needs."
+    }
   },
   {   
     "field": "Advanced Processing",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Processing", "level": 1},
         {"_id": "Object id", "name": "Improved Preservation", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"Improves the national capacity to preserve foods."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"Improves the national capacity to preserve foods."
+    }
   },
   {   
     "field": "Popular Health Food",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Social Science", "level": 2},
         {"_id": "Object id", "name": "Psychology", "level": 2},
         {"_id": "Object id", "name": "Improved Processing", "level": 1}
       ],
-      "effect": [
-        {"cost": 5 },
-        {"de1sc":"(A) -10 to regional terror (B) Purposefully research and introduce a new health food. "}
-      ]
+      "effect": {
+        "cost": 5 ,
+        "desc":"(A) -10 to regional terror (B) Purposefully research and introduce a new health food. "
+    }
   },
   {   
     "field": "Oceanic Sea Farms",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Commercial Sea Farms", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) Required Coastal Nation (B) Have +2 Fish/Turn (C) Further increased fishing yields due to ocean fishing."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) Required Coastal Nation (B) Have +2 Fish/Turn (C) Further increased fishing yields due to ocean fishing."
+    }
   },
   {   
     "field": "Robotic Farms",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Smart Systems", "level": 2},
         {"_id": "Object id", "name": "Advanced Agriculture", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) -10 regional terror (B) Launches a campaign to replace human agricultural labor with specialized robots."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) -10 regional terror (B) Launches a campaign to replace human agricultural labor with specialized robots."
+    }
   },
   {   
     "field": "Integrated Farm Management",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science ", "level": 3},
         {"_id": "Object id", "name": "Advanced Pesticides", "level": 2},
         {"_id": "Object id", "name": "Advanced Agriculture", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Launches a program to train farm managers in effective methods and implementation of newer technology."}
-      ]
+      "effect": 
+        {"cost": 5,
+        "desc":"Launches a program to train farm managers in effective methods and implementation of newer technology."}
   },
   {   
     "field": "Super Adaptable Crops",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology ", "level": 3},
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Advanced GM Crops", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Deploy versions of food crops that can grow in almost any conditions and are disease resistant."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"Deploy versions of food crops that can grow in almost any conditions and are disease resistant."
+    }
   },
   {   
     "field": "Exotic Super Foods",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology ", "level": 3},
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Advanced Processing", "level": 2},
         {"_id": "Object id", "name": "Xeno-Food Analysis", "level": 0}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) Have +1 PR Level (B) Develops manufacture methods for packs of highly condensed nutrient gel foods."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) Have +1 PR Level (B) Develops manufacture methods for packs of highly condensed nutrient gel foods."
+    }
   },
   {   
     "field": "Deep Sea Farms",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering ", "level": 4},
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Oceanic Sea Farms", "level": 3},
         {"_id": "Object id", "name": "Exotic Super Foods", "level": 3}
       ],
-      "effect": [
-        {"cost": 12},
-        {"de1sc":"(A) Required Coastal Nation (B) Have +3 Fish/Turn (C) Develops the capacity for deep sea farming and harvesting."}
-      ]
+      "effect": {
+        "cost": 12,
+        "desc":"(A) Required Coastal Nation (B) Have +3 Fish/Turn (C) Develops the capacity for deep sea farming and harvesting."
+    }
   },
   {   
     "field": "Hydroponic Factories",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Robotic Farms", "level": 3},
         {"_id": "Object id", "name": "Integrated Farm Management", "level": 3}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) -5 Regional Terror +1 PR, +2 Food/Turn (B) Deploys functional system for massive Hydroponic factories."}
-      ]
+      "effect":{
+        "cost": 10,
+        "desc":"(A) -5 Regional Terror +1 PR, +2 Food/Turn (B) Deploys functional system for massive Hydroponic factories."
+    }
   },
   {   
     "field": "Agricultural Eco-National Parks",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Psychology", "level": 4},
         {"_id": "Object id", "name": "Integrated Farm Management", "level": 3}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"-10 Regional Terror -1 PR (B) Convinces the public to allow agricultural on protected land."}
-      ]
+      "effect": {
+        "cost": 6,
+        "desc":"-10 Regional Terror -1 PR (B) Convinces the public to allow agricultural on protected land."
+    }
   },
   {   
     "field": "Industrial Food Synthesizers",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Super Adaptable Crops", "level": 3},
         {"_id": "Object id", "name": "Exotic Super Foods", "level": 3}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"(A) +1 PR Level (B) Develops national infrastructure for the production/delivery of nutrient gels."}
-      ]
+      "effect": {
+        "cost": 6,
+        "desc":"(A) +1 PR Level (B) Develops national infrastructure for the production/delivery of nutrient gels."
+    }
   },
   {   
     "field": "Space Food",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Popular Health Food", "level": 3},
         {"_id": "Object id", "name": "Exotic Super Foods", "level": 3}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) Allows survival during interplanetary travel (B) Develops food that will last during interplanetary travel."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) Allows survival during interplanetary travel (B) Develops food that will last during interplanetary travel."
+    }
   },
   {   
     "field": "Non-Terrestrial Farming",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
         {"_id": "Object id", "name": "Super Adaptable Crops", "level": 4},
         {"_id": "Object id", "name": "Integrated Farm Management", "level": 4},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 12},
-        {"de1sc":"(A) +1 PR Level (B) Develops the ability to create sustainable outposts on other planets."}
-      ]
+      "effect": {
+        "cost": 12,
+        "desc":"(A) +1 PR Level (B) Develops the ability to create sustainable outposts on other planets."
+    }
   },
   {   
     "field": "Mobile Food Synthesizers",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Industrial Food Synthesizers", "level": 4}
       ],
-      "effect": [
-        {"cost": 12},
-        {"de1sc":"(A) +1 PR Level (B) Develops synthesizer tech until it can be deployed as mobile and consumer units."}
-      ]
+      "effect": {
+        "cost": 12,
+        "desc":"(A) +1 PR Level (B) Develops synthesizer tech until it can be deployed as mobile and consumer units."
+    }
   },
   {   
     "field": "Distributed Network Capabilities",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Software & Processes", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) Framework for large-scale implementation of distributed network computing."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) Framework for large-scale implementation of distributed network computing."
+    }
   },
   {   
     "field": "Automated Ground Vehicles",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
         {"_id": "Object id", "name": "Software & Processes", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"Develops framework for automated ground-vehicle infrastructure."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"Develops framework for automated ground-vehicle infrastructure."
+    }
   }, 
   {   
     "field": "Improved Composites",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) Developments new composite materials for future construction."}
-      ]
+      "effect":{ 
+        "cost": 0,
+        "desc":"(A) Instant (B) Developments new composite materials for future construction."
+    }
   }, 
   {   
     "field": "Improved Composites",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) Developments new composite materials for future construction."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) Developments new composite materials for future construction."
+    }
   },
   {   
     "field": "Improved Mining",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Engineering", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"Improves national mining processes and infrastructure."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"Improves national mining processes and infrastructure."
+    }
   },
   {   
     "field": "Improved Power Grid",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
         {"_id": "Object id", "name": "Materials", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"Improves your national power grid infrastructure."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"Improves your national power grid infrastructure."
+    }
   },
   {   
     "field": "Flexible Fabrication",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Distributed Network Capabilities", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) Pay $M2 to reduce construction time 1 turn, (B) Develops new fabrication techniques and infrastructure."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) Pay $M2 to reduce construction time 1 turn, (B) Develops new fabrication techniques and infrastructure."
+    }
   },
   {   
     "field": "Green Personal Transport",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Electronics", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -5 Regional Terror (B) Develops viable green personal transport technology."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -5 Regional Terror (B) Develops viable green personal transport technology."
+    }
   },
   {   
     "field": "Hardened Satellites",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Composites", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Build Satellite (B) Develops viable green personal transport technology."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Build Satellite (B) Develops viable green personal transport technology."
+    }
   },
   {   
     "field": "Advanced Mining",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Mining", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) Have +1 Rare Crustal Minerals/Turn (B) Improves the national mining processes and infrastructure."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) Have +1 Rare Crustal Minerals/Turn (B) Improves the national mining processes and infrastructure."
+    }
   },
   {   
     "field": "Advanced Power Grid",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Electronics", "level": 2},
         {"_id": "Object id", "name": "Improved Power Grid", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Improves and shields the national power grid infrastructure."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"Improves and shields the national power grid infrastructure."
+      }
   },
   {   
     "field": "Hardened Bases",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Composites", "level": 1},
         {"_id": "Object id", "name": "Distributed Network Capabilities", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Build new $M14 (B) Upgrade $M5 (C) Allows constructed of Hardened Bases or Secret Bases to be upgraded."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Build new $M14 (B) Upgrade $M5 (C) Allows constructed of Hardened Bases or Secret Bases to be upgraded."
+    }
   },
   {   
     "field": "Smart Systems",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Social Science", "level": 3},
         {"_id": "Object id", "name": "Distributed Network Capabilities", "level": 1}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) All future scientific breakthroughs are worth +1 Progress. (B) Deploys integrated smart systems."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) All future scientific breakthroughs are worth +1 Progress. (B) Deploys integrated smart systems."
+    }
   },
   {   
     "field": "Hypersonic Air Transport",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Materials", "level": 3}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"Develops hyper-sonic transport capabilities."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"Develops hyper-sonic transport capabilities."
+    }
   },
   {   
     "field": "Nano-Comsat Swarm",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Smart Systems", "level": 3},
         {"_id": "Object id", "name": "Hardened Satellites", "level": 2},
         {"_id": "Object id", "name": "Mysterious Gray Goo Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Build Satellite (B) New Satellites are impossible to shoot down. (C) Develops SKYNET nano comsat swarm"}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Build Satellite (B) New Satellites are impossible to shoot down. (C) Develops SKYNET nano comsat swarm"
+    }
   },
   {   
     "field": "Bacterial Mining",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Advanced Gene Modification", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) +2 Rare Crustal Minerals/Turn, +1 PR +5 Regional Terror (B) Develops new national mining processes."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) +2 Rare Crustal Minerals/Turn, +1 PR +5 Regional Terror (B) Develops new national mining processes."
+    }
   },
   {   
     "field": "Hyper-Capacity Solar Power",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Advanced Power Grid", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"Develops large capacity solar power for various uses."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"Develops large capacity solar power for various uses."
+    }
   },
   {   
     "field": "Optimized Logistic Networks",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Psychology", "level": 3},
         {"_id": "Object id", "name": "Xeno-Logic Circuit Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 4},
-        {"de1sc":"Develops integrated Artificial Intelligence networks for complex tasks and processes."}
-      ]
+      "effect": {
+        "cost": 4,
+        "desc":"Develops integrated Artificial Intelligence networks for complex tasks and processes."
+    }
   },
   {   
     "field": "Intelligent Labor Bots",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Psychology", "level": 3},
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Smart Systems", "level": 3},
         {"_id": "Object id", "name": "Xeno-Logic Circuit Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) +10 Regional Terror +1 PR (B) Develops flexible and intelligent robotic workforce."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) +10 Regional Terror +1 PR (B) Develops flexible and intelligent robotic workforce."
+    }
   },
   {   
     "field": "Sub-Orbital Transport",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Hypersonic Air Transport", "level": 3}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) +1 PR (B) Develops and deploys viable civilian sub-orbital transport fleet."}
-      ]
+      "effect": { 
+        "cost": 10,
+        "desc":"(A) +1 PR (B) Develops and deploys viable civilian sub-orbital transport fleet."
+    }
   },
   {   
     "field": "Interplanetary Spaceship",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 4},
         {"_id": "Object id", "name": "Sub-Orbital Transport", "level": 4},
         {"_id": "Object id", "name": "Fusion Thruster Analysis", "level": "??"}
       ],
-      "effect": [
-        {"cost": 20},
-        {"de1sc":"(A) 3 Orbital Launch sites over 2 turns. (B) Designs and constructs an unarmed interplanetary ship capable of 0.5 G acceleration."}
-      ]
+      "effect": {
+        "cost": 20,
+        "desc":"(A) 3 Orbital Launch sites over 2 turns. (B) Designs and constructs an unarmed interplanetary ship capable of 0.5 G acceleration."
+    }
   },
   {   
     "field": "Plasmatic Mining",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Fusion Reactor", "level": 4},
         {"_id": "Object id", "name": "Plasma Cannon Analysis", "level": 5}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) +2 Red Mercury/Turn, +10 Global Terror, +1 PR (B) Develops plasmatic mining capability."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) +2 Red Mercury/Turn, +10 Global Terror, +1 PR (B) Develops plasmatic mining capability."
+    }
   },
   {   
     "field": "Fusion Reactor",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Materials", "level": 4},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 4},
-        {"de1sc":"(A) Required Red Mercury (B) Adds Fusion Reactor to a unit/facility. (C) Develops viable fusion reactor technology for Fusion Power."}
-      ]
+      "effect": {
+        "cost": 4,
+        "desc":"(A) Required Red Mercury (B) Adds Fusion Reactor to a unit/facility. (C) Develops viable fusion reactor technology for Fusion Power."
+    }
   },
   {   
     "field": "Sentient Computer",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 5},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 5},
         {"_id": "Object id", "name": "Intelligent Labor Bots", "level": 4},
         {"_id": "Object id", "name": "Optimized Logistic Networks", "level": 3}
       ],
-      "effect": [
-        {"cost": 20},
-        {"de1sc":"(A) Unknown Outcome... (B) Develops and deploys a fully sentient distributed AI network."}
-      ]
+      "effect": {
+        "cost": 20,
+        "desc":"(A) Unknown Outcome... (B) Develops and deploys a fully sentient distributed AI network."
+    }
   },
   {   
     "field": "Advance Orbital Station",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Sub-Orbital Transport", "level": 4},
         {"_id": "Object id", "name": "Intelligent Labor Bots", "level": 4},
         {"_id": "Object id", "name": "Fusion Reactor", "level": 4}
       ],
-      "effect": [
-        {"cost": 12},
-        {"de1sc":"Station to launch intra- solar system units."}
-      ]
+      "effect": {
+        "cost": 12,
+        "desc":"Station to launch intra- solar system units."
+    }
   },
   {   
     "field": "Super-Hardened Bases",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Hardened Bases", "level": 2},
         {"_id": "Object id", "name": "Plasmatic Mining", "level": 4},
         {"_id": "Object id", "name": "Flexible Fabrication", "level": 2}
       ],
-      "effect": [
-        {"cost": 12},
-        {"de1sc":"(A) Build new $M12 (B) Upgrade $M5 (C) Allows construction of Super-Hardened Bases or old Bases to be upgraded."}
-      ]
+      "effect": {
+        "cost": 12,
+        "desc":"(A) Build new $M12 (B) Upgrade $M5 (C) Allows construction of Super-Hardened Bases or old Bases to be upgraded."
+    }
   },
   {   
     "field": "Gravitics",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 5},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 5},
         {"_id": "Object id", "name": "Materials", "level": 5}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) $M10 per ship (B) Develops and deploys gravitics engine for air and space vehicles."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) $M10 per ship (B) Develops and deploys gravitics engine for air and space vehicles."
+    }
   },
   {   
     "field": "FTL Drive Prototype",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Interplanetary Warship", "level": 4},
         {"_id": "Object id", "name": "Intelligent Labor Bots", "level": 4},
         {"_id": "Object id", "name": "Fusion Reactor", "level": 4},
         {"_id": "Object id", "name": "Hyperlinium Alloy Analysis", "level": "??"}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M20, Hyperlinium Alloy (B) Adds FTL Prototype to a ship, ship must have a Fusion Reactor (C) Develops a Faster than Light Drive"}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M20, Hyperlinium Alloy (B) Adds FTL Prototype to a ship, ship must have a Fusion Reactor (C) Develops a Faster than Light Drive"
+    }
   },
   {   
     "field": "Damage Lasers",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M3/Unit (B) Upgrade during Operations Phase, +1 Attack Factor (C) Upgrades Modern Forces with Laser weapons"}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M3/Unit (B) Upgrade during Operations Phase, +1 Attack Factor (C) Upgrades Modern Forces with Laser weapons"
+    }
   },
   {   
     "field": "Hunter-Killer Satellites",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Astrophysics", "level": 1},
         {"_id": "Object id", "name": "Software & Processes", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M3/Unit (B) Satellite can shoot down 1 Satellite/turn (C) Upgrades Modern Forces to Plasma weapons"}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M3/Unit (B) Satellite can shoot down 1 Satellite/turn (C) Upgrades Modern Forces to Plasma weapons"
+    }
   },
   {   
     "field": "Plasma Weapons",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Astrophysics", "level": 2},
         {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M3/Unit (B) Upgrade during Operations Phase, +1 Defense Factor (C) Upgrades Modern Forces to Plasma weapons"}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M3/Unit (B) Upgrade during Operations Phase, +1 Defense Factor (C) Upgrades Modern Forces to Plasma weapons"
+    }
   },
   {   
     "field": "Orbital Nuclear Weapons",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Astrophysics", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M8/Unit and ICBM or SLBM (B) Upgrade of nuclear weapon to ONW (C) Develops viable orbital nuclear deployment platform."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M8/Unit and ICBM or SLBM (B) Upgrade of nuclear weapon to ONW (C) Develops viable orbital nuclear deployment platform."
+    }
   },
   {   
     "field": "Improved SIF Weapons",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Damage Lasers", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/SIF (B) Makes SIF more likely to damage or shoot down UFO’s and opposed SIF units."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/SIF (B) Makes SIF more likely to damage or shoot down UFO’s and opposed SIF units."
+    }
   },
   {   
     "field": "Improved Detection Systems",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Communication Log", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"Improves your understanding of alien protocols and gives you an improved ability to track them.."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"Improves your understanding of alien protocols and gives you an improved ability to track them.."
+    }
   },
   {   
     "field": "Enhance Corps Mobility",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Hypersonic Transport", "level": 3},
         {"_id": "Object id", "name": "Optimized Logistic Networks", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) All Global Corps Deployment costs -$M1/unit (C) Improves logistics via tech integration."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) All Global Corps Deployment costs -$M1/unit (C) Improves logistics via tech integration."
+    }
   },
   {   
     "field": "Anti-Alien Bio-Weapon",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
         {"_id": "Object id", "name": "Xeno-Food Analysis", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/Nuclear Weapon (B) Gives the ability to create warhead for use on nuclear weapon. (C) Develops and preps a bio-weapon that selectively targets."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/Nuclear Weapon (B) Gives the ability to create warhead for use on nuclear weapon. (C) Develops and preps a bio-weapon that selectively targets."
+    }
   },
   {   
     "field": "Moon Missile",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Astrophysics", "level": 3},
         {"_id": "Object id", "name": "Orbital Nuclear Weapons", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M4 to make one ONW into MNW (B) Upgrade of nuclear weapon to MNW (C) Develops viable moon missile nuclear delivery system."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M4 to make one ONW into MNW (B) Upgrade of nuclear weapon to MNW (C) Develops viable moon missile nuclear delivery system."
+    }
   },
   {   
     "field": "Advanced SIF Weapons",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Plasma Cannon Analysis", "level": 5}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/SIF (B) Makes SIF more likely to damage or shoot down UFO’s and opposed SIF units."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/SIF (B) Makes SIF more likely to damage or shoot down UFO’s and opposed SIF units."
+    }
   },
   {   
     "field": "Improved Interceptor",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Improved Detection Systems", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF tracking and interception abilities."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF tracking and interception abilities."
+    }
   },
   {   
     "field": "Surface Based Anti-Satellite Systems",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Hunter-Killer Satellites", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M5/SBASS (B) Shoots 1 Satillite down/turn (C) Develops ground based enemy satellite destruction system."}
-      ]
+      "effect": { 
+        "cost": 0,
+        "desc":"(A) $M5/SBASS (B) Shoots 1 Satillite down/turn (C) Develops ground based enemy satellite destruction system."
+    }
   },
   {   
     "field": "Red Mercury Dirty Bomb",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
         {"_id": "Object id", "name": "Red Mercury Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M5/Nuclear Weapon (B) Gives the ability to create warhead (RMDB) for use on nuclear weapon. (C) Converts warhead into Red Mercury dirty bomb."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M5/Nuclear Weapon (B) Gives the ability to create warhead (RMDB) for use on nuclear weapon. (C) Converts warhead into Red Mercury dirty bomb."
+    }
   },
   {   
     "field": "Interplanetary Missile",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Astrophysics", "level": 4},
         {"_id": "Object id", "name": "Moon Missile", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M5 to make MNW turned into INW. (B) Upgrade of nuclear weapon to INW (C) Develops viable interplanetary nuclear delivery system."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M5 to make MNW turned into INW. (B) Upgrade of nuclear weapon to INW (C) Develops viable interplanetary nuclear delivery system."
+    }
   },
   {   
     "field": "Pacifier Space Fighter",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Advanced Interceptor", "level": 4},
         {"_id": "Object id", "name": "Advanced SIF Weapons", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF damage and interception abilities."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF damage and interception abilities."
+    }
   },
   {   
     "field": "Advanced Interceptor",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 4},
         {"_id": "Object id", "name": "Improved Interceptor", "level": 3},
         {"_id": "Object id", "name": "Scanning Systems Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF damage and interception abilities."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/SIF (B) Makes it more likely to get an interception (C) Increases SIF damage and interception abilities."
+    }
   },
   {   
     "field": "Laser Anti-Satellite System",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Surface Based Anti-Satellite Systems", "level": 3},
         {"_id": "Object id", "name": "Damage Lasers", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M6/System (B) Shoots 2 Satellite down/turn (C) Improves ground based enemy satellite destruction system."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M6/System (B) Shoots 2 Satellite down/turn (C) Improves ground based enemy satellite destruction system."
+    }
   },
   {   
     "field": "Advanced Penetration Aids",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 4},
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Electronic", "level": 4},
         {"_id": "Object id", "name": "Scanning Systems Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M2/Nuclear Weapon (B) Reduces effect of AMB Systems (C) Develops stealth and jamming capabilities for nuclear systems."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M2/Nuclear Weapon (B) Reduces effect of AMB Systems (C) Develops stealth and jamming capabilities for nuclear systems."
+    }
   },
   {   
     "field": "Futuristic Corps",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
         {"_id": "Object id", "name": "Electronic", "level": 5},
         {"_id": "Object id", "name": "Strange Material Analysis", "level": 1},
         {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M10/Unit (B) 7 Attack | 7 Defense (C) Develops an equipment package to upgrade a Modern Tech. Corp unit."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M10/Unit (B) 7 Attack | 7 Defense (C) Develops an equipment package to upgrade a Modern Tech. Corp unit."
+    }
   },
   {   
     "field": "Starship Marines",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 4},
         {"_id": "Object id", "name": "Safe Performance Enhancers", "level": 4},
         {"_id": "Object id", "name": "Combat Armor Analysis", "level": 2},
         {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M5/Unit (B) The ultimate space badass (C) Develops Marine Corp to operate from Interplanetary Warships."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M5/Unit (B) The ultimate space badass (C) Develops Marine Corp to operate from Interplanetary Warships."
+    }
   },
   {   
     "field": "Interplanetary Warship",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 4},
         {"_id": "Object id", "name": "Materials", "level": 4},
         {"_id": "Object id", "name": "Psychology", "level": 4},
@@ -944,630 +941,629 @@
         {"_id": "Object id", "name": "High Energy Laser (HEL) Analysis", "level": 2},
         {"_id": "Object id", "name": "Stellar Navigation Chart Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 40},
-        {"de1sc":"(A) 3 Orbital Launch sites over 2 turns (B) Have +2 PR (C) Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.."}
-      ]
+      "effect": {
+        "cost": 40,
+        "desc":"(A) 3 Orbital Launch sites over 2 turns (B) Have +2 PR (C) Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.."
+    }
   },
   {   
     "field": "Interstellar Capital Ship",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 5},
         {"_id": "Object id", "name": "FTL Drive Prototype", "level": 5},
         {"_id": "Object id", "name": "Plasmatic Mining", "level": 4}
       ],
-      "effect": [
-        {"cost": 50},
-        {"de1sc":"(A) 4 Orbital Launch site over 2 turns (B) Designs and constructs a capital ship capable of FTL travel and devastating orbital strikes."}
-      ]
+      "effect": {
+        "cost": 50,
+        "desc":"(A) 4 Orbital Launch site over 2 turns (B) Designs and constructs a capital ship capable of FTL travel and devastating orbital strikes."
+    }
   },
   {   
     "field": "Laser ABM Systems",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
         {"_id": "Object id", "name": "Engineering", "level": 5},
         {"_id": "Object id", "name": "Laser Anti-Satellite System", "level": 4}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) $M6/System (B) Better ABM Defense (C) Improves existing Laser Tech. and deploys ground based missile defense platform."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) $M6/System (B) Better ABM Defense (C) Improves existing Laser Tech. and deploys ground based missile defense platform."
+    }
   },
   {   
     "field": "Improved Trauma Treatment",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 1},
         {"_id": "Object id", "name": "Psychology", "level": 1}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"(A) -2 Regional Terror (B) Develops new trauma center methodology."}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"(A) -2 Regional Terror (B) Develops new trauma center methodology."
+    }
   },
   {   
     "field": "Improved Vaccines",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Social Science", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"(A) -4 Regional Terror (B) Develops new methods for deploying vaccinations."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"(A) -4 Regional Terror (B) Develops new methods for deploying vaccinations."
+    }
   },
   {   
     "field": "Improved Antibiotics",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Genetics", "level": 1}
       ],
-      "effect": [
-        {"cost": 4},
-        {"de1sc":"(A) -6 Regional Terror (B) Develops new methods for antibiotics."}
-      ]
+      "effect": {
+        "cost": 4,
+        "desc":"(A) -6 Regional Terror (B) Develops new methods for antibiotics."
+    }
   },
   {   
     "field": "Improved Drug Delivery",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
         {"_id": "Object id", "name": "Materials", "level": 1},
         {"_id": "Object id", "name": "Social Science", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"Develops new tech and methods for drug deployment."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"Develops new tech and methods for drug deployment."
+    }
   },
   {   
     "field": "Advanced Trauma Treatment",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Social Science", "level": 2},
         {"_id": "Object id", "name": "Improved Trauma Treatment", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops new trauma center methods and pain management techniques."}
-      ]
+      "effect": { 
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops new trauma center methods and pain management techniques."
+    }
   },
   {   
     "field": "Advanced Vaccines",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Improved Vaccines", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops previously unknown vaccines, and new deployment methods."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops previously unknown vaccines, and new deployment methods."
+    }
   },
   {   
     "field": "Advanced Antibiotics",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Genetics", "level": 2},
         {"_id": "Object id", "name": "Improved Antibiotics", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops previously unknown antibiotics, and new deployment methods."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops previously unknown antibiotics, and new deployment methods."
+    }
   },
   {   
     "field": "Advanced Tranquilizers",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Improved Drug Delivery", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops new tranquilizers and methods of delivery."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops new tranquilizers and methods of delivery."
+    }
   },
   {   
     "field": "Advanced Gene Modification",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 2},
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Mysterious Gray Goo", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops new more controlled methods of Gene Modification."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops new more controlled methods of Gene Modification."
+    }
   },
   {   
     "field": "Anti-Agathic Drugs",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 3}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) -15 Regional Terror (B) Develops drugs and a therapy method to combat human aging."}
-      ]
+      "effect":{
+        "cost": 8,
+        "desc":"(A) -15 Regional Terror (B) Develops drugs and a therapy method to combat human aging."
+    }
   },
   {   
     "field": "Gene-Tailored Therapy",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Advanced Gene Modification", "level": 2}
       ],
-      "effect": [
-        {"cost": 4},
-        {"de1sc":"Develops new methodology for highly selective gene-therapy."}
-      ]
+      "effect": {
+        "cost": 4,
+        "desc":"Develops new methodology for highly selective gene-therapy."
+    }
   },
   {   
     "field": "Mind Control Drugs",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Psychology", "level": 3},
         {"_id": "Object id", "name": "Advanced Tranquilizers", "level": 2},
         {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"Develops drugs specifically designed to allow for mental reprogramming and manipulation."}
-      ]
+      "effect": {
+        "cost": 6,
+        "desc":"Develops drugs specifically designed to allow for mental reprogramming and manipulation."
+      }
   },
   {   
     "field": "Organ Fabrication",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Advanced Gene Modification", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops new methods for growing and printing of organs at a national scale."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) -10 Regional Terror (B) Develops new methods for growing and printing of organs at a national scale."
+    }
   },
   {   
     "field": "Biomedical Nanites",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Materials", "level": 3},
         {"_id": "Object id", "name": "Mysterious Gray Goo", "level": 2}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) Have +1 Lab Die for all future Biomedical Research (B) Develops nanite technology for future biomedical research."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) Have +1 Lab Die for all future Biomedical Research (B) Develops nanite technology for future biomedical research."
+    }
   },
   {   
     "field": "Cold Sleep",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Engineering", "level": 4},
         {"_id": "Object id", "name": "Anti-Agathic Drugs", "level": 3},
         {"_id": "Object id", "name": "Database Analysis", "level": 2},
         {"_id": "Object id", "name": "Alien Autopsy", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) Develops process and technology for cold-sleep and cryonics."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) Develops process and technology for cold-sleep and cryonics."
+    }
   },
   {   
     "field": "Robotic Nursing System",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 4},
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Intelligent Labor Bots", "level": 4}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"(A) -15 Regional Terror (B) Develops nursing suit for Labor Bots and an integrated healthcare management."}
-      ]
+      "effect": {
+        "cost": 6,
+        "desc":"(A) -15 Regional Terror (B) Develops nursing suit for Labor Bots and an integrated healthcare management."
+    }
   },
   {   
     "field": "Safe Pleasure Drugs",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 4},
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Mind Control Drugs", "level": 3}
       ],
-      "effect": [
-        {"cost": 2},
-        {"de1sc":"(A) -25 Regional Terror, -1 PR (B) Develops pleasure drug with very few short-term side effects"}
-      ]
+      "effect": {
+        "cost": 2,
+        "desc":"(A) -25 Regional Terror, -1 PR (B) Develops pleasure drug with very few short-term side effects"
+    }
   },
   {   
     "field": "Safe Performance Enhancers",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 4},
         {"_id": "Object id", "name": "Safe Pleasure Drugs", "level": 4}
       ],
-      "effect": [
-        {"cost": 4},
-        {"de1sc":"(A) +1 to Conventional Forces (B) Develops a performance enhancer with very few short-term side effects."}
-      ]
+      "effect": {
+        "cost": 4,
+        "desc":"(A) +1 to Conventional Forces (B) Develops a performance enhancer with very few short-term side effects."
+    }
   },
   {   
     "field": "Anti-Radiation Treatment",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 4},
         {"_id": "Object id", "name": "Astrophysics", "level": 3},
         {"_id": "Object id", "name": "Gene-Tailored Therapy ", "level": 3}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"(A) Allows interplanetary travel beyond the moon (B) Develops a gene-therapy that will reduce radiation damage."}
-      ]
+      "effect": {
+        "cost": 6,
+        "desc":"(A) Allows interplanetary travel beyond the moon (B) Develops a gene-therapy that will reduce radiation damage."
+    }
   },
   {   
     "field": "Genetic Perfection",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 5},
         {"_id": "Object id", "name": "Biology", "level": 5},
         {"_id": "Object id", "name": "Biomedical Nanites", "level": 3},
         {"_id": "Object id", "name": "Gene-Tailored Therapy", "level": 3}
       ],
-      "effect": [
-        {"cost": 20},
-        {"de1sc":"(A) -20 Regional Terror (B) Develops gene-therapies to target and correct almost any gene."}
-      ]
+      "effect": { 
+        "cost": 20,
+        "desc":"(A) -20 Regional Terror (B) Develops gene-therapies to target and correct almost any gene." }
   },
   {   
     "field": "Cure for Cancers",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 5},
         {"_id": "Object id", "name": "Biomedical Nanites", "level": 3},
         {"_id": "Object id", "name": "Anti-Radiation Treatment", "level": 4}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) The ultimate badass (B) Develops gene-therapies to target and correct almost any gene."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) The ultimate badass (B) Develops gene-therapies to target and correct almost any gene."
+    }
   },
   {   
     "field": "Brain Chemistry Correction",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 5},
         {"_id": "Object id", "name": "Psychology", "level": 5},
         {"_id": "Object id", "name": "Biomedical Nanites", "level": 3},
         {"_id": "Object id", "name": "Mind Control Drugs", "level": 3}
       ],
-      "effect": [
-        {"cost": 20},
-        {"de1sc":"(A) -30 Regional Terror (B) Develops methods that can correct and permanently alter brain chemistry."}
-      ]
+      "effect": {
+        "cost": 20,
+        "desc":"(A) -30 Regional Terror (B) Develops methods that can correct and permanently alter brain chemistry."
+    }
   },
   {   
     "field": "Auto Doctor System",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
         {"_id": "Object id", "name": "Psychology", "level": 5},
         {"_id": "Object id", "name": "Robotic Nursing System", "level": 4},
         {"_id": "Object id", "name": "Organ Fabrication", "level": 3},
         {"_id": "Object id", "name": "Biomedical Nanites", "level": 3}
       ],
-      "effect": [
-        {"cost": 15},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops methods for an automated medical system using a large suite of technology."}
-      ]
+      "effect": {
+        "cost": 15,
+        "desc":"(A) -10 Regional Terror (B) Develops methods for an automated medical system using a large suite of technology."
+    }
   },
   {   
     "field": "Improved Disaster Response",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 1},
         {"_id": "Object id", "name": "Social Science", "level": 1},
         {"_id": "Object id", "name": "Psychology", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"(A) -5 Regional Terror (B) Develops new disaster response methodology."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"(A) -5 Regional Terror (B) Develops new disaster response methodology."
+    }
   },
   {   
     "field": "Semi-Autonomous Vehicles",
     "level": 1,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
         {"_id": "Object id", "name": "Automated Ground Vehicles", "level": 1}
       ],
-      "effect": [
-        {"cost": 3},
-        {"de1sc":"Develops nationally deployable semi-autonomous vehicles."}
-      ]
+      "effect": {
+        "cost": 3,
+        "desc":"Develops nationally deployable semi-autonomous vehicles."
+    }
   },
   {   
     "field": "Advance Disaster Response",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
         {"_id": "Object id", "name": "Improved Disaster Response", "level": 1}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -5 Regional Terror (B) Develops advanced disaster response methodology."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -5 Regional Terror (B) Develops advanced disaster response methodology."
+    }
   },
   {   
     "field": "Exotic Artwork",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 2},
         {"_id": "Object id", "name": "Psychology", "level": 2},
         {"_id": "Object id", "name": "Alien Entertainment Analysis", "level": 2},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -5 Regional Terror (B) Develops new art styles based on alien technology and designs."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -5 Regional Terror (B) Develops new art styles based on alien technology and designs."
+    }
   },
   {   
     "field": "Exotic Musical Instruments",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 2},
         {"_id": "Object id", "name": "Alien Entertainment Analysis", "level": 2},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -5 Regional Terror (B) Develops new instruments based on alien technology."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -5 Regional Terror (B) Develops new instruments based on alien technology."
+    }
   },
   {   
     "field": "3D Television Projection",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -1 PR, -10 Regional Terror (B) Develops new 3D imaging systems."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -1 PR, -10 Regional Terror (B) Develops new 3D imaging systems."
+    }
   },
   {   
     "field": "Self-Driving Cars",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
         {"_id": "Object id", "name": "Electronics", "level": 2},
         {"_id": "Object id", "name": "Semi-Autonomous Vehicles", "level": 1},
         {"_id": "Object id", "name": "Scanning Systems Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -1 PR, -5 Regional Terror (B) Develops safe self-driving cars for national deployment."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -1 PR, -5 Regional Terror (B) Develops safe self-driving cars for national deployment."
+    }
   },
   {   
     "field": "Beginning Xeno-Language",
     "level": 2,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 2},
         {"_id": "Object id", "name": "Electronics", "level": 2},
         {"_id": "Object id", "name": "Communication System Analysis", "level": 2},
         {"_id": "Object id", "name": "Alien Entertainment Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) -10 Regional Terror (C) Begins the process of understanding alien languages."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) -10 Regional Terror (C) Begins the process of understanding alien languages."
+    }
   },
   {   
     "field": "4 Sense TV",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Exotic Musical Instruments", "level": 3},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -10 Regional Terror (B) Develops a television with additional signals to stimulate the feeling of touch and smell."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -10 Regional Terror (B) Develops a television with additional signals to stimulate the feeling of touch and smell."
+    }
   },
   {   
     "field": "Psycho-Animitronic Theater",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Mind Control Drugs", "level": 3},
         {"_id": "Object id", "name": "Exotic Musical Instruments", "level": 2},
         {"_id": "Object id", "name": "Exotic Artwork", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -1 PR -15 Regional Terror (B) Develops theatrical experience that effects all the senses."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -1 PR -15 Regional Terror (B) Develops theatrical experience that effects all the senses."
+    }
   },
   {   
     "field": "Virtual Holodeck Worlds",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 3},
         {"_id": "Object id", "name": "4 Sense TV", "level": 3}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) -1 PR -15 Regional Terror (B) Develops fully immersive virtual environments."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) -1 PR -15 Regional Terror (B) Develops fully immersive virtual environments."
+    }
   },
   {   
     "field": "Pleasure Systems",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Exotic Musical Instruments", "level": 2}
       ],
-      "effect": [
-        {"cost": 5},
-        {"de1sc":"(A) -1 PR -10 Regional Terror (B) Develops new head mounted entertainment system."}
-      ]
+      "effect": {
+        "cost": 5,
+        "desc":"(A) -1 PR -10 Regional Terror (B) Develops new head mounted entertainment system."
+    }
   },
   {   
     "field": "Flying Cars",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
         {"_id": "Object id", "name": "Flight Systems Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) -1 PR -5 Regional Terror (B) Develops flying car technology and infrastructure for national deployment."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) -1 PR -5 Regional Terror (B) Develops flying car technology and infrastructure for national deployment."
+    }
   },
   {   
     "field": "Advanced Xeno-Language",
     "level": 3,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
         {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
         {"_id": "Object id", "name": "Alien Prisoner", "level": 1}
       ],
-      "effect": [
-        {"cost": 0},
-        {"de1sc":"(A) Instant (B) Gain Language Card (C) Fully translates alien language."}
-      ]
+      "effect": {
+        "cost": 0,
+        "desc":"(A) Instant (B) Gain Language Card (C) Fully translates alien language."
+    }
   },
   {   
     "field": "Bio-Networking Helmets",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 3},
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
         {"_id": "Object id", "name": "Smart Systems", "level": 3},
         {"_id": "Object id", "name": "Database Analysis", "level": 3}
       ],
-      "effect": [
-        {"cost": 6},
-        {"de1sc":"(A) -1 PR -5 Regional Terror (B) Develops helmets that allows transmission of thought."}
-      ]
+      "effect": { 
+        "cost": 6,
+        "desc":"(A) -1 PR -5 Regional Terror (B) Develops helmets that allows transmission of thought."
+    }
   },
   {   
     "field": "Personal Cybernetic Modification",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Biology", "level": 4},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 3}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) +1 PR (B) Develops safe advanced cybernetics at a consumer level."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) +1 PR (B) Develops safe advanced cybernetics at a consumer level."
+    }
   },
   {   
     "field": "Personal Avatar Projections",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 2},
         {"_id": "Object id", "name": "Social Science", "level": 4},
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Virtual Holodeck Worlds", "level": 3}
       ],
-      "effect": [
-        {"cost": 8},
-        {"de1sc":"(A) +1 PR (B) Develops pleasure drug with very few short-term side effects."}
-      ]
+      "effect": {
+        "cost": 8,
+        "desc":"(A) +1 PR (B) Develops pleasure drug with very few short-term side effects."
+    }
   },
   {   
     "field": "Personal Labor Bots",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
         {"_id": "Object id", "name": "Intelligent Labor Bots", "level": 4}
       ],
-      "effect": [
-        {"cost": 10},
-        {"de1sc":"(A) +1 PR -10 Regional Terror (B) Develops flexible and intelligent robotic workforce."}
-      ]
+      "effect": {
+        "cost": 10,
+        "desc":"(A) +1 PR -10 Regional Terror (B) Develops flexible and intelligent robotic workforce."
+    }
   },
   {   
     "field": "Bio-Networked Meetings",
     "level": 4,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 4},
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
         {"_id": "Object id", "name": "Optimized Logistic Networks", "level": 3},
         {"_id": "Object id", "name": "Bio-Networking Helmets", "level": 4}
       ],
-      "effect": [
-        {"cost": 15},
-        {"de1sc":"(A) +3 PR -15 Regional Terror (B) Develops system to have near instant telepathic meetings."}
-      ]
+      "effect": {
+        "cost": 15,
+        "desc":"(A) +3 PR -15 Regional Terror (B) Develops system to have near instant telepathic meetings."
+    }
   },
   {   
     "field": "Neural Upload",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 5},
         {"_id": "Object id", "name": "Psychology", "level": 5},
         {"_id": "Object id", "name": "Electronics", "level": 5},
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
         {"_id": "Object id", "name": "Bio-Networking Meetings", "level": 4}
       ],
-      "effect": [
-        {"cost": 20},
-        {"de1sc":"(A) -20 Regional Terror (B) Develops the tech to transfer human neural information into the bio-network"}
-      ]
+      "effect": {
+        "cost": 20,
+        "desc":"(A) -20 Regional Terror (B) Develops the tech to transfer human neural information into the bio-network"
+    }
   },
   {   
     "field": "Hyper-Computing",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
         {"_id": "Object id", "name": "Psychology", "level": 5},
         {"_id": "Object id", "name": "Electronics", "level": 5},
         {"_id": "Object id", "name": "Biomedical Nanites", "level": 3},
         {"_id": "Object id", "name": "Bio-Networking Meetings", "level": 4}
       ],
-      "effect": [
-        {"cost": 15},
-        {"de1sc":"(A) +2 PR (B) Effect unknown... (C) Develops bio-networked distributed super computer."}
-      ]
+      "effect": {
+        "cost": 15,
+        "desc":"(A) +2 PR (B) Effect unknown... (C) Develops bio-networked distributed super computer."
+    }
   },
   {   
     "field": "Bio-Networked Society",
     "level": 5,
-    "rereq": [
+    "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
         {"_id": "Object id", "name": "Social Science", "level": 5},
@@ -1576,10 +1572,10 @@
         {"_id": "Object id", "name": "Bio-Networking Meetings", "level": 4},
         {"_id": "Object id", "name": "Database Analysis", "level": 2}
       ],
-      "effect": [
-        {"cost": 35},
-        {"de1sc":"(A) +2 PR -50 Regional Terror Construction times reduced Deployment Costs Reduced (B) Times reduced by 1 Turn (not below 1Turn); Deployment Cost reduce by $M1 (not below $M1) (C) Develops integrated bio-networked society that functions as an interconnected unit and can respond to various situations and crises at the speed of the network."}
-      ]
+      "effect": {
+        "cost": 35,
+        "desc":"(A) +2 PR -50 Regional Terror Construction times reduced Deployment Costs Reduced (B) Times reduced by 1 Turn (not below 1Turn); Deployment Cost reduce by $M1 (not below $M1) (C) Develops integrated bio-networked society that functions as an interconnected unit and can respond to various situations and crises at the speed of the network."
+    }
   },
 
 
