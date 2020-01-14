@@ -45,25 +45,21 @@ function validateUser(user) {
     phone: Joi.string().min(10).max(14),
     password: Joi.string().min(5).max(1024).required(),
     gender: Joi.string(),
-    discord: Joi.string()
+    discord: Joi.string(),
+    name: Joi.object().keys({
+      first: Joi.string().min(1).max(25),
+      last: Joi.string().min(1).max(50), 
+    }),    
+    address: Joi.object().keys({
+      street1: Joi.string().min(1).max(75),
+      street2: Joi.string().empty(''),
+      city: Joi.string().min(1).max(50),
+      state: Joi.string().min(2).max(2),
+      zipcode: Joi.string().min(5).max(10)
+    })
   };
 
   return Joi.validate(user, schema, { "allowUnknown": true });
 }
-
-/* was in validateUser ... this was causing the fields to not be written to mongo DB 
-   need to investigate why
-name: {
-      first: Joi.string().min(1).max(25).required(),
-      last: Joi.string().min(1).max(50).required(), 
-    },
-address: {
-      street1: Joi.string(),
-      street2: Joi.string(),
-      city: Joi.string(),
-      state: Joi.string().min(2).max(2),
-      zipcode: Joi.string().min(5).max(10)
-    },
-*/
 
 module.exports = { User, validateUser };

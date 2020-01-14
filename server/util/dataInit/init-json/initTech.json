@@ -1,6 +1,7 @@
 [
 {
-    "field": "Improved Fish Farms",
+    "name": "Improved Fish Farms",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -11,7 +12,8 @@
         "desc": "Improves national fish yields."}
   },
   {
-    "field": "Improved Agriculture",
+    "name": "Improved Agriculture",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -22,7 +24,8 @@
         "desc": "Improves national agriculture yields."}
   }, 
   {
-    "field": "Improved Recycling",
+    "name": "Improved Recycling",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -34,7 +37,8 @@
       }
   },
   {
-    "field": "Improved Processing",
+    "name": "Improved Processing",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -46,7 +50,8 @@
     }
   },
   {
-    "field": "Improved Preservation",
+    "name": "Improved Preservation",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -58,7 +63,8 @@
     }
   },
   {
-    "field": "Literature Research on Food & Agriculture",
+    "name": "Literature Research on Food & Agriculture",
+    "type": "tech",
     "level": 1,
     "prereq": [ 
       ],
@@ -68,7 +74,8 @@
     } 
   },
  {   
-    "field": "Commercial Sea Farms",
+    "name": "Commercial Sea Farms",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -81,8 +88,9 @@
     } 
   },
   {   
-      "field": "Advanced Agriculture",
-    "level": 2,
+      "name": "Advanced Agriculture",
+    "type": "tech",
+      "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -94,7 +102,8 @@
     }
   },
   {   
-    "field": "Advanced Pesticides",
+    "name": "Advanced Pesticides",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -106,7 +115,8 @@
     }
   },
   {   
-    "field": "Advanced GM Crops",
+    "name": "Advanced GM Crops",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -118,7 +128,8 @@
     }
   },
   {   
-    "field": "Advanced Processing",
+    "name": "Advanced Processing",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -131,7 +142,8 @@
     }
   },
   {   
-    "field": "Popular Health Food",
+    "name": "Popular Health Food",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -145,7 +157,8 @@
     }
   },
   {   
-    "field": "Oceanic Sea Farms",
+    "name": "Oceanic Sea Farms",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
@@ -158,7 +171,8 @@
     }
   },
   {   
-    "field": "Robotic Farms",
+    "name": "Robotic Farms",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
@@ -171,7 +185,8 @@
     }
   },
   {   
-    "field": "Integrated Farm Management",
+    "name": "Integrated Farm Management",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Social Science ", "level": 3},
@@ -183,7 +198,8 @@
         "desc":"Launches a program to train farm managers in effective methods and implementation of newer nology."}
   },
   {   
-    "field": "Super Adaptable Crops",
+    "name": "Super Adaptable Crops",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology ", "level": 3},
@@ -196,7 +212,8 @@
     }
   },
   {   
-    "field": "Exotic Super Foods",
+    "name": "Exotic Super Foods",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology ", "level": 3},
@@ -210,7 +227,8 @@
     }
   },
   {   
-    "field": "Deep Sea Farms",
+    "name": "Deep Sea Farms",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering ", "level": 4},
@@ -224,7 +242,8 @@
     }
   },
   {   
-    "field": "Hydroponic Factories",
+    "name": "Hydroponic Factories",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 4},
@@ -237,7 +256,8 @@
     }
   },
   {   
-    "field": "Agricultural Eco-National Parks",
+    "name": "Agricultural Eco-National Parks",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 4},
@@ -250,7 +270,8 @@
     }
   },
   {   
-    "field": "Industrial Food Synthesizers",
+    "name": "Industrial Food Synthesizers",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
@@ -263,7 +284,8 @@
     }
   },
   {   
-    "field": "Space Food",
+    "name": "Space Food",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
@@ -276,7 +298,8 @@
     }
   },
   {   
-    "field": "Non-Terrestrial Farming",
+    "name": "Non-Terrestrial Farming",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
@@ -290,7 +313,8 @@
     }
   },
   {   
-    "field": "Mobile Food Synthesizers",
+    "name": "Mobile Food Synthesizers",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
@@ -303,7 +327,8 @@
     }
   },
   {   
-    "field": "Distributed Network Capabilities",
+    "name": "Distributed Network Capabilities",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
@@ -315,7 +340,8 @@
     }
   },
   {   
-    "field": "Automated Ground Vehicles",
+    "name": "Automated Ground Vehicles",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -327,7 +353,8 @@
     }
   }, 
   {   
-    "field": "Improved Composites",
+    "name": "Improved Composites",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
@@ -339,7 +366,8 @@
     }
   }, 
   {   
-    "field": "Improved Composites",
+    "name": "Improved Composites",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
@@ -351,7 +379,8 @@
     }
   },
   {   
-    "field": "Improved Mining",
+    "name": "Improved Mining",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 1},
@@ -363,7 +392,8 @@
     }
   },
   {   
-    "field": "Improved Power Grid",
+    "name": "Improved Power Grid",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -375,7 +405,8 @@
     }
   },
   {   
-    "field": "Flexible Fabrication",
+    "name": "Flexible Fabrication",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -388,7 +419,8 @@
     }
   },
   {   
-    "field": "Green Personal Transport",
+    "name": "Green Personal Transport",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -400,7 +432,8 @@
     }
   },
   {   
-    "field": "Hardened Satellites",
+    "name": "Hardened Satellites",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -412,7 +445,8 @@
     }
   },
   {   
-    "field": "Advanced Mining",
+    "name": "Advanced Mining",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 2},
@@ -425,7 +459,8 @@
     }
   },
   {   
-    "field": "Advanced Power Grid",
+    "name": "Advanced Power Grid",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -438,7 +473,8 @@
       }
   },
   {   
-    "field": "Hardened Bases",
+    "name": "Hardened Bases",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -451,7 +487,8 @@
     }
   },
   {   
-    "field": "Smart Systems",
+    "name": "Smart Systems",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
@@ -465,7 +502,8 @@
     }
   },
   {   
-    "field": "Hypersonic Air Transport",
+    "name": "Hypersonic Air Transport",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -477,7 +515,8 @@
     }
   },
   {   
-    "field": "Nano-Comsat Swarm",
+    "name": "Nano-Comsat Swarm",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
@@ -491,7 +530,8 @@
     }
   },
   {   
-    "field": "Bacterial Mining",
+    "name": "Bacterial Mining",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
@@ -504,7 +544,8 @@
     }
   },
   {   
-    "field": "Hyper-Capacity Solar Power",
+    "name": "Hyper-Capacity Solar Power",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
@@ -517,7 +558,8 @@
     }
   },
   {   
-    "field": "Optimized Logistic Networks",
+    "name": "Optimized Logistic Networks",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
@@ -530,7 +572,8 @@
     }
   },
   {   
-    "field": "Intelligent Labor Bots",
+    "name": "Intelligent Labor Bots",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
@@ -545,7 +588,8 @@
     }
   },
   {   
-    "field": "Sub-Orbital Transport",
+    "name": "Sub-Orbital Transport",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
@@ -558,7 +602,8 @@
     }
   },
   {   
-    "field": "Interplanetary Spaceship",
+    "name": "Interplanetary Spaceship",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 4},
@@ -571,7 +616,8 @@
     }
   },
   {   
-    "field": "Plasmatic Mining",
+    "name": "Plasmatic Mining",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
@@ -584,7 +630,8 @@
     }
   },
   {   
-    "field": "Fusion Reactor",
+    "name": "Fusion Reactor",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
@@ -598,7 +645,8 @@
     }
   },
   {   
-    "field": "Sentient Computer",
+    "name": "Sentient Computer",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 5},
@@ -612,7 +660,8 @@
     }
   },
   {   
-    "field": "Advance Orbital Station",
+    "name": "Advance Orbital Station",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Sub-Orbital Transport", "level": 4},
@@ -625,7 +674,8 @@
     }
   },
   {   
-    "field": "Super-Hardened Bases",
+    "name": "Super-Hardened Bases",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Hardened Bases", "level": 2},
@@ -638,7 +688,8 @@
     }
   },
   {   
-    "field": "Gravitics",
+    "name": "Gravitics",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 5},
@@ -651,7 +702,8 @@
     }
   },
   {   
-    "field": "FTL Drive Prototype",
+    "name": "FTL Drive Prototype",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Interplanetary Warship", "level": 4},
@@ -665,7 +717,8 @@
     }
   },
   {   
-    "field": "Damage Lasers",
+    "name": "Damage Lasers",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
@@ -678,7 +731,8 @@
     }
   },
   {   
-    "field": "Hunter-Killer Satellites",
+    "name": "Hunter-Killer Satellites",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
@@ -692,7 +746,8 @@
     }
   },
   {   
-    "field": "Plasma Weapons",
+    "name": "Plasma Weapons",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -705,7 +760,8 @@
     }
   },
   {   
-    "field": "Orbital Nuclear Weapons",
+    "name": "Orbital Nuclear Weapons",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -717,7 +773,8 @@
     }
   },
   {   
-    "field": "Improved SIF Weapons",
+    "name": "Improved SIF Weapons",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -729,7 +786,8 @@
     }
   },
   {   
-    "field": "Improved Detection Systems",
+    "name": "Improved Detection Systems",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -741,7 +799,8 @@
     }
   },
   {   
-    "field": "Enhance Corps Mobility",
+    "name": "Enhance Corps Mobility",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Hypersonic Transport", "level": 3},
@@ -753,7 +812,8 @@
     }
   },
   {   
-    "field": "Anti-Alien Bio-Weapon",
+    "name": "Anti-Alien Bio-Weapon",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
@@ -767,7 +827,8 @@
     }
   },
   {   
-    "field": "Moon Missile",
+    "name": "Moon Missile",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -780,7 +841,8 @@
     }
   },
   {   
-    "field": "Advanced SIF Weapons",
+    "name": "Advanced SIF Weapons",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -793,7 +855,8 @@
     }
   },
   {   
-    "field": "Improved Interceptor",
+    "name": "Improved Interceptor",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -806,7 +869,8 @@
     }
   },
   {   
-    "field": "Surface Based Anti-Satellite Systems",
+    "name": "Surface Based Anti-Satellite Systems",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -819,7 +883,8 @@
     }
   },
   {   
-    "field": "Red Mercury Dirty Bomb",
+    "name": "Red Mercury Dirty Bomb",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
@@ -831,7 +896,8 @@
     }
   },
   {   
-    "field": "Interplanetary Missile",
+    "name": "Interplanetary Missile",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
@@ -844,7 +910,8 @@
     }
   },
   {   
-    "field": "Pacifier Space Fighter",
+    "name": "Pacifier Space Fighter",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
@@ -857,7 +924,8 @@
     }
   },
   {   
-    "field": "Advanced Interceptor",
+    "name": "Advanced Interceptor",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 4},
@@ -870,7 +938,8 @@
     }
   },
   {   
-    "field": "Laser Anti-Satellite System",
+    "name": "Laser Anti-Satellite System",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
@@ -883,7 +952,8 @@
     }
   },
   {   
-    "field": "Advanced Penetration Aids",
+    "name": "Advanced Penetration Aids",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 4},
@@ -897,7 +967,8 @@
     }
   },
   {   
-    "field": "Futuristic Corps",
+    "name": "Futuristic Corps",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
@@ -911,7 +982,8 @@
     }
   },
   {   
-    "field": "Starship Marines",
+    "name": "Starship Marines",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 4},
@@ -925,7 +997,8 @@
     }
   },
   {   
-    "field": "Interplanetary Warship",
+    "name": "Interplanetary Warship",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 4},
@@ -947,7 +1020,8 @@
     }
   },
   {   
-    "field": "Interstellar Capital Ship",
+    "name": "Interstellar Capital Ship",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 5},
@@ -960,7 +1034,8 @@
     }
   },
   {   
-    "field": "Laser ABM Systems",
+    "name": "Laser ABM Systems",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
@@ -973,7 +1048,8 @@
     }
   },
   {   
-    "field": "Improved Trauma Treatment",
+    "name": "Improved Trauma Treatment",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 1},
@@ -985,7 +1061,8 @@
     }
   },
   {   
-    "field": "Improved Vaccines",
+    "name": "Improved Vaccines",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -997,7 +1074,8 @@
     }
   },
   {   
-    "field": "Improved Antibiotics",
+    "name": "Improved Antibiotics",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -1009,7 +1087,8 @@
     }
   },
   {   
-    "field": "Improved Drug Delivery",
+    "name": "Improved Drug Delivery",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -1022,7 +1101,8 @@
     }
   },
   {   
-    "field": "Advanced Trauma Treatment",
+    "name": "Advanced Trauma Treatment",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -1035,7 +1115,8 @@
     }
   },
   {   
-    "field": "Advanced Vaccines",
+    "name": "Advanced Vaccines",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -1047,7 +1128,8 @@
     }
   },
   {   
-    "field": "Advanced Antibiotics",
+    "name": "Advanced Antibiotics",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -1060,7 +1142,8 @@
     }
   },
   {   
-    "field": "Advanced Tranquilizers",
+    "name": "Advanced Tranquilizers",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -1072,7 +1155,8 @@
     }
   },
   {   
-    "field": "Advanced Gene Modification",
+    "name": "Advanced Gene Modification",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 2},
@@ -1085,7 +1169,8 @@
     }
   },
   {   
-    "field": "Anti-Agathic Drugs",
+    "name": "Anti-Agathic Drugs",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
@@ -1097,7 +1182,8 @@
     }
   },
   {   
-    "field": "Gene-Tailored Therapy",
+    "name": "Gene-Tailored Therapy",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
@@ -1110,7 +1196,8 @@
     }
   },
   {   
-    "field": "Mind Control Drugs",
+    "name": "Mind Control Drugs",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
@@ -1125,7 +1212,8 @@
       }
   },
   {   
-    "field": "Organ Fabrication",
+    "name": "Organ Fabrication",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -1139,7 +1227,8 @@
     }
   },
   {   
-    "field": "Biomedical Nanites",
+    "name": "Biomedical Nanites",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 3},
@@ -1154,7 +1243,8 @@
     }
   },
   {   
-    "field": "Cold Sleep",
+    "name": "Cold Sleep",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 4},
@@ -1169,7 +1259,8 @@
     }
   },
   {   
-    "field": "Robotic Nursing System",
+    "name": "Robotic Nursing System",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 4},
@@ -1182,7 +1273,8 @@
     }
   },
   {   
-    "field": "Safe Pleasure Drugs",
+    "name": "Safe Pleasure Drugs",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 4},
@@ -1195,7 +1287,8 @@
     }
   },
   {   
-    "field": "Safe Performance Enhancers",
+    "name": "Safe Performance Enhancers",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 4},
@@ -1207,7 +1300,8 @@
     }
   },
   {   
-    "field": "Anti-Radiation Treatment",
+    "name": "Anti-Radiation Treatment",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 4},
@@ -1220,7 +1314,8 @@
     }
   },
   {   
-    "field": "Genetic Perfection",
+    "name": "Genetic Perfection",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 5},
@@ -1233,7 +1328,8 @@
         "desc":"(A) -20 Regional Terror (B) Develops gene-therapies to target and correct almost any gene." }
   },
   {   
-    "field": "Cure for Cancers",
+    "name": "Cure for Cancers",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Genetics", "level": 5},
@@ -1246,7 +1342,8 @@
     }
   },
   {   
-    "field": "Brain Chemistry Correction",
+    "name": "Brain Chemistry Correction",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 5},
@@ -1260,7 +1357,8 @@
     }
   },
   {   
-    "field": "Auto Doctor System",
+    "name": "Auto Doctor System",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
@@ -1275,7 +1373,8 @@
     }
   },
   {   
-    "field": "Improved Disaster Response",
+    "name": "Improved Disaster Response",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 1},
@@ -1288,7 +1387,8 @@
     }
   },
   {   
-    "field": "Semi-Autonomous Vehicles",
+    "name": "Semi-Autonomous Vehicles",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 1},
@@ -1300,7 +1400,8 @@
     }
   },
   {   
-    "field": "Advance Disaster Response",
+    "name": "Advance Disaster Response",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 2},
@@ -1313,7 +1414,8 @@
     }
   },
   {   
-    "field": "Exotic Artwork",
+    "name": "Exotic Artwork",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 2},
@@ -1327,7 +1429,8 @@
     }
   },
   {   
-    "field": "Exotic Musical Instruments",
+    "name": "Exotic Musical Instruments",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 2},
@@ -1340,7 +1443,8 @@
     }
   },
   {   
-    "field": "3D Television Projection",
+    "name": "3D Television Projection",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -1352,7 +1456,8 @@
     }
   },
   {   
-    "field": "Self-Driving Cars",
+    "name": "Self-Driving Cars",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -1366,7 +1471,8 @@
     }
   },
   {   
-    "field": "Beginning Xeno-Language",
+    "name": "Beginning Xeno-Language",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 2},
@@ -1380,7 +1486,8 @@
     }
   },
   {   
-    "field": "4 Sense TV",
+    "name": "4 Sense TV",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
@@ -1395,7 +1502,8 @@
     }
   },
   {   
-    "field": "Psycho-Animitronic Theater",
+    "name": "Psycho-Animitronic Theater",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
@@ -1410,7 +1518,8 @@
     }
   },
   {   
-    "field": "Virtual Holodeck Worlds",
+    "name": "Virtual Holodeck Worlds",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
@@ -1423,7 +1532,8 @@
     }
   },
   {   
-    "field": "Pleasure Systems",
+    "name": "Pleasure Systems",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 3},
@@ -1437,7 +1547,8 @@
     }
   },
   {   
-    "field": "Flying Cars",
+    "name": "Flying Cars",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -1450,7 +1561,8 @@
     }
   },
   {   
-    "field": "Advanced Xeno-Language",
+    "name": "Advanced Xeno-Language",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
@@ -1463,7 +1575,8 @@
     }
   },
   {   
-    "field": "Bio-Networking Helmets",
+    "name": "Bio-Networking Helmets",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 3},
@@ -1478,7 +1591,8 @@
     }
   },
   {   
-    "field": "Personal Cybernetic Modification",
+    "name": "Personal Cybernetic Modification",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -1491,7 +1605,8 @@
     }
   },
   {   
-    "field": "Personal Avatar Projections",
+    "name": "Personal Avatar Projections",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Psychology", "level": 2},
@@ -1505,7 +1620,8 @@
     }
   },
   {   
-    "field": "Personal Labor Bots",
+    "name": "Personal Labor Bots",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 3},
@@ -1517,7 +1633,8 @@
     }
   },
   {   
-    "field": "Bio-Networked Meetings",
+    "name": "Bio-Networked Meetings",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 4},
@@ -1531,7 +1648,8 @@
     }
   },
   {   
-    "field": "Neural Upload",
+    "name": "Neural Upload",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 5},
@@ -1546,7 +1664,8 @@
     }
   },
   {   
-    "field": "Hyper-Computing",
+    "name": "Hyper-Computing",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 5},
@@ -1561,7 +1680,8 @@
     }
   },
   {   
-    "field": "Bio-Networked Society",
+    "name": "Bio-Networked Society",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 5},
@@ -1578,7 +1698,8 @@
     }
   },
   {   
-    "field": "Alien Prisoner Cooperation",
+    "name": "Alien Prisoner Cooperation",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Alien Prisoner", "level": 0}
@@ -1589,7 +1710,8 @@
     }
   },
   {   
-    "field": "Personal Weapon Analysis",
+    "name": "Personal Weapon Analysis",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Alien Autopsy", "level": 3},
@@ -1602,7 +1724,8 @@
     }
   },
   {   
-    "field": "Xeno-Food Analysis",
+    "name": "Xeno-Food Analysis",
+    "type": "tech",
     "level": 1,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 1},
@@ -1616,7 +1739,8 @@
     }
   },
   {   
-    "field": "Alien Autopsy",
+    "name": "Alien Autopsy",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Biology", "level": 2},
@@ -1628,7 +1752,8 @@
     }
   },
   {   
-    "field": "Alien Entertainment Analysis",
+    "name": "Alien Entertainment Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -1643,7 +1768,8 @@
     }
   },
   {   
-    "field": "Combat Armor Analysis",
+    "name": "Combat Armor Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
@@ -1656,7 +1782,8 @@
     }
   },
   {   
-    "field": "Comm. System Analysis",
+    "name": "Comm. System Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 2},
@@ -1670,7 +1797,8 @@
     }
   },
   {   
-    "field": "Communication Log Analysis",
+    "name": "Communication Log Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 1},
@@ -1684,7 +1812,8 @@
     }
   },
   {   
-    "field": "Cultural Artifact Anaylsis",
+    "name": "Cultural Artifact Anaylsis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 2},
@@ -1698,7 +1827,8 @@
     }
   },
   {   
-    "field": "Database Analysis",
+    "name": "Database Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -1711,7 +1841,8 @@
     }
   },
   {   
-    "field": "Environmental System Analysis",
+    "name": "Environmental System Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -1724,7 +1855,8 @@
     }
   },
   {   
-    "field": "High Energy Laser (HEL) Analysis",
+    "name": "High Energy Laser (HEL) Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
@@ -1737,7 +1869,8 @@
     }
   },
   {   
-    "field": "Mysterious Gray Goo Analysis",
+    "name": "Mysterious Gray Goo Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -1750,7 +1883,8 @@
     }
   },
   {   
-    "field": "Strange Material Analysis",
+    "name": "Strange Material Analysis",
+    "type": "tech",
     "level": 2,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
@@ -1763,7 +1897,8 @@
     }
   },
   {   
-    "field": "Flight Systems Analysis",
+    "name": "Flight Systems Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
@@ -1777,7 +1912,8 @@
     }
   },
   {   
-    "field": "Hover Tank (Damaged) Analysis",
+    "name": "Hover Tank (Damaged) Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Electronics", "level": 3},
@@ -1791,7 +1927,8 @@
     }
   },
   {   
-    "field": "Political Data Analysis",
+    "name": "Political Data Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Social Science", "level": 3},
@@ -1806,7 +1943,8 @@
     }
   },
   {   
-    "field": "Red Mercury Analysis",
+    "name": "Red Mercury Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 3},
@@ -1819,7 +1957,8 @@
     }
   },
   {   
-    "field": "Scanning Systems Analysis",
+    "name": "Scanning Systems Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 2},
@@ -1833,7 +1972,8 @@
     }
   },
   {   
-    "field": "Smart Robots Analysis",
+    "name": "Smart Robots Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 2},
@@ -1847,7 +1987,8 @@
     }
   },
   {   
-    "field": "Stellar Navigation Chart Analysis",
+    "name": "Stellar Navigation Chart Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Astrophysics", "level": 3},
@@ -1861,7 +2002,8 @@
     }
   },
   {   
-    "field": "Xeno-Logic Circuit Analysis",
+    "name": "Xeno-Logic Circuit Analysis",
+    "type": "tech",
     "level": 3,
     "prereq": [
         {"_id": "Object id", "name": "Software & Processes", "level": 3},
@@ -1875,7 +2017,8 @@
     }
   },
   {   
-    "field": "Fusion Thruster Analysis",
+    "name": "Fusion Thruster Analysis",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
@@ -1888,7 +2031,8 @@
     }
   },
   {   
-    "field": "Kimyona Zairyo Analysis",
+    "name": "Kimyona Zairyo Analysis",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Materials", "level": 4},
@@ -1901,7 +2045,8 @@
     }
   },
   {   
-    "field": "Merkwurdige Materialien Analysis",
+    "name": "Merkwurdige Materialien Analysis",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
@@ -1914,7 +2059,8 @@
     }
   },
   {   
-    "field": "Space Fighter (Damaged) Analysis",
+    "name": "Space Fighter (Damaged) Analysis",
+    "type": "tech",
     "level": 4,
     "prereq": [
         {"_id": "Object id", "name": "Engineering", "level": 4},
@@ -1928,7 +2074,8 @@
     }
   },
   {   
-    "field": "Hyperspace Drive Analysis",
+    "name": "Hyperspace Drive Analysis",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 5},
@@ -1942,7 +2089,8 @@
     }
   },
   {   
-    "field": "Plasma Cannon Analysis",
+    "name": "Plasma Cannon Analysis",
+    "type": "tech",
     "level": 5,
     "prereq": [
         {"_id": "Object id", "name": "Theoretical Physics", "level": 4},

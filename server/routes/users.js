@@ -6,31 +6,43 @@ const validateObjectId = require('../middleware/validateObjectId');
 
 // User Model - Using Mongoose Model
 const { User, validateUser } = require('../models/user');
+const { Team } = require('../models/team');
 
 // @route   POST /user
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
     console.log('Someone is trying to make a user...', req.body)
-    let { username, name, email, password, dob } = req.body;
+    let userIn = req.body;
+    let { username, email } = req.body;
 
-    // const { error } = validateUser(req.body);
-    // if (error) return res.status(400).send(`Woo! ${error.details[0].message}`);
-    
+    const test1 = validateUser(req.body);
+    if (test1.error) return res.status(400).send(`User Val Error: ${test1.error.details[0].message}`);
+    console.log("jeff past validate user");
+
     let user = await User.findOne({ email })
     if (user) {
         console.log(`User with the email: ${email} already registered...`);
         return res.status(400).send(`User with the email: ${email} already registered...`);
     } else {
-        let user = new User(
-            { username, name , email, password, dob }
-        );
+        let user = new User(userIn);
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
 
         const token = user.generateAuthToken();
         
+        if (req.body.teamCode != ""){
+          let team = await Team.findOne({ teamCode: req.body.teamCode });  
+          if (!team) {
+            console.log("User Load Team Error, New User:", req.body.username, " Team: ", req.body.teamCode);
+          } else {
+            user.team.team_id  = team._id;
+            user.team.teamName = team.shortName;
+            user.team.teamCode = team.teamCode;
+          }
+        }
+
         user = await user.save();
         let sendUser = {
             _id: user._id,

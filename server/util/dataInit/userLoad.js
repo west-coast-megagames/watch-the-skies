@@ -64,7 +64,7 @@ async function loadUser(iData){
     let user = await User.findOne( { username: iData.username } );
     if (!user) {
        // New User here
-       let convDate = new Date(iData.DoB);
+       let convDate = new Date(iData.dob);
        let user = new User({ 
            username: iData.username,
            email: iData.email,
@@ -72,7 +72,7 @@ async function loadUser(iData){
            gender: iData.gender,
            discord: iData.discord,
            address: iData.address,
-           DoB: convDate
+           dob: convDate
         }); 
 
         user.password = await bcrypt.hash(iData.password, salt);
@@ -80,7 +80,7 @@ async function loadUser(iData){
         user.name.first = iData.name.first;
         user.name.last  = iData.name.last;
 
-        //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
+        //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
         let { error } = validateUser(user); 
         if (error) {
@@ -88,7 +88,7 @@ async function loadUser(iData){
           return;
         }
 
-        //userLoadDebugger("After Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
+        //userLoadDebugger("After Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
         
         if (iData.teamCode != ""){
           let team = await Team.findOne({ teamCode: iData.teamCode });  
@@ -102,7 +102,7 @@ async function loadUser(iData){
           }
         }
         
-        //userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.DoB);
+        //userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
         await user.save((err, user) => {
           if (err) return console.error(`New User Save Error: ${err}`);
@@ -111,7 +111,7 @@ async function loadUser(iData){
     } else {       
       // Existing User here ... update
       let id = user._id;
-      let convDate     = new Date(iData.DoB);
+      let convDate     = new Date(iData.dob);
       user.username  = iData.username;
       user.name.first  = iData.name.first;
       user.name.last   = iData.name.last;
@@ -120,7 +120,7 @@ async function loadUser(iData){
       user.address     = iData.address;
       user.gender      = iData.gender;
       user.discord     = iData.discord;
-      user.DoB         = convDate;
+      user.dob         = convDate;
 
       user.password = await bcrypt.hash(iData.password, salt);
 
@@ -136,7 +136,7 @@ async function loadUser(iData){
         }
       }
       
-      userLoadDebugger("Update user.name", user.name, "address", user.address, user.DoB);
+      userLoadDebugger("Update user.name", user.name, "address", user.address, user.dob);
 
       const { error } = validateUser(user); 
       if (error) {
