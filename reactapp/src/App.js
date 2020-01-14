@@ -1,12 +1,12 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
-import { Container, Header } from 'rsuite';
+import { Header } from 'rsuite';
 import { gameServer } from './config';
 import axios from 'axios';
 
 // Components
 import NavBar from './components/navBar';
-import ContentArea from './pages/main';
+import MainContainer from './pages/main';
 import Toast from './components/toast'
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
@@ -133,14 +133,14 @@ class App extends Component {
 
   render() {
     return(
-        <Container className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
+        <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
             <NavBar 
               team={ this.state.team }
               megabucks={ this.state.megabucks }
             />
           </Header>
-          <ContentArea
+          <MainContainer
             login={ this.state.login }
             teams={ this.state.teams }
             team={ this.state.team }
@@ -154,7 +154,7 @@ class App extends Component {
           />
           <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
           <Toast />
-        </Container>
+        </div>
     );
   }
 }
