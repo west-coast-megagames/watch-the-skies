@@ -1,8 +1,8 @@
 import React from 'react'; // React import
-import TransferForm from '../../components/transferForm';
-import ChartsPage from '../../components/graph';
-import AccountsTable from '../../components/accountsTable'
-import AutoTransfers from '../../components/transfersTable';
+import TransferForm from '../../../components/transferForm';
+import ChartsPage from '../../../components/graph';
+import AccountsTable from '../../../components/accountsTable'
+import AutoTransfers from '../../../components/transfersTable';
 import { Container, Header, Content, Footer, Sidebar } from 'rsuite';
 
 const Budget = (props) => {
