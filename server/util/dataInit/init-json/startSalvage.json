@@ -1,0 +1,379 @@
+[
+    {   
+        "field": "Alien Prisoner Cooperation",
+        "level": 1,
+        "prereq": [
+            {"_id": "Object id", "name": "Alien Prisoner", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc":"(A) Can be used for Advanced Xeno-Language (B) Alien can turn into Dead Alien for Autopsy."
+        }
+      },
+      {   
+        "field": "Personal Weapon Analysis",
+        "level": 1,
+        "prereq": [
+            {"_id": "Object id", "name": "Alien Autopsy", "level": 3},
+            {"_id": "Object id", "name": "Personal Weapon", "level": 0},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 3}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc":""
+        }
+      },
+      {   
+        "field": "Xeno-Food Analysis",
+        "level": 1,
+        "prereq": [
+            {"_id": "Object id", "name": "Biology", "level": 1},
+            {"_id": "Object id", "name": "Psychology", "level": 1},
+            {"_id": "Object id", "name": "Social Science", "level": 1},
+            {"_id": "Object id", "name": "Xeno Food", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc":"Must be discarded after successful research."
+        }
+      },
+      {   
+        "field": "Alien Autopsy",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Biology", "level": 2},
+            {"_id": "Object id", "name": "Dead Alien", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Alien Entertainment Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Electronics", "level": 1},
+            {"_id": "Object id", "name": "Engineering", "level": 2},
+            {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+            {"_id": "Object id", "name": "Cultural Artifact Analysis", "level": 2},
+            {"_id": "Object id", "name": "Alien Entertainment System", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc":"Can be used as a Bio-Networking Helmet"
+        }
+      },
+      {   
+        "field": "Combat Armor Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Combat Armor", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Comm. System Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Electronics", "level": 2},
+            {"_id": "Object id", "name": "Psychology", "level": 2},
+            {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+            {"_id": "Object id", "name": "Comm. System", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Communication Log Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Electronics", "level": 1},
+            {"_id": "Object id", "name": "Psychology", "level": 1},
+            {"_id": "Object id", "name": "Alien Autopsy", "level": 2},
+            {"_id": "Object id", "name": "Communication Log", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Cultural Artifact Anaylsis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Social Science", "level": 2},
+            {"_id": "Object id", "name": "Psychology", "level": 2},
+            {"_id": "Object id", "name": "Beginning Xeno Language", "level": 2},
+            {"_id": "Object id", "name": "Cultural Artifact", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Database Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Software & Processes", "level": 2},
+            {"_id": "Object id", "name": "Biology", "level": 3},
+            {"_id": "Object id", "name": "Database", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Environmental System Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Engineering", "level": 2},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Environmental System", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "High Energy Laser (HEL) Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
+            {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+            {"_id": "Object id", "name": "High Energy Laser (HEL)", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Mysterious Gray Goo Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Software & Processes", "level": 2},
+            {"_id": "Object id", "name": "Electronics", "level": 1},
+            {"_id": "Object id", "name": "Mysterious Gray Goo", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": "Must be discarded after successful research"
+        }
+      },
+      {   
+        "field": "Strange Material Analysis",
+        "level": 2,
+        "prereq": [
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 1},
+            {"_id": "Object id", "name": "Materials", "level": 2},
+            {"_id": "Object id", "name": "Strange Material", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": "Can be sold for $M1"
+        }
+      },
+      {   
+        "field": "Flight Systems Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Software & Processes", "level": 3},
+            {"_id": "Object id", "name": "Electronics", "level": 4},
+            {"_id": "Object id", "name": "Comm. System Analysis", "level": 2},
+            {"_id": "Object id", "name": "Flight Systems", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Hover Tank (Damaged) Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Electronics", "level": 3},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Personal Weapon Analysis", "level": 1},
+            {"_id": "Object id", "name": "Hover Tank (Damaged)", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Political Data Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Social Science", "level": 3},
+            {"_id": "Object id", "name": "Psychology", "level": 3},
+            {"_id": "Object id", "name": "Electronics", "level": 2},
+            {"_id": "Object id", "name": "Advanced Xeno-Language", "level": 3},
+            {"_id": "Object id", "name": "Political Data", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Red Mercury Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Materials", "level": 3},
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
+            {"_id": "Object id", "name": "Red Mercury", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Scanning Systems Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Engineering", "level": 2},
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 3},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Scanning Systems", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Smart Robots Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Software & Processes", "level": 2},
+            {"_id": "Object id", "name": "Electronics", "level": 3},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Smart Robots", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Stellar Navigation Chart Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Astrophysics", "level": 3},
+            {"_id": "Object id", "name": "Electronics", "level": 2},
+            {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
+            {"_id": "Object id", "name": "Stellar Navigation Chart", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Xeno-Logic Circuit Analysis",
+        "level": 3,
+        "prereq": [
+            {"_id": "Object id", "name": "Software & Processes", "level": 3},
+            {"_id": "Object id", "name": "Electronics", "level": 2},
+            {"_id": "Object id", "name": "Beginning Xeno-Language", "level": 2},
+            {"_id": "Object id", "name": "Xeno-Logic Circuit", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Fusion Thruster Analysis",
+        "level": 4,
+        "prereq": [
+            {"_id": "Object id", "name": "Engineering", "level": 4},
+            {"_id": "Object id", "name": "Red Mercury Analysis", "level": 3},
+            {"_id": "Object id", "name": "Fusion Thruster", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Kimyona Zairyo Analysis",
+        "level": 4,
+        "prereq": [
+            {"_id": "Object id", "name": "Materials", "level": 4},
+            {"_id": "Object id", "name": "Merkwurdige Materialien Analysis", "level": 4},
+            {"_id": "Object id", "name": "Kimyona Zairyo", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": "(A) Can be translated to Outlandish or Quirky Material (B) Can be sold for $M3"
+        }
+      },
+      {   
+        "field": "Merkwurdige Materialien Analysis",
+        "level": 4,
+        "prereq": [
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 2},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Merkwurdige Materialien", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": "(A) Can be translated to Curious or Unlikely Material (B) Can be sold for $M2"
+        }
+      },
+      {   
+        "field": "Space Fighter (Damaged) Analysis",
+        "level": 4,
+        "prereq": [
+            {"_id": "Object id", "name": "Engineering", "level": 4},
+            {"_id": "Object id", "name": "Astrophysics", "level": 2},
+            {"_id": "Object id", "name": "Strange Material Analysis", "level": 2},
+            {"_id": "Object id", "name": "Space Fighter (Damaged)", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Hyperspace Drive Analysis",
+        "level": 5,
+        "prereq": [
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 5},
+            {"_id": "Object id", "name": "Astrophysics", "level": 5},
+            {"_id": "Object id", "name": "Hyperlinium Alloy Analysis", "level": 5},
+            {"_id": "Object id", "name": "Hyperspace Drive", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      },
+      {   
+        "field": "Plasma Cannon Analysis",
+        "level": 5,
+        "prereq": [
+            {"_id": "Object id", "name": "Theoretical Physics", "level": 4},
+            {"_id": "Object id", "name": "Engineering", "level": 4},
+            {"_id": "Object id", "name": "Plasma Cannon", "level": 0}
+          ],
+          "effect": {
+            "cost": 0,
+            "desc": ""
+        }
+      }
+]
