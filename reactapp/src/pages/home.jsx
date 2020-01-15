@@ -8,7 +8,10 @@ const Home = (props) => {
             {props.login === true && 
                 <p>Goodluck testing out the application - you will need a control member to start the clock for you if you don't know how to!</p>}
             {props.login === false &&
-                    <p>Please login to get team information and get started...</p>}
+                <React.Fragment>
+                    <p>Please login to get team information and get started...</p>
+                </React.Fragment>
+            }
         </div>
 
     );
