@@ -23,6 +23,7 @@ class Registration extends Component {
 
     close() {
         this.setState({ show: false });
+        this.props.history.push('/home');
     };
 
     open() {
@@ -48,10 +49,12 @@ class Registration extends Component {
                 <Modal.Body>
                     { register === false ? <LoginForm
                         addAlert={ this.props.addAlert }
+                        login={this.props.handleLogin}
                         close={ this.close }
                     /> : null }
                     { register === true ? <RegForm
                         addAlert={ this.props.addAlert }
+                        login={this.props.handleLogin}
                         close={ this.close }
                     /> : null }
                 </Modal.Body>

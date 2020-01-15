@@ -52,9 +52,17 @@ class LiginForm extends Component {
         console.log('Submitted');
         try {
             let res = await axios.post(`${gameServer}api/auth`, this.state.account)
-            console.log(res)
+            let jwt = res.data;
+            console.log(`Token: ${jwt}`)
+            this.props.addAlert({
+                type: 'success',
+                title: 'Login Successful',
+                body: `Logged in... welcome ${this.state.account.login}!`})
+            localStorage.setItem('token', jwt);
+            this.props.login()
+            this.props.close();
         } catch (err) {
-            console.log(err)
+            console.log(`Error: ${err}`)
         }
         
     };

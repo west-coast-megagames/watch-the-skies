@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
 import axios from 'axios';
@@ -109,12 +110,18 @@ class App extends Component {
       this.setState({ aircrafts })
     }
   
-    handleLogin = async (team) => {
-      console.log(`${team.name} login Submitted`);
-      this.setState({ login: true, team: { name: "Updating..."} })
-      this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${team.name}...`})
-      teamEvents.updateTeam(team._id)
-      this.updateAircrafts();
+    handleLogin = async () => {
+      const jwt = localStorage.getItem('token');
+      const user = jwtDecode(jwt);
+      this.setState({ user })
+      console.log(`${user.username} logged in...`);
+      this.setState({ login: true, user, team: { name: "Updating..."} })
+      if (user.team) {
+        this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.teamName}...`})
+        teamEvents.updateTeam(user.team.team_id)
+        this.updateAircrafts();
+      }
+
     }
   
     deleteAlert = alertId => {
@@ -142,6 +149,7 @@ class App extends Component {
           </Header>
           <MainContainer
             login={ this.state.login }
+            user={ this.state.user }
             teams={ this.state.teams }
             team={ this.state.team }
             news={ this.state.news }

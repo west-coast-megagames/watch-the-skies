@@ -22,7 +22,7 @@ import Registration from './../components/registration';
     textAlign: 'center'
   };
   
-  const NavToggle = ({ expand, onChange }) => {
+  const NavToggle = ({ login, expand, onChange }) => {
     return (
       <Navbar appearance="subtle" className="nav-toggle">
         <Navbar.Body>
@@ -37,7 +37,9 @@ import Registration from './../components/registration';
               <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
               <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
               <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
-              <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
+              { login && (<React.Fragment>
+                <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
+              </React.Fragment>)}
             </Dropdown>
           </Nav>
   
@@ -106,13 +108,14 @@ import Registration from './../components/registration';
                   </Nav>
                 </Sidenav.Body>
               </Sidenav>
-              <NavToggle expand={expand} onChange={this.handleToggle} />
+              <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} />
             </Sidebar>
             <Content style={{ display: 'flex', flexDirection: 'column' }}>
                 <Switch>
-                    <Route path="/login" render={() => (
-                      <Registration
-                        addAlert = { this.props.addAlert }
+                    <Route path="/login" render={(props) => (
+                      <Registration {...props}
+                        addAlert={ this.props.addAlert }
+                        handleLogin={ this.props.handleLogin }
                       />
                     )}/>
                     <Route path="/home" render={() => (
@@ -129,12 +132,13 @@ import Registration from './../components/registration';
                         alert={ this.props.addAlert } 
                       />
                     )} />
-                    <Route path="/gov" render={() => (
-                      <Governance 
+                    <Route path="/gov" render={(props) => (
+                      <Governance {...props}
                           team = { this.props.team }
                           accounts = { this.props.accounts }
                           handleUpdate = { this.updateAccounts }
                           alert={ this.props.addAlert }
+                          
                       />
                     )}/>
                     <Route path="/sci" render={() => (
