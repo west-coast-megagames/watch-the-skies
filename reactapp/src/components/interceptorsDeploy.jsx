@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import { Drawer, Button } from 'rsuite'
+import { Drawer, Button, InputPicker } from 'rsuite'
 import { gameServer } from '../config';
 import axios from 'axios';
+
+const data = [
+  { value: "Aggressive", label: "Aggresive Stance"},
+  { value: "Passive", label: "Passive Stance"}
+]
 
 class InterceptorDeployForm extends Component {
 
@@ -22,7 +27,7 @@ class InterceptorDeployForm extends Component {
 
     try {
       let response = await axios.put(`${gameServer}api/intercept`, stats);
-      this.props.alert({type: 'succeess', title: 'Interceptor Launch...', body: response.data })
+      this.props.alert({type: 'success', title: 'Interceptor Launch...', body: response.data })
     } catch (err) {
       this.props.alert({type: 'error', title: 'Launch Failed', body: `${err.data} - ${err.message}` })
     };
@@ -56,9 +61,10 @@ class InterceptorDeployForm extends Component {
                   <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
                     <option>Select an interceptor!</option>
                     { this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true).map(ship => (
-                        <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.poi } at { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% health) </option>
+                        <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.country.countryName } | { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% damage) </option>
                     ))}
                   </select>
+                  <InputPicker placeholder="Aircraft Interception Stance" data={data} block />
               </div>
             </form>
         </Drawer.Body>
