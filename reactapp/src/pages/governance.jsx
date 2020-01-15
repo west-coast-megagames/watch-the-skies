@@ -15,10 +15,6 @@ class Governance extends Component {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
-    getActive(element) {
-        return element === this.state.tab ? '' : 'hidden';
-    }
-
     handleSelect(activeKey) {
         this.setState({ tab: activeKey })
     };

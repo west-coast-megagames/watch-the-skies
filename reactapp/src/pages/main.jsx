@@ -118,15 +118,15 @@ import Registration from './../components/registration';
                         handleLogin={ this.props.handleLogin }
                       />
                     )}/>
-                    <Route path="/home" render={() => (
-                      <Home
+                    <Route path="/home" render={(props) => (
+                      <Home {...props}
                           login={ this.props.login }
                           teams={ this.props.teams }
                           onChange={ this.props.handleLogin }
                       />
                     )} />
-                    <Route path="/ops" render={() => (
-                      <Operations
+                    <Route path="/ops" render={(props) => (
+                      <Operations {...props}
                         team={ this.props.team }
                         aircrafts={ this.props.aircrafts }
                         alert={ this.props.addAlert } 
@@ -141,31 +141,31 @@ import Registration from './../components/registration';
                           
                       />
                     )}/>
-                    <Route path="/sci" render={() => (
-                      <Science 
+                    <Route path="/sci" render={(props) => (
+                      <Science {...props}
                           team = { this.props.team }
                           alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/dip" render={() => (
-                      <Diplomacy
+                    <Route path="/dip" render={(props) => (
+                      <Diplomacy {...props}
                           team = { this.props.team }
                           alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/comms" render={() => (
-                      <Chat
+                    <Route path="/comms" render={(props) => (
+                      <Chat {...props}
                         team = { this.props.team }
                         alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/news" render={() => (
-                      <News
+                    <Route path="/news" render={(props) => (
+                      <News {...props}
                         news={ this.props.news }
                       />
                     )}/>
-                    <Route path="/control" render={() => (
-                      <Control
+                    <Route path="/control" render={(props) => (
+                      <Control {...props}
                           alert = { this.props.addAlert } 
                       />
                     )}/>
