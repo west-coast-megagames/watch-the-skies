@@ -52,7 +52,11 @@ router.post('/', async function (req, res) {
         };
 
         console.log(`User ${username} created...`);
-        return res.status(200).header('x-auth-token', token).json(sendUser);
+        return res
+          .status(200)
+          .header('x-auth-token', token)
+          .header('access-control-expose-headers', 'x-auth-token')
+          .json(sendUser);
     }
 });
 
