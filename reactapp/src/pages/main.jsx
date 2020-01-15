@@ -4,7 +4,6 @@ import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 
 // Pages
 import Governance from './governance';
-import LoginForm from '../components/loginForm';
 import Home from './home';
 import Control from './control';
 import NotFound from './404';
@@ -16,7 +15,6 @@ import Chat from './chat';
 import News from './news';
 import Registration from './../components/registration';
 
-  
   const iconStyles = {
     width: 56,
     height: 56,
@@ -24,7 +22,7 @@ import Registration from './../components/registration';
     textAlign: 'center'
   };
   
-  const NavToggle = ({ expand, onChange }) => {
+  const NavToggle = ({ login, expand, onChange }) => {
     return (
       <Navbar appearance="subtle" className="nav-toggle">
         <Navbar.Body>
@@ -36,9 +34,12 @@ import Registration from './../components/registration';
                 return <Icon style={iconStyles} icon="cog" />;
               }}
             >
-              <Dropdown.Item>Help</Dropdown.Item>
-              <Dropdown.Item>Settings</Dropdown.Item>
-              <Dropdown.Item>Sign out</Dropdown.Item>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
+              <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
+              { login && (<React.Fragment>
+                <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
+              </React.Fragment>)}
             </Dropdown>
           </Nav>
   
@@ -103,73 +104,74 @@ import Registration from './../components/registration';
                     <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
                     <Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>
                     <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
-                    <Nav.Item eventKey="7" to="/control" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
+                    <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   </Nav>
                 </Sidenav.Body>
               </Sidenav>
-              <NavToggle expand={expand} onChange={this.handleToggle} />
+              <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} />
             </Sidebar>
             <Content style={{ display: 'flex', flexDirection: 'column' }}>
                 <Switch>
-                    <Route path="/login" component={ LoginForm } />
-                    <Route path="/home" render={() => (
-                      <Home
+                    <Route path="/login" render={(props) => (
+                      <Registration {...props}
+                        addAlert={ this.props.addAlert }
+                        handleLogin={ this.props.handleLogin }
+                      />
+                    )}/>
+                    <Route path="/home" render={(props) => (
+                      <Home {...props}
                           login={ this.props.login }
                           teams={ this.props.teams }
                           onChange={ this.props.handleLogin }
                       />
                     )} />
-                    <Route path="/ops" render={() => (
-                      <Operations
+                    <Route path="/ops" render={(props) => (
+                      <Operations {...props}
                         team={ this.props.team }
                         aircrafts={ this.props.aircrafts }
                         alert={ this.props.addAlert } 
                       />
                     )} />
-                    <Route path="/gov" render={() => (
-                      <Governance 
+                    <Route path="/gov" render={(props) => (
+                      <Governance {...props}
                           team = { this.props.team }
                           accounts = { this.props.accounts }
                           handleUpdate = { this.updateAccounts }
                           alert={ this.props.addAlert }
+                          
                       />
                     )}/>
-                    <Route path="/sci" render={() => (
-                      <Science 
+                    <Route path="/sci" render={(props) => (
+                      <Science {...props}
                           team = { this.props.team }
                           alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/dip" render={() => (
-                      <Diplomacy
+                    <Route path="/dip" render={(props) => (
+                      <Diplomacy {...props}
                           team = { this.props.team }
                           alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/comms" render={() => (
-                      <Chat
+                    <Route path="/comms" render={(props) => (
+                      <Chat {...props}
                         team = { this.props.team }
                         alert={ this.props.addAlert }
                       />
                     )}/>
-                    <Route path="/news" render={() => (
-                      <News
+                    <Route path="/news" render={(props) => (
+                      <News {...props}
                         news={ this.props.news }
                       />
                     )}/>
-                    <Route path="/control" render={() => (
-                      <Control
+                    <Route path="/control" render={(props) => (
+                      <Control {...props}
                           alert = { this.props.addAlert } 
                       />
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
-                    <Route path="/reg" render={() => (
-                      <Registration
-                        addAlert = { this.props.addAlert }
-                      />
-                    )}/>
                     <Route path="/not-found" component={ NotFound } />
-                    <Redirect from="/" exact to="home" />
+                    <Redirect from="/" exact to="login" />
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>

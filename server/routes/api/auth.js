@@ -9,13 +9,15 @@ const { User } = require('../../models/user');
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
-    let { password, email } = req.body;
+    let { password, login } = req.body;
+    console.log(`${login} is attempting to log in...`)
     
-    let user = await User.findOne({ email });
-    if (!user) return res.status(400).send('Invalid E-mail or password');
+    let user = await User.findOne({ email: login });
+    if (!user) user = await User.findOne({ username: login });
+    if (!user) return res.status(400).send('Invalid login or password');
     
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid E-mail or password');
+    if (!validPassword) return res.status(400).send('Invalid login or password');
 
     const token = user.generateAuthToken();
     res.send(token);

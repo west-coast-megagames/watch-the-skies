@@ -17,14 +17,22 @@ const ZoneSchema = new Schema({
   zoneName: {type: String, 
              required: true,
              minlength: 3,
-             maxlength: 50}
+             maxlength: 50},
+  terror: {
+            type: Number,
+            min: 0,
+            max: 250,
+            default: 0
+        }
+  
 });
 
 ZoneSchema.methods.validateZone = function (zone) {
 //zoneDebugger("In methods validateZone", zone.zoneName, zone.zoneCode);
   const schema = {
     zoneName: Joi.string().min(3).max(50).required(),
-    zoneCode: Joi.string().min(2).max(2).required().uppercase()
+    zoneCode: Joi.string().min(2).max(2).required().uppercase(),
+    terror: Joi.number().min(0).max(250)
   };
 
   return Joi.validate(zone, schema, { "allowUnknown": true });
@@ -37,7 +45,8 @@ function validateZone(zone) {
   //zoneDebugger("In function validateZone", zone.zoneName);
   const schema = {
     zoneCode: Joi.string().min(2).max(2).required().uppercase(),
-    zoneName: Joi.string().min(3).max(50).required()
+    zoneName: Joi.string().min(3).max(50).required(),
+    terror: Joi.number().min(0).max(250)
   };
 
   //return Joi.schema.validate(zone, { "allowUnknown": true });

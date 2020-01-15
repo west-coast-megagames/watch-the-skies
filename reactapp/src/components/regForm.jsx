@@ -71,11 +71,13 @@ class RegForm extends React.Component {
     console.log(user);
     try {
     let res = await axios.post(`${gameServer}user`, user);
-      console.log(res)
-      this.props.addAlert({
-        type: 'success',
-        title: 'User Created',
-        body: `User created... welcome ${res.data.username}!`})
+    localStorage.setItem('token', res.headers['x-auth-token']);
+    this.props.addAlert({
+      type: 'success',
+      title: 'User Created',
+      body: `User created... welcome ${res.data.username}!`})
+    this.props.login()
+    this.props.close();  
     } catch (err) {
       console.log(err)
       this.props.addAlert({
@@ -83,7 +85,7 @@ class RegForm extends React.Component {
         title: 'Failed to create user',
         body: `${err.message}`})
     }
-    this.props.close();
+    
   }
 
   handleCheckEmail() {

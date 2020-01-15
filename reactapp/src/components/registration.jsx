@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'rsuite';
 import RegForm from './regForm';
+import LoginForm from './loginForm'
 
 class Registration extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class Registration extends Component {
             password: '',
             textarea: ''
           },
-          show: false
+          show: true,
+          register: false
         };
         this.close = this.close.bind(this);
         this.open = this.open.bind(this);
@@ -21,10 +23,12 @@ class Registration extends Component {
 
     close() {
         this.setState({ show: false });
+        this.props.history.push('/home');
     };
 
     open() {
-        this.setState({ show: true });
+        let register = !this.state.register
+        this.setState({ register });
     };
 
     handleChange(value) {
@@ -34,21 +38,32 @@ class Registration extends Component {
     };
       
     render() {
+        let register = this.state.register;
+        let title = register === false ? 'User Login' : 'User Registration';
         return (
           <div>
             <Modal show={this.state.show} onHide={this.close} size="xs">
                 <Modal.Header>
-                    <Modal.Title>User Registration</Modal.Title>
+                    <Modal.Title>{ title }</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RegForm
+                    { register === false ? <LoginForm
                         addAlert={ this.props.addAlert }
+                        login={this.props.handleLogin}
                         close={ this.close }
-                    />
+                    /> : null }
+                    { register === true ? <RegForm
+                        addAlert={ this.props.addAlert }
+                        login={this.props.handleLogin}
+                        close={ this.close }
+                    /> : null }
                 </Modal.Body>
-                <Modal.Footer></Modal.Footer>
+                <Modal.Footer>
+                    { register === false ? <Button onClick={this.open}>Switch to Registration</Button> : null }
+                    { register === true ? <Button onClick={this.open}>Switch to Login</Button> : null }
+                </Modal.Footer>
             </Modal>
-            <Button onClick={this.open}>New User</Button>
+            
         </div>
         );
     }

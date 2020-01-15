@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import TxtInput from './common/txtInput';
 import Joi from 'joi-browser';
+import axios from 'axios'
+import { gameServer } from '../config';
 
 class LiginForm extends Component {
     state = {
-        account: { username: '', password: ''},
+        account: { login: '', password: ''},
         errors: {}
     };
 
     schema = {
-        username: Joi.string().required(),
+        login: Joi.string().required(),
         password: Joi.string().required()
     };
 
@@ -21,8 +23,8 @@ class LiginForm extends Component {
 
         const { account } = this.state
 
-        if (account.username.trim() === '')
-            errors.username = "Username is required."
+        if (account.login.trim() === '')
+            errors.login = "Username or email is required."
         
         if (account.password.trim() === '')
             errors.password = "Password is required"
@@ -31,15 +33,15 @@ class LiginForm extends Component {
     };
 
     validateProperty = ({ name, value }) => {
-        if (name === 'username') {
-            if (value.trim() === "") return 'Username is required!';
+        if (name === 'login') {
+            if (value.trim() === "") return 'Username or email is required!';
         }
         if (name === 'password') {
             if (value.trim() === "") return 'Password is required!';
         }
     };
 
-    handleSubmit = e => {
+    handleSubmit = async e => {
         e.preventDefault();
 
         const errors = this.validate();
@@ -48,6 +50,21 @@ class LiginForm extends Component {
 
         // Call the server
         console.log('Submitted');
+        try {
+            let res = await axios.post(`${gameServer}api/auth`, this.state.account)
+            let jwt = res.data;
+            console.log(`Token: ${jwt}`)
+            this.props.addAlert({
+                type: 'success',
+                title: 'Login Successful',
+                body: `Logged in... welcome ${this.state.account.login}!`})
+            localStorage.setItem('token', jwt);
+            this.props.login()
+            this.props.close();
+        } catch (err) {
+            console.log(`Error: ${err}`)
+        }
+        
     };
 
     handleChange = ({currentTarget: input}) => {
@@ -64,14 +81,13 @@ class LiginForm extends Component {
     render() {
         const { account, errors } = this.state;
         return <div>
-            <h1>Login</h1>
             <form onSubmit={this.handleSubmit}>
                 <TxtInput
-                    name="username"
-                    value={account.username}
-                    label="Username"
+                    name="login"
+                    value={account.login}
+                    label="login"
                     onChange={this.handleChange}
-                    error={errors.username}
+                    error={errors.login}
                 />
 
                 <TxtInput
@@ -81,7 +97,6 @@ class LiginForm extends Component {
                     onChange={this.handleChange}
                     error={errors.password}
                 />
-
                 <button className="btn btn-primary">Login</button>
             </form>
         </div>;

@@ -8,7 +8,8 @@ const InitRefSchema = new Schema({
   refCode: { type: String, required: true },
   refLoad: { type: Boolean, default: false },
   refParent1: { type: String, default: null },
-  refParent2: { type: String, default: null }
+  refParent2: { type: String, default: null },
+  refNumber1: { type: Number }
   }
 );
 

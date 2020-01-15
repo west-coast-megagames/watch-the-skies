@@ -7,7 +7,7 @@ const initLoadAll = require('../../util/dataInit/initLoadAll');
 // @access  Public
 router.patch('/initAll', async function (req, res) {
 
-  await initLoadAll();
+  await initLoadAll("All");
 
   res.status(200).send("Init Of Data Done");
 

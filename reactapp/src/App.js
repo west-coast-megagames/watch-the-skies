@@ -1,12 +1,13 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
-import { Container, Header } from 'rsuite';
+import jwtDecode from 'jwt-decode'
+import { Header } from 'rsuite';
 import { gameServer } from './config';
 import axios from 'axios';
 
 // Components
 import NavBar from './components/navBar';
-import ContentArea from './pages/main';
+import MainContainer from './pages/main';
 import Toast from './components/toast'
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
@@ -109,12 +110,18 @@ class App extends Component {
       this.setState({ aircrafts })
     }
   
-    handleLogin = async (team) => {
-      console.log(`${team.name} login Submitted`);
-      this.setState({ login: true, team: { name: "Updating..."} })
-      this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${team.name}...`})
-      teamEvents.updateTeam(team._id)
-      this.updateAircrafts();
+    handleLogin = async () => {
+      const jwt = localStorage.getItem('token');
+      const user = jwtDecode(jwt);
+      this.setState({ user })
+      console.log(`${user.username} logged in...`);
+      this.setState({ login: true, user, team: { name: "Updating..."} })
+      if (user.team) {
+        this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.teamName}...`})
+        teamEvents.updateTeam(user.team.team_id)
+        this.updateAircrafts();
+      }
+
     }
   
     deleteAlert = alertId => {
@@ -133,15 +140,16 @@ class App extends Component {
 
   render() {
     return(
-        <Container className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
+        <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
             <NavBar 
               team={ this.state.team }
               megabucks={ this.state.megabucks }
             />
           </Header>
-          <ContentArea
+          <MainContainer
             login={ this.state.login }
+            user={ this.state.user }
             teams={ this.state.teams }
             team={ this.state.team }
             news={ this.state.news }
@@ -154,7 +162,7 @@ class App extends Component {
           />
           <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
           <Toast />
-        </Container>
+        </div>
     );
   }
 }

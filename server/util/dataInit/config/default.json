@@ -1,4 +1,5 @@
 {
     "initPath": "./",
-    "dbName": "dev"
+    "dbName": "dev",
+    "loadSel": "All"
 }
