@@ -1,5 +1,6 @@
 import React, { Component } from 'react'; // React import
 import { Container, Content, Button } from 'rsuite';
+import { ChatFeed, Message } from 'react-chat-ui'
 import { socket } from '../api'
 
 class Chat extends Component {
@@ -11,7 +12,9 @@ class Chat extends Component {
         };
         socket.on('new msg', (data) => {
             let chat = this.state.chat;
-            chat.push(data);
+            let msg = { id: data.name === this.props.team.name ? 0 : 1, message: data.body, senderName: data.name}
+            new Message(msg);
+            chat.push(msg);
             this.setState({ chat })
         })
         this.handleChange = this.handleChange.bind(this);
@@ -48,10 +51,18 @@ class Chat extends Component {
                 <Content>
                     <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
                         <div style={{flex: "1 1 95%", overflow: "auto", display: "flex", flexDirection: "column"}}>
-                            {this.state.chat.map(msg => (
-                                <div key={msg.key}>{msg.name}: {msg.body}</div>
-                            ))}
-                            <div style={{display: "block", margin: "30px"}}
+                            <ChatFeed
+                                messages={this.state.chat} // Boolean: list of message objects
+                                hasInputField={false} // Boolean: use our input, or use your own
+                                showSenderName // show the name of the user who sent the message
+                                bubblesCentered={false} //Boolean should the bubbles be centered in the feed?
+                                
+                                // JSON: Custom bubble styles
+                                bubbleStyles={
+                                    { text: { fontSize: 14 }, chatbubble: { borderRadius: 50, padding: 20 } }
+                                }
+                            />
+                            <div style={{display: "block", margin: "10px"}}
                                  ref={(el) => { this.messagesEnd = el; }}>&nbsp;
                             </div>
                         </div>
