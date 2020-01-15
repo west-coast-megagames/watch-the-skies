@@ -45,18 +45,24 @@ class Chat extends Component {
          return (
         <Container>
             <Content>
-                <div style={{ height: '70%' }}>
-                    { this.state.chat.map(msg => (
-                    <p key={ msg.key }>{msg.name}: {msg.body}</p>
-                    ))}
-                </div>
-                <hr />
-                <form style={{ padding: 10 }} onSubmit={this.handleSubmit} >
-                    <div className="mb-3">
-                        <textarea className="form-control" id="Textarea" placeholder="Enter chat message" value={this.state.message} onChange={this.handleChange} onKeyPress={this.handleKeyPress} required></textarea>
+                <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
+                    <div style={{flex: "1 1 100%", overflow: "auto", display: "flex", flexDirection: "column"}}>
+                        {this.state.chat.map(msg => (
+                            <p key={msg.key}>{msg.name}: {msg.body}</p>
+                        ))}
                     </div>
-                    <Button style={{ position: 'relative', float: 'right' }} appearance="primary" type="submit" >Send</Button>
-                </form>
+                    <div style={{padding: 10, flex: "none", overflow: "hidden", display: "flex", flexFlow: "column"}}>
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="mb-3">
+                                <textarea className="form-control" id="Textarea" placeholder="Enter chat message"
+                                          value={this.state.message} onChange={this.handleChange}
+                                          onKeyPress={this.handleKeyPress} required></textarea>
+                            </div>
+                            <Button style={{position: 'relative', float: 'right'}} appearance="primary"
+                                    type="submit">Send</Button>
+                        </form>
+                    </div>
+                </div>
             </Content>
         </Container>
          );
