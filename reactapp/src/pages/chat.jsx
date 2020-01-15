@@ -33,6 +33,7 @@ class Chat extends Component {
         socket.emit('chat msg', chatMsg);
         console.log(`${this.state.message} sent`);
         this.setState({ message: '' });
+        this.messagesEnd.scrollIntoView({ behavior: "smooth", block: "center"});
     };
 
     handleKeyPress = e => {
@@ -42,29 +43,41 @@ class Chat extends Component {
     }
 
     render() {
-         return (
-        <Container>
-            <Content>
-                <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
-                    <div style={{flex: "1 1 100%", overflow: "auto", display: "flex", flexDirection: "column"}}>
-                        {this.state.chat.map(msg => (
-                            <p key={msg.key}>{msg.name}: {msg.body}</p>
-                        ))}
-                    </div>
-                    <div style={{padding: 10, flex: "none", overflow: "hidden", display: "flex", flexFlow: "column"}}>
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="mb-3">
-                                <textarea className="form-control" id="Textarea" placeholder="Enter chat message"
-                                          value={this.state.message} onChange={this.handleChange}
-                                          onKeyPress={this.handleKeyPress} required></textarea>
+        return (
+            <Container>
+                <Content>
+                    <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
+                        <div style={{flex: "1 1 95%", overflow: "auto", display: "flex", flexDirection: "column"}}>
+                            {this.state.chat.map(msg => (
+                                <div key={msg.key}>{msg.name}: {msg.body}</div>
+                            ))}
+                            <div style={{display: "block", margin: "30px"}}
+                                 ref={(el) => { this.messagesEnd = el; }}>&nbsp;
                             </div>
-                            <Button style={{position: 'relative', float: 'right'}} appearance="primary"
-                                    type="submit">Send</Button>
-                        </form>
+                        </div>
+                        <div style={{
+                            padding: 10,
+                            flex: "none",
+                            overflow: "hidden",
+                            display: "flex",
+                            flexFlow: "column nowrap",
+                            marginBottom: "50px"
+                        }}>
+                            <form onSubmit={this.handleSubmit}>
+                                <div style={{width: "100%"}}>
+                                    <div style={{float: "left", width: "90%"}}>
+                                        <textarea className="form-control" id="Textarea" placeholder="Enter chat message"
+                                            value={this.state.message} onChange={this.handleChange}
+                                            onKeyPress={this.handleKeyPress} required></textarea>
+                                    </div>
+                                    <Button style={{float: "right", verticalAlign: "middle", minWidth: "10%"}}
+                                            appearance="primary" type="submit">Send</Button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </Content>
-        </Container>
+                </Content>
+            </Container>
          );
      }
  }
