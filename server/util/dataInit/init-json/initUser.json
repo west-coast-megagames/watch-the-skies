@@ -4,7 +4,7 @@
 "name" : {"first" : "Jerri", "last" : "Johnson" },
 "email" : "Megagamesareamazing@gmail.com",
 "phone" : "9167584621",
-"password" : "PWtest1",
+"password" : "PWtest",
 "address" : 
     {"street1" : "458 Rosebud Way",
      "street2" : "",
@@ -22,7 +22,7 @@
 "name" : {"first" : "Patricia", "last" : "Doors" },
 "email" : "PRlevelsStartAt5@gmail.com",
 "phone" : "9167584622",
-"password" : "PWtest2",
+"password" : "PWtest",
 "address" : 
     {"street1" : "856 Easy St",
      "street2" : "",
@@ -40,7 +40,7 @@
 "name" : {"first" : "George", "last" : "Of the Jungle" },
 "email" : "FastAsICanBe@hotmail.com",
 "phone" : "9167584623",
-"password" : "PWtest3",
+"password" : "PWtest",
 "address" : 
     {"street1" : "9540 Mt. Access Road",
      "street2" : "",
@@ -58,7 +58,7 @@
 "name" : {"first" : "Romeo", "last" : "Davison" },
 "email" : "LoveBeforeAll@yahoo.com",
 "phone" : "9167584624",
-"password" : "PWtest4",
+"password" : "PWtest",
 "address" : 
     {"street1" : "523 Come With Me way",
      "street2" : "",
@@ -76,7 +76,7 @@
 "name" : {"first" : "Lisa", "last" : "Frank" },
 "email" : "Art@gmail.com",
 "phone" : "9167584625",
-"password" : "PWTest5",
+"password" : "PWTest",
 "address" : 
     {"street1" : "15 Craft way",
      "street2" : "",
@@ -94,7 +94,7 @@
 "name" : {"first" : "Unknown", "last" : "Unknown" },
 "email" : "Arty2@gmail.com",
 "phone" : "9167584630",
-"password" : "PWTest6",
+"password" : "PWTest",
 "address" : 
     {"street1" : "2nd st",
      "street2" : "",
@@ -112,16 +112,16 @@
 "name" : {"first" : "John", "last" : "Cleveland" },
 "email" : "John.Cleveland@westcoastmegagames.com",
 "phone" : "9167100596",
-"password" : "JayTPW",
+"password" : "FroBoyX",
 "address" : 
     {"street1" : "5240 Rita Ave",
      "street2" : "",
      "city" : "Carmichael",
      "state" : "CA",
      "zipcode" : "95608"},
-"dob" : "1997-12-08",
+"dob" : "1986-12-03",
 "gender" : "Male",
 "discord" : "JT",
-"teamCode" : ""
+"teamCode" : "USA"
 }
 ]
