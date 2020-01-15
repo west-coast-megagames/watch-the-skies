@@ -1,5 +1,5 @@
 # watch-the-Skies
-This is the project file for the Watch the Skies Prototype, made for project nexus.
+This is the project file for the Watch the Skies Prototype, made for project nexus. Current Build: v0.1.2
 
 ## File Structure
 * reactapp - Front end React Applications
@@ -7,6 +7,9 @@ This is the project file for the Watch the Skies Prototype, made for project nex
         * components - All react components that make up the UI
             * common - Reusable react components
         * pages - All pages within the page routing hiarchy
+            * tabs - The tabs with components for each tab in the modules
+                * gov - The tabs relating to the governance module
+                * news - The tabs relating to the news module
 
 * server - Node.js Server
     * config - Any keys or configuration files for the server
@@ -17,12 +20,21 @@ This is the project file for the Watch the Skies Prototype, made for project nex
         * ops - Models pertaining to the OPERATIONS sub-game
     * routes - All Express routes
         * api - Currently the main routes folder (Unlear why)
+    * startup - All functions imported and run at server start
+    * test - Jest testing suite for development
+        * integration - Home for all integration tests
+        * unit - Home for all unit tests
     * util - Application functions
-        * init-json - Initial Load data
-        * systems - Game systems
-            * finance - The financial systems for WTS
+        * dataInit - Initialization server for seeding init data
+            * config - Enviornment variable for init server
+            * init-json - Initial Load data
+        * systems - Server level game functions
+        * wts - Watch the Skies game functions
+            * banking - The financial systems for WTS
             * gameClock - The main gameClock and turn/phase change processing for WTS
             * intercept - The Interception system for WTS
+            * notifications - Temp notifications system for WTS
+            * pr - The PR system for WTS
 
 ## Scripts
 In the server directory, you can run:
