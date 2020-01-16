@@ -1,5 +1,6 @@
 {
     "initPath": "./",
     "dbName": "dev",
-    "loadSel": "All"
+    "loadSel": "All",
+    "jwtPrivateKey": "rawr"
 }
