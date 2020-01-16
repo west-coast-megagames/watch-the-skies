@@ -106,7 +106,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
         email: req.body.email, 
         phone: req.body.phone, 
         gender: req.body.gender,
-        DoB: new Date(req.body.DoB),
+        dob: new Date(req.body.dob),
         discord: req.body.discord 
       },  
       {
