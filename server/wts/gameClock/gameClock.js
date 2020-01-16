@@ -68,7 +68,7 @@ function resetClock() {
     seconds = 0;
     
     phaseNum = 0;
-    currentPhase = 'Breifing';
+    currentPhase = 'Briefing';
 
     year = 2020;
     quarter = 0;
@@ -109,7 +109,7 @@ function getTimeRemaining(){
 // FUNCTION - incrementPhase { IN: N/A, OUT: N/A }
 // PROCESS: Changes the game state to the next phase
 function incrementPhase() {
-    if (currentPhase === 'Breifing' || currentTurn === 'Pre-Game') {
+    if (currentPhase === 'Briefing' || currentTurn === 'Pre-Game') {
         logger.info('Watch the Skies has begun!');
         quarter = 0;
         phaseNum = 0;
