@@ -200,7 +200,7 @@ describe('dice d20', () => {
     let found18   = false;
     let found19 = false;
     let found20 = false;
-    for (i = 0; i < 80; i++) {  
+    for (i = 0; i < 120; i++) {  
       let dieRoll = d20();
       if (dieRoll == 1) foundOne = true;
       if (dieRoll == 2) foundTwo = true;
