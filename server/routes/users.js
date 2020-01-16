@@ -18,7 +18,6 @@ router.post('/', async function (req, res) {
 
     const test1 = validateUser(req.body);
     if (test1.error) return res.status(400).send(`User Val Error: ${test1.error.details[0].message}`);
-    console.log("jeff past validate user");
 
     let user = await User.findOne({ email })
     if (user) {
@@ -107,7 +106,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
         email: req.body.email, 
         phone: req.body.phone, 
         gender: req.body.gender,
-        DoB: new Date(req.body.DoB),
+        dob: new Date(req.body.dob),
         discord: req.body.discord 
       },  
       {
