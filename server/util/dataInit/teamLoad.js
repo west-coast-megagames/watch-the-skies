@@ -16,6 +16,7 @@ const bodyParser = require('body-parser');
 
 // Team Model - Using Mongoose Model
 const { Team, validateTeam } = require('../../models/team');
+const { Country } = require('../../models/country');
 
 const app = express();
 
@@ -49,6 +50,7 @@ async function initLoad(doLoad) {
 
       if (teamDataIn[i].loadFlag == "true") {
         await loadTeam(teamDataIn[i]);
+        await setCountryShortName(teamDataIn[i]);      // team short name now defined ... set team.name in country
       }
     }
   }
@@ -148,5 +150,34 @@ async function deleteTeam(tData){
     teamLoadDebugger(`deleteTeam Error 2: ${err.message}`);
   }
 };
+
+async function setCountryShortName(tData){
+
+  if (!tData.code) {
+    return;
+  };
+
+  try {   
+    // Loop through Countrys with team code and set team.name to shortName
+    for await (const country of Country.find()) {
+      if (country.team.teamCode == tData.code ) {
+        let updId = country.id;  
+        try {
+          const countryUpd = await Country.findByIdAndUpdate({ _id: updId },
+            { team: { 
+                teamName: tData.shortName,
+                teamCode: country.team.teamCode,
+                team_id: country.team.team_id 
+            }    
+          });
+        } catch (err) {
+          console.log(`Error in setCountryShortName 1: ${err.message}`);
+        }
+      }
+    };
+  }catch (err) {
+    console.log(`Error In setCountryShortName 2: ${err.message}`);
+  }
+};      
 
 module.exports = runTeamLoad;
