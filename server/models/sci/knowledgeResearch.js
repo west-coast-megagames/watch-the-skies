@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Research = require('../sci/research');
 const Schema = mongoose.Schema;
 
 const fields = ['Astrophysics', 'Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science', 'Psychology', 'Social Science', 'Theoretical Physics']

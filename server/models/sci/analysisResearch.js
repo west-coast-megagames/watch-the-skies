@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
+const Research = require('../sci/research');
 const Schema = mongoose.Schema;
+
 
 const AnalysisResearch = Research.discriminator('AnalysisResearch', new Schema({
     type: { type: String, default: 'Analysis' },
