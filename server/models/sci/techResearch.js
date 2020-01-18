@@ -7,9 +7,9 @@ const TechResearch = Research.discriminator('TechResearch', new Schema({
     catagory: { type: String, enum: ['Military', 'Consumer', 'Infrastructure', 'Medical', 'Agriculture']},
     team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
     status: {
-        progress: { type: Number },
-        available: { type: Boolean },
-        completed: { type: Boolean },
+        progress: { type: Number, default: 0 },
+        available: { type: Boolean, default: true },
+        completed: { type: Boolean, default: false }
     }
 }));
 

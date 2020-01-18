@@ -1,0 +1,19 @@
+[
+{   
+    "name": "Damage Lasers",
+    "level": 1,
+    "prereq": ["Engineering I", "Materials I", "Theoretical Physics I"],
+    "type": "Technology",
+    "catagory": "Military",
+    "desc": "Laser weapons upgrade for Modern Forces"
+},
+{   
+    "_original": "Improved SIF Weapons",
+    "name": "Percision Laser Weapons", 
+    "level": 2,
+    "prereq": ["Engineering II", "Damage Lasers"],
+    "type": "Technology",
+    "catagory": "Military",
+    "desc": "Percision mounted laser weaponr system which increases chances of damaging an opponents systems or shooting down an opponent"
+}
+]
