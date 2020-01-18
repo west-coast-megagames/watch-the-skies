@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, Icon, Progress, Steps } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
@@ -42,10 +42,100 @@ class Science extends Component {
                         <h5>No dashboard has been coded for the Science Module!</h5>
                     )}/>
                     <Route path={`${url}/research`}  render={() => (
-                        <h5>The research system for the Science Module has not been created!</h5>
+                        <React.Fragment><h5>Active focus: Computer Science I</h5><Progress.Line percent={25} status='active' /></React.Fragment>
                     )}/>
                     <Route path={`${url}/knowledge`} render={() => (
-                        <h5>The knowledge system for the Science Module has not been created!</h5>
+                        <div>
+                            <h5>Astrophysics</h5>
+                            <Steps current={0} small>
+                                <Steps.Item title="Researching..." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <h5>Biology</h5>
+                            <Steps current={0} small>
+                                <Steps.Item title="Researching..." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Computer Science</p>
+                            <Steps current={1} small>
+                                <Steps.Item title="Published" />
+                                <Steps.Item title="Researching..." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Electronics</p>
+                            <Steps current={1} small>
+                                <Steps.Item title="Published." />
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Engineering</p>
+                            <Steps current={2} small>
+                                <Steps.Item title="Published" />
+                                <Steps.Item title="Published" />
+                                <Steps.Item title="Researching..." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Genetics</p>
+                            <Steps current={1} small>
+                                <Steps.Item title="Published." />
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Material Science</p>
+                            <Steps current={0} small>
+                                <Steps.Item title="Published." />
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Psychology</p>
+                            <Steps current={3} small>
+                                <Steps.Item title="Published." />
+                                <Steps.Item title="Published" />
+                                <Steps.Item title="Published" />
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Social Science</p>
+                            <Steps current={1} small>
+                                <Steps.Item title="Published." />
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                            <hr />
+                            <p>Theoretical Physics</p>
+                            <Steps current={0} small>
+                                <Steps.Item title="Researching.." />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                                <Steps.Item title="Unavailible" />
+                            </Steps>
+                        </div>
                     )}/>
                     <Route path={`${url}/applied`}  render={() => (
                         <h5>The applied technology system for the Science Module has not been created!</h5>
