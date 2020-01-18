@@ -30,9 +30,10 @@ router.get('/bnc', async function (req, res) {
 // @Desc    Post a new article
 // @access  Public
 router.post('/', async function (req, res) {
-    let { agency, turn, date, location, headline, body, imageSrc } = req.body;
-    const { error } = validateArticle(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    console.log('Someone is submitting...')
+    let { agency, turn, date, location, headline, body } = req.body;
+    // const { error } = validateArticle(req.body);
+    // if (error) return res.status(400).send(error.details[0].message);
 
     let gameTime = getTimeRemaining();
 
@@ -43,7 +44,7 @@ router.post('/', async function (req, res) {
     }
     
     let article = new Article(
-        { agency, timestamp, location, headline, body, imageSrc }
+        { agency, timestamp, location, headline, body }
     );
 
     article = await article.save();
