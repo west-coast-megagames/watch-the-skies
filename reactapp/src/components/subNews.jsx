@@ -3,8 +3,6 @@ import axios from 'axios'
 import { gameServer } from '../config'
 import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker } from 'rsuite';
 
-const { StringType, NumberType } = Schema.Types;
-
 
 class TextField extends React.PureComponent {
   render() {
@@ -23,11 +21,11 @@ class SubNews extends React.Component {
     super(props);
     this.state = {
       formValue: {
-        agency: { type: String, uppercase: true, required: true },
-        location: { type: String, required: true, minlength: 2, maxlength: 2 },
-        headline: { type: String, required: true, minlength: 10, maxlength: 100 },
-        body: {type: String, required: true, minlength: 60, maxlength: 1000},
-        imageSrc: { type: String }
+        agency: "",
+        location: "",
+        headline: "",
+        body: "",
+        imageSrc: ""
       },
       formError: {}
     };
