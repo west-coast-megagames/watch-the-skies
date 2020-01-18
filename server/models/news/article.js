@@ -9,9 +9,9 @@ const ArticleSchema = new Schema({
     turn: { type: String, default: "Test Turn"},
     phase: { type: String, default: "Test Phase"},
   },
-  location: { type: String, required: true, minlength: 2, maxlength: 2 },
+  location: { type: String, required: true },
   headline: { type: String, required: true, minlength: 10, maxlength: 100 },
-  body: {type: String, required: true, minlength: 60, maxlength: 1000},
+  body: {type: String, required: true, minlength: 0, maxlength: 1000},
   imageSrc: { type: String }
 });
 
@@ -23,7 +23,7 @@ function validateArticle(article) {
     //turn: Joi.string().required(),
     location: Joi.string().min(2).max(2).required(),
     headline: Joi.string().min(10).max(100).required(),
-    body: Joi.string().min(60).max(1000).required(), 
+    body: Joi.string().min(1).max(1000).required(), 
     imageSrc: Joi.string()
   };
 

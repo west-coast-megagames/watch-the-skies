@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const { logger } = require('./middleware/winston');
 
-require('supports-color');
+require('supports-color'); // Allows colors for debug panel
 
 // Import of the temparary Alert socket route for v0.1.1
 const { alerts } = require('./wts/notifications/alerts');
@@ -18,6 +18,8 @@ require('./startup/db')(); // Bootup of MongoDB through Mongoose
 require('./startup/config')(); // Bootup for special configurations
 require('./startup/prod')(app); // Production compression and middleware
 require('./config/sockets')(io); // Main websocket routes
+require('./wts/research/technology')() // REMOVE WHEN YOU IMPLEMENT A CONTROL ROUTE TO LOAD TECH TREE!!!
+
 // Socket.io routes are currently housed in config/sockets.js)
 alerts(io); // Temp alert route for v0.1.1
 
