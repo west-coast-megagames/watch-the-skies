@@ -19,6 +19,10 @@ describe('/zones/', () => {
     await Zone.deleteOne({ zoneCode: 'ZA'});
     await Zone.deleteOne({ zoneCode: 'ZB'});
     await Zone.deleteOne({ zoneCode: 'ZC'});
+    await Zone.deleteOne({ zoneCode: 'ZD'});
+    await Zone.deleteOne({ zoneCode: 'ZE'});
+    await Zone.deleteOne({ zoneCode: 'ZF'});
+    await Zone.deleteOne({ zoneCode: 'ZG'});
     server.close(); 
   });
 
@@ -26,9 +30,11 @@ describe('/zones/', () => {
     it('should return all zones', async () => {
       await Zone.collection.insertMany([
         { zoneCode: 'Z1', 
-          zoneName: 'Zone Test 1'},
+          zoneName: 'Zone Test 1', 
+          terror: 5},
         { zoneCode: 'Z2', 
-          zoneName: 'Zone Test 2'}
+          zoneName: 'Zone Test 2',
+          terror: 5}
       ])
       const res = await request(server).get('/api/zones');
       expect(res.status).toBe(200);
@@ -43,7 +49,8 @@ describe('/zones/', () => {
     it('should return a zone if valid id is passed', async () => {
       const zone = new Zone(
       { zoneCode: 'Z3', 
-        zoneName: 'Zone Test 3' 
+        zoneName: 'Zone Test 3',
+        terror: 5 
       });
       await zone.save();
 
@@ -64,7 +71,8 @@ describe('/zones/', () => {
     it('should return a zone if valid code is passed', async () => {
       const zone = new Zone(
       { zoneCode: 'Z4', 
-        zoneName: 'Zone Test 4' 
+        zoneName: 'Zone Test 4',
+        terror: 5 
       });
       await zone.save();
 
@@ -73,8 +81,10 @@ describe('/zones/', () => {
       //returns array of 1 object
       const returnedZoneCode = res.body[0].zoneCode;
       const returnedZoneName = res.body[0].zoneName;
+      const returnedTerror = res.body[0].terror;
       expect(returnedZoneCode).toMatch(/Z4/);
       expect(returnedZoneName).toMatch(/Zone Test 4/);
+      expect(returnedTerror).toEqual(5);
     });
 
     it('should return 404 if invalid code is passed', async () => {
@@ -90,29 +100,31 @@ describe('/zones/', () => {
     let token; 
     let newZoneName;
     let newZoneCode;
+    let newTerror;
     const exec = async () => {
       return await request(server)
       .post('api/zones/')
-      .send({ zoneCode: newZoneCode, zoneName: newZoneName });
+      .send({ zoneCode: newZoneCode, zoneName: newZoneName, terror: newTerror });
     }  
 
     beforeEach(() => {
       newZoneCode = 'Z5';
       newZoneName = 'Post Zone Test 1';
+      newTerror = 5;
     });
 
     it('should return 400 if zone zoneCode is less than 2 characters', async () => {
-      const res = await request(server).post('/api/zones').send({ zoneCode: "Z", zoneName: 'Test Zone Val 1' });
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z", zoneName: 'Test Zone Val 1', terror: 5 });
       expect(res.status).toBe(400);
     });
 
     it('should return 400 if zone zoneCode is greater than 2 characters', async () => {
-      const res = await request(server).post('/api/zones').send({ zoneCode: "Z12", zoneName: 'Test Zone Val 2' });
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z12", zoneName: 'Test Zone Val 2', terror: 5  });
       expect(res.status).toBe(400);
     });
 
     it('should return 400 if zone zoneName is less than 3 characters', async () => {
-      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: '12' });
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: '12', terror: 5 });
       expect(res.status).toBe(400);
     });
 
@@ -120,20 +132,32 @@ describe('/zones/', () => {
 
       // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation
       const testZoneName = new Array(52).join('a');
-      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: testZoneName});
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: testZoneName, terror: 5 });
       expect(res.status).toBe(400);
+    });
+
+    it('should return 400 if zone terror is less than 0', async () => {
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: 'Test Zone Terror Post', terror: -1 });
+      expect(res.status).toBe(400);
+      expect(res.text).toMatch(/must be larger than/)
+    });
+
+    it('should return 400 if zone terror is greater than 250', async () => {
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z6", zoneName: 'Test Zone Terror Post', terror: 300 });
+      expect(res.status).toBe(400);
+      expect(res.text).toMatch(/must be less than/)
     });
 
     it('should return 400 if zoneCode is already used (in database)', async () => {
 
-      const res = await request(server).post('/api/zones').send({ zoneCode: "NA", zoneName: 'Test Zone Unique' });
+      const res = await request(server).post('/api/zones').send({ zoneCode: "NA", zoneName: 'Test Zone Unique', terror: 5 });
         
       expect(res.status).toBe(400);
     });
 
     it('should save the zone if it is valid', async () => {
 
-      const res = await request(server).post('/api/zones').send({ zoneCode: "Z7", zoneName: 'Test Zone Post' });
+      const res = await request(server).post('/api/zones').send({ zoneCode: "Z7", zoneName: 'Test Zone Post', terror: 5 });
 
       const zone = await Zone.find({ zoneCode: 'Z7' });
 
@@ -150,7 +174,7 @@ describe('/zones/', () => {
     
     it('should return 400 if zoneName is less than 3 characters', async () => {
       //create a zone 
-      const res0 = await request(server).post('/api/zones').send({ zoneCode: "Z8", zoneName: 'Test Zone PUT 1' });
+      const res0 = await request(server).post('/api/zones').send({ zoneCode: "Z8", zoneName: 'Test Zone PUT 1', terror: 5 });
 
       const zone = await Zone.findOne({ zoneCode: 'Z8' });
       
@@ -158,7 +182,7 @@ describe('/zones/', () => {
 
       newZoneName = 'T1'; 
             
-      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: zone.zoneCode, zoneName: newZoneName});
+      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: zone.zoneCode, zoneName: newZoneName, terror: zone.terror});
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -167,18 +191,49 @@ describe('/zones/', () => {
 
     it('should return 400 if zoneName is more than 50 characters', async () => {
       //create a zone 
-      // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation
-      const res0 = await request(server).post('/api/zones/').send({ zoneCode: "Z9", zoneName: 'Test Zone PUT 2' });
+      const res0 = await request(server).post('/api/zones/').send({ zoneCode: "Z9", zoneName: 'Test Zone PUT 2', terror: 5 });
 
       const zone = await Zone.findOne({ zoneCode: 'Z9' });
   
-      id = zone._id;   
+      id = zone._id;  
+      // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation 
       newZoneName = new Array(52).join('a');
         
-      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: "Z9", zoneName: newZoneName });
+      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: "Z9", zoneName: newZoneName, terror: 5 });
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
+    });
+
+    it('should return 400 if zone terror is less than 0', async () => {
+      // create a zone
+      const res0 = await request(server).post('/api/zones').send({ zoneCode: "ZD", zoneName: 'Test Zone Terror', terror: 5 });
+      
+      const zone = await Zone.findOne({ zoneCode: 'ZD' });
+  
+      id = zone._id;  
+      newTerror = -1;
+     
+      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: "ZD", zoneName: zone.zoneName, terror: newTerror });
+      
+      expect(res.status).toBe(400);
+      expect(res.text).toMatch(/must be larger than/)
+      
+    });
+
+    it('should return 400 if zone terror is greater than 250', async () => {
+      // create a zone
+      const res0 = await request(server).post('/api/zones').send({ zoneCode: "ZE", zoneName: 'Test Zone Terror 2', terror: 5 });
+      
+      const zone = await Zone.findOne({ zoneCode: 'ZE' });
+  
+      id = zone._id;  
+      newTerror = 500;
+     
+      const res = await request(server).put('/api/zones/' + id).send({ zoneCode: "ZE", zoneName: zone.zoneName, terror: newTerror });
+      
+      expect(res.status).toBe(400);
+      expect(res.text).toMatch(/must be less than/)
     });
     
     it('should return 404 if id is invalid', async () => {

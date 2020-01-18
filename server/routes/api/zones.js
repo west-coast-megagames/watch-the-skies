@@ -48,10 +48,10 @@ router.get('/code/:zoneCode', async (req, res) => {
 // @Desc    Create New Zone
 // @access  Public
 router.post('/', async (req, res) => {
-  let { zoneCode, zoneName } = req.body;
+  let { zoneCode, zoneName, terror } = req.body;
   zoneDebugger("In Zone Post ... Code: ", zoneCode, "Name: ", zoneName);
   const newZone = new Zone(
-      { zoneCode, zoneName }
+      { zoneCode, zoneName, terror }
   );
     let docs = await Zone.find({ zoneCode })
     if (!docs.length) {
@@ -77,8 +77,9 @@ router.put('/:id', validateObjectId, async (req, res) => {
 
     const zone = await Zone.findByIdAndUpdate( req.params.id,
       { zoneName: req.body.zoneName,
-        zoneCode: req.body.zoneCode }, 
-      { new: true }
+        zoneCode: req.body.zoneCode,
+        terror: req.body.terror }, 
+      { new: true, omitUndefined: true }
     );
 
     if (zone != null) {

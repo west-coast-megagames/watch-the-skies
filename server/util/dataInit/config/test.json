@@ -1,5 +1,6 @@
 {
     "initPath": "./",
     "dbName": "auto-test",
-    "loadSel": "All"
+    "loadSel": "All",
+    "jwtPrivateKey": "rawr"
 }

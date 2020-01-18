@@ -162,6 +162,7 @@ import Registration from './../components/registration';
                     <Route path="/news" render={(props) => (
                       <News {...props}
                         news={ this.props.news }
+                        alert={ this.props.addAlert }
                       />
                     )}/>
                     <Route path="/control" render={(props) => (

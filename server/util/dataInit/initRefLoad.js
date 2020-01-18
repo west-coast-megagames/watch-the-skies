@@ -254,12 +254,12 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
           countryInitDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
         } else {
           country.team.team_id  = team._id;
-          country.team.teamName = team.shortName;
+          country.team.teamName = team.name;                    //team.shortName is not set yet
           country.team.teamCode = team.teamCode;
           countryInitDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
         }
       }      
-
+      
       let { error } = validateCountry(country); 
       if (error) {
         countryInitDebugger("New Country Validate Error", country.code, error.message);
@@ -294,7 +294,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
             countryInitDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
           } else {
             country.team.team_id  = team._id;
-            country.team.teamName = team.shortName;
+            country.team.teamName = team.name;          // team.shortName; is not set yet
             country.team.teamCode = team.teamCode;
             countryInitDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
           }

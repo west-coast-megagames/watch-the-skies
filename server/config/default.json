@@ -1,5 +1,6 @@
 {
     "jwtPrivateKey": "rawr",
     "initPath": "./util/dataInit/",
-    "dbName": "test"
+    "dbName": "test",
+    "loadSel": "All"
 }
