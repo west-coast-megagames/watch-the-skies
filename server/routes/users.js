@@ -34,7 +34,7 @@ router.post('/', async function (req, res) {
         if (req.body.teamCode != ""){
           let team = await Team.findOne({ teamCode: req.body.teamCode });  
           if (!team) {
-            console.log("User Load Team Error, New User:", req.body.username, " Team: ", req.body.teamCode);
+            console.log("User Post Team Error, New User:", req.body.username, " Team: ", req.body.teamCode);
           } else {
             user.team.team_id  = team._id;
             user.team.teamName = team.shortName;
@@ -64,8 +64,12 @@ router.post('/', async function (req, res) {
 // @access  Public
 router.get('/me', auth, async function (req, res) {
     const user = await User.findById(req.user._id).select('username email name')
-    console.log(`Verifying ${user.username}`);
-    res.json(user);
+    if (users != null) {
+      console.log(`Verifying ${user.username}`);
+      res.json(user);
+    } else {
+      res.status(404).send(`The User with the ID ${id} was not found!`);
+    }
 });
 
 // @route   GET /user
@@ -110,7 +114,8 @@ router.put('/:id', validateObjectId, async (req, res) => {
         discord: req.body.discord 
       },  
       {
-        new: true
+        new: true, 
+        omitUndefined: true
     });
   
     if (!user) return res.status(404).send('The user with the given ID was not found.');

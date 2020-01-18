@@ -79,7 +79,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
       { zoneName: req.body.zoneName,
         zoneCode: req.body.zoneCode,
         terror: req.body.terror }, 
-      { new: true }
+      { new: true, omitUndefined: true }
     );
 
     if (zone != null) {

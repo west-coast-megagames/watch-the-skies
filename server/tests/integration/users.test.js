@@ -4,23 +4,27 @@ const mongoose = require('mongoose');
 
 let server;
 
-describe('/users/', () => {
+describe('/user/', () => {
   beforeEach(() => { server = require('../../server'); });
   afterEach(async () => { 
     server.close(); 
-    await User.deleteOne({ screenname: 'Utest1'});
-    await User.deleteOne({ screenname: 'Utest2'});
-    await User.deleteOne({ screenname: 'Utest3'});
-    await User.deleteOne({ screenname: 'Utest4'});
-    await User.deleteOne({ screenname: 'Utest7'});
-    await User.deleteOne({ screenname: 'Putuser1'});
-    await User.deleteOne({ screenname: 'Putuser2'});
-    await User.deleteOne({ screenname: 'Putuser3'});
-    await User.deleteOne({ screenname: 'Putuser4'});
-    await User.deleteOne({ screenname: 'UpdPutUser4'});
-    await User.deleteOne({ screenname: 'Putuser5'});
-    await User.deleteOne({ screenname: 'UpdPutUser5'});
-    await User.deleteOne({ screenname: 'Deluser1'});
+    await User.deleteOne({ username: 'Utest1'});
+    await User.deleteOne({ username: 'Utest2'});
+    await User.deleteOne({ username: 'Utest3'});
+    await User.deleteOne({ username: 'Utest3a'});
+    await User.deleteOne({ username: 'Utest3b'});
+    await User.deleteOne({ username: 'Utest3c'});
+    await User.deleteOne({ username: 'Utest3d'});
+    await User.deleteOne({ username: 'Utest4'});
+    await User.deleteOne({ username: 'Utest7'});
+    await User.deleteOne({ username: 'Putuser1'});
+    await User.deleteOne({ username: 'Putuser2'});
+    await User.deleteOne({ username: 'Putuser3'});
+    await User.deleteOne({ username: 'Putuser4'});
+    await User.deleteOne({ username: 'UpdPutUser4'});
+    await User.deleteOne({ username: 'Putuser5'});
+    await User.deleteOne({ username: 'UpdPutUser5'});
+    await User.deleteOne({ username: 'Deluser1'});
   });
 
   describe('Get /', () => {
@@ -28,67 +32,166 @@ describe('/users/', () => {
       await User.collection.insertMany([
         { first: 'John', 
           last: 'Doe', 
-          DoB: "1991-01-01",
+          dob: "1991-01-01",
           email: 'testing@gmail.com', 
-          screenname: 'Utest1', 
+          username: 'Utest1', 
           phone: '9161112222', 
           gender: 'Male',
           password: 'PWtest22',
           discord: 'Dtest1' },
          { first: 'Jane', 
            last: 'Doe', 
-           DoB: "1991-02-01",
+           dob: "1991-02-01",
            email: 'testing2@gmail.com', 
-           screenname: 'Utest2', 
+           username: 'Utest2', 
            phone: '9161112223', 
            gender: 'Female',
            password: 'PWtest23',
            discord: 'Dtest2' },   
       ])
-      const res = await request(server).get('/users');
+      const res = await request(server).get('/user');
       expect(res.status).toBe(200);
       expect(res.body.length).toBeGreaterThanOrEqual(2);
-      expect(res.body.some(u => u.screenname === 'Utest1')).toBeTruthy();
-      expect(res.body.some(u => u.screenname === 'Utest2')).toBeTruthy();
-      expect(res.body.some(u => u.screenname === 'HOS UK')).toBeTruthy();
+      expect(res.body.some(u => u.username === 'Utest1')).toBeTruthy();
+      expect(res.body.some(u => u.username === 'Utest2')).toBeTruthy();
+      expect(res.body.some(u => u.username === 'HOS UK')).toBeTruthy();
     });
   });
+
 
   describe('Get /:id', () => {
     it('should return a user if valid id is passed', async () => {
       const user = new User(
         { email: 'testing3@gmail.com', 
-          screenname: 'Utest3', 
+          username: 'Utest3', 
           phone: '9161112222', 
           gender: 'Male',
           password: 'PWtest23',
-          DoB: "1991-03-01",
+          dob: "1991-03-01",
           discord: 'Dtest3' 
         });
         user.name.first = 'John';
         user.name.last  = 'Doe';
         await user.save();
 
-        const res = await request(server).get('/users/id/' + user._id);
+        const res = await request(server).get('/user/id/' + user._id);
         expect(res.status).toBe(200);
-        expect(res.body).toHaveProperty('screenname', user.screenname);
+        expect(res.body).toHaveProperty('username', user.username);
     });
 
     it('should return 404 if invalid id is passed', async () => {
         // pass in invalid id ... don't need to create a record
-        const res = await request(server).get('/users/id/1');
+        const res = await request(server).get('/user/id/1');
         expect(res.status).toBe(404);
         expect(res.text).toMatch(/Invalid ID/);
     });
 
     it('should return 404 if no user with given id exists', async () => {
       const id = mongoose.Types.ObjectId();
-      const res = await request(server).get('/users/id/' + id);
+      const res = await request(server).get('/user/id/' + id);
 
       expect(res.status).toBe(404);
     });
 
   });  
+
+/*   NOT READY YET
+  describe('Get /me', () => {
+    it('should return a user if valid id/token is passed', async () => {
+      const user = new User(
+        { email: 'testing3a@gmail.com', 
+          username: 'Utest3a', 
+          phone: '9161112222', 
+          gender: 'Male',
+          password: 'PWtest23a',
+          dob: "1991-03-01",
+          discord: 'Dtest3a' 
+        });
+        user.name.first = 'John';
+        user.name.last  = 'Doe';
+        const token = user.generateAuthToken();
+        await user.save();
+
+        const res = await request(server).get('/user/me')
+          .set('x-auth-token', token)
+          .send({ user });
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('username', user.username);
+    });
+
+    it('should return 404 if invalid id is passed', async () => {
+        
+      const user = new User(
+        { email: 'testing3b@gmail.com', 
+          username: 'Utest3b', 
+          phone: '9161112222', 
+          gender: 'Male',
+          password: 'PWtest23b',
+          dob: "1991-03-01",
+          discord: 'Dtest3b' 
+        });
+        user.name.first = 'John';
+        user.name.last  = 'Doeb';
+        const token = user.generateAuthToken();
+        await user.save();
+        user._id = "3b"
+        const res = await request(server).get('/user/me')
+          .set('x-auth-token', token)
+          .send({ user });
+        expect(res.status).toBe(404);
+        expect(res.text).toMatch(/Invalid ID/);
+    });
+
+    it('should return 404 if no user with given id exists', async () => {
+      const id = mongoose.Types.ObjectId();
+
+      const user = new User(
+        { email: 'testing3c@gmail.com', 
+          username: 'Utest3c', 
+          phone: '9161112222', 
+          gender: 'Male',
+          password: 'PWtest23c',
+          dob: "1991-03-01",
+          discord: 'Dtest3c' 
+        });
+        user.name.first = 'John';
+        user.name.last  = 'Doec';
+        const token = user.generateAuthToken();
+        await user.save();
+        user._id = id;
+        const res = await request(server).get('/user/me')
+          .set('x-auth-token', token)
+          .send({ user });
+
+      expect(res.status).toBe(404);
+      expect(res.text).toMatch(/not found/);
+    });
+
+    it('should return 401 if no token is passed', async () => {
+      const user = new User(
+        { email: 'testing3d@gmail.com', 
+          username: 'Utest3d', 
+          phone: '9161112222', 
+          gender: 'Male',
+          password: 'PWtest23d',
+          dob: "1991-03-01",
+          discord: 'Dtest3d' 
+        });
+        user.name.first = 'John';
+        user.name.last  = 'Doed';
+        const token = "";    //user.generateAuthToken();
+        await user.save();
+        
+        const res = await request(server).get('/user/me')
+          .send({ user });
+          // .set('x-auth-token', token)
+
+        expect(res.status).toBe(401);
+        expect(res.text).toMatch(/denied/);
+    });
+    
+  });
+*/
 
   describe('POST /', () => {
   
@@ -96,59 +199,59 @@ describe('/users/', () => {
        so only here as an example of what we might use in the future
 
     let token;   // define token var to be used in exec calls to vary
-    let screenname;
+    let username;
     const exec = async () => {
       return await request(server)
-      .post('/users')
+      .post('/user')
       .set('x-auth-token', token)
-      .send({ screenname: screenname });
+      .send({ username: username });
     }  
 
     beforeEach(() => {
       token = new User().generateAuthToken();
-      screenname = 'Utest4';
+      username = 'Utest4';
     });
     */
 
     /* following test assumes middleware auth is part of POST to test if user is logged in
     it('should return 401 if client is not logged in', async () => {
       token = '';   // not logged in as token is empty
-      screenname = 'Utest1';
+      username = 'Utest1';
       const res = await exec();
-      //const res = await request(server).post('/users').send({ screenname: screenname });
+      //const res = await request(server).post('/user').send({ username: username });
       expect(res.status).toBe(401);
     });
     */
  
-    it('should return 400 if user screenname is less than 5 characters', async () => {
+    it('should return 400 if user username is less than 5 characters', async () => {
       /* if auth was part of post ... using the exec function defined above
-      screenname = '1234';
+      username = '1234';
       const res = await exec(); ... this instead of the const res below
       */
 
-      const res = await request(server).post('/users').send({ screenname: '1234'});
+      const res = await request(server).post('/user').send({ username: '1234'});
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
 
-    it('should return 400 if user screenname is more than 15 characters', async () => {
+    it('should return 400 if user username is more than 15 characters', async () => {
 
       // generate a string from array number of elements minus 1 ... so 16 chars > 15 in joi validation
       const testScreenname = new Array(17).join('a');
-      const res = await request(server).post('/users').send({ screenname: testScreenname});
+      const res = await request(server).post('/user').send({ username: testScreenname});
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
 
     it('should return 400 if user email is already used (in database)', async () => {
 
-      const res = await request(server).post('/users').send({ email: 'Art@gmail.com', 
-        screenname: 'Utest7', 
+      const res = await request(server).post('/user').send({ email: 'Art@gmail.com', 
+        username: 'Utest7', 
         phone: '9161112237', 
         gender: 'Male',
         password: 'PWtest37',
         discord: 'Dtest7',
-        DoB: "1997-07-01",
+        dob: "1997-07-01",
         "name":
           {"first": "Jorge",
           "last": "Sport"
@@ -161,9 +264,9 @@ describe('/users/', () => {
 
     it('should save the user if it is valid', async () => {
 
-      const res = await request(server).post('/users').send({ screenname: 'Utest3'});
+      const res = await request(server).post('/user').send({ username: 'Utest3'});
 
-      const user = await User.find({ screenname: 'Utest3' });
+      const user = await User.find({ username: 'Utest3' });
 
       expect(user).not.toBeNull();
     });
@@ -175,13 +278,13 @@ describe('/users/', () => {
       await exec();
       */
 
-      const res = await request(server).post('/users').send({ email: 'testing4@gmail.com', 
-        screenname: 'Utest4', 
+      const res = await request(server).post('/user').send({ email: 'testing4@gmail.com', 
+        username: 'Utest4', 
         phone: '9161112230', 
         gender: 'Male',
         password: 'PWtest30',
         discord: 'Dtest4',
-        DoB: "1991-04-01",
+        dob: "1991-04-01",
         "name":
           {"first": "Jack",
           "last": "Sprat"
@@ -191,7 +294,7 @@ describe('/users/', () => {
       expect(res.status).toBe(200); 
       //don't care what _id is ... just that we got one
       expect(res.body).toHaveProperty('_id');   
-      //testing for specific screenname
+      //testing for specific username
       expect(res.body).toHaveProperty('email', 'testing4@gmail.com'); 
     });
   });
@@ -211,12 +314,12 @@ describe('/users/', () => {
     it('should return 400 if user is less than 5 characters', async () => {
       token = new User().generateAuthToken();    
       //create a user 
-      user = new User({ screenname: 'Putuser1',
+      user = new User({ username: 'Putuser1',
         email: 'puttest1@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -226,7 +329,7 @@ describe('/users/', () => {
       id = user._id;   
       newScreenname = '1234'; 
         
-      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+      const res = await request(server).put('/user/' + user._id).send({ username: newScreenname});
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -236,12 +339,12 @@ describe('/users/', () => {
 
       token = new User().generateAuthToken();    
       //create a user 
-      user = new User({ screenname: 'Putuser2',
+      user = new User({ username: 'Putuser2',
         email: 'puttest2@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -251,7 +354,7 @@ describe('/users/', () => {
       id = user._id;   
       newScreenname = new Array(17).join('a');
         
-      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname});
+      const res = await request(server).put('/user/' + user._id).send({ username: newScreenname});
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -260,12 +363,12 @@ describe('/users/', () => {
     it('should return 404 if id is invalid', async () => {
       token = new User().generateAuthToken();    
       //create a user 
-      user = new User({ screenname: 'Putuser3',
+      user = new User({ username: 'Putuser3',
         email: 'puttest3@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -273,9 +376,9 @@ describe('/users/', () => {
       await user.save();
   
       let id = 1;   
-      newScreenname = user.screenname;
+      newScreenname = user.username;
         
-      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname});
+      const res = await request(server).put('/user/' + id).send({ username: newScreenname});
   
       expect(res.status).toBe(404);
       expect(res.text).toMatch(/Invalid ID/);
@@ -285,13 +388,13 @@ describe('/users/', () => {
       id = mongoose.Types.ObjectId();
       newScreenname = "HOS USA";
   
-      const res = await request(server).put('/users/' + id).send({ screenname: newScreenname,
+      const res = await request(server).put('/user/' + id).send({ username: newScreenname,
         email: "PutUser99@hotmail.com",
         phone: '9161112237', 
         gender: 'Male',
         password: 'PWtest37',
         discord: 'Dtest7',
-        DoB: "1997-07-01",
+        dob: "1997-07-01",
         "name":
           {"first": "Jorge",
           "last": "Sport"
@@ -305,12 +408,12 @@ describe('/users/', () => {
     
       token = new User().generateAuthToken();    
       //create a user 
-      user = new User({ screenname: 'Putuser4',
+      user = new User({ username: 'Putuser4',
         email: 'puttest4@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -319,13 +422,13 @@ describe('/users/', () => {
   
       newScreenname = "UpdPutUser4";
         
-      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+      const res = await request(server).put('/user/' + user._id).send({ username: newScreenname,
         email: user.email,
         phone: user.phone, 
         gender: user.gender,
         password: user.password,
         discord: user.discord,
-        DoB: user.DoB,
+        dob: user.dob,
         "name":
           {"first": user.name.first,
           "last": user.name.last
@@ -334,19 +437,19 @@ describe('/users/', () => {
   
       const updatedUser = await User.findById(user._id);
   
-      expect(updatedUser.screenname).toBe(newScreenname);
+      expect(updatedUser.username).toBe(newScreenname);
     });
 
     it('should return the updated user if it is valid', async () => {
       
       token = new User().generateAuthToken();    
       //create a user 
-      user = new User({ screenname: 'Putuser5',
+      user = new User({ username: 'Putuser5',
         email: 'puttest5@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -355,13 +458,13 @@ describe('/users/', () => {
   
       newScreenname = "UpdPutUser5";
   
-      const res = await request(server).put('/users/' + user._id).send({ screenname: newScreenname,
+      const res = await request(server).put('/user/' + user._id).send({ username: newScreenname,
         email: user.email,
         phone: user.phone, 
         gender: user.gender,
         password: user.password,
         discord: user.discord,
-        DoB: user.DoB,
+        dob: user.dob,
         "name":
           {"first": user.name.first,
           "last": user.name.last
@@ -369,7 +472,7 @@ describe('/users/', () => {
       });
   
       expect(res.body).toHaveProperty('_id');
-      expect(res.body).toHaveProperty('screenname', newScreenname);
+      expect(res.body).toHaveProperty('username', newScreenname);
     });
 
   });
@@ -381,7 +484,7 @@ describe('/users/', () => {
 
     const exec = async () => {
       return await request(server)
-        .delete('/users/' + id)
+        .delete('/user/' + id)
         .set('x-auth-token', token)
         .send();
     }
@@ -389,12 +492,12 @@ describe('/users/', () => {
     beforeEach(async () => {
       // Before each test we need to create a user and 
       // put it in the database.      
-      user = new User({ screenname: 'Deluser1',
+      user = new User({ username: 'Deluser1',
         email: 'deltest2@gmail.com', 
         phone: '9161112240', 
         gender: 'Male',
         password: 'PWtest40',
-        DoB: "1991-12-01",
+        dob: "1991-12-01",
         discord: 'Dtest40' 
       });
       user.name.first = 'Alan';
@@ -435,7 +538,7 @@ describe('/users/', () => {
       const res = await exec();
 
       expect(res.body).toHaveProperty('_id', user._id.toHexString());
-      expect(res.body).toHaveProperty('screenname', user.screenname);
+      expect(res.body).toHaveProperty('username', user.username);
     });
     
   });  
@@ -444,7 +547,7 @@ describe('/users/', () => {
     
     it('should be no users if successful', async () => {
 
-      const res = await request(server).patch('/users/deleteAll');
+      const res = await request(server).patch('/user/deleteAll');
 
       expect(res.status).toBe(200);
       
@@ -453,5 +556,4 @@ describe('/users/', () => {
     });    
 
   });
-
 });

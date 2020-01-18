@@ -13,7 +13,7 @@ describe('auth middleware', () => {
 
   const exec = () => {
       return request(server)
-        .post('/users')
+        .post('/user')
         .set('x-auth-token', token)
         .send({ email: 'testing5@gmail.com', 
           username: 'Utest5', 
