@@ -4,6 +4,7 @@ import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
+import SubNews from '../components/subNews';
 
 class Diplomacy extends Component {
     constructor() {
@@ -35,7 +36,7 @@ class Diplomacy extends Component {
             <Content style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
-                        <h5>No posts feed has been coded for the News Module!</h5>
+                        <SubNews agency = 'GNN' alert={ this.props.alert } />
                     )}/>
                     <Route path={`${url}/gnn`}  render={() => (
                         <NewsFeed agency='GNN' articles={ this.props.news.gnn } />
