@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 
