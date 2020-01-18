@@ -9,7 +9,7 @@ const supportsColor = require('supports-color');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 //mongoose.set('useNewUrlParser', true);
 //mongoose.set('useFindAndModify', false);
