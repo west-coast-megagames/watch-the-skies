@@ -31,11 +31,15 @@ class Diplomacy extends Component {
                     <Nav.Item eventKey="gnn" to={`${url}/gnn`} componentClass={NavLink} > GNN News Feed</Nav.Item>
                     <Nav.Item eventKey="bnc" to={`${url}/bnc`} componentClass={NavLink} > BNC News Feed</Nav.Item>
                     <Nav.Item eventKey="releases" to={`${url}/releases`} componentClass={NavLink} > Press Releases</Nav.Item>
+                    <Nav.Item eventKey="add" to={`${url}/add`} componentClass={NavLink} > Add News</Nav.Item>
                 </Nav>
             </Header>
             <Content style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
+                        <NewsFeed agency='All' articles={ this.props.news.gnn.concat(this.props.news.bnc) } />
+                    )}/>
+                    <Route path={`${url}/add`} render={() => (
                         <SubNews agency = 'GNN' alert={ this.props.alert } />
                     )}/>
                     <Route path={`${url}/gnn`}  render={() => (

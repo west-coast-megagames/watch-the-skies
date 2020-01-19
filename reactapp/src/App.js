@@ -84,6 +84,7 @@ class App extends Component {
         bnc,
         gnn
       }
+      console.log(news);
       this.setState({ news })
     }
   
