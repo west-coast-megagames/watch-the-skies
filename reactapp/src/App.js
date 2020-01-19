@@ -14,8 +14,8 @@ import Toast from './components/toast'
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'font-awesome/css/font-awesome.css';
-import 'rsuite/dist/styles/rsuite-default.css'
-//import 'rsuite/dist/styles/rsuite-dark.css'
+import 'rsuite/dist/styles/rsuite-default.css';
+//import 'rsuite/dist/styles/rsuite-dark.css';
 
 import AlertPage from './components/common/alert';
 
