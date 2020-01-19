@@ -76,4 +76,16 @@ router.delete('/:id', async function (req, res) {
     }
 });
 
+router.delete('/', async function (req, res) {
+    let id = req.body._id;
+    const article = await Article.findByIdAndRemove(id);
+    console.log(article);
+    if (article != null) {
+        routeDebugger(`${article.headline} with the id ${id} was deleted!`);
+        res.status(200).send(article);
+    } else {
+        res.status(400).send(`No article with the id ${id} exists!`);
+    }
+});
+
 module.exports = router;

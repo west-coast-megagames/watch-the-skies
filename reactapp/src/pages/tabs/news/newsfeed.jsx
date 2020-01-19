@@ -14,9 +14,12 @@ const NewsFeed = (props) => {
             <h5>{ props.agency } News Feed</h5>
             <PanelGroup style={{ paddingTop: 10 }}>
                 { props.articles.map( article => (
-                    <Panel key={ article._id } header={ article.headline } collapsible bordered>
-                        <p>{ article.body }</p>
-                    </Panel>
+                    <div  class="artCont" key={ article._id }>
+                        <span class="delArticle" data-id={article._id}>X</span>
+                        <Panel key={ article._id } header={ article.headline } collapsible bordered>
+                            <p>{ article.body }</p>
+                        </Panel>
+                    </div>
                 ))}
             </PanelGroup>
         </Container>
