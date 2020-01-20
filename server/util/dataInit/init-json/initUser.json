@@ -121,7 +121,61 @@
      "zipcode" : "95608"},
 "dob" : "1986-12-03",
 "gender" : "Male",
-"discord" : "JT",
+"discord" : "FroBoyX#9805",
 "teamCode" : "USA"
+},
+{
+    "loadType" : "user",
+    "username" : "spearson",
+    "name" : {"first" : "Shawn", "last" : "Pearson" },
+    "email" : "illuminus@gmail.com",
+    "phone" : "",
+    "password" : "TempPassword",
+    "address" : 
+        {"street1" : "",
+         "street2" : "",
+         "city" : "",
+         "state" : "",
+         "zipcode" : ""},
+    "dob" : "1974-12-29",
+    "gender" : "Male",
+    "discord" : "illuminus#9763",
+    "teamCode" : "USA"
+},
+{
+    "loadType" : "user",
+    "username" : "eshen",
+    "name" : {"first" : "Eric", "last" : "Shen" },
+    "email" : "eric_shen@sbcglobal.net",
+    "phone" : "",
+    "password" : "TempPassword",
+    "address" : 
+        {"street1" : "",
+         "street2" : "",
+         "city" : "",
+         "state" : "",
+         "zipcode" : ""},
+    "dob" : "1966-10-15",
+    "gender" : "Male",
+    "discord" : "eshen#4992",
+    "teamCode" : "TUK"
+},
+{
+    "loadType" : "user",
+    "username" : "drewwww",
+    "name" : {"first" : "Drew", "last" : "Pascoal" },
+    "email" : "drewwwwdotcom@yahoo.com",
+    "phone" : "",
+    "password" : "TempPassword",
+    "address" : 
+        {"street1" : "",
+         "street2" : "",
+         "city" : "",
+         "state" : "",
+         "zipcode" : ""},
+    "dob" : "1975-04-05",
+    "gender" : "Male",
+    "discord" : "Drewwww#8011",
+    "teamCode" : "TUK"
 }
 ]
