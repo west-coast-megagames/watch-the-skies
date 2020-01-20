@@ -11,8 +11,11 @@ class Control extends Component {
     render(){
        return (
             <div className="center-text">
+                <h5>Game Clock Controls</h5>
                 <ClockControls />
-                <div>        
+                <hr />
+                <div>
+                    <h5>Interception Controls</h5>
                     <MDBBtnGroup>
                         <MDBBtn color="info" size="sm" onClick={ () => this.deployAliens() }>
                             Deploy Aliens
@@ -28,10 +31,21 @@ class Control extends Component {
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
+                <hr />
                 <div>
+                    <h5>Financial Controls</h5>
                     <MDBBtnGroup>
                         <MDBBtn color="info" size="sm" onClick={ () => this.resetAccounts() }>
                             Reset Accounts
+                        </MDBBtn>
+                    </MDBBtnGroup>
+                </div>
+                <hr />
+                <div>
+                    <h5>Research Controls</h5>
+                    <MDBBtnGroup>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
+                            Load Tech
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
@@ -79,6 +93,16 @@ class Control extends Component {
         try {
             const response = await axios.patch(`${gameServer}api/banking/accounts`)
             this.props.alert({type: 'success', title: 'Accounts Reset', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to reset accounts', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    loadTech = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/research/load`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Initial Technology Loaded', body: response.data})
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to reset accounts', body: `${err.response.data} - ${err.message}` })
         };

@@ -1,6 +1,8 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 
+let loadTech = require('../../wts/research/technology');
+
 const router = express.Router();
 
 // Research Models - Using Mongoose Model
@@ -49,6 +51,14 @@ router.post('/analysis', async function (req, res) {
     analysis = await analysis.save();
         console.log(`Analysis Completed...`);
         return res.json(analysis);            
+});
+
+// @route   POST api/research/tech
+// @Desc    Load all technology from JSON files
+// @access  Public
+router.patch('/load', async function (req, res) {
+    let response = await loadTech();
+    return res.status(200).send(response);
 });
 
 module.exports = router;
