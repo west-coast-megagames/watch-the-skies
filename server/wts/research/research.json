@@ -9,7 +9,7 @@
     "desc": "Focused laser technology that can be weaponized to create burst-fire beam weapons",
     "unlocks": [
         { "type": "upgrade", "name": "Laser Rifles" },
-        { "type": "technology", "name": "Percision Laser Weapons" }
+        { "type": "technology", "name": "Precision Laser Weapons" }
     ]
 },
 {   
@@ -19,7 +19,7 @@
     "prereq": ["Engineering I", "Materials I", "Astrophysics I", "Computer Science I"],
     "type": "Technology",
     "catagory": "Military",
-    "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy sattilights",
+    "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy satellites",
     "unlocks": [
         { "type": "system", "name": "Sat-Killer Weapon System" }
     ]
@@ -33,7 +33,7 @@
     "catagory": "Military",
     "desc": "Percision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems",
     "unlocks": [
-        { "type": "system", "name": "Percision Laser Cannon" }
+        { "type": "system", "name": "Precision Laser Cannon" }
     ]
 },
 {   
@@ -55,7 +55,7 @@
     "level": 1,
     "prereq": ["Materials I", "Computer Science I"],
     "type": "Technology",
-    "catagory": "Infrustructure",
+    "catagory": "Infrastructure",
     "desc": "Develops a framework for large-scale implementation of distributed network computing.",
     "unlocks": [
         { "type": "upgrade", "name": "Destributed Research Network" },
