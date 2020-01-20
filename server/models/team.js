@@ -18,7 +18,8 @@ const TeamSchema = new Schema({
   teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M'] },
   roles: [RoleSchema],
   prTrack: [Number],
-  prLevel: { type: Number }
+  prLevel: { type: Number },
+  sciRate: { type: Number, default: 25 }
 });
 
 TeamSchema.methods.validateTeam = function (team) {
