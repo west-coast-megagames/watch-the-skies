@@ -1,13 +1,8 @@
-const fs = require('fs')
 const techDebugger = require('debug')('app:tech');
 
 const { Team } = require('../../models/team');
 const Research = require('../../models/sci/research');
 const TechResearch = require('../../models/sci/techResearch');
-
-const { availibleTech, techTree, makeAvailible } = require('./research');
-const file = fs.readFileSync(require.resolve('./research.json'));
-const techData = JSON.parse(file);
 
 // Technology Constructor Function
 function Technology(tech) {
@@ -21,18 +16,21 @@ function Technology(tech) {
     this.checkAvailible = async function() {
         for (let team of await Team.find({ teamType: 'N' }, '_id name')) {
             let currentTech = await Research.findOne({ name: this.name, team_id: team._id });
+            techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
             if (!currentTech) {
-                console.log(`Checking ${team.name}'s eligibility to research ${this.name}`);
-
                 let count = 0;
                 let unlock = false;
+                let msg = ""
 
                 for (let req of this.prereq) {
-                console.log(`Checking for prereq ${req}...`);
-                let check = await Research.findOne({ name: req, team_id: team._id })
-                console.log(check);
-                if (check !== null) count++;
-                console.log(count);
+                    techDebugger(`${this.name}: Checking for prereq ${req}...`);
+                    let check = await Research.findOne({ name: req, team_id: team._id, 'status.completed': true })
+                    if (check !== null) {
+                        count++;
+                        techDebugger(`${this.name}: prereq ${req} found...`);
+                    } else {
+                        techDebugger(`${this.name}: prereq ${req} not found...`);
+                    }
                 };
 
                 if (count === this.prereq.length) {
@@ -40,7 +38,8 @@ function Technology(tech) {
                 }
 
                 if (unlock === true) {
-                    console.log(`Unlocking ${this.name} for ${team.name}`);
+                    msg = `${this.name}: Unlocking this tech for ${team.name}`
+                    techDebugger(msg);
                     let newTech = new TechResearch({
                         name: this.name,
                         level: this.level,
@@ -52,33 +51,19 @@ function Technology(tech) {
 
                     await newTech.save();
                 } else {
-                    console.log(`${team.name} is not eligible to research ${this.name}`);
+                    msg = `${this.name}: ${team.name} is not eligible to research this tech...`
+                    techDebugger(msg);
                 };
 
             } else {
-                console.log(`${this.name} is already availible...`)
+                msg = `${this.name}: This tech is already availible...`
+                techDebugger(msg);
             }
         };
+        return `Done updating eligibility to research ${this.name}`
     }
 }
 
-// Load function to load all technology into the the server side tech-tree.
-async function loadTech () {
-    let count = 0;
 
-    await techData.forEach(tech => {
-        techDebugger(tech);
-        availibleTech[count] = new Technology(tech);
-        count++;
 
-        makeAvailible();
-    });
-
-    return `${count} technology loaded...`
-};
-
-// console.log(techTree());
-
-// makeAvailible();
-
-module.exports = loadTech;
+module.exports = Technology;

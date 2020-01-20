@@ -1,7 +1,7 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 
-let loadTech = require('../../wts/research/technology');
+let { loadTech } = require('../../wts/research/techTree');
 
 const router = express.Router();
 
