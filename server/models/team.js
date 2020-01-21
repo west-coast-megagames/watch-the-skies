@@ -33,7 +33,7 @@ TeamSchema.methods.validateTeam = function (team) {
   return Joi.validate(team, schema, { "allowUnknown": true });
 }
 
-let Team = mongoose.model('team', TeamSchema);
+let Team = mongoose.model('Team', TeamSchema);
 
 function validateTeam(team) {
   //modelDebugger(`Validating ${team.name}...`);
