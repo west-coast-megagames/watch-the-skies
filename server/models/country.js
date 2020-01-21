@@ -3,17 +3,24 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 const countryDebugger = require('debug')('app:country');
 
-const CountrySchema = new Schema({ 
-    zone: { 
+/*
+ zone: { 
         zoneName: { type: String, minlength: 3, maxlength: 50, default: "UN-Assigned" },
         zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
         zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
     },
-    team: { 
+team: { 
       teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
       team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
       teamCode: { type: String, minlength: 2, maxlength: 3 }
     },
+*/
+
+const CountrySchema = new Schema({ 
+    zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+    loadZoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true },
+    team: { type: Schema.Types.ObjectId, ref: 'Team'},
+    loadTeamCode: { type: String, minlength: 2, maxlength: 3 },
     code: {
         type: String,
         required: true,
@@ -49,7 +56,7 @@ CountrySchema.methods.validateCountry = function (country) {
   return Joi.validate(country, schema, { "allowUnknown": true });
 }
 
-let Country = mongoose.model('country', CountrySchema);
+let Country = mongoose.model('Country', CountrySchema);
 
 function validateCountry(country) {
 

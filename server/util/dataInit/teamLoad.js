@@ -158,26 +158,18 @@ async function setCountryShortName(tData){
   };
 
   try {   
-    // Loop through Countrys with team code and set team.name to shortName
-    for await (const country of Country.find()) {
-      if (country.team.teamCode == tData.code ) {
-        let updId = country.id;  
-        try {
-          const countryUpd = await Country.findByIdAndUpdate({ _id: updId },
-            { team: { 
-                teamName: tData.shortName,
-                teamCode: country.team.teamCode,
-                team_id: country.team.team_id 
-            }    
-          });
-        } catch (err) {
-          console.log(`Error in setCountryShortName 1: ${err.message}`);
-        }
+    // Loop through Countrys with team code and populate
+    for await (const country of Country.find(loadTeamCode == tData.code)) {
+      let updId = country.id;  
+      try {
+        const countryUpd = await Country.findByIdAndUpdate({ _id: updId }).populate('team', 'name shortName');
+      } catch (err) {
+        console.log(`Error in setCountryShortName 1: ${err.message}`);
       }
-    };
+    }
   }catch (err) {
     console.log(`Error In setCountryShortName 2: ${err.message}`);
   }
-};      
+};
 
 module.exports = runTeamLoad;
