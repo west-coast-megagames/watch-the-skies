@@ -45,21 +45,31 @@ function validateUser(user) {
     phone: Joi.string().min(10).max(14),
     password: Joi.string().min(5).max(1024).required(),
     gender: Joi.string(),
-    discord: Joi.string(),
-    name: Joi.object().keys({
-      first: Joi.string().min(1).max(25),
-      last: Joi.string().min(1).max(50), 
-    }),    
-    address: Joi.object().keys({
-      street1: Joi.string().min(1).max(75),
-      street2: Joi.string().empty(''),
-      city: Joi.string().min(1).max(50),
-      state: Joi.string().min(2).max(2),
-      zipcode: Joi.string().min(5).max(10)
-    })
+    discord: Joi.string()
   };
 
   return Joi.validate(user, schema, { "allowUnknown": true });
 }
 
-module.exports = { User, validateUser };
+function validateName(name) {
+  const schema = {
+      first: Joi.string().min(1).max(25),
+      last: Joi.string().min(1).max(50)
+  };
+
+  return Joi.validate(name, schema, { "allowUnknown": true });
+}
+
+function validateAddr(address) {
+  const schema = {
+      street1: Joi.string().min(1).max(75),
+      street2: Joi.string().empty(''),
+      city: Joi.string().min(1).max(50),
+      state: Joi.string().min(2).max(2),
+      zipcode: Joi.string().min(5).max(10)
+  };
+
+  return Joi.validate(address, schema, { "allowUnknown": true });
+}
+
+module.exports = { User, validateUser, validateName, validateAddr };

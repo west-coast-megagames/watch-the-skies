@@ -5,7 +5,7 @@ const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 
 // User Model - Using Mongoose Model
-const { User, validateUser } = require('../models/user');
+const { User, validateUser, validateName, validateAddr } = require('../models/user');
 const { Team } = require('../models/team');
 
 // @route   POST /user
@@ -18,6 +18,12 @@ router.post('/', async function (req, res) {
 
     const test1 = validateUser(req.body);
     if (test1.error) return res.status(400).send(`User Val Error: ${test1.error.details[0].message}`);
+
+    const test2 = validateName(req.body);
+    if (test2.error) return res.status(400).send(`User Val Name Error: ${test2.error.details[0].message}`);
+
+    const test3 = validateAddr(req.body);
+    if (test3.error) return res.status(400).send(`User Val Addr Error: ${test3.error.details[0].message}`);
 
     let user = await User.findOne({ email })
     if (user) {
@@ -100,10 +106,15 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @Desc    Update Existing User
 // @access  Public  
 router.put('/:id', validateObjectId, async (req, res) => {
-    const { error } = validateUser(req.body); 
-    if (error) {       
-      return res.status(400).send(error.details[0].message);
-    } 
+    
+    const test1 = validateUser(req.body);
+    if (test1.error) return res.status(400).send(`User Put Val Error: ${test1.error.details[0].message}`);
+
+    const test2 = validateName(req.body);
+    if (test2.error) return res.status(400).send(`User Put Val Name Error: ${test2.error.details[0].message}`);
+
+    const test3 = validateAddr(req.body);
+    if (test3.error) return res.status(400).send(`User Put Val Addr Error: ${test3.error.details[0].message}`);
   
     const user = await User.findByIdAndUpdate(req.params.id, 
       { username: req.body.username,
