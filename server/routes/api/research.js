@@ -1,7 +1,8 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 
-let { loadTech } = require('../../wts/research/techTree');
+const { loadTech } = require('../../wts/research/techTree');
+const research = require('../../wts/research/research')
 
 const router = express.Router();
 
@@ -59,6 +60,13 @@ router.post('/analysis', async function (req, res) {
 router.patch('/load', async function (req, res) {
     let response = await loadTech();
     return res.status(200).send(response);
+});
+
+router.put('/progress', async function (req, res) {
+    let { tech_id, lab_id } = req.body;
+    let progress = await research.calculateProgress(tech_id, lab_id);
+
+    return res.status(200).send(progress);
 });
 
 module.exports = router;
