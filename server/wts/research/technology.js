@@ -46,7 +46,7 @@ function Technology(tech) {
                         prereq: this.prereq,
                         desc: this.desc,
                         catagory: this.catagory,
-                        team_id: team._id
+                        team: team._id
                     });
 
                     await newTech.save();
