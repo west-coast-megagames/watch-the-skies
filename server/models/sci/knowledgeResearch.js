@@ -2,17 +2,17 @@ const mongoose = require('mongoose');
 const Research = require('../sci/research');
 const Schema = mongoose.Schema;
 
-const fields = ['Astrophysics', 'Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science', 'Psychology', 'Social Science', 'Theoretical Physics']
+const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science', 'Physics', 'Psychology', 'Social Science', 'Quantum Mechanics']
 
 const KnowledgeResearch = Research.discriminator('KnowledgeResearch', new Schema({
     type: { type: String, default: 'Knowledge' },
     field: { type: String, enum: fields },
-    team: { type: Schema.Types.ObjectId, ref: 'Team'},
+    credit: { type: Schema.Types.ObjectId, ref: 'Team'},
     status: {
-        progress: { type: Number },
-        available: { type: Boolean },
-        completed: { type: Boolean },
-        published: { type: Boolean }
+        progress: { type: Number, default: 0},
+        available: { type: Boolean, default: true },
+        completed: { type: Boolean, default: false },
+        published: { type: Boolean, default: false }
     }
 }));
 
