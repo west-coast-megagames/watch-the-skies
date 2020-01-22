@@ -18,9 +18,9 @@ team: {
 
 const CountrySchema = new Schema({ 
     zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
-    loadZoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true },
+    loadZoneCode: {type: String, maxlength: 2, uppercase: true },
     team: { type: Schema.Types.ObjectId, ref: 'Team'},
-    loadTeamCode: { type: String, minlength: 2, maxlength: 3 },
+    loadTeamCode: { type: String, maxlength: 3 },
     code: {
         type: String,
         required: true,
