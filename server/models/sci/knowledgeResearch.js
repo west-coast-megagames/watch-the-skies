@@ -7,7 +7,7 @@ const fields = ['Astrophysics', 'Biology', 'Computer Science', 'Electronics', 'E
 const KnowledgeResearch = Research.discriminator('KnowledgeResearch', new Schema({
     type: { type: String, default: 'Knowledge' },
     field: { type: String, enum: fields },
-    team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
+    team: { type: Schema.Types.ObjectId, ref: 'Team'},
     status: {
         progress: { type: Number },
         available: { type: Boolean },
