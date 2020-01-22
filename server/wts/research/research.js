@@ -8,10 +8,10 @@ const techCost = [ 50, 100, 150, 200, 250, 300 ]
 async function calculateProgress(research_id, lab_id, funding) {
     try {
         console.log(lab_id); // Future await request to get lab information from DB
-        let tech = await Research.findById(tech_id).populate('team', 'name sciRate shortName');
+        let tech = await Research.findById(research_id).populate('team', 'name sciRate shortName');
 
         console.log(tech);
-        let progress = researchMultiplyer(tech.team.sciRate, 3);
+        let progress = researchMultiplyer(tech.team.sciRate, 3, 0.25);
 
         tech.status.progress += progress;
 
@@ -30,8 +30,8 @@ async function calculateProgress(research_id, lab_id, funding) {
     }
 };
 
-function researchMultiplyer(sciRate, funding) {
-    let multiplyer = 1;
+function researchMultiplyer(sciRate, funding, sciBonus) {
+    let multiplyer = 1 + sciBonus;
 
     for (let rolls = 0; rolls < funding; rolls++) {
         let roll = d6();
@@ -67,4 +67,4 @@ function researchMultiplyer(sciRate, funding) {
     return progress;
 }
 
-module.exports = { calculateProgress };
+module.exports = { calculateProgress, techCost };
