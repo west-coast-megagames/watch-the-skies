@@ -47,6 +47,12 @@ class Control extends Component {
                         <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
                             Load Tech
                         </MDBBtn>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
+                            Load Knowledge
+                        </MDBBtn>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
+                            Seed Knowledge
+                        </MDBBtn>
                     </MDBBtnGroup>
                 </div>
             </div>    
@@ -100,15 +106,34 @@ class Control extends Component {
 
     loadTech = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load`)
+            const response = await axios.patch(`${gameServer}api/research/load/tech`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Technology Loaded', body: response.data})
         } catch (err) {
-            this.props.alert({type: 'error', title: 'Failed to reset accounts', body: `${err.response.data} - ${err.message}` })
+            this.props.alert({type: 'error', title: 'Failed load tech tree', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    loadKnowledge = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/research/load/knowledge`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Initial Knowledge Loaded', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to load knowledge', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    seedKnowledge = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/research/load/knowledge/seed`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Initial Knowledge Seeded', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to seed knowledge', body: `${err.response.data} - ${err.message}` })
         };
     }
     
 }
 
- 
 export default Control;
