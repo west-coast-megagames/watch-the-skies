@@ -24,12 +24,14 @@ function Technology(tech) {
 
                 for (let req of this.prereq) {
                     techDebugger(`${this.name}: Checking for prereq ${req}...`);
-                    let check = await Research.findOne({ name: req, team_id: team._id, 'status.completed': true })
-                    if (check !== null) {
+                    let checkTech = await Research.findOne({ name: req, team: team._id, 'status.completed': true });
+                    let checkKnowledge = await Research.findOne({ name: req, 'status.published':true });
+                    if (checkTech !== null || checkKnowledge !== null) {
                         count++;
                         techDebugger(`${this.name}: prereq ${req} found...`);
                     } else {
                         techDebugger(`${this.name}: prereq ${req} not found...`);
+                        break;
                     }
                 };
 
