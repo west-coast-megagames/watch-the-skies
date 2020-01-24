@@ -12,7 +12,9 @@ const { Account } = require('../../models/gov/account');
 // @access  Public
 router.get('/', async function (req, res) {
     routeDebugger('Looking up accounts...');
-    let accounts = await Account.find().sort({code: 1});
+    let accounts = await Account.find()
+      .sort({code: 1})
+      .populate('team', 'name shortName');
     res.json(accounts);
 });
 
@@ -21,7 +23,8 @@ router.get('/', async function (req, res) {
 // @access  Public
 router.get('/:id', async function (req, res) {
     routeDebugger('Looking up a account...');
-    let account = await Account.findById({ _id: req.params.id });
+    let account = await Account.findById({ _id: req.params.id })
+      .populate('team', 'name shortName');
     res.json(account);
 });
 
@@ -36,6 +39,16 @@ router.post('/', async function (req, res) {
     const newAccount = new Account(
         { name, code, balance, deposits, withdrawls, autoTransfers }
     );
+
+    if (req.body.teamCode != ""){
+      let team = await Team.findOne({ teamCode: req.body.teamCode });  
+      if (!team) {
+        console.log("Account Post Team Error, New Account:", req.body.name, "Code:", req.body.code, " Team: ", req.body.teamCode);
+      } else {
+        newAccount.team = team._id;
+      }
+    }
+
     let docs = await Account.find({ name });
     if (!docs.length) {
         let account = await newAccount.save();

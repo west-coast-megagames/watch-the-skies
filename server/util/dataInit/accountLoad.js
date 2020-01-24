@@ -16,7 +16,7 @@ const bodyParser = require('body-parser');
 
 // Account Model - Using Mongoose Model
 const { Account, validateAccount } = require('../../models/gov/account');
-const { Team, validateTeam } = require('../../models/team');
+const { Team } = require('../../models/team');
 
 const app = express();
 
@@ -45,8 +45,7 @@ async function initLoad(doLoad) {
   for (let i = 0; i < accountDataIn.length; ++i ) {
     
     //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].parentCode1, accountDataIn[i].name);    
-    //await countAccount();   // how many records
-
+    
     if (accountDataIn[i].loadType == "accounts") {     
       
       if (accountDataIn[i].parentCode1 != ""){
@@ -55,9 +54,8 @@ async function initLoad(doLoad) {
           accountLoadDebugger("Account Load Team Error:", accountDataIn[i].name, " Team: ", accountDataIn[i].parentCode1);
           continue;
         } else {
-          found_team_id       = team._id;
-          found_teamShortName = team.shortName;
-          found_teamCode      = team.teamCode;
+          found_team_id = team._id;
+          found_owner   = team.shortName;
         }  
       } else {
         accountLoadDebugger("Account Load Blank Team:", accountDataIn[i].name, " Team: ", accountDataIn[i].parentCode1);
@@ -65,13 +63,13 @@ async function initLoad(doLoad) {
       }
 
       if (accountDataIn[i].loadFlag == "true") {
-        await loadAccount(found_team_id, found_teamShortName, found_teamCode, accountDataIn[i]);
+        await loadAccount(found_team_id, found_owner, accountDataIn[i]);
       }
     }
   }
 };
 
-async function loadAccount(t_id, tName, tCode, aData){
+async function loadAccount(t_id, tName, aData){
   try {   
     let bigCode = aData.code.toUpperCase();
     let account = await Account.findOne({ team_id: t_id, code: bigCode });
@@ -86,7 +84,8 @@ async function loadAccount(t_id, tName, tCode, aData){
            balance: aData.balance,
            deposits: aData.deposits,
            withdrawals: aData.withdrawals,
-           owner: tName
+           owner: tName,
+           team: t_id
         }); 
 
         let { error } = validateAccount(account); 
@@ -95,12 +94,6 @@ async function loadAccount(t_id, tName, tCode, aData){
           return;
         }
         
-        account.team.team_id  = t_id;
-        account.team.teamCode = tCode;
-
-        //accountLoadDebugger("Account before new save ... code", account.code, "t_id", t_id);
-        //account.markModified('code');
-      
         await account.save((err, account) => {
           if (err) return console.error(`New Account Save Error: ${err}`);
           accountLoadDebugger(account.owner + ", " + account.name + " New add saved to accounts collection.");
@@ -119,8 +112,7 @@ async function loadAccount(t_id, tName, tCode, aData){
        account.deposits      = aData.deposits;
        account.withdrawals   = aData.withdrawals;
        account.owner         = tName;
-       account.team.team_id  = t_id;
-       account.team.teamCode = tCode;
+       account.team          = t_id;
 
        const { error } = validateAccount(account); 
        if (error) {
