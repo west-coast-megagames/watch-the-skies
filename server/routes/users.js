@@ -42,9 +42,7 @@ router.post('/', async function (req, res) {
           if (!team) {
             console.log("User Post Team Error, New User:", req.body.username, " Team: ", req.body.teamCode);
           } else {
-            user.team.team_id  = team._id;
-            user.team.teamName = team.shortName;
-            user.team.teamCode = team.teamCode;
+            user.team = team._id;
           }
         }
 
@@ -70,6 +68,7 @@ router.post('/', async function (req, res) {
 // @access  Public
 router.get('/me', auth, async function (req, res) {
     const user = await User.findById(req.user._id).select('username email name')
+      .populate('team', 'name shortName');
     if (users != null) {
       console.log(`Verifying ${user.username}`);
       res.json(user);
@@ -83,8 +82,9 @@ router.get('/me', auth, async function (req, res) {
 // @access  Public
 router.get('/', async function (req, res) {
     console.log('Getting the users...');
-        let users = await User.find();
-        res.json(users);
+    let users = await User.find()
+      .populate('team', 'name shortName');
+    res.json(users);
 });
 
 // @route   GET /user/id
@@ -94,7 +94,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     
     let id = req.params.id;
 
-    const users = await User.findById(id);
+    const users = await User.findById(id)
+      .populate('team', 'name shortName');
     if (users != null) {
       res.json(users);
     } else {
@@ -106,7 +107,24 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @Desc    Update Existing User
 // @access  Public  
 router.put('/:id', validateObjectId, async (req, res) => {
-    
+    const { teamCode } = req.body;
+    let newTeam_id;
+    const oldUser = await User.findById({ _id: req.params.id });
+    if (oldUser != null ) {
+      newTeam_id  = oldUser.team;
+    };
+
+    if (teamCode != "") {
+      let team = await Team.findOne({ teamCode: teamCode });  
+      if (!team) {
+        console.log("User Put Team Error, Update Country:", req.body.name, " Team: ", teamCode);
+      } else {
+        newTeam_id  = team._id;
+      }
+    } else {
+      newTeam_id  = undefined;
+    }
+
     const test1 = validateUser(req.body);
     if (test1.error) return res.status(400).send(`User Put Val Error: ${test1.error.details[0].message}`);
 
@@ -122,7 +140,8 @@ router.put('/:id', validateObjectId, async (req, res) => {
         phone: req.body.phone, 
         gender: req.body.gender,
         dob: new Date(req.body.dob),
-        discord: req.body.discord 
+        discord: req.body.discord,
+        team: newTeam_id,
       },  
       {
         new: true, 

@@ -23,11 +23,7 @@ const UserSchema = new Schema({
   dob: { type: Date },
   gender: { type: String, enum: ["Male", "Female", "Non-Binary"]},
   discord: { type: String },
-  team: { 
-    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
-    teamCode: { type: String, minlength: 2, maxlength: 3 }
-  }
+  team: { type: Schema.Types.ObjectId, ref: 'Team'}
 });
 
 UserSchema.methods.generateAuthToken = function() {

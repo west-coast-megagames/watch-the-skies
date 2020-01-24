@@ -111,9 +111,7 @@ async function loadUser(iData){
           if (!team) {
             userLoadDebugger("User Load Team Error, New User:", iData.username, " Team: ", iData.teamCode);
           } else {
-            user.team.team_id  = team._id;
-            user.team.teamName = team.shortName;
-            user.team.teamCode = team.teamCode;
+            user.team = team._id;
             userLoadDebugger("User Load Team Found, User:", iData.username, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }
@@ -145,23 +143,11 @@ async function loadUser(iData){
         if (!team) {
           userLoadDebugger("User Load Team Error, Update User:", iData.username, " Team: ", iData.teamCode);
         } else {
-          user.team.team_id  = team._id;
-          user.team.teamName = team.shortName;
-          user.team.teamCode = team.teamCode;
+          user.team = team._id;
           userLoadDebugger("User Load Update Team Found, User:", iData.username, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }
       
-      //userLoadDebugger("Update user.name", user.name, "address", user.address, user.dob);
-
-      /*
-      const { error } = validateUser(user); 
-      if (error) {
-        userLoadDebugger("User Update Validate Error", iData.username, error.message);
-        return
-      }
-      */
-
       const test1 = validateUser(user);
         if (test1.error) {
           userLoadDebugger("User Update Validate Error", iData.username, test1.error.details[0].message);

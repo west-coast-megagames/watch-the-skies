@@ -3,19 +3,6 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 const countryDebugger = require('debug')('app:country');
 
-/*
- zone: { 
-        zoneName: { type: String, minlength: 3, maxlength: 50, default: "UN-Assigned" },
-        zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
-        zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-team: { 
-      teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-      team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
-      teamCode: { type: String, minlength: 2, maxlength: 3 }
-    },
-*/
-
 const CountrySchema = new Schema({ 
     zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
     loadZoneCode: {type: String, maxlength: 2, uppercase: true },
