@@ -39,13 +39,6 @@ function deposit (account, amount, note) {
     bankDebugging(`${amount} deposited into ${account.owner}'s ${account.name}.`);
     bankDebugging(`Reason: ${note}`);
 
-    alerts.setAlert({
-        team_id: account.team.team_id,
-        teamName: account.owner,
-        title: `${account.name} Deposit`,
-        body: `${amount} deposited into ${account.name} for ${note}.`
-    });
-
     let { getTimeRemaining } = require('../gameClock/gameClock')
     let { turn, phase, turnNum } = getTimeRemaining();
 
@@ -58,7 +51,7 @@ function deposit (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team.team_id,
+        team_id: account.team,
         transaction: 'deposit',
         account: account.name,
         amount,
@@ -83,13 +76,6 @@ function withdrawal (account, amount, note) {
     bankDebugging(`${amount} witdrawn from ${account.owner}'s ${account.name} account.`);
     bankDebugging(`Reason: ${note}`);
 
-    alerts.setAlert({
-        team_id: account.team.team_id,
-        teamName: account.owner,
-        title: `${account.name} withdrawal`,
-        body: `${amount} withdrawn from ${account.name} for ${note}.`
-    });
-
     const { getTimeRemaining } = require('../gameClock/gameClock')
     let { turn, phase, turnNum } = getTimeRemaining();
 
@@ -102,7 +88,7 @@ function withdrawal (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team.team_id,
+        team_id: account.team,
         transaction: 'withdrawal',
         account: account.name,
         amount,

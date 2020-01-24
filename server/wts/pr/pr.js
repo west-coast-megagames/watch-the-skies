@@ -14,7 +14,7 @@ async function updatePR() {
             if (team.teamType === 'N') {
                 let { _id, prTrack, prLevel } = team;
                 prDebugging(`Assigning income for ${team.shortName}...`);
-                let account = await Account.findOne({ name: 'Treasury', 'team.team_id': _id });
+                let account = await Account.findOne({ name: 'Treasury', 'team': _id });
 
                 let prChange = rollPR(prLevel, prTrack, 0);
                 account = await deposit(account, prChange.income, `Turn ${turnNum} income.`);
