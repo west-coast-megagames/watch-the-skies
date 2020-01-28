@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon, Progress, Row, Col} from 'rsuite';
+import { Nav, Container, Header, Content, Icon, Progress } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'

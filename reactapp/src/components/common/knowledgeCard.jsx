@@ -1,5 +1,5 @@
 import React from "react";
-import { Panel, Progress } from 'rsuite';
+import { Progress } from 'rsuite';
 import sci1 from '../../sci1.svg'
 
 const Header = (props) => {

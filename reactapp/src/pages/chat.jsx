@@ -52,7 +52,7 @@ class Chat extends Component {
                     <div style={{display: "flex", flexDirection: "column", height: "100vh"}}>
                         <div style={{flex: "1 1 95%", overflow: "auto", display: "flex", flexDirection: "column"}}>
                             <ChatFeed
-                                messages={this.state.chat} // Boolean: list of message objects
+                                messages={this.state.chat} // Array: list of message objects
                                 hasInputField={false} // Boolean: use our input, or use your own
                                 showSenderName // show the name of the user who sent the message
                                 bubblesCentered={false} //Boolean should the bubbles be centered in the feed?

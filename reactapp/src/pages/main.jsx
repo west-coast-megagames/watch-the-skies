@@ -110,7 +110,7 @@ import Registration from './../components/registration';
               </Sidenav>
               <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} />
             </Sidebar>
-            <Content style={{ display: 'flex', flexDirection: 'column' }}>
+            <Content>
                 <Switch>
                     <Route path="/login" render={(props) => (
                       <Registration {...props}

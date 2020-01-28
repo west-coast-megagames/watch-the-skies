@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker } from 'rsuite';
+import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar } from 'rsuite';
 
 
 class TextField extends React.PureComponent {
@@ -61,7 +61,7 @@ class SubNews extends React.Component {
     });
   }
   render() {
-    const { formError, formValue } = this.state;
+    const { formValue } = this.state;
 
     return (
       <Form

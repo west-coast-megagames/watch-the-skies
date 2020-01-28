@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import { teamEvents, currentAircrafts } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
