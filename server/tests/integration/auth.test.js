@@ -10,6 +10,7 @@ describe('auth middleware', () => {
   });
 
   let token;
+  let testPassword;
 
   const exec = () => {
       return request(server)
@@ -19,7 +20,7 @@ describe('auth middleware', () => {
           username: 'Utest5', 
           phone: '9161112230', 
           gender: 'Male',
-          password: 'PWtest31',
+          password: testPassword,
           discord: 'Dtest5',
           DoB: "1991-04-01",
           "name":
@@ -34,16 +35,37 @@ describe('auth middleware', () => {
     token = new User().generateAuthToken();
   });
 
+  /* doesn't seem to work
+  it('should return 401 if invalid token', async () => {
+    
+    token = "";
+    testPassword = "PWTest5";
+    const res = await exec();
+    expect(res.status).toBe(401);
+    expect(res.text).toMatch(/invalid/)
+
+  });
+  */
+
+  it('should return 400 if invalid user login', async () => {
+    
+    testPassword = "";
+    const res = await exec();
+    expect(res.status).toBe(400);
+    expect(res.text).toMatch(/password/)
+
+  });
+
   it('should return 200 if token is valid', async () => {
     
+    testPassword = "PWTest5";
     const res = await exec();
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('_id');   
     //testing for specific email
     expect(res.body).toHaveProperty('email', 'testing5@gmail.com');
 
-});
-
+  });
 
 
 });

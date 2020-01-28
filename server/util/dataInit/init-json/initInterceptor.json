@@ -162,7 +162,7 @@
      "upgrade": false,
      "repair": false,
      "mission" : false},
-"parentCode1" : "FRD", 
+"parentCode1" : "RFD", 
 "parentCode2" : "undefined"
 },
 {
@@ -358,7 +358,7 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
-"parentCode1" : "TKU", 
+"parentCode1" : "TUK", 
 "parentCode2" : "undefined"
 },
 {

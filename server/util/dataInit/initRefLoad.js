@@ -235,16 +235,21 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
       let country = new Country({ 
           code: cCode,
           name: cName,
-          unrest: cUnrest
+          unrest: cUnrest,
+          loadTeamCode: tCode,
+          loadZoneCode: zCode
       }); 
 
       let zone = await Zone.findOne({ zoneCode: zCode });  
       if (!zone) {
         countryInitDebugger("Country Load Zone Error, New Country:", cCode, " Zone: ", zCode);
       } else {
+        country.zone = zone._id;
+        /*
         country.zone.zone_id  = zone._id;
         country.zone.zoneName = zone.zoneName;
         country.zone.zoneCode = zone.zoneCode;
+        */
         countryInitDebugger("Country Load Zone Found, Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
       }      
       
@@ -253,9 +258,11 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
         if (!team) {
           countryInitDebugger("Country Load Team Error, New Country:", cCode, " Team: ", tCode);
         } else {
-          country.team.team_id  = team._id;
-          country.team.teamName = team.name;                    //team.shortName is not set yet
-          country.team.teamCode = team.teamCode;
+          country.team           = team._id;
+          /*
+          country.team.name      = team.name;
+          //country.team.shortName = team.shortName;    shortName is not set yet
+          */
           countryInitDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
         }
       }      
@@ -274,17 +281,18 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
         // Existing Country here ... update
         let id = country._id;
           
-        country.name   = cName;
-        country.code   = cCode;
-        country.unrest = cUnrest;
+        country.name         = cName;
+        country.code         = cCode;
+        country.unrest       = cUnrest;
+        country.loadTeamCode = tCode;
+        country.loadZoneCode = zCode;
 
         let zone = await Zone.findOne({ zoneCode: zCode });  
         if (!zone) {
           countryInitDebugger("Country Load Zone Error, Update Country:", cCode, " Zone: ", zCode);
         } else {
-          country.zone.zone_id  = zone._id;
-          country.zone.zoneName = zone.zoneName;
-          country.zone.zoneCode = zone.zoneCode;
+          country.zone = zone._id;
+          
           countryInitDebugger("Country Load Zone Found, Update Country:", cCode, " Zone: ", zCode, "Zone ID:",zone._id);
         }      
 
@@ -293,9 +301,8 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
           if (!team) {
             countryInitDebugger("Country Load Team Error, Update Country:", cCode, " Team: ", tCode);
           } else {
-            country.team.team_id  = team._id;
-            country.team.teamName = team.name;          // team.shortName; is not set yet
-            country.team.teamCode = team.teamCode;
+            country.team           = team._id;
+            
             countryInitDebugger("Country Load Team Found, Update Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
           }
         }    

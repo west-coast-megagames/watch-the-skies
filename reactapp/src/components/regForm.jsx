@@ -61,10 +61,6 @@ class RegForm extends React.Component {
   }
 
   async handleSubmit() {
-    // if (!this.form.check()) {
-    //   console.error('Form Error');
-    //   return;
-    // }
     console.log('Form submitted...');
     let { fname, lname, username, email, dob, password } = this.state.formValue
     let user = { name: { first: fname, last: lname }, username, email, dob, password }
@@ -94,7 +90,7 @@ class RegForm extends React.Component {
     });
   }
   render() {
-    const { formError, formValue } = this.state;
+    const { formValue } = this.state;
 
     return (
       <Form

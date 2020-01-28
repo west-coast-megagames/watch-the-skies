@@ -28,10 +28,10 @@ class Interception extends Component {
     this.radarSweep = setInterval(() => {
       let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
 
-      let contacts = data.filter(aircraft => aircraft.team.team_id !== this.props.team._id);
+      let contacts = data.filter(aircraft => aircraft.team._id !== this.props.team._id);
       contacts = contacts.filter(aircraft => aircraft.status.deployed === true);
 
-      let aircrafts = data.filter(aircraft => aircraft.team.team_id === this.props.team._id);
+      let aircrafts = data.filter(aircraft => aircraft.team._id === this.props.team._id);
 
       this.setState({ contacts, aircrafts });
       // console.log('Contacts and Aircrafts set...');

@@ -1,19 +1,54 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../../middleware/auth')
+const auth = require('../../middleware/auth');
+const validateObjectId = require('../../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
+const { Country } = require('../../models/country'); 
+const { Zone } = require('../../models/zone'); 
+const { Team } = require('../../models/team'); 
+const { Base } = require('../../models/base'); 
 
 // @route   GET api/interceptor
 // @Desc    Get all Interceptors
 // @access  Public
 router.get('/', async function (req, res) {
     console.log('Sending interceptors somewhere...');
-    let interceptors = await Interceptor.find().sort({team: 1});
+    let interceptors = await Interceptor.find()
+      .sort({team: 1})
+      .populate('team', 'name shortName')
+      .populate('location.zone', 'zoneName')
+      .populate('location.country', 'name')
+      /*
+      .populate('base', 'baseName')
+      */
+    ;
     res.json(interceptors);
 });
+
+// @route   GET api/interceptor
+// @Desc    Get Interceptors by ID
+// @access  Public
+router.get('/id/:id', validateObjectId, async (req, res) => {
+    let id = req.params.id;
+    let interceptor = await Interceptor.findById(id)
+      .sort({team: 1})
+      .populate('team', 'name shortName')
+      .populate('location.zone', 'zoneName')
+      .populate('location.country', 'name')
+      /*
+      .populate('base', 'baseName')
+      */
+    ;
+    if (interceptor != null) {
+      res.json(interceptor);
+    } else {
+      res.status(404).send(`The Interceptor with the ID ${id} was not found!`);
+    } 
+});
+
 
 // @route   POST api/interceptor
 // @Desc    Post a new interceptor
@@ -25,6 +60,34 @@ router.post('/', async function (req, res) {
     );
     let docs = await Interceptor.find({ designation })
     if (!docs.length) {
+
+        if (req.body.zoneCode != ""){
+          let zone = await Zone.findOne({ zoneCode: req.body.zoneCode });  
+          if (!zone) {
+            console.log("Interceptor Post Zone Error, New Interceptor:", req.body.designation, " Zone: ", req.body.zoneCode);
+          } else {
+              newInterceptor.location.zone = zone._id;
+          }
+        }
+
+        if (req.body.teamCode != ""){
+            let team = await Team.findOne({ teamCode: req.body.teamCode });  
+            if (!team) {
+                console.log("Interceptor Post Team Error, New Interceptor:", req.body.designation, " Team: ", req.body.teamCode);
+            } else {
+              newInterceptor.team = team._id;
+            }
+        }
+      
+        if (req.body.countryCode != ""){
+          let country = await Country.findOne({ code: req.body.countryCode });  
+          if (!country) {
+              console.log("Interceptor Post Country Error, New Interceptor:", req.body.designation, " Country: ", req.body.countryCode);
+          } else {
+            newInterceptor.location.country = country._id;
+          }
+        }
+
         let interceptor = await newInterceptor.save();
         res.json(interceptor);
         console.log(`Interceptor ${req.body.designation} created...`);
@@ -38,8 +101,61 @@ router.post('/', async function (req, res) {
 // @Desc    Update an interceptor
 // @access  Public
 router.put('/:id', async function (req, res) {
-    let { designation } = req.body;
-    const interceptor = await Interceptor.findOneAndUpdate({ _id: req.params.id }, { designation }, { new: true });
+    let { designation, zoneCode, teamCode, countryCode } = req.body;
+    let newZone_id;
+    let newTeam_id;
+    let newCountry_id;
+
+    const oldInterceptor = await Interceptor.findById({ _id: req.params.id });
+    if (oldInterceptor != null ) {
+      newZone_id    = oldInterceptor.location.zone;
+      newTeam_id    = oldInterceptor.team;
+      newCountry_id = oldInterceptor.location.country;
+    };
+
+    if (zoneCode != "") {
+      let zone = await Zone.findOne({ zoneCode: zoneCode });  
+      if (!zone) {
+        console.log("Interceptor Put Zone Error, Update Interceptor:", req.body.designation, " Zone: ", zoneCode);
+      } else {
+        newZone_id  = zone._id;
+      }
+    } else {
+      newZone_id  = undefined;
+    }
+    
+    if (teamCode != "") {
+      let team = await Team.findOne({ teamCode: teamCode });  
+      if (!team) {
+        console.log("Interceptor Put Team Error, Update Interceptor:", req.body.designation, " Team: ", teamCode);
+      } else {
+        newTeam_id  = team._id;
+      }
+    } else {
+      newTeam_id  = undefined;
+    }
+
+    if (countryCode != "") {
+      let country = await Country.findOne({ code: countryCode });  
+      if (!country) {
+        console.log("Interceptor Put Country Error, Update Interceptor:", req.body.designation, " Country: ", countryCode);
+      } else {
+        newCountry_id  = country._id;
+      }
+    } else {
+      newCountry_id  = undefined;
+    }
+
+    const interceptor = await Interceptor.findOneAndUpdate({ _id: req.params.id }, 
+        { designation,
+          location: {
+            zone: newZone_id,
+            country: newCountry_id
+          },
+          team: newTeam_id
+        }, 
+        { new: true,
+          omitUndefined: true });
     res.json(interceptor);
     console.log(`Interceptor ${req.params.id} updated...`);
     console.log(`Interceptor named ${interceptor.designation}...`);
