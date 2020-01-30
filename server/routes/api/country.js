@@ -14,7 +14,9 @@ const {Team} = require('../../models/team');
 // Only Active
 router.get('/', async (req, res) => {
   try {
-    let countrys = await Country.find().sort('code: 1');
+    let countrys = await Country.find().sort('code: 1')
+      .populate('team', 'name shortName')
+      .populate('zone', 'zoneName');
     res.json(countrys);
   } catch (err) {
     console.log('Error:', err.message);
@@ -29,7 +31,9 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 
     let id = req.params.id;
     try {
-        const country = await Country.findById(id);
+        const country = await Country.findById(id)
+          .populate('team', 'name shortName')
+          .populate('zone', 'zoneName');
         if (country != null) {
           res.json(country);
         } else {
@@ -47,7 +51,9 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 router.get('/code/:code', async (req, res) => {
   let code = req.params.code;
   try {
-    let country = await Country.find({ code });
+    let country = await Country.find({ code })
+      .populate('team', 'name shortName')
+      .populate('zone', 'zoneName');
     if (country.length) {
       res.json(country);
     } else {
@@ -66,7 +72,7 @@ router.post('/', async (req, res) => {
   
   let { code, name, zoneCode, unrest } = req.body;
   const newCountry = new Country(
-      { code, name, unrest }
+      { code, name, unrest, loadZoneCode: zoneCode, loadTeamCode: req.body.teamCode }
   );
   let docs = await Country.find({ code })
   if (!docs.length) {
@@ -76,9 +82,7 @@ router.post('/', async (req, res) => {
       if (!zone) {
         console.log("Country Post Zone Error, New Country:", req.body.name, " Zone: ", zoneCode);
       } else {
-        newCountry.zone.zone_id  = zone._id;
-        newCountry.zone.zoneName = zone.zoneName;
-        newCountry.zone.zoneCode = zone.zoneCode;
+        newCountry.zone = zone._id;
       }
     }
 
@@ -87,9 +91,7 @@ router.post('/', async (req, res) => {
       if (!team) {
         console.log("Country Post Team Error, New Country:", req.body.name, " Team: ", req.body.teamCode);
       } else {
-        newCountry.team.team_id  = team._id;
-        newCountry.team.teamName = team.shortName;
-        newCountry.team.teamCode = team.teamCode;
+        newCountry.team = team._id;
       }
     }
 
@@ -112,20 +114,12 @@ router.put('/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
   const { zoneCode, teamCode } = req.body;
   let newZone_id;
-  let newZoneName;
-  let newZoneCode;
   let newTeam_id;
-  let newTeamCode;
-  let newTeamName;
   try {
     const oldCountry = await Country.findById({ _id: req.params.id });
     if (oldCountry != null ) {
-      newZone_id  = oldCountry.zone.zone_id;
-      newZoneCode = oldCountry.zone.zoneCode;
-      newZoneName = oldCountry.zone.zoneName;
-      newTeamCode = oldCountry.team.teamCode;
-      newTeamName = oldCountry.team.teamName;
-      newTeam_id  = oldCountry.team.team_id;
+      newZone_id  = oldCountry.zone;
+      newTeam_id  = oldCountry.team;
     };
 
     if (zoneCode != "") {
@@ -134,12 +128,8 @@ router.put('/:id', validateObjectId, async (req, res) => {
         console.log("Country Put Zone Error, Update Country:", req.body.name, " Zone: ", zoneCode);
       } else {
         newZone_id  = zone._id;
-        newZoneCode = zone.zoneCode;
-        newZoneName = zone.zoneName;
       }
     } else {
-      newZoneCode = "";
-      newZoneName = "UN-Assigned";
       newZone_id  = undefined;
     }
     if (teamCode != "") {
@@ -148,32 +138,21 @@ router.put('/:id', validateObjectId, async (req, res) => {
         console.log("Country Put Team Error, Update Country:", req.body.name, " Team: ", teamCode);
       } else {
         newTeam_id  = team._id;
-        newTeamCode = team.teamCode;
-        newTeamName = team.shortName;
       }
     } else {
-      newTeamCode = "";
-      newTeamName = "UN-Assigned";
       newTeam_id  = undefined;
     }
 
     const country = await Country.findByIdAndUpdate({ _id: req.params.id },
       { name: req.body.name,
-          code: req.body.code,
-          unrest: req.body.unrest,
-          zone: {
-            zone_id: newZone_id,
-            zoneName: newZoneName,
-            zoneCode: newZoneCode
-          },
-          team: {
-            team_id: newTeam_id,
-            teamName: newTeamName,
-            teamCode: newTeamCode
-          }
-         }, 
-        { new: true , 
-          omitUndefined: true}
+        code: req.body.code,
+        unrest: req.body.unrest,
+        zone: newZone_id,
+        team: newTeam_id,
+      }, 
+      { new: true , 
+        omitUndefined: true
+      }
     );
     
 

@@ -24,7 +24,7 @@ class Diplomacy extends Component {
         const { tab } = this.state; 
 
          return (
-        <Container>
+        <Container style={{ height: "100vh" }}>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> feed</Nav.Item>
@@ -34,7 +34,7 @@ class Diplomacy extends Component {
                     <Nav.Item eventKey="add" to={`${url}/add`} componentClass={NavLink} > Add News</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20 }}>
+            <Content style={{ paddingLeft: 20, overflowY: "scroll", height: "100vh" }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
                         <NewsFeed agency='All' articles={ this.props.news.gnn.concat(this.props.news.bnc) } />

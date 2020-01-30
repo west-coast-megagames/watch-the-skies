@@ -1,0 +1,403 @@
+[
+    {
+        "name": "Biology I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+
+        "field": "Biology",
+        "desc": "Fund cutting edge projects in biology to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Biology II",
+        "level": 2,
+        "prereq": "Biology I",
+        "type": "Knowledge",
+        "field": "Biology",
+        "desc": "Fund advanced biology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Biology III",
+        "level": 3,
+        "prereq": "Biology II",
+        "type": "Knowledge",
+        "field": "Biology",
+        "desc": "Fund revolutionary biology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Biology IV",
+        "level": 4,
+        "prereq": "Biology III",
+        "type": "Knowledge",
+        "field": "Biology",
+        "desc": "Fund previously theoretical biology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Biology V",
+        "level": 5,
+        "prereq": "Biology IV",
+        "type": "Knowledge",
+        "field": "Biology",
+        "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Computer Science I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Computer Science II",
+        "level": 2,
+        "prereq": "Computer Science I",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund advanced computer science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Computer Science III",
+        "level": 3,
+        "prereq": "Computer Science II",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund revolutionary Computer Science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Computer Science IV",
+        "level": 4,
+        "prereq": "Computer Science III",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund previously theoretical Computer Science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Computer Science V",
+        "level": 5,
+        "prereq": "Computer Science IV",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund computer science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Electronics I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund cutting edge projects in electronics to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Electronics II",
+        "level": 2,
+        "prereq": "Electronics I",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund advanced electronics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Electronics III",
+        "level": 3,
+        "prereq": "Electronics II",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund revolutionary electronics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Electronics IV",
+        "level": 4,
+        "prereq": "Electronics III",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund preIvously theoretical electronics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Electronics V",
+        "level": 5,
+        "prereq": "Electronics IV",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Engineering I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Engineering II",
+        "level": 2,
+        "prereq": "Engineering I",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund advanced engineering research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Engineering III",
+        "level": 3,
+        "prereq": "Engineering II",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund revolutionary engineering research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Engineering IV",
+        "level": 4,
+        "prereq": "Engineering III",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund previously theoretical engineering research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Engineering V",
+        "level": 5,
+        "prereq": "Engineering IV",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund engineering research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Genetics I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund cutting edge projects in genetics to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Genetics II",
+        "level": 2,
+        "prereq": "Genetics I",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund advanced genetics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Genetics III",
+        "level": 3,
+        "prereq": "Genetics II",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund revolutionary genetics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Genetics IV",
+        "level": 4,
+        "prereq": "Genetics III",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund previously theoretical genetics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Genetics V",
+        "level": 5,
+        "prereq": "Genetics IV",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Material Science I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Material Science",
+        "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Material Science II",
+        "level": 2,
+        "prereq": "Material Science I",
+        "type": "Knowledge",
+        "field": "Material Science",
+        "desc": "Fund advanced material science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Material Science III",
+        "level": 3,
+        "prereq": "Material Science II",
+        "type": "Knowledge",
+        "field": "Material Science",
+        "desc": "Fund revolutionary material science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Material Science IV",
+        "level": 4,
+        "prereq": "Material Science III",
+        "type": "Knowledge",
+        "field": "Material Science",
+        "desc": "Fund previously theoretical material science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Material Science V",
+        "level": 5,
+        "prereq": "Material Science IV",
+        "type": "Knowledge",
+        "field": "Material Science",
+        "desc": "Fund material science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Physics I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Physics II",
+        "level": 2,
+        "prereq": "Physics I",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund advanced physics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Physics III",
+        "level": 3,
+        "prereq": "Physics II",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund revolutionary physics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Physics IV",
+        "level": 4,
+        "prereq": "Physics III",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund previously theoretical physics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Physics V",
+        "level": 5,
+        "prereq": "Physics IV",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Psychology I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund cutting edge projects in psychology to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Psychology II",
+        "level": 2,
+        "prereq": "Psychology I",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund advanced psychology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Psychology III",
+        "level": 3,
+        "prereq": "Psychology II",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund revolutionary psychology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Psychology IV",
+        "level": 4,
+        "prereq": "Psychology III",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund previously theoretical psychology research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Psychology V",
+        "level": 5,
+        "prereq": "Psychology IV",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund psychology research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Social Science I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund cutting edge projects in social science to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Social Science II",
+        "level": 2,
+        "prereq": "Social Science I",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund advanced social science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Social Science III",
+        "level": 3,
+        "prereq": "Social Science II",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund revolutionary social science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Social Science IV",
+        "level": 4,
+        "prereq": "Social Science III",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund previously theoretical social science research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Social Science V",
+        "level": 5,
+        "prereq": "Social Science IV",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    },
+    {
+        "name": "Quantum Mechanics I",
+        "level": 1,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund cutting edge projects in quantum mechanics to advance world knowledge and begin to apply that knowledge to new technologies."
+    },
+    {
+        "name": "Quantum Mechanics II",
+        "level": 2,
+        "prereq": "Quantum Mechanics I",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund advanced quantum mechanics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Quantum Mechanics III",
+        "level": 3,
+        "prereq": "Quantum Mechanics II",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund revolutionary quantum mechanics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Quantum Mechanics IV",
+        "level": 4,
+        "prereq": "Quantum Mechanics III",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund previously theoretical quantum mechanics research to advance world knowledge and develop applicable technology."
+    },
+    {
+        "name": "Quantum Mechanics V",
+        "level": 5,
+        "prereq": "Quantum Mechanics IV",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund quantum mechanics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+    }
+]

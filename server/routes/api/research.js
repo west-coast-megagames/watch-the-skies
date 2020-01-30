@@ -1,6 +1,10 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 
+const { loadTech } = require('../../wts/research/techTree');
+const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
+const research = require('../../wts/research/research')
+
 const router = express.Router();
 
 // Research Models - Using Mongoose Model
@@ -49,6 +53,37 @@ router.post('/analysis', async function (req, res) {
     analysis = await analysis.save();
         console.log(`Analysis Completed...`);
         return res.json(analysis);            
+});
+
+// @route   PATCH api/research/load/tech
+// @Desc    Load all technology from JSON files
+// @access  Public
+router.patch('/load/tech', async function (req, res) {
+    let response = await loadTech();
+    return res.status(200).send(response);
+});
+
+// @route   PATCH api/research/load/knowledge
+// @Desc    Load all knowledge fields from JSON files
+// @access  Public
+router.patch('/load/knowledge', async function (req, res) {
+    let response = await loadKnowledge();
+    return res.status(200).send(response);
+});
+
+// @route   PATCH api/research/load/knowledge/seed
+// @Desc    Load all knowledge fields from JSON files
+// @access  Public
+router.patch('/load/knowledge/seed', async function (req, res) {
+    await knowledgeSeed();
+    return res.status(200).send('We did it, such a seed!')
+});
+
+router.put('/progress', async function (req, res) {
+    let { tech_id, lab_id } = req.body;
+    let progress = await research.calculateProgress(tech_id, lab_id);
+
+    return res.status(200).send(progress);
 });
 
 module.exports = router;

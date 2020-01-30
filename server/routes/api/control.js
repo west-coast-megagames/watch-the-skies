@@ -9,7 +9,10 @@ const { Interceptor } = require('../../models/ops/interceptor');
 // @access  Public
 router.patch('/alien/deploy', async function (req, res) {
     let count = 0;
-    for await (const interceptor of Interceptor.find({ 'team.teamName': 'Aliens' })) {
+    let interceptors = await Interceptor.find().populate('team');
+    interceptors = interceptors.filter(i => i.team.teamType === 'A')
+    for await (const interceptor of interceptors) {
+        console.log(interceptor);
         if (interceptor.status.deployed === false) {
             count++
             interceptor.status.deployed = true;
@@ -29,7 +32,9 @@ router.patch('/alien/deploy', async function (req, res) {
 // @access  Public
 router.patch('/alien/return', async function (req, res) {
     let count = 0;
-    for await (const interceptor of Interceptor.find({ 'team.teamName': 'Aliens' })) {
+    let interceptors = await Interceptor.find().populate('team');
+    interceptors = interceptors.filter(i => i.team.teamType === 'A')
+    for await (const interceptor of interceptors) {
         if (interceptor.status.deployed === true) {
         count++
         interceptor.status.deployed = false;

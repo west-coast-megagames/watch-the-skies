@@ -16,7 +16,7 @@ const bcrypt = require('bcryptjs');
 //mongoose.set('useCreateIndex', true);
 
 // User Model - Using Mongoose Model
-const { User, validateUser } = require('../../models/user');
+const { User, validateUser, validateName, validateAddr } = require('../../models/user');
 const { Team, validateTeam } = require('../../models/team');
 
 const app = express();
@@ -82,12 +82,28 @@ async function loadUser(iData){
 
         //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
-        let { error } = validateUser(user); 
-        if (error) {
-          userLoadDebugger("New User Validate Error", user.username, error.message);
+        const test1 = validateUser(user);
+        if (test1.error) {
+          userLoadDebugger("New User Validate Error", iData.username, test1.error.details[0].message);
           return;
         }
 
+        //userLoadDebugger("Before Save Validate Name ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
+
+        const test2 = validateName(user);
+        if (test2.error) {
+          userLoadDebugger("New User Name Validate Error", iData.username, test2.error.details[0].message);
+          return;
+        }
+        
+        //userLoadDebugger("Before Save Validate Addr ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
+
+        const test3 = validateAddr(user);
+        if (test3.error) {
+          userLoadDebugger("New User Addr Validate Error", iData.username, test3.error.details[0].message);
+          return;
+        }
+    
         //userLoadDebugger("After Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
         
         if (iData.teamCode != ""){
@@ -95,9 +111,7 @@ async function loadUser(iData){
           if (!team) {
             userLoadDebugger("User Load Team Error, New User:", iData.username, " Team: ", iData.teamCode);
           } else {
-            user.team.team_id  = team._id;
-            user.team.teamName = team.shortName;
-            user.team.teamCode = team.teamCode;
+            user.team = team._id;
             userLoadDebugger("User Load Team Found, User:", iData.username, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }
@@ -129,20 +143,28 @@ async function loadUser(iData){
         if (!team) {
           userLoadDebugger("User Load Team Error, Update User:", iData.username, " Team: ", iData.teamCode);
         } else {
-          user.team.team_id  = team._id;
-          user.team.teamName = team.shortName;
-          user.team.teamCode = team.teamCode;
+          user.team = team._id;
           userLoadDebugger("User Load Update Team Found, User:", iData.username, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }
       
-      userLoadDebugger("Update user.name", user.name, "address", user.address, user.dob);
+      const test1 = validateUser(user);
+        if (test1.error) {
+          userLoadDebugger("User Update Validate Error", iData.username, test1.error.details[0].message);
+          return;
+        }
 
-      const { error } = validateUser(user); 
-      if (error) {
-        userLoadDebugger("User Update Validate Error", iData.username, error.message);
-        return
-      }
+        const test2 = validateName(user.name);
+        if (test2.error) {
+          userLoadDebugger("User Update Name Validate Error", iData.username, test2.error.details[0].message);
+          return;
+        }
+        
+        const test3 = validateAddr(user.address);
+        if (test3.error) {
+          userLoadDebugger("User Update Addr Validate Error", iData.username, test3.error.details[0].message);
+          return;
+        }
    
       await user.save((err, user) => {
       if (err) return console.error(`User Update Save Error: ${err}`);

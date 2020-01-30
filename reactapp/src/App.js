@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import { teamEvents, currentAircrafts } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -55,13 +55,13 @@ class App extends Component {
       this.setState({ aircrafts })
     });
 
-    updateAccounts((err, accounts) => {
-      accounts = accounts.filter(a => a.team.team_id === this.state.team._id);
-      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-      let megabucks = 0;
-      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-      this.setState({ accounts, megabucks })
-    });
+    // updateAccounts((err, accounts) => {
+    //   accounts = accounts.filter(a => a.team === this.state.team._id);
+    //   let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+    //   let megabucks = 0;
+    //   accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+    //   this.setState({ accounts, megabucks })
+    // });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -97,7 +97,7 @@ class App extends Component {
   
     updateAccounts = async (team) => {
       console.log(`${team.name} Accounts update...`);
-      let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team_id": team._id });
+      let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team": team._id });
       this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
@@ -114,12 +114,11 @@ class App extends Component {
     handleLogin = async () => {
       const jwt = localStorage.getItem('token');
       const user = jwtDecode(jwt);
-      this.setState({ user })
+      this.setState({ user, login: true })
       console.log(`${user.username} logged in...`);
-      this.setState({ login: true, user, team: { name: "Updating..."} })
       if (user.team) {
-        this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.teamName}...`})
-        teamEvents.updateTeam(user.team.team_id)
+        this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
+        this.setState({ team: user.team });
         this.updateAircrafts();
       }
 

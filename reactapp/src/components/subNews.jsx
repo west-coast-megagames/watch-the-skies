@@ -60,7 +60,7 @@ class SubNews extends React.Component {
     });
   }
   render() {
-    const { formError, formValue } = this.state;
+    const { formValue } = this.state;
 
     const agency = [
         {value: 'BNC', label: 'BNC'},

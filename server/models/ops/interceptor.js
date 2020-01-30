@@ -6,11 +6,7 @@ const Joi = require('joi');
 const InterceptorSchema = new Schema({
   designation: { type: String, required: true, min: 2, maxlength: 50 },
   type: { type: String, required: true, min: 2, maxlength: 50, default: "Interceptor"} ,
-  team: { 
-    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
-    teamCode: { type: String, minlength: 2, maxlength: 3 }
-  },
+  team: { type: Schema.Types.ObjectId, ref: 'Team'},
   stats: {
     hull: { type: Number, default: 2 },
     hullMax: { type: Number, default: 2 },
@@ -19,18 +15,10 @@ const InterceptorSchema = new Schema({
     activeRolls: [Number]
   },
   location: { 
-    zone: { 
-      zoneName: { type: String, default: "UN-Assigned" },
-      zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
-      zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    country: { 
-      countryName: { type: String, default: "UN-Assigned" },
-      country_id: { type: Schema.Types.ObjectId, ref: 'Country'},
-      countryCode: { type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    poi: { type: String }
+    zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+    country: { type: Schema.Types.ObjectId, ref: 'Country'},
   },
+  base: { type: Schema.Types.ObjectId, ref: 'Base'},
   status: {
     aggressive: { type: Boolean, default: true },
     passive: { type: Boolean, default: false },

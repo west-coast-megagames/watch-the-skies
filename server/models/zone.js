@@ -39,7 +39,7 @@ ZoneSchema.methods.validateZone = function (zone) {
   //return Joi.schema.validate(zone, { "allowUnknown": true });
 }
 
-let Zone = mongoose.model('zone', ZoneSchema);
+let Zone = mongoose.model('Zone', ZoneSchema);
 
 function validateZone(zone) {
   //zoneDebugger("In function validateZone", zone.zoneName);

@@ -92,10 +92,11 @@ describe('/countrys/', () => {
     let newCode;
     let newUnrest;
     let newZoneCode;
+    let newTeamCode;
     const exec = async () => {
       return await request(server)
       .post('api/country/')
-      .send({ code: newCode, name: newName, unrest: newUnrest, zoneCode: newZoneCode });
+      .send({ code: newCode, name: newName, unrest: newUnrest, zoneCode: newZoneCode, teamCode: newTeamCode });
     }  
 
     beforeEach(() => {
@@ -103,6 +104,7 @@ describe('/countrys/', () => {
       newName = 'Post Country Test 1';
       newUnrest = 7;
       newZoneCode = "NA";
+      newTeamCode = "USA";
     });
 
     it('should return 400 if country code is less than 2 characters', async () => {
@@ -153,7 +155,8 @@ describe('/countrys/', () => {
 
     it('should save the country if it is valid', async () => {
 
-      const res = await request(server).post('/api/country').send({ code: "C7", name: 'Test Country Post', unrest: 7, zoneCode: "NA" });
+      const res = await request(server).post('/api/country')
+         .send({ code: "C7", name: 'Test Country Post', unrest: 7, zoneCode: "NA", teamCode: "USA" });
 
       const country = await Country.find({ code: 'C7' });
 
@@ -171,7 +174,7 @@ describe('/countrys/', () => {
     
     it('should return 400 if name is less than 3 characters', async () => {
       //create a country 
-      const res0 = await request(server).post('/api/country').send({ code: "C8", name: 'Test Country PUT 1' });
+      const res0 = await request(server).post('/api/country').send({ code: "C8", name: 'Test Country PUT 1', teamCode: "PRC" });
 
       const country = await Country.findOne({ code: 'C8' });
       
@@ -179,7 +182,7 @@ describe('/countrys/', () => {
 
       newName = 'T1'; 
             
-      const res = await request(server).put('/api/country/' + id).send({ code: country.code, name: newName});
+      const res = await request(server).put('/api/country/' + id).send({ code: country.code, name: newName, teamCode: country.loadTeamCode});
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -189,14 +192,14 @@ describe('/countrys/', () => {
     it('should return 400 if name is more than 75 characters', async () => {
       //create a country 
       // generate a string from array number of elements minus 1 ... so 77 chars > 75 in joi validation
-      const res0 = await request(server).post('/api/country/').send({ code: "C9", name: 'Test Country PUT 2' });
+      const res0 = await request(server).post('/api/country/').send({ code: "C9", name: 'Test Country PUT 2', teamCode: "USA" });
 
       const country = await Country.findOne({ code: 'C9' });
   
       id = country._id;   
       newName = new Array(77).join('a');
         
-      const res = await request(server).put('/api/country/' + id).send({ code: "C9", name: newName });
+      const res = await request(server).put('/api/country/' + id).send({ code: "C9", name: newName, teamCode: country.loadTeamCode });
   
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -205,14 +208,15 @@ describe('/countrys/', () => {
     it('should return 404 if id is invalid', async () => {
       //create a country 
       country = new Country({ name: 'Test Country Put 3',
-        code: 'T1'
+        code: 'T1',
+        loadTeamCode: "TUK"
       });
       await country.save();
   
       let id = 1;   
       newName = country.name;
         
-      const res = await request(server).put('/api/country/' + id).send({ name: newName});
+      const res = await request(server).put('/api/country/' + id).send({ name: newName, teamCode: country.loadTeamCode });
   
       expect(res.status).toBe(404);
       expect(res.text).toMatch(/Invalid ID/);
@@ -223,7 +227,8 @@ describe('/countrys/', () => {
       newName = "Country Put Test 4";
   
       const res = await request(server).put('/api/country/' + id).send({ name: newName,
-        code: "T1"
+        code: "T1",
+        loadTeamCode: "TUK"
       });
   
       expect(res.status).toBe(404);
@@ -237,14 +242,16 @@ describe('/countrys/', () => {
         code: "T1",
         unrest: 13,
         zoneCode: "EU",
-        teamCode: "TUK"
+        loadTeamCode: "TUK"
       });
       await country.save();
   
       newName = "UpdPutZone5";
         
-      const res = await request(server).put('/api/country/' + country._id).send({ name: newName,
-        code: country.code
+      const res = await request(server).put('/api/country/' + country._id)
+        .send({ name: newName,
+                code: country.code,
+                teamCode: country.loadTeamCode
       });      
   
       const updatedZone = await Country.findById(country._id);
@@ -260,14 +267,15 @@ describe('/countrys/', () => {
         code: "T2",
         unrest: 13,
         zoneCode: "EU",
-        teamCode: "TUK"
+        loadTeamCode: "TUK"
       });
       await country.save();
   
       newName = "UpdPutZone6";
   
       const res = await request(server).put('/api/country/' + country._id).send({ name: newName,
-        code: country.code
+        code: country.code,
+        teamCode: country.loadTeamCode
       });
   
       expect(res.body).toHaveProperty('_id');

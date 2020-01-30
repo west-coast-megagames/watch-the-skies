@@ -16,9 +16,10 @@ const bodyParser = require('body-parser');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
-const { Zone, validateZone } = require('../../models/zone');
-const { Country, validateCountry } = require('../../models/country'); 
-const { Team, validateTeam } = require('../../models/team');
+const { Zone } = require('../../models/zone');
+const { Country } = require('../../models/country'); 
+const { Team } = require('../../models/team');
+const { Base } = require('../../models/base');
 
 const app = express();
 
@@ -81,10 +82,18 @@ async function loadInterceptor(iData){
           if (!team) {
             interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
           } else {
-            interceptor.team.team_id  = team._id;
-            interceptor.team.teamName = team.shortName;
-            interceptor.team.teamCode = team.teamCode;
+            interceptor.team = team._id;
             interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          }
+        }      
+
+        if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+          let base = await Base.findOne({ baseCode: iData.parentCode2 });  
+          if (!base) {
+            interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
+          } else {
+            interceptor.base = base._id;
+            interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
           }
         }      
 
@@ -93,9 +102,7 @@ async function loadInterceptor(iData){
           if (!zone) {
             interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.location.zone);
           } else {
-            interceptor.location.zone.zone_id  = zone._id;
-            interceptor.location.zone.zoneName = zone.zoneName;
-            interceptor.location.zone.zoneCode = zone.zoneCode;
+            interceptor.location.zone = zone._id;
             interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
           }      
         }
@@ -105,9 +112,7 @@ async function loadInterceptor(iData){
           if (!country) {
             interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.location.country);
           } else {
-            interceptor.location.country.country_id  = country._id;
-            interceptor.location.country.countryName = country.name;
-            interceptor.location.country.countryCode = country.code;
+            interceptor.location.country = country._id;
             interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
           }      
         }
@@ -131,21 +136,27 @@ async function loadInterceptor(iData){
         if (!team) {
           interceptorLoadDebugger("Interceptor Load Team Error, Update Interceptor:", iData.name, " Team: ", iData.parentCode1);
         } else {
-          interceptor.team.team_id  = team._id;
-          interceptor.team.teamName = team.shortName;
-          interceptor.team.teamCode = team.teamCode;
+          interceptor.team = team._id;
           interceptorLoadDebugger("Interceptor Load Update Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
         }
       }  
       
+      if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+        let base = await Base.findOne({ baseCode: iData.parentCode2 });  
+        if (!base) {
+          interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
+        } else {
+          interceptor.base = base._id;
+          interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
+        }
+      }      
+
       if (iData.location.zone != ""){
         let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
         if (!zone) {
           interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.location.zone);
         } else {
-          interceptor.location.zone.zone_id  = zone._id;
-          interceptor.location.zone.zoneName = zone.zoneName;
-          interceptor.location.zone.zoneCode = zone.zoneCode;
+          interceptor.location.zone = zone._id;
           interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
         }      
       }
@@ -155,9 +166,7 @@ async function loadInterceptor(iData){
         if (!country) {
           interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.location.country);
         } else {
-          interceptor.location.country.country_id  = country._id;
-          interceptor.location.country.countryName = country.name;
-          interceptor.location.country.countryCode = country.code;
+          interceptor.location.country = country._id;
           interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
         }      
       }
@@ -182,7 +191,7 @@ async function loadInterceptor(iData){
 
 async function deleteAllInterceptors(doLoad) {
   
-  interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
+  //interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
   if (!doLoad) return;
 
   try {

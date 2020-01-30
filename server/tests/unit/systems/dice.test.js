@@ -145,7 +145,7 @@ describe('dice d12', () => {
     let foundTen   = false;
     let foundEleven = false;
     let foundTwelve = false;
-    for (i = 0; i < 48; i++) {  
+    for (i = 0; i < 72; i++) {  
       let dieRoll = d12();
       if (dieRoll == 1) foundOne = true;
       if (dieRoll == 2) foundTwo = true;
