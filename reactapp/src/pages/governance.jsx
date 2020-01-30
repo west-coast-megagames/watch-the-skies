@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
 
 import Budget from './tabs/gov/budget';
+import World from '../components/world';
 
 class Governance extends Component {
     constructor() {
@@ -54,7 +55,7 @@ class Governance extends Component {
                         <h5>The treaty system for the Governance Module has not been created!</h5>
                     )}/>
                     <Route path={`${url}/unrest`}  render={() => (
-                        <h5>The unrest system for the Governance Module has not been created!</h5>
+                        <World />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
