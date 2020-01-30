@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker } from 'rsuite';
+import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker,SelectPicker } from 'rsuite';
 
 
 class TextField extends React.PureComponent {
@@ -41,7 +41,7 @@ class SubNews extends React.Component {
         this.props.alert({
             type: 'success',
             title: 'News Item Submitted',
-            body: `News with headline:  ${resArticle.data.headline}!`
+            body: 'News with headline:  ${resArticle.data.headline}!'
         })
         this.props.login()
         this.props.close();  
@@ -52,7 +52,6 @@ class SubNews extends React.Component {
             title: 'Failed to create news item',
             body: `${err.message}`})
     }
-    
   }
 
   handleCheckNews() {
@@ -62,6 +61,12 @@ class SubNews extends React.Component {
   }
   render() {
     const { formError, formValue } = this.state;
+
+    const agency = [
+        {value: 'BNC', label: 'BNC'},
+        {value: 'GNN', label: 'GNN'},
+        {value: 'US', label: 'US'}
+    ];
 
     return (
       <Form
@@ -76,7 +81,8 @@ class SubNews extends React.Component {
         formValue={formValue}
       >
 
-        <TextField name="agency" label="News Agency" />
+        <TextField name="agencyOld" label="News Agency" />
+        <SelectPicker name="agency" data={agency} style={{ width: 224 }} />
         <TextField name="location" label="Location" />
         <TextField name="headline" label="Headline" />
 
