@@ -1,6 +1,6 @@
 const fs = require('fs');
 const config = require('config');
-const file = fs.readFileSync(config.get('initPath') + 'init-json/initbaseSite.json', 'utf8');
+const file = fs.readFileSync(config.get('initPath') + 'init-json/initBaseSite.json', 'utf8');
 const baseDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const baseSiteLoadDebugger = require('debug')('app:baseLoad');

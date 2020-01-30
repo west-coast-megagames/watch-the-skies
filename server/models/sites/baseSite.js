@@ -39,7 +39,8 @@ function validateBase(baseSite) {
   //modelDebugger(`Validating ${baseSite.baseName}...`);
 
   const schema = {
-      baseName: Joi.string().min(2).max(50).required()
+      baseName: Joi.string().min(2).max(50).required(),
+      baseCode: Joi.string().min(2).max(50)
     };
   
   return Joi.validate(baseSite, schema, { "allowUnknown": true });

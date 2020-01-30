@@ -4,6 +4,7 @@ const runInterceptorLoad = require('../dataInit/interceptorLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runBaseLoad = require('../dataInit/baseLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
+const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 
 async function fullInit(selStr){
@@ -40,7 +41,15 @@ async function fullInit(selStr){
       if (selStr != 'All') {
         break;
       }
-          
+       
+    case 'All':
+    case 'CitySite':
+      let citySiteDone = await runCitySiteLoad(true);  // load expanded City Sites fields
+      console.log("City Sites Load Done: ", citySiteDone);
+      if (selStr != 'All') {
+        break;
+      }
+
     case 'All':
     case 'Interceptor':
       let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
