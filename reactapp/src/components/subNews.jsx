@@ -1,10 +1,10 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker,SelectPicker } from 'rsuite';
+import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker,SelectPicker, Input } from 'rsuite';
+//import Select from '../components/common/selectPicker';
 
-
-class TextField extends React.PureComponent {
+/*class TextField extends React.PureComponent {
   render() {
     const { name, label, accepter, ...props } = this.props;
     return (
@@ -14,24 +14,48 @@ class TextField extends React.PureComponent {
       </FormGroup>
     );
   }
-}
+}*/
+
+
 
 class SubNews extends React.Component {
-  constructor(props) {
+  /*constructor(props) {
     super(props);
     this.state = {
-      formValue: {
+      article: {
         agency: "",
         location: "",
         headline: "",
         body: "",
         imageSrc: ""
-      },
-      formError: {}
+      }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
+  */
 
+    state = {
+    article: {
+      agency: "",
+      location: "",
+      headline: "",
+      body: "",
+      imageSrc: ""
+    }}
+
+    handleInput = (value, id) => {
+        console.log(this);
+        console.log(value);
+        console.log(id);
+
+        let article = this.state.article;
+        article[id] = value;
+        this.setState({ article });
+    };
+
+
+/*
   async handleSubmit() {
     console.log('Form submitted...');
     console.dir(this.state.formValue);
@@ -53,6 +77,26 @@ class SubNews extends React.Component {
             body: `${err.message}`})
     }
   }
+  */
+
+    handleSubmit = async e => {
+        e.preventDefault();
+        try {
+            let resArticle = await axios.post(`${gameServer}api/news`, this.state.article);
+            //localStorage.setItem('token', res.headers['x-auth-token']);
+            this.props.alert({
+                type: 'success',
+                title: 'News Item Submitted',
+                body: 'News with headline:  ${resArticle.data.headline}!'
+            }) 
+        } catch (err) {
+            console.log(err)
+            this.props.alert({
+                type: 'error',
+                title: 'Failed to create news item',
+                body: `${err.message}`})
+        }
+    }
 
   handleCheckNews() {
     this.form.checkForField('news', checkResult => {
@@ -61,6 +105,8 @@ class SubNews extends React.Component {
   }
   render() {
     const { formValue } = this.state;
+    const { body, location, headline, imageSrc  } = this.state.article;
+
 
     const agency = [
         {value: 'BNC', label: 'BNC'},
@@ -69,26 +115,17 @@ class SubNews extends React.Component {
     ];
 
     return (
-      <Form
-        fluid
-        ref={ref => (this.form = ref)}
-        onChange={formValue => {
-          this.setState({ formValue });
-        }}
-        onCheck={formError => {
-          this.setState({ formError });
-        }}
-        formValue={formValue}
-      >
+      <Form>
 
-        <TextField name="agencyOld" label="News Agency" />
-        <SelectPicker name="agency" data={agency} style={{ width: 224 }} />
-        <TextField name="location" label="Location" />
-        <TextField name="headline" label="Headline" />
+        <SelectPicker id="agency" data={agency} style={{ width: 224 }}  labelKey='label' valueKey='value' placeholder='pick your origin' onChange={(value)=>this.handleInput(value, 'agency')}/>
+        <FormGroup>
+        <Input id='location' type="text" value={this.state.article.location} name="location" label="Location"  placeholder='location'  onChange={(value)=>this.handleInput(value, 'location')}/>
+        </FormGroup>
+        <Input id='headline' type="text" value={headline} name="headline" label="Headline"  placeholder='headline' onChange={(value)=>this.handleInput(value, 'headline')} />
 
-        <TextField name="body" label="Body" />
+        <Input id='body' type="text" value={body} name="body" label="Body" placeholder='body' onChange={(value)=>this.handleInput(value, 'body')} />
         
-        <TextField name="img" label="Image Source" />
+        <Input id='imageSrc' type="text" value={imageSrc} name="img" label="Image Source" placeholder='img' onChange={(value)=>this.handleInput(value, 'imageSrc')} />
 
         <ButtonToolbar>
           <Button appearance="primary" onClick={this.handleSubmit}>
