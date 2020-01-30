@@ -3,6 +3,7 @@ const runTeamLoad = require('../dataInit/teamLoad');
 const runInterceptorLoad = require('../dataInit/interceptorLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runBaseLoad = require('../dataInit/baseLoad');
+const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 
 async function fullInit(selStr){
@@ -32,6 +33,14 @@ async function fullInit(selStr){
         break;
       }
 
+    case 'All':
+    case 'BaseSite':
+      let baseSiteDone = await runBaseSiteLoad(true);  // load expanded Base Sites fields
+      console.log("Base Sites Load Done: ", baseSiteDone);
+      if (selStr != 'All') {
+        break;
+      }
+          
     case 'All':
     case 'Interceptor':
       let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
