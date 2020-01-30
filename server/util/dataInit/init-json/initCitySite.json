@@ -1,0 +1,38 @@
+[
+{"loadType": "citySite",
+"name" : "San Francisco",
+"code" : "US SFO",
+"parentCode1" : "US",
+"parentCode2" : "USA"
+},
+{"loadType": "citySite",
+"name" : "Moscow",
+"code" : "RU BKA",
+"parentCode1" : "RU",
+"parentCode2" : "RFD"
+},
+{"loadType": "citySite",
+"name" : "Beijing",
+"code" : "CN BJS",
+"parentCode1" : "CN",
+"parentCode2" : "PRC"
+},
+{"loadType": "citySite",
+"name" : "Paris",
+"code" : "FR ATY",
+"parentCode1" : "FR",
+"parentCode2" : "TFR"
+},
+{"loadType": "citySite",
+"name" : "London",
+"code" : "GB LHR",
+"parentCode1" : "GB",
+"parentCode2" : "TUK"
+},
+{"loadType": "citySite",
+ "name" : "Amundsen-Scott South Pole",
+ "code" : "AQ AMS",
+ "parentCode1" : "AQ",
+ "parentCode2" : "USA"
+}
+]

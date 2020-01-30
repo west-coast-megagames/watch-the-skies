@@ -1,0 +1,97 @@
+[
+{"loadType": "baseSite",
+"name" : "USA Base Alpha",
+"code" : "USBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"parentCode1" : "US",
+"parentCode2" : "USA"
+},
+{"loadType": "baseSite",
+"name" : "RFD Base Alpha",
+"code" : "RUBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"parentCode1" : "RU",
+"parentCode2" : "RFD"
+},
+{"loadType": "baseSite",
+"name" : "PRC Base Alpha",
+"code" : "CNBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"parentCode1" : "CN",
+"parentCode2" : "PRC"
+},
+{"loadType": "baseSite",
+"name" : "TFR Base Alpha",
+"code" : "FRBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"parentCode1" : "FR",
+"parentCode2" : "TFR"
+},
+{"loadType": "baseSite",
+"name" : "TUK Base Alpha",
+"code" : "GBBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined" },
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"parentCode1" : "GB",
+"parentCode2" : "TUK"
+}
+]
