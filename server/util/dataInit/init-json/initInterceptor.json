@@ -24,7 +24,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "USA", 
-"parentCode2" : "undefined"
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -52,7 +52,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "USA", 
-"parentCode2" : "undefined"
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -79,7 +79,8 @@
      "upgrade": false,
      "repair": false,
      "mission": false},
-"parentCode1" : "USA", "parentCode2" : "undefined"
+"parentCode1" : "USA", 
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -107,7 +108,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RUBA"
 },
 {
 "type" : "interceptor",
@@ -135,7 +136,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RFBA"
 },
 {
 "type" : "interceptor",
@@ -163,7 +164,7 @@
      "repair": false,
      "mission" : false},
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RFBA"
 },
 {
 "type" : "interceptor",
@@ -191,7 +192,7 @@
     "repair": false,
     "mission" : false },
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -219,7 +220,7 @@
     "repair": false,
     "mission" : false },
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -247,7 +248,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -275,7 +276,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -303,7 +304,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -331,7 +332,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -359,7 +360,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",
@@ -387,7 +388,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",
@@ -415,7 +416,7 @@
      "repair": false,
      "mission" : false },
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",

@@ -87,6 +87,16 @@ async function loadInterceptor(iData){
           }
         }      
 
+        if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+          let base = await Base.findOne({ baseCode: iData.parentCode2 });  
+          if (!base) {
+            interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
+          } else {
+            interceptor.base = base._id;
+            interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
+          }
+        }      
+
         if (iData.location.zone != ""){
           let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
           if (!zone) {
@@ -131,6 +141,16 @@ async function loadInterceptor(iData){
         }
       }  
       
+      if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+        let base = await Base.findOne({ baseCode: iData.parentCode2 });  
+        if (!base) {
+          interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
+        } else {
+          interceptor.base = base._id;
+          interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
+        }
+      }      
+
       if (iData.location.zone != ""){
         let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
         if (!zone) {

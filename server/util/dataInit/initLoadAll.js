@@ -25,6 +25,14 @@ async function fullInit(selStr){
       }
 
     case 'All':
+    case 'Base':
+      let baseDone = await runBaseLoad(true);  // load expanded Base fields
+      console.log("Base Load Done: ", baseDone);
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
     case 'Interceptor':
       let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
       console.log("Interceptor Load Done: ", interceptorDone);
@@ -36,14 +44,6 @@ async function fullInit(selStr){
     case 'User':
       let userDone = await runUserLoad(true);  // load expanded User fields
       console.log("User Load Done: ", userDone );
-      if (selStr != 'All') {
-        break;
-      }
-
-    case 'All':
-    case 'Base':
-      let baseDone = await runBaseLoad(true);  // load expanded Base fields
-      console.log("Base Load Done: ", baseDone);
       if (selStr != 'All') {
         break;
       }
