@@ -62,7 +62,11 @@ async function loadCity(iData){
        // New City here
        let citySite = new CitySite({ 
            cityName: iData.name,
-           cityCode: iData.code
+           cityCode: iData.code,
+           latDMS: iData.latDMS,
+           longDMS: iData.longDMS,
+           latDecimal: iData.latDecimal,
+           longDecimal: iData.longDecimal
         }); 
 
         let { error } = validateCity(citySite); 
@@ -101,6 +105,10 @@ async function loadCity(iData){
       
       citySite.cityName     = iData.name;
       citySite.cityCode     = iData.code;
+      citySite.latDMS       = iData.latDMS;
+      citySite.longDMS      = iData.longDMS;
+      citySite.latDecimal   = iData.latDecimal;
+      citySite.longDecimal  = iData.longDecimal;
       
       if (iData.parentCode2 != ""){
         let team = await Team.findOne({ teamCode: iData.parentCode2 });  
