@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const { Interceptor } = require('../../models/ops/interceptor');
+const Interceptor = require('../../models/ops/interceptor');
+const System = require('../../models/ops/systems')
+const { loadSystems } = require('../../wts/construction/systems/systems');
+const { systems } = require('../../wts/construction/systems/systems')
 
 // @route   PATCH api/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
@@ -61,5 +64,38 @@ router.patch('/resethull', async function (req, res) {
     }
     res.send("Interceptors succesfully reset!");
 });
+
+// @route   PATCH api/control/loadSystems
+// @desc    Loads all systems into game server
+// @access  Public
+router.patch('/loadSystems', async function (req, res) {
+    let response = await loadSystems();
+    res.status(200).send(response);
+});
+
+// @route   POST api/control/build
+// @desc    Builds the thing!
+// @access  Public
+router.post('/build', async function (req, res) {
+    let aircraft = req.body;
+    aircraft.systems = [];
+    for (let sys of aircraft.loudout) {
+        let system = systems[systems.findIndex(system => system.name === sys )]
+        system = await new System(system);
+        system = await system.save();
+        console.log(system);
+        aircraft.systems.push(system._id)
+    }
+    let newInterceptor = new Interceptor(aircraft);
+    console.log(newInterceptor)
+    newInterceptor = await newInterceptor.save();
+    newInterceptor = await Interceptor.findById(newInterceptor._id).populate('team', 'shortName').populate('systems');
+    newInterceptor.updateStats();
+    console.log(newInterceptor);
+   
+    res.status(200).send(newInterceptor);
+});
+
+
 
 module.exports = router;
