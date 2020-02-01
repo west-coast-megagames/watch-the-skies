@@ -23,6 +23,12 @@
   color: #61dafb;
 }
 
+.tabContent {
+  padding-left: 20px;
+  overflow-y: auto;
+  height: calc(100vh - 100px);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

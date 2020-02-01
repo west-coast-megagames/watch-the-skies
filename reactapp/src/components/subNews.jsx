@@ -116,16 +116,25 @@ class SubNews extends React.Component {
 
     return (
       <Form>
-
+        <FormGroup>
         <SelectPicker id="agency" data={agency} style={{ width: 224 }}  labelKey='label' valueKey='value' placeholder='pick your origin' onChange={(value)=>this.handleInput(value, 'agency')}/>
+        </FormGroup>
+
         <FormGroup>
         <Input id='location' type="text" value={this.state.article.location} name="location" label="Location"  placeholder='location'  onChange={(value)=>this.handleInput(value, 'location')}/>
         </FormGroup>
-        <Input id='headline' type="text" value={headline} name="headline" label="Headline"  placeholder='headline' onChange={(value)=>this.handleInput(value, 'headline')} />
 
+        <FormGroup>
+        <Input id='headline' type="text" value={headline} name="headline" label="Headline"  placeholder='headline' onChange={(value)=>this.handleInput(value, 'headline')} />
+        </FormGroup>
+
+        <FormGroup>
         <Input id='body' type="text" value={body} name="body" label="Body" placeholder='body' onChange={(value)=>this.handleInput(value, 'body')} />
+        </FormGroup>
         
+        <FormGroup>
         <Input id='imageSrc' type="text" value={imageSrc} name="img" label="Image Source" placeholder='img' onChange={(value)=>this.handleInput(value, 'imageSrc')} />
+        </FormGroup>
 
         <ButtonToolbar>
           <Button appearance="primary" onClick={this.handleSubmit}>

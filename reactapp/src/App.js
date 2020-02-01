@@ -11,11 +11,12 @@ import MainContainer from './pages/main';
 import Toast from './components/toast'
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
 import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css';
 //import 'rsuite/dist/styles/rsuite-dark.css';
+import './App.css';
+
 
 import AlertPage from './components/common/alert';
 
@@ -35,10 +36,7 @@ class App extends Component {
       name: "Select Team"
     },
     alerts: [],
-    news: {
-      bnc: [],
-      gnn: []
-    }
+    articles: []
   }
 
   componentDidMount() {
@@ -48,6 +46,7 @@ class App extends Component {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
       }
+
     });
 
     currentAircrafts((err, aircrafts) => {
@@ -78,14 +77,12 @@ class App extends Component {
     }
 
     async getNews () {
-      let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
-      let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
-      let news = {
-        bnc,
-        gnn
-      }
-      console.log(news);
-      this.setState({ news })
+      //let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
+      //let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
+      let { data: articles } = await axios.get(`${gameServer}api/news/articles`);
+
+
+      this.setState({ articles });
     }
   
     updateTeam = async (team) => {
@@ -138,6 +135,29 @@ class App extends Component {
       this.setState({ alerts });
     };
 
+    handleArtHide = (article) => {
+      let articles = this.state.articles;
+      let index = 0;
+      console.log('in hide');
+
+      /*if(article.agency === 'BNC') {
+          console.log(article.agency);
+          index = artBnc.indexOf(article._id);
+          artBnc.splice(index,1);
+      }
+      else if(article.agency === 'GNN') {
+          artGnn.splice(artGnn.indexOf(article._id),1);
+      }
+      else {
+          artPr.splice(artPr.indexOf(article._id),1);
+      }*/
+
+      //let news = {}
+      articles.splice(articles.indexOf(article._id),1);
+
+      this.setState({articles});
+    }
+
   render() {
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
@@ -152,13 +172,14 @@ class App extends Component {
             user={ this.state.user }
             teams={ this.state.teams }
             team={ this.state.team }
-            news={ this.state.news }
+            articles={ this.state.articles }
             accounts={ this.state.accounts }
             handleUpdate={ this.updateAccounts }
             aircrafts={ this.state.aircrafts }
             addAlert={ this.addAlert }
             handleLogin={ this.handleLogin }
             updateAccounts={ this.updateAccounts }
+            handleArtHide={this.handleArtHide}
           />
           <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
           <Toast />

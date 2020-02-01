@@ -32,7 +32,7 @@ class Operations extends Component {
                     <Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20 }}>
+            <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
                         <h5>No dashboard has been coded for the Operations Module!</h5>
