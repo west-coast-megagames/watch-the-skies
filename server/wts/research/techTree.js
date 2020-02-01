@@ -12,6 +12,7 @@ function getTechTree() {
     return techTree;
 }
 
+// TEMP function that goes through the whole tech tree and checks the availibility of each
 async function makeAvailible() {
     for (let tech of techTree) {
         let res = await tech.checkAvailible();
