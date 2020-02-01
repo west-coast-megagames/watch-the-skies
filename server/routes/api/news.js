@@ -26,6 +26,15 @@ router.get('/bnc', async function (req, res) {
     res.json(articles);
 });
 
+// @route   GET api/news/articles
+// @Desc    Get all Articles
+// @access  Public
+router.get('/articles', async function (req, res) {
+    routeDebugger('Gathering all articles!');
+    let articles = await Article.find();
+    res.json(articles);
+});
+
 // @route   POST api/news
 // @Desc    Post a new article
 // @access  Public
