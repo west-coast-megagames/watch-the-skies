@@ -1,5 +1,5 @@
 const fs = require('fs')
-const file = fs.readFileSync(require.resolve('./research.json'));
+const file = fs.readFileSync(require.resolve('../json/research.json'));
 const techData = JSON.parse(file);
 
 const techTreeDebugger = require('debug')('app:techTree');

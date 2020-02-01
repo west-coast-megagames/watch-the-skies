@@ -66,6 +66,4 @@ function Technology(tech) {
     }
 }
 
-
-
 module.exports = Technology;
