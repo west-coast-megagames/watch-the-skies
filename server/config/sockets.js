@@ -8,16 +8,11 @@ const eventListner = new events.EventEmitter();
 
 // Mongoose Object Models
 const { Team, getPR, getTeam } = require('../models/team');
-const { Interceptor, getAircrafts } = require('../models/ops/interceptor');
+const { getAircrafts } = require('../models/ops/aircraft');
 const { Account } = require('../models/gov/account');
 
 let connections = [];
 let msgKey = 0;
-
-Interceptor.watch().on('change', data => {
-  socketDebugger(new Date(), data);
-  eventListner.emit('updateAircrafts');
-});
 
 Team.watch().on('change', data => {
   socketDebugger(data);
