@@ -55,6 +55,14 @@ class Control extends Component {
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
+                <div>
+                    <h5>Construction Controls</h5>
+                    <MDBBtnGroup>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.loadSystems() }>
+                            Load Systems
+                        </MDBBtn>
+                    </MDBBtnGroup>
+                </div>
             </div>    
         );
     }
@@ -131,6 +139,16 @@ class Control extends Component {
             this.props.alert({type: 'success', title: 'Initial Knowledge Seeded', body: response.data})
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to seed knowledge', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    loadSystems = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/control/loadSystems`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'System options loaded', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed load Systems', body: `${err.response.data} - ${err.message}` })
         };
     }
     
