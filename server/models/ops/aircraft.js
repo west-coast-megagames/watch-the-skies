@@ -12,7 +12,7 @@ const AircraftSchema = new Schema({
     country: { type: Schema.Types.ObjectId, ref: 'Country'},
     site: { type: Schema.Types.ObjectId, ref: 'Site' }
   },
-  base: { type: Schema.Types.ObjectId, ref: 'Base'},
+  base: { type: Schema.Types.ObjectId, ref: 'Site'},
   status: {
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
@@ -32,6 +32,34 @@ AircraftSchema.methods.updateStats = function () {
   }
   console.log(`All systems for ${this.type} ${this.designation} leaded...`);
   console.log(this.stats);
+}
+
+AircraftSchema.methods.launch = async (aircraft, mission) => {
+  const banking = require('../../wts/banking/banking');
+  const { Account } = require('../gov/account');
+
+  try {
+    modelDebugger(`Attempting to launch ${aircraft.designation}`)
+    aircraft.status.deployed = true;
+    aircraft.status.ready = false;
+
+    modelDebugger(aircraft.status);
+
+    let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
+    
+
+    account = await banking.withdrawal(account, 1, `Deployment of ${aircraft.designation} for ${mission.toLowerCase()}`)
+
+    modelDebugger(account)
+    await account.save();
+    await aircraft.save();
+    modelDebugger(`Aircraft ${aircraft.designation} deployed...`);
+
+    return aircraft;
+
+  } catch (err) {
+    modelDebugger('Error:', err.message);
+  }
 }
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
@@ -62,32 +90,4 @@ async function getAircrafts() {
   return aircrafts;
 };
 
-async function launch (aircraft) {
-  const banking = require('../../wts/banking/banking');
-  const { Account } = require('../gov/account');
-
-  try {
-    modelDebugger(`Attempting to launch ${aircraft.designation}`)
-    aircraft.status.deployed = true;
-    aircraft.status.ready = false;
-    aircraft.status.mission = true;
-
-    modelDebugger(aircraft);
-
-    let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
-    console.log(account)
-
-    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
-
-    await account.save();
-    await aircraft.save();
-    console.log(`Aircraft ${aircraft.designation} deployed...`);
-
-    return;
-
-  } catch (err) {
-    modelDebugger('Error:', err.message);
-  }
-}
-
-module.exports = { Aircraft, launch, validateAircraft, getAircrafts }
+module.exports = { Aircraft, validateAircraft, getAircrafts }
