@@ -59,6 +59,7 @@ async function initLoad(doLoad) {
 
 async function loadInterceptor(iData){
   try {   
+    //interceptorLoadDebugger("Jeff in loadInterceptor ", iData.name); 
     let interceptor = await Interceptor.findOne( { designation: iData.name } );
     if (!interceptor) {
        // New Interceptor here
@@ -191,17 +192,20 @@ async function loadInterceptor(iData){
 
 async function deleteAllInterceptors(doLoad) {
   
-  //interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
+  interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
   if (!doLoad) return;
 
   try {
     for await (const interceptor of Interceptor.find()) {    
       let id = interceptor._id;
+
+      //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop", interceptor.designation); 
       try {
         let interceptorDel = await Interceptor.findByIdAndRemove(id);
         if (interceptorDel = null) {
-          interceptorLoadDebugger(`The Zone with the ID ${id} was not found!`);
+          interceptorLoadDebugger(`The Interceptor with the ID ${id} was not found!`);
         }
+        //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop after remove", interceptor.designation); 
       } catch (err) {
         interceptorLoadDebugger('Interceptor Delete All Error:', err.message);
       }

@@ -21,4 +21,15 @@ const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
   systems: [{ type: Schema.Types.ObjectId, ref: 'System' }]
 }));
 
-module.exports = Interceptor;
+function validateInterceptor(interceptor) {
+  //modelDebugger(`Validating ${interceptor.designation}...`);
+
+  const schema = {
+      designation: Joi.string().min(2).max(50).required(),
+      type: Joi.string().min(2).max(50).required()
+    };
+  
+  return Joi.validate(interceptor, schema, { "allowUnknown": true });
+};
+
+module.exports = { Interceptor , validateInterceptor };
