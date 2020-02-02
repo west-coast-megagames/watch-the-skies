@@ -17,9 +17,9 @@ async function teamPhase(turn) {
     return 0;
 };
 
-function actionPhase(turn) {
+async function actionPhase(turn) {
     phaseChangeDebugging(`Now changing to the action phase for ${turn}...`)
-    intercept.resolveInterceptions(); // Resolve Interceptions that have been sent [coded]
+    await intercept.resolveMissions(); // Resolve Interceptions that have been sent [coded]
     phaseChangeDebugging(`Done with action phase change for ${turn}!`)
     logger.info(`Turn ${turn} action phase has begun...`);
 };
