@@ -11,6 +11,6 @@ const SiteSchema = new Schema({
     longDecimal: { type: Number, min: -180, max: 180 }         // Postive is East, Negative is West 
 });
 
-let Site = mongoose.model('site', SiteSchema);
+let Site = mongoose.model('Site', SiteSchema);
 
 module.exports = Site;
