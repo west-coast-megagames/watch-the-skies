@@ -3,7 +3,7 @@
     "name": "Cutting Laser",
     "cost": 2,
     "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers"}],
-    "catagory": "Weapon",
+    "category": "Weapon",
     "desc": "Laser designed to cut through material and do damage to systems",
     "stats": { "attack": 1, "penetration": 1 }
 },
@@ -11,7 +11,7 @@
     "name": "BS Railgun Mk. I",
     "cost": 0,
     "prereq": [],
-    "catagory": "Weapon",
+    "category": "Weapon",
     "desc": "Basic terestrial mounted railgun",
     "stats": { "attack": 1 }
 },
@@ -19,7 +19,7 @@
     "name": "High Orbital Sensor Suite",
     "cost": 0,
     "prereq": [],
-    "catagory": "Sensors",
+    "category": "Sensors",
     "desc": "Basic terestrial sensor system",
     "stats": { "evade": 0 }
 },
@@ -27,7 +27,7 @@
     "name": "Standard Cockpit",
     "cost": 0,
     "prereq": [],
-    "catagory": "Compartment",
+    "category": "Compartment",
     "desc": "Basic single seater cock-pit",
     "stats": { "cargo": 0 }
 },
@@ -35,7 +35,7 @@
     "name": "High Volacity Thrusters",
     "cost": 0,
     "prereq": [],
-    "catagory": "Engine",
+    "category": "Engine",
     "desc": "Basic terestrial sensor system",
     "stats": { "range": 3000, "evade": 1 }
 },
@@ -43,7 +43,7 @@
     "name": "Targeting CPU",
     "cost": 0,
     "prereq": [],
-    "catagory": "Util",
+    "category": "Util",
     "desc": "Basic terestrial sensor system",
     "stats": { "penetration": 1 }
 }

@@ -23,7 +23,7 @@ router.get('/', async function (req, res) {
       .populate('team', 'name shortName')
       .populate('location.zone', 'zoneName')
       .populate('location.country', 'name')
-      .populate('systems', 'name catagory')
+      .populate('systems', 'name category')
       /*
       .populate('base', 'baseName')
       */

@@ -10,7 +10,7 @@ function Technology(tech) {
     this.level = tech.level;
     this.prereq = tech.prereq;
     this.desc = tech.desc;
-    this.catagory = tech.catagory;
+    this.category = tech.category;
 
     // Async Method to check if this technology is availible for each team
     this.checkAvailible = async function() {
@@ -47,7 +47,7 @@ function Technology(tech) {
                         level: this.level,
                         prereq: this.prereq,
                         desc: this.desc,
-                        catagory: this.catagory,
+                        category: this.category,
                         team: team._id
                     });
 
