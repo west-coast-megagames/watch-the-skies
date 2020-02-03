@@ -10,7 +10,7 @@ const Log = require('../../models/logs/log');
 // @access  Public
 router.get('/', async function (req, res) {
     routeDebugger('Sending the logs!');
-    let logs = await Log.find();
+    let logs = await Log.find().populate('team');
     res.json(logs);
 });
 
