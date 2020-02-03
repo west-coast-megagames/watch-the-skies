@@ -3,14 +3,8 @@ const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
-<<<<<<< HEAD
-const System = require('../../models/ops/systems')
-const { loadSystems } = require('../../wts/construction/systems/systems');
-const { systems } = require('../../wts/construction/systems/systems')
-=======
 const { System } = require('../../models/ops/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
->>>>>>> f90f419bc0a642afb24d98067181a9f464b03c20
 
 // @route   PATCH api/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
