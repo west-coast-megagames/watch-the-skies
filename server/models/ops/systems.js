@@ -22,4 +22,6 @@ const SystemSchema = new Schema({
     }
 });
 
-module.exports = System = mongoose.model('System', SystemSchema);
+let System = mongoose.model('System', SystemSchema);
+
+module.exports = { System };

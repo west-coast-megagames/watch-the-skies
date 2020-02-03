@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 const validateObjectId = require('../../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/ops/interceptor');
+const { Interceptor } = require('../../models/ops/interceptor');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team'); 
@@ -21,6 +21,7 @@ router.get('/', async function (req, res) {
       .populate('team', 'name shortName')
       .populate('location.zone', 'zoneName')
       .populate('location.country', 'name')
+      .populate('systems', 'name catagory')
       /*
       .populate('base', 'baseName')
       */
