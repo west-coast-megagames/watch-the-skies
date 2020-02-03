@@ -1,12 +1,14 @@
 const fs = require('fs')
-const file = fs.readFileSync(require.resolve('../../json/systems.json'));
+const config = require('config');
+
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/systems.json'));
 const systemData = JSON.parse(file);
 
 systemsDebugger = require('debug')('app:systems');
 
 const systems = []
 
-const System = require('../../../models/ops/systems')
+const { System } = require('../../../models/ops/systems');
 
 // Load function to load all systems.
 async function loadSystems () {
@@ -40,6 +42,5 @@ function Sys(system) {
         return newSystem;
     }
 }
-
 
 module.exports = { loadSystems, systems };
