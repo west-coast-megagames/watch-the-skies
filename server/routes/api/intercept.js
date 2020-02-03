@@ -4,7 +4,7 @@ const routeDebugger = require('debug')('app:routes');
 const airMission = require('../../wts/intercept/intercept');
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/ops/interceptor');
+const { Interceptor } = require('../../models/ops/interceptor');
 
 // @route   PUT api/intercept   ... update
 // @Desc    Find Attacker/Defender and activate intercept

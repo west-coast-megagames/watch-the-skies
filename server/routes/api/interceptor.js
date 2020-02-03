@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 const validateObjectId = require('../../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
-const Interceptor = require('../../models/ops/interceptor');
+const { Interceptor } = require('../../models/ops/interceptor');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team'); 
