@@ -4,14 +4,24 @@ import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
 import KnowledgeCard from '../components/common/knowledgeCard';
+import Labs from '../pages/tabs/sci/labs';
+import Axios from 'axios';
+import { gameServer } from '../config';
+
 
 class Science extends Component {
     constructor() {
         super();
         this.state = {
-          tab: 'dashboard'
+          tab: 'dashboard',
+          allKnowledge : []
         };
         this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    async loadScience() {
+        const {data: allKnowledge} = await Axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        this.setState({ allKnowledge });
     }
 
     getActive(element) {
@@ -40,10 +50,17 @@ class Science extends Component {
             <Content style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        <h5>No dashboard has been coded for the Science Module!</h5>
+                        //<h5>No dashboard has been coded for the Science Module!</h5>
+                        <button onClick = {() => {this.loadScience()}} >LOAD SCIENCE</button>
                     )}/>
                     <Route path={`${url}/research`}  render={() => (
-                        <React.Fragment><h5>Active focus: Computer Science I</h5><Progress.Line percent={25} status='active' /></React.Fragment>
+                        <Labs    
+                            team={ this.props.team }
+                            allKnowledge={this.state.allKnowledge}
+                            //accounts={ this.props.accounts }
+                            //handleUpdate={ this.props.handleUpdate }
+                            //alert={ this.props.alert }
+                        />
                     )}/>
                     <Route path={`${url}/knowledge`} render={() => (
                         <React.Fragment>
