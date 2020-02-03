@@ -30,4 +30,9 @@ function d20() {
     return rand;
 };
 
-module.exports = { d4, d6, d8, d10, d12, d20 };
+function rand(num) {
+    let rand = 1 + Math.floor(Math.random() * num);
+    return rand;
+};
+
+module.exports = { d4, d6, d8, d10, d12, d20, rand };
