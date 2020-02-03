@@ -3,9 +3,14 @@ const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
+<<<<<<< HEAD
 const System = require('../../models/ops/systems')
 const { loadSystems } = require('../../wts/construction/systems/systems');
 const { systems } = require('../../wts/construction/systems/systems')
+=======
+const { System } = require('../../models/ops/systems');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+>>>>>>> f90f419bc0a642afb24d98067181a9f464b03c20
 
 // @route   PATCH api/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
@@ -76,22 +81,24 @@ router.patch('/loadSystems', async function (req, res) {
 // @route   POST api/control/build
 // @desc    Builds the thing!
 // @access  Public
+
 router.post('/build', async function (req, res) {
     let aircraft = req.body;
     aircraft.systems = [];
-    for (let sys of aircraft.loudout) {
-        let system = systems[systems.findIndex(system => system.name === sys )]
-        system = await new System(system);
-        system = await system.save();
-        console.log(system);
-        aircraft.systems.push(system._id)
+    for (let sys of aircraft.loadout) {
+        let sysRef = systems[systems.findIndex(system => system.name === sys )];
+        newSystem = await new System(sysRef);
+        await newSystem.save(((err, newSystem) => {
+          if (err) return console.error(`Post Build Interceptor System Save Error: ${err}`);
+        }));
+        //console.log(newSystem);
+        aircraft.systems.push(newSystem._id);
     }
     let newInterceptor = new Interceptor(aircraft);
-    console.log(newInterceptor)
     newInterceptor = await newInterceptor.save();
     newInterceptor = await Interceptor.findById(newInterceptor._id).populate('team', 'shortName').populate('systems');
     newInterceptor.updateStats();
-    console.log(newInterceptor);
+    //console.log(newInterceptor);
    
     res.status(200).send(newInterceptor);
 });
