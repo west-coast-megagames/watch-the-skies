@@ -1,109 +1,80 @@
 const interceptDebugger = require('debug')('app:intercept');
 
-// Aggressive Interception Switch
-function aggroResult (unit, roll) {
-    let chances = [3, 5, 8, 10, 12];
+// Aggressive Interception Switch - Used for aggresive missions
+function outcome (unit, roll, stance) {
+    let aggresive = unit.stats.activeRolls; // Results table from the aircraft
+    let passive = unit.stats.passiveRolls; // Results table from the aircraft
     let { designation } = unit;
     let result = {
-        outcome: 'TBD',
-        damage: 0,
-        sysDmg: false,
-        hit: false,
-        sysHit: false,
-        evade: 0,
-        disengage: false,
+        damage: 0, // Hull dmg done to the aircraft due to pilot error
+        sysDmg: false, // System dmg done to aircraft due to pilot error
+        hit: false, // A hit with weapons scored on the enemy craft
+        evade: 0 // Extra evade due to pilot success
     };
 
-    interceptDebugger(`${designation} is checking for aggressive outcome...`)
-    switch(unit.status.aggressive == true) {
+    switch(stance === 'aggressive') {
+        case (true):
+            interceptDebugger(`${designation} is checking for aggressive outcome...`);
         case (roll <= chances[0]):
-            interceptDebugger(`${designation}'s outcome ${chances[0]} or less`)
-            result.outcome = `catastrophic failure.`;
+            interceptDebugger(`${designation}'s outcome ${chances[0]} or less - catastrophic failure.`)
             result.damage = 1;
             result.systemDmg = true;
             break;
         case (roll <= chances[1]):
-            interceptDebugger(`${designation}'s outcome between ${chances[0] + 1} and ${chances[1]}`)
-            result.outcome = `failure.`;
+            interceptDebugger(`${designation}'s outcome between ${chances[0] + 1} and ${chances[1]} - failure.`)
             result.damage = 1;
             result.systemDmg = false;
             break;
         case (roll <= chances[2]):
-            interceptDebugger(`${designation}'s outcome between ${chances[1] + 1} and ${chances[2]}`);
-            result.outcome = `Neutral Result.`;
+            interceptDebugger(`${designation}'s outcome between ${chances[1] + 1} and ${chances[2]} - Neutral Result.`);
             break;
         case (roll <= chances[3]):
-            interceptDebugger(`${designation}'s outcome between ${chances[2] +1 } and ${chances[3]}`);
-            result.outcome = `Mild Success.`;
+            interceptDebugger(`${designation}'s outcome between ${chances[2] +1 } and ${chances[3]} - Mild Success.`);
             result.hit = true,
-            result.sysHit = true,
-            result.disengage = disengageAttempt(unit);
+            result.evade += 1
             break;
         case (roll <= chances[4]):
-            interceptDebugger(`${designation}'s outcome is ${chances[3] + 1} or more`);
-            result.outcome = `Critical Success.`;
-            result.hit = true,
-            result.sysHit = true,
-            result.disengage = disengageAttempt(unit);
+            interceptDebugger(`${designation}'s outcome is ${chances[3] + 1} or more - Critical Success.`);
+            result.hit = true;
+            result.sysHit = true;
+            result.evade += 2;
             break;
         default:
             interceptDebugger(`The case does not work!`);
-    }
-    return result;
-};
-
-// Passive Interception Switch
-function passiveResult (unit, roll) {
-    let chances = [2, 4, 7, 9, 11, 12];
-    let { designation } = unit;
-    let result = {
-        outcome: 'TBD',
-        damage: 0,
-        sysDmg: false,
-        hit: false,
-        sysHit: false,
-        evade: 0,
-        disengage: false,
     };
 
-    interceptDebugger(`${designation} is checking for passive outcome...`)
-    switch(unit.status.passive == true) {
+    switch(stance === 'passive') {
+        case (true):
+            interceptDebugger(`${designation} is checking for passive outcome...`)
         case (roll <= chances[0]):
-            interceptDebugger(`${designation}'s outcome ${chances[0]} or less`)
-            result.outcome = `catastrophic failure.`;
+            interceptDebugger(`${designation}'s outcome ${chances[0]} or less` - `catastrophic failure.`)
             result.damage = 1;
             result.systemDmg = true;
             break;
         case (roll <= chances[1]):
-            interceptDebugger(`${designation}'s outcome between ${chances[0] + 1} and ${chances[1]}`)
-            result.outcome = `failure.`;
+            interceptDebugger(`${designation}'s outcome between ${chances[0] + 1} and ${chances[1]} - failure.`);
             result.damage = 1;
             result.systemDmg = false;
             break;
         case (roll <= chances[2]):
-            interceptDebugger(`${designation}'s outcome between ${chances[1] + 1} and ${chances[2]}`);
-            result.outcome = `neutral result.`;
+            interceptDebugger(`${designation}'s outcome between ${chances[1] + 1} and ${chances[2]} - neutral result.`);
             break;
         case (roll <= chances[3]):
-            interceptDebugger(`${designation}'s outcome between ${chances[2] +1 } and ${chances[3]}`);
-            result.outcome = `mild success.`;
-            result.disengage = disengageAttempt(unit);
+            interceptDebugger(`${designation}'s outcome between ${chances[2] +1 } and ${chances[3]} - mild success.`);
+            result.evade += 1;
             break;
         case (roll <= chances[4]):
-            interceptDebugger(`${designation}'s outcome between ${chances[3] + 1} and ${chances[4]}`);
-            result.outcome = `good success.`;
-            result.evade = 1;
-            result.disengage = disengageAttempt(unit);
+            interceptDebugger(`${designation}'s outcome between ${chances[3] + 1} and ${chances[4]} - good success.`);
+            result.evade += 2;
             break;
         case (roll <= chances[5]):
-            interceptDebugger(`${designation}'s outcome is ${chances[4] + 1} or more`);
-            result.outcome = `critical success.`;
-            result.evade = 2;
-            result.disengage = disengageAttempt(unit);
+            interceptDebugger(`${designation}'s outcome is ${chances[4] + 1} or more - critical success.`);
+            result.evade += 2;
+            result.hit = true;
             break;
         default:
             interceptDebugger(`The case does not work!`);
-    }
+    };
     return result;
 };
 
@@ -113,7 +84,4 @@ function disengageAttempt (unit) {
     return false;
 };
 
-module.exports = {
-    aggressive: aggroResult,
-    passive: passiveResult
-}
+module.exports = { outcome }

@@ -1,9 +1,10 @@
-const { atkRoll, defRoll } = require('./rolls');
+const { d6 } = require('../../util/systems/dice')
 const interceptDebugger = require('debug')('app:intercept');
+const { outcome } = require('./outcome')
 const interceptDmg = require('./damage');
 const report = require('./report');
 
-const Interceptor = require('../../models/ops/interceptor');
+const { Interceptor } = require('../../models/ops/interceptor');
 
 let interceptionMissions = []; // Attempted Interception missions for the round
 let escortMissions = []; // Attempted Escort missions for the round
@@ -51,33 +52,30 @@ async function start (aircraft, target, mission) {
 };
 
 async function resolveMissions () {
-    interceptDebugger('Resolving Missions!')
+    interceptDebugger('Resolving Missions...')
+    let count = 0;
     // Iterate over all submitted Interceptions
     for await (let interception of interceptionMissions) {
+        count++
+        interceptDebugger(`Interception #${count}`)
         let stance = 'passive'
-        interception.aircraft = await Interceptor.findById(interception.aircraft).populate('team', 'name');
-        let report = `${interception.aircraft.designation} is attempting to engaged a contact in ${interception.aircraft.team.name} airspace.`; // TODO - Change team name to locational information
+        let aircraft = await Interceptor.findById(interception.aircraft).populate('team', 'name');
+        let target = await Interceptor.findById(interception.target);
+        let report = `${aircraft.designation} is attempting to engaged a contact in ${aircraft.team.name} airspace.`; // TODO - Change team name to locational information
         
-        //Check for all escort missions for any that are guarding interception target
+        // Check for all escort missions for any that are guarding interception target
         for (let escort of escortMissions) {
-            console.log('Checking escort missions...')
-            let { target } = escort;
-            console.log(target);
-            console.log(interception.target);
-            if (interception.target === escort.target) {
-                console.log('Escort engaging!')
-                interception.target = await Interceptor.findById(escort.aircraft);
+            interceptDebugger('Checking escort missions...')
+            if (interception.target.toHexString() === escort.target.toHexString()) {
+                interceptDebugger('Escort engaging!')
+                target = await Interceptor.findById(escort.aircraft);
                 escortMissions.splice(escortMissions.indexOf(escort), 1);
                 stance = 'aggresive'
-                report = `${report} Non-targert has broken off to engage ${interception.aircraft.designation}.`
-            } else {
-                console.log('...allmost there!')
-                interception.target = await Interceptor.findById(interception.target);
+                report = `${report} Contact seems to have an escort, escort is breaking off to engage ${interception.aircraft.designation}.`
             }
         };
 
-        let { aircraft, target } = interception;
-        report = `${report} ${aircraft.designation} is engaging ${target.designation}.`;
+        interceptDebugger(`${aircraft.designation} is engaging ${target.designation}.`);
         
         intercept(aircraft, target, stance, report);
     };
@@ -88,21 +86,27 @@ async function resolveMissions () {
 
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 function intercept (attacker, defender, defStance, report) {
-    report = `${report} ${attacker.designation} has engaged ${defender.designation}.`;
-    interceptDebugger(`Report: ${report}`);
-//     let atkResult = atkRoll(attacker); // Gets Attacker Roll
-//     let defResult = defRoll(defender); // Gets Defender Roll
+    interceptDebugger(`Beginning intercept...`)
+    atkReport = `${report} ${attacker.designation} has engaged a ${defender.type}.`;
+    defReport = `${defender.designation} has beem engaged a ${attacker.type}.`;
+    
+    let atkRoll = d6() + d6(); // Gets Attacker Roll
+    interceptDebugger(`${attacker.designation} rolled a ${atkRoll}`);
+    let defRoll = d6() + d6(); // Gets Defender Roll
+    interceptDebugger(`${defender.designation} rolled a ${defRoll}`);
 
-//     let interceptReport = interceptDmg(attacker, defender, atkResult, defResult);
+    let atkResult = outcome(attacker, atkRoll, 'aggresive');
+    let defResult = outcome(defender, defRoll, defStance);
 
-//     let result = {
-//         attackerReport: `${attacker.designation} got a ${atkResult.outcome}`,
-//         defenderReport: `${defender.designation} got a ${defResult.outcome}`
-//     };
+    // let interceptReport = interceptDmg(attacker, defender, atkResult, defResult);
+
+    interceptDebugger(`${attacker.designation} got a ${atkResult.outcome}`);
+    interceptDebugger(`${defender.designation} got a ${defResult.outcome}`);
     
 //     const finalReport = {...interceptReport, ...result}
 
 //    report(finalReport, attacker, defender, engaged);
+    interceptDebugger(`Report: ${atkReport}`);
 };
 
 module.exports = { start, resolveMissions };
