@@ -3,6 +3,7 @@ const banking = require('../wts/banking/banking');
 const socketDebugger = require('debug')('app:sockets');
 const { logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 
+const nexusEvent = require('../startup/events');
 const events = require('events')
 const eventListner = new events.EventEmitter();
 
@@ -32,6 +33,11 @@ module.exports = function (io){
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
   */
+  nexusEvent.on('updateAircrafts', async () => {
+    let aircrafts = await getAircrafts();
+    socketDebugger('Sending Aircrafts!');
+    io.emit('currentAircrafts', aircrafts);
+  });
 
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
@@ -90,12 +96,6 @@ module.exports = function (io){
     client.on('updateAircrafts', async () => {
       socketDebugger(`${client.id} requested updated aircrafts...`);
       eventListner.emit('updateAircrafts');
-    });
-
-    eventListner.on('updateAircrafts', async () => {
-      let aircrafts = await getAircrafts();
-      socketDebugger('Sending Aircrafts!');
-      client.emit('currentAircrafts', aircrafts);
     });
 
     eventListner.on('updateAccounts', async () => {

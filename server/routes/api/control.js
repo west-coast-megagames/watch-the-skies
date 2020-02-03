@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const nexusEvent = require('../../startup/events');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
@@ -26,6 +27,8 @@ router.patch('/alien/deploy', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have been deployed...`);
     }
+
+    nexusEvent.emit('updateAircrafts');
 });
 
 
@@ -48,6 +51,7 @@ router.patch('/alien/return', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have returned to base...`);
     }
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/control/resethull
