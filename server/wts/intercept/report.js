@@ -2,51 +2,55 @@ const IntercptLog = require('../../models/logs/intereptLog');
 const Alert = require('../../models/logs/alert')
 const interceptDebugger = require('debug')('app:intercept_report');
 
-function interceptLogging (finalReport, attacker, defender, engaged) {
+function interceptLogging (finalReport, attacker, defender) {
     let atkLog = {
-        team: { teamName: attacker.team.teamName, teamID: attacker.team.teamId },
-        location: { zone: defender.location.zone, country: defender.location.country },
-        description: `${engaged} ${finalReport.attackDesc} ${finalReport.attackStatus}`,
-        unit: { _id: attacker._id, description: attacker.designation,
-            outcome: { 
-                frameDmg: finalReport.atkDmg > 0 ? true : false,
-                sysDmg: false,
-                evasion: false,
-                dmg: finalReport.atkDmg
-            }
+        team: attacker.team,
+        position: 'Offense',
+        location: { country: defender.location.country },
+        report: finalReport.atkReport,
+        unit: attacker._id,
+        opponent: defender._id,
+        atkStats: {
+            damage: {
+                frameDmg: finalReport.atkDmg,
+                systemDmg: finalReport.atkSysDmg   
+            },
+            outcome: finalReport.atkStatus
         },
-        opponent: { _id: defender._id, description: defender.designation,
-            outcome: { 
-                frameDmg: finalReport.defDmg > 0 ? true : false,
-                sysDmg: false,
-                evasion: false,
-                dmg: finalReport.defDmg
-            }
-        }
+        defStats: {
+            damage: {
+                frameDmg: finalReport.defDmg,
+                systemDmg: finalReport.defSysDmg   
+            },
+            outcome: finalReport.defStatus
+        },
+        salvage: finalReport.salvage
     };
 
     let defLog = {
-        team: { teamName: defender.team.teamName, teamID: defender.team.teamId },
-        location: { zone: defender.location.zone, country: defender.location.country },
-        description: `${defender.designation} was intercepted in ${defender.location.country.countryName} airspace! ${finalReport.defenseDesc} ${finalReport.defStatus}`,
-        unit: { _id: defender._id, description: defender.designation,
-            outcome: { 
-                frameDmg: finalReport.defDmg > 0 ? true : false,
-                sysDmg: false,
-                evasion: false,
-                dmg: finalReport.defDmg
-            }
+        team: defender.team,
+        position: 'Defense',
+        location: { country: defender.location.country },
+        report: finalReport.defReport,
+        unit: defender._id,
+        opponent: attacker._id,
+        atkStats: {
+            damage: {
+                frameDmg: finalReport.atkDmg,
+                systemDmg: finalReport.atkSysDmg   
+            },
+            outcome: finalReport.atkStatus
         },
-        opponent: { _id: attacker._id, description: attacker.designation,
-            outcome: { 
-                frameDmg: finalReport.atkDmg > 0 ? true : false,
-                sysDmg: false,
-                evasion: false,
-                dmg: finalReport.atkDmg
-            }
-        }
+        defStats: {
+            damage: {
+                frameDmg: finalReport.defDmg,
+                systemDmg: finalReport.defSysDmg   
+            },
+            outcome: finalReport.defStatus
+        },
+        salvage: finalReport.salvage
     };
-
+        
     atkLog = interceptLog(atkLog);
     defLog = interceptLog(defLog);
 };
@@ -58,14 +62,6 @@ async function interceptLog (log) {
 
     let newLog = new IntercptLog({...timestamp,...log});
 
-    let newAlert = new Alert ({
-        team_id: log.team.teamID,
-        teamName: log.team.teamName,
-        title: 'Interception!',
-        body: log.description
-    });
-
-    await newAlert.save();
     newLog = await newLog.save();
 
     interceptDebugger(newLog);

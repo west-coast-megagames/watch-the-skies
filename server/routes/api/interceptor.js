@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const nexusEvent = require('../../startup/events');
 
 const auth = require('../../middleware/auth');
 const validateObjectId = require('../../middleware/validateObjectId');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
+const { Aircraft } = require('../../models/ops/aircraft');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team'); 
@@ -188,19 +190,21 @@ router.patch('/resethull', auth, async function (req, res) {
         await interceptor.save();
     }
     res.send("Interceptors succesfully reset!");
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/interceptor/return
 // @desc    Update all interceptors to return to base
 // @access  Public
 router.patch('/return', async function (req, res) {
-    for await (const interceptor of Interceptor.find()) {    
-        interceptor.status.deployed = false;
-        interceptor.status.ready = true;
-        interceptor.status.mission = false;
-        await interceptor.save();
+    for await (const aircraft of Aircraft.find()) {    
+        aircraft.status.deployed = false;
+        aircraft.status.ready = true;
+        console.log(aircraft);
+        await aircraft.save();
     }
     res.send("Interceptors succesfully returned!");
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/interceptor/china
