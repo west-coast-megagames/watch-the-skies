@@ -62,7 +62,7 @@ async function loadBase(iData){
        // New Base here
        let baseSite = new BaseSite({ 
            baseName: iData.name,
-           baseCode: iData.code
+           siteCode: iData.code
         }); 
 
         let { error } = validateBase(baseSite); 
@@ -103,7 +103,7 @@ async function loadBase(iData){
       let id = baseSite._id;
       
       baseSite.baseName     = iData.name;
-      baseSite.baseCode     = iData.code;
+      baseSite.siteCode     = iData.code;
       baseSite.facilities   = iData.facilities;
       baseSite.baseDefenses = iData.baseDefenses;
 

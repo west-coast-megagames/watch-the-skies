@@ -53,25 +53,21 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
-    designation: Joi.string().min(2).max(50).required()
-    /* there is no Type field here that I can see ... still in interceptor though
-    type: Joi.string().min(2).max(50).required(),
-    */
+    designation: Joi.string().min(2).max(50).required(),
+    type: Joi.string().min(2).max(50).required()
   };
 
   return Joi.validate(aircraft, schema, { "allowUnknown": true });
 }
 
-let Aircraft = mongoose.model('aircraft', AircraftSchema);
+let Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
 function validateAircraft(aircraft) {
   //modelDebugger(`Validating ${aircraft.designation}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required()
-       /* there is no Type field that I can see  ... still in interceptor though
+      designation: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
-      */
     };
   
   return Joi.validate(aircraft, schema, { "allowUnknown": true });

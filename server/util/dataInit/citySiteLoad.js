@@ -62,7 +62,7 @@ async function loadCity(iData){
        // New City here
        let citySite = new CitySite({ 
            cityName: iData.name,
-           cityCode: iData.code,
+           siteCode: iData.code,
            latDMS: iData.latDMS,
            longDMS: iData.longDMS,
            latDecimal: iData.latDecimal,
@@ -104,7 +104,7 @@ async function loadCity(iData){
       let id = citySite._id;
       
       citySite.cityName     = iData.name;
-      citySite.cityCode     = iData.code;
+      citySite.siteCode     = iData.code;
       citySite.latDMS       = iData.latDMS;
       citySite.longDMS      = iData.longDMS;
       citySite.latDecimal   = iData.latDecimal;

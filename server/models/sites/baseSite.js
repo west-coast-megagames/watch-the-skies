@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Site = require('./site');
+const { Site } = require('./site');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
@@ -17,30 +17,20 @@ const FacilitySchema = new Schema({
 const BaseSite = Site.discriminator('BaseSite', new Schema({
   siteType: { type: String, default: 'Base' },
   baseName: { type: String, required: true, minlength: 2, maxlength: 50 },
+  /* should not have both a baseCode and siteCode 
   baseCode: { type: String, minlength: 2, maxlength: 50, default: "undefined"} ,
+  */
   baseDefenses: { type: Boolean, default: false },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   facilities: [FacilitySchema]
 }));
-
-/* NOT WORKING
-Site.methods.validateBase = function (baseSite) {
-  const schema = {
-    baseName: Joi.string().min(2).max(50).required()
-  };
-
-  return Joi.validate(baseSite, schema, { "allowUnknown": true });
-}
-*/
-
-//let BaseSite = mongoose.model('baseSite', BaseSiteSchema);
 
 function validateBase(baseSite) {
   //modelDebugger(`Validating ${baseSite.baseName}...`);
 
   const schema = {
       baseName: Joi.string().min(2).max(50).required(),
-      baseCode: Joi.string().min(2).max(50)
+      siteCode: Joi.string().min(2).max(20).required()
     };
   
   return Joi.validate(baseSite, schema, { "allowUnknown": true });
