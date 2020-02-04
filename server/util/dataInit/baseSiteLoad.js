@@ -62,7 +62,15 @@ async function loadBase(iData){
        // New Base here
        let baseSite = new BaseSite({ 
            baseName: iData.name,
-           siteCode: iData.code
+           siteCode: iData.code,
+           geoDMS: { 
+            latDMS: iData.latDMS,
+            longDMS: iData.longDMS
+           },
+           geoDecimal: {
+            latDecimal: iData.latDecimal,
+            longDecimal: iData.longDecimal
+          }
         }); 
 
         let { error } = validateBase(baseSite); 

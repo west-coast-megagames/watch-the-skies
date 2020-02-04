@@ -63,10 +63,14 @@ async function loadCity(iData){
        let citySite = new CitySite({ 
            cityName: iData.name,
            siteCode: iData.code,
-           latDMS: iData.latDMS,
-           longDMS: iData.longDMS,
-           latDecimal: iData.latDecimal,
-           longDecimal: iData.longDecimal
+           geoDMS: { 
+             latDMS: iData.latDMS,
+             longDMS: iData.longDMS
+           },
+           geoDecimal: {
+             latDecimal: iData.latDecimal,
+             longDecimal: iData.longDecimal
+           }
         }); 
 
         let { error } = validateCity(citySite); 
@@ -103,12 +107,12 @@ async function loadCity(iData){
       // Existing City here ... update
       let id = citySite._id;
       
-      citySite.cityName     = iData.name;
-      citySite.siteCode     = iData.code;
-      citySite.latDMS       = iData.latDMS;
-      citySite.longDMS      = iData.longDMS;
-      citySite.latDecimal   = iData.latDecimal;
-      citySite.longDecimal  = iData.longDecimal;
+      citySite.cityName               = iData.name;
+      citySite.siteCode               = iData.code;
+      citySite.geoDMS.latDMS          = iData.latDMS;
+      citySite.geoDMS.longDMS         = iData.longDMS;
+      citySite.geoDecimal.latDecimal  = iData.latDecimal;
+      citySite.geoDecimal.longDecimal = iData.longDecimal;
       
       if (iData.parentCode2 != ""){
         let team = await Team.findOne({ teamCode: iData.parentCode2 });  
