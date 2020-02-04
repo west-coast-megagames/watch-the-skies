@@ -96,7 +96,7 @@ async function updateStats(id) {
     }
     console.log(`${system.name} loaded into ${aircraft.type}...`)
   }
-  console.log(`All systems for ${aircraft.type} ${aircraft.name} leaded...`);
+  console.log(`All systems for ${aircraft.type} ${aircraft.name} loaded...`);
   aircraft.stats = stats;
   aircraft.markModified('stats');
   aircraft = await aircraft.save();

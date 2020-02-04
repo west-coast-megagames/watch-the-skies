@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
-  type: { type: String, required: true, min: 2, maxlength: 50, default: 'Interceptor'},
+  type: { type: String, min: 2, maxlength: 50, default: 'Interceptor'},
   stats: {
     hull: { type: Number, default: 3 },
     hullMax: { type: Number, default: 3 },
@@ -26,7 +26,7 @@ function validateInterceptor(interceptor) {
 
   const schema = {
       name: Joi.string().min(2).max(50).required(),
-      type: Joi.string().min(2).max(50).required()
+      type: Joi.string().min(2).max(50)
     };
   
   return Joi.validate(interceptor, schema, { "allowUnknown": true });

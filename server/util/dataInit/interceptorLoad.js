@@ -38,13 +38,6 @@ async function runinterceptorLoad(runFlag){
     if (runFlag) {
       await loadSystems();                         // load wts/json/systems.json data into array    
       
-      /*
-      // check that we have them
-      for (let j = 0; j < systems.length; ++j ) {
-         console.log("systems from load: ", j, systems[j].name);
-      };
-      */   
-
       await deleteAllInterceptors(runFlag);
       await initLoad(runFlag);
     }
@@ -81,12 +74,6 @@ async function loadInterceptor(iData){
            code: iData.code
         }); 
 
-        let { error } = validateInterceptor(interceptor); 
-        if (error) {
-          interceptorLoadDebugger("New Interceptor Validate Error", team.name, error.message);
-          return;
-        }
-        
         interceptor.stats  = iData.stats;
         interceptor.status = iData.status;
 
@@ -94,13 +81,17 @@ async function loadInterceptor(iData){
         interceptor.systems = [];
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.name === sys )];
-          newSystem = await new System(sysRef);
-          await newSystem.save(((err, newSystem) => {
-            if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-            //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
-          }));
+          if (sysRef) {
+            newSystem = await new System(sysRef);
+            await newSystem.save(((err, newSystem) => {
+              if (err) return console.error(`New Interceptor System Save Error: ${err}`);
+              //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
+            }));
 
-          interceptor.systems.push(newSystem._id)
+            interceptor.systems.push(newSystem._id)
+          } else {
+            interceptorLoadDebugger('Error in creation of system', sys, "for ", interceptor.name);
+          }
         }
 
         if (iData.parentCode1 != ""){
@@ -142,7 +133,21 @@ async function loadInterceptor(iData){
             interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
           }      
         }
-        
+
+        let { error } = validateInterceptor(interceptor); 
+        if (error) {
+          interceptorLoadDebugger("New Interceptor Validate Error", interceptor.name, error.message);
+          // remove associated systems records
+          for (let j = 0; j < interceptor.systems.length; ++j ) {
+            sysId = interceptor.systems[j];
+            let systemDel = await System.findByIdAndRemove(sysId);
+            if (systemDel = null) {
+              console.log(`The Interceptor System with the ID ${sysId} was not found!`);
+            }
+          }      
+          return; 
+        }
+
         await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
           interceptorLoadDebugger(interceptor.name + " add saved to interceptor collection.");
