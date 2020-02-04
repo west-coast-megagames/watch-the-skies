@@ -1,0 +1,21 @@
+[
+{   
+    "mission": "Interception",
+    "unit": [],
+    "": 88,
+    "": [],
+    "stance": "Active",
+    "category": "Military",
+    "desc": "Focused laser technology that can be weaponized to create burst-fire beam weapons"
+}
+]
+
+aircraft: [ "Interception", "Patrol", "Escort", "Recon", "Transport", "Diversion" ]
+
+
+Interception: Target a contact and go make it go boom
+Patrol: Protect a site
+Escort: Intercept anything going after your target
+Recon: Gather information about a site/contact
+Transport: Take things to/from a site
+Diversion: Be a contact for no reason

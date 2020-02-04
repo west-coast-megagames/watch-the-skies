@@ -27,7 +27,10 @@ class Control extends Component {
                             Return Aliens
                         </MDBBtn>
                         <MDBBtn color="info" size="sm" onClick={ () => this.returnAll() }>
-                            Return Interceptors
+                            Return Aircraft
+                        </MDBBtn>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
+                            Update Aircraft
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
@@ -52,6 +55,14 @@ class Control extends Component {
                         </MDBBtn>
                         <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
                             Seed Knowledge
+                        </MDBBtn>
+                    </MDBBtnGroup>
+                </div>
+                <div>
+                    <h5>Construction Controls</h5>
+                    <MDBBtnGroup>
+                        <MDBBtn color="info" size="sm" onClick={ () => this.loadSystems() }>
+                            Load Systems
                         </MDBBtn>
                     </MDBBtnGroup>
                 </div>
@@ -133,7 +144,26 @@ class Control extends Component {
             this.props.alert({type: 'error', title: 'Failed to seed knowledge', body: `${err.response.data} - ${err.message}` })
         };
     }
-    
+
+    loadSystems = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/control/loadSystems`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'System options loaded', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed load Systems', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    updateAircraft = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/control/updateAircraft`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Aircrafts updated...', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to update aircrafts', body: `${err.response.data} - ${err.message}` })
+        };
+    }
 }
 
 export default Control;

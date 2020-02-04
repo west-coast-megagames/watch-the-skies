@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const nexusEvent = require('../../startup/events');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
+const { Aircraft, updateStats } = require('../../models/ops/aircraft');
+const { System } = require('../../models/ops/systems');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 
 // @route   PATCH api/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
@@ -24,6 +28,8 @@ router.patch('/alien/deploy', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have been deployed...`);
     }
+
+    nexusEvent.emit('updateAircrafts');
 });
 
 
@@ -46,6 +52,7 @@ router.patch('/alien/return', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have returned to base...`);
     }
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/control/resethull
@@ -60,6 +67,51 @@ router.patch('/resethull', async function (req, res) {
         await interceptor.save();
     }
     res.send("Interceptors succesfully reset!");
+});
+
+// @route   PATCH api/control/loadSystems
+// @desc    Loads all systems into game server
+// @access  Public
+router.patch('/loadSystems', async function (req, res) {
+    let response = await loadSystems();
+    res.status(200).send(response);
+});
+
+// @route   POST api/control/build
+// @desc    Builds the thing!
+// @access  Public
+router.post('/build', async function (req, res) {
+    let aircraft = req.body;
+    aircraft.systems = [];
+    for (let sys of aircraft.loadout) {
+        let sysRef = systems[systems.findIndex(system => system.name === sys )];
+        newSystem = await new System(sysRef);
+        await newSystem.save(((err, newSystem) => {
+          if (err) return console.error(`Post Build Interceptor System Save Error: ${err}`);
+        }));
+        //console.log(newSystem);
+        aircraft.systems.push(newSystem._id);
+    }
+    let newInterceptor = new Interceptor(aircraft);
+    newInterceptor = await newInterceptor.save();
+    newInterceptor = await Interceptor.findById(newInterceptor._id).populate('team', 'shortName').populate('systems');
+    newInterceptor.updateStats();
+    //console.log(newInterceptor);
+   
+    res.status(200).send(newInterceptor);
+});
+
+// @route   PATCH api/control/update aircraft
+// @desc    Builds the thing!
+// @access  Public
+router.patch('/updateAircraft', async function (req, res) {
+    count = 0;
+    for (let aircraft of await Aircraft.find().populate('systems')) {
+        await updateStats(aircraft._id);
+        count++;
+    };
+    
+    res.status(200).send(`${count} aircraft updated...`);
 });
 
 module.exports = router;

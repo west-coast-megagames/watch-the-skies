@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Modal from '../components/common/modal'
 import { gameServer } from '../config';
 
 class InterceptorLogs extends Component {
 
     state = {
         logs: [],
-        show: 'collapse'
+        show: 'collapse',
+        showReport: false
     }
 
     async getLogs() {
@@ -15,7 +17,7 @@ class InterceptorLogs extends Component {
             let res = await axios.get(`${gameServer}api/logs`);
             let logs = res.data; 
             logs = logs.filter(l => l.logType === 'Interception');
-            logs = logs.filter(l => l.unit._id === this.props.interceptor._id);
+            logs = logs.filter(l => l.unit === this.props.interceptor._id);
             this.setState({ logs })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Log Issue', body: `Error: ${err.message}`})
@@ -34,6 +36,14 @@ class InterceptorLogs extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.interceptor !== this.props.interceptor) this.getLogs();
+    }
+    
+    close = () => {
+        this.setState({ showReport: false });
+    }
+
+    open = (event) => {
+        this.setState({ showReport: true });
     }
 
     // getDamage = (log) => {
@@ -70,14 +80,17 @@ class InterceptorLogs extends Component {
                                     </thead>
                                     <tbody>
                                     { this.state.logs.map(log => (
+                                        <React.Fragment>
                                         <tr key={ log._id }>
                                             <td>{ log.logType }</td>
                                             <td>{ log.timestamp.turn }</td>
-                                            <td>{ log.location.country.countryName }</td>
-                                            <td>{ Math.round(log.unit.outcome.dmg / this.props.interceptor.stats.hullMax * 100) }%</td>
-                                            <td>{ log.opponent.outcome.dmg >= 3 ? 'Severe' : log.opponent.outcome.dmg >= 1 ? 'Moderate' : 'None' }</td>
-                                            <td><button type="aar" value="aar" className="btn btn-warning">Report</button></td>
+                                            <td>{ log.location.country.name }</td>
+                                            <td>{ Math.round(log.atkStats.damage.frameDmg / this.props.interceptor.stats.hullMax * 100) }%</td>
+                                            <td>{ log.defStats.damage.frameDmg >= 3 ? 'Severe' : log.defStats.damage.frameDmg >= 1 ? 'Moderate' : 'None' }</td>
+                                            <td><button type="aar" value="aar" className="btn btn-warning" onClick={this.open}>Report</button></td>
                                         </tr>
+                                        <Modal close={this.close} show={this.state.showReport} report={log.report} />
+                                        </React.Fragment>
                                         ))}
                                     </tbody>
                                 </table>

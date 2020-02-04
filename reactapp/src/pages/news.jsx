@@ -6,16 +6,12 @@ import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
 import SubNews from '../components/subNews';
 
-class Diplomacy extends Component {
-    constructor() {
-        super();
-        this.state = {
-          tab: 'feed'
-        };
-        this.handleSelect = this.handleSelect.bind(this);
-    }
+class News extends Component {
+    state = {
+        tab: 'feed',
+    };
 
-    handleSelect(activeKey) {
+    handleSelect = (activeKey) => {
         this.setState({ tab: activeKey })
     }
 
@@ -34,22 +30,24 @@ class Diplomacy extends Component {
                     <Nav.Item eventKey="add" to={`${url}/add`} componentClass={NavLink} > Add News</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20, overflowY: "scroll", height: "100vh" }}>
+            <Content  className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
-                        <NewsFeed agency='All' articles={ this.props.news.gnn.concat(this.props.news.bnc) } />
+                        <NewsFeed agency='All' articles={ this.props.articles } teams={this.props.teams}  del={this.props.handleArtHide} />
                     )}/>
-                    <Route path={`${url}/add`} render={() => (
-                        <SubNews agency = 'GNN' alert={ this.props.alert } />
-                    )}/>
+                    
                     <Route path={`${url}/gnn`}  render={() => (
-                        <NewsFeed agency='GNN' articles={ this.props.news.gnn } />
+                        <NewsFeed agency='GNN' articles={ this.props.articles.filter(el => el.agency==='GNN') } teams={this.props.teams}  del={this.props.handleArtHide} />
                     )}/>
                     <Route path={`${url}/bnc`}  render={() => (
-                        <NewsFeed agency='BNC' articles={ this.props.news.bnc } />
+                        <NewsFeed agency='BNC' articles={ this.props.articles.filter(el => el.agency==='BNC') } teams={this.props.teams}  del={this.props.handleArtHide}/>
                     )}/>
                     <Route path={`${url}/releases`}  render={() => (
-                        <h5>The press release system for the News Module has not been created!</h5>
+                        <NewsFeed agency='Press Releases' articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') } teams={this.props.teams} del={this.props.handleArtHide}  />
+                    )}/>
+
+                    <Route path={`${url}/add`} render={() => (
+                        <SubNews alert={ this.props.alert } />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/feed`} />
                 </Switch>
@@ -59,4 +57,4 @@ class Diplomacy extends Component {
      }
  }
 
-export default Diplomacy;
+export default News;

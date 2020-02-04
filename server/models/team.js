@@ -7,7 +7,7 @@ const Joi = require('joi');
 const RoleSchema = new Schema({
   role: { type: String },
   type: { type: String, enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']},
-  user_id: { type: String }  
+  user: { type: Schema.Types.ObjectId, ref: 'User'} 
 });
 
 //teamType is (N)ational, (A)lien or (M)edia
@@ -58,9 +58,19 @@ async function getPR(team_id) {
   }
 };
 
+async function getSciRate(team_id) {
+  modelDebugger(`Trying to find SCI Rate for ${team_id}`)
+  try {
+    let sciRate = await Team.findOne({ _id: team_id }).select('sciRate');
+    return sciRate.sciRate;
+  } catch (err) {
+    modelDebugger(`Error: ${err.message}`);
+  }
+};
+
 async function getTeam(team_id) {
   let team = await Team.findOne({ _id: team_id });
   return team;
 };
 
-module.exports = { Team, validateTeam, getPR, getTeam }
+module.exports = { Team, validateTeam, getPR, getTeam, getSciRate }

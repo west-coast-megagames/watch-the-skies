@@ -1,0 +1,117 @@
+[
+{"loadType": "baseSite",
+"name" : "USA Base Alpha",
+"code" : "USBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"latDMS": "38 40 26.0 N",
+"longDMS": "120 25 53.0 W",
+"latDecimal": 38.67389,
+"longDecimal": -120.43139,
+"parentCode1" : "US",
+"parentCode2" : "USA"
+},
+{"loadType": "baseSite",
+"name" : "RFD Base Alpha",
+"code" : "RUBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"latDMS": "57 10 20.0 N",
+"longDMS": "045 25 02.0 E",
+"latDecimal": 57.17222,
+"longDecimal": 45.41722,
+"parentCode1" : "RU",
+"parentCode2" : "RFD"
+},
+{"loadType": "baseSite",
+"name" : "PRC Base Alpha",
+"code" : "CNBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"latDMS": "35 55 00.0 N",
+"longDMS": "100 22 40.0 E",
+"latDecimal": 35.91667,
+"longDecimal": 100.37778,
+"parentCode1" : "CN",
+"parentCode2" : "PRC"
+},
+{"loadType": "baseSite",
+"name" : "TFR Base Alpha",
+"code" : "FRBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"latDMS": "48 45 23.0 N",
+"longDMS": "003 21 52.0 E",
+"latDecimal": 48.75539,
+"longDecimal": 3.36444,
+"parentCode1" : "FR",
+"parentCode2" : "TFR"
+},
+{"loadType": "baseSite",
+"name" : "TUK Base Alpha",
+"code" : "GBBA",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+    { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+        {"inUse": true, "unitID" : "undefined" },
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
+    }
+],
+"latDMS": "55 50 7.48 N",
+"longDMS": "002 31 31.8 W",
+"latDecimal": 55.83541,
+"longDecimal": -2.52550,
+"parentCode1" : "GB",
+"parentCode2" : "TUK"
+}
+]

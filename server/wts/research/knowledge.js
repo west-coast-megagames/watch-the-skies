@@ -1,5 +1,5 @@
 const fs = require('fs')
-const file = fs.readFileSync(require.resolve('./knowledge.json'));
+const file = fs.readFileSync(require.resolve('../json/knowledge.json'));
 const knowledgeData = JSON.parse(file);
 
 knowledgeDebugger = require('debug')('app:knowledge');
