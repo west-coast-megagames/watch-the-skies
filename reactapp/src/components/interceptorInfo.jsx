@@ -28,7 +28,11 @@ class InterceptorInfo extends Component {
             <p><b>Weapons Rating:</b> { stats.damage }</p>
             <p><b>Evade Rating:</b> n/a</p>
             <h4>Systems</h4>
-            <p>This ship has no systems...</p>
+            <ul>
+              {this.props.interceptor.systems.map(system => (
+                <li>{system.name} | {system.catagory}</li>
+              ))}
+            </ul>
             <InterceptorLogs
               interceptor={ this.props.interceptor }
               alert={ this.props.alert }

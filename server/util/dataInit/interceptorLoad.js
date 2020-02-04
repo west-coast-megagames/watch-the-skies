@@ -15,12 +15,15 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Interceptor Model - Using Mongoose Model
+const { updateStats } = require('../../models/ops/aircraft');
 const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team');
 const { Base } = require('../../models/base');
-
+const { System } = require('../../models/ops/systems');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { BaseSite } = require('../../models/sites/baseSite');
 const app = express();
 
 // Bodyparser Middleware
@@ -33,6 +36,15 @@ async function runinterceptorLoad(runFlag){
     //interceptorLoadDebugger("Jeff in runinterceptorLoad", runFlag);    
     if (!runFlag) return false;
     if (runFlag) {
+      await loadSystems();                         // load wts/json/systems.json data into array    
+      
+      /*
+      // check that we have them
+      for (let j = 0; j < systems.length; ++j ) {
+         console.log("systems from load: ", j, systems[j].name);
+      };
+      */   
+
       await deleteAllInterceptors(runFlag);
       await initLoad(runFlag);
     }
@@ -59,6 +71,7 @@ async function initLoad(doLoad) {
 
 async function loadInterceptor(iData){
   try {   
+    //interceptorLoadDebugger("Jeff in loadInterceptor ", iData.name); 
     let interceptor = await Interceptor.findOne( { designation: iData.name } );
     if (!interceptor) {
        // New Interceptor here
@@ -77,6 +90,19 @@ async function loadInterceptor(iData){
         interceptor.stats  = iData.stats;
         interceptor.status = iData.status;
 
+        // create systems records for interceptor and store ID in interceptor.system
+        interceptor.systems = [];
+        for (let sys of iData.loadout) {
+          let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          newSystem = await new System(sysRef);
+          await newSystem.save(((err, newSystem) => {
+            if (err) return console.error(`New Interceptor System Save Error: ${err}`);
+            //interceptorLoadDebugger(interceptor.designation, "system", sys, " add saved to system collection.");
+          }));
+
+          interceptor.systems.push(newSystem._id)
+        }
+
         if (iData.parentCode1 != ""){
           let team = await Team.findOne({ teamCode: iData.parentCode1 });  
           if (!team) {
@@ -84,6 +110,16 @@ async function loadInterceptor(iData){
           } else {
             interceptor.team = team._id;
             interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          }
+        }      
+
+        if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+          let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
+          if (!baseSite) {
+            interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
+          } else {
+            interceptor.base = baseSite._id;
+            interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
           }
         }      
 
@@ -110,6 +146,7 @@ async function loadInterceptor(iData){
         await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
           interceptorLoadDebugger(interceptor.designation + " add saved to interceptor collection.");
+          updateStats(interceptor._id);
         });
     } else {       
       // Existing Interceptor here ... update
@@ -121,6 +158,22 @@ async function loadInterceptor(iData){
       interceptor.stats       = iData.stats;
       interceptor.status      = iData.status;
 
+      // create systems records for interceptor and store ID in interceptor.system
+      if (iData.loadout.length != 0){
+        // create systems records for interceptor and store ID in interceptor.system
+        interceptor.systems = [];
+        for (let sys of iData.loadout) {
+          let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          newSystem = await new System(sysRef);
+          await newSystem.save(((err, newSystem) => {
+          if (err) return console.error(`New Interceptor System Save Error: ${err}`);
+          //interceptorLoadDebugger(interceptor.designation, "system", sys, " add saved to system collection.");
+          }));
+
+          interceptor.systems.push(newSystem._id)
+        }
+      }
+
       if (iData.parentCode1 != ""){
         let team = await Team.findOne({ teamCode: iData.parentCode1 });  
         if (!team) {
@@ -131,6 +184,16 @@ async function loadInterceptor(iData){
         }
       }  
       
+      if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
+        let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
+        if (!baseSite) {
+          interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
+        } else {
+          interceptor.base = baseSite._id;
+          interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
+        }
+      }      
+
       if (iData.location.zone != ""){
         let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
         if (!zone) {
@@ -158,8 +221,9 @@ async function loadInterceptor(iData){
       }
    
       await interceptor.save((err, interceptor) => {
-      if (err) return console.error(`Interceptor Update Save Error: ${err}`);
-      interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
+        if (err) return console.error(`Interceptor Update Save Error: ${err}`);
+        interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
+        updateStats(interceptor._id);
       });
     }
   } catch (err) {
@@ -171,17 +235,30 @@ async function loadInterceptor(iData){
 
 async function deleteAllInterceptors(doLoad) {
   
-  //interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
+  interceptorLoadDebugger("Jeff in deleteAllInterceptors", doLoad);    
   if (!doLoad) return;
 
   try {
     for await (const interceptor of Interceptor.find()) {    
       let id = interceptor._id;
+
+      //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop", interceptor.designation); 
       try {
+
+        // remove associated systems records
+        for (let j = 0; j < interceptor.systems.length; ++j ) {
+          sysId = interceptor.systems[j];
+          let systemDel = await System.findByIdAndRemove(sysId);
+          if (systemDel = null) {
+            interceptorLoadDebugger(`The Interceptor System with the ID ${sysId} was not found!`);
+          }
+        }
+
         let interceptorDel = await Interceptor.findByIdAndRemove(id);
         if (interceptorDel = null) {
-          interceptorLoadDebugger(`The Zone with the ID ${id} was not found!`);
+          interceptorLoadDebugger(`The Interceptor with the ID ${id} was not found!`);
         }
+        //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop after remove", interceptor.designation); 
       } catch (err) {
         interceptorLoadDebugger('Interceptor Delete All Error:', err.message);
       }

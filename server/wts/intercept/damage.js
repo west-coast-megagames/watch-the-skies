@@ -1,75 +1,118 @@
-const interceptDebugger = require('debug')('app:intercept');
+const interceptDebugger = require('debug')('app:intercept - damage');
+const { d6, rand } = require('../../util/systems/dice');
 
 //Intercepter Model
 const { Interceptor } = require('../../models/ops/interceptor');
 
 function interceptDmg(attacker, defender, atkResult, defResult) {
-    let defReport = {
-        evade: defResult.evade,
+    interceptDebugger('Prepearing damage report...')
+    let atkEvade = atkResult.evade + attacker.stats.evade;
+    let defEvade = defResult.evade + defender.stats.evade
+    let defOutcome = {
+        evade: defEvade - Math.floor(atkEvade / 2),
         damage: defResult.damage,
         sysDmg: defResult.sysDmg,
         hit: atkResult.hit,
-        weaponDmg: attacker.stats.damage, 
-        sysHit: atkResult.sysHit
+        weaponDmg: attacker.stats.attack, 
+        sysHit: attacker.stats.penetration - defender.stats.armor
     };
 
-    let atkReport = {
-        evade: atkResult.evade,
+    let atkOutcome = {
+        evade: atkEvade - Math.floor(defEvade / 2),
         damage: atkResult.damage,
         sysDmg: atkResult.sysDmg,
         hit: defResult.hit,
-        weaponDmg: defender.stats.damage, 
-        sysHit: defResult.sysHit
+        weaponDmg: defender.stats.attack, 
+        sysHit: defender.stats.penetration - attacker.stats.armor
     };
 
-    let defDmg = damageCalc(defender, defReport);
-    let atkDmg = damageCalc(attacker, atkReport);
+    let defReport = dmgCalc(defender, defOutcome);
+    let atkReport = dmgCalc(attacker, atkOutcome);
 
     let dmgReport = {
-        defDmg: defDmg.dmg,
-        defenseDesc: defDmg.dmgDesc,
-        defStatus: defDmg.outcome,
-        atkDmg: atkDmg.dmg,
-        attackDesc: atkDmg.dmgDesc,
-        attackStatus: atkDmg.outcome
+        defDmg: defReport.dmg,
+        defSysDmg: defReport.sysDmg,
+        defenseDesc: defReport.dmgDesc,
+        defStatus: defReport.outcome,
+        defReport: defReport.aar,
+        atkDmg: atkReport.dmg,
+        atkSysDmg: atkReport.sysDmg,
+        atkDesc: atkReport.dmgDesc,
+        atkStatus: atkReport.outcome,
+        atkReport: atkReport.aar,
+        salvage: [...atkReport.salvage, ...defReport.salvage]
     };
 
     return dmgReport;
 };
 
-function damageCalc(unit, report) {
-    interceptDebugger(`Calculating ${unit.designation} damage now...`);
+function dmgCalc(unit, report) {
     let { evade, damage, sysDmg, hit, weaponDmg, sysHit } = report;
+    let { designation } = unit;
+   
+
+    interceptDebugger(`Calculating ${designation} damage...`);
     interceptDebugger(report);
+    let battleReport = ''
+    let salvageArray = [];
 
     let atkDmg = 0;
 
-    if (hit == true){
-        atkDmg = weaponDmg;
+    if (evade > 0) {
+        weaponDmg < evade ? amount = weaponDmg : amount = evade
+        weaponDmg < evade ? weaponDmg = 0 : weaponDmg -= evade;
+        battleReport = `${battleReport} ${designation} evades ${amount}pts of damage.`
+        interceptDebugger(battleReport);
     };
+
+    hit === true ? atkDmg = weaponDmg : sysHit = 0;
 
     const hullDmg = atkDmg + damage;
-    interceptDebugger(`${unit.designation} is hit for ${hullDmg} damage!`)
-
-    if (hullDmg > 0 && evade > 0) {
-        hullDmg = hullDmg - evade;
-    };
-
     interceptDebugger(`${unit.designation} takes ${hullDmg} damage!`);
 
-    let dmgReport = {
-        unit: unit._id,
-        designation: unit.designation,
-        dmg: hullDmg,
-        dmgDesc: `${unit.designation} takes ${hullDmg} damage!`,
-        outcome: `${unit.designation} returns to base!`
-    };
+    let systemHits = 0;
+    if (sysHit > 0 || sysDmg) {
+        sysDmg === true ? systemHits = sysHit + 1 : systemHits = sysHit;
+        for (let i = 0; i < systemHits; i++) {
+            let roll = d6();
+            let index = rand(unit.systems.length - 1);
+            let hitSystem = unit.systems[index];
+
+            if (roll <= 3) {
+                interceptDebugger('Damaging System...');
+                interceptDebugger(hitSystem)
+                battleReport = `${battleReport} ${hitSystem.name} damaged.`
+                // save system damage...
+                // CREATE MATERIAL SALVAGE and ADD to salvage array
+            } else if (roll > 3) {
+                interceptDebugger('Destroying System...');
+                interceptDebugger(hitSystem);
+                battleReport = `${battleReport} ${hitSystem.name} destroyed.`
+                // CREATE MATERIAL SALVAGE and ADD to salvage array
+                unit.systems.splice(index, 1);
+            };
+        }
+    }
+
     unit.stats.hull = unit.stats.hull - hullDmg;
+    battleReport = `${battleReport} ${unit.designation} took ${hullDmg}pts of damage in the battle.`
+    interceptDebugger(battleReport);
+
+    let dmgReport = {
+        dmg: hullDmg,
+        sysDmg: systemHits > 0 ? true : false,
+        dmgDesc: `${unit.designation} took ${hullDmg} damage!`,
+        outcome: `${unit.designation} returns to base!`,
+        salvage: salvageArray,
+        aar: battleReport,
+    };
 
     if (unit.stats.hull <= 0) {
         interceptDebugger(`${unit.designation} destroyed!`);
         unit.status.destroyed = true;
         dmgReport.outcome = `${unit.designation} destroyed!`;
+        dmgReport.aar = `${dmgReport.aar} ${unit.designation} destroyed!`;
+        // Create crash site...
     };
 
     applyDmg(unit);
@@ -78,26 +121,26 @@ function damageCalc(unit, report) {
 
 //Update Interceptors with Damage
 async function applyDmg(unit) {
-    const { Country } = require('../../models/country');
+    interceptDebugger(`Applying damage to ${unit.designation}...`);
 
-    let update = await Interceptor.findById(unit._id);
-    let country_id = update.location.country.country_id;
-    let location = await Country.findById(country_id);
+    let update = await Interceptor.findById(unit._id)
+    // let country = update.base.country;
 
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;
     update.status.mission = false;
     update.status.ready = true;
     update.status.deployed = false;
-    update.location.country.countryName = location.name;
+    // update.location.country = country;
 
 
-    if(unit.stats.hull != unit.stats.hullMax) {
+    if (unit.stats.hull != unit.stats.hullMax) {
         update.status.damaged = true;
     }
 
     await update.save();
+    interceptDebugger(`Damage applied to ${unit.designation}...`)
     return 0;
 };
 
-module.exports = interceptDmg;
+module.exports = { interceptDmg, dmgCalc };

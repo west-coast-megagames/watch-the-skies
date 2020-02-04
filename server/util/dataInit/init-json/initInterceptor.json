@@ -23,8 +23,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+  "loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "USA", 
-"parentCode2" : "undefined"
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -51,8 +53,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "USA", 
-"parentCode2" : "undefined"
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -79,7 +83,10 @@
      "upgrade": false,
      "repair": false,
      "mission": false},
-"parentCode1" : "USA", "parentCode2" : "undefined"
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
+"parentCode1" : "USA", 
+"parentCode2" : "USBA"
 },
 {
 "type" : "interceptor",
@@ -106,8 +113,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RUBA"
 },
 {
 "type" : "interceptor",
@@ -134,8 +143,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RFBA"
 },
 {
 "type" : "interceptor",
@@ -162,8 +173,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false},
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "RFD", 
-"parentCode2" : "undefined"
+"parentCode2" : "RFBA"
 },
 {
 "type" : "interceptor",
@@ -190,8 +203,10 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],    
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -218,8 +233,10 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],    
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -246,8 +263,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "PRC", 
-"parentCode2" : "undefined"
+"parentCode2" : "CNBA"
 },
 {
 "type" : "interceptor",
@@ -274,8 +293,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -302,8 +323,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -330,8 +353,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TFR", 
-"parentCode2" : "undefined"
+"parentCode2" : "FRBA"
 },
 {
 "type" : "interceptor",
@@ -358,8 +383,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",
@@ -386,8 +413,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",
@@ -414,8 +443,10 @@
      "upgrade": false,
      "repair": false,
      "mission" : false },
+"loadout": 
+     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "TUK", 
-"parentCode2" : "undefined"
+"parentCode2" : "GBBA"
 },
 {
 "type" : "interceptor",
@@ -442,6 +473,8 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],    
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 },
@@ -470,6 +503,8 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],    
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 },
@@ -497,7 +532,9 @@
     "ready": true,
     "upgrade": false,
     "repair": false,
-"mission" : false },
+    "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 },
@@ -526,6 +563,8 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 },
@@ -554,6 +593,8 @@
     "upgrade": false,
     "repair": false,
     "mission" : false },
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "FFG", 
 "parentCode2" : "undefined"
 }

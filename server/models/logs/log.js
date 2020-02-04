@@ -9,7 +9,7 @@ const LogSchema = new Schema({
         phase: { type: String },
         turnNum: { type: Number }
     },
-    team_id: { type: String, }
+    team: { type: Schema.Types.ObjectId, ref: 'Team'}
 });
 
 module.exports = Log = mongoose.model('log', LogSchema);

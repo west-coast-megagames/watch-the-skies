@@ -13,7 +13,7 @@ class Interceptors extends Component {
     }
 
     getLocation = (aircraft) => {
-        let location = aircraft.location.poi !== undefined ? aircraft.location.poi : aircraft.location.country.countryName;
+        let location = aircraft.location.poi !== undefined ? aircraft.location.poi : aircraft.location.country.name;
         return location;
     }
 

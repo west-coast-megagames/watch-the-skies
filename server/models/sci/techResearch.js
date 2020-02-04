@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const TechResearch = Research.discriminator('TechResearch', new Schema({
     type: { type: String, default: 'Technology' },
-    catagory: { type: String, enum: ['Military', 'Consumer', 'Infrastructure', 'Medical', 'Agriculture']},
+    category: { type: String, enum: ['Military', 'Consumer', 'Infrastructure', 'Medical', 'Agriculture']},
     team: { type: Schema.Types.ObjectId, ref: 'Team'},
     status: {
         progress: { type: Number, default: 0 },

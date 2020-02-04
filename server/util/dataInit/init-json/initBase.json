@@ -1,7 +1,7 @@
 [
 {"loadType" : "base",
 "name" : "USA Base Alpha",
-"code" : "undefined",
+"code" : "USBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
@@ -20,7 +20,7 @@
 },
 {"loadType" : "base",
 "name" : "RFD Base Alpha",
-"code" : "undefined",
+"code" : "RUBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
@@ -39,7 +39,7 @@
 },
 {"loadType" : "base",
 "name" : "PRC Base Alpha",
-"code" : "undefined",
+"code" : "CNBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
@@ -58,7 +58,7 @@
 },
 {"loadType" : "base",
 "name" : "TFR Base Alpha",
-"code" : "undefined",
+"code" : "FRBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
@@ -77,7 +77,7 @@
 },
 {"loadType" : "base",
 "name" : "TUK Base Alpha",
-"code" : "undefined",
+"code" : "GBBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},

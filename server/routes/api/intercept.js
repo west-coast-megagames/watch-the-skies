@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const routeDebugger = require('debug')('app:routes');
-const intercept = require('../../wts/intercept/intercept');
+const airMission = require('../../wts/intercept/intercept');
+const nexusEvent = require('../../startup/events');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
@@ -10,15 +11,23 @@ const { Interceptor } = require('../../models/ops/interceptor');
 // @Desc    Find Attacker/Defender and activate intercept
 // @access  Public
 router.put('/', async (req, res) => {
-    routeDebugger('Accepting Interception...')
-    let attacker = await Interceptor.findById(req.body.attacker);
-    let defender = await Interceptor.findById(req.body.defender);
+    let result = ''
+    let { aircraft, target, mission } = req.body;
 
-    attacker.location.country.countryName = defender.location.country.countryName
-    
-    await attacker.save()
-    let result = await intercept.launchInterception(attacker, defender);
+    aircraft = await Interceptor.findById(aircraft).populate('systems');
+    target = await Interceptor.findById(target).populate('systems');
+
+    result = `${aircraft.designation} launching.`;
+    aircraft.location = target.location;
+
+    aircraft = await aircraft.launch(aircraft, mission); // Changes attacker status
+    result = `${result} ${aircraft.designation} en route to attempt ${mission.toLowerCase()}.`;
+
+    await airMission.start(aircraft, target, mission);
+
+    routeDebugger(result)
     res.status(200).send(result);
+    nexusEvent.emit('updateAircrafts');
 });
 
 module.exports = router;

@@ -1,5 +1,5 @@
 const fs = require('fs')
-const file = fs.readFileSync(require.resolve('./research.json'));
+const file = fs.readFileSync(require.resolve('../json/research.json'));
 const techData = JSON.parse(file);
 
 const techTreeDebugger = require('debug')('app:techTree');
@@ -12,6 +12,7 @@ function getTechTree() {
     return techTree;
 }
 
+// TEMP function that goes through the whole tech tree and checks the availibility of each
 async function makeAvailible() {
     for (let tech of techTree) {
         let res = await tech.checkAvailible();

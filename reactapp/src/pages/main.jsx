@@ -161,8 +161,10 @@ import Registration from './../components/registration';
                     )}/>
                     <Route path="/news" render={(props) => (
                       <News {...props}
-                        news={ this.props.news }
+                        articles={ this.props.articles }
                         alert={ this.props.addAlert }
+                        teams={this.props.teams}
+                        handleArtHide={this.props.handleArtHide}
                       />
                     )}/>
                     <Route path="/control" render={(props) => (

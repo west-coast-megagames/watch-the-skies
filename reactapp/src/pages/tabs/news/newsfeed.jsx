@@ -10,12 +10,12 @@ const NewsFeed = (props) => {
     };
     
     return (
-        <Container style={{ paddingTop: 10, overflowY: "auto", height: "100vh" }}>
+        <Container >
             <h5>{ props.agency } News Feed</h5>
             <PanelGroup style={{ paddingTop: 10 }}>
                 { props.articles.map( article => (
                     <div  className="artCont" key={ article._id }>
-                        <span className="delArticle" data-id={article._id}>X</span>
+                        <button onClick={ () => props.del(article) } className="btn btn-danger btn-sm m-1">X</button>
                         <Panel key={ article._id } header={ article.headline } collapsible bordered>
                             <p>{ article.body }</p>
                         </Panel>

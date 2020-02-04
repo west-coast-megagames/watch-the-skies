@@ -5,33 +5,29 @@ const Schema = mongoose.Schema;
 
 const InterceptLog = Log.discriminator('InterceptLog', new Schema({
     logType: { type: String, default: 'Interception' },
+    position: { type: String },
     location: {
-        zone: { type: String, require: true },
-        country: { type: String, require: true },
-        city: { type: String },
-        poi: { type: String }
+        country: { type: Schema.Types.ObjectId, ref: 'Country'},
+        site: { type: Schema.Types.ObjectId, ref: 'Site'},
     },
-    description: { type: String, required: true },
-    unit: {
-        _id: { type: ObjectId, required: true },
-        description: { type: String, required: true },
-        outcome: { 
-            frameDmg: { type: Boolean },
-            sysDmg: { type: Boolean },
-            evasion: { type: Boolean },
-            dmg: { type: Number }
-        }
+    report: { type: String, required: true },
+    unit: { type: Schema.Types.ObjectId, ref: 'Aircraft'},
+    opponent: { type: Schema.Types.ObjectId, ref: 'Aircraft'},
+    atkStats: {
+        damage: {
+            frameDmg: { type: Number },
+            systemDmg: { type: Number },
+        },
+        outcome: { type: String }
     },
-    opponent: {
-        _id: { type: ObjectId, required: true },
-        description: { type: String, required: true },
-        outcome: { 
-            frameDmg: { type: Boolean },
-            sysDmg: { type: Boolean },
-            evasion: { type: Boolean },
-            dmg: { type: Number },
-        }
-    }
+    defStats: {
+        damage: {
+            frameDmg: { type: Number },
+            systemDmg: { type: Number },
+        },
+        outcome: { type: String }
+    },
+    salvage: [{ type: String }]
 }));
 
 module.exports = InterceptLog;

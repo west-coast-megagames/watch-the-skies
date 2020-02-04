@@ -156,7 +156,7 @@ async function deleteAllBases(doLoad) {
       try {
         let baseDel = await Base.findByIdAndRemove(id);
         if (baseDel = null) {
-          baseLoadDebugger(`The Zone with the ID ${id} was not found!`);
+          baseLoadDebugger(`The Base with the ID ${id} was not found!`);
         }
       } catch (err) {
         baseLoadDebugger('Base Delete All Error:', err.message);

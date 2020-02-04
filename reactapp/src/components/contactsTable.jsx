@@ -30,7 +30,7 @@ class Contacts extends Component {
                         <tr key={ contact._id }>
                             <td>Small</td>
                             <td>Unknown</td>
-                            <td>{ contact.location.country.countryName }</td>
+                            <td>{ contact.location.country.name }</td>
                             <td><button onClick={ () => this.props.deployInterceptors( 'deploying', contact, undefined ) } className="btn btn-success btn-sm">Deploy</button></td>
                         </tr>
                         ))}
