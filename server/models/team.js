@@ -10,12 +10,12 @@ const RoleSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User'} 
 });
 
-//teamType is (N)ational, (A)lien or (M)edia
+//teamType is (N)ational, (A)lien, (M)edia, (C)ontrol
 const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, minlength: 2, maxlength: 30 },
   teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },
-  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M'] },
+  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C'] },
   roles: [RoleSchema],
   prTrack: [Number],
   prLevel: { type: Number },
