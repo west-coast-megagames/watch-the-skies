@@ -15,6 +15,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Interceptor Model - Using Mongoose Model
+const { updateStats } = require('../../models/ops/aircraft');
 const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
@@ -22,6 +23,7 @@ const { Team } = require('../../models/team');
 const { Base } = require('../../models/base');
 const { System } = require('../../models/ops/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { BaseSite } = require('../../models/sites/baseSite');
 const app = express();
 
 // Bodyparser Middleware
@@ -112,12 +114,12 @@ async function loadInterceptor(iData){
         }      
 
         if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
-          let base = await Base.findOne({ baseCode: iData.parentCode2 });  
-          if (!base) {
+          let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
+          if (!baseSite) {
             interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
           } else {
-            interceptor.base = base._id;
-            interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
+            interceptor.base = baseSite._id;
+            interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
           }
         }      
 
@@ -144,10 +146,8 @@ async function loadInterceptor(iData){
         await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
           interceptorLoadDebugger(interceptor.designation + " add saved to interceptor collection.");
+          updateStats(interceptor._id);
         });
-
-        interceptor.updateStats();
-        
     } else {       
       // Existing Interceptor here ... update
       let id = interceptor._id;
@@ -185,12 +185,12 @@ async function loadInterceptor(iData){
       }  
       
       if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
-        let base = await Base.findOne({ baseCode: iData.parentCode2 });  
-        if (!base) {
+        let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
+        if (!baseSite) {
           interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
         } else {
-          interceptor.base = base._id;
-          interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", base._id);
+          interceptor.base = baseSite._id;
+          interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
         }
       }      
 
@@ -221,11 +221,9 @@ async function loadInterceptor(iData){
       }
    
       await interceptor.save((err, interceptor) => {
-      if (err) return console.error(`Interceptor Update Save Error: ${err}`);
-      interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
-
-      interceptor.updateStats();
-
+        if (err) return console.error(`Interceptor Update Save Error: ${err}`);
+        interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
+        updateStats(interceptor._id);
       });
     }
   } catch (err) {

@@ -4,8 +4,8 @@ import { gameServer } from '../config';
 import axios from 'axios';
 
 const data = [
-  { value: "Aggressive", label: "Aggresive Stance"},
-  { value: "Passive", label: "Passive Stance"}
+  { value: "Interception", label: "Intercept and attack Contact"},
+  { value: "Escort", label: "Escort and protect Contact"}
 ]
 
 class InterceptorDeployForm extends Component {
@@ -13,7 +13,12 @@ class InterceptorDeployForm extends Component {
   state = {
     ships: [],
     interceptor: this.props.interceptor,
-    contact: this.props.contact
+    contact: this.props.contact,
+    missions: [
+      { value: "Interception", label: "Intercept and attack Contact"},
+      { value: "Escort", label: "Escort and protect Contact"}
+    ],
+    mission: ''
   }
 
   handleSubmit = async () => {
@@ -21,8 +26,9 @@ class InterceptorDeployForm extends Component {
     this.props.deployInterceptors( 'deployed', this.state.contact, this.state.interceptor );
 
     let stats = {
-      attacker: this.state.interceptor,
-      defender: this.state.contact
+      aircraft: this.state.interceptor,
+      target: this.state.contact._id,
+      mission: this.state.mission
     };
 
     try {
@@ -64,7 +70,7 @@ class InterceptorDeployForm extends Component {
                         <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.country.countryName } | { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% damage) </option>
                     ))}
                   </select>
-                  <InputPicker placeholder="Aircraft Interception Stance" data={data} block />
+                  <InputPicker placeholder="Mission Selection" data={this.state.missions} value={this.state.mission} onChange={value => (this.setState({ mission: value }))}block />
               </div>
             </form>
         </Drawer.Body>

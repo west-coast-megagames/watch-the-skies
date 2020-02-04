@@ -8,7 +8,7 @@ const SystemSchema = new Schema({
         type: { type: String},
         name: {type: String}}
     ],
-    catagory: { type: String },
+    category: { type: String },
     desc: { type: String },
     stats: {
         hullMax: { type: Number },

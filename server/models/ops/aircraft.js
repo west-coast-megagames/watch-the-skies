@@ -23,17 +23,6 @@ const AircraftSchema = new Schema({
   }
 });
 
-AircraftSchema.methods.updateStats = function () {
-  for (let system of this.systems) {
-    for (let [key, value] of Object.entries(system.stats)) {
-      this.stats[key] += value; 
-    }
-    console.log(`${system.name} loaded into ${this.type}...`)
-  }
-  console.log(`All systems for ${this.type} ${this.designation} leaded...`);
-  console.log(this.stats);
-}
-
 AircraftSchema.methods.launch = async (aircraft, mission) => {
   const banking = require('../../wts/banking/banking');
   const { Account } = require('../gov/account');
@@ -64,25 +53,21 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
-    designation: Joi.string().min(2).max(50).required()
-    /* there is no Type field here that I can see ... still in interceptor though
-    type: Joi.string().min(2).max(50).required(),
-    */
+    designation: Joi.string().min(2).max(50).required(),
+    type: Joi.string().min(2).max(50).required()
   };
 
   return Joi.validate(aircraft, schema, { "allowUnknown": true });
 }
 
-let Aircraft = mongoose.model('aircraft', AircraftSchema);
+let Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
 function validateAircraft(aircraft) {
   //modelDebugger(`Validating ${aircraft.designation}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required()
-       /* there is no Type field that I can see  ... still in interceptor though
+      designation: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
-      */
     };
   
   return Joi.validate(aircraft, schema, { "allowUnknown": true });
@@ -90,8 +75,34 @@ function validateAircraft(aircraft) {
 
 async function getAircrafts() {
   modelDebugger('Retriving all aircraft documents...');
-  let aircrafts = await AircraftSchema.find();
+  let aircrafts = await Aircraft.find()
+    .sort({team: 1})
+    .populate('team', 'name shortName')
+    .populate('location.zone', 'zoneName')
+    .populate('location.country', 'name')
+    .populate('systems', 'name category');
   return aircrafts;
 };
 
-module.exports = { Aircraft, validateAircraft, getAircrafts }
+async function updateStats(id) {
+  let aircraft = await Aircraft.findById(id).populate('systems');
+  let { stats } = aircraft
+  for (let system of aircraft.systems) {
+    for (let [key, value] of Object.entries(system.stats)) {
+      if (typeof value === typeof 0) {
+        console.log(`${key}: ${value}`);
+        stats[key] = value; 
+      }
+    }
+    console.log(`${system.name} loaded into ${aircraft.type}...`)
+  }
+  console.log(`All systems for ${aircraft.type} ${aircraft.designation} leaded...`);
+  aircraft.stats = stats;
+  aircraft.markModified('stats');
+  aircraft = await aircraft.save();
+  console.log(aircraft.stats);
+
+  return;
+}
+
+module.exports = { Aircraft, validateAircraft, getAircrafts, updateStats }

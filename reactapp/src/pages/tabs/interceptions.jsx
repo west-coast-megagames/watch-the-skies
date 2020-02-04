@@ -25,18 +25,14 @@ class Interception extends Component {
   }
 
   componentDidMount() {
-    this.radarSweep = setInterval(() => {
-      let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
-
-      let contacts = data.filter(aircraft => aircraft.team._id !== this.props.team._id);
-      contacts = contacts.filter(aircraft => aircraft.status.deployed === true);
-
-      let aircrafts = data.filter(aircraft => aircraft.team._id === this.props.team._id);
-
-      this.setState({ contacts, aircrafts });
-      // console.log('Contacts and Aircrafts set...');
-    }, 500);
+    this.radarSweep();
   };
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.aircrafts !== this.props.aircrafts){
+      this.radarSweep();
+    }
+  }
 
   componentWillUnmount() {
     clearInterval(this.radarSweep);
@@ -75,6 +71,18 @@ class Interception extends Component {
       </React.Fragment>
     );
   };
+
+  radarSweep() {
+    let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
+
+    let contacts = data.filter(aircraft => aircraft.team._id !== this.props.team._id);
+    contacts = contacts.filter(aircraft => aircraft.status.deployed === true);
+
+    let aircrafts = data.filter(aircraft => aircraft.team._id === this.props.team._id);
+
+    this.setState({ contacts, aircrafts });
+    console.log('Contacts and Aircrafts set...');
+  } 
 
   deployInterceptors = async (context, contact, interceptor) =>{
     this.toggleDeploy();

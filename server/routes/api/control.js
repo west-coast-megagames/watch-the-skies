@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const nexusEvent = require('../../startup/events');
 
 // Interceptor Model - Using Mongoose Model
 const { Interceptor } = require('../../models/ops/interceptor');
+const { Aircraft, updateStats } = require('../../models/ops/aircraft');
 const { System } = require('../../models/ops/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 
@@ -26,6 +28,8 @@ router.patch('/alien/deploy', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have been deployed...`);
     }
+
+    nexusEvent.emit('updateAircrafts');
 });
 
 
@@ -48,6 +52,7 @@ router.patch('/alien/return', async function (req, res) {
     } else {
         res.status(200).send(`${count} alien crafts have returned to base...`);
     }
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/control/resethull
@@ -75,7 +80,6 @@ router.patch('/loadSystems', async function (req, res) {
 // @route   POST api/control/build
 // @desc    Builds the thing!
 // @access  Public
-
 router.post('/build', async function (req, res) {
     let aircraft = req.body;
     aircraft.systems = [];
@@ -97,6 +101,17 @@ router.post('/build', async function (req, res) {
     res.status(200).send(newInterceptor);
 });
 
-
+// @route   PATCH api/control/update aircraft
+// @desc    Builds the thing!
+// @access  Public
+router.patch('/updateAircraft', async function (req, res) {
+    count = 0;
+    for (let aircraft of await Aircraft.find().populate('systems')) {
+        await updateStats(aircraft._id);
+        count++;
+    };
+    
+    res.status(200).send(`${count} aircraft updated...`);
+});
 
 module.exports = router;

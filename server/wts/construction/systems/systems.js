@@ -29,7 +29,7 @@ function Sys(system) {
     this.cost = system.cost;
     this.prereq = system.prereq;
     this.desc = system.desc;
-    this.catagory = system.catagory;
+    this.category = system.category;
     this.stats = system.stats
 
     this.build = async function() {
