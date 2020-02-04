@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const SpacecraftSchema = new Schema({
-  designation: { type: String, required: true, min: 2, maxlength: 50 },
+  name: { type: String, required: true, min: 2, maxlength: 50 },
   type: { 
     type: String,
     required: true,
@@ -53,7 +53,7 @@ const SpacecraftSchema = new Schema({
 
 SpacecraftSchema.methods.validateInterceptor = function (interceptor) {
   const schema = {
-    designation: Joi.string().min(2).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     type: Joi.string().min(2).max(50).required(),
   };
 
@@ -63,10 +63,10 @@ SpacecraftSchema.methods.validateInterceptor = function (interceptor) {
 let Interceptor = mongoose.model('interceptor', SpacecraftSchema);
 
 function validateInterceptor(interceptor) {
-  //modelDebugger(`Validating ${interceptor.designation}...`);
+  //modelDebugger(`Validating ${interceptor.name}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required(),
+      name: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
     };
   
@@ -84,7 +84,7 @@ async function launch (aircraft) {
   const { Account } = require('../gov/account');
 
   try {
-    modelDebugger(`Attempting to launch ${aircraft.designation}`)
+    modelDebugger(`Attempting to launch ${aircraft.name}`)
     aircraft.status.deployed = true;
     aircraft.status.ready = false;
     aircraft.status.mission = true;
@@ -94,11 +94,11 @@ async function launch (aircraft) {
     let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
     console.log(account)
 
-    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
+    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.name}`)
 
     await account.save();
     await aircraft.save();
-    console.log(`Aircraft ${aircraft.designation} deployed...`);
+    console.log(`Aircraft ${aircraft.name} deployed...`);
 
     return;
 

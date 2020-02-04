@@ -60,10 +60,10 @@ router.patch('/alien/return', async function (req, res) {
 // @access  Public
 router.patch('/resethull', async function (req, res) {
     for await (const interceptor of Interceptor.find()) {    
-        console.log(`${interceptor.designation} has ${interceptor.stats.hull} hull points`);
+        console.log(`${interceptor.name} has ${interceptor.stats.hull} hull points`);
         interceptor.stats.hull = interceptor.stats.hullMax;
         interceptor.status.destroyed = false;
-        console.log(`${interceptor.designation} now has ${interceptor.stats.hull} hull points`);
+        console.log(`${interceptor.name} now has ${interceptor.stats.hull} hull points`);
         await interceptor.save();
     }
     res.send("Interceptors succesfully reset!");

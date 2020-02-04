@@ -9,7 +9,7 @@ class InterceptorInfo extends Component {
   }
 
   render() {
-    let { stats, designation, location, type } = this.props.interceptor;
+    let { stats, name, location, type } = this.props.interceptor;
     
     return (
         <Drawer
@@ -21,7 +21,7 @@ class InterceptorInfo extends Component {
             <Drawer.Title>Aircraft Information</Drawer.Title>
           </Drawer.Header>
           <Drawer.Body>
-            <p><b>Name:</b> { designation }</p>
+            <p><b>Name:</b> { name }</p>
             <p><b>Location:</b> { location.zone.zoneName } Zone | { location.country.countryName }</p>
             <p><b>Type:</b> { type }</p>
             <p><b>Hull Integrity:</b> { stats.hull }/{ stats.hullMax }</p>

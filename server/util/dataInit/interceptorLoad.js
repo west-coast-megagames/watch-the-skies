@@ -72,18 +72,18 @@ async function initLoad(doLoad) {
 async function loadInterceptor(iData){
   try {   
     //interceptorLoadDebugger("Jeff in loadInterceptor ", iData.name); 
-    let interceptor = await Interceptor.findOne( { designation: iData.name } );
+    let interceptor = await Interceptor.findOne( { name: iData.name } );
     if (!interceptor) {
        // New Interceptor here
        let interceptor = new Interceptor({ 
-           designation: iData.name,
+           name: iData.name,
            type: iData.type,
            code: iData.code
         }); 
 
         let { error } = validateInterceptor(interceptor); 
         if (error) {
-          interceptorLoadDebugger("New Interceptor Validate Error", team.designation, error.message);
+          interceptorLoadDebugger("New Interceptor Validate Error", team.name, error.message);
           return;
         }
         
@@ -97,7 +97,7 @@ async function loadInterceptor(iData){
           newSystem = await new System(sysRef);
           await newSystem.save(((err, newSystem) => {
             if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-            //interceptorLoadDebugger(interceptor.designation, "system", sys, " add saved to system collection.");
+            //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
           }));
 
           interceptor.systems.push(newSystem._id)
@@ -145,14 +145,14 @@ async function loadInterceptor(iData){
         
         await interceptor.save((err, interceptor) => {
           if (err) return console.error(`New Interceptor Save Error: ${err}`);
-          interceptorLoadDebugger(interceptor.designation + " add saved to interceptor collection.");
+          interceptorLoadDebugger(interceptor.name + " add saved to interceptor collection.");
           updateStats(interceptor._id);
         });
     } else {       
       // Existing Interceptor here ... update
       let id = interceptor._id;
       
-      interceptor.designation = iData.name;
+      interceptor.name = iData.name;
       interceptor.type        = iData.type;
       interceptor.code        = iData.code;
       interceptor.stats       = iData.stats;
@@ -167,7 +167,7 @@ async function loadInterceptor(iData){
           newSystem = await new System(sysRef);
           await newSystem.save(((err, newSystem) => {
           if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-          //interceptorLoadDebugger(interceptor.designation, "system", sys, " add saved to system collection.");
+          //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
           }));
 
           interceptor.systems.push(newSystem._id)
@@ -222,7 +222,7 @@ async function loadInterceptor(iData){
    
       await interceptor.save((err, interceptor) => {
         if (err) return console.error(`Interceptor Update Save Error: ${err}`);
-        interceptorLoadDebugger(interceptor.designation + " update saved to interceptor collection.");
+        interceptorLoadDebugger(interceptor.name + " update saved to interceptor collection.");
         updateStats(interceptor._id);
       });
     }
@@ -242,7 +242,7 @@ async function deleteAllInterceptors(doLoad) {
     for await (const interceptor of Interceptor.find()) {    
       let id = interceptor._id;
 
-      //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop", interceptor.designation); 
+      //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop", interceptor.name); 
       try {
 
         // remove associated systems records
@@ -258,7 +258,7 @@ async function deleteAllInterceptors(doLoad) {
         if (interceptorDel = null) {
           interceptorLoadDebugger(`The Interceptor with the ID ${id} was not found!`);
         }
-        //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop after remove", interceptor.designation); 
+        //interceptorLoadDebugger("Jeff in deleteAllInterceptors loop after remove", interceptor.name); 
       } catch (err) {
         interceptorLoadDebugger('Interceptor Delete All Error:', err.message);
       }

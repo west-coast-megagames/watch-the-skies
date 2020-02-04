@@ -1,6 +1,6 @@
 {
     "_ID": 0,
-    "designation": "PAC Fed Beta",
+    "name": "PAC Fed Beta",
     "type": "PAC",
     "location": {
         "zone": "Africa", 

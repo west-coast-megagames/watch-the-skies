@@ -39,7 +39,7 @@ class Interceptors extends Component {
                 <tbody>
                 { this.props.aircrafts.map(aircraft => (
                     <tr key={ aircraft._id }>
-                        <td>{ aircraft.designation }</td>
+                        <td>{ aircraft.name }</td>
                         <td>Someone</td>
                         <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
                         <td>{ this.getLocation(aircraft) }</td>

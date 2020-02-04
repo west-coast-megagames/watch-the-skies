@@ -1,6 +1,6 @@
 {
     "_ID": 0,
-    "designation": "Inter US Alpha",
+    "name": "Inter US Alpha",
     "type": "Interceptor",
     "location": {
         "zone": "North American", 

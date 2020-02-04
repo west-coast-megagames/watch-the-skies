@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const AircraftSchema = new Schema({
-  designation: { type: String, required: true, min: 2, maxlength: 50 },
+  name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   mission: { type: String },
   location: { 
@@ -28,7 +28,7 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   const { Account } = require('../gov/account');
 
   try {
-    modelDebugger(`Attempting to launch ${aircraft.designation}`)
+    modelDebugger(`Attempting to launch ${aircraft.name}`)
     aircraft.status.deployed = true;
     aircraft.status.ready = false;
 
@@ -37,12 +37,12 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
     let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
     
 
-    account = await banking.withdrawal(account, 1, `Deployment of ${aircraft.designation} for ${mission.toLowerCase()}`)
+    account = await banking.withdrawal(account, 1, `Deployment of ${aircraft.name} for ${mission.toLowerCase()}`)
 
     modelDebugger(account)
     await account.save();
     await aircraft.save();
-    modelDebugger(`Aircraft ${aircraft.designation} deployed...`);
+    modelDebugger(`Aircraft ${aircraft.name} deployed...`);
 
     return aircraft;
 
@@ -53,7 +53,7 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
-    designation: Joi.string().min(2).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     type: Joi.string().min(2).max(50).required()
   };
 
@@ -63,10 +63,10 @@ AircraftSchema.methods.validateAircraft = function (aircraft) {
 let Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
 function validateAircraft(aircraft) {
-  //modelDebugger(`Validating ${aircraft.designation}...`);
+  //modelDebugger(`Validating ${aircraft.name}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required(),
+      name: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
     };
   
@@ -96,7 +96,7 @@ async function updateStats(id) {
     }
     console.log(`${system.name} loaded into ${aircraft.type}...`)
   }
-  console.log(`All systems for ${aircraft.type} ${aircraft.designation} leaded...`);
+  console.log(`All systems for ${aircraft.type} ${aircraft.name} leaded...`);
   aircraft.stats = stats;
   aircraft.markModified('stats');
   aircraft = await aircraft.save();

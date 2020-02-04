@@ -67,7 +67,7 @@ class InterceptorDeployForm extends Component {
                   <select className="form-control" form="deployForm" value={ this.state.interceptor } onChange={ this.handleChange }>
                     <option>Select an interceptor!</option>
                     { this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true).map(ship => (
-                        <option key={ship._id} value={ship._id}>{ ship.designation } ( { ship.location.country.countryName } | { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% damage) </option>
+                        <option key={ship._id} value={ship._id}>{ ship.name } ( { ship.location.country.countryName } | { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% damage) </option>
                     ))}
                   </select>
                   <InputPicker placeholder="Mission Selection" data={this.state.missions} value={this.state.mission} onChange={value => (this.setState({ mission: value }))}block />

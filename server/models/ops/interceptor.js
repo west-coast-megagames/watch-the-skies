@@ -22,10 +22,10 @@ const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
 }));
 
 function validateInterceptor(interceptor) {
-  //modelDebugger(`Validating ${interceptor.designation}...`);
+  //modelDebugger(`Validating ${interceptor.name}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required(),
+      name: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
     };
   

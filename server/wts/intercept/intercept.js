@@ -15,7 +15,7 @@ let diversionMissions = []; // Attempted Diversion missions for the round
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start (aircraft, target, mission) {
-    let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.designation} submitted.`
+    let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`
     aircraft = aircraft._id; // Saves just the _ID of the aircraft
     target = target._id; // Saves just the _ID of the target
 
@@ -62,8 +62,8 @@ async function resolveMissions () {
         let stance = 'passive' // Targets stance for interception defaults to 'passive'
         let aircraft = await Interceptor.findById(interception.aircraft).populate('location.country', 'name').populate('systems');
         let target = await Interceptor.findById(interception.target).populate('systems');
-        interceptDebugger(`${aircraft.designation} vs. ${target.designation}`);
-        let report = `${aircraft.designation} is attempting to engaged a contact in ${aircraft.location.country.name} airspace.`;
+        interceptDebugger(`${aircraft.name} vs. ${target.name}`);
+        let report = `${aircraft.name} is attempting to engaged a contact in ${aircraft.location.country.name} airspace.`;
         
         // Check for all escort missions for any that are guarding interception target
         for (let escort of escortMissions) {
@@ -73,11 +73,11 @@ async function resolveMissions () {
                 target = await Interceptor.findById(escort.aircraft).populate('systems');
                 escortMissions.splice(escortMissions.indexOf(escort), 1);
                 stance = 'aggresive'
-                report = `${report} Contact seems to have an escort, escort is breaking off to engage ${interception.aircraft.designation}.`
+                report = `${report} Contact seems to have an escort, escort is breaking off to engage ${interception.aircraft.name}.`
             }
         };
 
-        interceptDebugger(`${aircraft.designation} is engaging ${target.designation}.`);
+        interceptDebugger(`${aircraft.name} is engaging ${target.name}.`);
         intercept(aircraft, target, stance, report);
     };
     interceptions = [];
@@ -88,13 +88,13 @@ async function resolveMissions () {
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 async function intercept (attacker, defender, defStance, report) {
     interceptDebugger(`Beginning intercept...`)
-    atkReport = `${report} ${attacker.designation} has engaged ${defender.type}.`;
-    defReport = `${defender.designation} has been engaged by ${attacker.type}.`;
+    atkReport = `${report} ${attacker.name} has engaged ${defender.type}.`;
+    defReport = `${defender.name} has been engaged by ${attacker.type}.`;
     
     let atkRoll = d6() + d6(); // Attacker Roll | 2 d6
-    interceptDebugger(`${attacker.designation} rolled a ${atkRoll}`);
+    interceptDebugger(`${attacker.name} rolled a ${atkRoll}`);
     let defRoll = d6() + d6(); // Defender Roll | 2 d6
-    interceptDebugger(`${defender.designation} rolled a ${defRoll}`);
+    interceptDebugger(`${defender.name} rolled a ${defRoll}`);
 
     let atkResult = await outcome(attacker, atkRoll, 'aggresive'); // Puts the attacker through the results table returning results data | outcome.js
     let defResult = await outcome(defender, defRoll, defStance); // Puts the attacker through the results table returning results data | outcome.js
