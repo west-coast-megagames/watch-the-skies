@@ -30,7 +30,7 @@ class InterceptorInfo extends Component {
             <h4>Systems</h4>
             <ul>
               {this.props.interceptor.systems.map(system => (
-                <li>{system.name} | {system.catagory}</li>
+                <li>{system.name} | {system.category}</li>
               ))}
             </ul>
             <InterceptorLogs
