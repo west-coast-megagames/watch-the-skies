@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
 import KnowledgeCard from '../components/common/knowledgeCard';
 import Labs from '../pages/tabs/sci/labs';
+import Knowledge from '../pages/tabs/sci/knowledge';
 import Axios from 'axios';
 import { gameServer } from '../config';
 
@@ -20,7 +21,9 @@ class Science extends Component {
     }
 
     async loadScience() {
-        const {data: allKnowledge} = await Axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        const {data: rawData} = await Axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        const allKnowledge = this.removeDuplicates(rawData, 'name');
+        console.log('DUPREMOVE=', allKnowledge);
         this.setState({ allKnowledge });
     }
 
@@ -32,9 +35,17 @@ class Science extends Component {
         this.setState({ tab: activeKey })
     }
 
+    removeDuplicates(myArr, prop) {
+        return myArr.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj.name).indexOf(obj[prop]) === pos;
+        });
+    }
+
     render() {
         const url = this.props.match.path;
         const { tab } = this.state; 
+
+        
 
          return (
         <Container>
@@ -63,6 +74,15 @@ class Science extends Component {
                         />
                     )}/>
                     <Route path={`${url}/knowledge`} render={() => (
+                        <Knowledge    
+                        team={ this.props.team }
+                        allKnowledge={this.state.allKnowledge}
+                        //accounts={ this.props.accounts }
+                        //handleUpdate={ this.props.handleUpdate }
+                        //alert={ this.props.alert }
+                        />
+                    )}/>
+                    <Route path={`${url}/applied`}  render={() => (
                         <React.Fragment>
                         <div className="card-group">
                             <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
@@ -79,9 +99,6 @@ class Science extends Component {
                             <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
                         </div>
                         </React.Fragment>
-                    )}/>
-                    <Route path={`${url}/applied`}  render={() => (
-                        <h5>The applied technology system for the Science Module has not been created!</h5>
                     )}/>
                     <Route path={`${url}/salvage`}  render={() => (
                         <h5>The salvage system for the Science Module has not been created!</h5>
