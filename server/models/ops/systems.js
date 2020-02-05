@@ -8,7 +8,7 @@ const SystemSchema = new Schema({
         type: { type: String},
         name: {type: String}}
     ],
-    category: { type: String },
+    category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util', 'Chassis' ] },
     desc: { type: String },
     stats: {
         hullMax: { type: Number },
