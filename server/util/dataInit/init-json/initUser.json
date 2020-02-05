@@ -177,5 +177,23 @@
     "gender" : "Male",
     "discord" : "Drewwww#8011",
     "teamCode" : "TUK"
+},
+{
+    "loadType" : "user",
+    "username" : "ControlMan",
+    "name" : {"first" : "Control", "last" : "Man" },
+    "email" : "control@gmail.com",
+    "phone" : "5555555555",
+    "password" : "TempPassword",
+    "address" : 
+        {"street1" : "Four Place",
+         "street2" : "",
+         "city" : "Sacramento",
+         "state" : "CA",
+         "zipcode" : "11111"},
+    "dob" : "1974-12-29",
+    "gender" : "Male",
+    "discord" : "control#9763",
+    "teamCode" : "TCN"
 }
 ]

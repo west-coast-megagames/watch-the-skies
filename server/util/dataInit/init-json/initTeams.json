@@ -109,5 +109,24 @@
 ],
 "prLevel" : 0,
 "loadFlag" : "true"
+},
+{
+"loadType" : "team", 
+"name": "Control Team", 
+"shortName" : "Control",
+"teamType" : "C",
+"code" : "TCN", 
+"roles" : [
+    {"role": "Game Controller", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Alliances Controller", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Alien Controller", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Science Controller", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Map Controller", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+     {"role": "Deputy Game Controller", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"}
+],
+"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["GB"]}]
 }
 ]
