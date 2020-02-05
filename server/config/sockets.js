@@ -12,6 +12,21 @@ const { Team, getPR, getTeam } = require('../models/team');
 const { getAircrafts } = require('../models/ops/aircraft');
 const { Account } = require('../models/gov/account');
 
+class Client {
+  constructor() {
+      this.connections = [];
+      this.saveClient = this.saveClient.bind(this);
+      this.delClient = this.saveClient.bind(this);
+  }
+  saveClient (team, client) {
+      client.team = team;
+      this.connections.push(client);
+  }
+  delClient (client) {
+      this.connections.splice(connections.indexOf(client), 1);
+  }
+}
+
 let connections = [];
 let msgKey = 0;
 
@@ -27,12 +42,14 @@ Account.watch().on('change', async data => {
   eventListner.emit('updateAccounts', team);
 });
 
-module.exports = function (io){
+
   /*
   setInterval(() => {
     io.emit('gameClock', gameClock.getTimeRemaining());
   }, 1000);
   */
+
+module.exports = function (io){
   nexusEvent.on('updateAircrafts', async () => {
     let aircrafts = await getAircrafts();
     socketDebugger('Sending Aircrafts!');

@@ -74,5 +74,4 @@ function updateAccounts (cb) {
     socket.on('updateAccounts', data => cb(null, data))
 }
 
-
 export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAccounts, socket };
