@@ -9,6 +9,8 @@ class Interception extends Component {
   state = {
     contacts: [],
     aircrafts: [],
+    bases: [],
+    cities: [],
     isDeploying: false,
     contact: undefined,
     showInfo: false,
@@ -26,11 +28,13 @@ class Interception extends Component {
 
   componentDidMount() {
     this.radarSweep();
+    this.sitesSort();
   };
 
   componentDidUpdate(prevProps) {
     if(prevProps.aircrafts !== this.props.aircrafts){
       this.radarSweep();
+      this.sitesSort();
     }
   }
 
@@ -44,6 +48,8 @@ class Interception extends Component {
           <Contacts 
             deployInterceptors={ this.deployInterceptors }
             contacts={this.state.contacts}
+            bases={this.state.bases}
+            cities={this.state.cities}
           />
           <hr />
           <Interceptors
@@ -71,6 +77,13 @@ class Interception extends Component {
       </React.Fragment>
     );
   };
+
+  sitesSort() {
+    let bases = this.props.sites.filter(site => site.__t === 'BaseSite' );
+    let cities = this.props.sites.filter(site => site.__t === 'CitySite' );
+
+    this.setState({ bases, cities })
+  }
 
   radarSweep() {
     let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);

@@ -24,7 +24,7 @@ class Contacts extends Component {
             id: '1',
             type: `category`,
             labelName: `High Orbit Contacts`,
-            status: `${this.props.contacts.length} Contacts`,
+            status: this.props.contacts.length != 0 ? `${this.props.contacts.length} Contacts` : 'No Contacts',
             info: `Advanced high orbit contacts...`,
             children: this.props.contacts.map(el => {
                 return { id:el._id, labelName:el.name, status:'Unknown', type:el.type, location:el.location.country.name };
@@ -34,7 +34,7 @@ class Contacts extends Component {
             id: '2',
             type: `category`,
             labelName: `Activity Sites`,
-            status: `0 Sites`,
+            status: `No Sites`,
             info: `Points of interest and international activity`,
             children: []
         },
@@ -42,9 +42,33 @@ class Contacts extends Component {
             id: '3',
             type: `category`,
             labelName: `EX-COM Bases`,
-            status: `0 Bases`,
+            status: this.props.bases.length != 0 ? `${this.props.bases.length} bases` : 'No bases',
             info: `Extraterrestirial Response Bases`,
-            children: []
+            children: this.props.bases.map(el => {
+                return {
+                    id:el._id,
+                    labelName:el.baseName,
+                    status:'Unknown',
+                    type:el.type,
+                    info: `Base owned and operated by ${el.team.name}`,
+                    location:el.country.name };
+            })
+        },
+        {
+            id: '4',
+            type: `category`,
+            labelName: `Cities`,
+            status: this.props.cities.length != 0 ? `${this.props.cities.length} cities` : 'No cities',
+            info: `Urban Centers`,
+            children: this.props.cities.map(el => {
+                return {
+                    id:el._id,
+                    labelName:el.cityName,
+                    status:'Unknown',
+                    type:el.type,
+                    info: `...information about city?`,
+                    location:el.country.name };
+            })
         }]
         
 
@@ -112,8 +136,8 @@ class Contacts extends Component {
                             if (rowData.type !== 'category') {
                             return (
                                 <React.Fragment>
-                                    <button onClick={handleAction}> Edit </button> |
-                                    <button onClick={handleAction}> Remov </button>
+                                    <button onClick={handleAction}> Engage </button> |
+                                    <button onClick={handleAction}> Do it! </button>
                                 </React.Fragment>)
                             } 
                         }}

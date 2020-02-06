@@ -129,6 +129,7 @@ import Registration from './../components/registration';
                       <Operations {...props}
                         team={ this.props.team }
                         aircrafts={ this.props.aircrafts }
+                        sites={this.props.sites}
                         alert={ this.props.addAlert } 
                       />
                     )} />
@@ -143,7 +144,8 @@ import Registration from './../components/registration';
                     )}/>
                     <Route path="/sci" render={(props) => (
                       <Science {...props}
-                          team = { this.props.team }
+                          sites={ this.props.sites }
+                          team ={ this.props.team }
                           alert={ this.props.addAlert }
                       />
                     )}/>

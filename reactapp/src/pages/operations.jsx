@@ -38,7 +38,8 @@ class Operations extends Component {
                         <h5>No dashboard has been coded for the Operations Module!</h5>
                     )}/>
                     <Route path={`${url}/intercept`} render={() => (
-                        <Interception 
+                        <Interception
+                            sites={ this.props.sites }
                             team={ this.props.team }
                             aircrafts={ this.props.aircrafts }
                             alert={ this.props.alert } 

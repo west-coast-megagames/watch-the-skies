@@ -30,6 +30,7 @@ class App extends Component {
     user: {},
     teams: [],
     aircrafts: [],
+    sites: [],
     accounts: [],
     megabucks: 0,
     team: {
@@ -71,9 +72,9 @@ class App extends Component {
 
     // Axios call to server for all teams
     async getTeams () {
-
+      let { data: sites } = await axios.get(`${gameServer}api/sites`)
       let { data: teams } = await axios.get(`${gameServer}api/team`);
-      this.setState({ teams })
+      this.setState({ teams, sites })
     }
 
     async getNews () {
@@ -172,6 +173,7 @@ class App extends Component {
             user={ this.state.user }
             teams={ this.state.teams }
             team={ this.state.team }
+            sites={ this.state.sites }
             articles={ this.state.articles }
             accounts={ this.state.accounts }
             handleUpdate={ this.updateAccounts }
