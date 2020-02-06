@@ -15,16 +15,21 @@ class Science extends Component {
         super();
         this.state = {
           tab: 'dashboard',
-          allKnowledge : []
+          allKnowledge : [],
+          fundingCost: [],
+          techCost: []
         };
         this.handleSelect = this.handleSelect.bind(this);
     }
 
     async loadScience() {
         const {data: rawData} = await Axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        const { data } = await Axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
+        let techCost = data.techCost;
+        let fundingCost = data.fundingCost;
         const allKnowledge = this.removeDuplicates(rawData, 'name');
         console.log('DUPREMOVE=', allKnowledge);
-        this.setState({ allKnowledge });
+        this.setState({ allKnowledge, techCost, fundingCost });
     }
 
     getActive(element) {

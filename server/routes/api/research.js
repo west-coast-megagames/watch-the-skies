@@ -3,7 +3,7 @@ const express = require('express');
 
 const { loadTech } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
-const research = require('../../wts/research/research')
+const science = require('../../wts/research/research');
 
 const router = express.Router();
 
@@ -20,6 +20,18 @@ router.get('/', async function (req, res) {
     routeDebugger('Showing all completed research...');
     let research = await Research.find();
     res.json(research);
+});
+
+// @route   GET api/research/sciStats
+// @Desc    Get global science state
+// @access  Public
+router.get('/sciState', async function (req, res) {
+    routeDebugger('Sending server science state...');
+    let state = {
+        fundingCost: science.fundingCost,
+        techCost: science.techCost
+    };
+    res.status(200).json(state);
 });
 
 // @route   POST api/research/tech
@@ -79,9 +91,12 @@ router.patch('/load/knowledge/seed', async function (req, res) {
     return res.status(200).send('We did it, such a seed!')
 });
 
+// @route   put api/research/progress
+// @Desc    Puts in a technology for RESEARCH
+// @access  Public
 router.put('/progress', async function (req, res) {
-    let { tech_id, lab_id } = req.body;
-    let progress = await research.calculateProgress(tech_id, lab_id);
+    let { tech_id, funding } = req.body;
+    let progress = await science.calculateProgress(lab_id);
 
     return res.status(200).send(progress);
 });
