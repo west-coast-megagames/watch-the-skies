@@ -26,20 +26,31 @@ async function loadKnowledge () {
 };
 
 async function knowledgeSeed() {
+    await Research.deleteMany({ type: 'Knowledge'})
     let seeded = []
     for (let i = 0; i < 3; i++) {
         let done = false;
         while(done == false) {    
-            let rand = 1 + Math.floor(Math.random() * knowledgeTree.length);
-            let field = knowledgeTree[rand];
-            if (field.level < 3 && seeded[i-1] !== field){
-                seeded[i] = field;
-                done = true;
+            let rand = 1 + Math.floor(Math.random() * (knowledgeTree.length - 1));
+            let seed = knowledgeTree[rand];
+            knowledgeDebugger(`${seed.name} rolled as seed ${i + 1}`);
+            if (seed.level < 3 && seeded[i-1] !== seed){
+                if (seeded.length === 0) {
+                    knowledgeDebugger(`${seed.name} seeded...`)
+                    seeded[i] = seed;
+                    done = true;
+                } else {
+                    seeded.forEach(el => {
+                        if (el.field !== seed.field) {
+                            knowledgeDebugger(`${seed.name} seeded...`)
+                            seeded[i] = seed;
+                            done = true;
+                        }
+                    })
+                }
             }
         }
     }
-
-    console.log(seeded);
 
     seeded.forEach(async (knowledge) => {
         let newKnowledge = await knowledge.seed();
