@@ -22,7 +22,11 @@ const BaseSite = Site.discriminator('BaseSite', new Schema({
   */
   baseDefenses: { type: Boolean, default: false },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
-  facilities: [FacilitySchema]
+  facilities: {
+    labs: { type: Number, default: 1 },
+    Hangers: { type: Number, default: 1 },
+    Factory: { type: Number, default: 1 }
+  }
 }));
 
 function validateBase(baseSite) {
