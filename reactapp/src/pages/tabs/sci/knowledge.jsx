@@ -1,12 +1,60 @@
 import React, { Component } from 'react';
 import { Progress } from 'rsuite';
-import { Table } from 'rsuite';
+import { Table, Icon, IconButton, Divider, Whisper } from 'rsuite';
 
 const { Column, HeaderCell, Cell, Pagination } = Table;
 
 
+const ActionCell = ({ rowData, dataKey, ...props }) => {
+    function handleDrew() {
+      alert(`id:${rowData[dataKey]}`);
+    }
+    return (
+      <Cell {...props} className="link-group">
+        <IconButton
+          appearance="subtle"
+          onClick={handleDrew}
+          icon={<Icon icon="edit2" />}
+        />
+        <Divider vertical />
+        <Whisper>
+          <IconButton appearance="subtle" icon={<Icon icon="more" />} />
+        </Whisper>
+      </Cell>
+    );
+  };
 
-class Knowledge extends Component {
+
+const ImageCell = ({ rowData, dataKey, ...props }) => (
+    <Cell {...props} style={{ padding: 0 }}>
+      <div
+        style={{
+          width: 40,
+          height: 40,
+          background: '#f5f5f5',
+          borderRadius: 20,
+          marginTop: 2,
+          overflow: 'hidden',
+          display: 'inline-block'
+        }}
+      >
+        <img src={rowData[dataKey]} width="44" />
+        <p className="card-text"><Progress.Line percent={30} status='active' /></p>
+      </div>
+    </Cell>
+  );
+
+
+  const ProgressCell = ({ rowData, dataKey, ...props }) => (
+    <Cell {...props} style={{ padding: 0 }}>
+      <div>
+        <Progress.Line percent={25} status='active' />
+      </div>
+    </Cell>
+  );
+  
+  
+  class Labs extends Component {
     state = { 
         lab : ['lab1', 'lab2', 'lab3']
     }
@@ -32,9 +80,35 @@ class Knowledge extends Component {
         <ul>{ names.map(index => (<li key={index}> Unique: {index} </li>))}</ul>
         */
         return ( 
+//            <React.Fragment>
+//                <h5>Active focus: Computer Science I</h5>
+//                <Progress.Line percent={25} status='active' />
+//                <table className="table">
+//                    <thead>
+//                        <tr>
+//                            <th>Knowledge</th>
+//                            <th>Level</th>
+//                            <th>Progress</th>
+//                            <th>Desc</th>
+//                        </tr>
+//                    </thead>
+//                    <tbody>
+//                        {allKnowledge.map(index => (
+//                            <tr>
+//                                <td>{index.field}</td>
+//                                <td>{index.level}</td>
+//                                <td>{index.status.progress}</td>
+//                                <td>{index.desc}</td>
+//                            </tr>
+//                        ))}
+//                    </tbody>
+//                </table>
+//            </React.Fragment>
+
+
+
             <div>
-                <h5>Active focus: Computer Science I</h5>
-                <Progress.Line percent={25} status='active' />
+                
                 <Table
                 height={400}
                 //data={this.state.data}
@@ -43,23 +117,23 @@ class Knowledge extends Component {
                 //    console.log(data);
                 //}}
                 >
-                <Column width={130} align="left" fixed>
-                    <HeaderCell>Field</HeaderCell>
+                <Column width={70} align="center" fixed>
+                    <HeaderCell>Id</HeaderCell>
                     <Cell dataKey="field" />
                 </Column>
         
-                <Column width={50} align="center" fixed>
-                    <HeaderCell>Level</HeaderCell>
+                <Column width={200} fixed>
+                    <HeaderCell>First Name</HeaderCell>
                     <Cell dataKey="level" />
                 </Column>
         
-                <Column width={75} align="center" >
-                    <HeaderCell>Progress</HeaderCell>
+                <Column width={200}>
+                    <HeaderCell>Last Name</HeaderCell>
                     <Cell dataKey="status.progress" />
                 </Column>
         
                 <Column width={200}>
-                    <HeaderCell>Description</HeaderCell>
+                    <HeaderCell>City</HeaderCell>
                     <Cell dataKey="desc" />
                 </Column>
         
@@ -67,7 +141,16 @@ class Knowledge extends Component {
                     <HeaderCell>Street</HeaderCell>
                     <Cell dataKey="field" />
                 </Column>
-
+        
+                <Column width={300}>
+                    <HeaderCell>Company Name</HeaderCell>
+                    <Cell dataKey="field" />
+                </Column>
+        
+                <Column width={300}>
+                    <HeaderCell>Email</HeaderCell>
+                    <Cell dataKey="field" />
+                </Column>
                 <Column width={120} fixed="right">
                     <HeaderCell>Action</HeaderCell>
         
@@ -85,13 +168,18 @@ class Knowledge extends Component {
                     }}
                     </Cell>
                 </Column>
+                <Column width={120} fixed="right">
+            <       HeaderCell>Action</HeaderCell>
+                    <ProgressCell dataKey="id" />
+                </Column>
+
                 </Table>
-            </div>
+            </div> 
         );
     }
 }
 
-export default Knowledge;
+export default Labs;
 
 
 
