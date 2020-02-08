@@ -6,6 +6,7 @@ import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-i
 import KnowledgeCard from '../components/common/knowledgeCard';
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
+import Salvage from '../pages/tabs/sci/salvage';
 import Axios from 'axios';
 import { gameServer } from '../config';
 
@@ -28,7 +29,7 @@ class Science extends Component {
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
         const allKnowledge = this.removeDuplicates(rawData, 'name');
-        console.log('DUPREMOVE=', allKnowledge);
+//        console.log('DUPREMOVE=', allKnowledge);
         this.setState({ allKnowledge, techCost, fundingCost });
     }
 
@@ -44,8 +45,8 @@ class Science extends Component {
         return myArr.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj.name).indexOf(obj[prop]) === pos;
         });
-    }
-
+      }
+      
     render() {
         const url = this.props.match.path;
         const { tab } = this.state; 
@@ -105,8 +106,14 @@ class Science extends Component {
                         </div>
                         </React.Fragment>
                     )}/>
-                    <Route path={`${url}/salvage`}  render={() => (
-                        <h5>The salvage system for the Science Module has not been created!</h5>
+                    <Route path={`${url}/salvage`} render={() => (
+                        <Salvage    
+                        team={ this.props.team }
+                        allKnowledge={this.state.allKnowledge}
+                        //accounts={ this.props.accounts }
+                        //handleUpdate={ this.props.handleUpdate }
+                        //alert={ this.props.alert }
+                        />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
