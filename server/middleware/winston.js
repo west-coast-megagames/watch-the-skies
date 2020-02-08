@@ -2,6 +2,7 @@ const errorDebugger = require('debug')('app:error')
 const winston = require('winston');
 // may need to comment out line below if we have problems with integration testing
 require ('winston-mongodb');
+const dbURI = require('../config/keys').mongoURI;
 
 const { createLogger, format, transports } = winston;
 
@@ -23,16 +24,19 @@ const logger = createLogger({
       //
       new transports.File({ filename: 'prototype-error.log', level: 'error' }),
       new transports.File({ filename: 'prototype-combined.log' }),
-      new transports.MongoDB({ db: 'mongodb+srv://Admin:u8A7WZzz80uLT5we@cluster0-dvbtk.azure.mongodb.net/test?retryWrites=true&w=majority'})
+      new transports.MongoDB({ db: dbURI,
+                               level: 'error'})
     ]
   });
 
-  logger.add(new transports.Console({
-    format: format.combine(
+  if (process.env.NODE_ENV !== 'production') {
+    logger.add(new transports.Console({
+      format: format.combine(
       format.colorize(),
       format.simple()
     )
-  }));
+    }));
+  }
 
   function routeError (err, req, res, next) {
     logger.error(err);
