@@ -7,6 +7,7 @@ import KnowledgeCard from '../components/common/knowledgeCard';
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
 import Salvage from '../pages/tabs/sci/salvage';
+import MySelectPicker from '../pages/tabs/sci/myselectpicker';
 import Axios from 'axios';
 import { gameServer } from '../config';
 
@@ -62,6 +63,7 @@ class Science extends Component {
                     <Nav.Item eventKey="knowledge" to={`${url}/knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
                     <Nav.Item eventKey="applied" to={`${url}/applied`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faVials} />}> Applied Tech</Nav.Item>
                     <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item>
+                    <Nav.Item eventKey="trial" to={`${url}/trial`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Trial</Nav.Item>
                 </Nav>
             </Header>
             <Content style={{ paddingLeft: 20 }}>
@@ -108,6 +110,15 @@ class Science extends Component {
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
+                        team={ this.props.team }
+                        allKnowledge={this.state.allKnowledge}
+                        //accounts={ this.props.accounts }
+                        //handleUpdate={ this.props.handleUpdate }
+                        //alert={ this.props.alert }
+                        />
+                    )}/>
+                    <Route path={`${url}/trial`} render={() => (
+                        <MySelectPicker    
                         team={ this.props.team }
                         allKnowledge={this.state.allKnowledge}
                         //accounts={ this.props.accounts }

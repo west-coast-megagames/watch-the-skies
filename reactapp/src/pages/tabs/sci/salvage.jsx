@@ -102,8 +102,8 @@ class Salvage extends Component {
           toggleComponentClass={Button}
           size="xs"
           placeholder="Default"
-          searchable="false"
-          parentSelectable="true"
+          searchable={false}
+          parentSelectable={true}
           data={myResult}
           style={styles}
         />
