@@ -24,8 +24,8 @@ router.get('/', async function (req, res) {
     let interceptors = await Interceptor.find()
       .sort({team: 1})
       .populate('team', 'name shortName')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('systems', 'name category')
       .populate('base', 'baseName')
     ;
@@ -40,8 +40,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     let interceptor = await Interceptor.findById(id)
       .sort({team: 1})
       .populate('team', 'name shortName')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('systems', 'name category')
       .populate('base', 'baseName')
     ;
@@ -61,9 +61,9 @@ router.post('/', async function (req, res) {
   if (systems.length == 0) {
     await loadSystems();                         // load wts/json/systems.json data into array   
   }
-  let { name, team, location, stats, zoneCode, teamCode, countryCode, baseCode } = req.body;
+  let { name, team, country, zone, site, stats, zoneCode, teamCode, countryCode, baseCode } = req.body;
   const newInterceptor = new Interceptor(
-    { name, team, location, stats }
+    { name, team, country, zone, site, stats }
     );
   let docs = await Interceptor.find({ name })
   if (!docs.length) {
@@ -73,7 +73,7 @@ router.post('/', async function (req, res) {
       if (!zone) {
         console.log("Interceptor Post Zone Error, New Interceptor:", req.body.name, " Zone: ", req.body.zoneCode);
       } else {
-        newInterceptor.location.zone = zone._id;
+        newInterceptor.zone = zone._id;
       }
     }
 
@@ -91,7 +91,8 @@ router.post('/', async function (req, res) {
       if (!country) {
         console.log("Interceptor Post Country Error, New Interceptor:", req.body.name, " Country: ", req.body.countryCode);
       } else {
-        newInterceptor.location.country = country._id;
+        newInterceptor.country = country._id;
+        newInterceptor.zone    = country.zone;
       }
     }
 
@@ -145,8 +146,8 @@ router.post('/', async function (req, res) {
     interceptor = await Interceptor.findById(interceptor._id)
       .populate('team', 'shortName')
       .populate('systems', 'name category')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('base', 'baseName');
 
     updateStats(interceptor._id);
@@ -180,9 +181,9 @@ router.put('/:id', async function (req, res) {
 
   const oldInterceptor = await Interceptor.findById({ _id: req.params.id });
   if (oldInterceptor != null ) {
-    newZone_Id         = oldInterceptor.location.zone;
+    newZone_Id         = oldInterceptor.zone;
     newTeam_Id         = oldInterceptor.team;
-    newCountry_Id      = oldInterceptor.location.country;
+    newCountry_Id      = oldInterceptor.country;
     newAircraftSystems = oldInterceptor.systems;
     newBase_Id         = oldInterceptor.base;
   };
@@ -254,10 +255,8 @@ router.put('/:id', async function (req, res) {
 
   let interceptor = await Interceptor.findOneAndUpdate({ _id: req.params.id }, 
     { name,
-      location: {
-        zone: newZone_Id,
-        country: newCountry_Id
-      },
+      zone: newZone_Id,
+      country: newCountry_Id,
       team: newTeam_Id,
       base: newBase_Id,
       systems: newAircraftSystems
@@ -269,8 +268,8 @@ router.put('/:id', async function (req, res) {
     interceptor = await Interceptor.findById(interceptor._id)
       .populate('team', 'shortName')
       .populate('systems', 'name category')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('base', 'baseName');
 
     res.status(200).json(interceptor);

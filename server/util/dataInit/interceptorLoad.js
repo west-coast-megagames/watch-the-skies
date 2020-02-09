@@ -114,23 +114,23 @@ async function loadInterceptor(iData){
           }
         }      
 
-        if (iData.location.zone != ""){
-          let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
+        if (iData.zone != ""){
+          let zone = await Zone.findOne({ zoneCode: iData.zone });  
           if (!zone) {
-            interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.location.zone);
+            interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.zone);
           } else {
-            interceptor.location.zone = zone._id;
-            interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
+            interceptor.zone = zone._id;
+            interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.zone, "Zone ID:", zone._id);
           }      
         }
 
-        if (iData.location.country != ""){
-          let country = await Country.findOne({ code: iData.location.country });  
+        if (iData.country != ""){
+          let country = await Country.findOne({ code: iData.country });  
           if (!country) {
-            interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.location.country);
+            interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.country);
           } else {
-            interceptor.location.country = country._id;
-            interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
+            interceptor.country = country._id;
+            interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
           }      
         }
 
@@ -199,23 +199,23 @@ async function loadInterceptor(iData){
         }
       }      
 
-      if (iData.location.zone != ""){
-        let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
+      if (iData.zone != ""){
+        let zone = await Zone.findOne({ zoneCode: iData.zone });  
         if (!zone) {
-          interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.location.zone);
+          interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.zone);
         } else {
-          interceptor.location.zone = zone._id;
-          interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
+          interceptor.zone = zone._id;
+          interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.zone, "Zone ID:", zone._id);
         }      
       }
 
-      if (iData.location.country != ""){
-        let country = await Country.findOne({ code: iData.location.country });  
+      if (iData.country != ""){
+        let country = await Country.findOne({ code: iData.country });  
         if (!country) {
-          interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.location.country);
+          interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.country);
         } else {
-          interceptor.location.country = country._id;
-          interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
+          interceptor.country = country._id;
+          interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
         }      
       }
 

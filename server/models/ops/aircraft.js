@@ -6,12 +6,10 @@ const Joi = require('joi');
 const AircraftSchema = new Schema({
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
-  mission: { type: String },
-  location: { 
-    zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
-    country: { type: Schema.Types.ObjectId, ref: 'Country'},
-    site: { type: Schema.Types.ObjectId, ref: 'Site' }
-  },
+  mission: { type: String }, 
+  zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+  country: { type: Schema.Types.ObjectId, ref: 'Country'},
+  site: { type: Schema.Types.ObjectId, ref: 'Site' },
   base: { type: Schema.Types.ObjectId, ref: 'Site'},
   status: {
     damaged: { type: Boolean, default: false },
@@ -78,8 +76,8 @@ async function getAircrafts() {
   let aircrafts = await Aircraft.find()
     .sort({team: 1})
     .populate('team', 'name shortName')
-    .populate('location.zone', 'zoneName')
-    .populate('location.country', 'name')
+    .populate('zone', 'zoneName')
+    .populate('country', 'name')
     .populate('systems', 'name category');
   return aircrafts;
 };

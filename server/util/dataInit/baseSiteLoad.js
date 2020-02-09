@@ -98,6 +98,7 @@ async function loadBase(iData){
             baseSiteLoadDebugger("BaseSite Load Country Error, New Base:", iData.name, " Country: ", iData.parentCode1);
           } else {
             baseSite.country = country._id;
+            baseSite.zone    = country.zone;
             baseSiteLoadDebugger("BaseSite Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
           }      
         }
@@ -131,6 +132,7 @@ async function loadBase(iData){
           baseSiteLoadDebugger("BaseSite Load Country Error, Update Base:", iData.name, " Country: ", iData.parentCode1);
         } else {
           baseSite.country = country._id;
+          baseSite.zone    = country.zone;
           baseSiteLoadDebugger("BaseSite Load Country Found, Update Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
       }
