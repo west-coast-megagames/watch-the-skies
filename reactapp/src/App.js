@@ -138,7 +138,6 @@ class App extends Component {
 
     handleArtHide = (article) => {
       let articles = this.state.articles;
-      let index = 0;
       console.log('in hide');
 
       /*if(article.agency === 'BNC') {

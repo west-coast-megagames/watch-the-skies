@@ -71,7 +71,7 @@ class Interception extends Component {
             show={ this.state.isDeploying }
             handleChange={ this.handleChange }
             interceptor={ this.state.interceptor }
-            contact={this.state.contact}
+            target={this.state.contact}
             alert={ this.props.alert } 
           /> : null }
       </React.Fragment>
@@ -98,6 +98,7 @@ class Interception extends Component {
   } 
 
   deployInterceptors = async (context, contact, interceptor) =>{
+    console.log(`Deploying ${contact}`)
     this.toggleDeploy();
 
     if ( context === 'cancel' ){
@@ -106,7 +107,7 @@ class Interception extends Component {
         interceptor: undefined
       });
       return;
-    } else if ( context === 'deploying' ){
+    } else if ( context === 'deploy' ){
       this.setState({
         contact
       });
