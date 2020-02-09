@@ -6,7 +6,9 @@ function interceptLogging (finalReport, attacker, defender) {
     let atkLog = {
         team: attacker.team,
         position: 'Offense',
-        location: { country: defender.location.country },
+        country: defender.country,
+        zone: defender.zone,
+        site: defender.site,
         report: finalReport.atkReport,
         unit: attacker._id,
         opponent: defender._id,
@@ -30,7 +32,9 @@ function interceptLogging (finalReport, attacker, defender) {
     let defLog = {
         team: defender.team,
         position: 'Defense',
-        location: { country: defender.location.country },
+        country: defender.country,
+        zone: defender.zone,
+        site: defender.site,
         report: finalReport.defReport,
         unit: defender._id,
         opponent: attacker._id,

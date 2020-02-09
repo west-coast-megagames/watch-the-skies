@@ -20,6 +20,7 @@ const BaseSchema = new Schema({
   baseDefenses: { type: Boolean, default: false },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   country: { type: Schema.Types.ObjectId, ref: 'Country'},
+  zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
   facilities: [FacilitySchema]
 });
 

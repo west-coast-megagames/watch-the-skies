@@ -18,7 +18,10 @@ router.put('/', async (req, res) => {
     target = await Interceptor.findById(target).populate('systems');
 
     result = `${aircraft.name} launching.`;
-    aircraft.location = target.location;
+    aircraft.country = target.country;
+    aircraft.zone    = target.zone;
+    aircraft.site    = target.site;
+
 
     aircraft = await aircraft.launch(aircraft, mission); // Changes attacker status
     result = `${result} ${aircraft.name} en route to attempt ${mission.toLowerCase()}.`;

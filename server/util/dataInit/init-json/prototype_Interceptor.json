@@ -2,11 +2,9 @@
     "_ID": 0,
     "name": "Inter US Alpha",
     "type": "Interceptor",
-    "location": {
-        "zone": "North American", 
-        "country": "USA", 
-        "poi": "New York"
-    },
+    "zone": "NA", 
+    "country": "USA", 
+    "poi": "New York",
     "status": {
         "Ready": true,
         "Damaged": false,

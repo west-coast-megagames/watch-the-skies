@@ -164,14 +164,14 @@ router.post('/build', async function (req, res) {
     }
     
     let newInterceptor = new Interceptor(aircraft);
-    newInterceptor.location.country = newCountry_Id;
-    newInterceptor.location.zone    = newZone_Id;
+    newInterceptor.country = newCountry_Id;
+    newInterceptor.zone    = newZone_Id;
     newInterceptor = await newInterceptor.save();
     newInterceptor = await Interceptor.findById(newInterceptor._id)
       .populate('team', 'shortName')
       .populate('systems', 'name category')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('base', 'baseName');
     await updateStats(newInterceptor._id);
     

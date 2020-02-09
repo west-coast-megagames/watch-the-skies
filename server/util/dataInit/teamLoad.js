@@ -4,6 +4,8 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initTeams.json'
 const teamDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const teamLoadDebugger = require('debug')('app:teamLoad');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -50,7 +52,9 @@ async function initLoad(doLoad) {
 
       if (teamDataIn[i].loadFlag == "true") {
         await loadTeam(teamDataIn[i]);
+        /* no longer need to set shortName as it is no longer stored in the country collection 
         await setCountryShortName(teamDataIn[i]);      // team short name now defined ... set team.name in country
+        */
       }
     }
   }
@@ -85,7 +89,7 @@ async function loadTeam(tData){
         //team.accounts = tData.accounts;   ... moved to it's own load
 
         await team.save((err, team) => {
-          if (err) return console.error(`New Team Save Error: ${err}`);
+          if (err) return logger.error(`New Team Save Error: ${err}`);
           //teamLoadDebugger(team.name, " add saved to teams collection.", "type: ", team.teamType);
           teamLoadDebugger(`${team.name} add saved to teams collection. type: ${team.teamType}`);
         });
@@ -110,7 +114,7 @@ async function loadTeam(tData){
        }
    
        await team.save((err, team) => {
-       if (err) return console.error(`Team Update Save Error: ${err}`);
+       if (err) return logger.error(`Team Update Save Error: ${err}`);
        teamLoadDebugger(team.name, " update saved to teams collection.", "type: ", team.teamType);
 
        });
@@ -159,16 +163,18 @@ async function setCountryShortName(tData){
 
   try {   
     // Loop through Countrys with team code and populate
-    for await (const country of Country.find(loadTeamCode == tData.code)) {
+    
+    //for await (const country of Country.find({"loadTeamCode": tData.code })) {
+      for await (const country of Country.find({ loadTeamCode: tData.code})) {
       let updId = country.id;  
       try {
         const countryUpd = await Country.findByIdAndUpdate({ _id: updId }).populate('team', 'name shortName');
       } catch (err) {
-        console.log(`Error in setCountryShortName 1: ${err.message}`);
+        logger.error(`Error in setCountryShortName 1: ${err.message}`);
       }
     }
   }catch (err) {
-    console.log(`Error In setCountryShortName 2: ${err.message}`);
+    logger.error(`Error In setCountryShortName 2: ${err.message}`);
   }
 };
 

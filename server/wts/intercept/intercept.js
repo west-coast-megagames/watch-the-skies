@@ -72,10 +72,10 @@ async function resolveMissions () {
         count++ // Count iteration for each interception
         interceptDebugger(`Mission #${count} - Intercept Mission`)
         let stance = 'passive' // Targets stance for interception defaults to 'passive'
-        let aircraft = await Aircraft.findById(interception.aircraft).populate('location.country', 'name').populate('systems');
+        let aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems');
         let target = await Aircraft.findById(interception.target).populate('systems');
         interceptDebugger(`${aircraft.name} vs. ${target.name}`);
-        let report = `${aircraft.name} is attempting to engaged a contact in ${aircraft.location.country.name} airspace.`;
+        let report = `${aircraft.name} is attempting to engaged a contact in ${aircraft.country.name} airspace.`;
         
         // Check for all escort missions for any that are guarding interception target (Aircraft)
         for (let escort of escortMissions) {
@@ -100,10 +100,10 @@ async function resolveMissions () {
         count++ // Count iteration for each mission
         interceptDebugger(`Mission #${count} - Transport Mission}`);
         let stance = 'passive' // Targets stance for transport defaults to 'passive'
-        let aircraft = await Aircraft.findById(transport.aircraft).populate('location.country', 'name').populate('systems');
+        let aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems');
         let target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
         interceptDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
-        let report = `${aircraft.name} hauled cargo through ${aircraft.location.country.name} airspace, attemting to reach ${target.name}`;
+        let report = `${aircraft.name} hauled cargo through ${aircraft.country.name} airspace, attemting to reach ${target.name}`;
 
         // Check for all patrol missions for any that are guarding transport target (Site)
         for (let patrol of patrolMissions) {

@@ -131,7 +131,7 @@ async function applyDmg(unit) {
     update.status.mission = false;
     update.status.ready = true;
     update.status.deployed = false;
-    // update.location.country = country;
+    // update.country = country;
 
 
     if (unit.stats.hull != unit.stats.hullMax) {

@@ -12,11 +12,6 @@ const SpacecraftSchema = new Schema({
     maxlength: 50,
     enum: ["Satellite", "Interceptor", "Gunship", "Transport", "Hauler", "Decoy"], 
     default: "Interceptor"} ,
-  team: { 
-    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
-    teamCode: { type: String, minlength: 2, maxlength: 3 }
-  },
   stats: {
     hull: { type: Number, default: 2 },
     hullMax: { type: Number, default: 2 },
@@ -24,19 +19,12 @@ const SpacecraftSchema = new Schema({
     passiveRolls: [Number],
     activeRolls: [Number]
   },
-  location: { 
-    zone: { 
-      zoneName: { type: String, default: "UN-Assigned" },
-      zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
-      zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    country: { 
-      countryName: { type: String, default: "UN-Assigned" },
-      country_id: { type: Schema.Types.ObjectId, ref: 'Country'},
-      countryCode: { type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    poi: { type: String }
-  },
+  team: { type: Schema.Types.ObjectId, ref: 'Team'},
+  mission: { type: String }, 
+  zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+  country: { type: Schema.Types.ObjectId, ref: 'Country'},
+  site: { type: Schema.Types.ObjectId, ref: 'Site' },
+  base: { type: Schema.Types.ObjectId, ref: 'Site'},
   status: {
     aggressive: { type: Boolean, default: true },
     passive: { type: Boolean, default: false },

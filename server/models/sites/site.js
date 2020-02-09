@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const SiteSchema = new Schema({
     country: { type: Schema.Types.ObjectId, ref: 'Country'},
+    zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
     siteCode: { type: String, minlength: 2, maxlength: 20, required: true },
     geoDMS: {
       latDMS: { type: String, minlength: 7, maxlength: 12 },     // format DD MM SS.S N or S  example  40 44 55.0 N

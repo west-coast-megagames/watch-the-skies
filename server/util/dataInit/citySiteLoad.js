@@ -85,6 +85,7 @@ async function loadCity(iData){
             citySiteLoadDebugger("CitySite Load Country Error, New City:", iData.name, " Country: ", iData.parentCode1);
           } else {
             citySite.country = country._id;
+            citySite.zone    = country.zone;
             citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
           }      
         }
@@ -130,6 +131,7 @@ async function loadCity(iData){
           citySiteLoadDebugger("CitySite Load Country Error, Update City:", iData.name, " Country: ", iData.parentCode1);
         } else {
           citySite.country = country._id;
+          citySite.zone    = country.zone;
           citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
       }
