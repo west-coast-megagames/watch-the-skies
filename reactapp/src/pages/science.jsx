@@ -118,13 +118,27 @@ class Science extends Component {
                         />
                     )}/>
                     <Route path={`${url}/trial`} render={() => (
-                        <MySelectPicker    
-                        team={ this.props.team }
-                        allKnowledge={this.state.allKnowledge}
-                        //accounts={ this.props.accounts }
-                        //handleUpdate={ this.props.handleUpdate }
-                        //alert={ this.props.alert }
-                        />
+                        <div>
+                            <span>Lab 1: </span>
+                            <MySelectPicker
+                            lab='Lab 1'  
+                            team={ this.props.team }
+                            allKnowledge={this.state.allKnowledge}
+                            //accounts={ this.props.accounts }
+                            //handleUpdate={ this.props.handleUpdate }
+                            alert={ this.props.alert }
+                            />
+                            <hr />
+                            <span>Lab 2: </span>
+                            <MySelectPicker
+                            lab='Lab 2'  
+                            team={ this.props.team }
+                            allKnowledge={this.state.allKnowledge}
+                            //accounts={ this.props.accounts }
+                            //handleUpdate={ this.props.handleUpdate }
+                            alert={ this.props.alert }
+                            />
+                        </div>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>

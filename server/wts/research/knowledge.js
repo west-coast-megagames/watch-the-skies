@@ -28,7 +28,8 @@ async function loadKnowledge () {
 async function knowledgeSeed() {
     await Research.deleteMany({ type: 'Knowledge'})
     let seeded = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 8; i++) {
+        knowledgeDebugger(`Seed count: ${i}`)
         let done = false;
         while(done == false) {    
             let rand = 1 + Math.floor(Math.random() * (knowledgeTree.length - 1));
