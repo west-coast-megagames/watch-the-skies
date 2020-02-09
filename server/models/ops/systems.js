@@ -19,6 +19,11 @@ const SystemSchema = new Schema({
         evade: { type: Number },
         range: { type: Number },
         cargo: { type: Number }
+    },
+    status: {
+        salvage: { type: Boolean },
+        damaged: { type: Boolean },
+        destroyed: { type: Boolean },
     }
 });
 
