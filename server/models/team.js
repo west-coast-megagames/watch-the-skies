@@ -12,6 +12,7 @@ const RoleSchema = new Schema({
 
 //teamType is (N)ational, (A)lien, (M)edia, (C)ontrol
 const TeamSchema = new Schema({
+  model: { type: String, default: 'Team'},
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, minlength: 2, maxlength: 30 },
   teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },

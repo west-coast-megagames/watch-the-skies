@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const ArticleSchema = new Schema({
+  model: { type: String, default: 'Article'},
   agency: { type: String, uppercase: true, required: true },
   timestamp: {
     date: { type: Date, default: Date.now() },

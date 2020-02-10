@@ -5,6 +5,7 @@ const config = require('config');
 const Joi = require('joi');
 
 const UserSchema = new Schema({
+  model: { type: String, default: 'User'},
   username: { type: String, required: true, unique: true, minlength: 5, maxlength: 15 },
   name: {
     first: { type: String, required: true, minlength: 1, maxlength: 25 },

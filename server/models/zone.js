@@ -6,6 +6,7 @@ const zoneDebugger = require('debug')('app:zone');
 const supportsColor = require('supports-color');
 
 const ZoneSchema = new Schema({
+  model: { type: String, default: 'Zone'},
   zoneCode: {type: String, 
              required: true,
              minlength: 2,

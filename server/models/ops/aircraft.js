@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const AircraftSchema = new Schema({
+  model: { type: String, default: 'Aircraft'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   mission: { type: String }, 
