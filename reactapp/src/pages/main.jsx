@@ -15,43 +15,13 @@ import Chat from './chat';
 import News from './news';
 import Registration from './../components/registration';
 
-  const iconStyles = {
-    width: 56,
-    height: 56,
-    lineHeight: '56px',
-    textAlign: 'center'
-  };
-  
-  const NavToggle = ({ login, expand, onChange }) => {
-    return (
-      <Navbar appearance="subtle" className="nav-toggle">
-        <Navbar.Body>
-          <Nav>
-            <Dropdown
-              placement="topStart"
-              trigger="click"
-              renderTitle={children => {
-                return <Icon style={iconStyles} icon="cog" />;
-              }}
-            >
-              <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
-              <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
-              <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
-              { login && (<React.Fragment>
-                <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
-              </React.Fragment>)}
-            </Dropdown>
-          </Nav>
-  
-          <Nav pullRight>
-            <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
-              <Icon icon={expand ? 'angle-left' : 'angle-right'} />
-            </Nav.Item>
-          </Nav>
-        </Navbar.Body>
-      </Navbar>
-    );
-  };
+const iconStyles = {
+  width: 56,
+  height: 56,
+  lineHeight: '56px',
+  textAlign: 'center'
+};
+
   
   class ContentArea extends Component {
     constructor(props) {
@@ -82,7 +52,6 @@ import Registration from './../components/registration';
       const { active } = this.state;
 
       return (
-          
           <Container>
             <Sidebar
               style={{ display: 'flex', flexDirection: 'column' }}
@@ -102,7 +71,7 @@ import Registration from './../components/registration';
                     <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
                     <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
                     <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
-                    <Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>
+                    {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                     <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                     <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   </Nav>
@@ -184,6 +153,38 @@ import Registration from './../components/registration';
         );
     }
 }
+
+// Defines the side/panel taggle navigation
+const NavToggle = ({ login, expand, onChange }) => {
+  return (
+    <Navbar appearance="subtle" className="nav-toggle">
+      <Navbar.Body>
+        <Nav>
+          <Dropdown
+            placement="topStart"
+            trigger="click"
+            renderTitle={children => {
+              return <Icon style={iconStyles} icon="cog" />;
+            }}
+          >
+            <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
+            <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
+            <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
+            { login && (<React.Fragment>
+              <Dropdown.Item to="/404" componentClass={NavLink}>Sign out</Dropdown.Item>
+            </React.Fragment>)}
+          </Dropdown>
+        </Nav>
+
+        <Nav pullRight>
+          <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
+            <Icon icon={expand ? 'angle-left' : 'angle-right'} />
+          </Nav.Item>
+        </Nav>
+      </Navbar.Body>
+    </Navbar>
+  );
+};
       
 
 export default ContentArea;
