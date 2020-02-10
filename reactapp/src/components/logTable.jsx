@@ -47,7 +47,7 @@ class InterceptorLogs extends Component {
     }
 
     // getDamage = (log) => {
-    //     let location = aircraft.location.poi !== undefined ? aircraft.location.poi : aircraft.location.country.countryName;
+    //     let location = aircraft.site !== undefined ? aircraft.site.name : aircraft.country.name;
     //     return location;
     // }
 
@@ -84,7 +84,7 @@ class InterceptorLogs extends Component {
                                         <tr key={ log._id }>
                                             <td>{ log.logType }</td>
                                             <td>{ log.timestamp.turn }</td>
-                                            <td>{ log.location.country.name }</td>
+                                            <td>{ log.country.name }</td>
                                             <td>{ Math.round(log.atkStats.damage.frameDmg / this.props.interceptor.stats.hullMax * 100) }%</td>
                                             <td>{ log.defStats.damage.frameDmg >= 3 ? 'Severe' : log.defStats.damage.frameDmg >= 1 ? 'Moderate' : 'None' }</td>
                                             <td><button type="aar" value="aar" className="btn btn-warning" onClick={this.open}>Report</button></td>

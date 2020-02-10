@@ -65,7 +65,7 @@ class Contacts extends Component {
                     </Column>
 
                     <Column flexGrow={2}>
-                        <HeaderCell>Location</HeaderCell>
+                        <HeaderCell>Mission Location</HeaderCell>
                         <Cell dataKey="location" />
                     </Column>
                     <Column width={150} fixed="right">
@@ -100,10 +100,18 @@ class Contacts extends Component {
             id: '1',
             type: `category`,
             labelName: `High Orbit Contacts`,
-            status: this.props.contacts.length !== 0 ? `${this.props.contacts.length} Contacts` : 'No Contacts',
+            status: this.props.contacts.length !== 0 ? `${this.props.contacts.length} contacts` : 'No contacts',
             info: `Advanced high orbit contacts...`,
             children: this.props.contacts.map(el => {
-                return { id:el._id, labelName:el.name, status:'Unknown', type:el.type, location:el.location.country.name, target: el, deploy: this.props.deployInterceptors };
+                return {
+                    id:el._id,
+                    labelName:el.name,
+                    status:'Unknown',
+                    type:el.type,
+                    location:el.country.name,
+                    target: el,
+                    deploy: this.props.deployInterceptors
+                };
             })
         },
         {

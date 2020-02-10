@@ -9,13 +9,13 @@ class InterceptorInfo extends Component {
   }
 
   render() {
-    let { stats, name, zone, country, type } = this.props.interceptor;
+    let { stats, name, zone, country, type } = this.props.aircraft;
     
     return (
         <Drawer
           size='md'
           show={this.props.show}
-          onHide={this.props.close}
+          onHide={() => this.props.onClick('cancel', null)}
         >
           <Drawer.Header>
             <Drawer.Title>Aircraft Information</Drawer.Title>
@@ -29,18 +29,18 @@ class InterceptorInfo extends Component {
             <p><b>Evade Rating:</b> n/a</p>
             <h4>Systems</h4>
             <ul>
-              {this.props.interceptor.systems.map(system => (
-                <li>{system.name} | {system.category}</li>
+              {this.props.aircraft.systems.map(system => (
+                <li key={system._id}>{system.name} | {system.category}</li>
               ))}
             </ul>
             <InterceptorLogs
-              interceptor={ this.props.interceptor }
+              interceptor={ this.props.aircraft }
               alert={ this.props.alert }
             />
           </Drawer.Body>
           <Drawer.Footer>
-            <Button onClick={this.props.close} appearance="primary">Confirm</Button>
-            <Button onClick={this.props.close} appearance="subtle">Cancel</Button>
+            <Button onClick={() => this.props.onClick('cancel', null)} appearance="primary">Confirm</Button>
+            <Button onClick={() => this.props.onClick('cancel', null)} appearance="subtle">Cancel</Button>
           </Drawer.Footer>
         </Drawer>
     );
