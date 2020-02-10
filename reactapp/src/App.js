@@ -41,8 +41,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.getTeams(); //Get all teams in DB and store to state
-    this.getNews(); //Get all news in DB and store to state
+    this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
     teamEvents.teamUpdate((err, team) => {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
@@ -70,93 +69,91 @@ class App extends Component {
     }
   }
 
-    // Axios call to server for all teams
-    async getTeams () {
-      let { data: sites } = await axios.get(`${gameServer}api/sites`)
-      let { data: teams } = await axios.get(`${gameServer}api/team`);
-      this.setState({ teams, sites })
-    }
+  async loadState () {
+    let { data: sites } = await axios.get(`${gameServer}api/sites`); // Axios call to server for all sites
+    let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
+    let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`); //Axios call to server for all teams
+    let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
+    this.setState({ teams, sites, aircrafts, articles })
+  }
 
-    async getNews () {
-      //let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
-      //let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
-      let { data: articles } = await axios.get(`${gameServer}api/news/articles`);
-
-
-      this.setState({ articles });
-    }
+  async getNews () {
+    //let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
+    //let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
+    let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
+    this.setState({ articles });
+  }
   
-    updateTeam = async (team) => {
-      if (team.id !== undefined) {
-        console.log(`${team.name} Updating...`);
-        teamEvents.updateTeam(team._id);
-      };
+  updateTeam = async (team) => {
+    if (team.id !== undefined) {
+      console.log(`${team.name} Updating...`);
+      teamEvents.updateTeam(team._id);
     };
-  
-    updateAccounts = async (team) => {
-      console.log(`${team.name} Accounts update...`);
-      let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team": team._id });
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
-      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-      let megabucks = 0;
-      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-      this.setState({ accounts, megabucks })
+  };
+
+  updateAccounts = async (team) => {
+    console.log(`${team.name} Accounts update...`);
+    let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team": team._id });
+    this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
+    let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+    let megabucks = 0;
+    accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+    this.setState({ accounts, megabucks })
+  }
+
+  updateAircrafts = async () => {
+    let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`);
+    this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
+    this.setState({ aircrafts })
+  }
+
+  handleLogin = async () => {
+    const jwt = localStorage.getItem('token');
+    const user = jwtDecode(jwt);
+    this.setState({ user, login: true })
+    console.log(`${user.username} logged in...`);
+    if (user.team) {
+      this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
+      this.setState({ team: user.team });
     }
-  
-    updateAircrafts = async () => {
-      let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`);
-      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
-      this.setState({ aircrafts })
+
+  }
+
+  deleteAlert = alertId => {
+    const alerts = this.state.alerts.filter(a => a.id !== alertId);
+    this.setState({ alerts });
+  };
+
+  addAlert = async (alert) => {
+    let alerts = this.state.alerts
+    console.log(`ID: ${idCount}`)
+    alert.id = idCount++;;
+    alerts.push(alert);
+    setTimeout(() => this.deleteAlert(alert.id), 5000)
+    this.setState({ alerts });
+  };
+
+  handleArtHide = (article) => {
+    let articles = this.state.articles;
+    console.log('in hide');
+
+    /*if(article.agency === 'BNC') {
+        console.log(article.agency);
+        index = artBnc.indexOf(article._id);
+        artBnc.splice(index,1);
     }
-  
-    handleLogin = async () => {
-      const jwt = localStorage.getItem('token');
-      const user = jwtDecode(jwt);
-      this.setState({ user, login: true })
-      console.log(`${user.username} logged in...`);
-      if (user.team) {
-        this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
-        this.setState({ team: user.team });
-        this.updateAircrafts();
-      }
-
+    else if(article.agency === 'GNN') {
+        artGnn.splice(artGnn.indexOf(article._id),1);
     }
-  
-    deleteAlert = alertId => {
-      const alerts = this.state.alerts.filter(a => a.id !== alertId);
-      this.setState({ alerts });
-    };
-  
-    addAlert = async (alert) => {
-      let alerts = this.state.alerts
-      console.log(`ID: ${idCount}`)
-      alert.id = idCount++;;
-      alerts.push(alert);
-      setTimeout(() => this.deleteAlert(alert.id), 5000)
-      this.setState({ alerts });
-    };
+    else {
+        artPr.splice(artPr.indexOf(article._id),1);
+    }*/
 
-    handleArtHide = (article) => {
-      let articles = this.state.articles;
-      console.log('in hide');
+    //let news = {}
+    articles.splice(articles.indexOf(article._id),1);
 
-      /*if(article.agency === 'BNC') {
-          console.log(article.agency);
-          index = artBnc.indexOf(article._id);
-          artBnc.splice(index,1);
-      }
-      else if(article.agency === 'GNN') {
-          artGnn.splice(artGnn.indexOf(article._id),1);
-      }
-      else {
-          artPr.splice(artPr.indexOf(article._id),1);
-      }*/
-
-      //let news = {}
-      articles.splice(articles.indexOf(article._id),1);
-
-      this.setState({articles});
-    }
+    this.setState({articles});
+  }
 
   render() {
     return(
