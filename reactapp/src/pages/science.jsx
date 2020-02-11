@@ -3,15 +3,12 @@ import { Nav, Container, Header, Content, Icon, Progress } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
-import KnowledgeCard from '../components/common/knowledgeCard';
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
 import Salvage from '../pages/tabs/sci/salvage';
 import MySelectPicker from '../pages/tabs/sci/myselectpicker';
-import Axios from 'axios';
+import axios from 'axios';
 import { gameServer } from '../config';
-
-
 class Science extends Component {
     constructor() {
         super();
@@ -24,14 +21,18 @@ class Science extends Component {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
+    componentDidMount() {
+        this.loadScience();
+    }
+
     async loadScience() {
-        const {data: rawData} = await Axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
-        const { data } = await Axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
+        // const {data: rawData} = await axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        const { data } = await axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
-        const allKnowledge = this.removeDuplicates(rawData, 'name');
-//        console.log('DUPREMOVE=', allKnowledge);
-        this.setState({ allKnowledge, techCost, fundingCost });
+        // const allKnowledge = this.removeDuplicates(rawData, 'name');
+        // console.log('DUPREMOVE=', allKnowledge);
+        this.setState({ techCost, fundingCost });
     }
 
     getActive(element) {
@@ -69,13 +70,12 @@ class Science extends Component {
             <Content style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        //<h5>No dashboard has been coded for the Science Module!</h5>
-                        <button onClick = {() => {this.loadScience()}} >LOAD SCIENCE</button>
+                        <h5>No dashboard has been coded for the Science Module!</h5>
                     )}/>
                     <Route path={`${url}/research`}  render={() => (
                         <Labs    
                             team={ this.props.team }
-                            allKnowledge={this.state.allKnowledge}
+                            allKnowledge={this.props.research}
                             //accounts={ this.props.accounts }
                             //handleUpdate={ this.props.handleUpdate }
                             //alert={ this.props.alert }
@@ -84,34 +84,19 @@ class Science extends Component {
                     <Route path={`${url}/knowledge`} render={() => (
                         <Knowledge    
                         team={ this.props.team }
-                        allKnowledge={this.state.allKnowledge}
+                        allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
                         //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/applied`}  render={() => (
-                        <React.Fragment>
-                        <div className="card-group">
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                        </div>
-                        <div className="card-group">
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                        </div>
-                        </React.Fragment>
+                        <h5>Nothing Exists here yet...</h5>
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
                         team={ this.props.team }
-                        allKnowledge={this.state.allKnowledge}
+                        allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
                         //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
@@ -123,7 +108,7 @@ class Science extends Component {
                             <MySelectPicker
                             lab='Lab 1'  
                             team={ this.props.team }
-                            allKnowledge={this.state.allKnowledge}
+                            allKnowledge={this.props.research}
                             //accounts={ this.props.accounts }
                             //handleUpdate={ this.props.handleUpdate }
                             alert={ this.props.alert }
@@ -133,7 +118,7 @@ class Science extends Component {
                             <MySelectPicker
                             lab='Lab 2'  
                             team={ this.props.team }
-                            allKnowledge={this.state.allKnowledge}
+                            allKnowledge={this.props.research}
                             //accounts={ this.props.accounts }
                             //handleUpdate={ this.props.handleUpdate }
                             alert={ this.props.alert }

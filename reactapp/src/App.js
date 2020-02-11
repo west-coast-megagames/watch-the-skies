@@ -37,7 +37,8 @@ class App extends Component {
       name: "Select Team"
     },
     alerts: [],
-    articles: []
+    articles: [],
+    research: []
   }
 
   componentDidMount() {
@@ -74,7 +75,8 @@ class App extends Component {
     let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
     let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`); //Axios call to server for all teams
     let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
-    this.setState({ teams, sites, aircrafts, articles })
+    const {data: research} = await axios.get(`${gameServer}api/research`);  // Axios call to server for all research
+    this.setState({ teams, sites, aircrafts, articles, research })
   }
 
   async getNews () {
@@ -171,6 +173,7 @@ class App extends Component {
             team={ this.state.team }
             sites={ this.state.sites }
             articles={ this.state.articles }
+            research={ this.state.research }
             accounts={ this.state.accounts }
             handleUpdate={ this.updateAccounts }
             aircrafts={ this.state.aircrafts }

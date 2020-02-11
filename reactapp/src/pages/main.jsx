@@ -116,6 +116,7 @@ const iconStyles = {
                           sites={ this.props.sites }
                           team ={ this.props.team }
                           alert={ this.props.addAlert }
+                          research={ this.props.research }
                       />
                     )}/>
                     <Route path="/dip" render={(props) => (

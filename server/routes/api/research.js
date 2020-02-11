@@ -18,7 +18,7 @@ const Research = require('../../models/sci/research')
 // @access  Public
 router.get('/', async function (req, res) {
     routeDebugger('Showing all completed research...');
-    let research = await Research.find();
+    let research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
     res.json(research);
 });
 
