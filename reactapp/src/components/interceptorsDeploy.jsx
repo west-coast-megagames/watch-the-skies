@@ -11,7 +11,6 @@ let missions = [
   { value: "Recon", label: "Recon | Gather info about target site or aircraft", aircraft: true, site: true},
   { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true}
 ]
-
 class InterceptorDeployForm extends Component {
 
   state = {
@@ -22,7 +21,7 @@ class InterceptorDeployForm extends Component {
   }
 
   render() {
-    if (this.state.target.type === 'site') {
+    if (this.state.target.model === 'Site') {
       missions = missions.filter(mission => mission.site === true)
     } else {
       missions = missions.filter(mission => mission.aircraft === true)

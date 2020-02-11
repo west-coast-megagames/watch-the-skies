@@ -13,6 +13,7 @@ const { Interceptor } = require('../../models/ops/interceptor');
 router.put('/', async (req, res) => {
     let result = ''
     let { aircraft, target, mission } = req.body;
+    routeDebugger(req.body)
 
     aircraft = await Interceptor.findById(aircraft).populate('systems');
     target = await Interceptor.findById(target).populate('systems');

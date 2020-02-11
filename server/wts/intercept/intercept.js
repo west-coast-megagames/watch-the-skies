@@ -80,17 +80,17 @@ async function resolveMissions () {
         // Check for all escort missions for any that are guarding interception target (Aircraft)
         for (let escort of escortMissions) {
             interceptDebugger('Checking escort missions...')
-            if (interception.target.toHexString() === escort.target.toHexString()) {
+            if (interception.target.toHexString() === escort.target.toHexString()) { // toHexString allows checking equality for _id
                 interceptDebugger('Escort engaging!')
                 target = await Aircraft.findById(escort.aircraft).populate('systems');
                 escortMissions.splice(escortMissions.indexOf(escort), 1);
                 stance = 'aggresive'
-                report = `${report} Contact seems to have an escort, escort is breaking off to engage ${target.name}.`
+                report = `${report} Contact seems to have an escort, escort is breaking off to engage ${aircraft.name}.`
             }
         };
 
         interceptDebugger(`${aircraft.name} is engaging ${target.name}.`);
-        report = `${report} ${attacker.name} engaged ${defender.type}.`;
+        report = `${report} ${aircraft.name} engaged ${target.type}.`;
         intercept(aircraft, 'aggresive', target, stance, report);
     };
     interceptions = [];
@@ -108,7 +108,7 @@ async function resolveMissions () {
         // Check for all patrol missions for any that are guarding transport target (Site)
         for (let patrol of patrolMissions) {
             interceptDebugger('Checking patrol missions...')
-            if (transport.target.toHexString() === patrol.target.toHexString()) {
+            if (transport.target.toHexString() === patrol.target.toHexString()) { // toHexString allows checking equality for _id
                 interceptDebugger('Patrol engaging!')
                 target = await Aircraft.findById(patrol.aircraft).populate('systems');
                 patrolMissions.splice(patrolMissions.indexOf(patrol), 1);
@@ -139,7 +139,7 @@ async function intercept (attacker, atkStance, defender, defStance, report) {
     let defResult = await outcome(defender, defRoll, defStance); // Puts the attacker through the results table returning results data | outcome.js
 
     let interceptReport = await interceptDmg(attacker, defender, atkResult, defResult); // Calculates damage and applies it | damage.js
-    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport}`
+    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport}` 
     interceptReport.defReport = `${defReport} ${interceptReport.defReport}`
     interceptLogging(interceptReport, attacker, defender); // Creates the final intercept logs for both teams | report.js
     interceptDebugger(`Atk After Action Report - ${atkReport} ${interceptReport.atkReport}`);
