@@ -59,7 +59,7 @@ class LiginForm extends Component {
                 title: 'Login Successful',
                 body: `Logged in... welcome ${this.state.account.login}!`})
             localStorage.setItem('token', jwt);
-            this.props.login()
+            this.props.login();
             this.props.close();
         } catch (err) {
             console.log(`Error: ${err}`)

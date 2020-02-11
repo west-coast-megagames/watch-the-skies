@@ -7,6 +7,7 @@ import axios from 'axios';
 
 // Components
 import NavBar from './components/navBar';
+import Registration from './components/registration';
 import MainContainer from './pages/main';
 import Toast from './components/toast'
 
@@ -33,9 +34,7 @@ class App extends Component {
     sites: [],
     accounts: [],
     megabucks: 0,
-    team: {
-      name: "Select Team"
-    },
+    team: null,
     alerts: [],
     articles: [],
     research: []
@@ -47,7 +46,6 @@ class App extends Component {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
       }
-
     });
 
     currentAircrafts((err, aircrafts) => {
@@ -62,12 +60,6 @@ class App extends Component {
     //   accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
     //   this.setState({ accounts, megabucks })
     // });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.team !== this.state.team && this.state.team.name !== 'Updating...') {
-        this.updateAccounts(this.state.team);
-    }
   }
 
   async loadState () {
@@ -117,8 +109,13 @@ class App extends Component {
     if (user.team) {
       this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
       this.setState({ team: user.team });
+      this.updateAccounts(this.state.team);
     }
+    
+  }
 
+  handleSignout = () => {
+    this.setState({ team: null })
   }
 
   deleteAlert = alertId => {
@@ -158,6 +155,13 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.team === null) {
+      return(
+        <Registration
+        addAlert={ this.addAlert }
+        handleLogin={ this.handleLogin }/>
+      )
+    }
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
@@ -179,6 +183,7 @@ class App extends Component {
             aircrafts={ this.state.aircrafts }
             addAlert={ this.addAlert }
             handleLogin={ this.handleLogin }
+            handleSignout={ this.handleSignout }
             updateAccounts={ this.updateAccounts }
             handleArtHide={this.handleArtHide}
           />

@@ -42,8 +42,8 @@ class Registration extends Component {
         let title = register === false ? 'User Login' : 'User Registration';
         return (
           <div>
-            <Modal show={this.state.show} onHide={this.close} size="xs">
-                <Modal.Header>
+            <Modal show={this.state.show} size="xs">
+                <Modal.Header closeButton={false}>
                     <Modal.Title>{ title }</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
