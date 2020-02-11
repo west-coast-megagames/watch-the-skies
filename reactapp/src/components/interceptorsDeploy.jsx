@@ -17,15 +17,17 @@ class InterceptorDeployForm extends Component {
     ships: [],
     interceptor: undefined,
     target: this.props.target,
-    missions: missions
+    siteMissions: [],
+    airMissions: []
+  }
+
+  componentDidMount() {
+      let siteMissions = missions.filter(mission => mission.site === true)
+      let airMissions = missions.filter(mission => mission.aircraft === true)
+      this.setState({ siteMissions, airMissions });
   }
 
   render() {
-    if (this.state.target.model === 'Site') {
-      missions = missions.filter(mission => mission.site === true)
-    } else {
-      missions = missions.filter(mission => mission.aircraft === true)
-    }
     return(
       <Drawer
         size='md'
@@ -44,7 +46,7 @@ class InterceptorDeployForm extends Component {
                         <option key={ship._id} value={ship._id}>{ ship.name } ( { ship.country.name } | { 100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100) }% damage)</option>
                     ))}
                   </select>
-                  <InputPicker placeholder="Mission Selection" data={missions} value={this.state.mission} onChange={value => (this.setState({ mission: value }))}block />
+                  <InputPicker placeholder="Mission Selection" data={this.state.target.model === 'Site' ? this.state.siteMissions : this.state.airMissions} value={this.state.mission} onChange={value => (this.setState({ mission: value }))}block />
               </div>
             </form>
         </Drawer.Body>
