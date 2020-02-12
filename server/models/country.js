@@ -36,7 +36,7 @@ const CountrySchema = new Schema({
     type: Boolean,
     default: false
   },
-  borderedBy: [ { country: { type: Schema.Types.ObjectId, ref: 'Country'} } ]
+  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}]
 });
 
 CountrySchema.methods.validateCountry = function (country) {
