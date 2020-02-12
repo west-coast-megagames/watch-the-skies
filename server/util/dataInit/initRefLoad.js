@@ -66,7 +66,8 @@ async function initLoad(doLoad) {
       await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       
       if (refDataIn[i].loadFlag === "true") {
-        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2, refDataIn[i].refNumber1);
+        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, 
+                  refDataIn[i].parentCode2, refDataIn[i].refNumber1, refDataIn[i].refBoolean1);
       }
     }
   };
@@ -223,7 +224,7 @@ async function deleteTeam(tName, tCode, tLoadFlg){
   }
 };
 
-async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
+async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest, cCoastal){
   
   try {   
 
@@ -237,7 +238,8 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
           name: cName,
           unrest: cUnrest,
           loadTeamCode: tCode,
-          loadZoneCode: zCode
+          loadZoneCode: zCode,
+          coastal:  cCoastal
       }); 
 
       let zone = await Zone.findOne({ zoneCode: zCode });  
@@ -286,6 +288,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
         country.unrest       = cUnrest;
         country.loadTeamCode = tCode;
         country.loadZoneCode = zCode;
+        country.coastal      = cCoastal;
 
         let zone = await Zone.findOne({ zoneCode: zCode });  
         if (!zone) {

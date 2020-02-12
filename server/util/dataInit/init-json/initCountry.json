@@ -1,0 +1,26 @@
+[
+{"loadType": "country", 
+ "code": "CA",
+ "name": "Canada",
+ "borderedBY": [ {"code": "US" } ],
+ "coastal": true
+},
+{"loadType": "country", 
+ "code": "US",
+ "name": "United States",
+ "borderedBY": [ {"code": "CA" },
+               {"code": "MX"} ],
+ "coastal": true
+},
+{"loadType": "country", 
+ "code": "TD",
+ "name": "Chad", 
+ "borderedBY": [ {"code": "NE"},
+               {"code": "NG"},
+               {"code": "SD"},
+               {"code": "LY"},
+               {"code": "CM"},
+               {"code": "CF"}],
+ "coastal": false
+}
+]
