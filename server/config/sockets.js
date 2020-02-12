@@ -115,7 +115,7 @@ module.exports = function (io){
       eventListner.emit('updateAircrafts');
     });
 
-    eventListner.on('updateAccounts', async () => {
+    nexusEvent.on('updateAccounts', async () => {
       let accounts = await Account.find();
       socketDebugger('Sending Accounts!');
       client.emit('updateAccounts', accounts);
