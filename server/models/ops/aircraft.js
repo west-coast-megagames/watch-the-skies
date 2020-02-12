@@ -7,7 +7,6 @@ const AircraftSchema = new Schema({
   model: { type: String, default: 'Aircraft'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
-  mission: { type: String }, 
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
   country: { type: Schema.Types.ObjectId, ref: 'Country'},
   site: { type: Schema.Types.ObjectId, ref: 'Site' },
@@ -19,6 +18,7 @@ const AircraftSchema = new Schema({
     ready: { type: Boolean, default: true },
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
+    mission: { type: String }
   }
 });
 
