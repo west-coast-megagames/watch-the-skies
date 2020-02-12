@@ -30,7 +30,8 @@ class TransferForm extends Component {
         if (id === 'from') {
             let accountIndex = this.props.accounts.findIndex((account => account._id === value));
             let account = this.props.accounts[accountIndex];
-            this.setState({ account });
+            let amount = 0;
+            this.setState({ account, amount });
         }
         
         console.log(`Input Value: ${value}`);
@@ -41,7 +42,7 @@ class TransferForm extends Component {
     };
 
     handleAmount = (value) => {
-        if (value < 0 || this.state.account.balance === undefined || this.state.account.balance < 0) {
+        if (value < 0 || this.state.account === undefined || this.state.account.balance < 0) {
             value = 0;
         } else if (value > this.state.account.balance) {
             value = this.state.account.balance;
@@ -67,7 +68,7 @@ class TransferForm extends Component {
 
     render() {
         let accounts = this.props.accounts;
-        let max = this.state.account.balance !== undefined ? this.state.account.balance : 0;
+        let max = this.state.account !== undefined ? this.state.account.balance : 0;
         
         if (this.props.accounts.length <= 0)
         return <h4>No accounts available for transfer, select a team to use the application!</h4>

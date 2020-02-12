@@ -23,7 +23,6 @@ class Registration extends Component {
 
     close() {
         this.setState({ show: false });
-        this.props.history.push('/home');
     };
 
     open() {

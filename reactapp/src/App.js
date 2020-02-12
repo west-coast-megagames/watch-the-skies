@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts } from './api'
+import { teamEvents, currentAircrafts, updateAccounts } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -15,7 +15,7 @@ import Toast from './components/toast'
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
 import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css';
-//import 'rsuite/dist/styles/rsuite-dark.css';
+// import 'rsuite/dist/styles/rsuite-dark.css';
 import './App.css';
 
 
@@ -53,13 +53,14 @@ class App extends Component {
       this.setState({ aircrafts })
     });
 
-    // updateAccounts((err, accounts) => {
-    //   accounts = accounts.filter(a => a.team === this.state.team._id);
-    //   let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-    //   let megabucks = 0;
-    //   accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-    //   this.setState({ accounts, megabucks })
-    // });
+    updateAccounts((err, accounts) => {
+      accounts = accounts.filter(a => a.team === this.state.team._id);
+      let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
+      let megabucks = 0;
+      accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
+      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
+      this.setState({ accounts, megabucks })
+    });
   }
 
   async loadState () {
