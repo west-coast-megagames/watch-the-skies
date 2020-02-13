@@ -15,18 +15,18 @@ const FacilitySchema = new Schema({
 });
 
 const BaseSite = Site.discriminator('BaseSite', new Schema({
-  siteType: { type: String, default: 'Base' },
-  baseName: { type: String, required: true, minlength: 2, maxlength: 50 },
+  type: { type: String, default: 'Base' },
+  name: { type: String, required: true, minlength: 2, maxlength: 50 },
   /* should not have both a baseCode and siteCode 
   baseCode: { type: String, minlength: 2, maxlength: 50, default: "undefined"} ,
   */
-  baseDefenses: { type: Boolean, default: false },
-  team: { type: Schema.Types.ObjectId, ref: 'Team'},
+  defenses: { type: Boolean, default: false },
   facilities: {
     labs: { type: Number, default: 1 },
     Hangers: { type: Number, default: 1 },
     Factory: { type: Number, default: 1 }
-  }
+  },
+  public: { type: Boolean, default: false }
 }));
 
 function validateBase(baseSite) {
