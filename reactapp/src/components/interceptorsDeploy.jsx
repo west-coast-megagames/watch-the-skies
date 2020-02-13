@@ -8,7 +8,8 @@ let missions = [
   { value: "Escort", label: "Escort | Protect target aircraft" , aircraft: true, site: false},
   { value: "Patrol", label: "Patrol | Protect target site", aircraft: false, site: true},
   { value: "Transport", label: "Transport | Take cargo to/from target site", aircraft: false, site: true},
-  { value: "Recon", label: "Recon | Gather info about target site or aircraft", aircraft: true, site: true},
+  { value: "Recon Aircraft", label: "Recon | Gather info about target aircraft", aircraft: true, site: false},
+  { value: "Recon Site", label: "Recon | Gather info about target site", aircraft: false, site: true},
   { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true}
 ]
 class InterceptorDeployForm extends Component {

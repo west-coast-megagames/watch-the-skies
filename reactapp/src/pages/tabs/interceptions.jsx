@@ -29,7 +29,7 @@ class Interception extends Component {
     }
   }
 
-  componentDidUnmount() {
+  componentWillUnmount() {
     clearInterval(this.radarSweep);
   };
 

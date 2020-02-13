@@ -113,5 +113,28 @@
 "longDecimal": -2.52550,
 "parentCode1" : "GB",
 "parentCode2" : "TUK"
-}
+},
+{"loadType": "baseSite",
+ "name" : "FFG Base Alpha",
+ "code" : "FFGBA",
+ "baseDefenses" : false,
+ "facilities" :  [
+     { "type" : "engineeringBay", "name" : "Engineering A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+     { "type" : "constructionBay", "name" : "Construct A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+     { "type" : "lab", "name" : "Lab A", "bays" :  {"inUse" : false, "unitID" : "undefined"}},
+     { "type" : "hangar" , "name" : "Hangar A", "bays" : [
+            {"inUse": true, "unitID" : "undefined" },
+            {"inUse" : true, "unitID" : "undefined"},
+            {"inUse" : true, "unitID" : "undefined"},
+            {"inUse" : false, "unitID" : "undefined"},
+            {"inUse" : false, "unitID" : "undefined"} ]
+        }
+    ],
+    "latDMS": "81 35 54.7 S",
+    "longDMS": "064 21 13.7 E",
+    "latDecimal": -81.59853,
+    "longDecimal": 64.35380,
+    "parentCode1" : "AQ",
+    "parentCode2" : "FFG"
+    }
 ]

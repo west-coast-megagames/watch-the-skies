@@ -30,17 +30,17 @@ class Client {
 let connections = [];
 let msgKey = 0;
 
-Team.watch().on('change', data => {
-  socketDebugger(data);
-});
+// Team.watch().on('change', data => {
+//   socketDebugger(data);
+// });
 
-Account.watch().on('change', async data => {
-  socketDebugger(data);
-  let id = data.documentKey._id;
-  let account = await Account.findById(id);
-  let team = await Team.findById(account.team_id);
-  eventListner.emit('updateAccounts', team);
-});
+// Account.watch().on('change', async data => {
+//   socketDebugger(data);
+//   let id = data.documentKey._id;
+//   let account = await Account.findById(id);
+//   let team = await Team.findById(account.team_id);
+//   eventListner.emit('updateAccounts', team);
+// });
 
 
   /*

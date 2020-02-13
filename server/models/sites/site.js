@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const SiteSchema = new Schema({
     model: { type: String, default: 'Site'},
+    team: { type: Schema.Types.ObjectId, ref: 'Salvage'},
     country: { type: Schema.Types.ObjectId, ref: 'Country'},
     zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
     siteCode: { type: String, minlength: 2, maxlength: 20, required: true },
@@ -21,7 +22,7 @@ let Site = mongoose.model('Site', SiteSchema);
 
 SiteSchema.methods.validateBase = function (baseSite) {
   const schema = {
-    baseName: Joi.string().min(2).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     siteCode: Joi.string().min(2).max(20).required()
   };
 

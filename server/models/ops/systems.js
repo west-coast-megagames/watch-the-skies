@@ -10,6 +10,8 @@ const SystemSchema = new Schema({
     ],
     category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util', 'Chassis' ] },
     desc: { type: String },
+    owner: { type: Schema.Types.ObjectId, ref: 'Team'},
+    creator: { type: Schema.Types.ObjectId, ref: 'Team'},
     stats: {
         hullMax: { type: Number },
         attack: { type: Number },
@@ -21,9 +23,8 @@ const SystemSchema = new Schema({
         cargo: { type: Number }
     },
     status: {
-        salvage: { type: Boolean },
-        damaged: { type: Boolean },
-        destroyed: { type: Boolean },
+        salvage: { type: Boolean, default: false },
+        damaged: { type: Boolean, default: false },
     }
 });
 

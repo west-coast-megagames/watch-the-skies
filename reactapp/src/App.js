@@ -42,11 +42,11 @@ class App extends Component {
 
   componentDidMount() {
     this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
-    teamEvents.teamUpdate((err, team) => {
-      if(this.state.team.name !== "Select Team") {
-        this.setState({ team });
-      }
-    });
+    // teamEvents.teamUpdate((err, team) => {
+    //   if(this.state.team.name !== "Select Team") {
+    //     this.setState({ team });
+    //   }
+    // });
 
     currentAircrafts((err, aircrafts) => {
       console.log('Reciving aircrafts...')

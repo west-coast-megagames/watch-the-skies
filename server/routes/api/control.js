@@ -71,6 +71,7 @@ router.patch('/resethull', async function (req, res) {
         await interceptor.save();
     }
     res.send("Interceptors succesfully reset!");
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/control/loadSystems
