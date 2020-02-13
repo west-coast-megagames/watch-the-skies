@@ -14,6 +14,7 @@ const mongoOptions =  {
 
 module.exports = function () {
     // Connect to MongoDB with Mongoose
+    mongoose.set('useUnifiedTopology', true);
     mongoose.connect(dbURI, mongoOptions)
     .then(() => logger.info(`MongoDB Connected to ${config.get('dbName')}...`));
 }

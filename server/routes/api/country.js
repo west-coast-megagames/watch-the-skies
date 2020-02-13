@@ -16,7 +16,8 @@ router.get('/', async (req, res) => {
   try {
     let countrys = await Country.find().sort('code: 1')
       .populate('team', 'name shortName')
-      .populate('zone', 'zoneName');
+      .populate('zone', 'zoneName')
+      .populate('borderedBy', 'name');
     res.json(countrys);
   } catch (err) {
     console.log('Error:', err.message);
@@ -33,7 +34,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     try {
         const country = await Country.findById(id)
           .populate('team', 'name shortName')
-          .populate('zone', 'zoneName');
+          .populate('zone', 'zoneName')
+          .populate('borderedBy', 'name');
         if (country != null) {
           res.json(country);
         } else {
@@ -53,7 +55,8 @@ router.get('/code/:code', async (req, res) => {
   try {
     let country = await Country.find({ code })
       .populate('team', 'name shortName')
-      .populate('zone', 'zoneName');
+      .populate('zone', 'zoneName')
+      .populate('borderedBy', 'name');
     if (country.length) {
       res.json(country);
     } else {
