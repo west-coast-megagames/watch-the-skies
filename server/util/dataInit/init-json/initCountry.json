@@ -2,8 +2,7 @@
 {"loadType": "country", 
  "code": "US",
  "name": "United States",
- "borderedBY": [ {"code": "CA" },
-               {"code": "MX"} ],
+ "borderedBy": [ {"code": "CA" }, {"code": "MX"} ],
  "coastal": true
 },
 {"loadType": "country", 
