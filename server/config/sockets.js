@@ -50,12 +50,6 @@ let msgKey = 0;
   */
 
 module.exports = function (io){
-  nexusEvent.on('updateAircrafts', async () => {
-    let aircrafts = await getAircrafts();
-    socketDebugger('Sending Aircrafts!');
-    io.emit('currentAircrafts', aircrafts);
-  });
-
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
     connections.push(client);
@@ -81,6 +75,12 @@ module.exports = function (io){
       socketDebugger(`${client.id} requested updated team information for ${team_id}`);
       let team = await getTeam(team_id);
       client.emit('teamUpdate', team);
+    });
+
+    nexusEvent.on('updateAircrafts', async () => {
+      let aircrafts = await getAircrafts();
+      socketDebugger('Sending Aircrafts!');
+      io.emit('currentAircrafts', aircrafts);
     });
 
     client.on('pauseGame', () => {

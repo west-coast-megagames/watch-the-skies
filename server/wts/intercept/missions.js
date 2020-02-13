@@ -94,7 +94,7 @@ async function runInterceptions () {
         
         missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
         atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
-        intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
+        await intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
     };
     return 0;
 }
@@ -119,7 +119,7 @@ async function runTransports () {
         }
     }
     
-    return 0;
+    return;
 }
 
 // Iterate over all remaining Recon missions
@@ -142,7 +142,7 @@ async function runRecon() {
             
                 missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
                 atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
-                intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
+                await intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
 
                 return 0;
             }
@@ -169,7 +169,7 @@ async function checkPatrol(target, atkReport, aircraft) {
             patrolMissions.splice(patrolMissions.indexOf(patrol), 1);
             atkReport = `${atkReport} patrol sited over target site, being engaged by ${target.type}.`;
             let defReport = `${target.name} breaking off from patrol to engage ${aircraft.type}.`
-            intercept(aircraft, 'passive', atkReport, target, 'aggresive', defReport);
+            await intercept(aircraft, 'passive', atkReport, target, 'aggresive', defReport);
             return 'intercepted';
         };
     };

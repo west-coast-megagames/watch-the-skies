@@ -22,6 +22,8 @@ async function intercept (attacker, atkStance, atkReport, defender, defStance, d
     interceptLogging(interceptReport, attacker, defender); // Creates the final intercept logs for both teams | report.js
     interceptDebugger(`Atk After Action Report - ${atkReport} ${interceptReport.atkReport}`);
     interceptDebugger(`Def After Action Report - ${defReport} ${interceptReport.defReport}`);
+
+    return;
 };
 
 module.exports = { intercept };
