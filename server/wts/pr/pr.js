@@ -1,5 +1,6 @@
 const { d8 } = require('../../util/systems/dice');
 const prDebugging = require('debug')('app:prSystem');
+const nexusEvent = require('../../startup/events');
 const { deposit } = require('../banking/banking');
 
 async function updatePR() {
@@ -23,8 +24,10 @@ async function updatePR() {
                 team = await team.save();
                 prDebugging(`${team.shortName} has PR Level of ${team.prLevel}`);
                 prDebugging(account);
+                
             }
         };
+        nexusEvent.emit('updateAccounts');
     } catch (err) {
         prDebugging('Error:', err.message);
     };
