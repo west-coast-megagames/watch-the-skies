@@ -22,7 +22,7 @@ let Site = mongoose.model('Site', SiteSchema);
 
 SiteSchema.methods.validateBase = function (baseSite) {
   const schema = {
-    baseName: Joi.string().min(2).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     siteCode: Joi.string().min(2).max(20).required()
   };
 

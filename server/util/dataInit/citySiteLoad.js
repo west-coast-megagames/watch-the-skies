@@ -57,11 +57,11 @@ async function initLoad(doLoad) {
 
 async function loadCity(iData){
   try {   
-    let citySite = await CitySite.findOne( { cityName: iData.name } );
+    let citySite = await CitySite.findOne( { name: iData.name } );
     if (!citySite) {
        // New City here
        let citySite = new CitySite({ 
-           cityName: iData.name,
+           name: iData.name,
            siteCode: iData.code,
            geoDMS: { 
              latDMS: iData.latDMS,
@@ -102,13 +102,13 @@ async function loadCity(iData){
 
         await citySite.save((err, citySite) => {
           if (err) return console.error(`New CitySite Save Error: ${err}`);
-          citySiteLoadDebugger(citySite.cityName + " add saved to citySite collection.");
+          citySiteLoadDebugger(citySite.name + " add saved to citySite collection.");
         });
     } else {       
       // Existing City here ... update
       let id = citySite._id;
       
-      citySite.cityName               = iData.name;
+      citySite.name               = iData.name;
       citySite.siteCode               = iData.code;
       citySite.geoDMS.latDMS          = iData.latDMS;
       citySite.geoDMS.longDMS         = iData.longDMS;
@@ -144,7 +144,7 @@ async function loadCity(iData){
    
       await citySite.save((err, citySite) => {
       if (err) return console.error(`City Update Save Error: ${err}`);
-      citySiteLoadDebugger(citySite.cityName + " update saved to city collection.");
+      citySiteLoadDebugger(citySite.name + " update saved to city collection.");
       });
     }
   } catch (err) {

@@ -57,11 +57,11 @@ async function initLoad(doLoad) {
 
 async function loadBase(iData){
   try {   
-    let baseSite = await BaseSite.findOne( { baseName: iData.name } );
+    let baseSite = await BaseSite.findOne( { name: iData.name } );
     if (!baseSite) {
        // New Base here
        let baseSite = new BaseSite({ 
-           baseName: iData.name,
+           name: iData.name,
            siteCode: iData.code,
            geoDMS: { 
             latDMS: iData.latDMS,
@@ -105,13 +105,13 @@ async function loadBase(iData){
         
         await baseSite.save((err, baseSite) => {
           if (err) return console.error(`New BaseSite Save Error: ${err}`);
-          baseSiteLoadDebugger(baseSite.baseName + " add saved to baseSite collection.");
+          baseSiteLoadDebugger(baseSite.name + " add saved to baseSite collection.");
         });
     } else {       
       // Existing Base here ... update
       let id = baseSite._id;
       
-      baseSite.baseName     = iData.name;
+      baseSite.name     = iData.name;
       baseSite.siteCode     = iData.code;
       baseSite.facilities   = iData.facilities;
       baseSite.baseDefenses = iData.baseDefenses;
@@ -145,7 +145,7 @@ async function loadBase(iData){
    
       await baseSite.save((err, baseSite) => {
       if (err) return console.error(`Base Update Save Error: ${err}`);
-      baseSiteLoadDebugger(baseSite.baseName + " update saved to base collection.");
+      baseSiteLoadDebugger(baseSite.name + " update saved to base collection.");
       });
     }
   } catch (err) {
