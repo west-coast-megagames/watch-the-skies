@@ -8,7 +8,8 @@ import { Container, Header, Content, Footer, Sidebar, SelectPicker } from 'rsuit
 class Budget extends Component {
     state = {
         account: undefined,
-        account_id: null
+        account_id: null,
+        transactions: [{id: 1}, {id: 2}]
     }
 
     componentDidMount() {
@@ -29,8 +30,8 @@ class Budget extends Component {
         return (
             <Container className="budget-tab">
                 <Header className="transfers">
-                    <TransferForm {...this.props}
-                    />
+                    {this.state.transactions.map(el => (<TransferForm key={el.id} {...this.props}
+                    />))}
                 </Header>
                 <Container className="transfers">
                     <Sidebar>
