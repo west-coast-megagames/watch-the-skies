@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const SiteSchema = new Schema({
     model: { type: String, default: 'Site'},
-    team: { type: Schema.Types.ObjectId, ref: 'Salvage'},
+    team: { type: Schema.Types.ObjectId, ref: 'Team'},
     country: { type: Schema.Types.ObjectId, ref: 'Country'},
     zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
     siteCode: { type: String, minlength: 2, maxlength: 20, required: true },
