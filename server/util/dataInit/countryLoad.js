@@ -56,7 +56,7 @@ async function initLoad(doLoad) {
 
 async function loadCountry(cData){
   try {   
-    logger.debug("Jeff here in loadCountry ... Code", cData.code, "name ", cData.name);
+    //logger.debug("Jeff here in loadCountry ... Code", cData.code, "name ", cData.name);
     //console.log("Jeff here in loadCountry ... Code", cData.code, "name ", cData.name);
     
     let country = await Country.findOne( { code: cData.code } );
