@@ -82,6 +82,15 @@ router.patch('/loadSystems', async function (req, res) {
     res.status(200).send(response);
 });
 
+// @route   GET api/control/salvage
+// @desc    Sends all systems marked for salvage
+// @access  Public
+router.get('/salvage', async function (req, res) {
+  let response = await System.find({'status.salvage': true});
+  res.status(200).send(response);
+});
+
+
 // @route   POST api/control/build
 // @desc    Builds the thing!
 // @access  Public
