@@ -49,7 +49,7 @@ class App extends Component {
     // });
 
     currentAircrafts((err, aircrafts) => {
-      console.log('Reciving aircrafts...')
+      this.addAlert({type: 'success', title: 'Accounts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
       this.setState({ aircrafts })
     });
 
