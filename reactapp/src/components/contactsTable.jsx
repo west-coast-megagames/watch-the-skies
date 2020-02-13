@@ -131,7 +131,7 @@ class Contacts extends Component {
             children: this.props.bases.map(el => {
                 return {
                     id:el._id,
-                    labelName:el.baseName,
+                    labelName:el.name,
                     status:'Unknown',
                     type:el.type,
                     info: `Base owned and operated by ${el.team.name}`,
@@ -149,7 +149,7 @@ class Contacts extends Component {
             children: this.props.cities.map(el => {
                 return {
                     id:el._id,
-                    labelName:el.cityName,
+                    labelName:el.name,
                     status:'Unknown',
                     type:el.type,
                     info: `...information about city?`,
