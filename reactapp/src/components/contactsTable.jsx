@@ -26,6 +26,8 @@ class Contacts extends Component {
     render() {
         console.log(`Render: Count ${this.props.contacts.length}`);
         const { length: count } = this.props.contacts;
+        const { account } = this.props
+        const disabled = account.balance < 1;
 
         if (count === 0)
             return <h4>No radar contacts decending from or flying in high orbit</h4>
@@ -81,6 +83,7 @@ class Contacts extends Component {
                                     <Button 
                                         color='yellow'
                                         size='sm'
+                                        disabled={disabled}
                                         onClick={handleAction}> Engage </Button>
                                     <span> | </span> 
                                     <Button color='blue' size='sm' onClick={handleAction}> Info </Button>

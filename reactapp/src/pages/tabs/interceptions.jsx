@@ -41,6 +41,7 @@ class Interception extends Component {
             contacts={this.state.contacts}
             bases={this.state.bases}
             cities={this.state.cities}
+            account={this.props.account}
           />
           <hr />
           <Interceptors

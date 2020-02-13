@@ -97,6 +97,7 @@ class ContentArea extends Component {
                   <Route path="/ops" render={(props) => (
                     <Operations {...props}
                       team={ this.props.team }
+                      accounts={ this.props.accounts }
                       aircrafts={ this.props.aircrafts }
                       sites={this.props.sites}
                       alert={ this.props.addAlert } 
