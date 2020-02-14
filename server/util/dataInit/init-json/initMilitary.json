@@ -1,0 +1,2139 @@
+[{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 1",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 2",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 3",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 4",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 5",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 6",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 7",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 8",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 9",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 10",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 11",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "UK Modern Attack Sub Fleet 1",
+    "team" : "TUK",
+    "zone" : "EU",
+    "country" : "GB",
+    "site" : "site",
+    "base" : "GBBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Modern Sub FLeet"},
+        {"vehicles" : "Vehicle Modern Sub Fleet"},
+        {"transport" : "Transport Modern Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 1",
+    "team" : "RFD",
+    "zone" : "EU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 2",
+    "team" : "RFD",
+    "zone" : "EU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 3",
+    "team" : "RFD",
+    "zone" : "EU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub FLeet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 1",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "JP",
+    "site" : "site",
+    "base" : "JPBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 2",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "JP",
+    "site" : "site",
+    "base" : "JPBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 3",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "JP",
+    "site" : "site",
+    "base" : "JPBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 1",
+    "team" : "IDN",
+    "zone" : "AU",
+    "country" : "IN",
+    "site" : "site",
+    "base" : "INBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 2",
+    "team" : "IDN",
+    "zone" : "AU",
+    "country" : "IN",
+    "site" : "site",
+    "base" : "INBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 3",
+    "team" : "IDN",
+    "zone" : "AU",
+    "country" : "IN",
+    "site" : "site",
+    "base" : "INBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 3",
+    "team" : "TFR",
+    "zone" : "EU",
+    "country" : "FR",
+    "site" : "site",
+    "base" : "FRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Small Modern Attack Sub Fleet 1",
+    "team" : "TFR",
+    "zone" : "EU",
+    "country" : "FR",
+    "site" : "site",
+    "base" : "FRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Small Modern Sub Fleet"},
+        {"vehicles" : "Vehicle Small Modern Sub Fleet"},
+        {"transport" : "Transport Small Modern Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Attack Sub Fleet 1",
+    "team" : "EPT",
+    "zone" : "AS",
+    "country" : "EG",
+    "site" : "site",
+    "base" : "FRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 1",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 2",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 3",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 4",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 5",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 6",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Attack Sub Fleet 1",
+    "team" : "BZL",
+    "zone" : "SA",
+    "country" : "BZ",
+    "site" : "site",
+    "base" : "BZBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Australia Attack Sub Fleet 1",
+    "team" : "AUS",
+    "zone" : "AU",
+    "country" : "AU",
+    "site" : "site",
+    "base" : "AUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Sub Fleet"},
+        {"vehicles" : "Vehicle Sub Fleet"},
+        {"transport" : "Transport Sub Fleet"}
+    ],
+    "training" : "Training Sub Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 1",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 2",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 3",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 4",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "UK Surface Fleet 1",
+    "team" : "TUK",
+    "zone" : "EU",
+    "country" : "GB",
+    "site" : "site",
+    "base" : "GBBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Russia Surface Fleet 1",
+    "team" : "RFD",
+    "zone" : "EU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 1",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 2",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 3",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 4",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 5",
+    "team" : "JPN",
+    "zone" : "AU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Iran Surface Fleet 1",
+    "team" : "IRN",
+    "zone" : "AS",
+    "country" : "IR",
+    "site" : "site",
+    "base" : "IRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Surface Fleet 1",
+    "team" : "IND",
+    "zone" : "AU",
+    "country" : "IN",
+    "site" : "site",
+    "base" : "INBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "France Surface Fleet 1",
+    "team" : "TFR",
+    "zone" : "EU",
+    "country" : "FR",
+    "site" : "site",
+    "base" : "FRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Surface Fleet 1",
+    "team" : "EPT",
+    "zone" : "AS",
+    "country" : "EG",
+    "site" : "site",
+    "base" : "EGBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 1",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 2",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 3",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 4",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 5",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Australia Surface Fleet 1",
+    "team" : "AUS",
+    "zone" : "AU",
+    "country" : "AU",
+    "site" : "site",
+    "base" : "AUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Surface Fleet"},
+        {"vehicles" : "Vehicle Surface Fleet"},
+        {"transport" : "Transport Surface Fleet"}
+    ],
+    "training" : "Training Surface Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 4},
+        {"defense" : 3},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 1",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 2",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 3",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 4",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 5",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "UK Carrier Fleet 1",
+    "team" : "TUK",
+    "zone" : "EU",
+    "country" : "GB",
+    "site" : "site",
+    "base" : "GBBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Russia Carrier Fleet 1",
+    "team" : "RFD",
+    "zone" : "EU",
+    "country" : "RU",
+    "site" : "site",
+    "base" : "RUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "India Carrier Fleet 1",
+    "team" : "IND",
+    "zone" : "AU",
+    "country" : "AU",
+    "site" : "site",
+    "base" : "AUBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "France Carrier Fleet 1",
+    "team" : "TFR",
+    "zone" : "EU",
+    "country" : "FR",
+    "site" : "site",
+    "base" : "FRBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 1",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 2",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 3",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 4",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 5",
+    "team" : "PRC",
+    "zone" : "AU",
+    "country" : "CN",
+    "site" : "site",
+    "base" : "CNBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Carrier Fleet 1",
+    "team" : "BZL",
+    "zone" : "SA",
+    "country" : "BZ",
+    "site" : "site",
+    "base" : "BZBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Carrier Fleet"},
+        {"vehicles" : "Vehicle Carrier Fleet"},
+        {"transport" : "Transport Carrier Fleet"}
+    ],
+    "training" : "Training Carrier Fleet",
+    "type" : "Fleet",
+    "stats" : [
+        {"health" : 4},
+        {"healthMax" : 4},
+        {"attack" : 5},
+        {"defense" : 4},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+{
+    "model" : "Military",
+    "name" : "USA Marine Corps 1",
+    "team" : "USA",
+    "zone" : "NA",
+    "country" : "US",
+    "site" : "site",
+    "base" : "USBA",
+    "status" : [ 
+        {"damage" : false},
+        {"deployed" : false},
+        {"destroyed" : false},
+        {"repair" : false}
+    ],
+    "equipment" : [
+        {"weapons" : "Weapon Marine Corps"},
+        {"vehicles" : "Vehicle Marine Corps"},
+        {"transport" : "Transport Marine Corps"}
+    ],
+    "training" : "Training Marine Corps",
+    "type" : "Army",
+    "stats" : [
+        {"health" : 2},
+        {"healthMax" : 2},
+        {"attack" : 4},
+        {"defense" : 5},
+        {"localDeploy" : 2},
+        {"globalDeploy" : 5},
+        {"invasion" : 2}
+    ]
+},
+]
