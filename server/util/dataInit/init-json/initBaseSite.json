@@ -151,6 +151,13 @@
         {"inUse" : true, "unitID" : "undefined"},
         {"inUse" : false, "unitID" : "undefined"},
         {"inUse" : false, "unitID" : "undefined"} ]
+    },
+    { "type" : "hangar" , "name" : "Hangar B", "bays" : [
+        {"inUse": true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : true, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"},
+        {"inUse" : false, "unitID" : "undefined"} ]
     }
 ],
 "latDMS": "32 41 10.0 N",
