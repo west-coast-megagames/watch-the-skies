@@ -4,6 +4,8 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initinterceptor
 const interceptorDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const interceptorLoadDebugger = require('debug')('app:interceptorLoad');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -77,15 +79,31 @@ async function loadInterceptor(iData){
         interceptor.stats  = iData.stats;
         interceptor.status = iData.status;
 
+        if (iData.parentCode1 != ""){
+          let team = await Team.findOne({ teamCode: iData.parentCode1 });  
+          if (!team) {
+            interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
+          } else {
+            interceptor.team = team._id;
+            interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          }
+        }      
+
         // create systems records for interceptor and store ID in interceptor.system
+        console.log("jeff interceptor systems  iData.loadout", iData.loadout);
         interceptor.systems = [];
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          console.log("jeff in interceptor systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
             newSystem = await new System(sysRef);
+              
             await newSystem.save(((err, newSystem) => {
-              if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-              //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
+              if (err) {
+                logger.error(`New Interceptor System Save Error: ${err}`);
+                return console.error(`New Interceptor System Save Error: ${err}`);
+              }
+              interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
             }));
 
             interceptor.systems.push(newSystem._id)
@@ -144,6 +162,7 @@ async function loadInterceptor(iData){
             if (systemDel = null) {
               console.log(`The Interceptor System with the ID ${sysId} was not found!`);
             }
+            console.log(`The Interceptor System with the ID ${sysId} was DELETED ... Interceptor validate error!`);
           }      
           return; 
         }
@@ -157,7 +176,7 @@ async function loadInterceptor(iData){
       // Existing Interceptor here ... update
       let id = interceptor._id;
       
-      interceptor.name = iData.name;
+      interceptor.name        = iData.name;
       interceptor.type        = iData.type;
       interceptor.code        = iData.code;
       interceptor.stats       = iData.stats;

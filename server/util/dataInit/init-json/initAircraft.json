@@ -1,0 +1,124 @@
+[{
+"model" : "Aircraft",
+"name" : "USA Air 1",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 2",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 3",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 4",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 3=5",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 6",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]},
+{
+"model" : "Aircraft",
+"name" : "USA Air 7",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "site",
+"base" : "site",
+"status" : [ 
+    {"damaged" : false},
+    {"deployed" : false},
+    {"destroyed" : false},
+    {"ready" : true},
+    {"upgrade" : false},
+    {"repair" : false},
+    {"mission" : "Standby"}
+]}
+
+
+
+    
+]
