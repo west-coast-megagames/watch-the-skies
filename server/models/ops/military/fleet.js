@@ -5,16 +5,14 @@ const Joi = require('joi');
 
 const Fleet = Military.discriminator('Fleet', new Schema({
   type: { type: String, default: 'Fleet'},
-  deploy: {
-      local: 2,
-      global: 5,
-      attack: 2
-  },
   stats: {
     health: { type: Number, default: 4 },
     healthMax: { type: Number, default: 4 },
     attack: { type: Number, default: 0 },
-    defense: { type: Number, default: 2 }
+    defense: { type: Number, default: 2 },
+    localDeploy: { type: Number, default: 2 },
+    globalDeploy: { type: Number, default: 5 },
+    invasion: { type: Number, default: 2 },
   }
 }));
 

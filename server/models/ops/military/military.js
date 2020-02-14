@@ -20,34 +20,35 @@ const MilitarySchema = new Schema({
   equipment: {
     weapons: { type: Schema.Types.ObjectId, ref: 'Equipment' },
     vehicles: { type: Schema.Types.ObjectId, ref: 'Equipment' },
+    transports: { type: Schema.Types.ObjectId, ref: 'Equipment' }
   },
   training: { type: Schema.Types.ObjectId, ref: 'Equipment' }
 });
 
-MilitarySchema.methods.deploy = async (military ,country) => {
+MilitarySchema.methods.deploy = async (unit ,country) => {
   const banking = require('../../../wts/banking/banking');
   const { Account } = require('../../gov/account');
 
   try {
-    modelDebugger(`Deploying ${military.name} to ${country.name} in the ${country.zone.name} zone`);
-    let cost = 0
-    if (military.zone !== country.zone) {
-        cost = 5;
-        military.status.deployed = true;
-    } else if (military.zone === country.zone) {
-        cost = 2;
-        military.status.deployed = true;
+    modelDebugger(`Deploying ${unit.name} to ${country.name} in the ${country.zone.name} zone`);
+    let cost = 0;
+    if (unit.zone !== country.zone) {
+        cost = unit.status.localDeploy;
+        unit.status.deployed = true;
+    } else if (unit.zone === country.zone) {
+        cost = unit.status.globalDeploy;
+        unit.status.deployed = true;
     };
 
-    let account = await Account.findOne({ name: 'Operations', 'team': military.team });
-    account = await banking.withdrawal(account, cost, `Deploying ${military.name} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`);
+    let account = await Account.findOne({ name: 'Operations', 'team': unit.team });
+    account = await banking.withdrawal(account, cost, `Deploying ${unit.name} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`);
 
     modelDebugger(account)
     await account.save();
     await aircraft.save();
-    modelDebugger(`${military.name} deployed...`);
+    modelDebugger(`${unit.name} deployed...`);
 
-    return military;
+    return unit;
 
   } catch (err) {
     modelDebugger('Error:', err.message);
