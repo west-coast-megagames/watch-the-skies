@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Progress } from 'rsuite';
 import { Table, Icon } from 'rsuite';
 
-const { Column, HeaderCell, Cell, Pagination } = Table;
+const { Column, HeaderCell, Cell } = Table;
 
 
 

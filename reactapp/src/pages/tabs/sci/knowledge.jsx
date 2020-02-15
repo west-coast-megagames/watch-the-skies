@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Progress } from 'rsuite';
-import { Table, Icon, IconButton, Divider, Whisper } from 'rsuite';
+import { Table } from 'rsuite';
 
-const { Column, HeaderCell, Cell, Pagination } = Table;
+const { Column, HeaderCell, Cell } = Table;
 
-
+/*
 const ActionCell = ({ rowData, dataKey, ...props }) => {
     function handleDrew() {
       alert(`id:${rowData[dataKey]}`);
@@ -43,7 +43,7 @@ const ImageCell = ({ rowData, dataKey, ...props }) => (
       </div>
     </Cell>
   );
-
+*/
 
   const ProgressCell = ({ rowData, dataKey, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>
@@ -156,13 +156,11 @@ const ImageCell = ({ rowData, dataKey, ...props }) => (
         
                     <Cell>
                     {rowData => {
-                        function handleAction() {
-                        alert(`id:${rowData.id}`);
-                        }
+                        //function handleAction() {
+                        //alert(`id:${rowData.id}`);
+                        //}
                         return (
                         <span>
-                            <a onClick={ () => {this.handleEdit()}}> Edit </a> |{' '}
-                            <a onClick={ () => {this.handleEdit()}}> Remove </a>
                         </span>
                         );
                     }}

@@ -6,10 +6,10 @@ class Salvage extends Component {
   state = { 
   }
   
-  render() { 
+  render() {  
     //console.log('PROPS:', this.props);
     const labResearchTypes = ["Knowledge", "Technology", "Analysis"];   // Types of research that can be studied by Labs (Remove Knowledge after testing)
-    const { allKnowledge, team } = this.props;                    // Prop Objects holding all Knowledge known and team
+    const { allKnowledge } = this.props;                    // Prop Objects holding all Knowledge known and team
     //console.log("ALLKNOWLEDGE=",allKnowledge);
 
     /*------------------------------
@@ -40,7 +40,7 @@ class Salvage extends Component {
     function createCascadeArray (list2Traverse, parentLevel) {
       let cnt = 0;            // counts the number of records at this level
       const newArr = list2Traverse.map(
-        function(val){ 
+      function(val){ 
           cnt += 1;
 
           // If parent is 0, then we are listing categories of Knowledge, Tech, or Analysis
@@ -48,6 +48,7 @@ class Salvage extends Component {
             // create new fields list in childrenList
             const tempList = allKnowledge.map(knowledge => {
               if (knowledge.type === val) { return (knowledge.field) };
+              return (null);
             });
             
             // Make the entries in the chilrenList Array unique
@@ -64,9 +65,8 @@ class Salvage extends Component {
           if (parentLevel===1)  {  
             //create new names list in childrenList
             const tempList = allKnowledge.map(knowledge => {
-              if (knowledge.field === val) {
-                return (knowledge.name)
-              };
+              if (knowledge.field === val) { return (knowledge.name) };
+              return (null);
             });
             const childrenList = [...new Set(tempList)];    // Make the entries in the chilrenList Array unique
             //create new name list in childrenList
@@ -79,6 +79,7 @@ class Salvage extends Component {
             //no children at this level only key and label
             return {id:parentLevel + "." + cnt, label:val}; 
           }
+      return (newArr);
       }) 
       return (newArr);
     };

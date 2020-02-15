@@ -12,24 +12,26 @@ class MySelectPicker extends Component {
     }
   
 	handleChange(value) {
-		  console.log(value)
 		  this.setState({research:value})
 		  this.props.alert({type: 'success', title: 'Research Selected', body: `${this.props.lab} is working on ${value}`})
 	}
 
 	render() {
-		const { allKnowledge, team } = this.props;                    // Prop Objects holding all Knowledge known and team
-		console.log('ALLKNOW=', this.props.allKnowledge);
-		console.log('DATA=', this.state.data);
+		const { allKnowledge } = this.props;                    // Prop Objects holding all Knowledge known and team
+		//console.log('ALLKNOW=', this.props.allKnowledge);
+		const pendSciKnow = allKnowledge.filter(researchItem => (!researchItem.status.completed && researchItem.type==="Knowledge"));
+		//console.log('PENDSCIKNOW=', pendSciKnow);
+		const pendTech = allKnowledge.filter(researchItem => (!researchItem.status.completed && researchItem.type==="Technology"));
+		//console.log('PENDTECH=', pendTech);
 		return (
 			<SelectPicker
 				lab={this.props.lab}
 				value={this.state.research}
 				groupBy='field'
-				valueKey='name'
+				valueKey='_id'
 				labelKey='name'
 				onChange={this.handleChange}
-		  		data={allKnowledge}
+		  		data={ [...pendSciKnow, ...pendTech] }
 		  		style={{ width: 224 }}
 			/>
 	  	);

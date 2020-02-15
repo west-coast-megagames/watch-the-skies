@@ -1,14 +1,14 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon, Progress } from 'rsuite';
+import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
 import Salvage from '../pages/tabs/sci/salvage';
-import MySelectPicker from '../pages/tabs/sci/myselectpicker';
 import axios from 'axios';
 import { gameServer } from '../config';
+import ResearchLabs from './tabs/sci/researchLabs';
 class Science extends Component {
     constructor() {
         super();
@@ -55,7 +55,7 @@ class Science extends Component {
 
         
 
-         return (
+        return (
         <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
@@ -64,7 +64,7 @@ class Science extends Component {
                     <Nav.Item eventKey="knowledge" to={`${url}/knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
                     <Nav.Item eventKey="applied" to={`${url}/applied`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faVials} />}> Applied Tech</Nav.Item>
                     <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item>
-                    <Nav.Item eventKey="trial" to={`${url}/trial`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Trial</Nav.Item>
+                    <Nav.Item eventKey="trial" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Research Labs</Nav.Item>
                 </Nav>
             </Header>
             <Content style={{ paddingLeft: 20 }}>
@@ -102,28 +102,13 @@ class Science extends Component {
                         //alert={ this.props.alert }
                         />
                     )}/>
-                    <Route path={`${url}/trial`} render={() => (
-                        <div>
-                            <span>Lab 1: </span>
-                            <MySelectPicker
-                            lab='Lab 1'  
-                            team={ this.props.team }
-                            allKnowledge={this.props.research}
-                            //accounts={ this.props.accounts }
-                            //handleUpdate={ this.props.handleUpdate }
-                            alert={ this.props.alert }
-                            />
-                            <hr />
-                            <span>Lab 2: </span>
-                            <MySelectPicker
-                            lab='Lab 2'  
-                            team={ this.props.team }
-                            allKnowledge={this.props.research}
-                            //accounts={ this.props.accounts }
-                            //handleUpdate={ this.props.handleUpdate }
-                            alert={ this.props.alert }
-                            />
-                        </div>
+                    <Route path={`${url}/Research Labs`} render={() => (
+                        <ResearchLabs
+                        team={this.props.team}
+                        allKnowledge={this.props.research}
+                        everythingProp={this.props}
+                        alert={this.props.alert}
+                        />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
