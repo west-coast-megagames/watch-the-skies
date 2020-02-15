@@ -104,8 +104,7 @@ class SubNews extends React.Component {
     });
   }
   render() {
-    const { formValue } = this.state;
-    const { body, location, headline, imageSrc  } = this.state.article;
+    const { body, headline, imageSrc  } = this.state.article;
 
 
     const agency = [

@@ -18,6 +18,7 @@ class TerrorMap extends Component {
         <Container style={{ height: "100vh" }}>
             <img
                 src={map}
+                alt='Terror Map'
             />
         </Container>
          );
