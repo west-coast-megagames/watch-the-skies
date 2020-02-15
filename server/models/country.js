@@ -3,34 +3,40 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 const countryDebugger = require('debug')('app:country');
 
-const CountrySchema = new Schema({ 
-    zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
-    loadZoneCode: {type: String, maxlength: 2, uppercase: true },
-    team: { type: Schema.Types.ObjectId, ref: 'Team'},
-    loadTeamCode: { type: String, maxlength: 3 },
-    code: {
-        type: String,
-        required: true,
-        index: true,
-        trim: true,
-        unique: true,
-        minlength: 2,
-        maxlength: 2,
-        uppercase: true
-    },
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-        minlength: 3,
-        maxlength: 75
-    },
-    unrest: {
-        type: Number,
-        min: 0,
-        max: 250,
-        default: 0
-    }
+const CountrySchema = new Schema({
+  model: { type: String, default: 'Country'},
+  zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+  loadZoneCode: {type: String, maxlength: 2, uppercase: true },
+  team: { type: Schema.Types.ObjectId, ref: 'Team'},
+  loadTeamCode: { type: String, maxlength: 3 },
+  code: {
+      type: String,
+      required: true,
+      index: true,
+      trim: true,
+      unique: true,
+      minlength: 2,
+      maxlength: 2,
+      uppercase: true
+  },
+  name: {
+      type: String,
+      required: true,
+      trim: true,
+      minlength: 3,
+      maxlength: 75
+  },
+  unrest: {
+      type: Number,
+      min: 0,
+      max: 250,
+      default: 0
+  },
+  coastal: {
+    type: Boolean,
+    default: false
+  },
+  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}]
 });
 
 CountrySchema.methods.validateCountry = function (country) {

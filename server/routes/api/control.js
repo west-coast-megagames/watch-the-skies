@@ -71,6 +71,7 @@ router.patch('/resethull', async function (req, res) {
         await interceptor.save();
     }
     res.send("Interceptors succesfully reset!");
+    nexusEvent.emit('updateAircrafts');
 });
 
 // @route   PATCH api/control/loadSystems
@@ -80,6 +81,15 @@ router.patch('/loadSystems', async function (req, res) {
     let response = await loadSystems();
     res.status(200).send(response);
 });
+
+// @route   GET api/control/salvage
+// @desc    Sends all systems marked for salvage
+// @access  Public
+router.get('/salvage', async function (req, res) {
+  let response = await System.find({'status.salvage': true});
+  res.status(200).send(response);
+});
+
 
 // @route   POST api/control/build
 // @desc    Builds the thing!
@@ -164,14 +174,14 @@ router.post('/build', async function (req, res) {
     }
     
     let newInterceptor = new Interceptor(aircraft);
-    newInterceptor.location.country = newCountry_Id;
-    newInterceptor.location.zone    = newZone_Id;
+    newInterceptor.country = newCountry_Id;
+    newInterceptor.zone    = newZone_Id;
     newInterceptor = await newInterceptor.save();
     newInterceptor = await Interceptor.findById(newInterceptor._id)
       .populate('team', 'shortName')
       .populate('systems', 'name category')
-      .populate('location.zone', 'zoneName')
-      .populate('location.country', 'name')
+      .populate('zone', 'zoneName')
+      .populate('country', 'name')
       .populate('base', 'baseName');
     await updateStats(newInterceptor._id);
     

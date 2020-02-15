@@ -12,7 +12,12 @@ const { Site } = require('../../models/sites/site')
 // @access  Public
 router.get('/', async function (req, res) {
     routeDebugger('Looking up all sites...');
-    let sites = await Site.find().populate('country', 'name').populate('team').sort({team: 1});
+    let sites = await Site.find()
+      .populate('country', 'name')
+      .populate('team', 'shortName name')
+      .populate('facilities', 'name type')
+      .sort({team: 1});
+
     res.status(200).json(sites);
 });
 

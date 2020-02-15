@@ -14,17 +14,8 @@ class Interception extends Component {
     isDeploying: false,
     contact: undefined,
     showInfo: false,
-    interceptor: undefined
+    aircraft: undefined
   };
-
-  close = () => {
-    this.setState({
-      showInfo: false
-    });
-  }
-  toggleDrawer = () => {
-    this.setState({ showInfo: true });
-  }
 
   componentDidMount() {
     this.radarSweep();
@@ -50,6 +41,7 @@ class Interception extends Component {
             contacts={this.state.contacts}
             bases={this.state.bases}
             cities={this.state.cities}
+            account={this.props.account}
           />
           <hr />
           <Interceptors
@@ -58,10 +50,9 @@ class Interception extends Component {
           />
 
           { this.state.showInfo ? <InterceptorInfo
-            interceptor={ this.state.interceptor }
-            show={ this.showInfo }
-            close={ this.close }
-            toggleDrawer={ this.toggleDrawer }
+            aircraft={ this.state.aircraft }
+            show={ this.state.showInfo }
+            onClick={ this.showInfo }
             alert={ this.props.alert }
             /> : null }
 
@@ -70,8 +61,7 @@ class Interception extends Component {
             deployInterceptors={ this.deployInterceptors }
             show={ this.state.isDeploying }
             handleChange={ this.handleChange }
-            interceptor={ this.state.interceptor }
-            contact={this.state.contact}
+            target={this.state.contact}
             alert={ this.props.alert } 
           /> : null }
       </React.Fragment>
@@ -88,8 +78,7 @@ class Interception extends Component {
   radarSweep() {
     let data = this.props.aircrafts.filter(aircraft => aircraft.status.destroyed !== true);
 
-    let contacts = data.filter(aircraft => aircraft.team._id !== this.props.team._id);
-    contacts = contacts.filter(aircraft => aircraft.status.deployed === true);
+    let contacts = this.props.aircrafts.filter(aircraft => aircraft.status.deployed === true);
 
     let aircrafts = data.filter(aircraft => aircraft.team._id === this.props.team._id);
 
@@ -97,49 +86,45 @@ class Interception extends Component {
     console.log('Contacts and Aircrafts set...');
   } 
 
-  deployInterceptors = async (context, contact, interceptor) =>{
-    this.toggleDeploy();
+  deployInterceptors = async (context, contact, aircraft) =>{
+    console.log(`Deploying ${contact}`)
+    this.setState({
+      isDeploying: !this.state.isDeploying
+    });
 
     if ( context === 'cancel' ){
       this.setState({
         contact: undefined,
-        interceptor: undefined
+        aircraft: undefined
       });
       return;
-    } else if ( context === 'deploying' ){
+    } else if ( context === 'deploy' ){
       this.setState({
         contact
       });
     } else if ( context === 'deployed' ){
       this.setState({
-        interceptor
+        aircraft
       });
     }
   };
 
-  showInfo = async (context, interceptor) =>{
+  showInfo = async (context, aircraft) =>{
     this.setState({
       showInfo: !this.state.showInfo
     });
 
     if ( context === 'cancel' ){
       this.setState({
-        interceptor: undefined
+        aircraft: undefined
       });
       return;
     } else if ( context === 'info' ){
       this.setState({
-        interceptor
+        aircraft
       });
     }
   };
-
-  toggleDeploy = () => {
-      this.setState({
-        isDeploying: !this.state.isDeploying
-      });
-  };
-
 }
 
 export default Interception;

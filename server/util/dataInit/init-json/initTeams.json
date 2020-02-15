@@ -18,64 +18,8 @@
 ],
 "prTrack" : [0, 6, 12, 18, 24, 30, 36, 42, 48],
 "prLevel" : 5,
-"loadFlag" : "true"
-},
-{
-"loadType" : "team", 
-"name": "Russian Federation", 
-"shortName" : "Russia",
-"teamType" : "N",
-"code" : "RFD", 
-"roles" : [ 
-    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
-    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
-    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Senior Diplomat" , "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"}
-],
-"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
-"prLevel" : 5,
-"loadFlag" : "true"
-},
-{
-"loadType" : "team", 
-"name": "People's Republic of China",
-"shortName" : "China", 
-"teamType" : "N",
-"code" : "PRC", 
-"roles" : [ 
-    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
-    {"role": "Premier", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
-    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Senior Diplomat" , "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
-    {"role" : "Commander of Second Artillery Corps" , "type" : "Military", "userID" : "undefined", "loadFlag" : "false"}
-],
-"prTrack" : [0, 5, 10, 16, 21, 27, 32, 37, 43],
-"prLevel" : 5,
-"loadFlag" : "true"
-},
-{
-"loadType" : "team", 
-"name": "The France Republic", 
-"shortName" : "France",
-"teamType" : "N",
-"code" : "TFR", 
-"roles" : [
-    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
-    {"role" : "Minister of Foreign Affairs & International Development", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
-    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
-    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"}
-],
-"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
-"prLevel" : 5,
-"loadFlag" : "true"
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["US"]}]
 },
 {
 "loadType" : "team", 
@@ -95,6 +39,197 @@
 "prLevel" : 5,
 "loadFlag" : "true",
 "parent" : [{"type" : "country", "code" : ["GB"]}]
+},
+{
+"loadType" : "team", 
+"name": "The Republic of South Africa", 
+"shortName" : "South Africa",
+"teamType" : "N",
+"code" : "RSA", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role": "Vice President", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"},
+    {"role" : "Minister of International Relations and Cooperation", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"prTrack" : [3, 5, 7, 10, 12, 14, 16, 17],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["ZA"]}]
+},
+{
+"loadType" : "team", 
+"name": "Russian Federation", 
+"shortName" : "Russia",
+"teamType" : "N",
+"code" : "RFD", 
+"roles" : [ 
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Senior Diplomat" , "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"}
+],
+"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["RU"]}]
+},
+{
+"loadType" : "team", 
+"name": "Japan", 
+"shortName" : "Japan",
+"teamType" : "N",
+"code" : "JPN", 
+"roles" : [
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Commander of Self Defense Forces", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"prTrack" : [3, 7, 10, 14, 18, 21, 25, 28],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["JP"]}]
+},
+{
+"loadType" : "team", 
+"name": "Islamic Republic of Iran", 
+"shortName" : "Iran",
+"teamType" : "N",
+"code" : "IRN", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role": "Supreme Leader", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Armed Forces Commander", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"prTrack" : [2, 4, 6, 8, 10, 12, 14, 16],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["IR"]}]
+},
+{
+"loadType" : "team", 
+"name": "Republic of India", 
+"shortName" : "India",
+"teamType" : "N",
+"code" : "IND", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"},
+    {"role" : "Minister of External Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"}
+],
+"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["IN"]}]
+},
+{
+"loadType" : "team", 
+"name": "The France Republic", 
+"shortName" : "France",
+"teamType" : "N",
+"code" : "TFR", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs & International Development", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"}
+],
+"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["FR"]}]
+},
+{
+"loadType" : "team", 
+"name": "The Arab Republic of Egypt", 
+"shortName" : "Egypt",
+"teamType" : "N",
+"code" : "EPT", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"prTrack" : [2, 4, 6, 8, 10, 11, 12, 13],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["EG"]}]
+},
+{
+"loadType" : "team", 
+"name": "People's Republic of China",
+"shortName" : "China", 
+"teamType" : "N",
+"code" : "PRC", 
+"roles" : [ 
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role": "Premier", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Senior Diplomat" , "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Commander of Second Artillery Corps" , "type" : "Military", "userID" : "undefined", "loadFlag" : "false"}
+],
+"prTrack" : [0, 5, 10, 16, 21, 27, 32, 37, 43],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["CN"]}]
+},
+{
+"loadType" : "team", 
+"name": "Federative Republic of Brazil", 
+"shortName" : "Brazil",
+"teamType" : "N",
+"code" : "BRZ", 
+"roles" : [
+    {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Commander of the Joint General Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"},
+    {"role": "Deputy Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "false"}
+],
+"prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["BR"]}]
+},
+{
+"loadType" : "team", 
+"name": "The Commonwealth of Australia", 
+"shortName" : "Australia",
+"teamType" : "N",
+"code" : "AUS", 
+"roles" : [
+    {"role": "Prime Minister", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Minister of Foreign Affairs", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "UN Ambassador", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
+    {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
+],
+"prTrack" : [2, 5, 8, 9, 12, 16, 19, 22, 25],
+"prLevel" : 5,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["AU"]}]
 },
 {
 "loadType" : "team",

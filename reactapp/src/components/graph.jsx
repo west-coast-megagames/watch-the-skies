@@ -54,9 +54,8 @@ class ChartsPage extends React.Component {
   };
 
   componentDidMount () {
-      if (this.props.accounts.length > 0) {
-      let accountIndex = this.props.accounts.findIndex(account => account.name === 'Treasury');
-      let account = this.props.accounts[accountIndex];
+      if (this.props.account !== undefined) {
+      let account = this.props.account
       let { dataLine } = this.state;
       console.log(account);
       let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
@@ -68,9 +67,8 @@ class ChartsPage extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.accounts !== prevProps.accounts && this.props.accounts.length > 0) {
-      let accountIndex = this.props.accounts.findIndex(account => account.name === 'Treasury');
-      let account = this.props.accounts[accountIndex];
+    if (this.props.account !== prevProps.account && this.props.accounts.length > 0) {
+      let account = this.props.account;
       let { dataLine } = this.state;
       console.log(account);
       let datasetIndex = dataLine.datasets.findIndex(set => set.label === 'Income/Turn');
@@ -82,7 +80,7 @@ class ChartsPage extends React.Component {
   }
 
   render() {
-    if (this.props.team.name === "Select Team" || this.props.accounts.length <= 0) {
+    if (this.props.account === undefined || this.props.accounts.length <= 0) {
       return(
         <div>
           <p>No Chart Availible</p>

@@ -21,11 +21,16 @@ const logger = createLogger({
       //
       // - Write to all logs with level `info` and below to `quick-start-combined.log`.
       // - Write all logs error (and below) to `quick-start-error.log`.
-      //
+      // Errors only File
       new transports.File({ filename: 'prototype-error.log', level: 'error' }),
-      new transports.File({ filename: 'prototype-combined.log' }),
-      new transports.MongoDB({ db: dbURI,
-                               level: 'error'})
+      // Info / Warnings / Errors combined
+      new transports.File({ filename: 'prototype-combined.log', level: 'info' }),
+      // Debug / Verbose/ Http / Info / Warnings / Errors combined
+      new transports.File({ filename: 'prototype-debug-combined.log', level: 'debug' }),
+      // Error DB to log collection
+      new transports.MongoDB({ db: dbURI, level: 'error', collection: 'log'}),
+      // Info / Warnings / Errors combined
+      new transports.MongoDB({ db: dbURI, level: 'info', collection: 'log-info'})
     ]
   });
 
@@ -36,6 +41,9 @@ const logger = createLogger({
       format.simple()
     )
     }));
+  } else {
+    //use regular debug in non-production mode
+    //debug.log = (...args) => logger.debug(util.format(...args))
   }
 
   function routeError (err, req, res, next) {

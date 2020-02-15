@@ -1,10 +1,10 @@
 const bankDebugging = require('debug')('app:bankingSystem'); // Debug console log
 
-const alerts = require('../notifications/alerts'); // Alert system [Depreciated]
 const transactionLog = require('../../models/logs/transactionLog') // WTS Game log function
 
 const { Team } = require('../../models/team'); // Mongoose Model - Team
 const { Interceptor } = require('../../models/ops/interceptor') // Mongoose Model - Interceptor
+const nexusEvent = require('../../startup/events'); // Import of server event carrior
 
 // FUNCTION - transfer [async]
 // IN: Transfer Object { team_id, to, from, amount, note }
@@ -25,7 +25,7 @@ async function transfer (to, from, amount, note) {
 
         await withdrawalAccount.save();
         await depositAccount.save();
-
+        nexusEvent.emit('updateAccounts')
         bankDebugging(`${withdrawalAccount.owner}s transfer completed!`)
 };
 

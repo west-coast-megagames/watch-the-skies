@@ -11,6 +11,10 @@ class AccountsTable extends Component {
       }
 
     render() {
+        let total = 0;
+        this.state.data.forEach(account => {
+            total += account.balance;
+        });
         if (!this.props.accounts) {
             return(
                 <div>
@@ -32,7 +36,7 @@ class AccountsTable extends Component {
                     <Cell dataKey="name" />
                 </Column>
                 <Column align="center" width={60}>
-                    <HeaderCell>Total</HeaderCell>
+                    <HeaderCell title="Total" summary={total}>Total</HeaderCell>
                     <Cell dataKey="balance" />
                 </Column>
             </Table>

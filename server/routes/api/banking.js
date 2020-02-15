@@ -1,4 +1,5 @@
 const routeDebugger = require('debug')('app:routes');
+const nexusEvent = require('../../startup/events');
 const express = require('express');
 const router = express.Router();
 
@@ -80,6 +81,8 @@ router.patch('/accounts', async function (req, res) {
         console.log(`${account.owner}'s ${account.name} reset...`);  
     };
     res.send("Accounts succesfully reset!");
+
+    nexusEvent.emit('updateAccounts');
 });
 
 router.put('/accounts', async function (req, res) {

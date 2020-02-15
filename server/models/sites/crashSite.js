@@ -3,13 +3,15 @@ const { Site } = require('./site');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
-const CrashSite = Site.discriminator('CrashSite', new Schema({
-  siteType: { type: String, default: 'Crash' },
-  crashName: { type: String, required: true, minlength: 2, maxlength: 50 },
+const CrashSite = Site.discriminator('Crash', new Schema({
+  type: { type: String, default: 'Crash' },
+  name: { type: String, required: true, minlength: 2, maxlength: 50 },
   /* should not have both crashCode and siteCode
   crashCode: { type: String, minlength: 2, maxlength: 50, default: "undefined"} ,
   */
-  team: { type: Schema.Types.ObjectId, ref: 'Team'}
+
+  salvage: [{ type: Schema.Types.ObjectId, ref: 'System'}],
+  public: { type: Boolean, default: false }
 }));
 
 function validateCrash(crashSite) {

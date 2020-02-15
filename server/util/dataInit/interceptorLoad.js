@@ -4,6 +4,8 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initinterceptor
 const interceptorDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const interceptorLoadDebugger = require('debug')('app:interceptorLoad');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -77,15 +79,31 @@ async function loadInterceptor(iData){
         interceptor.stats  = iData.stats;
         interceptor.status = iData.status;
 
+        if (iData.parentCode1 != ""){
+          let team = await Team.findOne({ teamCode: iData.parentCode1 });  
+          if (!team) {
+            interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
+          } else {
+            interceptor.team = team._id;
+            interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          }
+        }      
+
         // create systems records for interceptor and store ID in interceptor.system
+        //console.log("jeff interceptor systems  iData.loadout", iData.loadout);
         interceptor.systems = [];
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          //console.log("jeff in interceptor systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
             newSystem = await new System(sysRef);
+              
             await newSystem.save(((err, newSystem) => {
-              if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-              //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
+              if (err) {
+                logger.error(`New Interceptor System Save Error: ${err}`);
+                return console.error(`New Interceptor System Save Error: ${err}`);
+              }
+              interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
             }));
 
             interceptor.systems.push(newSystem._id)
@@ -110,27 +128,28 @@ async function loadInterceptor(iData){
             interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
           } else {
             interceptor.base = baseSite._id;
+            interceptor.site = baseSite._id;
             interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
           }
         }      
 
-        if (iData.location.zone != ""){
-          let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
+        if (iData.zone != ""){
+          let zone = await Zone.findOne({ zoneCode: iData.zone });  
           if (!zone) {
-            interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.location.zone);
+            interceptorLoadDebugger("Interceptor Load Zone Error, New Interceptor:", iData.name, " Zone: ", iData.zone);
           } else {
-            interceptor.location.zone = zone._id;
-            interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
+            interceptor.zone = zone._id;
+            interceptorLoadDebugger("Interceptor Load Zone Found, New Interceptor:", iData.name, " Zone: ", iData.zone, "Zone ID:", zone._id);
           }      
         }
 
-        if (iData.location.country != ""){
-          let country = await Country.findOne({ code: iData.location.country });  
+        if (iData.country != ""){
+          let country = await Country.findOne({ code: iData.country });  
           if (!country) {
-            interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.location.country);
+            interceptorLoadDebugger("Interceptor Load Country Error, New Interceptor:", iData.name, " Country: ", iData.country);
           } else {
-            interceptor.location.country = country._id;
-            interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
+            interceptor.country = country._id;
+            interceptorLoadDebugger("Interceptor Load Country Found, New Interceptor:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
           }      
         }
 
@@ -144,6 +163,7 @@ async function loadInterceptor(iData){
             if (systemDel = null) {
               console.log(`The Interceptor System with the ID ${sysId} was not found!`);
             }
+            console.log(`The Interceptor System with the ID ${sysId} was DELETED ... Interceptor validate error!`);
           }      
           return; 
         }
@@ -157,7 +177,7 @@ async function loadInterceptor(iData){
       // Existing Interceptor here ... update
       let id = interceptor._id;
       
-      interceptor.name = iData.name;
+      interceptor.name        = iData.name;
       interceptor.type        = iData.type;
       interceptor.code        = iData.code;
       interceptor.stats       = iData.stats;
@@ -195,27 +215,28 @@ async function loadInterceptor(iData){
           interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
         } else {
           interceptor.base = baseSite._id;
+          interceptor.site = baseSite._id;
           interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
         }
       }      
 
-      if (iData.location.zone != ""){
-        let zone = await Zone.findOne({ zoneCode: iData.location.zone });  
+      if (iData.zone != ""){
+        let zone = await Zone.findOne({ zoneCode: iData.zone });  
         if (!zone) {
-          interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.location.zone);
+          interceptorLoadDebugger("Interceptor Load Zone Error, Update Interceptor:", iData.name, " Zone: ", iData.zone);
         } else {
-          interceptor.location.zone = zone._id;
-          interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.location.zone, "Zone ID:", zone._id);
+          interceptor.zone = zone._id;
+          interceptorLoadDebugger("Interceptor Load Zone Found, Update Interceptor:", iData.name, " Zone: ", iData.zone, "Zone ID:", zone._id);
         }      
       }
 
-      if (iData.location.country != ""){
-        let country = await Country.findOne({ code: iData.location.country });  
+      if (iData.country != ""){
+        let country = await Country.findOne({ code: iData.country });  
         if (!country) {
-          interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.location.country);
+          interceptorLoadDebugger("Interceptor Load Country Error, Update Interceptor:", iData.name, " Country: ", iData.country);
         } else {
-          interceptor.location.country = country._id;
-          interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.location.country, "Country ID:", country._id);
+          interceptor.country = country._id;
+          interceptorLoadDebugger("Interceptor Load Country Found, Update Interceptor:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
         }      
       }
 

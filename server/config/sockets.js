@@ -30,17 +30,17 @@ class Client {
 let connections = [];
 let msgKey = 0;
 
-Team.watch().on('change', data => {
-  socketDebugger(data);
-});
+// Team.watch().on('change', data => {
+//   socketDebugger(data);
+// });
 
-Account.watch().on('change', async data => {
-  socketDebugger(data);
-  let id = data.documentKey._id;
-  let account = await Account.findById(id);
-  let team = await Team.findById(account.team_id);
-  eventListner.emit('updateAccounts', team);
-});
+// Account.watch().on('change', async data => {
+//   socketDebugger(data);
+//   let id = data.documentKey._id;
+//   let account = await Account.findById(id);
+//   let team = await Team.findById(account.team_id);
+//   eventListner.emit('updateAccounts', team);
+// });
 
 
   /*
@@ -50,12 +50,6 @@ Account.watch().on('change', async data => {
   */
 
 module.exports = function (io){
-  nexusEvent.on('updateAircrafts', async () => {
-    let aircrafts = await getAircrafts();
-    socketDebugger('Sending Aircrafts!');
-    io.emit('currentAircrafts', aircrafts);
-  });
-
   io.on('connection', (client) => {
     logger.info(`New client connected... ${client.id}`);
     connections.push(client);
@@ -81,6 +75,12 @@ module.exports = function (io){
       socketDebugger(`${client.id} requested updated team information for ${team_id}`);
       let team = await getTeam(team_id);
       client.emit('teamUpdate', team);
+    });
+
+    nexusEvent.on('updateAircrafts', async () => {
+      let aircrafts = await getAircrafts();
+      socketDebugger('Sending Aircrafts!');
+      io.emit('currentAircrafts', aircrafts);
     });
 
     client.on('pauseGame', () => {
@@ -115,7 +115,7 @@ module.exports = function (io){
       eventListner.emit('updateAircrafts');
     });
 
-    eventListner.on('updateAccounts', async () => {
+    nexusEvent.on('updateAccounts', async () => {
       let accounts = await Account.find();
       socketDebugger('Sending Accounts!');
       client.emit('updateAccounts', accounts);

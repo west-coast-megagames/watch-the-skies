@@ -18,6 +18,14 @@ const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
     passiveRolls: [Number],
     activeRolls: [Number]
   },
+  loadout: {
+    cpu: { type: Number, default: 1 },
+    weapons: { type: Number, default: 1 },
+    engines: { type: Number, default: 1 },
+    sensors: { type: Number, default: 1 },
+    compartments: { type: Number, default: 1 },
+    utils: { type: Number, default: 1 },
+  },
   systems: [{ type: Schema.Types.ObjectId, ref: 'System' }]
 }));
 
