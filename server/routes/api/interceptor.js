@@ -12,7 +12,7 @@ const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team'); 
 const { BaseSite } = require('../../models/sites/baseSite');
-const { System } = require('../../models/ops/systems');
+const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 
 // @route   GET api/interceptor

@@ -6,7 +6,7 @@ const Joi = require('joi');
 const EquipmentSchema = new Schema({
   model: { type: String, default: 'Equipment'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
-  owner: { type: Schema.Types.ObjectId, ref: 'Team'},
+  team: { type: Schema.Types.ObjectId, ref: 'Team'},
   manufacturer: { type: Schema.Types.ObjectId, ref: 'Team'},
   cost: { type: Number },
   buildTime: { type: Number },

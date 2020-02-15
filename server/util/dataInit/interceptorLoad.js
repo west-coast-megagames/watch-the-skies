@@ -23,7 +23,7 @@ const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team');
 const { Base } = require('../../models/base');
-const { System } = require('../../models/ops/systems');
+const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { BaseSite } = require('../../models/sites/baseSite');
 const app = express();
@@ -89,6 +89,16 @@ async function loadInterceptor(iData){
           }
         }      
 
+        if (iData.parentCode1 != ""){
+          let team = await Team.findOne({ teamCode: iData.parentCode1 });  
+          if (!team) {
+            interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
+          } else {
+            interceptor.team = team._id;
+            interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          }
+        }      
+        
         // create systems records for interceptor and store ID in interceptor.system
         //console.log("jeff interceptor systems  iData.loadout", iData.loadout);
         interceptor.systems = [];
@@ -97,7 +107,8 @@ async function loadInterceptor(iData){
           //console.log("jeff in interceptor systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
             newSystem = await new System(sysRef);
-              
+            newSystem.team         = interceptor.team;
+            newSystem.manufacturer = interceptor.team;  
             await newSystem.save(((err, newSystem) => {
               if (err) {
                 logger.error(`New Interceptor System Save Error: ${err}`);
@@ -111,16 +122,6 @@ async function loadInterceptor(iData){
             interceptorLoadDebugger('Error in creation of system', sys, "for ", interceptor.name);
           }
         }
-
-        if (iData.parentCode1 != ""){
-          let team = await Team.findOne({ teamCode: iData.parentCode1 });  
-          if (!team) {
-            interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
-          } else {
-            interceptor.team = team._id;
-            interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
-          }
-        }      
 
         if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
           let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
@@ -183,22 +184,6 @@ async function loadInterceptor(iData){
       interceptor.stats       = iData.stats;
       interceptor.status      = iData.status;
 
-      // create systems records for interceptor and store ID in interceptor.system
-      if (iData.loadout.length != 0){
-        // create systems records for interceptor and store ID in interceptor.system
-        interceptor.systems = [];
-        for (let sys of iData.loadout) {
-          let sysRef = systems[systems.findIndex(system => system.name === sys )];
-          newSystem = await new System(sysRef);
-          await newSystem.save(((err, newSystem) => {
-          if (err) return console.error(`New Interceptor System Save Error: ${err}`);
-          //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
-          }));
-
-          interceptor.systems.push(newSystem._id)
-        }
-      }
-
       if (iData.parentCode1 != ""){
         let team = await Team.findOne({ teamCode: iData.parentCode1 });  
         if (!team) {
@@ -208,7 +193,25 @@ async function loadInterceptor(iData){
           interceptorLoadDebugger("Interceptor Load Update Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
         }
       }  
-      
+
+      // create systems records for interceptor and store ID in interceptor.system
+      if (iData.loadout.length != 0){
+        // create systems records for interceptor and store ID in interceptor.system
+        interceptor.systems = [];
+        for (let sys of iData.loadout) {
+          let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          newSystem = await new System(sysRef);
+          newSystem.team   = interceptor.team;
+          newSystem.manufacturer = interceptor.team;
+          await newSystem.save(((err, newSystem) => {
+          if (err) return console.error(`New Interceptor System Save Error: ${err}`);
+          //interceptorLoadDebugger(interceptor.name, "system", sys, " add saved to system collection.");
+          }));
+
+          interceptor.systems.push(newSystem._id)
+        }
+      }
+
       if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
         let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
         if (!baseSite) {

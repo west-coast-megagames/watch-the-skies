@@ -26,7 +26,7 @@ const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
     compartments: { type: Number, default: 1 },
     utils: { type: Number, default: 1 },
   },
-  systems: [{ type: Schema.Types.ObjectId, ref: 'System' }]
+  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 }));
 
 function validateInterceptor(interceptor) {

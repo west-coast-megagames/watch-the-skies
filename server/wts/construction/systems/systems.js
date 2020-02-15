@@ -8,7 +8,7 @@ systemsDebugger = require('debug')('app:systems');
 
 const systems = []
 
-const { System } = require('../../../models/ops/systems');
+const { System } = require('../../../models/gov/equipment/systems');
 
 // Load function to load all systems.
 async function loadSystems () {
