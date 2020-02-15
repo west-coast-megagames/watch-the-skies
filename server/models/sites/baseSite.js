@@ -21,11 +21,7 @@ const BaseSite = Site.discriminator('BaseSite', new Schema({
   baseCode: { type: String, minlength: 2, maxlength: 50, default: "undefined"} ,
   */
   defenses: { type: Boolean, default: false },
-  facilities: {
-    labs: { type: Number, default: 1 },
-    Hangers: { type: Number, default: 1 },
-    Factory: { type: Number, default: 1 }
-  },
+  facilities: [{ type: Schema.Types.ObjectId, ref: 'Facility' }],
   public: { type: Boolean, default: false }
 }));
 

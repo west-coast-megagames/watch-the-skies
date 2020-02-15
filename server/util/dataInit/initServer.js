@@ -19,6 +19,7 @@ const users = require('../../routes/users');
 const news = require('../../routes/api/news');
 const logs = require('../../routes/api/log');
 const account = require('../../routes/api/accounts');
+const sites = require('../../routes/api/sites');
 const config = require('config');
 
 // Middleware - express and socketIo

@@ -90,11 +90,11 @@ async function loadInterceptor(iData){
         }      
 
         // create systems records for interceptor and store ID in interceptor.system
-        console.log("jeff interceptor systems  iData.loadout", iData.loadout);
+        //console.log("jeff interceptor systems  iData.loadout", iData.loadout);
         interceptor.systems = [];
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.name === sys )];
-          console.log("jeff in interceptor systems ", sys, "sysRef:", sysRef);
+          //console.log("jeff in interceptor systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
             newSystem = await new System(sysRef);
               
@@ -128,6 +128,7 @@ async function loadInterceptor(iData){
             interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
           } else {
             interceptor.base = baseSite._id;
+            interceptor.site = baseSite._id;
             interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
           }
         }      
@@ -214,6 +215,7 @@ async function loadInterceptor(iData){
           interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
         } else {
           interceptor.base = baseSite._id;
+          interceptor.site = baseSite._id;
           interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
         }
       }      
