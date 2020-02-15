@@ -14,6 +14,7 @@ import Diplomacy from './diplomacy';
 import Chat from './chat';
 import News from './news';
 import Registration from './../components/registration';
+import Models from './models';
 
 const iconStyles = {
   width: 56,
@@ -142,6 +143,11 @@ class ContentArea extends Component {
                   )}/>
                   <Route path="/control" render={(props) => (
                     <Control {...props}
+                        alert = { this.props.addAlert } 
+                    />
+                  )}/>
+                  <Route path="/editor" render={(props) => (
+                    <Models {...props}
                         alert = { this.props.addAlert } 
                     />
                   )}/>
