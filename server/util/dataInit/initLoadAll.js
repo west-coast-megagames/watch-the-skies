@@ -3,7 +3,6 @@ const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
 const runInterceptorLoad = require('../dataInit/interceptorLoad');
 const runUserLoad = require('../dataInit/userLoad');
-const runBaseLoad = require('../dataInit/baseLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
