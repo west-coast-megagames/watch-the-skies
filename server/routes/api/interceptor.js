@@ -11,7 +11,6 @@ const { Aircraft, updateStats } = require('../../models/ops/aircraft');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team'); 
-const { Base } = require('../../models/base'); 
 const { BaseSite } = require('../../models/sites/baseSite');
 const { System } = require('../../models/ops/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
@@ -27,7 +26,8 @@ router.get('/', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('systems', 'name category')
-      .populate('base', 'baseName')
+      .populate('site', 'name')
+      .populate('base', 'name')
     ;
     res.json(interceptors);
 });
@@ -43,7 +43,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('systems', 'name category')
-      .populate('base', 'baseName')
+      .populate('site', 'name')
+      .populate('base', 'name')
     ;
     if (interceptor != null) {
       res.json(interceptor);
@@ -148,7 +149,8 @@ router.post('/', async function (req, res) {
       .populate('systems', 'name category')
       .populate('zone', 'zoneName')
       .populate('country', 'name')
-      .populate('base', 'baseName');
+      .populate('site', 'name')
+      .populate('base', 'name');
 
     updateStats(interceptor._id);
     res.status(200).json(interceptor);
@@ -270,7 +272,8 @@ router.put('/:id', async function (req, res) {
       .populate('systems', 'name category')
       .populate('zone', 'zoneName')
       .populate('country', 'name')
-      .populate('base', 'baseName');
+      .populate('site', 'name')
+      .populate('base', 'name');
 
     res.status(200).json(interceptor);
     console.log(`Interceptor ${req.params.id} updated...`);
