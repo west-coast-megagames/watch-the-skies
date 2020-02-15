@@ -5,7 +5,7 @@ const nexusEvent = require('../../startup/events');
 // Interceptor Model - Using Mongoose Model
 const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
 const { Aircraft, updateStats } = require('../../models/ops/aircraft');
-const { System } = require('../../models/ops/systems');
+const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 

@@ -8,7 +8,7 @@ class Salvage extends Component {
   
   render() { 
     //console.log('PROPS:', this.props);
-    const labResearchTypes = ["Knowledge", "Tech", "Analysis"];   // Types of research that can be studied by Labs (Remove Knowledge after testing)
+    const labResearchTypes = ["Knowledge", "Technology", "Analysis"];   // Types of research that can be studied by Labs (Remove Knowledge after testing)
     const { allKnowledge, team } = this.props;                    // Prop Objects holding all Knowledge known and team
     //console.log("ALLKNOWLEDGE=",allKnowledge);
 
