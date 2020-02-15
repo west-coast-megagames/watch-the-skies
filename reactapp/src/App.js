@@ -12,7 +12,6 @@ import Registration from './components/registration';
 import TerrorMap from './pages/terror';
 import MainContainer from './pages/main';
 import AlertPage from './components/common/alert';
-import NotFound from './pages/404';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
@@ -31,8 +30,11 @@ class App extends Component {
     user: {},
     team: null,
     teams: [],
-    aircrafts: [],
+    zones: [],
+    countries: [],
     sites: [],
+    facilities: [],
+    aircrafts: [],
     accounts: [],
     megabucks: 0,
     alerts: [],
@@ -71,51 +73,48 @@ class App extends Component {
           handleLogin={ this.handleLogin }/>
       )
     }
+
+    if (this.state.team.name === "Control Team") {
+      return(
+        <TerrorMap
+          zones={ this.state.zones }
+          countries={ this.state.countries }
+          sites={ this.state.sites }
+        />
+      )
+    }
+
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
-          <Switch>
-            <Route path="/national" render={() => (
-              <React.Fragment>
-                <Header>
-                  <NavBar 
-                    team={ this.state.team }
-                    megabucks={ this.state.megabucks }
-                  />
-                </Header>
-                <MainContainer
-                  login={ this.state.login }
-                  user={ this.state.user }
-                  teams={ this.state.teams }
-                  team={ this.state.team }
-                  sites={ this.state.sites }
-                  articles={ this.state.articles }
-                  research={ this.state.research }
-                  accounts={ this.state.accounts }
-                  handleUpdate={ this.updateAccounts }
-                  aircrafts={ this.state.aircrafts }
-                  addAlert={ this.addAlert }
-                  handleLogin={ this.handleLogin }
-                  handleSignout={ this.handleSignout }
-                  updateAccounts={ this.updateAccounts }
-                  handleArtHide={this.handleArtHide}
-                />
-                <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
-              </React.Fragment>
-            )}/>
-            <Route path="/terror" render={() => (
-              <TerrorMap
-                zones={this.state.zones}
-              />
-            )}/>
-            <Route path="/not-found" component={ NotFound } />
-            <Redirect from="/" exact to="/national" />
-            <Redirect to="/not-found" />
-        </Switch>
-   
+          <Header>
+            <NavBar 
+              team={ this.state.team }
+              megabucks={ this.state.megabucks }
+            />
+          </Header>
+          <MainContainer
+            login={ this.state.login }
+            user={ this.state.user }
+            teams={ this.state.teams }
+            team={ this.state.team }
+            sites={ this.state.sites }
+            articles={ this.state.articles }
+            research={ this.state.research }
+            facilities={ this.state.facilities }
+            accounts={ this.state.accounts }
+            handleUpdate={ this.updateAccounts }
+            aircrafts={ this.state.aircrafts }
+            addAlert={ this.addAlert }
+            handleLogin={ this.handleLogin }
+            handleSignout={ this.handleSignout }
+            updateAccounts={ this.updateAccounts }
+            handleArtHide={this.handleArtHide}
+          />
+          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
         </div>
     );
   }
-  
+
   async loadState () {
     let { data: sites } = await axios.get(`${gameServer}api/sites`); // Axios call to server for all sites
     let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
@@ -123,7 +122,8 @@ class App extends Component {
     let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
     let { data: research} = await axios.get(`${gameServer}api/research`);  // Axios call to server for all research
     let { data: zones } = await axios.get(`${gameServer}api/zones`) // Axios call to server for all zones
-    this.setState({ teams, sites, aircrafts, articles, research, zones })
+    let { data: facilities } = await axios.get(`${gameServer}api/facilities`) // Axios call to server for all facilities
+    this.setState({ teams, sites, aircrafts, articles, research, zones, facilities })
   }
 
   async getNews () {
