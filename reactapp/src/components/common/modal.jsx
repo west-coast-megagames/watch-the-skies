@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal, Button } from 'rsuite';
 
-class Model extends React.Component {
+class Model extends Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -18,7 +18,7 @@ class Model extends React.Component {
       this.setState({ show: true });
     }
     render() {
-      const { overflow, show } = this.state;
+      const { overflow } = this.state;
       return (
         <div className="modal-container">
           <Modal overflow={overflow} show={this.props.show} onHide={this.props.close}>

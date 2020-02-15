@@ -1,6 +1,5 @@
 import React, { Component } from 'react'; // React
 import { teamEvents, currentAircrafts, updateAccounts } from './api'
-import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
