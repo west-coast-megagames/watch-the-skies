@@ -38,14 +38,6 @@ async function fullInit(selStr){
     }
 
     case 'All':
-    case 'Base':
-      let baseDone = await runBaseLoad(true);  // load expanded Base fields
-      logger.debug("Base Load Done: ", baseDone);
-      if (selStr != 'All') {
-        break;
-      }
-
-    case 'All':
     case 'BaseSite':
       let baseSiteDone = await runBaseSiteLoad(true);  // load expanded Base Sites fields
       logger.debug("Base Sites Load Done: ", baseSiteDone);
