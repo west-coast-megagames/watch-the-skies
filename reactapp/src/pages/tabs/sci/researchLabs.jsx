@@ -21,11 +21,11 @@ const ProgressValCell = ({ rowData, dataKey, ...props }) => {
 		);
 	 };
 
-
 class ResearchLabs extends Component {
 	constructor() {
 		super();
 		this.state = {
+			research: [],
 			labUpdates: [],
 			Labs: [
 				{
@@ -57,11 +57,17 @@ class ResearchLabs extends Component {
 		  //this.setState({research:value})
 		  this.props.alert({type: 'success', title: 'Research Selected', body: `${this.props.lab} Drew is working on ${value}`})
 	}
+
+	componentDidMount(){
+		let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
+		this.setState({research});
+	}
 	
 	render() { 
 		console.log('TEAM=', this.props.team);
 		console.log('EVERYTHING=', this.props.everythingProp);
 		let props = this.props;
+		let research = this.state.research;
 		let handleUpdate = this.update
 		let alert = this.props.alert
 		return(
@@ -87,9 +93,10 @@ class ResearchLabs extends Component {
 						}          
 						return (
 							<MySelectPicker
-								lab={rowData.lab}
+								lab={ rowData.lab }
 								team={ props.team }
-								allKnowledge={ props.allKnowledge}
+								allKnowledge={ props.allKnowledge }
+								availibleResearch={ research }
 								//accounts={ this.props.accounts }
 								handleChange={ handleSubmit }
 								alert={ props.alert }

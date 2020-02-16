@@ -47,45 +47,5 @@
     "unlocks": [
         { "type": "Equipment", "name": "Orbital Nuclear Weapon" }
     ]
-},
-{   
-    "_original": "Distributed Network Capabilities",
-    "name": "Distributed Network Capabilities",
-    "level": 1,
-    "prereq": ["Material Science I", "Computer Science I"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops a framework for large-scale implementation of distributed network computing.",
-    "unlocks": [
-        { "type": "Equipment", "name": "Destributed Research Network" },
-        { "type": "Equipment", "name": "Destributed Military Network" },
-        { "type": "Technology", "name": "Flexible Fabrication" }
-    ]
-},
-{   
-    "_original": "Improved Composites",
-    "name": "Improved Composites",
-    "level": 1,
-    "prereq": ["Material Science I", "Engineering I"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops new compositing techniques for stronger metal alloys.",
-    "unlocks": [
-        { "type": "System", "name": "Durasteel Hull Plating" },
-        { "type": "Technology", "name": "Composite Reinforced Manufacture" }
-    ]
-},
-{   
-    "_original": "Flexible Fabrication",
-    "name": "Flexible Fabrication",
-    "level": 2,
-    "prereq": ["Computer Science II", "Engineering II", "Distributed Network Capabilities"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops new fabrication techniques.",
-    "unlocks": [
-        { "type": "Equipment", "name": "Flexible Fabricator" }
-    ]
 }
-
 ]
