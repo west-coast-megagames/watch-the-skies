@@ -21,7 +21,6 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 		let myProgress = 0;		// Progress of myResearch
 		let myLevel    = 0;		// Level of Tech of myResearch
 		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
-		let myPct	   = 0;		// Final percent to place on progress bar (Progress/TechCost)
 		const result = newLabCheck(rowData.name, props.labUpdates);
 		if (result >= 0) {		// Lab was updated, so find the new %
 			let myID = props.labUpdates[result].research;	// ID of the tech being researched in this row
@@ -31,7 +30,7 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 				myProgress = myResearch[0].status.progress;
 				myLevel    = myResearch[0].level;
 				myTechCost = props.techCost[myLevel];
-				return (Math.floor(myProgress/myTechCost));	
+				return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
 			} else {
 				return (17);	// using dummy 17% for now since all progress is 0% - should change to 0
 			}
