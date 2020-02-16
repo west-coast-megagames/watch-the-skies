@@ -1,0 +1,12 @@
+[
+{   
+    "_original": "Improved Fish Farms",
+    "name": "Improved Fish Farms",
+    "level": 1,
+    "prereq": ["Biology I", "Computer Science I"],
+    "type": "Technology",
+    "field": "Agricultur",
+    "desc": "Improves national fish yields.",
+    "unlocks": []
+}
+]

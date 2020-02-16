@@ -1,0 +1,27 @@
+[
+{   
+    "_original": "Improved Trauma Treatment",
+    "name": "Improved Trauma Treatment",
+    "level": 1,
+    "prereq": ["Psycology I", "Computer Science I"],
+    "type": "Technology",
+    "field": "Medical",
+    "desc": "Develops new trauma center methodology.",
+    "effects": { "type": "terror", "effect": -2 },
+    "unlocks": [
+        { "type": "Technology", "name": "Advanced Trauma Treatment" },
+        { "type": "Facility", "name": "Remote Trauma Center" }
+    ]
+},
+{   
+    "_original": "Improved Vaccines",
+    "name": "Improved Vaccines",
+    "level": 1,
+    "prereq": ["Biology I", "Social Science I"],
+    "type": "Technology",
+    "field": "Medical",
+    "desc": "Develops new methods for deploying vaccinations.",
+    "effects": { "type": "terror", "effect": -10 },
+    "unlocks": []
+}
+]
