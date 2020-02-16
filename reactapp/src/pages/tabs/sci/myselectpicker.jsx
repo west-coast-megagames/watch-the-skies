@@ -32,7 +32,7 @@ class MySelectPicker extends Component {
 				valueKey='_id'
 				labelKey='name'
 				onChange={this.handleChange}
-		  		data={ [...pendSciKnow, ...pendTech] }
+		  		data={ this.props.availibleResearch }
 		  		style={{ width: 224 }}
 			/>
 	  	);
