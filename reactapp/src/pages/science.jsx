@@ -64,7 +64,7 @@ class Science extends Component {
                     <Nav.Item eventKey="knowledge" to={`${url}/knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
                     <Nav.Item eventKey="applied" to={`${url}/applied`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faVials} />}> Applied Tech</Nav.Item>
                     <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item>
-                    <Nav.Item eventKey="trial" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Research Labs</Nav.Item>
+                    <Nav.Item eventKey="trial" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faFlask} />}> Research Labs</Nav.Item>
                 </Nav>
             </Header>
             <Content style={{ paddingLeft: 20 }}>
