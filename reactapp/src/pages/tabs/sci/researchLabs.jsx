@@ -17,16 +17,25 @@ function newLabCheck(lab, labArray) {
 
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
 	function lookupPct () {
-		let myPct = {};			// lookup entry in the allKnowledge Obj which holds the Pct for progress bar
+		let myResearch = {};	// lookup entry in the allKnowledge Obj which holds the Pct for progress bar
+		let myProgress = 0;		// Progress of myResearch
+		let myLevel    = 0;		// Level of Tech of myResearch
+		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
+		let myPct	   = 0;		// Final percent to place on progress bar (Progress/TechCost)
 		const result = newLabCheck(rowData.name, props.labUpdates);
 		if (result >= 0) {		// Lab was updated, so find the new %
 			let myID = props.labUpdates[result].research;	// ID of the tech being researched in this row
-			myPct = props.allKnowledge.filter(el => el._id === myID);
-			if (myID !== null) {
-				return (myPct[0].status.progress);	// Most cases, obj is a number.  When removed via "X", it becomes null
+			myResearch = props.allKnowledge.filter(el => el._id === myID);
+
+			if (myID !== null) {	// Most cases, obj is a number.  When removed via "X", it becomes null
+				myProgress = myResearch[0].status.progress;
+				myLevel    = myResearch[0].level;
+				myTechCost = props.techCost[myLevel];
+				return (Math.floor(myProgress/myTechCost));	
 			} else {
 				return (17);	// using dummy 17% for now since all progress is 0% - should change to 0
 			}
+
 		} else {
 			return (33);	// using dummy 33% for now since all progress is 0% - should change to 0
 		}
@@ -93,7 +102,7 @@ class ResearchLabs extends Component {
                     <Cell dataKey="name">
 					{rowData => {      
 						function handleChange(value) {
-							let updatedLab = { lab: rowData.name, research: value };
+							let updatedLab = { _id: rowData._id, lab: rowData.name, research: value };
 							sendUpdate(updatedLab);
 						}          
 						return (
@@ -117,6 +126,7 @@ class ResearchLabs extends Component {
 						dataKey="blah"
 						labUpdates={this.state.labUpdates}
 						allKnowledge={ props.allKnowledge }
+						techCost={ props.techCost }
 					/>
                 </Column>
         
