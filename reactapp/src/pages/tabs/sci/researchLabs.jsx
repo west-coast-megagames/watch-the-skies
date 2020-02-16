@@ -8,7 +8,7 @@ const { Column, HeaderCell, Cell } = Table;
 function newLabCheck(lab, labArray) {
 	let i;
 	for (i = 0; i < labArray.length; i++) {
-		if (labArray[i].lab === lab) {
+		if (labArray[i]._id === lab) {
 			return i;
 		}
 	}
@@ -21,15 +21,15 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 		let myProgress = 0;		// Progress of myResearch
 		let myLevel    = 0;		// Level of Tech of myResearch
 		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
-		const result = newLabCheck(rowData.name, props.labUpdates);
+		const result = newLabCheck(rowData._id, props.labupdates);
 		if (result >= 0) {		// Lab was updated, so find the new %
-			let myID = props.labUpdates[result].research;	// ID of the tech being researched in this row
-			myResearch = props.allKnowledge.filter(el => el._id === myID);
+			let myID = props.labupdates[result].research;	// ID of the tech being researched in this row
+			myResearch = props.allknowledge.filter(el => el._id === myID);
 
 			if (myID !== null) {	// Most cases, obj is a number.  When removed via "X", it becomes null
 				myProgress = myResearch[0].status.progress;
 				myLevel    = myResearch[0].level;
-				myTechCost = props.techCost[myLevel];
+				myTechCost = props.techcost[myLevel];
 				return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
 			} else {
 				return (17);	// using dummy 17% for now since all progress is 0% - should change to 0
@@ -48,6 +48,18 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 	);
 };
 
+const InputNumberCell = ({ rowData, dataKey, ...props }) => {
+	function updateFunding () {
+		//props.alert({type: 'success', title: 'Updating Funding', body: `${rowData._id} is working on ${rowData.name}`})
+		return (4);
+	}
+	const drewjunk = updateFunding();
+	return (
+	<Cell {...props} style={{ padding: 0 }} dataKey="blah" >
+		<InputNumber prefix="Funding" max={drewjunk} min={0} step={1} style={{ width: 140 }}/>
+	</Cell>
+	);
+};
 
 class ResearchLabs extends Component {
 	constructor() {
@@ -62,7 +74,7 @@ class ResearchLabs extends Component {
 	
 	handleUpdate(updatedLab) {
 		let labUpdates = this.state.labUpdates;
-		const result = newLabCheck(updatedLab.lab, labUpdates);
+		const result = newLabCheck(updatedLab._id, labUpdates);
 		if (result === -1) {				// New Entry
 				labUpdates.push(updatedLab);
 		} else {							// Existing Entry
@@ -91,17 +103,17 @@ class ResearchLabs extends Component {
 				rowHeight={50}
                 data={this.state.labs}
                 >
-                <Column verticalAlign='middle' width={200} align="left" fixed>
+                <Column verticalAlign='middle' width={120} align="left" fixed>
                     <HeaderCell>Lab Name</HeaderCell>
                     <Cell dataKey="name" />
                 </Column>
         
-                <Column verticalAlign='middle' width={300} align="left" fixed>
+                <Column verticalAlign='middle' width={250} align="left" fixed>
                     <HeaderCell>Action</HeaderCell>
                     <Cell dataKey="name">
 					{rowData => {      
 						function handleChange(value) {
-							let updatedLab = { _id: rowData._id, lab: rowData.name, research: value };
+							let updatedLab = { _id: rowData._id, research: value };
 							sendUpdate(updatedLab);
 						}          
 						return (
@@ -122,18 +134,23 @@ class ResearchLabs extends Component {
                     <HeaderCell>Current Progress</HeaderCell>
 					<ProgressCell 
 						dataKey="blah"
-						labUpdates={this.state.labUpdates}
-						allKnowledge={ props.allKnowledge }
-						techCost={ props.techCost }
+						labupdates={this.state.labUpdates}
+						allknowledge={ props.allKnowledge }
+						techcost={ props.techCost }
 					/>
                 </Column>
         
                 <Column verticalAlign='middle' width={230}>
                     <HeaderCell>Funding Level</HeaderCell>
-					<Cell dataKey="blah">
-					<InputNumber prefix="Funding" max={4} min={0} step={1} style={{ width: 140 }}/>
-					</Cell>
+					<InputNumberCell 
+						prefix="Funding" 
+						max={4} 
+						min={0} 
+						step={1} 
+						style={{ width: 140 }}
+					/>
                 </Column>
+
 				<Column verticalAlign='middle' width={230}>
                     <HeaderCell>Cost</HeaderCell>
 					<Cell dataKey="blah">

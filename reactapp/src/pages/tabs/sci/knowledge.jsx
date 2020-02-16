@@ -1,79 +1,135 @@
 import React, { Component } from 'react';
-import { Progress } from 'rsuite';
-import { Table } from 'rsuite';
+import { Table, Icon } from 'rsuite';
 
 const { Column, HeaderCell, Cell } = Table;
 
-/*
-const ActionCell = ({ rowData, dataKey, ...props }) => {
-    function handleDrew() {
-      alert(`id:${rowData[dataKey]}`);
-    }
-    return (
-      <Cell {...props} className="link-group">
-        <IconButton
-          appearance="subtle"
-          onClick={handleDrew}
-          icon={<Icon icon="edit2" />}
-        />
-        <Divider vertical />
-        <Whisper>
-          <IconButton appearance="subtle" icon={<Icon icon="more" />} />
-        </Whisper>
-      </Cell>
-    );
-  };
 
 
-const ImageCell = ({ rowData, dataKey, ...props }) => (
-    <Cell {...props} style={{ padding: 0 }}>
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          background: '#f5f5f5',
-          borderRadius: 20,
-          marginTop: 2,
-          overflow: 'hidden',
-          display: 'inline-block'
-        }}
-      >
-        <img src={rowData[dataKey]} width="44" />
-        <p className="card-text"><Progress.Line percent={30} status='active' /></p>
-      </div>
-    </Cell>
-  );
-*/
-
-  const ProgressCell = ({ rowData, dataKey, ...props }) => (
-    <Cell {...props} style={{ padding: 0 }}>
-      <div>
-        <Progress.Line percent={25} status='active' />
-      </div>
-    </Cell>
-  );
-  
-  
-  class Labs extends Component {
+class Labs extends Component {
     state = { 
         lab : ['lab1', 'lab2', 'lab3']
     }
     
 
     
-    handleEdit() {
-        console.log("handleEdit");
+    formatTableData(origData) {
+        //console.log('ORIGDATA=', origData);
+        //const names = [...new Set(origData.allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
+        //console.log('FUNKNAMES=', names);
+        const knowledgeTypes = origData.filter(knowledge => (knowledge.type === "Knowledge"));
+        console.log('KNOWLEDGETYPES=', knowledgeTypes);
+        const physicsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Physics"));
+        const socialScienceKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Social Science"));
+        const biologyKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Biology"));
+        const engineeringKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Engineering"));
+        const electronicsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Electronics"));
+        const geneticsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Genetics"));
+
+        const techTypes = origData.filter(knowledge => (knowledge.type === "Tech"));
+        console.log('TECHTYPES=', techTypes);
+        
+        
+        const tableData = [
+            {
+              id: 'h1ScientificKnowledge',
+              labelName: 'Scientific Knowledge',
+              children: [
+                {
+                    id: 'h2Physics',
+                    labelName: 'Physics',
+                    children: physicsKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                },
+                {
+                    id: 'h2SocialScience',
+                    labelName: 'Social Science',
+                    children: socialScienceKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                },
+                {
+                    id: 'h2Biology',
+                    labelName: 'Biology',
+                    children: biologyKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                },
+                {
+                    id: 'h2Engineering',
+                    labelName: 'Engineering',
+                    children: engineeringKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                },
+                {
+                    id: 'h2Electronics',
+                    labelName: 'Electronics',
+                    children: electronicsKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                },
+                {
+                    id: 'h2Genetics',
+                    labelName: 'Genetics',
+                    children: geneticsKnowledge.map(index => {
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                    })
+                }
+              ]
+            },
+            {
+                id: 'h2AppliedTechnology',
+                labelName: 'Applied Technology',
+                children: [
+                  {
+                      id: 'h2FoodAndAgricultre',
+                      labelName: 'Food & Agriculture',
+                      children: [
+                          //{
+                          //    id: 'Food1', //names._id,
+                          //    labelName: 'blah2',
+                          //    status: 'ENABLED',
+                          //    count: 460
+                          //}
+                      ]
+                  }
+                ]
+              },
+              {
+                id: 'h2Analysis',
+                labelName: 'Analysis',
+                children: [
+                  //{
+                  //    id: 'h2FoodAndAgricultre',
+                  //    labelName: 'Food & Agriculture',
+                  //    children: [
+                          //{
+                          //    id: 'Food1', //names._id,
+                          //    labelName: 'blah2',
+                          //    status: 'ENABLED',
+                          //    count: 460
+                          //}
+                  //    ]
+                  //}
+                ]
+              }
+          ];
+          
+          return (tableData)
+        
     }
     
     render() { 
-        //console.log('ALLKNOWLEDGE:', this.props.allKnowledge);
+        const myTableData = this.formatTableData(this.props.allKnowledge);
+        console.log('MYTABLEDATA:', myTableData);
         const { allKnowledge } = this.props;        // Scientific Knowledge Names
         console.log('ALLKNOWLEDGE:', allKnowledge);
         const names = [...new Set(allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
         console.log('NAMES: ', names);
         const completedKnowledge = allKnowledge.filter(knowledge => knowledge.status.completed);
         console.log('completedKnowledge: ', completedKnowledge);
-        const inProgressKnowledge = allKnowledge.filter(knowledge => !knowledge.status.completed);
+        const inProgressKnowledge = allKnowledge.filter(knowledge => (!knowledge.status.completed && knowledge.status.available));
         console.log('inProgressKnowledge: ', inProgressKnowledge);
         /* COMMENT FOR BELOW IN RETURN
         <ul>{ allKnowledge.map(index => (<li key={index._id}> Name: {index.name} </li>))}</ul>
@@ -108,71 +164,38 @@ const ImageCell = ({ rowData, dataKey, ...props }) => (
 
 
             <div>
-                
                 <Table
-                height={400}
-                //data={this.state.data}
-                data={allKnowledge}
-                //onRowClick={data => {
-                //    console.log(data);
-                //}}
-                >
-                <Column width={70} align="center" fixed>
-                    <HeaderCell>Id</HeaderCell>
-                    <Cell dataKey="field" />
-                </Column>
-        
-                <Column width={200} fixed>
-                    <HeaderCell>First Name</HeaderCell>
-                    <Cell dataKey="level" />
-                </Column>
-        
-                <Column width={200}>
-                    <HeaderCell>Last Name</HeaderCell>
-                    <Cell dataKey="status.progress" />
-                </Column>
-        
-                <Column width={200}>
-                    <HeaderCell>City</HeaderCell>
-                    <Cell dataKey="desc" />
-                </Column>
-        
-                <Column width={200}>
-                    <HeaderCell>Street</HeaderCell>
-                    <Cell dataKey="field" />
-                </Column>
-        
-                <Column width={300}>
-                    <HeaderCell>Company Name</HeaderCell>
-                    <Cell dataKey="field" />
-                </Column>
-        
-                <Column width={300}>
-                    <HeaderCell>Email</HeaderCell>
-                    <Cell dataKey="field" />
-                </Column>
-                <Column width={120} fixed="right">
-                    <HeaderCell>Action</HeaderCell>
-        
-                    <Cell>
-                    {rowData => {
-                        //function handleAction() {
-                        //alert(`id:${rowData.id}`);
-                        //}
-                        return (
-                        <span>
-                        </span>
-                        );
+                    isTree
+                    defaultExpandAllRows={false}
+                    rowKey="id"
+                    height={800}
+                    data={myTableData}
+                    onExpandChange={(isOpen, rowData) => {
+                        //console.log(isOpen, rowData);
                     }}
-                    </Cell>
-                </Column>
-                <Column width={120} fixed="right">
-            <       HeaderCell>Action</HeaderCell>
-                    <ProgressCell dataKey="id" />
-                </Column>
+                    renderTreeToggle={(icon, rowData) => {
+                        if (rowData.children && rowData.children.length === 0) {
+                        return <Icon icon="spinner" spin />;
+                        }
+                        return icon;
+                    }}
+                    >
+                    <Column flexGrow={5}>
+                        <HeaderCell>Knowledge Type</HeaderCell>
+                        <Cell dataKey="labelName" />
+                    </Column>
+                
+                    <Column width={100}>
+                        <HeaderCell>Level</HeaderCell>
+                        <Cell dataKey="level" />
+                    </Column>
 
+                    <Column width={200}>
+                        <HeaderCell>Progress</HeaderCell>
+                        <Cell dataKey="progress" />
+                    </Column>
                 </Table>
-            </div> 
+            </div>
         );
     }
 }
@@ -184,19 +207,22 @@ export default Labs;
 
 
 
-//class FixedColumnTable extends React.Component {
+//class TreeTable extends React.Component {
 //    constructor(props) {
 //      super(props);
 //      this.state = {
-//        data: fakeData
+//        data: fakeTreeData
 //      };
 //    }
 //    render() {
+//      const { data } = this.state;
 //      return (
+
 
 
 
 //      );
 //    }
 //  }
-//  ReactDOM.render(<FixedColumnTable />);
+  
+//ReactDOM.render(<TreeTable />);

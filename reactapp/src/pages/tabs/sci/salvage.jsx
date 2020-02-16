@@ -89,7 +89,7 @@ class Salvage extends Component {
 
   
     
-    console.log("============START===========");
+    //console.log("============START===========");
     const myResult = createCascadeArray(labResearchTypes,0);
     //console.log("MYRESULT=",myResult);
 
@@ -104,7 +104,6 @@ class Salvage extends Component {
           size="xs"
           placeholder="Default"
           searchable={false}
-          parentSelectable={true}
           data={myResult}
           style={styles}
         />
