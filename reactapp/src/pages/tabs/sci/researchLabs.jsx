@@ -26,6 +26,7 @@ class ResearchLabs extends Component {
 	constructor() {
 		super();
 		this.state = {
+			labUpdates: [],
 			Labs: [
 				{
 					research: null,
@@ -42,9 +43,15 @@ class ResearchLabs extends Component {
 			],
 			junk: null
 		}
-        this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.update = this.update.bind(this);
     }
   
+	update(update) {
+		let labUpdates = this.state.labUpdates;
+		labUpdates.push(update);
+		this.setState({labUpdates})
+	}
   
 	handleChange(value) {
 		  //this.setState({research:value})
@@ -54,6 +61,9 @@ class ResearchLabs extends Component {
 	render() { 
 		console.log('TEAM=', this.props.team);
 		console.log('EVERYTHING=', this.props.everythingProp);
+		let props = this.props;
+		let handleUpdate = this.update
+		let alert = this.props.alert
 		return(
 			<div>
 				<Table
@@ -69,14 +79,23 @@ class ResearchLabs extends Component {
                 <Column width={300} align="left" fixed>
                     <HeaderCell>Action</HeaderCell>
                     <Cell dataKey="lab">
-						<MySelectPicker
-						lab="Lab X"
-						team={ this.props.team }
-						allKnowledge={this.props.allKnowledge}
-						//accounts={ this.props.accounts }
-						handleChange={ this.handleChange }
-						alert={ this.props.alert }
-						/>
+					{rowData => {      
+						function handleSubmit(value) {
+							alert({type: 'success', title: 'Research Selected', body: `${rowData.lab} Drew is working on ${value}`});
+							let update = { lab: rowData.lab, research: value };
+							handleUpdate(update);
+						}          
+						return (
+							<MySelectPicker
+								lab={rowData.lab}
+								team={ props.team }
+								allKnowledge={ props.allKnowledge}
+								//accounts={ this.props.accounts }
+								handleChange={ handleSubmit }
+								alert={ props.alert }
+							/>   
+						)}}
+
 					</Cell>
                 </Column>
         

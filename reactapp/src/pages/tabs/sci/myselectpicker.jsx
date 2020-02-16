@@ -13,6 +13,7 @@ class MySelectPicker extends Component {
   
 	handleChange(value) {
 		  this.setState({research:value})
+		  this.props.handleChange(value);
 		  this.props.alert({type: 'success', title: 'Research Selected', body: `${this.props.lab} is working on ${value}`})
 	}
 
