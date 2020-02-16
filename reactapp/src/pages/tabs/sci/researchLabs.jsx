@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Progress, Table } from 'rsuite';
+import { Progress, Table, InputNumber, Input } from 'rsuite';
 import MySelectPicker from './myselectpicker';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -91,12 +91,12 @@ class ResearchLabs extends Component {
 				rowHeight={50}
                 data={this.state.labs}
                 >
-                <Column width={200} align="left" fixed>
+                <Column verticalAlign='middle' width={200} align="left" fixed>
                     <HeaderCell>Lab Name</HeaderCell>
                     <Cell dataKey="name" />
                 </Column>
         
-                <Column width={300} align="left" fixed>
+                <Column verticalAlign='middle' width={300} align="left" fixed>
                     <HeaderCell>Action</HeaderCell>
                     <Cell dataKey="name">
 					{rowData => {      
@@ -115,11 +115,10 @@ class ResearchLabs extends Component {
 								alert={ props.alert }
 							/>   
 						)}}
-
 					</Cell>
                 </Column>
         
-                <Column width={200}>
+                <Column verticalAlign='middle' width={200}>
                     <HeaderCell>Current Progress</HeaderCell>
 					<ProgressCell 
 						dataKey="blah"
@@ -129,24 +128,19 @@ class ResearchLabs extends Component {
 					/>
                 </Column>
         
-                <Column width={200}>
-                    <HeaderCell>Progress Value</HeaderCell>
-					<Cell dataKey="blah" />
+                <Column verticalAlign='middle' width={230}>
+                    <HeaderCell>Funding Level</HeaderCell>
+					<Cell dataKey="blah">
+					<InputNumber prefix="Funding" max={4} min={0} step={1} style={{ width: 140 }}/>
+					</Cell>
                 </Column>
-    
-
+				<Column verticalAlign='middle' width={230}>
+                    <HeaderCell>Cost</HeaderCell>
+					<Cell dataKey="blah">
+					<Input prefix="Cost:"  max={4} min={0} step={1} style={{ width: 140 }}/>
+					</Cell>
+                </Column>
                 </Table>
-
-
-
-				<hr />
-				<span>Lab 2: </span>
-				<MySelectPicker
-					lab='Lab 2'  
-					team={ this.props.team }
-					allKnowledge={this.props.allKnowledge}
-					alert={ this.props.alert }
-				/>
 			</div>
     	);
   	}
