@@ -103,11 +103,13 @@ class Science extends Component {
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
-                        <ResearchLabs
+                        <ResearchLabs {...this.props}
                         team={this.props.team}
                         allKnowledge={this.props.research}
                         everythingProp={this.props}
                         alert={this.props.alert}
+                        techCost={this.state.techCost}
+                        fundingCost={this.state.fundingCost}
                         />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />

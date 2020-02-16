@@ -3,8 +3,8 @@ const modelDebugger = require('debug')('app: Military Model');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
-const Army = Military.discriminator('Army', new Schema({
-  type: { type: String, default: 'Army'},
+const Corps = Military.discriminator('Corps', new Schema({
+  type: { type: String, default: 'Corps'},
   stats: {
     health: { type: Number, default: 2 },
     healthMax: { type: Number, default: 2 },
