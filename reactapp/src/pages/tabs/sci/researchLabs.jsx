@@ -32,20 +32,31 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 				myTechCost = props.techcost[myLevel];
 				return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
 			} else {
-				return (17);	// using dummy 17% for now since all progress is 0% - should change to 0
+				return (-1);	// -1 and issue error instead of progress bar
 			}
 
 		} else {
-			return (33);	// using dummy 33% for now since all progress is 0% - should change to 0
+			return (-1);	// -1 and issue error instead of progress bar
 		}
 	}
-	return (
-	<Cell {...props} style={{ padding: 0 }}>
-		  <div>
-			  <Progress.Line percent={lookupPct()} status='active' />
-		  </div>
-	</Cell>
-	);
+	const getPctResult = lookupPct();
+	if (getPctResult < 0) {			// No updated Lab - return error instead of progress bar
+		return (
+			<Cell {...props} style={{ padding: 0 }}>
+				  <div>
+					  Choose a research
+				  </div>
+			</Cell>
+			);
+	} else {
+		return (
+			<Cell {...props} style={{ padding: 0 }}>
+				<div>
+					<Progress.Line percent={lookupPct()} status='active' />
+				</div>
+			</Cell>
+		);
+	}
 };
 
 const InputNumberCell = ({ rowData, dataKey, ...props }) => {
