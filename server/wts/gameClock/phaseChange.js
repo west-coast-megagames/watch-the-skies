@@ -3,6 +3,8 @@ const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
 const banking = require('../banking/banking'); // IMPORT - Banking System
 
+const nexusEvent = require('../../startup/events');
+
 const { logger } = require('../../middleware/winston'); // IMPORT - Winston error logging
 
 /* This file handles all the events triggered on phase change.
