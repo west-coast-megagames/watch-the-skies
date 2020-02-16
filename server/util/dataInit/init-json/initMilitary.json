@@ -2,32 +2,12 @@
     "model" : "Military",
     "name" : "USA Attack Sub Fleet 1",
     "team" : "USA",
-    "zone" : "NA",
     "country" : "US",
-    "site" : "site",
-    "base" : "USBA",
-    "status" : [ 
-        {"damage" : false},
-        {"deployed" : false},
-        {"destroyed" : false},
-        {"repair" : false}
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"
     ],
-    "equipment" : [
-        {"weapons" : "Weapon Sub FLeet"},
-        {"vehicles" : "Vehicle Sub Fleet"},
-        {"transport" : "Transport Sub Fleet"}
-    ],
-    "training" : "Training Sub Fleet",
-    "type" : "Fleet",
-    "stats" : [
-        {"health" : 4},
-        {"healthMax" : 4},
-        {"attack" : 5},
-        {"defense" : 3},
-        {"localDeploy" : 2},
-        {"globalDeploy" : 5},
-        {"invasion" : 2}
-    ]
+    "training" : "",
+    "type" : "Fleet"
 },
 {
     "model" : "Military",
@@ -36,7 +16,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -67,7 +47,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -98,7 +78,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -129,7 +109,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -160,7 +140,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -191,7 +171,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -222,7 +202,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -253,7 +233,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -284,7 +264,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -315,7 +295,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -346,7 +326,7 @@
     "zone" : "EU",
     "country" : "GB",
     "site" : "site",
-    "base" : "GBBA",
+    "homeBase" : "GBBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -377,7 +357,7 @@
     "zone" : "EU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -408,7 +388,7 @@
     "zone" : "EU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -439,7 +419,7 @@
     "zone" : "EU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -470,7 +450,7 @@
     "zone" : "AU",
     "country" : "JP",
     "site" : "site",
-    "base" : "JPBA",
+    "homeBase" : "JPBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -501,7 +481,7 @@
     "zone" : "AU",
     "country" : "JP",
     "site" : "site",
-    "base" : "JPBA",
+    "homeBase" : "JPBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -532,7 +512,7 @@
     "zone" : "AU",
     "country" : "JP",
     "site" : "site",
-    "base" : "JPBA",
+    "homeBase" : "JPBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -563,7 +543,7 @@
     "zone" : "AU",
     "country" : "IN",
     "site" : "site",
-    "base" : "INBA",
+    "homeBase" : "INBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -594,7 +574,7 @@
     "zone" : "AU",
     "country" : "IN",
     "site" : "site",
-    "base" : "INBA",
+    "homeBase" : "INBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -625,7 +605,7 @@
     "zone" : "AU",
     "country" : "IN",
     "site" : "site",
-    "base" : "INBA",
+    "homeBase" : "INBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -656,7 +636,7 @@
     "zone" : "EU",
     "country" : "FR",
     "site" : "site",
-    "base" : "FRBA",
+    "homeBase" : "FRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -687,7 +667,7 @@
     "zone" : "EU",
     "country" : "FR",
     "site" : "site",
-    "base" : "FRBA",
+    "homeBase" : "FRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -718,7 +698,7 @@
     "zone" : "AS",
     "country" : "EG",
     "site" : "site",
-    "base" : "FRBA",
+    "homeBase" : "FRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -749,7 +729,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -780,7 +760,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -811,7 +791,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -842,7 +822,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -873,7 +853,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -904,7 +884,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -935,7 +915,7 @@
     "zone" : "SA",
     "country" : "BZ",
     "site" : "site",
-    "base" : "BZBA",
+    "homeBase" : "BZBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -966,7 +946,7 @@
     "zone" : "AU",
     "country" : "AU",
     "site" : "site",
-    "base" : "AUBA",
+    "homeBase" : "AUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -997,7 +977,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1028,7 +1008,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1059,7 +1039,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1090,7 +1070,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1121,7 +1101,7 @@
     "zone" : "EU",
     "country" : "GB",
     "site" : "site",
-    "base" : "GBBA",
+    "homeBase" : "GBBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1152,7 +1132,7 @@
     "zone" : "EU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1183,7 +1163,7 @@
     "zone" : "AU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1214,7 +1194,7 @@
     "zone" : "AU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1245,7 +1225,7 @@
     "zone" : "AU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1276,7 +1256,7 @@
     "zone" : "AU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1307,7 +1287,7 @@
     "zone" : "AU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1338,7 +1318,7 @@
     "zone" : "AS",
     "country" : "IR",
     "site" : "site",
-    "base" : "IRBA",
+    "homeBase" : "IRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1369,7 +1349,7 @@
     "zone" : "AU",
     "country" : "IN",
     "site" : "site",
-    "base" : "INBA",
+    "homeBase" : "INBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1400,7 +1380,7 @@
     "zone" : "EU",
     "country" : "FR",
     "site" : "site",
-    "base" : "FRBA",
+    "homeBase" : "FRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1431,7 +1411,7 @@
     "zone" : "AS",
     "country" : "EG",
     "site" : "site",
-    "base" : "EGBA",
+    "homeBase" : "EGBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1462,7 +1442,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1493,7 +1473,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1524,7 +1504,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1555,7 +1535,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1586,7 +1566,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1617,7 +1597,7 @@
     "zone" : "AU",
     "country" : "AU",
     "site" : "site",
-    "base" : "AUBA",
+    "homeBase" : "AUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1648,7 +1628,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1679,7 +1659,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1709,7 +1689,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1740,7 +1720,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1771,7 +1751,7 @@
     "zone" : "NA",
     "country" : "US",
     "site" : "site",
-    "base" : "USBA",
+    "homeBase" : "USBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1802,7 +1782,7 @@
     "zone" : "EU",
     "country" : "GB",
     "site" : "site",
-    "base" : "GBBA",
+    "homeBase" : "GBBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1833,7 +1813,7 @@
     "zone" : "EU",
     "country" : "RU",
     "site" : "site",
-    "base" : "RUBA",
+    "homeBase" : "RUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1864,7 +1844,7 @@
     "zone" : "AU",
     "country" : "AU",
     "site" : "site",
-    "base" : "AUBA",
+    "homeBase" : "AUBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1895,7 +1875,7 @@
     "zone" : "EU",
     "country" : "FR",
     "site" : "site",
-    "base" : "FRBA",
+    "homeBase" : "FRBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1926,7 +1906,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1957,7 +1937,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -1988,7 +1968,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -2019,7 +1999,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -2050,7 +2030,7 @@
     "zone" : "AU",
     "country" : "CN",
     "site" : "site",
-    "base" : "CNBA",
+    "homeBase" : "CNBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -2081,7 +2061,7 @@
     "zone" : "SA",
     "country" : "BZ",
     "site" : "site",
-    "base" : "BZBA",
+    "homeBase" : "BZBA",
     "status" : [ 
         {"damage" : false},
         {"deployed" : false},
@@ -2109,31 +2089,11 @@
     "model" : "Military",
     "name" : "USA Marine Corps 1",
     "team" : "USA",
-    "zone" : "NA",
     "country" : "US",
-    "site" : "site",
-    "base" : "USBA",
-    "status" : [ 
-        {"damage" : false},
-        {"deployed" : false},
-        {"destroyed" : false},
-        {"repair" : false}
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Marine Vehicles"}
     ],
-    "equipment" : [
-        {"weapons" : "Weapon Marine Corps"},
-        {"vehicles" : "Vehicle Marine Corps"},
-        {"transport" : "Transport Marine Corps"}
-    ],
-    "training" : "Training Marine Corps",
-    "type" : "Army",
-    "stats" : [
-        {"health" : 2},
-        {"healthMax" : 2},
-        {"attack" : 4},
-        {"defense" : 5},
-        {"localDeploy" : 2},
-        {"globalDeploy" : 5},
-        {"invasion" : 2}
-    ]
-},
+    "training" : "Corps",
+    "type" : "Corps"
+}
 ]
