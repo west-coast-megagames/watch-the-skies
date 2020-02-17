@@ -5,6 +5,8 @@ import Interception from './tabs/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 
+import map from '../img/worldMap_mergedRegions.svg'
+
 class Operations extends Component {
     constructor() {
         super();
@@ -59,7 +61,10 @@ class Operations extends Component {
                         /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <h5>The global system for the Operations Module has not been created!</h5>
+                        <img
+                            src={map}
+                            alt='Terror Map'
+                        />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
                         <h5>The nuclear system for the Operations Module has not been created!</h5>
