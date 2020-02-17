@@ -1,17 +1,38 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon, Progress } from 'rsuite';
+import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
-import KnowledgeCard from '../components/common/knowledgeCard';
-
+import Labs from '../pages/tabs/sci/labs';
+import Knowledge from '../pages/tabs/sci/knowledge';
+import Salvage from '../pages/tabs/sci/salvage';
+import axios from 'axios';
+import { gameServer } from '../config';
+import ResearchLabs from './tabs/sci/researchLabs';
 class Science extends Component {
     constructor() {
         super();
         this.state = {
-          tab: 'dashboard'
+          tab: 'dashboard',
+          allKnowledge : [],
+          fundingCost: [],
+          techCost: []
         };
         this.handleSelect = this.handleSelect.bind(this);
+    }
+
+    componentDidMount() {
+        this.loadScience();
+    }
+
+    async loadScience() {
+        // const {data: rawData} = await axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        const { data } = await axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
+        let techCost = data.techCost;
+        let fundingCost = data.fundingCost;
+        // const allKnowledge = this.removeDuplicates(rawData, 'name');
+        // console.log('DUPREMOVE=', allKnowledge);
+        this.setState({ techCost, fundingCost });
     }
 
     getActive(element) {
@@ -22,16 +43,23 @@ class Science extends Component {
         this.setState({ tab: activeKey })
     }
 
+    removeDuplicates(myArr, prop) {
+        return myArr.filter((obj, pos, arr) => {
+            return arr.map(mapObj => mapObj.name).indexOf(obj[prop]) === pos;
+        });
+      }
+      
     render() {
         const url = this.props.match.path;
         const { tab } = this.state; 
+        
 
-         return (
+        return (
         <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
-                    <Nav.Item eventKey="research" to={`${url}/research`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFlask} />}> Research</Nav.Item>
+                    <Nav.Item eventKey="trial" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faFlask} />}> Research Labs</Nav.Item>
                     <Nav.Item eventKey="knowledge" to={`${url}/knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
                     <Nav.Item eventKey="applied" to={`${url}/applied`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faVials} />}> Applied Tech</Nav.Item>
                     <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item>
@@ -43,31 +71,44 @@ class Science extends Component {
                         <h5>No dashboard has been coded for the Science Module!</h5>
                     )}/>
                     <Route path={`${url}/research`}  render={() => (
-                        <React.Fragment><h5>Active focus: Computer Science I</h5><Progress.Line percent={25} status='active' /></React.Fragment>
+                        <Labs    
+                            team={ this.props.team }
+                            allKnowledge={this.props.research}
+                            //accounts={ this.props.accounts }
+                            //handleUpdate={ this.props.handleUpdate }
+                            //alert={ this.props.alert }
+                        />
                     )}/>
                     <Route path={`${url}/knowledge`} render={() => (
-                        <React.Fragment>
-                        <div className="card-group">
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                        </div>
-                        <div className="card-group">
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                            <KnowledgeCard name="Test Tech" desc="Look at the science! What happens if I put more and more text here?" />
-                        </div>
-                        </React.Fragment>
+                        <Knowledge    
+                        team={ this.props.team }
+                        allKnowledge={this.props.research}
+                        //accounts={ this.props.accounts }
+                        //handleUpdate={ this.props.handleUpdate }
+                        //alert={ this.props.alert }
+                        />
                     )}/>
                     <Route path={`${url}/applied`}  render={() => (
-                        <h5>The applied technology system for the Science Module has not been created!</h5>
+                        <h5>Nothing Exists here yet...</h5>
                     )}/>
-                    <Route path={`${url}/salvage`}  render={() => (
-                        <h5>The salvage system for the Science Module has not been created!</h5>
+                    <Route path={`${url}/salvage`} render={() => (
+                        <Salvage    
+                        team={ this.props.team }
+                        allKnowledge={this.props.research}
+                        //accounts={ this.props.accounts }
+                        //handleUpdate={ this.props.handleUpdate }
+                        //alert={ this.props.alert }
+                        />
+                    )}/>
+                    <Route path={`${url}/Research Labs`} render={() => (
+                        <ResearchLabs {...this.props}
+                        team={this.props.team}
+                        allKnowledge={this.props.research}
+                        everythingProp={this.props}
+                        alert={this.props.alert}
+                        techCost={this.state.techCost}
+                        fundingCost={this.state.fundingCost}
+                        />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>

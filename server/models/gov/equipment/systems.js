@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
+const { Equipment } = require('./equipment');
 const Schema = mongoose.Schema;
+const Joi = require('joi');
 
-const SystemSchema = new Schema({
-    name: { type: String },
-    cost: { type: Number },
-    prereq: [{
-        type: { type: String},
-        name: {type: String}}
-    ],
-    category: { type: String },
-    desc: { type: String },
+const System = Equipment.discriminator('System', new Schema({
+    type: { type: String, default: 'System' },
+    category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util', 'Chassis' ] },
     stats: {
         hullMax: { type: Number },
         attack: { type: Number },
@@ -20,8 +16,6 @@ const SystemSchema = new Schema({
         range: { type: Number },
         cargo: { type: Number }
     }
-});
-
-let System = mongoose.model('System', SystemSchema);
+}));
 
 module.exports = { System };

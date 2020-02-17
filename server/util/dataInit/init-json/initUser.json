@@ -16,6 +16,42 @@
 "discord" : "Rawr",
 "teamCode" : "USA"
 },
+{
+"loadType" : "user",
+"username" : "HOS UK",
+"name" : {"first" : "Lisa", "last" : "Frank" },
+"email" : "Art@gmail.com",
+"phone" : "9167584625",
+"password" : "PWTest",
+"address" : 
+    {"street1" : "15 Craft way",
+     "street2" : "",
+    "city" : "Zoo",
+       "state" : "AZ",
+     "zipcode" : "12345"},
+"dob" : "1992-08-03",
+"gender" : "Non-Binary",
+"discord" : "Pretty",
+"teamCode" : "TUK"
+ },
+ { 
+"loadType" : "user",
+"username" : "HOS South Africa",
+"name" : {"first" : "Nelson", "last" : "M." },
+"email" : "SAfortheWin@gmail.com",
+"phone" : "9161234567",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "785 Easy St",
+     "street2" : "",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "RZA"
+},
 { 
 "loadType" : "user",
 "username" : "HOS Russia",
@@ -34,23 +70,59 @@
 "discord" : "Money",
 "teamCode" : "RFD"
 },
-{
+{ 
 "loadType" : "user",
-"username" : "HOS China",
-"name" : {"first" : "George", "last" : "Of the Jungle" },
-"email" : "FastAsICanBe@hotmail.com",
-"phone" : "9167584623",
+"username" : "HOS Japan",
+"name" : {"first" : "Ellis", "last" : "Doors" },
+"email" : "oneOfThe12@gmail.com",
+"phone" : "9164584622",
 "password" : "PWtest",
 "address" : 
-    {"street1" : "9540 Mt. Access Road",
+    {"street1" : "700 Easy St",
      "street2" : "",
-     "city" : "Hang Town",
+     "city" : "Luxury Town",
      "state" : "CA",
-     "zipcode" : "64825"},
-"dob" : "2013-10-03",
-"gender" : "Male",
-"discord" : "Jungle",
-"teamCode" : "PRC"
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "JPN"
+},
+{ 
+"loadType" : "user",
+"username" : "HOS Iran",
+"name" : {"first" : "Seeker", "last" : "Doors" },
+"email" : "wehavenukes5@gmail.com",
+"phone" : "9167581111",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "800 Easy St",
+     "street2" : "",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "IRN"
+},
+{ 
+"loadType" : "user",
+"username" : "HOS India",
+"name" : {"first" : "Mary", "last" : "Doors" },
+"email" : "player@gmail.com",
+"phone" : "9167584622",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "900 Easy St",
+     "street2" : "",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "IND"
 },
 {
 "loadType" : "user",
@@ -72,22 +144,77 @@
 },
 {
 "loadType" : "user",
-"username" : "HOS UK",
-"name" : {"first" : "Lisa", "last" : "Frank" },
-"email" : "Art@gmail.com",
-"phone" : "9167584625",
-"password" : "PWTest",
+"username": "HOS Egypt",
+"name" : {"first" : "Ancient", "last" : "Doors" },
+"email" : "Ancient@yahoo.com",
+"phone" : "9167700624",
+"password" : "PWtest",
 "address" : 
-    {"street1" : "15 Craft way",
+    {"street1" : "1000 Easy St",
      "street2" : "",
-     "city" : "Zoo",
-     "state" : "AZ",
-     "zipcode" : "12345"},
-"dob" : "1992-08-03",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-03-12",
 "gender" : "Non-Binary",
-"discord" : "Pretty",
-"teamCode" : "TUK"
+"discord" : "Free",
+"teamCode" : "EPT"
 },
+{
+"loadType" : "user",
+"username" : "HOS China",
+"name" : {"first" : "George", "last" : "Of the Jungle" },
+"email" : "FastAsICanBe@hotmail.com",
+"phone" : "9167584623",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "9540 Mt. Access Road",
+     "street2" : "",
+     "city" : "Hang Town",
+     "state" : "CA",
+     "zipcode" : "64825"},
+"dob" : "2013-10-03",
+"gender" : "Male",
+"discord" : "Jungle",
+"teamCode" : "PRC"
+},
+{ 
+"loadType" : "user",
+"username" : "HOS Brazil",
+"name" : {"first" : "Mano", "last" : "Doors" },
+"email" : "LatinAmerica@gmail.com",
+"phone" : "9167584444",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "1100 Easy St",
+     "street2" : "",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "BRZ"
+},
+{ 
+"loadType" : "user",
+"username" : "HOS Australia",
+"name" : {"first" : "Sue", "last" : "Doors" },
+"email" : "SueDoors@gmail.com",
+"phone" : "916758555",
+"password" : "PWtest",
+"address" : 
+    {"street1" : "500 Easy St",
+     "street2" : "",
+     "city" : "Luxury Town",
+     "state" : "CA",
+     "zipcode" : "45792"},
+"dob" : "1994-05-08",
+"gender" : "Female",
+"discord" : "Money",
+"teamCode" : "AUS"
+},
+
 {
 "loadType" : "user",
 "username" : "HOS Fed",
@@ -177,5 +304,23 @@
     "gender" : "Male",
     "discord" : "Drewwww#8011",
     "teamCode" : "TUK"
+},
+{
+    "loadType" : "user",
+    "username" : "ControlMan",
+    "name" : {"first" : "Control", "last" : "Man" },
+    "email" : "control@gmail.com",
+    "phone" : "5555555555",
+    "password" : "TempPassword",
+    "address" : 
+        {"street1" : "Four Place",
+         "street2" : "",
+         "city" : "Sacramento",
+         "state" : "CA",
+         "zipcode" : "11111"},
+    "dob" : "1974-12-29",
+    "gender" : "Male",
+    "discord" : "control#9763",
+    "teamCode" : "TCN"
 }
 ]

@@ -19,7 +19,7 @@
     "name": "High Orbital Sensor Suite",
     "cost": 0,
     "prereq": [],
-    "category": "Sensors",
+    "category": "Sensor",
     "desc": "Basic terestrial sensor system",
     "stats": { "evade": 0 }
 },

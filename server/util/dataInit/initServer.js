@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dbDebugger = require('debug')('app:db');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 const supportsColor = require('supports-color');
 //const connect = require('../config/sockets');
 const http = require('http');
@@ -18,11 +19,13 @@ const users = require('../../routes/users');
 const news = require('../../routes/api/news');
 const logs = require('../../routes/api/log');
 const account = require('../../routes/api/accounts');
+const sites = require('../../routes/api/sites');
 const config = require('config');
 
 // Middleware - express and socketIo
 const app = express();
 const server = http.createServer(app);
+require('../../startup/logging')(); // Bootup for error handling
 
 // Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
 app.use(cors());
@@ -42,7 +45,10 @@ const mongoOptions =  {
 // Connect to MongoDB with Mongoose
 mongoose.connect(dbURI, mongoOptions)
     .then(() => dbDebugger(`MongoDB Connected ${config.get('dbName')} ...`))
+    .then(() => logger.info(`MongoDB Connected ${config.get('dbName')} ...`));
+    /* let winston handle it
     .catch(err => console.warn(err));
+    */
 
 // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 app.use('../../api/interceptor', interceptor); // Route for manipulating interceptors
@@ -54,7 +60,7 @@ app.use('../../users', users); // Route for dealing with Users
 app.use('../../api/news', news); // Route for the news desks
 app.use('../../api/logs', logs); // Route for logs
 app.use('../../api/accounts', account); // Route for Team Accounts
-
+  
 let loadSel = config.get('loadSel');
 if (loadSel == "") { 
   loadSel = "All"; 
@@ -64,4 +70,4 @@ initLoadAll(loadSel);
 
 // Server entry point - Node Server
 const port = process.env.PORT || 5000;
-server.listen(port, () => console.log(`WTS INIT Server started on port ${port}...`));
+server.listen(port, () => logger.info(`WTS INIT Server started on port ${port}...`));

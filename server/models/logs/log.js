@@ -9,6 +9,7 @@ const LogSchema = new Schema({
         phase: { type: String },
         turnNum: { type: Number }
     },
+    model: { type: String, default: 'Log'},
     team: { type: Schema.Types.ObjectId, ref: 'Team'}
 });
 

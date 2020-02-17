@@ -1,0 +1,1187 @@
+[{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"
+    ],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 2",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 3",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 4",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 5",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 6",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 7",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 8",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 9",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 10",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Attack Sub Fleet 11",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "UK Modern Attack Sub Fleet 1",
+    "team" : "TUK",
+    "country" : "GB",
+    "homeBase" : "GB",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 2",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Attack Sub Fleet 3",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 1",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 2",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Attack Sub Fleet 3",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 1",
+    "team" : "IDN",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 2",
+    "team" : "IDN",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Attack Sub Fleet 3",
+    "team" : "IDN",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "France Attack Sub Fleet 3",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "France Small Modern Attack Sub Fleet 1",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Attack Sub Fleet 1",
+    "team" : "EPT",
+    "country" : "EG",
+    "homeBase" : "EG",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 1",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 2",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 3",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 4",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 5",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Attack Sub Fleet 6",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Attack Sub Fleet 1",
+    "team" : "BRZ",
+    "country" : "BZ",
+    "homeBase" : "BZ",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Australia Attack Sub Fleet 1",
+    "team" : "AUS",
+    "country" : "AU",
+    "homeBase" : "AU",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 2",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 3",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Surface Fleet 4",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "UK Surface Fleet 1",
+    "team" : "TUK",
+    "country" : "GB",
+    "homeBase" : "GB",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Surface Fleet 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 1",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 2",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 3",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 4",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Surface Fleet 5",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Surface Fleet 1",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Surface Fleet 1",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "France Surface Fleet 1",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Surface Fleet 1",
+    "team" : "EPT",
+    "country" : "EG",
+    "homeBase" : "EG",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 1",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 2",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 3",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 4",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Surface Fleet 5",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Australia Surface Fleet 1",
+    "team" : "AUS",
+    "country" : "AU",
+    "homeBase" : "AU",
+    "equipment" : [ "Surface Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 2",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 3",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 4",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Carrier Fleet 5",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "UK Carrier Fleet 1",
+    "team" : "TUK",
+    "country" : "GB",
+    "homeBase" : "GB",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Carrier Fleet 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Carrier Fleet 1",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "France Carrier Fleet 1",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 1",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 2",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 3",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 4",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "China Carrier Fleet 5",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Carrier Fleet 1",
+    "team" : "BRZ",
+    "country" : "BZ",
+    "homeBase" : "BZ",
+    "equipment" : [ "Carrier Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "USA Marine Corps 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Marine Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Old Technology Corps 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Old Technology Corps 2",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Old Technology Corps 3",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Old Technology Corps 4",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "UK Old Technology Corps 1",
+    "team" : "TUK",
+    "country" : "GB",
+    "homeBase" : "GB",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "South Africa Old Technology Corps 1",
+    "team" : "RSA",
+    "country" : "ZA",
+    "homeBase" : "ZA",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Old Technology Corps 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Old Technology Corps 2",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Old Technology Corps 3",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Old Technology Corps 4",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Old Technology Corps 1",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "India Old Technology Corps 1",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "India Old Technology Corps 2",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "India Old Technology Corps 3",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "India Old Technology Corps 4",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "France Old Technology Corps 1",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Old Technology Corps 1",
+    "team" : "EPT",
+    "country" : "EG",
+    "homeBase" : "EG",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Old Technology Corps 1",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Old Technology Corps 2",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Old Technology Corps 3",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Old Technology Corps 4",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Old Technology Corps 1",
+    "team" : "BRZ",
+    "country" : "BZ",
+    "homeBase" : "BZ",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Australia Old Technology Corps 1",
+    "team" : "AUS",
+    "country" : "AU",
+    "homeBase" : "AU",
+    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Modern Technology Corps 1",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "USA Modern Technology Corps 2",
+    "team" : "USA",
+    "country" : "US",
+    "homeBase" : "US",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "UK Modern Technology Corps 1",
+    "team" : "TUK",
+    "country" : "GB",
+    "homeBase" : "GB",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Modern Technology Corps 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Modern Technology Corps 1",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Modern Technology Corps 2",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "India Modern Technology Corps 1",
+    "team" : "IND",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "France Modern Technology Corps 1",
+    "team" : "TFR",
+    "country" : "FR",
+    "homeBase" : "FR",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Modern Technology Corps 1",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "China Modern Technology Corps 2",
+    "team" : "PRC",
+    "country" : "CN",
+    "homeBase" : "CN",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Australia Modern Technology Corps 1",
+    "team" : "AUS",
+    "country" : "AU",
+    "homeBase" : "AU",
+    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
+    ],
+    "training" : "Corps",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "South Africa Modern Technology Corps 1",
+    "team" : "RSA",
+    "country" : "ZA",
+    "homeBase" : "ZA",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Modern Technology Corps 1",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Modern Technology Corps 2",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Modern Technology Corps 3",
+    "team" : "RFD",
+    "country" : "RU",
+    "homeBase" : "RU",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Modern Technology Corps 1",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Modern Technology Corps 2",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Modern Technology Corps 3",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Modern Technology Corps 1",
+    "team" : "EPT",
+    "country" : "EG",
+    "homeBase" : "EG",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Egypt Modern Technology Corps 2",
+    "team" : "EPT",
+    "country" : "EG",
+    "homeBase" : "EG",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Modern Technology Corps 1",
+    "team" : "BRZ",
+    "country" : "BZ",
+    "homeBase" : "BZ",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+},
+{
+    "model" : "Military",
+    "name" : "Brazil Modern Technology Corps 2",
+    "team" : "BRZ",
+    "country" : "BZ",
+    "homeBase" : "BZ",
+    "equipment" : [ {"vehicles" : "Militia Vehicles"}
+    ],
+    "training" : "Militia",
+    "type" : "Corps"
+}
+]

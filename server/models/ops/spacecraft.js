@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const SpacecraftSchema = new Schema({
-  designation: { type: String, required: true, min: 2, maxlength: 50 },
+  name: { type: String, required: true, min: 2, maxlength: 50 },
   type: { 
     type: String,
     required: true,
@@ -12,11 +12,6 @@ const SpacecraftSchema = new Schema({
     maxlength: 50,
     enum: ["Satellite", "Interceptor", "Gunship", "Transport", "Hauler", "Decoy"], 
     default: "Interceptor"} ,
-  team: { 
-    teamName: { type: String, minlength: 2, maxlength: 50, default: "UN-Assigned" },
-    team_id: { type: Schema.Types.ObjectId, ref: 'Team'},
-    teamCode: { type: String, minlength: 2, maxlength: 3 }
-  },
   stats: {
     hull: { type: Number, default: 2 },
     hullMax: { type: Number, default: 2 },
@@ -24,19 +19,12 @@ const SpacecraftSchema = new Schema({
     passiveRolls: [Number],
     activeRolls: [Number]
   },
-  location: { 
-    zone: { 
-      zoneName: { type: String, default: "UN-Assigned" },
-      zone_id: { type: Schema.Types.ObjectId, ref: 'Zone'},
-      zoneCode: {type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    country: { 
-      countryName: { type: String, default: "UN-Assigned" },
-      country_id: { type: Schema.Types.ObjectId, ref: 'Country'},
-      countryCode: { type: String, minlength: 2, maxlength: 2, uppercase: true }
-    },
-    poi: { type: String }
-  },
+  team: { type: Schema.Types.ObjectId, ref: 'Team'},
+  mission: { type: String }, 
+  zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
+  country: { type: Schema.Types.ObjectId, ref: 'Country'},
+  site: { type: Schema.Types.ObjectId, ref: 'Site' },
+  base: { type: Schema.Types.ObjectId, ref: 'Site'},
   status: {
     aggressive: { type: Boolean, default: true },
     passive: { type: Boolean, default: false },
@@ -53,7 +41,7 @@ const SpacecraftSchema = new Schema({
 
 SpacecraftSchema.methods.validateInterceptor = function (interceptor) {
   const schema = {
-    designation: Joi.string().min(2).max(50).required(),
+    name: Joi.string().min(2).max(50).required(),
     type: Joi.string().min(2).max(50).required(),
   };
 
@@ -63,10 +51,10 @@ SpacecraftSchema.methods.validateInterceptor = function (interceptor) {
 let Interceptor = mongoose.model('interceptor', SpacecraftSchema);
 
 function validateInterceptor(interceptor) {
-  //modelDebugger(`Validating ${interceptor.designation}...`);
+  //modelDebugger(`Validating ${interceptor.name}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required(),
+      name: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50).required()
     };
   
@@ -84,7 +72,7 @@ async function launch (aircraft) {
   const { Account } = require('../gov/account');
 
   try {
-    modelDebugger(`Attempting to launch ${aircraft.designation}`)
+    modelDebugger(`Attempting to launch ${aircraft.name}`)
     aircraft.status.deployed = true;
     aircraft.status.ready = false;
     aircraft.status.mission = true;
@@ -94,11 +82,11 @@ async function launch (aircraft) {
     let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
     console.log(account)
 
-    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.designation}`)
+    account = banking.withdrawal(account, 1, `Deployment of ${aircraft.name}`)
 
     await account.save();
     await aircraft.save();
-    console.log(`Aircraft ${aircraft.designation} deployed...`);
+    console.log(`Aircraft ${aircraft.name} deployed...`);
 
     return;
 

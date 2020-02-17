@@ -2,7 +2,9 @@ const fs = require('fs');
 const config = require('config');
 const file = fs.readFileSync(config.get('initPath') + 'init-json/refdata.json', 'utf8');
 const refDataIn = JSON.parse(file);
-//const mongoose = require('mongoose');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
+
 const zoneInitDebugger = require('debug')('app:zoneInit');
 const teamInitDebugger = require('debug')('app:teamInit');
 const countryInitDebugger = require('debug')('app:countryInit');
@@ -66,7 +68,8 @@ async function initLoad(doLoad) {
       await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
       
       if (refDataIn[i].loadFlag === "true") {
-        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, refDataIn[i].parentCode2, refDataIn[i].refNumber1);
+        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, 
+                  refDataIn[i].parentCode2, refDataIn[i].refNumber1, refDataIn[i].refBoolean1);
       }
     }
   };
@@ -223,10 +226,13 @@ async function deleteTeam(tName, tCode, tLoadFlg){
   }
 };
 
-async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
+
+async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest, cCoastal){
   
   try {   
 
+    //logger.debug("Jeff here in loadCountry for refData ... Code", cCode, "name ", cName);
+    //console.log("Jeff here in loadCountry for refData ... Code", cCode, "name ", cName);
     let country = await Country.findOne( { code: cCode } );
     if (!country) {
       // New Country here
@@ -237,7 +243,8 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
           name: cName,
           unrest: cUnrest,
           loadTeamCode: tCode,
-          loadZoneCode: zCode
+          loadZoneCode: zCode,
+          coastal:  cCoastal
       }); 
 
       let zone = await Zone.findOne({ zoneCode: zCode });  
@@ -286,6 +293,7 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest){
         country.unrest       = cUnrest;
         country.loadTeamCode = tCode;
         country.loadZoneCode = zCode;
+        country.coastal      = cCoastal;
 
         let zone = await Zone.findOne({ zoneCode: zCode });  
         if (!zone) {

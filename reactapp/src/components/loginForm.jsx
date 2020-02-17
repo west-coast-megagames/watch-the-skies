@@ -44,9 +44,9 @@ class LiginForm extends Component {
     handleSubmit = async e => {
         e.preventDefault();
 
-        const errors = this.validate();
-        this.setState({ errors: errors || {} });
-        if (errors) return;
+        // const errors = this.validate();
+        // this.setState({ errors: errors || {} });
+        // if (errors) return;
 
         // Call the server
         console.log('Submitted');
@@ -59,7 +59,7 @@ class LiginForm extends Component {
                 title: 'Login Successful',
                 body: `Logged in... welcome ${this.state.account.login}!`})
             localStorage.setItem('token', jwt);
-            this.props.login()
+            this.props.login();
             this.props.close();
         } catch (err) {
             console.log(`Error: ${err}`)

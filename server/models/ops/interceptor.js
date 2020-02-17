@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 
 const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
-  type: { type: String, required: true, min: 2, maxlength: 50, default: 'Interceptor'},
+  type: { type: String, min: 2, maxlength: 50, default: 'Interceptor'},
   stats: {
     hull: { type: Number, default: 3 },
     hullMax: { type: Number, default: 3 },
@@ -18,15 +18,23 @@ const Interceptor = Aircraft.discriminator('Interceptor', new Schema({
     passiveRolls: [Number],
     activeRolls: [Number]
   },
-  systems: [{ type: Schema.Types.ObjectId, ref: 'System' }]
+  loadout: {
+    cpu: { type: Number, default: 1 },
+    weapons: { type: Number, default: 1 },
+    engines: { type: Number, default: 1 },
+    sensors: { type: Number, default: 1 },
+    compartments: { type: Number, default: 1 },
+    utils: { type: Number, default: 1 },
+  },
+  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 }));
 
 function validateInterceptor(interceptor) {
-  //modelDebugger(`Validating ${interceptor.designation}...`);
+  //modelDebugger(`Validating ${interceptor.name}...`);
 
   const schema = {
-      designation: Joi.string().min(2).max(50).required(),
-      type: Joi.string().min(2).max(50).required()
+      name: Joi.string().min(2).max(50).required(),
+      type: Joi.string().min(2).max(50)
     };
   
   return Joi.validate(interceptor, schema, { "allowUnknown": true });

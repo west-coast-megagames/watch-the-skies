@@ -11,6 +11,7 @@ const TransferSchema = new Schema({
   })
 
 const AccountSchema = new Schema({
+  model: { type: String, default: 'Account'},
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   owner: { type: String },
   name: { type: String },

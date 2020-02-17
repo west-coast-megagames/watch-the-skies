@@ -5,13 +5,27 @@ import Interception from './tabs/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 
+import map from '../img/worldMap_mergedRegions.svg'
+
 class Operations extends Component {
     constructor() {
         super();
         this.state = {
-          tab: 'dashboard'
+          tab: 'dashboard',
+          account: {}
         };
         this.handleSelect = this.handleSelect.bind(this);
+        this.setAccount = this.setAccount.bind(this);
+    }
+
+    componentDidMount() {
+        this.setAccount()
+    }
+
+    setAccount() {
+        let indexOf = this.props.accounts.findIndex(el => el.name === 'Operations');
+        let account = this.props.accounts[indexOf];
+        this.setState({ account })
     }
 
     handleSelect(activeKey) {
@@ -38,14 +52,19 @@ class Operations extends Component {
                         <h5>No dashboard has been coded for the Operations Module!</h5>
                     )}/>
                     <Route path={`${url}/intercept`} render={() => (
-                        <Interception 
+                        <Interception
+                            sites={ this.props.sites }
                             team={ this.props.team }
                             aircrafts={ this.props.aircrafts }
-                            alert={ this.props.alert } 
+                            alert={ this.props.alert }
+                            account={ this.state.account }
                         /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <h5>The global system for the Operations Module has not been created!</h5>
+                        <img
+                            src={map}
+                            alt='Terror Map'
+                        />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
                         <h5>The nuclear system for the Operations Module has not been created!</h5>

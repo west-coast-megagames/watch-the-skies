@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker,SelectPicker, Input } from 'rsuite';
+import { Form, FormGroup, Button, ButtonToolbar, SelectPicker, Input } from 'rsuite';
 //import Select from '../components/common/selectPicker';
 
 /*class TextField extends React.PureComponent {
@@ -87,7 +87,7 @@ class SubNews extends React.Component {
             this.props.alert({
                 type: 'success',
                 title: 'News Item Submitted',
-                body: 'News with headline:  ${resArticle.data.headline}!'
+                body: `News with headline:  ${resArticle.data.headline}!`
             }) 
         } catch (err) {
             console.log(err)
@@ -104,8 +104,7 @@ class SubNews extends React.Component {
     });
   }
   render() {
-    const { formValue } = this.state;
-    const { body, location, headline, imageSrc  } = this.state.article;
+    const { body, headline, imageSrc  } = this.state.article;
 
 
     const agency = [

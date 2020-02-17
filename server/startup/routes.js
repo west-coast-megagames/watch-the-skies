@@ -12,6 +12,8 @@ const team = require('../routes/api/team');
 const intercept = require('../routes/api/intercept');
 const zones = require('../routes/api/zones');
 const country = require('../routes/api/country');
+const facilities = require('../routes/api/facilities');
+const sites = require('../routes/api/sites')
 const account = require('../routes/api/accounts');
 const users = require('../routes/users');
 const news = require('../routes/api/news');
@@ -38,6 +40,8 @@ module.exports = function(app) {
     app.use('/api/intercept', intercept); // Route for triggering an interception
     app.use('/api/zones', zones); // Route for inputing zones
     app.use('/api/country', country); // Route for inputing countries
+    app.use('/api/facilities', facilities); // Route for inputing countries
+    app.use('/api/sites', sites) // Route for sites
     app.use('/api/accounts', account); // Route for inputing accounts
     app.use('/user', users); // Route for dealing with Users
     app.use('/api/news', news); // Route for the news desks

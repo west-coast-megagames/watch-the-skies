@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker, SelectPicker } from 'rsuite';
+import { Form, FormGroup, FormControl, ControlLabel, Button, ButtonToolbar, Schema, DatePicker } from 'rsuite';
 
 const { StringType, NumberType } = Schema.Types;
 

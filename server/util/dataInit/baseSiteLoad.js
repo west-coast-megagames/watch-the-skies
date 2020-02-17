@@ -4,6 +4,8 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initBaseSite.js
 const baseDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const baseSiteLoadDebugger = require('debug')('app:baseLoad');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -18,6 +20,10 @@ const bodyParser = require('body-parser');
 const { BaseSite, validateBase } = require('../../models/sites/baseSite');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team');
+const { Facility } = require('../../models/gov/facility/facility');
+const { Lab } = require('../../models/gov/facility/lab');
+const { Hanger } = require('../../models/gov/facility/hanger');
+const { Factory } = require('../../models/gov/facility/factory');
 
 const app = express();
 
@@ -57,62 +63,105 @@ async function initLoad(doLoad) {
 
 async function loadBase(iData){
   try {   
-    let baseSite = await BaseSite.findOne( { baseName: iData.name } );
+    let baseSite = await BaseSite.findOne( { name: iData.name } );
     if (!baseSite) {
-       // New Base here
-       let baseSite = new BaseSite({ 
-           baseName: iData.name,
-           siteCode: iData.code,
-           geoDMS: { 
-            latDMS: iData.latDMS,
-            longDMS: iData.longDMS
-           },
-           geoDecimal: {
-            latDecimal: iData.latDecimal,
-            longDecimal: iData.longDecimal
-          }
-        }); 
-
-        let { error } = validateBase(baseSite); 
-        if (error) {
-          baseSiteLoadDebugger("New BaseSite Validate Error", iData.name, error.message);
-          return;
+      // New Base here
+      let baseSite = new BaseSite({ 
+        name: iData.name,
+        siteCode: iData.code,
+        geoDMS: { 
+        latDMS: iData.latDMS,
+        longDMS: iData.longDMS
+        },
+        geoDecimal: {
+         latDecimal: iData.latDecimal,
+         longDecimal: iData.longDecimal
         }
-        
-        baseSite.facilities   = iData.facilities;
-        baseSite.baseDefenses = iData.baseDefenses;
-
-        if (iData.parentCode2 != ""){
-          let team = await Team.findOne({ teamCode: iData.parentCode2 });  
-          if (!team) {
-            baseSiteLoadDebugger("BaseSite Load Team Error, New Base:", iData.name, " Team: ", iData.parentCode2);
-          } else {
-            baseSite.team  = team._id;
-            baseSiteLoadDebugger("BaseSite Load Team Found, Base:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+      }); 
+      let { error } = validateBase(baseSite); 
+      if (error) {
+        // remove associated facility records
+        for (let j = 0; j < baseSite.facilities.length; ++j ) {
+          facilityId = baseSite.facilities[j];
+          let facilityDel = await Facility.findByIdAndRemove(facilityId);
+          if (facilityDel = null) {
+            baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);
           }
+        }
+        baseSiteLoadDebugger("New BaseSite Validate Error", iData.name, error.message);
+        return;
+      }
+      baseSite.baseDefenses = iData.baseDefenses;
+
+      if (iData.parentCode2 != ""){
+        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+        if (!team) {
+          baseSiteLoadDebugger("BaseSite Load Team Error, New Base:", iData.name, " Team: ", iData.parentCode2);
+        } else {
+          baseSite.team  = team._id;
+          baseSiteLoadDebugger("BaseSite Load Team Found, Base:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+        }
+      }      
+
+      if (iData.parentCode1 != ""){
+        let country = await Country.findOne({ code: iData.parentCode1 });  
+        if (!country) {
+          baseSiteLoadDebugger("BaseSite Load Country Error, New Base:", iData.name, " Country: ", iData.parentCode1);
+        } else {
+          baseSite.country = country._id;
+          baseSite.zone    = country.zone;
+          baseSiteLoadDebugger("BaseSite Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
+      }
 
-        if (iData.parentCode1 != ""){
-          let country = await Country.findOne({ code: iData.parentCode1 });  
-          if (!country) {
-            baseSiteLoadDebugger("BaseSite Load Country Error, New Base:", iData.name, " Country: ", iData.parentCode1);
-          } else {
-            baseSite.country = country._id;
-            baseSiteLoadDebugger("BaseSite Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
-          }      
+      // create facility records for baseSite and store ID in baseSite.facilities
+      baseSite.facilities = [];
+      for (let i = 0; i < iData.facilities.length; ++i ) {
+        let fac = iData.facilities[i];
+        let facError = false;
+        let facType  = fac.type;
+        let facId    = null;
+        //switch not working ... using if else
+        if (facType == 'Factory') {
+          newFacility = await new Factory(fac);
+          facId = newFacility._id;
+        } else if (facType == 'Lab') {
+          newFacility = await new Lab(fac);
+          facId = newFacility._id;
+        } else if (facType == 'Hanger') {
+          newFacility = await new Hanger(fac);
+          facId = newFacility._id;
+        } else {
+          logger.error("Invalid Facility Type In baseSite Load:", fac.type);
+          facError = true;
         }
-        
-        await baseSite.save((err, baseSite) => {
-          if (err) return console.error(`New BaseSite Save Error: ${err}`);
-          baseSiteLoadDebugger(baseSite.baseName + " add saved to baseSite collection.");
-        });
+         
+        if (!facError) {
+          newFacility.site = baseSite._id;
+          newFacility.team = baseSite.team;
+    
+          await newFacility.save(((err, newFacility) => {
+            if (err) {
+              logger.error(`New BaseSite Facility Save Error: ${err}`);
+              return console.error(`New BaseSite Facility Save Error: ${err}`);
+            }
+            baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
+          }));
+    
+          baseSite.facilities.push(facId);
+        }
+      }  
+
+      await baseSite.save((err, baseSite) => {
+        if (err) return console.error(`New BaseSite Save Error: ${err}`);
+        baseSiteLoadDebugger(baseSite.name + " add saved to baseSite collection.");
+      });
     } else {       
       // Existing Base here ... update
       let id = baseSite._id;
       
-      baseSite.baseName     = iData.name;
+      baseSite.name         = iData.name;
       baseSite.siteCode     = iData.code;
-      baseSite.facilities   = iData.facilities;
       baseSite.baseDefenses = iData.baseDefenses;
 
       if (iData.parentCode2 != ""){
@@ -131,19 +180,66 @@ async function loadBase(iData){
           baseSiteLoadDebugger("BaseSite Load Country Error, Update Base:", iData.name, " Country: ", iData.parentCode1);
         } else {
           baseSite.country = country._id;
+          baseSite.zone    = country.zone;
           baseSiteLoadDebugger("BaseSite Load Country Found, Update Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
         }      
       }
 
       const { error } = validateBase(baseSite); 
       if (error) {
+        // remove associated facility records
+        for (let j = 0; j < baseSite.facilities.length; ++j ) {
+          facilityId = baseSite.facilities[j];
+          let facilityDel = await Facility.findByIdAndRemove(facilityId);
+          if (facilityDel = null) {
+            baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);
+          }
+        }
         baseSiteLoadDebugger("BaseSite Update Validate Error", iData.name, error.message);
         return
       }
    
+      // create facility records for baseSite and store ID in baseSite.facilities
+      // create facility records for baseSite and store ID in baseSite.facilities
+      baseSite.facilities = [];
+      for (let i = 0; i < iData.facilities.length; ++i ) {
+        let fac = iData.facilities[i];
+        let facError = false;
+        let facType  = fac.type;
+        let facId    = null;
+        //switch not working ... using if else
+        if (facType == 'Factory') {
+          newFacility = await new Factory(fac);
+          facId = newFacility._id;
+        } else if (facType == 'Lab') {
+          newFacility = await new Lab(fac);
+          facId = newFacility._id;
+        } else if (facType == 'Hanger') {
+          newFacility = await new Hanger(fac);
+          facId = newFacility._id;
+        } else {
+          logger.error("Invalid Facility Type In baseSite Load:", fac.type);
+          facError = true;
+        }
+         
+        if (!facError) {
+          newFacility.site = baseSite._id;
+          newFacility.team = baseSite.team;
+    
+          await newFacility.save(((err, newFacility) => {
+            if (err) {
+              logger.error(`New BaseSite Facility Save Error: ${err}`);
+              return console.error(`New BaseSite Facility Save Error: ${err}`);
+            }
+            baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
+          }));
+    
+          baseSite.facilities.push(facId)              
+        }
+      }  
       await baseSite.save((err, baseSite) => {
-      if (err) return console.error(`Base Update Save Error: ${err}`);
-      baseSiteLoadDebugger(baseSite.baseName + " update saved to base collection.");
+        if (err) return console.error(`Update BaseSite Save Error: ${err}`);
+        baseSiteLoadDebugger(baseSite.name + " add saved to baseSite collection.");
       });
     }
   } catch (err) {
@@ -162,6 +258,14 @@ async function deleteAllBases(doLoad) {
     for await (const baseSite of BaseSite.find()) {    
       let id = baseSite._id;
       try {
+        // remove associated facility records
+        for (let j = 0; j < baseSite.facilities.length; ++j ) {
+          facilityId = baseSite.facilities[j];
+          let facilityDel = await Facility.findByIdAndRemove(facilityId);
+          if (facilityDel = null) {
+            baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);
+          }
+        }
         let baseDel = await BaseSite.findByIdAndRemove(id);
         if (baseDel = null) {
           baseSiteLoadDebugger(`The BaseSite with the ID ${id} was not found!`);
