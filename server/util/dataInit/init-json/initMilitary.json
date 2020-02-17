@@ -1,6 +1,6 @@
 [{
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 1",
+    "name" : "USA Modern Attack Sub Fleet 1",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -11,7 +11,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 2",
+    "name" : "USA Modern Attack Sub Fleet 2",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -21,7 +21,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 3",
+    "name" : "USA Modern Attack Sub Fleet 3",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -31,7 +31,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 4",
+    "name" : "USA Modern Attack Sub Fleet 4",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -41,7 +41,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 5",
+    "name" : "USA Modern Attack Sub Fleet 5",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -51,7 +51,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 6",
+    "name" : "USA Modern Attack Sub Fleet 6",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -61,7 +61,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 7",
+    "name" : "USA Modern Attack Sub Fleet 7",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -71,7 +71,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 8",
+    "name" : "USA Modern Attack Sub Fleet 8",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -81,7 +81,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 9",
+    "name" : "USA Modern Attack Sub Fleet 9",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -91,7 +91,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 10",
+    "name" : "USA Modern Attack Sub Fleet 10",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -101,7 +101,7 @@
 },
 {
     "model" : "Military",
-    "name" : "USA Attack Sub Fleet 11",
+    "name" : "USA Modern Attack Sub Fleet 11",
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
@@ -121,7 +121,17 @@
 },
 {
     "model" : "Military",
-    "name" : "Russia Attack Sub Fleet 1",
+    "name" : "South Africa Standard Attack Sub Fleet 1",
+    "team" : "RZA",
+    "country" : "ZA",
+    "homeBase" : "ZA",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Russia Modern Attack Sub Fleet 1",
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
@@ -131,7 +141,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Russia Attack Sub Fleet 2",
+    "name" : "Russia Modern Attack Sub Fleet 2",
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
@@ -141,7 +151,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Russia Attack Sub Fleet 3",
+    "name" : "Russia Modern Attack Sub Fleet 3",
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
@@ -151,7 +161,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Japan Attack Sub Fleet 1",
+    "name" : "Japan Modern Attack Sub Fleet 1",
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
@@ -161,7 +171,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Japan Attack Sub Fleet 2",
+    "name" : "Japan Modern Attack Sub Fleet 2",
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
@@ -171,7 +181,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Japan Attack Sub Fleet 3",
+    "name" : "Japan Modern Attack Sub Fleet 3",
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
@@ -181,7 +191,67 @@
 },
 {
     "model" : "Military",
-    "name" : "India Attack Sub Fleet 1",
+    "name" : "Japan Modern Attack Sub Fleet 4",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Modern Attack Sub Fleet 5",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Standard Attack Sub Fleet 1",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Standard Attack Sub Fleet 2",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Japan Standard Attack Sub Fleet 3",
+    "team" : "JPN",
+    "country" : "JP",
+    "homeBase" : "JP",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "Iran Standard Attack Sub Fleet 1",
+    "team" : "IRN",
+    "country" : "IR",
+    "homeBase" : "IR",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "India Small Modern Attack Sub Fleet 1",
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
@@ -191,7 +261,7 @@
 },
 {
     "model" : "Military",
-    "name" : "India Attack Sub Fleet 2",
+    "name" : "India Standard Attack Sub Fleet 1",
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
@@ -201,7 +271,7 @@
 },
 {
     "model" : "Military",
-    "name" : "India Attack Sub Fleet 3",
+    "name" : "India Standard Attack Sub Fleet 2",
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
@@ -211,7 +281,17 @@
 },
 {
     "model" : "Military",
-    "name" : "France Attack Sub Fleet 3",
+    "name" : "India Standard Attack Sub Fleet 3",
+    "team" : "IDN",
+    "country" : "IN",
+    "homeBase" : "IN",
+    "equipment" : [ "Submarine Group"],
+    "training" : "",
+    "type" : "Fleet"
+},
+{
+    "model" : "Military",
+    "name" : "France Modern Attack Sub Fleet 3",
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
@@ -221,17 +301,7 @@
 },
 {
     "model" : "Military",
-    "name" : "France Small Modern Attack Sub Fleet 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Attack Sub Fleet 1",
+    "name" : "Egypt Standard Attack Sub Fleet 1",
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
@@ -241,7 +311,7 @@
 },
 {
     "model" : "Military",
-    "name" : "China Attack Sub Fleet 1",
+    "name" : "China Modern Attack Sub Fleet 1",
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
@@ -251,7 +321,7 @@
 },
 {
     "model" : "Military",
-    "name" : "China Attack Sub Fleet 2",
+    "name" : "China Modern Attack Sub Fleet 2",
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
@@ -261,7 +331,7 @@
 },
 {
     "model" : "Military",
-    "name" : "China Attack Sub Fleet 3",
+    "name" : "China Modern Attack Sub Fleet 3",
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
@@ -271,7 +341,7 @@
 },
 {
     "model" : "Military",
-    "name" : "China Attack Sub Fleet 4",
+    "name" : "China Modern Attack Sub Fleet 4",
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
@@ -281,27 +351,7 @@
 },
 {
     "model" : "Military",
-    "name" : "China Attack Sub Fleet 5",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Attack Sub Fleet 6",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Attack Sub Fleet 1",
+    "name" : "Brazil Standard Attack Sub Fleet 1",
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
@@ -311,7 +361,7 @@
 },
 {
     "model" : "Military",
-    "name" : "Australia Attack Sub Fleet 1",
+    "name" : "Australia Standard Attack Sub Fleet 1",
     "team" : "AUS",
     "country" : "AU",
     "homeBase" : "AU",
