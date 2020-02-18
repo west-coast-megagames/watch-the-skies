@@ -62,7 +62,10 @@ class LiginForm extends Component {
             this.props.login();
             this.props.close();
         } catch (err) {
-            console.log(`Error: ${err}`)
+            console.log(`Error: ${err}`);
+            const account = {...this.state.account};
+            const errors = {login : 'Username or password is incorrect'};
+            this.setState({ account, errors }); 
         }
         
     };
