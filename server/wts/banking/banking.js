@@ -23,12 +23,12 @@ async function transfer (to, from, amount, note) {
         withdrawalAccount = await withdrawal(withdrawalAccount, amount, note);
         depositAccount = await deposit(depositAccount, amount, note);
 
-        await withdrawalAccount.save();
-        await depositAccount.save();
+        nexusEvent.emit('updateAccounts')
+
         bankDebugging(`${withdrawalAccount.owner}s transfer completed!`)
 };
 
-function deposit (account, amount, note) {
+async function deposit (account, amount, note) {
     const alerts = require('../notifications/alerts');
 
     bankDebugging(`Attempting to deposit into ${account.name}.`);
@@ -58,14 +58,13 @@ function deposit (account, amount, note) {
     });
 
     log.save();
+    account = await account.save();
 
     bankDebugging('Deposit log created...')
-    nexusEvent.emit('updateAccounts')
-
     return account;
 };
 
-function withdrawal (account, amount, note) {
+async function withdrawal (account, amount, note) {
     const alerts = require('../notifications/alerts');
 
     bankDebugging(`Attempting to withdrawal from ${account.name}.`);
@@ -97,7 +96,7 @@ function withdrawal (account, amount, note) {
 
     log.save();
 
-    nexusEvent.emit('updateAccounts')
+    account = await account.save();
     bankDebugging('withdrawal log created...')
 
     return account;
