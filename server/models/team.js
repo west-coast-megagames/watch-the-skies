@@ -19,6 +19,7 @@ const TeamSchema = new Schema({
   teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C'] },
   roles: [RoleSchema],
   prTrack: [Number],
+  agent: [Number],
   prLevel: { type: Number },
   sciRate: { type: Number, default: 25 }
 });
