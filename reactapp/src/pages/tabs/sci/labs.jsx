@@ -3,15 +3,11 @@ import { Table, Icon } from 'rsuite';
 
 const { Column, HeaderCell, Cell } = Table;
 
-
-
 class Labs extends Component {
     state = { 
         lab : ['lab1', 'lab2', 'lab3']
     }
-    
 
-    
     formatTableData(origData) {
         //console.log('ORIGDATA=', origData);
         //const names = [...new Set(origData.allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array

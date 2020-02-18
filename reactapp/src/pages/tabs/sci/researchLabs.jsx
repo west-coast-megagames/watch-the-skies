@@ -107,7 +107,7 @@ class ResearchLabs extends Component {
 		// For withdrawal, need to provide an opbject with
 		// account_id, note, amount
 		const dummy_txn = {
-			account_id : "5e4b20f8a4f6c743d0e03a0f",
+			account_id : "5e4b82c3b846f83a806fd791",
 			note : "here is a dummy transaction for withdrawals",
 			amount : 10
 		}

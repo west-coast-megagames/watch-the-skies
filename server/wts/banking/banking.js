@@ -25,7 +25,6 @@ async function transfer (to, from, amount, note) {
 
         await withdrawalAccount.save();
         await depositAccount.save();
-        nexusEvent.emit('updateAccounts')
         bankDebugging(`${withdrawalAccount.owner}s transfer completed!`)
 };
 
@@ -61,6 +60,7 @@ function deposit (account, amount, note) {
     log.save();
 
     bankDebugging('Deposit log created...')
+    nexusEvent.emit('updateAccounts')
 
     return account;
 };
@@ -97,6 +97,7 @@ function withdrawal (account, amount, note) {
 
     log.save();
 
+    nexusEvent.emit('updateAccounts')
     bankDebugging('withdrawal log created...')
 
     return account;
