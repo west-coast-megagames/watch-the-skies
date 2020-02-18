@@ -4,7 +4,7 @@ const Research = require('../../models/sci/research') // Imports the Research ob
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
 
 const techCost = [ 66, 133, 200, 250, 300, 350 ] // Arbitratily set at increments of 50 currently
-const fundingCost = [ 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
+const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
 async function calculateProgress(research_id, lab_id, funding) {

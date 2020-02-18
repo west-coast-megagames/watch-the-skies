@@ -5,7 +5,7 @@
     "level": 1,
     "prereq": ["Biology I", "Computer Science I"],
     "type": "Technology",
-    "field": "Agricultur",
+    "field": "Agriculture",
     "desc": "Improves national fish yields.",
     "unlocks": []
 }
