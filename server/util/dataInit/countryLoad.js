@@ -63,7 +63,8 @@ async function loadCountry(cData){
 
     if (!country) {
        // No New Country here ... should have been loaded by refData
-      logger.info("Country Update Error ... Country Not Found for ", cData.code, cData.name );
+      //logger.info(cData.code + " " + cData.name + " does Not Exist for countryLoad." );
+      logger.info(`${cData.code} ${cData.name} does Not Exists for countryLoad.`)
       //console.log("Country Update Error ... Country Not Found for ", cData.code, cData.name );
       return;
     } else {       
@@ -77,7 +78,7 @@ async function loadCountry(cData){
         if (borderCountry) {
           borderedBy_Ids.push(borderCountry._id);
         } else {
-          logger.info("Country Update Error ... BorderedBy Country Not Found for ", cData.code, "By ", cData.borderedBy[j].code );
+          logger.info(cData.borderedBy[j].code + " BorderedBy Country Not Found for " + cData.code);
         }
       }
       country.borderedBy = borderedBy_Ids;
