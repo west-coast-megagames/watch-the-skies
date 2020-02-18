@@ -140,7 +140,7 @@ class Control extends Component {
 
     loadKnowledge = async () => {
         try {
-            const response = await axios.delete(`${gameServer}api/resear`)
+            const response = await axios.patch(`${gameServer}api/research/load/knowledge`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Knowledge Loaded', body: response.data})
         } catch (err) {
