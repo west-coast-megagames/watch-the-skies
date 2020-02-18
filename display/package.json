@@ -29,9 +29,6 @@
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "joi": "^14.3.1",
-    "mongodb": "^3.5.3",
-    "mongoose": "^5.9.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
