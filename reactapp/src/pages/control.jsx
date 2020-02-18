@@ -47,6 +47,9 @@ class Control extends Component {
                 <div>
                     <h5>Research Controls</h5>
                     <MDBBtnGroup>
+                        <MDBBtn color="danger" size="sm" onClick={ () => this.delResearch() }>
+                            Delete All Research
+                        </MDBBtn>
                         <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
                             Load Knowledge
                         </MDBBtn>
@@ -125,9 +128,19 @@ class Control extends Component {
         };
     }
 
+    delResearch = async () => {
+        try {
+            const response = await axios.delete(`${gameServer}api/research`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Deleted all Research', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to delete Research', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
     loadKnowledge = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load/knowledge`)
+            const response = await axios.delete(`${gameServer}api/resear`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Knowledge Loaded', body: response.data})
         } catch (err) {

@@ -91,6 +91,15 @@ router.patch('/load/knowledge/seed', async function (req, res) {
     return res.status(200).send('We did it, such a seed!')
 });
 
+// @route   DEL api/research/delete
+// @Desc    Load all research in the database
+// @access  Public
+router.delete('/', async function (req, res) {
+    let data = await Research.deleteMany();
+    console.log(data);
+    return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`)
+});
+
 // @route   put api/research/progress
 // @Desc    Puts in a technology for RESEARCH
 // @access  Public
