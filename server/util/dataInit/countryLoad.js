@@ -63,9 +63,7 @@ async function loadCountry(cData){
 
     if (!country) {
        // No New Country here ... should have been loaded by refData
-      //logger.info(cData.code + " " + cData.name + " does Not Exist for countryLoad." );
-      logger.info(`${cData.code} ${cData.name} does Not Exists for countryLoad.`)
-      //console.log("Country Update Error ... Country Not Found for ", cData.code, cData.name );
+      logger.info(`${cData.code} ${cData.name} does Not Exist for countryLoad.`)
       return;
     } else {       
       // Existing Country here ... update
