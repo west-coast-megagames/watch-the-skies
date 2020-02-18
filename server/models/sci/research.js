@@ -9,4 +9,4 @@ const ResearchSchema = new Schema({
     desc: { type: String }
 });
 
-module.exports = Log = mongoose.model('research', ResearchSchema, 'research');
+module.exports = Log = mongoose.model('Research', ResearchSchema, 'research');
