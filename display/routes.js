@@ -4,6 +4,7 @@ const cors = require('cors');
 // Routes - Using Express
 const news = require('./route/news');
 const home = require('./route/home')
+const zone = require('./route/zone')
 
 module.exports = function(app) {
     // Bodyparser Middleware
@@ -15,4 +16,5 @@ module.exports = function(app) {
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
     app.use('/', home);
     app.use('/news', news); // Route for the news desks
+    app.use('/zones', zone); // Route for the zones
 }
