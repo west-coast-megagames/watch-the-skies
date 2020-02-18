@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const MilitarySchema = new Schema({
   model: { type: String, default: 'Military'},
-  name: { type: String, required: true, min: 2, maxlength: 50 },
+  name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
   country: { type: Schema.Types.ObjectId, ref: 'Country'},
