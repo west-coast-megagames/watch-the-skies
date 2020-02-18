@@ -8,6 +8,7 @@ const { logger } = require('../../middleware/winston');
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/gov/account');
 const { Team } = require('../../models/team');
+const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts
 // @Desc    Get all Accounts
@@ -106,5 +107,15 @@ router.put('/transfer', async function (req, res){
     await account.save();
     res.status(200).send('Automatic transfer deleted!');
 });
+
+
+// @route   POST api/banking/withdrawl
+// @desc    Submit a withdrawl
+// @access  Public
+router.post('/withdrawl', async function (req, res) {
+    let { account_id, amount, note } = req.body;
+    res.status(200).send(`You have submitted a ${amount} withdrawl due to ${note}`);
+    banking.withdrawal(account_id, amount, node);
+})
 
 module.exports = router;
