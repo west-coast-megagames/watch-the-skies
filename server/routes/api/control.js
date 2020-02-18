@@ -207,8 +207,4 @@ router.patch('/updateAircraft', async function (req, res) {
     res.status(200).send(`${count} aircraft updated...`);
 });
 
-
-router.get ("/drew", function (req, res ){
-  res.status(200).send('this is my string');
-})
 module.exports = router;

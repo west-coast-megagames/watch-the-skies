@@ -24,18 +24,23 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
 		const result = newLabCheck(rowData._id, props.labupdates);
 		if (result >= 0) {		// Lab was updated, so find the new %
-			let myResearchID = props.labupdates[result].research_id;	// ID of the tech being researched in this row
-			if (myResearchID !== null) {	// Most cases, obj is a number.  When removed via "X", it becomes null
-				myResearch = props.allknowledge.filter(el => el._id === myResearchID);
-				myProgress = myResearch[0].status.progress;
-				myLevel    = myResearch[0].level;
-				myTechCost = props.techcost[myLevel];
-				return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
-			} else {
+			if (props.labupdates[result].research.length <= 0) {		// Research currently has no focus in that lab object
 				return (-1);	// -1 and issue error instead of progress bar
+			} else {
+				let myResearchID = props.labupdates[result].research[0];	// ID of the tech being researched in this row
+				if (myResearchID === null) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
+					props.labupdates[result].research = [];		// initialize the research array to a null instead of null array
+					return (-1);	// -1 and issue error instead of progress bar
+				} else {
+					myResearch = props.allknowledge.filter(el => el._id === myResearchID);
+					myProgress = myResearch[0].status.progress;
+					myLevel    = myResearch[0].level;
+					myTechCost = props.techcost[myLevel];
+					return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
+				}
 			}
 
-		} else {
+		} else {  	// Could not find an updated lab
 			return (-1);	// -1 and issue error instead of progress bar
 		}
 	}
@@ -103,7 +108,7 @@ class ResearchLabs extends Component {
 		// bring up dialog box
 		// if OK, submit bank transaction and backend update
 		// if cancel, remove the dialog
-		const myresp = await axios.get(`${gameServer}api/control/drew`);
+		
 		// For withdrawal, need to provide an opbject with
 		// account_id, note, amount
 		const dummy_txn = {
@@ -115,7 +120,6 @@ class ResearchLabs extends Component {
 		console.log("MYTXN=", mytxn);
 		// for lab update, need to provide lab object
 		// const myupdate = await axios.put(`${gameServer}api/facilities/blah`, $LabObj);
-		console.log(myresp);
 	}
 
 	componentDidMount(){
@@ -152,12 +156,8 @@ class ResearchLabs extends Component {
 						<Cell style={{ padding: 0 }} dataKey="name">
 						{rowData => {   
 							function handleChange(value) {
-								let updatedLab = { 
-									_id: rowData._id, 
-									research_id: value,
-									//funding : rowData.funding
-									funding: null 
-								};
+								let updatedLab = rowData;
+								updatedLab.research[0] = value;
 								sendLabUpdate(updatedLab);
 							}          
 							return (
@@ -188,12 +188,8 @@ class ResearchLabs extends Component {
 						<Cell style={{ padding: 0 }}  >
 						{rowData => {      
 							function handleChange(value) {
-								let updatedLab = { 
-									_id: rowData._id, 
-									//research_id: rowData.research[0],
-									research_id: null,
-									funding: value 
-								};
+								let updatedLab = rowData;
+								updatedLab.funding = value;
 								sendFundingUpdate(updatedLab);
 							}          
 							return (
