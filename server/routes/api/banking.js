@@ -115,7 +115,8 @@ router.put('/transfer', async function (req, res){
 router.post('/withdrawal', async function (req, res) {
     let { account_id, amount, note } = req.body;
     res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
-    banking.withdrawal(account_id, amount, note);
+    let account = await Account.findById(account_id);
+    banking.withdrawal(account, amount, note);
 })
 
 module.exports = router;

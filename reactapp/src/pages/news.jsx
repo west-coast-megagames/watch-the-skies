@@ -46,8 +46,8 @@ class News extends Component {
                         <NewsFeed agency='Press Releases' articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') } teams={this.props.teams} del={this.props.handleArtHide}  />
                     )}/>
 
-                    <Route path={`${url}/add`} render={() => (
-                        <SubNews alert={ this.props.alert } />
+                    <Route path={`${url}/add`} render={(props) => (
+                        <SubNews {...props} alert={ this.props.alert } />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/feed`} />
                 </Switch>

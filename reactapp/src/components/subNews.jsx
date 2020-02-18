@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { gameServer } from '../config'
-import { Form, FormGroup, Button, ButtonToolbar, SelectPicker, Input } from 'rsuite';
+import { Form, FormGroup, FormControl, Button, ButtonToolbar, SelectPicker, Input } from 'rsuite';
 //import Select from '../components/common/selectPicker';
 
 /*class TextField extends React.PureComponent {
@@ -116,19 +116,20 @@ class SubNews extends React.Component {
     return (
       <Form>
         <FormGroup>
-        <SelectPicker id="agency" data={agency} style={{ width: 224 }}  labelKey='label' valueKey='value' placeholder='pick your origin' onChange={(value)=>this.handleInput(value, 'agency')}/>
+          <SelectPicker id="agency" data={agency} style={{ width: 224 }}  labelKey='label' valueKey='value' placeholder='pick your origin' onChange={(value)=>this.handleInput(value, 'agency')}/>
+          <SelectPicker id="agency" data={agency} style={{ width: 224 }}  labelKey='label' valueKey='value' placeholder='pick your origin' onChange={(value)=>this.handleInput(value, 'agency')}/>
         </FormGroup>
 
         <FormGroup>
-        <Input id='location' type="text" value={this.state.article.location} name="location" label="Location"  placeholder='location'  onChange={(value)=>this.handleInput(value, 'location')}/>
+          <Input id='location' type="text" value={this.state.article.location} name="location" label="Location"  placeholder='location'  onChange={(value)=>this.handleInput(value, 'location')}/>
         </FormGroup>
 
         <FormGroup>
-        <Input id='headline' type="text" value={headline} name="headline" label="Headline"  placeholder='headline' onChange={(value)=>this.handleInput(value, 'headline')} />
+          <Input id='headline' type="text" value={headline} name="headline" label="Headline"  placeholder='headline' onChange={(value)=>this.handleInput(value, 'headline')} />
         </FormGroup>
 
         <FormGroup>
-        <Input id='body' type="text" value={body} name="body" label="Body" placeholder='body' onChange={(value)=>this.handleInput(value, 'body')} />
+          <FormControl id='body' componentClass="textarea" rows={6} name="body" value={body} onChange={(value)=>this.handleInput(value, 'body')} />
         </FormGroup>
         
         <FormGroup>

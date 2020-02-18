@@ -85,6 +85,7 @@ async function loadTeam(tData){
         team.prTrack  = tData.prTrack;
         team.roles    = tData.roles;
         team.prLevel  = tData.prLevel;
+        team.agents   = tData.agents;
 
         //team.accounts = tData.accounts;   ... moved to it's own load
 
@@ -104,6 +105,7 @@ async function loadTeam(tData){
        team.prTrack   = tData.prTrack;
        team.roles     = tData.roles;
        team.prLevel   = tData.prLevel;
+       team.agents    = tData.agents;
 
        //team.accounts  = tData.accounts;  ... moved to it's own load
 
