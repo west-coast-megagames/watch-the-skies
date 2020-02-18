@@ -23,9 +23,9 @@ router.get('/accounts', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/account', async function (req, res) {
-    let { team_id, name, code, balance, deposits, withdrawls, autoTransfers } = req.body;
+    let { team_id, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
     const newAccount = new Account(
-        { team_id, name, code, balance, deposits, withdrawls, autoTransfers }
+        { team_id, name, code, balance, deposits, withdrawals, autoTransfers }
     );
     let docs = await Account.find({ team_id, name })
     if (!docs.length) {
@@ -109,13 +109,13 @@ router.put('/transfer', async function (req, res){
 });
 
 
-// @route   POST api/banking/withdrawl
-// @desc    Submit a withdrawl
+// @route   POST api/banking/withdrawal
+// @desc    Submit a withdrawal
 // @access  Public
-router.post('/withdrawl', async function (req, res) {
+router.post('/withdrawal', async function (req, res) {
     let { account_id, amount, note } = req.body;
-    res.status(200).send(`You have submitted a ${amount} withdrawl due to ${note}`);
-    banking.withdrawal(account_id, amount, node);
+    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
+    banking.withdrawal(account_id, amount, note);
 })
 
 module.exports = router;
