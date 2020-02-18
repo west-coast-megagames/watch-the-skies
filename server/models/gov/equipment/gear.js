@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const Gear = Equipment.discriminator('Gear', new Schema({
     type: { type: String, default: 'Gear' },
-    category: { type: String, enum: [ 'Weapons', 'Vehicles', 'Transport' ]},
+    category: { type: String, enum: [ 'Weapons', 'Vehicles', 'Transport', "Training" ]},
     stats: {
         healthMax: { type: Number },
         attack: { type: Number },

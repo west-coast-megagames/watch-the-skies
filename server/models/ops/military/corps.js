@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const modelDebugger = require('debug')('app: Military Model');
 const Schema = mongoose.Schema;
+const { Military } = require('./military');
 const Joi = require('joi');
 
 const Corps = Military.discriminator('Corps', new Schema({
@@ -13,7 +14,8 @@ const Corps = Military.discriminator('Corps', new Schema({
     localDeploy: { type: Number, default: 2 },
     globalDeploy: { type: Number, default: 5 },
     invasion: { type: Number, default: 2 },
-  }
+  },
+  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 }));
 
-module.exports = { Army }
+module.exports = { Corps }

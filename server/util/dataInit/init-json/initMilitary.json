@@ -4,9 +4,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"
-    ],
-    "training" : "",
+    "gear" : [ "Submarine Group" ],
     "type" : "Fleet"
 },
 {
@@ -15,8 +13,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group" ],    
     "type" : "Fleet"
 },
 {
@@ -25,8 +22,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group" ],
     "type" : "Fleet"
 },
 {
@@ -35,8 +31,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group" ],
     "type" : "Fleet"
 },
 {
@@ -45,8 +40,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group" ],
     "type" : "Fleet"
 },
 {
@@ -55,8 +49,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -65,8 +58,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -75,8 +67,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -85,8 +76,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -95,8 +85,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -105,8 +94,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -115,8 +103,7 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -125,8 +112,7 @@
     "team" : "RZA",
     "country" : "ZA",
     "homeBase" : "ZA",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -135,8 +121,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -145,8 +130,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -155,8 +139,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -165,8 +148,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -175,8 +157,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -185,8 +166,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -195,8 +175,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -205,8 +184,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -215,8 +193,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -225,8 +202,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -235,8 +211,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -245,8 +220,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -255,8 +229,7 @@
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -265,8 +238,7 @@
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -275,8 +247,7 @@
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -285,8 +256,7 @@
     "team" : "IDN",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -295,8 +265,7 @@
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -305,8 +274,7 @@
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -315,8 +283,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -325,8 +292,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -335,8 +301,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -345,8 +310,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -355,8 +319,7 @@
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -365,8 +328,7 @@
     "team" : "AUS",
     "country" : "AU",
     "homeBase" : "AU",
-    "equipment" : [ "Submarine Group"],
-    "training" : "",
+    "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
 {
@@ -375,8 +337,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -385,8 +346,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -395,8 +355,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -405,8 +364,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -415,8 +373,7 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -425,8 +382,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -435,8 +391,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -445,8 +400,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -455,8 +409,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -465,8 +418,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -475,8 +427,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -485,8 +436,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -495,8 +445,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -505,8 +454,7 @@
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -515,8 +463,7 @@
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -525,8 +472,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -535,8 +481,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -545,8 +490,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -555,8 +499,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -565,8 +508,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -575,8 +517,7 @@
     "team" : "AUS",
     "country" : "AU",
     "homeBase" : "AU",
-    "equipment" : [ "Surface Group"],
-    "training" : "",
+    "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
 {
@@ -585,8 +526,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -595,8 +535,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },{
     "model" : "Military",
@@ -604,8 +543,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -614,8 +552,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -624,8 +561,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -634,8 +570,7 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -644,8 +579,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -654,8 +588,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -664,8 +597,7 @@
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -674,8 +606,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -684,8 +615,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -694,8 +624,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -704,8 +633,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -714,8 +642,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -724,8 +651,7 @@
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
-    "equipment" : [ "Carrier Group"],
-    "training" : "",
+    "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
 {
@@ -734,9 +660,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Marine Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Marine Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -745,9 +669,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -756,9 +678,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -767,9 +687,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -778,9 +696,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -789,9 +705,7 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -800,9 +714,7 @@
     "team" : "RSA",
     "country" : "ZA",
     "homeBase" : "ZA",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -811,9 +723,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [ "Old Tech Vehicles", "Corps"],
     "type" : "Corps"
 },
 {
@@ -822,9 +732,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -833,9 +741,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -844,9 +750,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -855,9 +759,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -866,9 +768,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -877,9 +777,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -888,9 +786,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -899,9 +795,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -910,9 +804,7 @@
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -921,9 +813,7 @@
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -932,9 +822,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -943,9 +831,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -954,9 +840,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -965,9 +849,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -976,9 +858,7 @@
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -987,9 +867,7 @@
     "team" : "AUS",
     "country" : "AU",
     "homeBase" : "AU",
-    "equipment" : [ {"vehicles" : "Old Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -998,9 +876,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1009,9 +885,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1020,9 +894,7 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1031,9 +903,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1042,9 +912,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1053,9 +921,7 @@
     "team" : "JPN",
     "country" : "JP",
     "homeBase" : "JP",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1064,8 +930,7 @@
     "team" : "IND",
     "country" : "IN",
     "homeBase" : "IN",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "training" : "Corps",
     "type" : "Corps"
 },
@@ -1075,9 +940,7 @@
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1086,9 +949,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1097,8 +958,7 @@
     "team" : "PRC",
     "country" : "CN",
     "homeBase" : "CN",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "training" : "Corps",
     "type" : "Corps"
 },
@@ -1108,9 +968,7 @@
     "team" : "AUS",
     "country" : "AU",
     "homeBase" : "AU",
-    "equipment" : [ {"vehicles" : "Modern Tech Vehicles"}
-    ],
-    "training" : "Corps",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1119,9 +977,7 @@
     "team" : "RSA",
     "country" : "ZA",
     "homeBase" : "ZA",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1130,9 +986,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1141,9 +995,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1152,9 +1004,7 @@
     "team" : "RFD",
     "country" : "RU",
     "homeBase" : "RU",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1163,9 +1013,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1174,9 +1022,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1185,9 +1031,7 @@
     "team" : "IRN",
     "country" : "IR",
     "homeBase" : "IR",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1196,9 +1040,7 @@
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1207,9 +1049,7 @@
     "team" : "EPT",
     "country" : "EG",
     "homeBase" : "EG",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1218,9 +1058,7 @@
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
 {
@@ -1229,9 +1067,7 @@
     "team" : "BRZ",
     "country" : "BZ",
     "homeBase" : "BZ",
-    "equipment" : [ {"vehicles" : "Militia Vehicles"}
-    ],
-    "training" : "Militia",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 }
 ]

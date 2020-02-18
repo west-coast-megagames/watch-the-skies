@@ -6,6 +6,7 @@ const runUserLoad = require('../dataInit/userLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
+const runMilitaryLoad = require('../dataInit/militaryLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 async function fullInit(selStr){
@@ -75,6 +76,15 @@ async function fullInit(selStr){
       if (selStr != 'All') {
         break;
       }
+
+    case 'All':
+    case 'Military':  
+      let militaryDone = await runMilitaryLoad(true);   // load expanded military fields initMilitary.json with gear
+      logger.debug("Military Load Done: ", militaryDone);
+      if (selStr != 'All') {
+        break;
+      }
+
 
     if (selStr = 'All') break;
 

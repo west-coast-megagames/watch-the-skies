@@ -17,12 +17,7 @@ const MilitarySchema = new Schema({
     destroyed: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
   },
-  equipment: {
-    weapons: { type: Schema.Types.ObjectId, ref: 'Equipment' },
-    vehicles: { type: Schema.Types.ObjectId, ref: 'Equipment' },
-    transports: { type: Schema.Types.ObjectId, ref: 'Equipment' }
-  },
-  training: { type: Schema.Types.ObjectId, ref: 'Equipment' }
+  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 });
 
 MilitarySchema.methods.deploy = async (unit ,country) => {
@@ -45,7 +40,7 @@ MilitarySchema.methods.deploy = async (unit ,country) => {
 
     modelDebugger(account)
     await account.save();
-    await aircraft.save();
+    await military.save();
     modelDebugger(`${unit.name} deployed...`);
 
     return unit;
@@ -55,6 +50,45 @@ MilitarySchema.methods.deploy = async (unit ,country) => {
   }
 }
 
+MilitarySchema.methods.validateMilitary = function (military) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required()
+  };
+
+  return Joi.validate(military, schema, { "allowUnknown": true });
+}
+
 let Military = mongoose.model('Military', MilitarySchema);
 
-module.exports = { Military}
+function validateMilitary(military) {
+  //modelDebugger(`Validating ${military.name}...`);
+
+  const schema = {
+      name: Joi.string().min(2).max(50).required()
+    };
+  
+  return Joi.validate(military, schema, { "allowUnknown": true });
+};
+
+async function updateStats(id) {
+  let military = await Military.findById(id).populate('gear');
+  let { stats } = military
+  for (let gear of military.gear) {
+    for (let [key, value] of Object.entries(gear.stats)) {
+      if (typeof value === typeof 0) {
+        console.log(`${key}: ${value}`);
+        stats[key] = value; 
+      }
+    }
+    console.log(`${gear.name} loaded into ${military.type}...`)
+  }
+  console.log(`All gear for ${military.type} ${military.name} loaded...`);
+  military.stats = stats;
+  military.markModified('stats');
+  military = await military.save();
+  console.log(military.stats);
+
+  return;
+}
+
+module.exports = { Military, validateMilitary, updateStats }
