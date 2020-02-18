@@ -117,6 +117,7 @@ class ContentArea extends Component {
                   <Route path="/sci" render={(props) => (
                     <Science {...props}
                         sites={ this.props.sites }
+                        accounts = { this.props.accounts }
                         facilities={ this.props.facilities }
                         team ={ this.props.team }
                         alert={ this.props.addAlert }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button } from 'rsuite';
+import axios from 'axios';
+import { gameServer } from '../../../config';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -69,6 +71,7 @@ class ResearchLabs extends Component {
 		}
 		this.handleLabUpdate = this.handleLabUpdate.bind(this);
 		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
+		//this.confirmSubmit = this.confirmSubmit.bind(this);
 	}
 	
 	handleLabUpdate(updatedLab) {
@@ -96,6 +99,25 @@ class ResearchLabs extends Component {
 		//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
 	}
   
+	async confirmSubmit() {
+		// bring up dialog box
+		// if OK, submit bank transaction and backend update
+		// if cancel, remove the dialog
+		const myresp = await axios.get(`${gameServer}api/control/drew`);
+		// For withdrawal, need to provide an opbject with
+		// account_id, note, amount
+		const dummy_txn = {
+			account_id : "5e4b20f8a4f6c743d0e03a0f",
+			note : "here is a dummy transaction for withdrawals",
+			amount : 10
+		}
+		const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, dummy_txn);
+		console.log("MYTXN=", mytxn);
+		// for lab update, need to provide lab object
+		// const myupdate = await axios.put(`${gameServer}api/facilities/blah`, $LabObj);
+		console.log(myresp);
+	}
+
 	componentDidMount(){
 		let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
 		let labs = this.props.facilities.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
@@ -112,103 +134,115 @@ class ResearchLabs extends Component {
 		let research = this.state.research;
 		let sendLabUpdate = this.handleLabUpdate;
 		let sendFundingUpdate = this.handleFundingUpdate;
+		let confirmSubmit = this.confirmSubmit;
 		return(
 			<div>
 				<Table
-				height={400}
-				rowHeight={50}
-                data={this.state.labs}
-                >
-                <Column verticalAlign='middle' width={120} align="left" fixed>
-                    <HeaderCell>Lab Name</HeaderCell>
-                    <Cell dataKey="name" />
-                </Column>
-        
-                <Column verticalAlign='top' width={250} align="left" fixed>
-                    <HeaderCell>Action</HeaderCell>
-                    <Cell dataKey="name">
-					{rowData => {   
-						function handleChange(value) {
-							let updatedLab = { 
-								_id: rowData._id, 
-								research_id: value,
-								//funding : rowData.funding
-								funding: null 
-							};
-							sendLabUpdate(updatedLab);
-						}          
-						return (
-							<SelectPicker
-								defaultValue={ rowData.research[0] }
-								groupBy='field'
-								valueKey='_id'
-								labelKey='name'
-								onChange={handleChange}
-								data={ research }
-								style={{ width: 224 }}
-							/>
-						)}}
-					</Cell>
-                </Column>
-        
-                <Column verticalAlign='middle' width={200}>
-                    <HeaderCell>Current Progress</HeaderCell>
-					<ProgressCell 
-						dataKey="blah"
-						labupdates={this.state.labUpdates}
-						allknowledge={ props.allKnowledge }
-						techcost={ props.techCost }
-					/>
-                </Column>
-        
-                <Column verticalAlign='middle' width={150}>
-                    <HeaderCell>Funding Level</HeaderCell>
-                    <Cell style={{ padding: 0 }}  >
-					{rowData => {      
-						function handleChange(value) {
-							let updatedLab = { 
-								_id: rowData._id, 
-								//research_id: rowData.research[0],
-								research_id: null,
-								funding: value 
-							};
-							sendFundingUpdate(updatedLab);
-						}          
-						return (
-							<InputNumber 
-								prefix="Funding" 
-								defaultValue={0}
-								disabled={rowData.disableFunding}
-								max={4} 
-								min={0} 
-								step={1} 
-								style={{ width: 140 } }
-								onChange={ handleChange }
-							/>
-						)}}
-					</Cell>
-                </Column>
+					height={400}
+					rowHeight={50}
+					data={this.state.labs}
+					>
+					<Column verticalAlign='middle' width={120} align="left" fixed>
+						<HeaderCell>Lab Name</HeaderCell>
+						<Cell dataKey="name" />
+					</Column>
+			
+					<Column verticalAlign='middle' width={250} align="left" fixed>
+						<HeaderCell>Action</HeaderCell>
+						<Cell style={{ padding: 0 }} dataKey="name">
+						{rowData => {   
+							function handleChange(value) {
+								let updatedLab = { 
+									_id: rowData._id, 
+									research_id: value,
+									//funding : rowData.funding
+									funding: null 
+								};
+								sendLabUpdate(updatedLab);
+							}          
+							return (
+								<SelectPicker
+									defaultValue={ rowData.research[0] }
+									groupBy='field'
+									valueKey='_id'
+									labelKey='name'
+									onChange={handleChange}
+									data={ research }
+									style={{ width: 200 }}
+								/>
+							)}}
+						</Cell>
+					</Column>
+			
+					<Column verticalAlign='middle' width={200}>
+						<HeaderCell>Current Progress</HeaderCell>
+						<ProgressCell 
+							labupdates={this.state.labUpdates}
+							allknowledge={ props.allKnowledge }
+							techcost={ props.techCost }
+						/>
+					</Column>
+			
+					<Column verticalAlign='middle' width={150}>
+						<HeaderCell>Funding Level</HeaderCell>
+						<Cell style={{ padding: 0 }}  >
+						{rowData => {      
+							function handleChange(value) {
+								let updatedLab = { 
+									_id: rowData._id, 
+									//research_id: rowData.research[0],
+									research_id: null,
+									funding: value 
+								};
+								sendFundingUpdate(updatedLab);
+							}          
+							return (
+								<InputNumber 
+									prefix="Funding" 
+									defaultValue={0}
+									disabled={rowData.disableFunding}
+									max={4} 
+									min={0} 
+									step={1} 
+									style={{ width: 140 } }
+									onChange={ handleChange }
+								/>
+							)}}
+						</Cell>
+					</Column>
 
-				<Column verticalAlign='middle' width={230}>
-                    <HeaderCell>Cost</HeaderCell>
-					<Cell dataKey="blah">
-					{rowData => {      
-						let labUpdates = this.state.labUpdates;
-						const result = newLabCheck(rowData._id, labUpdates);
-						let myFundLevel = 0;
-						let myFunding = 0;
-						if (result >= 0) {	// existing entry
-							myFundLevel = labUpdates[result].funding;
-							myFunding = props.fundingCost[myFundLevel];
-						} 
-						return (
-							<Tag 
-								color="green">
-								$ { myFunding } MB
-							</Tag>
-						)}}
-					</Cell>
-                </Column>
+					<Column verticalAlign='middle' width={100}>
+						<HeaderCell>Cost</HeaderCell>
+						<Cell dataKey="blah">
+						{rowData => {      
+							let labUpdates = this.state.labUpdates;
+							const result = newLabCheck(rowData._id, labUpdates);
+							let myFundLevel = 0;
+							let myFunding = 0;
+							if (result >= 0) {	// existing entry
+								myFundLevel = labUpdates[result].funding;
+								myFunding = props.fundingCost[myFundLevel];
+							} 
+							return (
+								<Tag 
+									color="green">
+									$ { myFunding } MB
+								</Tag>
+							)}}
+						</Cell>
+					</Column>
+
+					<Column verticalAlign='middle' width={120} fixed="right">
+						<HeaderCell></HeaderCell>
+						<Cell style={{ padding: 0 }} >
+							<Button
+								onClick={ confirmSubmit }
+							>
+								Push Me
+							</Button>
+						</Cell>
+					</Column>
+
                 </Table>
 			</div>
     	);
