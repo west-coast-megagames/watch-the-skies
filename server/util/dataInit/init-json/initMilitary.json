@@ -13,7 +13,7 @@
     "team" : "USA",
     "country" : "US",
     "homeBase" : "US",
-    "gear" : [ "Submarine Group" ],    
+    "gear" : [ "Submarine Group" ],
     "type" : "Fleet"
 },
 {
@@ -261,7 +261,7 @@
 },
 {
     "model" : "Military",
-    "name" : "France Modern Attack Sub Fleet 3",
+    "name" : "France Modern Attack Sub Fleet 1",
     "team" : "TFR",
     "country" : "FR",
     "homeBase" : "FR",
@@ -894,15 +894,6 @@
     "team" : "TUK",
     "country" : "GB",
     "homeBase" : "GB",
-    "gear" : [  "Modern Tech Vehicles", "Corps" ],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Technology Corps 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase" : "RU",
     "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },

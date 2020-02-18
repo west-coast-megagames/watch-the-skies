@@ -46,6 +46,7 @@ async function runMilitaryLoad(runFlag){
     return true;
   } catch (err) {
     militaryLoadDebugger('Catch runMilitaryLoad Error:', err.message);
+    logger.error('Catch runMilitaryLoad Error:', err.message);
     return false; 
   }
 };
@@ -57,8 +58,8 @@ async function initLoad(doLoad) {
 
   for (let i = 0; i < militaryDataIn.length; ++i ) {
     
-    //militaryLoadDebugger("Jeff in runMilitaryLoad loop", i, militaryDataIn[i].name );    
-    //militaryLoadDebugger("Jeff in runMilitaryLoad loop", i, militaryDataIn[i] );
+    //logger.info("Jeff in runMilitaryLoad loop %O", i, militaryDataIn[i].name );    
+    //logger.info("Jeff in runMilitaryLoad loop %O", i, militaryDataIn[i] );
     
     await loadMilitary(militaryDataIn[i]);
   }
@@ -66,9 +67,9 @@ async function initLoad(doLoad) {
 
 async function loadMilitary(iData){
   try {   
-    //militaryLoadDebugger("Jeff in loadMilitary ", iData.name); 
     let military = await Military.findOne( { name: iData.name } );
     if (!military) {
+      //logger.info("Jeff 0a in loadMilitary %O", iData.name, iData.type);       
       switch(iData.type){
         case 'Fleet':
           createFleet(iData);
@@ -83,6 +84,7 @@ async function loadMilitary(iData){
       }
     } else {       
       // Existing Military here ... update
+      //logger.info("Jeff 0b in loadMilitary %O", iData.name, iData.type); 
       switch(iData.type){
         case 'Fleet':
           updateFleet(iData);
@@ -97,7 +99,7 @@ async function loadMilitary(iData){
       }
     }
   } catch (err) {
-    militaryLoadDebugger('Catch Military Error:', err.message);
+    logger.error('Catch Military Error:', err.message);
     return;
   }
 };
@@ -125,20 +127,21 @@ async function deleteAllMilitarys(doLoad) {
 
         let militaryDel = await Military.findByIdAndRemove(id);
         if (militaryDel = null) {
-          militaryLoadDebugger(`The Military with the ID ${id} was not found!`);
+          logger.error(`The Military with the ID ${id} was not found!`);
         }
         //militaryLoadDebugger("Jeff in deleteAllMilitarys loop after remove", military.name); 
       } catch (err) {
-        militaryLoadDebugger('Military Delete All Error:', err.message);
+        logger.error('Military Delete All Error:', err.message);
       }
     }        
-    militaryLoadDebugger("All Militarys succesfully deleted!");
+    logger.info("All Militarys succesfully deleted!");
   } catch (err) {
-    militaryLoadDebugger(`Delete All Militarys Catch Error: ${err.message}`);
+    logger.error(`Delete All Militarys Catch Error: ${err.message}`);
   }
 };  
 
 async function createFleet(iData){
+  //logger.info("Jeff 1 in loadMilitary %O", iData.name, iData.type); 
   // New Fleet/Military here
   let fleet = new Fleet({ 
     name: iData.name,
@@ -200,21 +203,21 @@ async function createFleet(iData){
 
       fleet.gear.push(newGear._id)
     } else {
-      militaryLoadDebugger('Error in creation of gear', ger, "for ", fleet.name);
+      logger.error('Error in creation of gear', ger, "for ", fleet.name);
     }
   }
 
   let { error } = validateMilitary(fleet); 
   if (error) {
-    militaryLoadDebugger("New Military Validate Error", fleet.name, error.message);
+    logger.error("New Military Validate Error", fleet.name, error.message);
     // remove associated gears records
     for (let j = 0; j < fleet.gear.length; ++j ) {
       gerId = military.equipment[j];
       let gearDel = await Gear.findByIdAndRemove(gerId);
       if (gearDel = null) {
-         console.log(`The Military Gear with the ID ${gerId} was not found!`);
+         logger.error(`The Military Gear with the ID ${gerId} was not found!`);
       }
-      console.log(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
+      logger.info(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
     }      
     return; 
   }
@@ -222,6 +225,7 @@ async function createFleet(iData){
   await fleet.save((err, fleet) => {
     if (err) return console.error(`New Military Save Error: ${err}`);
     militaryLoadDebugger(fleet.name + " add saved to military collection.");
+    logger.info(fleet.name + " add saved to military collection.");
     updateStats(fleet._id);
   });
 }
@@ -240,31 +244,31 @@ async function createCorps(iData){
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
    if (!team) {
-     militaryLoadDebugger("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
+     //logger.info("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
    } else {
      corps.team = team._id;
-     militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+     //logger.info("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
    }
   }      
 
   if (iData.country != ""){
     let country = await Country.findOne({ code: iData.country });  
     if (!country) {
-      militaryLoadDebugger("Military Load Country Error, New Military:", iData.name, " Country: ", iData.country);
+      //logger.info("Military Load Country Error, New Military:", iData.name, " Country: ", iData.country);
     } else {
       corps.country = country._id;
       corps.zone    = country.zone;
-      militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+      //logger.info("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
     }
   }       
 
   if (iData.homeBase != ""){
     let country = await Country.findOne({ code: iData.homeBase });  
     if (!country) {
-      militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
+      //logger.info("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
       corps.homeBase = country._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
+      //logger.info("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
     }
   }       
 
@@ -283,26 +287,26 @@ async function createCorps(iData){
         logger.error(`New Military Gear Save Error: ${err}`);
         return console.error(`New Military Gear Save Error: ${err}`);
       }
-      militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
+      //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
       }));
 
       corps.gear.push(newGear._id)
     } else {
-      militaryLoadDebugger('Error in creation of gear', ger, "for ", corps.name);
+      logger.error('Error in creation of gear', ger, "for ", corps.name);
     }
   }
 
   let { error } = validateMilitary(corps); 
   if (error) {
-    militaryLoadDebugger("New Military Validate Error", corps.name, error.message);
+    logger.error("New Military Validate Error", corps.name, error.message);
     // remove associated gears records
     for (let j = 0; j < corps.gear.length; ++j ) {
       gerId = military.equipment[j];
       let gearDel = await Gear.findByIdAndRemove(gerId);
       if (gearDel = null) {
-         console.log(`The Military Gear with the ID ${gerId} was not found!`);
+         logger.error(`The Military Gear with the ID ${gerId} was not found!`);
       }
-      console.log(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
+      logger.info(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
     }      
     return; 
   }
@@ -310,6 +314,7 @@ async function createCorps(iData){
   await corps.save((err, corps) => {
     if (err) return console.error(`New Military Save Error: ${err}`);
     militaryLoadDebugger(corps.name + " add saved to military collection.");
+    logger.info(corps.name + " add saved to military collection.");
     updateStats(corps._id);
   });
 }
