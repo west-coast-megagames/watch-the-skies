@@ -28,7 +28,8 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 				return (-1);	// -1 and issue error instead of progress bar
 			} else {
 				let myResearchID = props.labupdates[result].research[0];	// ID of the tech being researched in this row
-				if (myResearchID === null) {		// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
+				if (myResearchID === null) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
+					props.labupdates[result].research = [];		// initialize the research array to a null instead of null array
 					return (-1);	// -1 and issue error instead of progress bar
 				} else {
 					myResearch = props.allknowledge.filter(el => el._id === myResearchID);
