@@ -75,6 +75,7 @@ class ContentArea extends Component {
                   {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
+                  {this.props.team.name === 'Control Team' ? <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}}}
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
@@ -135,7 +136,7 @@ class ContentArea extends Component {
                     />
                   )}/>
                   <Route path="/news" render={(props) => (
-                    <News {...props}
+                    <News {...props} {...this.props}
                       articles={ this.props.articles }
                       alert={ this.props.addAlert }
                       teams={this.props.teams}
@@ -151,6 +152,9 @@ class ContentArea extends Component {
                     <Models {...props}
                         alert = { this.props.addAlert } 
                     />
+                  )}/>
+                  <Route path="/control" render={() => (
+                    <h1>Does this thing work?!</h1>
                   )}/>
                   <Route path="/mosh" component={ MoshTest } />
                   <Route path="/not-found" component={ NotFound } />
