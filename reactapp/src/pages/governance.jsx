@@ -43,7 +43,6 @@ class Governance extends Component {
                         <Budget
                         team={ this.props.team }
                         accounts={ this.props.accounts }
-                        handleUpdate={ this.props.handleUpdate }
                         alert={ this.props.alert }
                     />
                     )}/>

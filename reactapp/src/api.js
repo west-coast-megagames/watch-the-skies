@@ -6,13 +6,6 @@ const socket = openSocket(gameServer);
 const clockSocket = openSocket(`${gameServer}clock`);
 const updateSocket = openSocket(`${gameServer}update`);
 
-function teamUpdate (cb) {
-    updateSocket.on('teamUpdate', data => cb(null, data));
-};
-
-let teamEvents = { teamUpdate };
-
-
 // Clock Socket Events and Event Listners
 function subscribeToClock (cb) {
     clockSocket.on('gameClock', clock => cb(null, clock));
@@ -48,13 +41,23 @@ function autoTransfer (transfer) {
 
 let banking = { bankingTransfer, autoTransfer };
 
-function currentAircrafts (cb) {
+function updateAircrafts (cb) {
     console.log('Listning for current aircrafts...')
     updateSocket.on('currentAircrafts', data => cb(null, data));
 };
 
 function updateAccounts (cb) {
-    updateSocket.on('updateAccounts', data => cb(null, data))
+    updateSocket.on('updateAccounts', data => cb(null, data));
 }
 
-export { gameClock, banking, teamEvents, currentAircrafts, updateAccounts, socket, clockSocket, updateSocket };
+function updateResearch (cb) {
+    updateSocket.on('updateResearch', data => cb(null, data)); 
+}
+
+function updateTeam (cb) {
+    updateSocket.on('teamUpdate', data => cb(null, data));
+};
+
+let updateEvents = { updateTeam, updateAircrafts, updateAccounts, updateResearch };
+
+export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };

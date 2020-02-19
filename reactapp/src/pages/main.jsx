@@ -109,7 +109,6 @@ class ContentArea extends Component {
                     <Governance {...props}
                         team = { this.props.team }
                         accounts = { this.props.accounts }
-                        handleUpdate = { this.updateAccounts }
                         alert={ this.props.addAlert }
                         
                     />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts, updateAccounts, clockSocket } from './api'
+import { teamEvents, updateEvents, clockSocket, updateSocket } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -42,24 +42,29 @@ class App extends Component {
 
   componentDidMount() {
     this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
-    teamEvents.teamUpdate((err, team) => {
+    updateEvents.updateTeam((err, team) => {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
       }
     });
 
-    currentAircrafts((err, aircrafts) => {
-      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
-      this.setState({ aircrafts })
+    updateEvents.updateAircrafts((err, aircrafts) => {
+      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`});
+      this.setState({ aircrafts });
     });
 
-    updateAccounts((err, accounts) => {
+    updateEvents.updateAccounts((err, accounts) => {
       accounts = accounts.filter(a => a.team === this.state.team._id);
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
       accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
-      this.setState({ accounts, megabucks })
+      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
+      this.setState({ accounts, megabucks });
+    });
+
+    updateEvents.updateResearch((err, research) => {
+      this.addAlert({type: 'success', title: 'Research Update', body: `The current state of research has been updated...`});
+      this.setState({ research });
     });
   }
 
@@ -100,12 +105,10 @@ class App extends Component {
             research={ this.state.research }
             facilities={ this.state.facilities }
             accounts={ this.state.accounts }
-            handleUpdate={ this.updateAccounts }
             aircrafts={ this.state.aircrafts }
             addAlert={ this.addAlert }
             handleLogin={ this.handleLogin }
             handleSignout={ this.handleSignout }
-            updateAccounts={ this.updateAccounts }
             handleArtHide={this.handleArtHide}
           />
           <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
@@ -158,6 +161,7 @@ class App extends Component {
       this.updateAccounts(this.state.team);
     }
     clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
+    updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
   }
 
   handleSignout = () => {

@@ -75,7 +75,6 @@ class Science extends Component {
                             team={ this.props.team }
                             allKnowledge={this.props.research}
                             //accounts={ this.props.accounts }
-                            //handleUpdate={ this.props.handleUpdate }
                             //alert={ this.props.alert }
                         />
                     )}/>
@@ -84,7 +83,6 @@ class Science extends Component {
                         team={ this.props.team }
                         allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
-                        //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
                         />
                     )}/>
@@ -96,7 +94,6 @@ class Science extends Component {
                         team={ this.props.team }
                         allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
-                        //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
                         />
                     )}/>
