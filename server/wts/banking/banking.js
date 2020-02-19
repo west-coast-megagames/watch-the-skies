@@ -29,8 +29,6 @@ async function transfer (to, from, amount, note) {
 };
 
 async function deposit (account, amount, note) {
-    const alerts = require('../notifications/alerts');
-
     bankDebugging(`Attempting to deposit into ${account.name}.`);
     bankDebugging(`Current amount in ${account.name}: ${account.balance}`);
     account.balance += parseInt(amount);
@@ -65,8 +63,6 @@ async function deposit (account, amount, note) {
 };
 
 async function withdrawal (account, amount, note) {
-    const alerts = require('../notifications/alerts');
-
     bankDebugging(`Attempting to withdrawal from ${account.name}.`);
     bankDebugging(`Current amount in ${account.name}: ${account.balance}`);
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import { teamEvents, currentAircrafts, updateAccounts, clockSocket } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -8,7 +8,6 @@ import axios from 'axios';
 // Components
 import NavBar from './components/navBar';
 import Registration from './components/registration';
-import TerrorMap from './pages/terror';
 import MainContainer from './pages/main';
 import AlertPage from './components/common/alert';
 
@@ -43,14 +42,14 @@ class App extends Component {
 
   componentDidMount() {
     this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
-    // teamEvents.teamUpdate((err, team) => {
-    //   if(this.state.team.name !== "Select Team") {
-    //     this.setState({ team });
-    //   }
-    // });
+    teamEvents.teamUpdate((err, team) => {
+      if(this.state.team.name !== "Select Team") {
+        this.setState({ team });
+      }
+    });
 
     currentAircrafts((err, aircrafts) => {
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
+      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
       this.setState({ aircrafts })
     });
 
@@ -131,13 +130,6 @@ class App extends Component {
     let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
     this.setState({ articles });
   }
-  
-  updateTeam = async (team) => {
-    if (team.id !== undefined) {
-      console.log(`${team.name} Updating...`);
-      teamEvents.updateTeam(team._id);
-    };
-  };
 
   updateAccounts = async (team) => {
     console.log(`${team.name} Accounts update...`);
@@ -165,7 +157,7 @@ class App extends Component {
       this.setState({ team: user.team });
       this.updateAccounts(this.state.team);
     }
-    
+    clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
   }
 
   handleSignout = () => {
