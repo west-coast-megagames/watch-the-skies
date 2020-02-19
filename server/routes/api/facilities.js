@@ -27,13 +27,13 @@ router.put('/research', async function (req, res) {
   routeDebugger('Updating facility...');
   let update = req.body;
   console.log(update);
+  let funding =  parseInt(update.funding)
+  console.log(`Funding level ${funding}`)
   let facility = await Facility.findById(update._id);
-  facility.funding = update.funding;
-  facility.research = update.research;
-  facility.markModified('funding');
-  facility.markModified('research');
+  facility.funding = funding
+  console.log(facility)
   facility = await facility.save();
-  console.log(facility);
+  console.log(facility)
   res.status(200).json(facility);
 });
 
