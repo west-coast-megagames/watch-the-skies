@@ -64,8 +64,6 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 	}
 };
 
-
-
 class ResearchLabs extends Component {
 	constructor() {
 		super();
@@ -76,7 +74,7 @@ class ResearchLabs extends Component {
 		}
 		this.handleLabUpdate = this.handleLabUpdate.bind(this);
 		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
-		//this.confirmSubmit = this.confirmSubmit.bind(this);
+		this.confirmSubmit = this.confirmSubmit.bind(this);
 	}
 	
 	handleLabUpdate(updatedLab) {
@@ -104,33 +102,47 @@ class ResearchLabs extends Component {
 		//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
 	}
   
-	async confirmSubmit() {
+	async confirmSubmit(lab) {
+		let labs = this.state.labs;
+		labs.forEach(el => {
+			if (el._id === lab._id) { 
+				el.disableFunding = true
+				el.funding = lab.funding;
+			}
+		});
+		console.log(this.state);
+		this.setState({ labs })
+
 		// bring up dialog box
 		// if OK, submit bank transaction and backend update
 		// if cancel, remove the dialog
-		
+
+		let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
+
 		// For withdrawal, need to provide an opbject with
 		// account_id, note, amount
 		const dummy_txn = {
-			account_id : "5e4b82c3b846f83a806fd791",
-			note : "here is a dummy transaction for withdrawals",
-			amount : 10
+			account_id : account._id,
+			note : `Level ${lab.funding} funding for science lab ${lab.name}`,
+			amount : this.props.fundingCost[lab.funding]
 		}
 		const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, dummy_txn);
 		console.log("MYTXN=", mytxn);
 		// for lab update, need to provide lab object
-		// const myupdate = await axios.put(`${gameServer}api/facilities/blah`, $LabObj);
+		const myupdate = await axios.put(`${gameServer}api/facilities/research`, lab);
+		console.log(myupdate);
 	}
 
 	componentDidMount(){
-		let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
-		let labs = this.props.facilities.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
-		
-		labs.forEach(el => { 
-			el.disableFunding = false;
-		});
+		this.teamFilter();
+	}
 
-        this.setState({research, labs});
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps !== this.props) {
+			this.teamFilter();
+		}
+
+	
 	}
 	
 	render() { 
@@ -166,6 +178,7 @@ class ResearchLabs extends Component {
 									groupBy='field'
 									valueKey='_id'
 									labelKey='name'
+									disabled={rowData.disableFunding}
 									onChange={handleChange}
 									data={ research }
 									style={{ width: 200 }}
@@ -195,7 +208,7 @@ class ResearchLabs extends Component {
 							return (
 								<InputNumber 
 									prefix="Funding" 
-									defaultValue={0}
+									defaultValue={rowData.funding}
 									disabled={rowData.disableFunding}
 									max={4} 
 									min={0} 
@@ -231,18 +244,34 @@ class ResearchLabs extends Component {
 					<Column verticalAlign='middle' width={120} fixed="right">
 						<HeaderCell></HeaderCell>
 						<Cell style={{ padding: 0 }} >
-							<Button
-								onClick={ confirmSubmit }
-							>
-								Push Me
-							</Button>
+						{rowData => {
+							return(
+								<Button
+									disabled={rowData.disableFunding}
+									onClick={() => confirmSubmit(rowData) }
+								>
+									Update Project
+								</Button>
+							)
+						}}	
 						</Cell>
 					</Column>
-
                 </Table>
+
 			</div>
     	);
-  	}
+	  }
+	  
+	  teamFilter = () => {
+			let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
+			let labs = this.props.facilities.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
+
+			labs.forEach(el => { 
+				el.funding > 0 ? el.disableFunding = true : el.disableFunding = false;
+			});
+
+			this.setState({research, labs});
+	  }
 }
 
 export default ResearchLabs;
