@@ -23,9 +23,8 @@ async function transfer (to, from, amount, note) {
         withdrawalAccount = await withdrawal(withdrawalAccount, amount, note);
         depositAccount = await deposit(depositAccount, amount, note);
 
-        nexusEvent.emit('updateAccounts')
-
         bankDebugging(`${withdrawalAccount.owner}s transfer completed!`)
+        return;
 };
 
 async function deposit (account, amount, note) {

@@ -12,7 +12,7 @@ let msgKey = 0;
 module.exports = function(io) {
     let MainClients = new SocketServer
 
-    io.of('/update').on('connection', (client) => {
+    io.on('connection', (client) => {
         logger.info(`New client subscribing to main socket... ${client.id}`);
         MainClients.connections.push(client);
         logger.info(`${MainClients.connections.length} ${MainClients.connections.length === 1 ? 'client' : 'clients'} subscribed to update service...`);
@@ -30,30 +30,27 @@ module.exports = function(io) {
           })
     
         client.on('pauseGame', () => {
-        gameClock.pauseClock();
+            gameClock.pauseClock();
         });
     
         client.on('startGame', () => {
-        gameClock.startClock();
+            gameClock.startClock();
         });
     
         client.on('resetClock', () => {
-        gameClock.resetClock();
+            gameClock.resetClock();
         });
     
         client.on('skipPhase', () => {
-        gameClock.skipPhase();
+            gameClock.skipPhase();
         });
     
-        client.on('bankingTransfer', (transfer) => {
-        let { to, from, amount, note } = transfer;
-        socketDebugger(transfer);
-        banking.transfer(to, from, amount, note);
-        });
-    
-        client.on('autoTransfer', (transfer) => {
-        let { to, from, amount, note } = transfer;
-        banking.setAutoTransfer(to, from, amount, note);
+        client.on('bankingTransfer', async (transfer) => {
+            let { to, from, amount, note } = transfer;
+            socketDebugger(transfer);
+            await banking.transfer(to, from, amount, note);
+
+            nexusEvent.emit('updateAccounts');
         });
 
         client.on('disconnect', () => {
