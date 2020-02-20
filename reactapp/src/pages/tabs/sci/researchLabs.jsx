@@ -70,7 +70,8 @@ class ResearchLabs extends Component {
 		this.state = {
 			research: [],
 			labUpdates: [],
-			labs : []
+			labs : [],
+			availFunding : 0
 		}
 		this.handleLabUpdate = this.handleLabUpdate.bind(this);
 		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
@@ -83,7 +84,7 @@ class ResearchLabs extends Component {
 		if (result === -1) {				// New Entry
 			labUpdates.push(updatedLab);
 		} else {							// Existing Entry
-			labUpdates[result].research_id = updatedLab.research_id;
+			labUpdates[result].research[0] = updatedLab.research[0];
 		}
 		this.setState({labUpdates});
 		//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
@@ -92,8 +93,7 @@ class ResearchLabs extends Component {
 	handleFundingUpdate(updatedLab) {
 		let labUpdates = this.state.labUpdates;
 		const result = newLabCheck(updatedLab._id, labUpdates);
-		if (result === -1) {				// New Entry
-			updatedLab.research_id = null;		
+		if (result === -1) {				// New Entry	
 			labUpdates.push(updatedLab);  
 		} else {							// Existing Entry
 			labUpdates[result].funding = updatedLab.funding;
@@ -265,12 +265,26 @@ class ResearchLabs extends Component {
 	  teamFilter = () => {
 			let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
 			let labs = this.props.facilities.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
+			let availSciFunding = this.props.accounts.filter(el => el.name === 'Science' && el.team === this.props.team._id);
+			let availFunding = availSciFunding[0];
 
+//			while (typeof availFunding === "undefined") {
+//				availFunding = availSciFunding[0];
+//				console.log("It is undefined...");
+//			}
+				
+console.log("AVAILFUND=",availFunding);
+			availSciFunding.forEach(el => {
+				availFunding = el.balance;
+			})
+console.log("AVAILFUND2=",availFunding);
+//console.log("AVAILFUND=",availFunding.balance);		
 			labs.forEach(el => { 
 				el.funding > 0 ? el.disableFunding = true : el.disableFunding = false;
+				el.disableFunding = false;   // temporarily override to false for testing
 			});
 
-			this.setState({research, labs});
+			this.setState({research, labs, availFunding});
 	  }
 }
 
