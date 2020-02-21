@@ -6,6 +6,7 @@ import ClockControls from './../components/clockControls';
 import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 
 import { gameServer } from '../config';
+import LogList from '../components/common/logList';
 
 class Control extends Component {
 
@@ -22,7 +23,7 @@ class Control extends Component {
         const { tab } = this.state; 
 
          return (
-        <Container style={{ height: "100vh" }}>
+        <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="game" to={`${url}/game`} componentClass={NavLink}  icon={<Icon icon="game" />}> Game Control</Nav.Item>
@@ -97,7 +98,7 @@ class Control extends Component {
                     )}/>
                     
                     <Route path={`${url}/national`}  render={() => (
-                        <h5>Grrr...</h5>
+                        <LogList />
                     )}/>
                     <Route path={`${url}/military`}  render={() => (
                         <h5>Grrr...</h5>
