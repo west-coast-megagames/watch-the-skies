@@ -70,7 +70,8 @@ async function loadCity(iData){
            geoDecimal: {
              latDecimal: iData.latDecimal,
              longDecimal: iData.longDecimal
-           }
+           },
+           dateline: iData.dateline
         }); 
 
         let { error } = validateCity(citySite); 
@@ -108,12 +109,13 @@ async function loadCity(iData){
       // Existing City here ... update
       let id = citySite._id;
       
-      citySite.name               = iData.name;
+      citySite.name                   = iData.name;
       citySite.siteCode               = iData.code;
       citySite.geoDMS.latDMS          = iData.latDMS;
       citySite.geoDMS.longDMS         = iData.longDMS;
       citySite.geoDecimal.latDecimal  = iData.latDecimal;
       citySite.geoDecimal.longDecimal = iData.longDecimal;
+      citySite.dateline               = iData.dateline;
       
       if (iData.parentCode2 != ""){
         let team = await Team.findOne({ teamCode: iData.parentCode2 });  
