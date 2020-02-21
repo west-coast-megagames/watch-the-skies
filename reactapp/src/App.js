@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, updateEvents, clockSocket, updateSocket } from './api'
+import { updateEvents, clockSocket, updateSocket } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -76,16 +76,6 @@ class App extends Component {
           handleLogin={ this.handleLogin }/>
       )
     }
-
-    {/*if (this.state.team.name === "Control Team") {
-      return(
-        <TerrorMap
-          zones={ this.state.zones }
-          countries={ this.state.countries }
-          sites={ this.state.sites }
-        />
-      )
-    }*/}
 
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>

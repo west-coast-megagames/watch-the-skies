@@ -163,7 +163,7 @@ class ContentArea extends Component {
               </Switch>
           </Content>
       </Container>
-      );
+    );
   }
 }
 

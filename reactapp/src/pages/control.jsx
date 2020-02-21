@@ -1,79 +1,118 @@
+import axios from 'axios';
 import React, { Component } from 'react';
+import { Container, Nav, Content, Icon, Header } from 'rsuite';
+import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import ClockControls from './../components/clockControls';
 import { MDBBtnGroup, MDBBtn } from 'mdbreact';
-import axios from 'axios';
+
 import { gameServer } from '../config';
 
 class Control extends Component {
 
-    state = {};
+    state = {
+        tab: 'game',
+    };
 
-    render(){
-       return (
-            <div className="center-text">
-                <h5>Game Clock Controls</h5>
-                <ClockControls />
-                <hr />
-                <div>
-                    <h5>Interception Controls</h5>
-                    <MDBBtnGroup>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.deployAliens() }>
-                            Deploy Aliens
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.repairAll() }>
-                            Repair all 
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.returnAliens() }>
-                            Return Aliens
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.returnAll() }>
-                            Return Aircraft
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
-                            Update Aircraft
-                        </MDBBtn>
-                    </MDBBtnGroup>
-                </div>
-                <hr />
-                <div>
-                    <h5>Financial Controls</h5>
-                    <MDBBtnGroup>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.resetAccounts() }>
-                            Reset Accounts
-                        </MDBBtn>
-                    </MDBBtnGroup>
-                </div>
-                <hr />
-                <div>
-                    <h5>Research Controls</h5>
-                    <MDBBtnGroup>
-                        <MDBBtn color="danger" size="sm" onClick={ () => this.delResearch() }>
-                            Delete All Research
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
-                            Load Knowledge
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
-                            Seed Knowledge
-                        </MDBBtn>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
-                            Load Tech
-                        </MDBBtn>
-                    </MDBBtnGroup>
-                </div>
-                <div>
-                    <h5>Construction Controls</h5>
-                    <MDBBtnGroup>
-                        <MDBBtn color="info" size="sm" onClick={ () => this.loadSystems() }>
-                            Load Systems
-                        </MDBBtn>
-                    </MDBBtnGroup>
-                </div>
-            </div>    
-        );
+    handleSelect = (activeKey) => {
+        this.setState({ tab: activeKey })
     }
 
-    deployAliens = async () => {
+    render() {
+        const url = this.props.match.path;
+        const { tab } = this.state; 
+
+         return (
+        <Container style={{ height: "100vh" }}>
+            <Header>
+                <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
+                    <Nav.Item eventKey="game" to={`${url}/game`} componentClass={NavLink}  icon={<Icon icon="game" />}> Game Control</Nav.Item>
+                    <Nav.Item eventKey="national" to={`${url}/national`} componentClass={NavLink}> National Control</Nav.Item>
+                    <Nav.Item eventKey="military" to={`${url}/military`} componentClass={NavLink} > Military Control</Nav.Item>
+                    <Nav.Item eventKey="alien" to={`${url}/alien`} componentClass={NavLink} > Alien Control</Nav.Item>
+                </Nav>
+            </Header>
+            <Content  className='tabContent' style={{ paddingLeft: 20 }}>
+                <Switch>
+                    <Route path={`${url}/game`} render={() => (
+                        <div className="center-text">
+                        <h5>Game Clock Controls</h5>
+                        <ClockControls />
+                        <hr />
+                        <div>
+                            <h5>Interception Controls</h5>
+                            <MDBBtnGroup>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.deployAliens() }>
+                                    Deploy Aliens
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.repairAll() }>
+                                    Repair all 
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.returnAliens() }>
+                                    Return Aliens
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.returnAll() }>
+                                    Return Aircraft
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
+                                    Update Aircraft
+                                </MDBBtn>
+                            </MDBBtnGroup>
+                        </div>
+                        <hr />
+                        <div>
+                            <h5>Financial Controls</h5>
+                            <MDBBtnGroup>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.resetAccounts() }>
+                                    Reset Accounts
+                                </MDBBtn>
+                            </MDBBtnGroup>
+                        </div>
+                        <hr />
+                        <div>
+                            <h5>Research Controls</h5>
+                            <MDBBtnGroup>
+                                <MDBBtn color="danger" size="sm" onClick={ () => this.delResearch() }>
+                                    Delete All Research
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
+                                    Load Knowledge
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
+                                    Seed Knowledge
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
+                                    Load Tech
+                                </MDBBtn>
+                            </MDBBtnGroup>
+                        </div>
+                        <div>
+                            <h5>Construction Controls</h5>
+                            <MDBBtnGroup>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.loadSystems() }>
+                                    Load Systems
+                                </MDBBtn>
+                            </MDBBtnGroup>
+                        </div>
+                    </div>
+                    )}/>
+                    
+                    <Route path={`${url}/national`}  render={() => (
+                        <h5>Grrr...</h5>
+                    )}/>
+                    <Route path={`${url}/military`}  render={() => (
+                        <h5>Grrr...</h5>
+                    )}/>
+                    <Route path={`${url}/alien`}  render={() => (
+                        <h5>Grrr...</h5>
+                    )}/>
+                    <Redirect from={`${url}/`} exact to={`${url}/game`} />
+                </Switch>
+            </Content>
+        </Container>
+         );
+     }
+
+     deployAliens = async () => {
         try {
             const response = await axios.patch(`${gameServer}api/control/alien/deploy`)
             this.props.alert({type: 'success', title: 'Aliens Deployed', body: response.data })
