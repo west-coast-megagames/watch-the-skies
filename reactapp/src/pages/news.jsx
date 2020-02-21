@@ -20,7 +20,7 @@ class News extends Component {
         const { tab } = this.state; 
 
          return (
-        <Container style={{ height: "100vh" }}>
+        <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> feed</Nav.Item>
