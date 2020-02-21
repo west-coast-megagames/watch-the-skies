@@ -127,6 +127,7 @@ class ResearchLabs extends Component {
 			amount : this.props.fundingCost[lab.funding]
 		}
 		const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, dummy_txn);
+		alert(mytxn.data)
 		console.log("MYTXN=", mytxn);
 		// for lab update, need to provide lab object
 		const myupdate = await axios.put(`${gameServer}api/facilities/research`, lab);

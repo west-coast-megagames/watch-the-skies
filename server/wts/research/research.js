@@ -1,4 +1,5 @@
 const researchDebugger = require('debug')('app:research');
+const nexusEvent = require('../../startup/events');
 
 const Research = require('../../models/sci/research') // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
@@ -6,22 +7,51 @@ const { d6 } = require('../../util/systems/dice'); // Import of the dice randomi
 const techCost = [ 66, 133, 200, 250, 300, 350 ] // Arbitratily set at increments of 50 currently
 const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
 
+const { Facility } = require('../../models/gov/facility/facility');
+
+async function startResearch () {
+    for (let lab of await Facility.find({ type: 'Lab' })) {
+        if (lab.research.length < 1) {
+            researchDebugger(`${lab.name} does not have research to conduct...`);
+        } else {
+            researchDebugger(`${lab.name} has research to conduct`);
+            await calculateProgress(lab);
+        }
+    }
+    nexusEvent.emit('updateResearch');
+}
+
 // FUNCTION for calculating the progress applied to a single RESEARCH project
-async function calculateProgress(research_id, lab_id, funding) {
+async function calculateProgress(lab) {
     try {
-        console.log(lab_id); // Future await request to get lab information from DB
-        let tech = await Research.findById(research_id).populate('team', 'name sciRate shortName'); // Imports the specific Research object by _id
+        console.log(lab._id); // Future await request to get lab information from DB
+        let tech = await Research.findById(lab.research[0]).populate('team', 'name sciRate shortName'); // Imports the specific Research object by _id
+        let sciRate = tech.team.sciRate + lab.sciRate
+        let sciBonus = lab.bonus
+        console.log(typeof sciRate)
+        console.log(typeof sciBonus)
 
         console.log(tech);
-        let progress = researchMultiplyer(tech.team.sciRate, 3, 0.25); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
+        let progress = researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
         tech.status.progress += progress; // Adds progress to the current Research
 
         tech.status.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
-        tech.status.completed === true ? researchDebugger(`${tech.name} completed!`) : researchDebugger(`${progress} progress towards ${tech.name}...`) // HOOK for the progress report...
+        if (tech.status.completed === true) {
+            researchDebugger(`${tech.name} completed!`)
+            // Unlock new technology
+            lab.research = [];
+        } else {
+            researchDebugger(`${progress} progress towards ${tech.name}...`);
+        }
 
+        lab.funding = 0;
+        lab = await lab.save() // Saves the modified lab
         tech = await tech.save(); // Saves the current project to the database
+
+        researchDebugger(lab);
+        researchDebugger(tech);
 
         return tech;
 
@@ -66,11 +96,10 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
         }
     };
 
-
     researchDebugger(`Research Multiplyer: ${multiplyer}`);
     let progress = sciRate * multiplyer // Final calculation of progress on the technology
-    researchDebugger(`Progress: ${progress}...`)
+    researchDebugger(`Progress: ${progress}...`);
     return progress; // Returns progress to the Calculate Progress function.
-}
+};
 
-module.exports = { calculateProgress, techCost, fundingCost };
+module.exports = { startResearch, calculateProgress, techCost, fundingCost };

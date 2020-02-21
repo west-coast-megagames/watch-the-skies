@@ -51,8 +51,6 @@ router.put('/research', async function (req, res) {
   routeDebugger('Updating facility...');
   let update = req.body;
   //console.log("jeff 1", update);
-
-  let funding =  parseInt(update.funding)
   //console.log(`Funding level jeff 2 ${funding}`)
   
   let facility = await Facility.findById(update._id);
@@ -61,12 +59,15 @@ router.put('/research', async function (req, res) {
     res.status(404).send(`The facility with the ID ${update._id} was not found!`);
   } else {
     if (facility.type === "Lab"){
+      routeDebugger(`${update.name} lab is being updated...`)
+      let funding = parseInt(update.funding);
+      let research = update.research; 
       facility.funding = funding;
-      //console.log("jeff 3 ", facility)
+      facility.research = research
     }
   
     facility = await facility.save();
-    //console.log("jeff 4", facility)
+    routeDebugger(facility)
     res.status(200).json(facility);
   }
 });
