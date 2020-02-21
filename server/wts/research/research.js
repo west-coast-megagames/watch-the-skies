@@ -19,6 +19,7 @@ async function startResearch () {
         }
     }
     nexusEvent.emit('updateResearch');
+    nexusEvent.emit('updateFacilities');
 }
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
@@ -28,8 +29,6 @@ async function calculateProgress(lab) {
         let tech = await Research.findById(lab.research[0]).populate('team', 'name sciRate shortName'); // Imports the specific Research object by _id
         let sciRate = tech.team.sciRate + lab.sciRate
         let sciBonus = lab.bonus
-        console.log(typeof sciRate)
-        console.log(typeof sciBonus)
 
         console.log(tech);
         let progress = researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus

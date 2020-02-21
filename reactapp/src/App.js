@@ -66,6 +66,11 @@ class App extends Component {
       this.addAlert({type: 'success', title: 'Research Update', body: `The current state of research has been updated...`});
       this.setState({ research });
     });
+
+    updateEvents.updateFacilities((err, facilities) => {
+      this.addAlert({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
+      this.setState({facilities})
+    })
   }
 
   render() {

@@ -58,6 +58,10 @@ function updateTeam (cb) {
     updateSocket.on('teamUpdate', data => cb(null, data));
 };
 
-let updateEvents = { updateTeam, updateAircrafts, updateAccounts, updateResearch };
+function updateFacilities (cb) {
+    updateSocket.on('updateFacilities', data => cb(null, data));
+}
+
+let updateEvents = { updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities };
 
 export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };

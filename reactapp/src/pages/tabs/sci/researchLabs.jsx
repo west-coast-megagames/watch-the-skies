@@ -140,6 +140,7 @@ class ResearchLabs extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps !== this.props) {
+			console.log('Updating State...')
 			this.teamFilter();
 		}
 

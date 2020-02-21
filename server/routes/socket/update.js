@@ -8,6 +8,7 @@ const { getTeam } = require('../../models/team');
 const { getAircrafts } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
 const Research = require('../../models/sci/research');
+const { Facility } = require('../../models/gov/facility/facility')
 
 module.exports = function(io) {
     let UpdateClients = new SocketServer
@@ -52,5 +53,11 @@ module.exports = function(io) {
         socketDebugger(`Event: Updating research...`);
         let research = await Research.find();
         updateSocket.emit('updateResearch', research);
+    });
+
+    nexusEvent.on('updateFacilities', async () => {
+        socketDebugger('Event: Updating facilities...')
+        let facilities = await Facility.find();
+        updateSocket.emit('updateFacilities', facilities);
     })
 }
