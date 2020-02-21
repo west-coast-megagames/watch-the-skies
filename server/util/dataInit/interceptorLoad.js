@@ -89,16 +89,6 @@ async function loadInterceptor(iData){
           }
         }      
 
-        if (iData.parentCode1 != ""){
-          let team = await Team.findOne({ teamCode: iData.parentCode1 });  
-          if (!team) {
-            interceptorLoadDebugger("Interceptor Load Team Error, New Interceptor:", iData.name, " Team: ", iData.parentCode1);
-          } else {
-            interceptor.team = team._id;
-            interceptorLoadDebugger("Interceptor Load Team Found, Interceptor:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
-          }
-        }      
-        
         // create systems records for interceptor and store ID in interceptor.system
         //console.log("jeff interceptor systems  iData.loadout", iData.loadout);
         interceptor.systems = [];

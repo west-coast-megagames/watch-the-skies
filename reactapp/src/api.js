@@ -1,30 +1,14 @@
 import openSocket from 'socket.io-client';
 import { gameServer } from './config';
 
-
 // Socket Routes
 const socket = openSocket(gameServer);
-const alert = openSocket(`${gameServer}alert`);
-
-
-// Update Socket Events and Event Listners
-function updateTeam (team_id) {
-    let updateTeam = setInterval(() => {
-        socket.emit('updateTeam', team_id);
-        clearInterval(updateTeam);
-    }, 1000);
-};
-
-function teamUpdate (cb) {
-    socket.on('teamUpdate', data => cb(null, data));
-};
-
-let teamEvents = { updateTeam, teamUpdate };
-
+const clockSocket = openSocket(`${gameServer}clock`);
+const updateSocket = openSocket(`${gameServer}update`);
 
 // Clock Socket Events and Event Listners
 function subscribeToClock (cb) {
-    socket.on('gameClock', clock => cb(null, clock));
+    clockSocket.on('gameClock', clock => cb(null, clock));
 };
 
 function pauseGame () {
@@ -57,21 +41,27 @@ function autoTransfer (transfer) {
 
 let banking = { bankingTransfer, autoTransfer };
 
-
-// Notification Socket Events and Event Listners
-function alertListen (cb) {
-    alert.on('alert', data => cb(null, data))
-};
-
-let alerts = { alertListen };
-
-function currentAircrafts (cb) {
+function updateAircrafts (cb) {
     console.log('Listning for current aircrafts...')
-    socket.on('currentAircrafts', data => cb(null, data));
+    updateSocket.on('currentAircrafts', data => cb(null, data));
 };
 
 function updateAccounts (cb) {
-    socket.on('updateAccounts', data => cb(null, data))
+    updateSocket.on('updateAccounts', data => cb(null, data));
 }
 
-export { gameClock, banking, alerts, teamEvents, currentAircrafts, updateAccounts, socket };
+function updateResearch (cb) {
+    updateSocket.on('updateResearch', data => cb(null, data)); 
+}
+
+function updateTeam (cb) {
+    updateSocket.on('teamUpdate', data => cb(null, data));
+};
+
+function updateFacilities (cb) {
+    updateSocket.on('updateFacilities', data => cb(null, data));
+}
+
+let updateEvents = { updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities };
+
+export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };

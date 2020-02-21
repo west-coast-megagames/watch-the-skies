@@ -11,7 +11,7 @@ const System = Equipment.discriminator('System', new Schema({
         attack: { type: Number },
         penetration: { type: Number },
         armor: { type: Number },
-        sheild: { type: Number },
+        shield: { type: Number },
         evade: { type: Number },
         range: { type: Number },
         cargo: { type: Number }

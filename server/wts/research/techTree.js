@@ -34,7 +34,7 @@ async function loadTech () {
         count++;
     });
 
-    makeAvailible();
+    await makeAvailible();
 
     return `${count} technology loaded into tech tree...`
 };

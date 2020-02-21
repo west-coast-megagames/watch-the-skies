@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import { gameClock, teamEvents } from '../api';
+import { gameClock, updateEvents } from '../api';
 import TeamAvatar from './common/teamAvatar';
 import alert from '../audio/breaking-news-5.ogg';
 
@@ -20,7 +20,7 @@ class NavBar extends Component {
         super(props);
         gameClock.subscribeToClock((err, clock) => {
             if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum) {
-                teamEvents.updateTeam(this.props.team._id);
+                updateEvents.updateTeam(this.props.team._id);
             }
             this.setState({ 
                 minutes: clock.minutes,
@@ -37,6 +37,7 @@ class NavBar extends Component {
         this.playTrack();
     }
 
+    // Audio trigger code...
     playTrack = () => {
         const {audio} = this.state;
         audio.type = 'audio/ogg';

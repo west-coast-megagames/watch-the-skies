@@ -8,6 +8,7 @@ const { logger } = require('../../middleware/winston');
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/gov/account');
 const { Team } = require('../../models/team');
+const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts
 // @Desc    Get all Accounts
@@ -22,9 +23,9 @@ router.get('/accounts', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/account', async function (req, res) {
-    let { team_id, name, code, balance, deposits, withdrawls, autoTransfers } = req.body;
+    let { team_id, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
     const newAccount = new Account(
-        { team_id, name, code, balance, deposits, withdrawls, autoTransfers }
+        { team_id, name, code, balance, deposits, withdrawals, autoTransfers }
     );
     let docs = await Account.find({ team_id, name })
     if (!docs.length) {
@@ -106,5 +107,17 @@ router.put('/transfer', async function (req, res){
     await account.save();
     res.status(200).send('Automatic transfer deleted!');
 });
+
+
+// @route   POST api/banking/withdrawal
+// @desc    Submit a withdrawal
+// @access  Public
+router.post('/withdrawal', async function (req, res) {
+    let { account_id, amount, note } = req.body;
+    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
+    let account = await Account.findById(account_id);
+    await banking.withdrawal(account, amount, note);
+    nexusEvent.emit('updateAccounts')
+})
 
 module.exports = router;

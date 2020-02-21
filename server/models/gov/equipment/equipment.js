@@ -24,4 +24,21 @@ const EquipmentSchema = new Schema({
 
 let Equipment = mongoose.model('Equipment', EquipmentSchema);
 
-module.exports = { Equipment }
+EquipmentSchema.methods.validateEquipment = function (Equipment) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required(),
+  };
+
+  return Joi.validate(Equipment, schema, { "allowUnknown": true });
+}
+
+function validateEquipment(Equipment) {
+
+  const schema = {
+      name: Joi.string().min(2).max(50).required(),
+    };
+  
+  return Joi.validate(Equipment, schema, { "allowUnknown": true });
+};
+
+module.exports = { Equipment, validateEquipment }

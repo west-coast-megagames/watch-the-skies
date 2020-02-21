@@ -2,6 +2,7 @@ const phaseChangeDebugging = require('debug')('app:phaseChange');
 const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the PR system
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
 const banking = require('../banking/banking'); // IMPORT - Banking System
+const { startResearch } = require('../research/research');
 
 const nexusEvent = require('../../startup/events');
 
@@ -26,8 +27,9 @@ async function actionPhase(turn) {
     logger.info(`Turn ${turn} action phase has begun...`);
 };
 
-function freePhase(turn) {
+async function freePhase(turn) {
     phaseChangeDebugging(`Now changing to the FREE phase ${turn}...`)
+    await startResearch(); // Resolve availible research...
     phaseChangeDebugging(`Done with FREE phase change for ${turn}!`)
     logger.info(`Turn ${turn} free phase has begun...`);
     return 0;

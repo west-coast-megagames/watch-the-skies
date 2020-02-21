@@ -29,7 +29,7 @@ class Budget extends Component {
     };
 
     addTransfer = (schedule) => {
-        let transfer = { id: count, to: '', from: '', amount: 0, note: '' }
+        let transfer = { id: count, to: undefined, from: undefined, amount: 0, note: undefined }
         if (schedule === true) transfer.schedule = true;
         let transactions = this.state.transactions;
         transactions.push(transfer)
@@ -54,7 +54,7 @@ class Budget extends Component {
             <Container className="budget-tab">
                 <Header className="transfers">
                     <ButtonGroup><Button onClick={() => this.addTransfer(false)}>New Transfer</Button><Button onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button></ButtonGroup>
-                    {this.state.transactions.map(el => (<TransferForm key={el.id} transfer={el} delete={this.delTransfer} {...this.props}
+                    {this.state.transactions.map(el => (<TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props}
                     />))}
                 </Header>
                 <Container className="transfers">

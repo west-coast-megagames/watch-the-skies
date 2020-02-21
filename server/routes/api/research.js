@@ -1,11 +1,13 @@
 const routeDebugger = require('debug')('app:routes');
+const nexusEvent = require('../../startup/events');
 const express = require('express');
+const router = express.Router();
 
 const { loadTech } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
 const science = require('../../wts/research/research');
 
-const router = express.Router();
+
 
 // Research Models - Using Mongoose Model
 const TechResearch = require('../../models/sci/techResearch');
@@ -72,6 +74,7 @@ router.post('/analysis', async function (req, res) {
 // @access  Public
 router.patch('/load/tech', async function (req, res) {
     let response = await loadTech();
+    nexusEvent.emit('updateResearch');
     return res.status(200).send(response);
 });
 
@@ -80,6 +83,7 @@ router.patch('/load/tech', async function (req, res) {
 // @access  Public
 router.patch('/load/knowledge', async function (req, res) {
     let response = await loadKnowledge();
+    nexusEvent.emit('updateResearch');
     return res.status(200).send(response);
 });
 
@@ -88,7 +92,17 @@ router.patch('/load/knowledge', async function (req, res) {
 // @access  Public
 router.patch('/load/knowledge/seed', async function (req, res) {
     await knowledgeSeed();
+    nexusEvent.emit('updateResearch');
     return res.status(200).send('We did it, such a seed!')
+});
+
+// @route   DEL api/research/delete
+// @Desc    Load all research in the database
+// @access  Public
+router.delete('/', async function (req, res) {
+    let data = await Research.deleteMany();
+    console.log(data);
+    return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`)
 });
 
 // @route   put api/research/progress

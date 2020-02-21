@@ -1,4 +1,6 @@
 const events = require('events')
-const nexusEvent = new events.EventEmitter();
+class NexusEvent extends events {}
+
+const nexusEvent = new NexusEvent();
 
 module.exports = nexusEvent;

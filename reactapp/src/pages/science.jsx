@@ -75,7 +75,6 @@ class Science extends Component {
                             team={ this.props.team }
                             allKnowledge={this.props.research}
                             //accounts={ this.props.accounts }
-                            //handleUpdate={ this.props.handleUpdate }
                             //alert={ this.props.alert }
                         />
                     )}/>
@@ -84,7 +83,6 @@ class Science extends Component {
                         team={ this.props.team }
                         allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
-                        //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
                         />
                     )}/>
@@ -96,16 +94,12 @@ class Science extends Component {
                         team={ this.props.team }
                         allKnowledge={this.props.research}
                         //accounts={ this.props.accounts }
-                        //handleUpdate={ this.props.handleUpdate }
                         //alert={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
                         <ResearchLabs {...this.props}
-                        team={this.props.team}
                         allKnowledge={this.props.research}
-                        everythingProp={this.props}
-                        alert={this.props.alert}
                         techCost={this.state.techCost}
                         fundingCost={this.state.fundingCost}
                         />

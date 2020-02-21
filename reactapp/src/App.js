@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React
-import { teamEvents, currentAircrafts, updateAccounts } from './api'
+import { updateEvents, clockSocket, updateSocket } from './api'
 import jwtDecode from 'jwt-decode'
 import { Header } from 'rsuite';
 import { gameServer } from './config';
@@ -8,7 +8,6 @@ import axios from 'axios';
 // Components
 import NavBar from './components/navBar';
 import Registration from './components/registration';
-import TerrorMap from './pages/terror';
 import MainContainer from './pages/main';
 import AlertPage from './components/common/alert';
 
@@ -43,25 +42,35 @@ class App extends Component {
 
   componentDidMount() {
     this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
-    // teamEvents.teamUpdate((err, team) => {
-    //   if(this.state.team.name !== "Select Team") {
-    //     this.setState({ team });
-    //   }
-    // });
-
-    currentAircrafts((err, aircrafts) => {
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
-      this.setState({ aircrafts })
+    updateEvents.updateTeam((err, team) => {
+      if(this.state.team.name !== "Select Team") {
+        this.setState({ team });
+      }
     });
 
-    updateAccounts((err, accounts) => {
+    updateEvents.updateAircrafts((err, aircrafts) => {
+      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`});
+      this.setState({ aircrafts });
+    });
+
+    updateEvents.updateAccounts((err, accounts) => {
       accounts = accounts.filter(a => a.team === this.state.team._id);
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
       accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
-      this.setState({ accounts, megabucks })
+      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
+      this.setState({ accounts, megabucks });
     });
+
+    updateEvents.updateResearch((err, research) => {
+      this.addAlert({type: 'success', title: 'Research Update', body: `The current state of research has been updated...`});
+      this.setState({ research });
+    });
+
+    updateEvents.updateFacilities((err, facilities) => {
+      this.addAlert({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
+      this.setState({facilities})
+    })
   }
 
   render() {
@@ -70,16 +79,6 @@ class App extends Component {
           <Registration
           addAlert={ this.addAlert }
           handleLogin={ this.handleLogin }/>
-      )
-    }
-
-    if (this.state.team.name === "Control Team") {
-      return(
-        <TerrorMap
-          zones={ this.state.zones }
-          countries={ this.state.countries }
-          sites={ this.state.sites }
-        />
       )
     }
 
@@ -101,12 +100,10 @@ class App extends Component {
             research={ this.state.research }
             facilities={ this.state.facilities }
             accounts={ this.state.accounts }
-            handleUpdate={ this.updateAccounts }
             aircrafts={ this.state.aircrafts }
             addAlert={ this.addAlert }
             handleLogin={ this.handleLogin }
             handleSignout={ this.handleSignout }
-            updateAccounts={ this.updateAccounts }
             handleArtHide={this.handleArtHide}
           />
           <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
@@ -131,13 +128,6 @@ class App extends Component {
     let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
     this.setState({ articles });
   }
-  
-  updateTeam = async (team) => {
-    if (team.id !== undefined) {
-      console.log(`${team.name} Updating...`);
-      teamEvents.updateTeam(team._id);
-    };
-  };
 
   updateAccounts = async (team) => {
     console.log(`${team.name} Accounts update...`);
@@ -165,7 +155,8 @@ class App extends Component {
       this.setState({ team: user.team });
       this.updateAccounts(this.state.team);
     }
-    
+    clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
+    updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
   }
 
   handleSignout = () => {

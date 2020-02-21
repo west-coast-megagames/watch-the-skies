@@ -8,7 +8,7 @@ const Infrustructure = Equipment.discriminator('Infrustructure', new Schema({
     category: { type: String, enum: [ 'unknown' ]},
     stats: {
         sciRate: { type: Number },
-        multiplier: { type: Number },
+        sciBonus: { type: Number },
         copacity: { type: Number }
     }
 }));

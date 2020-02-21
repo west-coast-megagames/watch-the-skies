@@ -5,7 +5,7 @@ import Select from './common/selectPicker';
 
 class TransferForm extends Component {
     state = {
-        transfer: { to: undefined, from: undefined, amount: 0, note: undefined},
+        transfer: {},
         account: {},
         schedule: false
     }
@@ -16,17 +16,15 @@ class TransferForm extends Component {
         if (this.state.transfer.to === undefined || this.state.transfer.from === undefined){
             this.props.alert({type: 'error', title: 'Transfer failed', body: `Accounts not selected`})
         } else {
-            if (this.state.schedule === false) {
-                banking.bankingTransfer(this.state.transfer);
-                console.log('Submitted transfer');
-            } else {
+            if (this.state.transfer.schedule === true) {
                 banking.autoTransfer(this.state.transfer);
                 console.log('Submitted automatic transfer');
+            } else {
+                banking.bankingTransfer(this.state.transfer);
+                console.log('Submitted transfer');
             }
             this.props.alert({type: 'success', title: 'Submitted Transfer', body: `Placeholder notification for your transfer of ${this.state.transfer.amount}`})
-            let transfer = { to: '', from: '', amount: 0, note: '' };
-            let account = {};
-            this.setState({ transfer, account });
+            this.props.delTransfer(this.state.transfer.id);
         }
     };
 
@@ -65,10 +63,10 @@ class TransferForm extends Component {
         this.setState({ schedule })
     };
 
-    // componentDidMount() {
-    //     let transfer = { to: '', from: '', amount: 0, note: '' }
-    //     this.setState({ transfer });
-    // }
+    componentDidMount() {
+        let transfer = this.props.transfer;
+        this.setState({ transfer });
+    }
 
     render() {
         let accounts = this.props.accounts;
@@ -108,7 +106,7 @@ class TransferForm extends Component {
                     <Input style={{ width: 150 }} placeholder="Note" type="text" id='note' value={this.state.transfer.note} onChange={(value) => this.handleChange(value, 'note')}/>
                 </FormGroup>
 
-                <ButtonGroup><Button onClick={this.handleSubmit}>Submit</Button><Button onClick={() => this.props.delete(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
+                <ButtonGroup><Button onClick={this.handleSubmit}>Submit</Button><Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
             </Form>
 
             // <form className="form-inline" onSubmit={this.handleSubmit}>

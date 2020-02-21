@@ -78,6 +78,7 @@ async function initLoad(doLoad) {
 
 async function loadZone(zName, zCode, zLoadFlg, zTerror){
   try {   
+    randomTerror =  Math.floor(Math.random() * 251);
     let zone = await Zone.findOne( { zoneCode: zCode } );
     if (!zone) {
        // New Zone here
@@ -85,7 +86,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror){
        let zone = new Zone({ 
            zoneCode: zCode,
            zoneName: zName,
-           terror: zTerror
+           terror: randomTerror                       //zTerror
         }); 
 
         let { error } = validateZone(zone); 
@@ -104,7 +105,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror){
       
        zone.zoneName = zName;
        zone.zoneCode = zCode;
-       zone.terror   = zTerror;
+       zone.terror   = randomTerror;     //zTerror;
 
        const { error } = validateZone(zone); 
        if (error) {
