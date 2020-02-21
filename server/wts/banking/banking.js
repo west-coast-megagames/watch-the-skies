@@ -47,7 +47,7 @@ async function deposit (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team,
+        team: account.team,
         transaction: 'deposit',
         account: account.name,
         amount,
@@ -82,7 +82,7 @@ async function withdrawal (account, amount, note) {
             phase,
             turnNum
         },
-        team_id: account.team,
+        team: account.team,
         transaction: 'withdrawal',
         account: account.name,
         amount,
