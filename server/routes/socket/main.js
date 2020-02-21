@@ -53,6 +53,14 @@ module.exports = function(io) {
             nexusEvent.emit('updateAccounts');
         });
 
+        client.on('autoTransfer', async (transfer) => {
+            let { to, from, amount, note } = transfer;
+            socketDebugger(transfer);
+            await banking.setAutoTransfer(to, from, amount, note);
+
+            nexusEvent.emit('updateAccounts');
+        });
+
         client.on('disconnect', () => {
             logger.info(`Client disconnecting from update service... ${client.id}`);
             MainClients.delClient(client);
