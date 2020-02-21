@@ -56,7 +56,7 @@
 },
 {"loadType": "citySite",
  "name" : "Amundsen-Scott South Pole",
- "dateline" : "BEIJING",
+ "dateline" : "SOUTH POLE",
  "code" : "AQ AMS",
  "latDMS": "90 00 00.0 S",
  "longDMS": "139 15 60.0 W",
