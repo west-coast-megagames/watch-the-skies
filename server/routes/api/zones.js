@@ -62,10 +62,8 @@ router.get('/withCountries', async (req, res) => {
     let temp = {};
     let zoneId = zonesWith[i]._id.toHexString();
     for (let j = 0; j < cFinds.length; ++j){
-      //console.log("jeff a", cFinds[j].code, cFinds[j].name, cFinds[j].zone, zoneId);
       let cZoneId = cFinds[j].zone.toHexString();
       if (cZoneId === zoneId) {
-        console.log("jeff 0 ", cFinds[j].code, cFinds[j].name);
         cList.push({"code": cFinds[j].code, "name": cFinds[j].name});
       }
     }
