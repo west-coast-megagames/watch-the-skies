@@ -25,6 +25,7 @@ router.get('/', async (req, res) => {
   } 
 });
 
+
 // @route   GET api/countrys
 // @Desc    Get all ACTIVE countrys
 // @access  Public
@@ -35,9 +36,18 @@ router.get('/byZones', async (req, res) => {
       .populate('zone', 'zoneCode zoneName terror -_id')
       .select('code name -_id');
     
-    countrys.sort((a , b) => (a.zoneCode < b.zoneCode) ? -1 :
-                             (a.zoneCode > b.zoneCode ? 1 : 0) );
+    //countrys.sort((a , b) => (a.zoneCode < b.zoneCode) ? -1 :
+    //                         (a.zoneCode > b.zoneCode ? 1 : 0) );
     
+    var sortByProperty = function (property) {
+                              return function (x, y) {
+                              return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+                              };
+                          };
+
+    countrys.sort(sortByProperty('zone', 'zoneCode'));
+            //.sort(sortByProperty('code'));
+      
     res.json(countrys);
   } catch (err) {
     console.log('Error:', err.message);
