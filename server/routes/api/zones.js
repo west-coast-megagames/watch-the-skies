@@ -5,6 +5,7 @@ const router = express.Router();
 const zoneDebugger = require('debug')('app:zone');
 const supportsColor = require('supports-color');
 const validateObjectId = require('../../middleware/validateObjectId');
+const {Country} = require('../../models/country'); 
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
@@ -43,6 +44,41 @@ router.get('/code/:zoneCode', async (req, res) => {
       res.status(404).send(`The Zone with the Zone Code ${zoneCode} was not found!`);
     }
   });
+
+// @route   GET api/zones/withCountries
+// @Desc    Get Zones by Zone Code with assigned countries
+// @access  Public
+router.get('/withCountries', async (req, res) => {
+  // get countries once
+  let cFinds = await Country.find()
+                  .sort('code: 1');
+  let zones = await Zone.find().sort('zoneCode: 1')
+                        .select('zoneCode zoneName terror _id');
+
+  let zonesWith = zones;     
+  let zonesWithCountries = [];              
+  for (let i = 0; i < zonesWith.length; ++i ) {
+    let cList = [];
+    let temp = {};
+    let zoneId = zonesWith[i]._id.toHexString();
+    for (let j = 0; j < cFinds.length; ++j){
+      //console.log("jeff a", cFinds[j].code, cFinds[j].name, cFinds[j].zone, zoneId);
+      let cZoneId = cFinds[j].zone.toHexString();
+      if (cZoneId === zoneId) {
+        console.log("jeff 0 ", cFinds[j].code, cFinds[j].name);
+        cList.push({"code": cFinds[j].code, "name": cFinds[j].name});
+      }
+    }
+    Object.assign(zonesWith[i], {"countries": cList});
+    Object.assign(temp, {"zoneCode": zonesWith[i].zoneCode}, 
+                    {"zoneName": zonesWith[i].zoneName},
+                    {"terror": zonesWith[i].terror},
+                    {"countries": cList} );   
+    zonesWithCountries.push(temp);
+  }
+  
+  res.json(zonesWithCountries);
+});
 
 // @route   POST api/zones
 // @Desc    Create New Zone

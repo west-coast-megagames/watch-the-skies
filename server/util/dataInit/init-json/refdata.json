@@ -392,7 +392,7 @@
   {"loadType": "country", "code": "SD", "name": "Sudan", "borderedBy" : [{"code": "EG"}, {"code": "ER"}, {"code": "LY"}, {"code": "TD"}, {"code": "CF"}, {"code": "SS"}, {"code": "ET"}], "coastal" : true,
     "loadFlag": "true", "parentCode1": "AF", "parentCode2": "", "refNumber1":  0},
   {"loadType": "country", "code": "PS", "name": "State of Palestine", "borderedBy" : [{"code": "IL"}, {"code": "EG"}], "coastal" : true,
-    "loadFlag": "true", "parentCode1": "PS", "parentCode2": "", "refNumber1":  0},
+    "loadFlag": "true", "parentCode1": "AS", "parentCode2": "", "refNumber1":  0},
   {"loadType": "country", "code": "SR", "name": "Suriname", "borderedBy" : [{"code": "GF"}, {"code": "GY"}, {"code": "BZ"}], "coastal" : true,
     "loadFlag": "true", "parentCode1": "SA", "parentCode2": "", "refNumber1":  0},
   {"loadType": "country", "code": "SJ", "name": "Svalbard and Jan Mayen", "borderedBy" : [], "coastal" : true,
