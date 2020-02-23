@@ -1,13 +1,9 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, FlexboxGrid } from 'rsuite';
+import { Nav, Container, Header, Content } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import Interception from './tabs/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
-
-import map from '../img/worldMap_mergedRegions.svg'
-import ResearchLabs from './tabs/sci/researchLabs';
-
 class Operations extends Component {
     constructor() {
         super();

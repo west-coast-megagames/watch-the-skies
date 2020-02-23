@@ -81,7 +81,8 @@ class Science extends Component {
                     <Route path={`${url}/knowledge`} render={() => (
                         <Knowledge    
                         team={ this.props.team }
-                        allKnowledge={this.props.research}
+                        allResearch={this.props.research}
+                        techCost={this.state.techCost}
                         //accounts={ this.props.accounts }
                         //alert={ this.props.alert }
                         />
