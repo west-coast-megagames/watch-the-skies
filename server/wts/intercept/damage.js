@@ -151,7 +151,7 @@ async function dmgCalc(unit, report) {
 //Update Interceptors with Damage
 async function applyDmg(unit) {
     interceptDebugger(`Applying damage to ${unit.name}...`);
-    let update = await Interceptor.findById(unit._id).populate('team').populate('base');
+    let update = await Interceptor.findById(unit._id).populate('team').populate('baseOrig');
     
     if (update.team.teamType === 'A') {
         return 0;
@@ -165,9 +165,9 @@ async function applyDmg(unit) {
     update.status.mission = "Docked"
     update.status.ready = true;
     update.status.deployed = false;
-    update.country = update.base.country;
-    update.site = update.base._id
-    update.zone = update.base.zone
+    update.country = update.baseOrig.country;
+    update.site = update.baseOrig._id
+    update.zone = update.baseOrig.zone
 
 
     if (unit.stats.hull != unit.stats.hullMax) {
