@@ -7,7 +7,7 @@ const SiteSchema = new Schema({
     team: { type: Schema.Types.ObjectId, ref: 'Team'},
     country: { type: Schema.Types.ObjectId, ref: 'Country'},
     zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
-    siteCode: { type: String, minlength: 2, maxlength: 20, required: true },
+    siteCode: { type: String, minlength: 2, maxlength: 20, required: true, unique: true },
     geoDMS: {
       latDMS: { type: String, minlength: 7, maxlength: 13 },     // format DD MM SS.S N or S  example  40 44 55.02 N
       longDMS: { type: String, minlength: 7, maxlength: 14 }     // format DDD MM SS.S E or W example 073 59 11.02 W
