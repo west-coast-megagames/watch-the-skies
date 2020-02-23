@@ -8,8 +8,8 @@ const {Zone} = require('../../models/zone');
 const {Team} = require('../../models/team'); 
 
 
-// @route   GET api/countrys
-// @Desc    Get all ACTIVE countrys
+// @route   GET api/country
+// @Desc    Get all ACTIVE countries
 // @access  Public
 // Only Active
 router.get('/', async (req, res) => {
@@ -25,8 +25,38 @@ router.get('/', async (req, res) => {
   } 
 });
 
-// @route   GET api/countrys/id
-// @Desc    Get countrys by id
+
+// @route   GET api/country
+// @Desc    Get all ACTIVE countries
+// @access  Public
+// Only Active
+router.get('/byZones', async (req, res) => {
+  try {
+    let countrys = await Country.find()
+      .populate('zone', 'zoneCode zoneName terror -_id')
+      .select('code name -_id');
+    
+    //countrys.sort((a , b) => (a.zoneCode < b.zoneCode) ? -1 :
+    //                         (a.zoneCode > b.zoneCode ? 1 : 0) );
+    
+    var sortByProperty = function (property) {
+                              return function (x, y) {
+                              return ((x[property] === y[property]) ? 0 : ((x[property] > y[property]) ? 1 : -1));
+                              };
+                          };
+
+    countrys.sort(sortByProperty('zone', 'zoneCode'));
+            //.sort(sortByProperty('code'));
+      
+    res.json(countrys);
+  } catch (err) {
+    console.log('Error:', err.message);
+    res.status(400).send(err.message);
+  } 
+});
+
+// @route   GET api/country/id
+// @Desc    Get countries by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
 
@@ -47,8 +77,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     }
 });
 
-// @route   GET api/countrys/code
-// @Desc    Get countrys by Country Code
+// @route   GET api/country/code
+// @Desc    Get countries by Country Code
 // @access  Public
 router.get('/code/:code', async (req, res) => {
   let code = req.params.code;
@@ -68,7 +98,7 @@ router.get('/code/:code', async (req, res) => {
   }
 });
 
-// @route   POST api/countrys
+// @route   POST api/country
 // @Desc    Create New Country
 // @access  Public
 router.post('/', async (req, res) => {

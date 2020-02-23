@@ -112,14 +112,14 @@ async function loadInterceptor(iData){
             interceptorLoadDebugger('Error in creation of system', sys, "for ", interceptor.name);
           }
         }
-
+ 
         if (iData.parentCode2 != "" && iData.parentCode2 != "undefined" ){
           let baseSite = await BaseSite.findOne({ siteCode: iData.parentCode2 });  
           if (!baseSite) {
             interceptorLoadDebugger("Interceptor Load Base Error, New Interceptor:", iData.name, " Base: ", iData.parentCode2);
           } else {
-            interceptor.base = baseSite._id;
             interceptor.site = baseSite._id;
+            interceptor.baseOrig = baseSite._id;
             interceptorLoadDebugger("Interceptor Load Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
           }
         }      
@@ -207,8 +207,8 @@ async function loadInterceptor(iData){
         if (!baseSite) {
           interceptorLoadDebugger("Interceptor Load Base Error, Update Interceptor:", iData.name, " Base: ", iData.parentCode2);
         } else {
-          interceptor.base = baseSite._id;
-          interceptor.site = baseSite._id;
+          interceptor.baseOrig = baseSite._id;
+          interceptor.site     = baseSite._id;
           interceptorLoadDebugger("Interceptor Load Update Base Found, Interceptor:", iData.name, " Base: ", iData.parentCode2, "Base ID:", baseSite._id);
         }
       }      
