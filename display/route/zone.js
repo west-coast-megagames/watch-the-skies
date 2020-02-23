@@ -20,7 +20,7 @@ router.get('/', async function (req, res) {
 // @route   GET /zones/withCountries
 // @Desc    Get all Articles
 // @access  Public
-router.get('/', async function (req, res) {
+router.get('/withCountries', async function (req, res) {
     console.log('Gathering all zones!');
     restApi('https://project-nexus-prototype.herokuapp.com/api/zones/withCountries/')
     .then(response => {
