@@ -2,6 +2,7 @@ const runLoad = require('../dataInit/initRefLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
 const runInterceptorLoad = require('../dataInit/interceptorLoad');
+const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
@@ -61,6 +62,20 @@ async function fullInit(selStr){
         break;
       }
 
+    
+    //case 'All':      not part of main init load yet ... when we disable Interceptor probably
+    case 'Aircraft':
+      let aircraftDone = await runAircraftLoad(true);  // load expanded Aircraft fields
+      logger.debug("Aircraft Load Done: ", aircraftDone);
+      /*
+      if (selStr != 'All') {
+        break;
+      }
+      */
+      break;    
+      // don't want to do anything else while testing
+      
+      
     case 'All':
     case 'User':
       let userDone = await runUserLoad(true);  // load expanded User fields
