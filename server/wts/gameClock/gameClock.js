@@ -9,7 +9,7 @@ let hours = 0;      // Starting hours on master game clock
 let minutes = 40;   // Starting minutes on master game clock
 let seconds = 0;    // Starting seconds on master game clock
 
-let phaseTimes = [8, 12, 10];   // The amount of minutes in each phase
+let phaseTimes = [10, 12, 8];   // The amount of minutes in each phase
 let phaseTime = 0;              // Current time left in the Phase
 let currentTime = Date.parse(new Date()); // Current Computer Date
 let deadline = new Date(currentTime + phaseTime*60*1000); // Time for End of Phase
@@ -19,7 +19,7 @@ let phaseNum = -1; // Current Phase Number
 let currentPhase = 'Briefing'; // Current Phase Name
 
 let quarters = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec']; // Quarter Names
-let year = 2020; // Current Game Year
+let year = 2024; // Current Game Year
 let quarter = -1; // Current Quarter
 let currentTurn = 'Pre-Game'; // Current Turn Name
 let turnNum = 0; // Current turn Number
@@ -70,7 +70,7 @@ function resetClock() {
     phaseNum = 0;
     currentPhase = 'Briefing';
 
-    year = 2020;
+    year = 2024;
     quarter = 0;
     currentTurn = 'Pre-Game';
     turnNum = 0;
