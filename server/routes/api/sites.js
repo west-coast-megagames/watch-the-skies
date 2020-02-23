@@ -16,6 +16,7 @@ router.get('/', async function (req, res) {
       .populate('country', 'name')
       .populate('team', 'shortName name')
       .populate('facilities', 'name type')
+      .populate('zone', 'model zoneName zoneCode')
       .sort({team: 1});
 
     res.status(200).json(sites);
