@@ -22,7 +22,7 @@ router.get('/', async function (req, res) {
 // @access  Public
 router.get('/', async function (req, res) {
     console.log('Gathering all zones!');
-    restApi('https://project-nexus-prototype.herokuapp.com/api/contry/byZones')
+    restApi('https://project-nexus-prototype.herokuapp.com/api/country/byZones')
     .then(response => {
         res.json(response)
     })
