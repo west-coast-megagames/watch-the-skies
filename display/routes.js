@@ -3,8 +3,9 @@ const cors = require('cors');
 
 // Routes - Using Express
 const news = require('./route/news');
-const home = require('./route/home')
-const zone = require('./route/zone')
+const home = require('./route/home');
+const zone = require('./route/zone');
+const country = require('./route/country');
 
 module.exports = function(app) {
     // Bodyparser Middleware
@@ -17,4 +18,5 @@ module.exports = function(app) {
     app.use('/', home);
     app.use('/news', news); // Route for the news desks
     app.use('/zones', zone); // Route for the zones
+    app.use('/country', country); // Route for the countries
 }

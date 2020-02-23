@@ -8,8 +8,8 @@ const {Zone} = require('../../models/zone');
 const {Team} = require('../../models/team'); 
 
 
-// @route   GET api/countrys
-// @Desc    Get all ACTIVE countrys
+// @route   GET api/country
+// @Desc    Get all ACTIVE countries
 // @access  Public
 // Only Active
 router.get('/', async (req, res) => {
@@ -26,8 +26,8 @@ router.get('/', async (req, res) => {
 });
 
 
-// @route   GET api/countrys
-// @Desc    Get all ACTIVE countrys
+// @route   GET api/country
+// @Desc    Get all ACTIVE countries
 // @access  Public
 // Only Active
 router.get('/byZones', async (req, res) => {
@@ -55,8 +55,8 @@ router.get('/byZones', async (req, res) => {
   } 
 });
 
-// @route   GET api/countrys/id
-// @Desc    Get countrys by id
+// @route   GET api/country/id
+// @Desc    Get countries by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
 
@@ -77,8 +77,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
     }
 });
 
-// @route   GET api/countrys/code
-// @Desc    Get countrys by Country Code
+// @route   GET api/country/code
+// @Desc    Get countries by Country Code
 // @access  Public
 router.get('/code/:code', async (req, res) => {
   let code = req.params.code;
@@ -98,7 +98,7 @@ router.get('/code/:code', async (req, res) => {
   }
 });
 
-// @route   POST api/countrys
+// @route   POST api/country
 // @Desc    Create New Country
 // @access  Public
 router.post('/', async (req, res) => {
