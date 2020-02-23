@@ -10,7 +10,7 @@ const AircraftSchema = new Schema({
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
   country: { type: Schema.Types.ObjectId, ref: 'Country'},
   site: { type: Schema.Types.ObjectId, ref: 'Site' },
-  base: { type: Schema.Types.ObjectId, ref: 'Site'},
+  baseOrig: { type: Schema.Types.ObjectId, ref: 'Site'},
   status: {
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
@@ -53,7 +53,7 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
-    type: Joi.string().min(2).max(50).required()
+    type: Joi.string().min(2).max(50)
   };
 
   return Joi.validate(aircraft, schema, { "allowUnknown": true });
@@ -66,7 +66,7 @@ function validateAircraft(aircraft) {
 
   const schema = {
       name: Joi.string().min(2).max(50).required(),
-      type: Joi.string().min(2).max(50).required()
+      type: Joi.string().min(2).max(50)
     };
   
   return Joi.validate(aircraft, schema, { "allowUnknown": true });

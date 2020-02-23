@@ -142,7 +142,7 @@
 "loadout": 
     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "parentCode1" : "RFD", 
-"parentCode2" : "RFBA"
+"parentCode2" : "RUBA"
 },
 {
 "type" : "interceptor",
@@ -172,7 +172,7 @@
 "loadout": 
      ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],     
 "parentCode1" : "RFD", 
-"parentCode2" : "RFBA"
+"parentCode2" : "RUBA"
 },
 {
 "type" : "interceptor",
