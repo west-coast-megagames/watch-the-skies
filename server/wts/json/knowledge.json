@@ -1,10 +1,17 @@
 [
     {
-        "name": "Biology I",
-        "level": 1,
+        "name": "Biology",
+        "level": 0,
         "prereq": "None",
         "type": "Knowledge",
-
+        "field": "Biology",
+        "desc": "Fund basic research in the field of biology to advance world knowledge."
+    },
+    {
+        "name": "Biology I",
+        "level": 1,
+        "prereq": "Biology",
+        "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund cutting edge projects in biology to advance world knowledge and begin to apply that knowledge to new technologies."
     },
@@ -41,9 +48,17 @@
         "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Computer Science",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Computer Science",
+        "desc": "Fund basic research in the field of Computer Science to advance world knowledge."
+    },
+    {
         "name": "Computer Science I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Computer Science",
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -81,9 +96,17 @@
         "desc": "Fund computer science research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Electronics",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Electronics",
+        "desc": "Fund basic research in the field of Electronics to advance world knowledge."
+    },
+    {
         "name": "Electronics I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Electronics",
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund cutting edge projects in electronics to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -121,9 +144,17 @@
         "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Engineering",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Engineering",
+        "desc": "Fund basic research in the field of Engineering to advance world knowledge."
+    },
+    {
         "name": "Engineering I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Engineering",
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -161,9 +192,17 @@
         "desc": "Fund engineering research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Genetics",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Genetics",
+        "desc": "Fund basic research in the field of Genetics to advance world knowledge."
+    },
+    {
         "name": "Genetics I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Genetics",
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund cutting edge projects in genetics to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -201,9 +240,17 @@
         "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Materical Science",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Materical Science",
+        "desc": "Fund basic research in the field of Materical Science to advance world knowledge."
+    },
+    {
         "name": "Material Science I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Material Science",
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -241,9 +288,17 @@
         "desc": "Fund material science research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Physics",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Physics",
+        "desc": "Fund basic research in the field of Physics to advance world knowledge."
+    },
+    {
         "name": "Physics I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Physics",
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -281,9 +336,17 @@
         "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Psychology",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Psychology",
+        "desc": "Fund basic research in the field of Psychology to advance world knowledge."
+    },
+    {
         "name": "Psychology I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Psychology",
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund cutting edge projects in psychology to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -321,9 +384,17 @@
         "desc": "Fund psychology research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Social Science",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Social Science",
+        "desc": "Fund basic research in the field of Social Science to advance world knowledge."
+    },
+    {
         "name": "Social Science I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Social Science",
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund cutting edge projects in social science to advance world knowledge and begin to apply that knowledge to new technologies."
@@ -361,9 +432,17 @@
         "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject."
     },
     {
+        "name": "Quantum Mechanics",
+        "level": 0,
+        "prereq": "None",
+        "type": "Knowledge",
+        "field": "Quantum Mechanics",
+        "desc": "Fund basic research in the field of Quantum Mechanics to advance world knowledge."
+    },
+    {
         "name": "Quantum Mechanics I",
         "level": 1,
-        "prereq": "None",
+        "prereq": "Quantum Mechanics",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund cutting edge projects in quantum mechanics to advance world knowledge and begin to apply that knowledge to new technologies."
