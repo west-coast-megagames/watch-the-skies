@@ -155,7 +155,7 @@ router.post('/build', async function (req, res) {
       if (!baseSite) {
         console.log("Interceptor Build Base Error, New Interceptor:", req.body.name, " Base: ", req.body.baseCode);
       } else {
-        aircraft.base = baseSite._id;
+        aircraft.baseOrig = baseSite._id;
       }
     }      
 
