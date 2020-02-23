@@ -1,198 +1,78 @@
 import React, { Component } from 'react';
-import { Table, Icon } from 'rsuite';
+import { Table, Badge, Tag, Progress } from 'rsuite';
 
 const { Column, HeaderCell, Cell } = Table;
+const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 
-
-
-class Labs extends Component {
+class Knowledge extends Component {
     state = { 
-        lab : ['lab1', 'lab2', 'lab3']
+        data: []
+    }
+
+    componentDidMount() {
+        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge')
+        let tableKnowlege = this.createTable(knowledge);
+        this.setState({ data: tableKnowlege });
     }
     
-
-    
-    formatTableData(origData) {
-        //console.log('ORIGDATA=', origData);
-        //const names = [...new Set(origData.allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
-        //console.log('FUNKNAMES=', names);
-        const knowledgeTypes = origData.filter(knowledge => (knowledge.type === "Knowledge"));
-        console.log('KNOWLEDGETYPES=', knowledgeTypes);
-        const physicsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Physics"));
-        const socialScienceKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Social Science"));
-        const biologyKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Biology"));
-        const engineeringKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Engineering"));
-        const electronicsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Electronics"));
-        const geneticsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Genetics"));
-
-        const techTypes = origData.filter(knowledge => (knowledge.type === "Tech"));
-        console.log('TECHTYPES=', techTypes);
-        
-        
-        const tableData = [
-            {
-              id: 'h1ScientificKnowledge',
-              labelName: 'Scientific Knowledge',
-              children: [
-                {
-                    id: 'h2Physics',
-                    labelName: 'Physics',
-                    children: physicsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
-                },
-                {
-                    id: 'h2SocialScience',
-                    labelName: 'Social Science',
-                    children: socialScienceKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
-                },
-                {
-                    id: 'h2Biology',
-                    labelName: 'Biology',
-                    children: biologyKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
-                },
-                {
-                    id: 'h2Engineering',
-                    labelName: 'Engineering',
-                    children: engineeringKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
-                },
-                {
-                    id: 'h2Electronics',
-                    labelName: 'Electronics',
-                    children: electronicsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
-                },
-                {
-                    id: 'h2Genetics',
-                    labelName: 'Genetics',
-                    children: geneticsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
-                    })
+    createTable = (knowledge) => {
+        let data = this.state.data;
+        console.log(fields)
+        for (let field of fields) {
+            let object = {}
+            console.log(field)
+            object.field = field;
+            object.research = undefined;
+            object.complete = []
+            let fieldResearch = knowledge.filter(el => el.field === field);
+            for (let el of fieldResearch) {
+                if (el.status.completed === true) {
+                    object.complete.push(el)
+                } else if (el.status.completed === false) {
+                    object.research = el
                 }
-              ]
-            },
-            {
-                id: 'h2AppliedTechnology',
-                labelName: 'Applied Technology',
-                children: [
-                  {
-                      id: 'h2FoodAndAgricultre',
-                      labelName: 'Food & Agriculture',
-                      children: [
-                          //{
-                          //    id: 'Food1', //names._id,
-                          //    labelName: 'blah2',
-                          //    status: 'ENABLED',
-                          //    count: 460
-                          //}
-                      ]
-                  }
-                ]
-              },
-              {
-                id: 'h2Analysis',
-                labelName: 'Analysis',
-                children: [
-                  //{
-                  //    id: 'h2FoodAndAgricultre',
-                  //    labelName: 'Food & Agriculture',
-                  //    children: [
-                          //{
-                          //    id: 'Food1', //names._id,
-                          //    labelName: 'blah2',
-                          //    status: 'ENABLED',
-                          //    count: 460
-                          //}
-                  //    ]
-                  //}
-                ]
-              }
-          ];
-          
-          return (tableData)
-        
+            };
+            data.push(object);
+        }
+        return data;
     }
     
     render() { 
-        const myTableData = this.formatTableData(this.props.allKnowledge);
-        console.log('MYTABLEDATA:', myTableData);
-        const { allKnowledge } = this.props;        // Scientific Knowledge Names
-        console.log('ALLKNOWLEDGE:', allKnowledge);
-        const names = [...new Set(allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
-        console.log('NAMES: ', names);
-        const completedKnowledge = allKnowledge.filter(knowledge => knowledge.status.completed);
-        console.log('completedKnowledge: ', completedKnowledge);
-        const inProgressKnowledge = allKnowledge.filter(knowledge => (!knowledge.status.completed && knowledge.status.available));
-        console.log('inProgressKnowledge: ', inProgressKnowledge);
-        /* COMMENT FOR BELOW IN RETURN
-        <ul>{ allKnowledge.map(index => (<li key={index._id}> Name: {index.name} </li>))}</ul>
-        <ul>{ names.map(index => (<li key={index}> Unique: {index} </li>))}</ul>
-        */
+        
         return ( 
-//            <React.Fragment>
-//                <h5>Active focus: Computer Science I</h5>
-//                <Progress.Line percent={25} status='active' />
-//                <table className="table">
-//                    <thead>
-//                        <tr>
-//                            <th>Knowledge</th>
-//                            <th>Level</th>
-//                            <th>Progress</th>
-//                            <th>Desc</th>
-//                        </tr>
-//                    </thead>
-//                    <tbody>
-//                        {allKnowledge.map(index => (
-//                            <tr>
-//                                <td>{index.field}</td>
-//                                <td>{index.level}</td>
-//                                <td>{index.status.progress}</td>
-//                                <td>{index.desc}</td>
-//                            </tr>
-//                        ))}
-//                    </tbody>
-//                </table>
-//            </React.Fragment>
-
-
-
             <div>
                 <Table
-                    isTree
-                    defaultExpandAllRows={false}
-                    rowKey="id"
-                    height={800}
-                    data={myTableData}
-                    onExpandChange={(isOpen, rowData) => {
-                        //console.log(isOpen, rowData);
-                    }}
-                    renderTreeToggle={(icon, rowData) => {
-                        if (rowData.children && rowData.children.length === 0) {
-                        return <Icon icon="spinner" spin />;
-                        }
-                        return icon;
-                    }}
+                    rowKey="field"
+                    autoHeight
+                    data={this.state.data}
                     >
-                    <Column flexGrow={5}>
-                        <HeaderCell>Knowledge Type</HeaderCell>
-                        <Cell dataKey="labelName" />
+                    <Column width={200}>
+                        <HeaderCell>Field</HeaderCell>
+                        <Cell dataKey="field" />
                     </Column>
                 
-                    <Column width={100}>
-                        <HeaderCell>Level</HeaderCell>
-                        <Cell dataKey="level" />
+                    <Column align='center' width={100}>
+                        <HeaderCell>Global Level</HeaderCell>
+                        <Cell>{rowData => {
+                            let currentLevel = rowData.research.level - 1;
+                            return(
+                                <Tag color='green'>{currentLevel}</Tag>
+                        )}}</Cell>
                     </Column>
 
-                    <Column width={200}>
-                        <HeaderCell>Progress</HeaderCell>
-                        <Cell dataKey="progress" />
+                    <Column width={300}>
+                        <HeaderCell>Global Progress Towards next Level</HeaderCell>
+                        <Cell dataKey="research.status.progress">{rowData => {
+                            let totalProgress = 0;
+                            // for (let [value] of rowData.research.status.progress) {
+                            //     totalProgress += value;
+                            // };
+                            let percent = totalProgress / this.props.techCost[rowData.research.level] * 100
+                            console.log(percent);
+                            return(
+                                <Progress.Line percent={5} />
+                        )}}</Cell>
+
                     </Column>
                 </Table>
             </div>
@@ -200,29 +80,4 @@ class Labs extends Component {
     }
 }
 
-export default Labs;
-
-
-
-
-
-
-//class TreeTable extends React.Component {
-//    constructor(props) {
-//      super(props);
-//      this.state = {
-//        data: fakeTreeData
-//      };
-//    }
-//    render() {
-//      const { data } = this.state;
-//      return (
-
-
-
-
-//      );
-//    }
-//  }
-  
-//ReactDOM.render(<TreeTable />);
+export default Knowledge;
