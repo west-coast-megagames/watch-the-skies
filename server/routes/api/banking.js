@@ -93,7 +93,8 @@ router.put('/accounts', async function (req, res) {
     res.json(accounts);
 });
 
-router.put('/transfer', async function (req, res){
+router.patch('/delAutoTransfer', async function (req, res){
+    routeDebugger('Attempting to delete auto transaction...')
     console.log(req.body)
     let { account_id, transfer_id } = req.body;
     let account = await Account.findOne({ _id: account_id });
@@ -106,6 +107,7 @@ router.put('/transfer', async function (req, res){
     account.markModified('autoTransfers');
     await account.save();
     res.status(200).send('Automatic transfer deleted!');
+    nexusEvent.emit('updateAccounts')
 });
 
 

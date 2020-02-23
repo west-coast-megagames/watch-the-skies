@@ -80,7 +80,10 @@ class Budget extends Component {
                 </Container>
                 <Footer>
                     <h4>Automatic Transfers</h4>
-                    <AutoTransfers accounts={ this.props.accounts } />
+                    <AutoTransfers
+                        accounts={ this.props.accounts }
+                        alert={ this.props.alert }
+                    />
                 </Footer>
             </Container>
         );
