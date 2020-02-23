@@ -1,11 +1,12 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content } from 'rsuite';
+import { Nav, Container, Header, Content, FlexboxGrid } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import Interception from './tabs/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 
 import map from '../img/worldMap_mergedRegions.svg'
+import ResearchLabs from './tabs/sci/researchLabs';
 
 class Operations extends Component {
     constructor() {
@@ -61,13 +62,19 @@ class Operations extends Component {
                         /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <img
-                            src={map}
-                            alt='Terror Map'
-                        />
+                        <React.Fragment>
+                            <h5>Military Operations</h5>
+                            <p>Table of all Military Units sorted by zone</p>
+                            <hr />
+                            <h5>Air Operations</h5>
+                            <p>Table of all air contacts...</p>
+                            <hr />
+                            <h5>Space Operations</h5>
+                            <p>Table of all space operations...</p>
+                        </React.Fragment>
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
-                        <h5>The nuclear system for the Operations Module has not been created!</h5>
+                        <h5>The nuclear has been cut for March 14th and won't be in the box...</h5>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
