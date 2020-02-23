@@ -11,13 +11,22 @@ const { techCost } = require('./research');
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = []
+const teamsProgress = teamProgress();
+
+async function teamProgress () {
+    progress = {}
+    for (let team of await Team.find()) {
+        progress[`${team.shortName}`] = 0;
+    }
+    knowledgeDebugger(progress);
+    return progress;
+}
 
 // Load function to load all knowledge fields and levels into the the server side knowledgeTree.
 async function loadKnowledge () {
     let count = 0;
 
     await knowledgeData.forEach(knowledge => {
-        knowledgeDebugger(knowledge);
         knowledgeTree[count] = new Knowledge(knowledge);
         count++;
     });
@@ -28,44 +37,38 @@ async function loadKnowledge () {
 async function knowledgeSeed() {
     await Research.deleteMany({ type: 'Knowledge'})
     let seeded = []
-    for (let i = 0; i < 8; i++) {
-        knowledgeDebugger(`Seed count: ${i}`)
-        let done = false;
-        while(done == false) {    
-            let rand = 1 + Math.floor(Math.random() * (knowledgeTree.length - 1));
-            let seed = knowledgeTree[rand];
-            knowledgeDebugger(`${seed.name} rolled as seed ${i + 1}`);
-            if (seed.level < 3 && seeded[i-1] !== seed){
-                if (seeded.length === 0) {
-                    knowledgeDebugger(`${seed.name} seeded...`)
-                    seeded[i] = seed;
-                    done = true;
-                } else {
-                    seeded.forEach(el => {
-                        if (el.field !== seed.field) {
-                            knowledgeDebugger(`${seed.name} seeded...`)
-                            seeded[i] = seed;
-                            done = true;
-                        }
-                    })
-                }
-            }
-        }
+    let i = 1;
+    for (let field of fields) {
+        knowledgeDebugger(field);
+        knowledgeDebugger(`Seed count: ${i}`) 
+            let rand = 1 + Math.floor(Math.random() * 3);
+            knowledgeDebugger(rand);
+            let seed = await knowledgeTree.find(el => el.field === field && el.level === rand);
+            seeded.push(seed);
+            knowledgeDebugger(`${seed.name} rolled as seed...`);
+            knowledgeDebugger(`${seed.name} seeded...`)
+
     }
 
     seeded.forEach(async (knowledge) => {
-        let newKnowledge = await knowledge.seed();
+        let newKnowledge = await knowledge.unlock();
         console.log(newKnowledge);
 
         let tree = knowledgeTree;
 
-        let index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level + 1);
-        tree[index].unlock();
+        // let index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level + 1);
+        // await tree[index].unlock();
 
-        index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level - 1);
-        console.log(`Index: ${index}`);
-        index != -1 ? tree[index].seed() : null;
+        let index = 0;
+
+        while (newKnowledge.level > 0 && index !== -1) {
+            index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level - 1);
+            console.log(`Index: ${index}`);
+            index != -1 ? newKnowledge = await tree[index].seed() : null
+        }
     });
+
+    return;
 }
 
 // Knowledge Constructor Function
@@ -97,20 +100,14 @@ function Knowledge(knowledge) {
         return newKnowledge;
     }
     
-    this.unlock = async function() {   
+    this.unlock = async function() {
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
             level: this.level,
             prereq: this.prereq,
             desc: this.desc,
             field: this.field,
-            progress: {
-                USA: 0,
-                TUK: 0,
-                PRC: 0,
-                RFD: 0,
-                TFR: 0
-            },
+            progress: teamsProgress,
             status: {
                 progress: 0,
                 availible: true,
@@ -119,11 +116,12 @@ function Knowledge(knowledge) {
             }
         });
 
-        await newKnowledge.save();
+        newKnowledge = await newKnowledge.save();
 
         console.log(`${this.name} has been unlocked for research!`)
+
+        return newKnowledge;
     }
 }
-
 
 module.exports = { Knowledge, loadKnowledge, knowledgeSeed };
