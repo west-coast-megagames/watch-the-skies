@@ -3,9 +3,9 @@
     "_original": "Improved Trauma Treatment",
     "name": "Improved Trauma Treatment",
     "level": 1,
-    "prereq": ["Psycology I", "Computer Science I"],
+    "prereq": ["Psychology I", "Social Science I"],
     "type": "Technology",
-    "field": "Medical",
+    "field": "Biomedical",
     "desc": "Develops new trauma center methodology.",
     "effects": { "type": "terror", "effect": -2 },
     "unlocks": [
@@ -17,11 +17,181 @@
     "_original": "Improved Vaccines",
     "name": "Improved Vaccines",
     "level": 1,
-    "prereq": ["Biology I", "Social Science I"],
+    "prereq": ["Genetics I", "Social Science I"],
     "type": "Technology",
-    "field": "Medical",
+    "field": "Biomedical",
     "desc": "Develops new methods for deploying vaccinations.",
     "effects": { "type": "terror", "effect": -10 },
     "unlocks": []
+},
+{   
+    "name": "Improved Antibiotics",
+    "level": 1,
+    "prereq": ["Genetics I", "Biology I"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops new forms of antibiotics.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Sensory enhancers",
+    "level": 1,
+    "prereq": ["Social Science I", "Genetics I", "Psychology I"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Augments an individuals natural sense to increase their performance and sensitivity.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Alternative Splicing",
+    "level": 1,
+    "prereq": ["Biology I", "Engineering I"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Process of generating multiple transcriptions from a single pre-mRNA using enhanced lasers.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Advanced Gene Modification",
+    "level": 2,
+    "prereq": ["Biology II", "Engineering II", "Electronic II"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops new more controlled methods of Gene Modification.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Organ Fabrication",
+    "level": 2,
+    "prereq": ["Biology II", "Engineering II", "Electronic II"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops new methods for growing and printing of organs at a national scale.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Protein Synthesis",
+    "level": 2,
+    "prereq": ["Genetic II", "Biology II"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Resilient Bacteria",
+    "level": 2,
+    "prereq": ["Genetic II", "Biology II"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Bacteria resistant to infection.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Anti-Radiation Treatment",
+    "level": 3,
+    "prereq": ["Genetic III", "Physics III", "Electronic II"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops a gene-therapy that will reduce radiation damage.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Biological Computing",
+    "level": 3,
+    "prereq": ["Biology II", "Genetics III", "Computer Science III"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Allows brain and software integration for diagnosis and minor programmability.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Alpha Rhythm Generation",
+    "level": 3,
+    "prereq": ["Biology III", "Social Science III", "Psychology III"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Stimulates alpha brain waves to ease thoughts and reduce pain levels.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Physical Augmentations",
+    "level": 3,
+    "prereq": ["Materials II", "Engineering III", "Psychology III"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Physical cybernetic limb replacements and enhancements.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Biological Nanites",
+    "level": 4,
+    "prereq": ["Biology IV", "Electronic III", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Physical cybernetic limb replacements and enhancements.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Neurological Augmentation",
+    "level": 4,
+    "prereq": ["Genetic IV", "Psychology IV", "Electronics III"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Neurological and sensory cybernetic replacements and enhancements.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Brain Chemical Correction",
+    "level": 5,
+    "prereq": ["Genetic V", "Psychology V", "Social Science IV"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops methods that can correct and permanently alter brain chemistry.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Robotic Nursing",
+    "level": 5,
+    "prereq": ["Genetic V", "Social Science V", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Auto Doctor System",
+    "level": 5,
+    "prereq": ["Biology V", "Psychology IV", "Computer Science V"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Develops methods for an automated medical system using a large suite of technology.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Terminal Illness Treatment",
+    "level": 5,
+    "prereq": ["Biology V", "Engineering IV", "Social Science V"],
+    "type": "Technology",
+    "field": "Biomedical",
+    "desc": "Treatment and recovery for previously terminal illnesses.",
+    "effects": { },
+    "unlocks": [ ]
 }
 ]
