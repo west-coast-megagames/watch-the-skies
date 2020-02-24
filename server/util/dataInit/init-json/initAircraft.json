@@ -1,6 +1,6 @@
 [{
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 1",
 "team" : "USA",
 "zone" : "NA",
@@ -26,7 +26,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 2",
 "team" : "USA",
 "zone" : "NA",
@@ -52,7 +52,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 3",
 "team" : "USA",
 "zone" : "NA",
@@ -78,7 +78,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 4",
 "team" : "USA",
 "zone" : "NA",
@@ -104,7 +104,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 5",
 "team" : "USA",
 "zone" : "NA",
@@ -130,7 +130,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 6",
 "team" : "USA",
 "zone" : "NA",
@@ -156,7 +156,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "USA Air 7",
 "team" : "USA",
 "zone" : "NA",
@@ -182,7 +182,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "UK Air 1",
 "team" : "TUK",
 "zone" : "EU",
@@ -208,7 +208,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "UK Air 2",
 "team" : "TUK",
 "zone" : "EU",
@@ -234,7 +234,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "UK Air 3",
 "team" : "TUK",
 "zone" : "EU",
@@ -260,7 +260,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "UK Air 4",
 "team" : "TUK",
 "zone" : "EU",
@@ -286,7 +286,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "S. Africa Air 1",
 "team" : "RSA",
 "zone" : "AF",
@@ -312,7 +312,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "S. Africa Air 2",
 "team" : "RSA",
 "zone" : "AF",
@@ -338,7 +338,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Russia Air 1",
 "team" : "RFD",
 "zone" : "EU",
@@ -364,7 +364,7 @@
 },    
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Russia Air 2",
 "team" : "RFD",
 "zone" : "EU",
@@ -390,7 +390,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Russia Air 3",
 "team" : "RFD",
 "zone" : "EU",
@@ -416,7 +416,7 @@
 },    
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Russia Air 4",
 "team" : "RFD",
 "zone" : "EU",
@@ -442,7 +442,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Russia Air 5",
 "team" : "RFD",
 "zone" : "EU",
@@ -468,7 +468,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 1",
 "team" : "JPN",
 "zone" : "AU",
@@ -494,7 +494,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 2",
 "team" : "JPN",
 "zone" : "AU",
@@ -520,7 +520,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 3",
 "team" : "JPN",
 "zone" : "AU",
@@ -546,7 +546,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 4",
 "team" : "JPN",
 "zone" : "AU",
@@ -572,7 +572,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 5",
 "team" : "JPN",
 "zone" : "AU",
@@ -598,7 +598,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Japan Air 6",
 "team" : "JPN",
 "zone" : "AU",
@@ -624,7 +624,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Iran Air 1",
 "team" : "IRN",
 "zone" : "AS",
@@ -650,7 +650,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Iran Air 2",
 "team" : "IRN",
 "zone" : "AS",
@@ -676,9 +676,9 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "India Air 1",
-"team" : "IDN",
+"team" : "IND",
 "zone" : "AU",
 "country" : "IN",
 "site": "",
@@ -702,9 +702,9 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "India Air 2",
-"team" : "IDN",
+"team" : "IND",
 "zone" : "AU",
 "country" : "IN",
 "site": "",
@@ -728,9 +728,9 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "India Air 3",
-"team" : "IDN",
+"team" : "IND",
 "zone" : "AU",
 "country" : "IN",
 "site": "",
@@ -754,9 +754,9 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "India Air 4",
-"team" : "IDN",
+"team" : "IND",
 "zone" : "AU",
 "country" : "IN",
 "site": "",
@@ -780,9 +780,9 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "India Air 5",
-"team" : "IDN",
+"team" : "IND",
 "zone" : "AU",
 "country" : "IN",
 "site": "",
@@ -806,7 +806,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "France Air 1",
 "team" : "TFR",
 "zone" : "EU",
@@ -832,7 +832,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "France Air 2",
 "team" : "TFR",
 "zone" : "EU",
@@ -858,7 +858,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "France Air 3",
 "team" : "TFR",
 "zone" : "EU",
@@ -884,7 +884,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "France Air 4",
 "team" : "TFR",
 "zone" : "EU",
@@ -910,7 +910,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "EGYPT Air 1",
 "team" : "EPT",
 "zone" : "AS",
@@ -936,7 +936,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "EGYPT Air 2",
 "team" : "EPT",
 "zone" : "AS",
@@ -962,7 +962,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 1",
 "team" : "PRC",
 "zone" : "AU",
@@ -988,7 +988,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 2",
 "team" : "PRC",
 "zone" : "AU",
@@ -1014,7 +1014,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 3",
 "team" : "PRC",
 "zone" : "AU",
@@ -1040,7 +1040,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 4",
 "team" : "PRC",
 "zone" : "AU",
@@ -1066,7 +1066,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 5",
 "team" : "PRC",
 "zone" : "AU",
@@ -1092,7 +1092,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "China Air 6",
 "team" : "PRC",
 "zone" : "AU",
@@ -1118,13 +1118,13 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Brazil Air 1",
-"team" : "BZL",
+"team" : "BRZ",
 "zone" : "SA",
-"country" : "BZ",
+"country" : "BR",
 "site": "",
-"base" : "BZBA",
+"base" : "BRBA",
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1144,13 +1144,13 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Brazil Air 2",
-"team" : "BZL",
+"team" : "BRZ",
 "zone" : "SA",
-"country" : "BZ",
+"country" : "BR",
 "site": "",
-"base" : "BZBA",
+"base" : "BRBA",
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1170,13 +1170,13 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Brazil Air 3",
-"team" : "BZL",
+"team" : "BRZ",
 "zone" : "SA",
-"country" : "BZ",
+"country" : "BR",
 "site": "",
-"base" : "BZBA",
+"base" : "BRBA",
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1196,13 +1196,13 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Brazil Air 4",
-"team" : "BZL",
+"team" : "BRZ",
 "zone" : "SA",
-"country" : "BZ",
+"country" : "BR",
 "site": "",
-"base" : "BZBA",
+"base" : "BRBA",
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1222,7 +1222,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Australia Air 1",
 "team" : "AUS",
 "zone" : "AU",
@@ -1248,7 +1248,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Australia Air 2",
 "team" : "AUS",
 "zone" : "AU",
@@ -1274,7 +1274,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Australia Air 3",
 "team" : "AUS",
 "zone" : "AU",
@@ -1300,7 +1300,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "interceptor",
+"type" : "Interceptor",
 "name" : "Australia Air 4",
 "team" : "AUS",
 "zone" : "AU",
@@ -1323,5 +1323,150 @@
     "upgrade" : false,
     "repair" : false,
     "mission" : "Standby"}
+},
+{
+"model" : "Aircraft",
+"type" : "Interceptor",
+"name" : "FFG Prime",
+"team" : "FFG", 
+"zone": "AN", 
+"country": "AQ", 
+"site": "",
+"base" : "undefined",
+"loadout": 
+["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : "Standby" }
+},
+{
+"model" : "Aircraft",
+"type" : "Interceptor",
+"name" : "FFG Pioneer",
+"team" : "FFG", 
+"zone": "AN", 
+"country": "AQ", 
+"site": "",
+"base" : "undefined",
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : "Standby" }
+},
+{
+"model" : "Aircraft",
+"type" : "SSU",
+"name" : "FFG Civil Technician",
+"team" : "FFG", 
+"zone": "AN", 
+"country": "AQ", 
+"site": "",
+"base" : "undefined",
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : "Standby" }
+},
+{
+"model" : "Aircraft",
+"type" : "Interceptor",
+"name" : "FFG Secundo",
+"team" : "FFG", 
+"zone": "AN", 
+"country": "AQ", 
+"site": "",
+"base" : "undefined",
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : "Standby" }
+},
+{
+"model" : "Aircraft",
+"type" : "Interceptor",
+"name" : "FFG Tristar",
+"team" : "FFG", 
+"zone": "AN", 
+"country": "AQ", 
+"site": "",
+"base" : "undefined",
+"loadout": 
+    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"stats":
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12] },
+"status":
+    {"aggressive": true,
+    "passive": false,
+    "disengage": false,
+    "damaged": false,
+    "deployed": false,
+    "destroyed": false,
+    "ready": true,
+    "upgrade": false,
+    "repair": false,
+    "mission" : "Standby" }
 }
 ]

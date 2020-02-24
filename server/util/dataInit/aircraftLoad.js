@@ -18,7 +18,6 @@ const bodyParser = require('body-parser');
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/aircraft');
-const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team');
@@ -170,25 +169,15 @@ async function loadAircraft(iData){
           return; 
         }
 
-        console.log("jeff before save", aircraft.name,  " systems ", aircraft.systems);
+        //console.log("jeff before save", aircraft.name,  " systems ", aircraft.systems);
 
-        let intId = aircraft._id;
-        let saveSys = aircraft.systems;
         await aircraft.save((err, aircraft) => {
           if (err) return console.error(`New Aircraft Save Error: ${err}`);
           logger.debug(aircraft.name + " add saved to aircraft collection.");
           //updateStats(aircraft._id);
         });
 
-        //systems not being written ... try interceptor
-        let interceptor = await Interceptor.findByIdAndUpdate({ _id: intId }, 
-          { 
-            systems: saveSys
-          }, 
-          { new: true,
-            omitUndefined: true });
-
-        console.log("jeff after save", aircraft.name,  " systems ", aircraft.systems, "saveSys:", saveSys);
+        //console.log("jeff after save", aircraft.name,  " systems ", aircraft.systems, "saveSys:", saveSys);
 
     } else {       
       // Existing Aircraft here ... update

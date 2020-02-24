@@ -3,7 +3,7 @@ const { generateSalvage } = require('./salvage');
 const { d6, rand } = require('../../util/systems/dice');
 
 //Intercepter Model
-const { Interceptor } = require('../../models/ops/interceptor');
+const { Aircraft } = require('../../models/ops/aircraft');
 
 async function interceptDmg(attacker, defender, atkResult, defResult) {
     interceptDebugger('Prepearing damage report...')
@@ -148,10 +148,10 @@ async function dmgCalc(unit, report) {
     return dmgReport;
 };
 
-//Update Interceptors with Damage
+//Update Aircrafts with Damage
 async function applyDmg(unit) {
     interceptDebugger(`Applying damage to ${unit.name}...`);
-    let update = await Interceptor.findById(unit._id).populate('team').populate('baseOrig');
+    let update = await Aircraft.findById(unit._id).populate('team').populate('baseOrig');
     
     if (update.team.teamType === 'A') {
         return 0;
