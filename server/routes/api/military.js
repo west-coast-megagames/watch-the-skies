@@ -61,7 +61,7 @@ router.post('/', async function (req, res) {
   if (gear.length == 0) {
     await loadGears();                         // load wts/json/gear.json data into array   
   }
-  let { name, team, country, zone, site, stats, zoneCode, teamCode, countryCode, homeBase } = req.body;
+  let { name, team, country, zone, siteCode, stats, zoneCode, teamCode, countryCode, homeBase } = req.body;
   const newMilitary = new Military(
     { name, team, country, zone, site, stats }
     );
@@ -97,21 +97,21 @@ router.post('/', async function (req, res) {
     }
 
     if (homeBase && homeBase != ""){
-      let country = await Country.findOne({ code: homeBase });  
-      if (!country) {
+      let site = await Site.findOne({ siteCode: homeBase });  
+      if (!site) {
         console.log("Military Post Home Base Error, New Military:", req.body.name, " Home Base: ", req.body.homeBase);
       } else {
-        newMilitary.homeBase = country._id;
+        newMilitary.homeBase = site._id;
       }
     }
 
-    if (site && site != "" && homeBase != "undefined" ){
-      let site = await Site.findOne({ siteCode: site });  
+    if (siteCode && siteCode != "" && siteCode != "undefined" ){
+      let site = await Site.findOne({ siteCode: siteCode });  
       if (!site) {
-        console.log("Military Post Site Error, New Military:", req.body.name, " Site: ", site);
+        console.log("Military Post Site Error, New Military:", req.body.name, " Site: ", siteCode);
       } else {
         newMilitary.site = site._id;
-        militaryLoadDebugger("Military Post Site Found, Military:", req.body.name, " Site: ", site, "Site ID:", site._id);
+        militaryLoadDebugger("Military Post Site Found, Military:", req.body.name, " Site: ", siteCode, "Site ID:", site._id);
       }
     }      
 
@@ -235,20 +235,20 @@ router.put('/:id', async function (req, res) {
   }
 
   if (homeBase && homeBase != "") {
-    let country = await Country.findOne({ code: homeBase });  
-    if (!country) {
+    let site = await Site.findOne({ siteCode: homeBase });  
+    if (!site) {
       console.log("Military Put Home Base Error, Update Military:", req.body.name, " Home Base: ", homeBase);
     } else {
-      newHomeBase_Id  = country._id;
+      newHomeBase_Id  = site._id;
     }
   } else {
     newHomeBase_Id  = undefined;
   }
 
-  if (site && site != "" && site != "undefined" ){
-    let site = await Site.findOne({ siteCode: site });  
+  if (siteCode && siteCode != "" && siteCode != "undefined" ){
+    let site = await Site.findOne({ siteCode: siteCode });  
     if (!site) {
-      console.log("Military Put Site Error, Update Military:", req.body.name, " Site: ", site);
+      console.log("Military Put Site Error, Update Military:", req.body.name, " Site: ", siteCode);
     } else {
       newSite_Id = site._id;
     }
