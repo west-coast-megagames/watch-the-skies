@@ -10,7 +10,11 @@ const Log = require('../../models/logs/log');
 // @access  Public
 router.get('/', async function (req, res) {
     routeDebugger('Sending the logs!');
-    let logs = await Log.find().populate('team').populate('country', 'shortName');
+    let logs = await Log.find()
+        .populate('team')
+        .populate('country', 'name')
+        .populate('zone')
+        .sort('-timeStamp.date');
     res.json(logs);
 });
 
