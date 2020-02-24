@@ -177,7 +177,7 @@
 },
 {"loadType": "baseSite",
 "name" : "BRZ Base Alpha",
-"code" : "BZBA",
+"code" : "BRBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},

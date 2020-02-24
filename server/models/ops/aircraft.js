@@ -5,6 +5,7 @@ const Joi = require('joi');
 
 const AircraftSchema = new Schema({
   model: { type: String, default: 'Aircraft'},
+  type: { type: String, min: 2, maxlength: 50, default: 'Interceptor'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
@@ -19,6 +20,26 @@ const AircraftSchema = new Schema({
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
     mission: { type: String }
+  },
+  loadout: {
+    cpu: { type: Number, default: 1 },
+    weapons: { type: Number, default: 1 },
+    engines: { type: Number, default: 1 },
+    sensors: { type: Number, default: 1 },
+    compartments: { type: Number, default: 1 },
+    utils: { type: Number, default: 1 },
+  },systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
+  stats: {
+    hull: { type: Number, default: 3 },
+    hullMax: { type: Number, default: 3 },
+    attack: { type: Number, default: 0 },
+    penetration: { type: Number, default: 0 },
+    armor: { type: Number, default: 0 },
+    evade: { type: Number, default: 0 },
+    range: { type: Number, default: 0 },
+    cargo: { type: Number, default: 0 },
+    passiveRolls: [Number],
+    activeRolls: [Number]
   }
 });
 
