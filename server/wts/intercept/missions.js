@@ -42,7 +42,7 @@ async function start (aircraft, target, mission) {
             transportMissions = [...transportMissions, ...newTransport]; // Adds Transport to be resolved
             missionDebugger(transportMissions);
             break;
-        case (mission === 'Recon'):
+        case (mission === 'Recon Site' || mission === 'Recon Airship'):
             let newRecon = [{ aircraft, target }]; // Saves the Recon combination
             reconMissions = [...ReconMissions, ...newRecon]; // Adds Recon to be resolved
             missionDebugger(reconMissions);
@@ -63,7 +63,7 @@ async function start (aircraft, target, mission) {
 
 // Function for resolving missions when the Team Phase ends.
 async function resolveMissions () {
-    missionDebugger('Resolving Missions...')
+    missionDebugger('Resolving Missions...');
 
     await runInterceptions();
     await runTransports();
