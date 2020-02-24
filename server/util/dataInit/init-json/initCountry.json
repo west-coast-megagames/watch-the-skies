@@ -658,7 +658,7 @@
   "loadFlag": "true", "parentCode1": "AS", "parentCode2": "", "refNumber1":  0},
 {"loadType": "country", "code": "TW", "name": "Taiwan, Province of China", "borderedBy" : [], "coastal" : true,
   "loadFlag": "false", "parentCode1": "AU", "parentCode2": "", "refNumber1":  0},
-{"loadType": "country", "code": "TJ", "name": "Tajikistan", "borderedBy" : [{"code": "AF"}, {"code": "UZ"}, {"code": "KY"}, {"code": "CN"}], "coastal" : false,
+{"loadType": "country", "code": "TJ", "name": "Tajikistan", "borderedBy" : [{"code": "AF"}, {"code": "UZ"}, {"code": "KG"}, {"code": "CN"}], "coastal" : false,
   "loadFlag": "true", "parentCode1": "AS", "parentCode2": "", "refNumber1":  0},
 {"loadType": "country", "code": "TZ", "name": "Tanzania, United Republic of", "borderedBy" : [{"code": "BI"}, {"code": "CD"}, {"code": "MW"}, {"code": "RW"}, {"code": "UG"}, {"code": "ZM"}, {"code": "MZ"}, {"code": "KE"}], "coastal" : true,
   "loadFlag": "true", "parentCode1": "AF", "parentCode2": "", "refNumber1":  0},
