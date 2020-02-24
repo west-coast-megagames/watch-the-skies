@@ -27,7 +27,7 @@ router.get('/', async function (req, res) {
       .populate('country', 'name')
       .populate('systems', 'name category')
       .populate('site', 'name')
-      .populate('base', 'name')
+      .populate('baseOrig', 'name')
     ;
     res.json(interceptors);
 });
