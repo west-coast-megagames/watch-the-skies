@@ -6,6 +6,7 @@ const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
+const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
@@ -50,6 +51,14 @@ async function fullInit(selStr){
     case 'CitySite':
       let citySiteDone = await runCitySiteLoad(true);  // load expanded City Sites fields
       logger.debug("City Sites Load Done: ", citySiteDone);
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'Spacecraft':
+      let spacecraftDone = await runSpacecraftLoad(true);  // load expanded Spacecraft Sites fields
+      logger.debug("Spacecraft Sites Load Done: ", spacecraftDone);
       if (selStr != 'All') {
         break;
       }

@@ -3,8 +3,10 @@ const Schema = mongoose.Schema;
 const Joi = require('joi');
 const countryDebugger = require('debug')('app:country');
 
+// type are Terrestrial(earth) and Alien
 const CountrySchema = new Schema({
   model: { type: String, default: 'Country'},
+  type: {  type: String, minlength: 1, maxlength: 1, enum: ["T", "A"], default: "T"} ,
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
   loadZoneCode: {type: String, maxlength: 2, uppercase: true },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},

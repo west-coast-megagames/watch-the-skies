@@ -70,6 +70,12 @@ async function loadCountry(cData){
       let id = country._id;
       
       country.coastal = cData.coastal;
+      if (!cData.type) {
+        country.type = "T";
+      }
+      else {
+        country.type = cData.type;
+      }
       let borderedBy_Ids = [];
       for (let j = 0; j < cData.borderedBy.length; ++j ) {
         let borderCountry = await Country.findOne( { code: cData.borderedBy[j].code } );
