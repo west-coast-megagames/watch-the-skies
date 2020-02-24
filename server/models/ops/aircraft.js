@@ -50,6 +50,21 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   }
 }
 
+AircraftSchema.methods.returnToBase = async (aircraft) => {
+  modelDebugger(`Returning ${aircraft.name} to ${baseOrig.name}...`);
+  aircraft.mission = "Docked";
+  aircraft.status.ready = true;
+  aircraft.status.deployed = false;
+  aircraft.country = update.baseOrig.country;
+  aircraft.site = update.baseOrig._id;
+  aircraft.zone = update.baseOrig.zone;
+
+  aircraft = await aircraft.save();
+
+  return aircraft;
+}
+
+
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
