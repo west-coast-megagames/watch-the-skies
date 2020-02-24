@@ -12,7 +12,7 @@
     "cost": 0,
     "prereq": [],
     "category": "Weapon",
-    "desc": "Basic terestrial mounted railgun",
+    "desc": "Basic terrestrial mounted railgun",
     "stats": { "attack": 1 }
 },
 {   
@@ -20,7 +20,7 @@
     "cost": 0,
     "prereq": [],
     "category": "Sensor",
-    "desc": "Basic terestrial sensor system",
+    "desc": "Basic terrestrial sensor system",
     "stats": { "evade": 0 }
 },
 {   
@@ -36,7 +36,7 @@
     "cost": 0,
     "prereq": [],
     "category": "Engine",
-    "desc": "Basic terestrial sensor system",
+    "desc": "Basic terrestrial sensor system",
     "stats": { "range": 3000, "evade": 1 }
 },
 {   
@@ -44,7 +44,7 @@
     "cost": 0,
     "prereq": [],
     "category": "Util",
-    "desc": "Basic terestrial sensor system",
+    "desc": "Basic terrestrial sensor system",
     "stats": { "penetration": 1 }
 }
 ]
