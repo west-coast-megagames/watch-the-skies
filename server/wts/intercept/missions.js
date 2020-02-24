@@ -84,7 +84,7 @@ async function runInterceptions () {
         let aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems');
         let target = await Aircraft.findById(interception.target).populate('systems');
         missionDebugger(`${aircraft.name} vs. ${target.name}`);
-        let atkReport = `${aircraft.name} is attempting to engaged a contact in ${aircraft.country.name} airspace.`;
+        let atkReport = `${aircraft.name} is attempting to engage a contact in ${aircraft.country.name} airspace.`;
         
         let escortCheck = await checkEscort(interception.target, atkReport)
 
@@ -193,7 +193,7 @@ async function checkEscort(target, atkReport) {
         }
     };
     target = await Aircraft.findById(target).populate('systems').populate('country');
-    let defReport = `${target.name} engaged over ${target.country.name} airspace.`;
+    let defReport = `${target.name} was engaged over ${target.country.name} airspace.`;
     return { target, atkReport, defReport };
 }
 
