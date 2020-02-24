@@ -115,7 +115,8 @@ async function getAircrafts() {
     .populate('team', 'name shortName')
     .populate('zone', 'zoneName')
     .populate('country', 'name')
-    .populate('systems', 'name category');
+    .populate('systems', 'name category')
+    .populate('baseOrig', 'name');
   return aircrafts;
 };
 
