@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert} from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 
@@ -134,36 +134,57 @@ class ResearchLabs extends Component {
 	async confirmSubmit(lab) {
 //		console.log("=============== CONFIRM SUBMIT ===============");
 //		console.log("ROWDATA=", lab);
-		let labs = this.state.labs;
-		labs.forEach(el => {
-			if (el._id === lab._id) { 
-				el.disableFunding = true
-				el.funding = lab.funding;
+		try {
+			// bring up dialog box
+			// if OK, submit bank transaction and backend update
+			// if cancel, remove the dialog
+			let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
+
+			// For withdrawal, need to provide an opbject with
+			// account_id, note, amount
+			const txn = {
+				account_id : account._id,
+				note : `Level ${lab.funding} funding for science lab ${lab.name}`,
+				amount : this.props.fundingCost[lab.funding]
 			}
-		});
-//		console.log(this.state);
-		this.setState({ labs })
+			// console.log("MYTXN=", mytxn);
+			const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+			Alert.success(mytxn.data, 4000)
+		} catch (err) { 
+			console.log(err)
+			// Alert.error(err.data, 4000)
+		};
 
-		// bring up dialog box
-		// if OK, submit bank transaction and backend update
-		// if cancel, remove the dialog
+		try {
+			// for lab update, need to provide lab object
+			const research_id = lab.research[0]._id
+			const newLab = { funding: parseInt(lab.funding), name: lab.name, _id: lab._id, research: [research_id] }
+			console.log(newLab)
+			
+			const myupdate = await axios.put(`${gameServer}api/facilities/research`, newLab);
+			//	console.log(myupdate);
+			Alert.success(myupdate.data, 4000)
 
-		let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
-
-		// For withdrawal, need to provide an opbject with
-		// account_id, note, amount
-		const dummy_txn = {
-			account_id : account._id,
-			note : `Level ${lab.funding} funding for science lab ${lab.name}`,
-			amount : this.props.fundingCost[lab.funding]
-		}
-		const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, dummy_txn);
-		alert(mytxn.data)
-//		console.log("MYTXN=", mytxn);
-		// for lab update, need to provide lab object
-		const myupdate = await axios.put(`${gameServer}api/facilities/research`, lab);
-//		console.log(myupdate);
+			let labs = this.state.labs;
+			labs.forEach(el => {
+				if (el._id === lab._id) { 
+					el.disableFunding = true
+					el.funding = lab.funding;
+				}
+			});
+			this.setState({ labs })
+		} catch (err) {
+			console.log(err)
+			// Alert.error(err.data, 4000) 
+		};
 	}
+
+
+
+
+
+
+
 
 	componentDidMount(){
 //		console.log("=============== COMPONENT DID MOUNT ===============");
