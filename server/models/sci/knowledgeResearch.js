@@ -6,7 +6,7 @@ const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Ge
 
 const ProgressSchema = new Schema({
     team: { type: Schema.Types.ObjectId, ref: 'Team'},
-    progress: { type: Number, default: 0}
+    progress: { type: Number, default: 0 }
 });
 
 const KnowledgeResearch = Research.discriminator('KnowledgeResearch', new Schema({

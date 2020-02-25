@@ -8,6 +8,7 @@ const TechResearch = require('../../models/sci/techResearch');
 function Technology(tech) {
     this.name = tech.name;
     this.level = tech.level;
+    this.code = tech.code;
     this.prereq = tech.prereq;
     this.desc = tech.desc;
     this.field = tech.field;
