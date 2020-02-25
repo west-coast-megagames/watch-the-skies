@@ -38,7 +38,11 @@ class Governance extends Component {
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        <Timeline />
+                        <Timeline 
+                            teams={ this.props.teams }
+                            team={ this.props.team }
+                        />
+
                     )}/>
                     <Route path={`${url}/budget`}  render={() => (
                         <Budget
