@@ -24,7 +24,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for deploying vaccinations.",
-    "effects": { "type": "terror", "effect": -10 },
+    "effects": { "type": "terror", "effect": -4 },
     "unlocks": [],
     "breakthrough": [{"code" : "Bio3A"}]
 },
@@ -36,7 +36,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new forms of antibiotics.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -6 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio2A"}, {"code" : "Mil3B"}]
 },
@@ -72,7 +72,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new more controlled methods of Gene Modification.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio2B"}]
 },
@@ -84,7 +84,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio3D"}]
 },
@@ -192,7 +192,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops methods that can correct and permanently alter brain chemistry.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -30 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio5C"}]
 },
@@ -204,7 +204,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -15 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio5C"}, {"code" : "Mil5G"}]
 },
@@ -216,7 +216,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops methods for an automated medical system using a large suite of technology.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [ ]
 },
 {   

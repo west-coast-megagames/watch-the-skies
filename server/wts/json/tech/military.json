@@ -202,7 +202,7 @@
     "type": "Technology",
     "field": "Military",
     "desc": "Develops flexible and intelligent robotic workforce.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": 10 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Inf4G"}, {"code" : "Mil4C"}, {"code" : "Agr3A"}]
 },
@@ -286,7 +286,7 @@
     "type": "Technology",
     "field": "Military",
     "desc": "Allows nearly every possible 3 dimensional task in robotics, with increased strength and dexterity.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Bio5B"}]
 },
@@ -310,7 +310,7 @@
     "type": "Technology",
     "field": "Military",
     "desc": "Develops helmets that allows transmission of thought.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -15 },
     "unlocks": [ ],
     "breakthrough": [{"code": "Mil5B"}]
 },
