@@ -5,6 +5,7 @@ const knowledgeData = JSON.parse(file);
 knowledgeDebugger = require('debug')('app:knowledge');
 
 const { Team } = require('../../models/team/team');
+const { National } = require('../../models/team/national');
 const { Control } = require('../../models/team/control');
 const Research = require('../../models/sci/research');
 const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
@@ -143,7 +144,7 @@ function Knowledge(knowledge) {
 
         newKnowledge = await newKnowledge.save();
 
-        console.log(`${this.name} has been unlocked for research!`)
+        console.log(`${newKnowledge.name} has been unlocked for research!`)
 
         return newKnowledge;
     }
@@ -159,9 +160,8 @@ async function completeKnowledge (research) {
       if (team.progress > high) research.credit = team._id;
     }
     knowledgeDebugger(research)
-    // let credit = research.credit;
-    // credit = await Team.findById(credit);
-    knowledgeDebugger(`${research.credit} has been credited with advancing the world to ${research.name}`)
+    // credit = await Team.findById(research.credit);
+    knowledgeDebugger(`${research.name} has been credited with advancing the world to ${research.name}`)
     
     if (research.level < 5) {
         let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
