@@ -79,7 +79,7 @@
     "type": "Technology",
     "field": "Agriculture",
     "desc": "Launches a campaign to replace human agricultural labor with specialized robots.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [],
     "breakthrough": [{"code": "Agr5A"}]
 },
