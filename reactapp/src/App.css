@@ -29,6 +29,31 @@
   height: calc(100vh - 100px);
 }
 
+.game-timeline {
+  margin-left: 16px;
+}
+
+.game-timeline .rs-timeline-item-custom-dot .rs-icon {
+  position: absolute;
+  background: #fff;
+  top: 0;
+  left: -2px;
+  border: 2px solid #ddd;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 18px;
+  padding-top: 9px;
+  color: #999;
+  margin-left: -13px;
+}
+
+.game-timeline .rs-timeline-item-content {
+  padding-left: 35px;
+  padding-top: 15px;
+
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
