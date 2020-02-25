@@ -51,13 +51,16 @@ module.exports = function(io) {
 
     nexusEvent.on('updateResearch', async () => {
         socketDebugger(`Event: Updating research...`);
-        let research = await Research.find();
+        let research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
         updateSocket.emit('updateResearch', research);
     });
 
     nexusEvent.on('updateFacilities', async () => {
         socketDebugger('Event: Updating facilities...')
-        let facilities = await Facility.find();
+        let facilities = await Facility.find().populate('site', 'name type')
+        .populate('team', 'shortName name')
+        .populate('research')
+        .populate('equipment');
         updateSocket.emit('updateFacilities', facilities);
     })
 }
