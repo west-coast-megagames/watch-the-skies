@@ -49,10 +49,17 @@
 }
 
 .game-timeline .rs-timeline-item-content {
-  padding-left: 35px;
-  padding-top: 15px;
-
+  padding-left: 30px;
 }
+
+.game-timeline .rs-panel-heading {
+  padding: 12px;
+}
+
+.game-timeline .rs-panel-collapsible .rs-panel-heading::before {
+  top: 12px
+}
+
 
 @keyframes App-logo-spin {
   from {
