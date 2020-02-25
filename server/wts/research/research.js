@@ -41,9 +41,9 @@ async function calculateProgress(lab) {
         researchDebugger(typeof sciRate)
         let progress = researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
-        tech.status.progress += progress; // Adds progress to the current Research
+        tech.progress += progress; // Adds progress to the current Research
 
-        tech.status.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
+        tech.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
         if (tech.status.completed === true) {
             researchDebugger(`${tech.name} completed!`)

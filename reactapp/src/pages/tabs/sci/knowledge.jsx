@@ -62,9 +62,9 @@ class Knowledge extends Component {
 
                     <Column width={300}>
                         <HeaderCell>Global Progress Towards next Level</HeaderCell>
-                        <Cell dataKey="research.status.progress">{rowData => {
+                        <Cell dataKey="research.progress">{rowData => {
                             let totalProgress = 0;
-                            // for (let [value] of rowData.research.status.progress) {
+                            // for (let [value] of rowData.research.progress) {
                             //     totalProgress += value;
                             // };
                             let percent = totalProgress / this.props.techCost[rowData.research.level] * 100

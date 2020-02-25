@@ -52,7 +52,7 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 //					console.log("ALLKNOW=",props.allknowledge);
 					myResearch = props.allknowledge.filter(el => el._id === myResearchID._id);
 //					console.log("MYRESEARCH=",myResearch);
-					myProgress = myResearch[0].status.progress;
+					myProgress = myResearch[0].progress;
 //					console.log("MYPROGRESS=",myProgress);
 					myLevel    = myResearch[0].level;
 //					console.log("MYLEVEL=",myLevel);

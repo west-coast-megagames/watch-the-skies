@@ -8,11 +8,11 @@ const UnlockSchema = new Schema({
 
 const ResearchSchema = new Schema({
     model: { type: String, default: 'Research'},
-    name: { type: String },
+    name: { type: String, required: true},
     code: {type: String},
-    level: { type: Number },
+    level: { type: Number, required: true },
     prereq: [String],
-    desc: { type: String },
+    desc: { type: String, required: true},
     unlocks: [UnlockSchema]
 });
 
