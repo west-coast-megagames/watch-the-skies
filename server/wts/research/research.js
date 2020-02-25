@@ -9,7 +9,9 @@ const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll 
 
 const { Facility } = require('../../models/gov/facility/facility');
 const { Team } = require('../../models/team/team');
+/*
 const { National } = require('../../models/team/national');
+*/
 
 async function startResearch () {
     for await (let lab of await Facility.find({ type: 'Lab' })) {
