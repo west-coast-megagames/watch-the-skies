@@ -266,7 +266,8 @@ class ResearchLabs extends Component {
 	  
 	  teamFilter = () => {
 			let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
-			let labs = this.props.facilities.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
+			let labs = this.props.facilities.filter(el => el.team !== null);
+			labs = labs.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
 			let availSciFunding = this.props.accounts.filter(el => el.name === 'Science' && el.team === this.props.team._id);
 			let availFunding = availSciFunding[0];
 

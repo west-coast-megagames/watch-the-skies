@@ -2,11 +2,13 @@
 {   
     "_original": "Damage Lasers",
     "name": "Damage Lasers",
+    "code": "Mil1C",
     "level": 1,
     "prereq": ["Engineering I", "Material Science I", "Physics I"],
     "type": "Technology",
     "field": "Military",
     "desc": "Focused laser technology that can be weaponized to create burst-fire beam weapons",
+    "effects": { },
     "unlocks": [
         { "type": "Equipment", "name": "Laser Rifles" },
         { "type": "Technology", "name": "Ship Mounted Laser Weapons" }
@@ -15,11 +17,13 @@
 {   
     "_original": "Hunter-Killer Satellites",
     "name": "Anti-satellite Weapon Systems", 
+    "code": "Mil1D",
     "level": 1,
     "prereq": ["Engineering I", "Material Science I", "Physics I", "Computer Science I"],
     "type": "Technology",
     "field": "Military",
     "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy satellites",
+    "effects": { },
     "unlocks": [
         { "type": "System", "name": "Sat-Killer Weapon System" }
     ]
@@ -27,11 +31,13 @@
 {   
     "_original": "Improved SIF Weapons",
     "name": "Ship Mounted Laser Weapons", 
+    "code": "Mil2F",
     "level": 2,
     "prereq": ["Engineering II", "Damage Lasers" ],
     "type": "Technology",
     "field": "Military",
-    "desc": "Percision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems",
+    "desc": "Precision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems",
+    "effects": { },
     "unlocks": [
         { "type": "System", "name": "Precision Laser Cannon" }
     ]
@@ -39,13 +45,446 @@
 {   
     "_original": "Orbital Nuclear Weapons",
     "name": "Orbital Delivery Package",
+    "code": "Mil2G",
     "level": 2,
     "prereq": ["Engineering II", "Physics II"],
     "type": "Technology",
     "field": "Military",
-    "desc": "Deployment and delivery systems for high-orbit and orbital nuclear systems",
+    "desc": "Deployment and delivery systems for high-orbit and orbital nuclear systems.",
+    "effects": { },
     "unlocks": [
         { "type": "Equipment", "name": "Orbital Nuclear Weapon" }
     ]
+},
+
+
+{   
+    "name": "Tactical Directed Energy",
+    "code": "Mil1A",
+    "level": 1,
+    "prereq": ["Engineering I", "Quantum Mechanics I", "Material Science I"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Focused laser beams.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Improved Alloys",
+    "code": "Mil1B",
+    "level": 1,
+    "prereq": ["Engineering I", "Material Science I"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Improved metal combining to give greater strength or resistance to corrosion.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Ship-Based Laser Weaponry",
+    "code": "Mil2A",
+    "level": 2,
+    "prereq": ["Physics I", "Computer Science I", "Electronics I"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Weaponizing laser beams for aircraft and satellites.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Improved Radar Capability",
+    "code": "Mil2B",
+    "level": 2,
+    "prereq": ["Computer Science II", "Electronics II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Improves your understanding of alien protocols and gives you an improved ability to track them.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Robotic Enhancements",
+    "code": "Mil2C",
+    "level": 2,
+    "prereq": ["Computer Science II", "Electronics I", "Engineering II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Enhancements to existing robotics to improve sensory input and mechanical limitations.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Improved Military Compounds",
+    "code": "Mil2D",
+    "level": 2,
+    "prereq": ["Material Science II", "Engineering II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Allows military compounds (bases and satellites) to be hardened.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Autonomous Vehicle Networking",
+    "code": "Mil2E",
+    "level": 2,
+    "prereq": ["Computer Science II", "Electronics II", "Engineering II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Framework for autonomous vehicles.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Laser Munitions",
+    "code": "Mil3A",
+    "level": 3,
+    "prereq": ["Psychology II", "Material Science II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Miniaturizing laser beams for personal weapons.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Anti-Bio Munitions",
+    "code": "Mil3B",
+    "level": 3,
+    "prereq": ["Social Science II", "Biology II", "Electronics II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops and preps a bio-weapon that selectively targets aliens or humans.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Energy Sensory Tracking",
+    "code": "Mil3C",
+    "level": 3,
+    "prereq": ["Quantum Mechanics III", "Computer Science II", "Electronics II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "A series of highly sensitive detection, identification, navigation and tracking systems used to determine the range, altitude, direction, or speed of objects based on energy signatures.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Mechanized Infantry",
+    "code": "Mil3D",
+    "level": 3,
+    "prereq": ["Material Science III", "Physics III", "Engineering III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Mechanized exoskeleton and battle armor for infantry.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Intelligent Droid Labor",
+    "code": "Mil3E",
+    "level": 3,
+    "prereq": ["Electronics III", "Computer Science III", "Social Science III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops flexible and intelligent robotic workforce.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "High Density Resonance Overlays",
+    "code": "Mil3F",
+    "level": 3,
+    "prereq": ["Material Science III", "Physics II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "An energy absorbent coating applied to hardened composites to reduce friction.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Vehicular Propulsion Enhancement",
+    "code": "Mil3G",
+    "level": 3,
+    "prereq": ["Material Science III", "Physics III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Applying energy absorbent material to modern rocketry and affixing to vehicles.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Magnetic Projection",
+    "code": "Mil3H",
+    "level": 3,
+    "prereq": ["Quantum Mechanics III", "Engineering III", "Computer Science II"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Projection of magnetic fields to counter other forces for defense shielding.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Laser Defense Grid",
+    "code": "Mil4A",
+    "level": 4,
+    "prereq": ["Physics IV", "Electronics III", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Improves existing Laser Tech. and deploys ground based missile/satellite defense platform.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Long Range Rocketry",
+    "code": "Mil4B",
+    "level": 4,
+    "prereq": ["Engineering III", "Physics IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops rockets to transport to the moon and beyond.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Orbital Weaponry",
+    "code": "Mil4C",
+    "level": 4,
+    "prereq": ["Material IV", "Engineering IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops viable orbital nuclear deployment platform.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Advanced Robotics",
+    "code": "Mil4D",
+    "level": 4,
+    "prereq": ["Material Science III", "Electronics III", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Allows nearly every possible 3 dimensional task in robotics, with increased strength and dexterity.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Super Hardened Alloys",
+    "code": "Mil4E",
+    "level": 4,
+    "prereq": ["Physics III", "Engineering IV", "Material Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Alloys combined with Red Mercury to strengthen and stabilize.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Bio-Networked Systems",
+    "code": "Mil4F",
+    "level": 4,
+    "prereq": ["Social Science IV", "Quantum Mechanics III", "Material Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops helmets that allows transmission of thought.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Pseudo Projection",
+    "code": "Mil4G",
+    "level": 4,
+    "prereq": ["Physics IV", "Quantum Mechanics III", "Computer Science III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Allows lifelike projection of holograms from enhanced vehicles or structures.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "TrueStealth Technology",
+    "code": "Mil4H",
+    "level": 4,
+    "prereq": ["Material Science IV", "Quantum Mechanics III", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Advanced coating for vehicles and facilities that makes them nearly invisible to the naked eye.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Plasmatic Applications",
+    "code": "Mil4I",
+    "level": 4,
+    "prereq": ["Engineering IV", "Material Science III", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Applications of plasma for weaponry and other real world applications.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Antimatter Containment",
+    "code": "Mil4J",
+    "level": 4,
+    "prereq": ["Quantum Mechanics IV", "Material Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Ability to contain and control anti-matter.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Pacifier Project",
+    "code": "Mil4K",
+    "level": 4,
+    "prereq": ["Electronics IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Creates Pacifier Class systems.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Advanced Magnetic Shielding",
+    "code": "Mil4L",
+    "level": 4,
+    "prereq": ["Engineering IV", "Electronics IV", "Computer Science III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Creation of portable shielding for deflecting incoming objects.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Magnetic Fusion",
+    "code": "Mil4M",
+    "level": 4,
+    "prereq": ["Engineering III", "Quantum Mechanics IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Fusion drives with a magnetic coil exhaust acceleration to increase drive efficiency",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Electroconductive Rails",
+    "code": "Mil4N",
+    "level": 4,
+    "prereq": ["Physics IV", "Quantum Mechanics III"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "A rail cannon system for advanced combat.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Anti-Grav",
+    "code": "Mil4O",
+    "level": 4,
+    "prereq": ["Material Science IV", "Quantum Mechanics IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Anti gravity and gravity manipulation systems.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Red Mercury Fission",
+    "code": "Mil4P",
+    "level": 4,
+    "prereq": ["Quantum Mechanics IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Converts nuclear system into Red Mercury dirty delivery system.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Personal Aerial Transport Systems",
+    "code": "Mil5A",
+    "level": 5,
+    "prereq": ["Engineering V", "Electronics IV", "Computer Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Framework for anti-gravity personal vehicles.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Mind Control",
+    "code": "Mil5B",
+    "level": 5,
+    "prereq": ["Psychology V", "Engineering IV", "Social Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Allows hijacking of another thoughts for a short while.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Enhanced Covert Operations",
+    "code": "Mil5C",
+    "level": 5,
+    "prereq": ["Material Science V", "Genetics IV", "Engineering IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Application of TrueStealth technology to covert operations agents.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Plasmatic Mechanization",
+    "code": "Mil5D",
+    "level": 5,
+    "prereq": ["Material Science IV", "Biology IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Ability to add plasma weaponry to mechs.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Space Force - Interstellar Corps Training",
+    "code": "Mil5E",
+    "level": 5,
+    "prereq": ["Psychology V", "Electronics V", "Material Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops Marine unit to operate from Interplanetary Warships.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Space Force - Armed Vehicles",
+    "code": "Mil5F",
+    "level": 5,
+    "prereq": ["Physics V", "Electronics V", "Material Science IV"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Space Force - Support Vehicles",
+    "code": "Mil5G",
+    "level": 5,
+    "prereq": ["Computer Science V", "Electronics V", "Social Science V"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.",
+    "effects": { },
+    "unlocks": [ ]
+},
+{   
+    "name": "Quantum Temporal Warp Synthesis",
+    "code": "Mil5H",
+    "level": 5,
+    "prereq": ["Computer Science V", "Engineering V", "Material Science V"],
+    "type": "Technology",
+    "field": "Military",
+    "desc": "Develops a Faster Than Light Drive, which uses a dimensional transport effect. Ships instantaneously teleport from one point in space to another after spooling energy.",
+    "effects": { },
+    "unlocks": [ ]
 }
 ]

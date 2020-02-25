@@ -5,7 +5,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 // Country Model - Using Mongoose Model
 const {Country, validateCountry} = require('../../models/country'); 
 const {Zone} = require('../../models/zone'); 
-const {Team} = require('../../models/team'); 
+const {Team} = require('../../models/team/team'); 
 
 
 // @route   GET api/country

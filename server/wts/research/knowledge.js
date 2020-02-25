@@ -4,7 +4,7 @@ const knowledgeData = JSON.parse(file);
 
 knowledgeDebugger = require('debug')('app:knowledge');
 
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
 const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const { techCost } = require('./research');
@@ -85,6 +85,8 @@ function Knowledge(knowledge) {
             prereq: this.prereq,
             desc: this.desc,
             field: this.field,
+            desc: this.desc,
+            unlocks: {},
             status: {
                 progress: techCost[this.level],
                 availible: false,

@@ -22,10 +22,11 @@ const { Fleet } = require('../../models/ops/military/fleet');
 const { Corps } = require('../../models/ops/military/corps');
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const { Gear } = require('../../models/gov/equipment/gear');
 const { loadMilGears, gears } = require('../../wts/construction/equipment/milGear');
 const { BaseSite } = require('../../models/sites/baseSite');
+const { Site } = require('../../models/sites/site');
 const app = express();
 
 // Bodyparser Middleware
@@ -174,12 +175,12 @@ async function createFleet(iData){
   }       
 
   if (iData.homeBase != ""){
-    let country = await Country.findOne({ code: iData.homeBase });  
-    if (!country) {
+    let site = await Site.findOne({ siteCode: iData.homeBase });  
+    if (!site) {
       militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
-      fleet.homeBase = country._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
+      fleet.homeBase = site._id;
+      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
 
@@ -263,12 +264,12 @@ async function createCorps(iData){
   }       
 
   if (iData.homeBase != ""){
-    let country = await Country.findOne({ code: iData.homeBase });  
-    if (!country) {
+    let site = await Site.findOne({ siteCode: iData.homeBase });  
+    if (!site) {
       //logger.info("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
-      corps.homeBase = country._id;
-      //logger.info("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
+      corps.homeBase = site._id;
+      //logger.info("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
 
@@ -353,12 +354,12 @@ async function updateFleet(iData){
   }       
 
   if (iData.homeBase != ""){
-    let country = await Country.findOne({ code: iData.homeBase });  
-    if (!country) {
+    let site = await Site.findOne({ siteCode: iData.homeBase });  
+    if (!site) {
       militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
-      fleet.homeBase = country._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
+      fleet.homeBase = site._id;
+      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
 
@@ -442,12 +443,12 @@ async function updateCorps(iData){
   }       
 
   if (iData.homeBase != ""){
-    let country = await Country.findOne({ code: iData.homeBase });  
-    if (!country) {
+    let site = await Site.findOne({ code: iData.homeBase });  
+    if (!site) {
       militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
-      corps.homeBase = country._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Country ID:", country._id);
+      corps.homeBase = site._id;
+      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
 

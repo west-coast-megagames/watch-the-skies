@@ -4,9 +4,8 @@ const techTreeDebugger = require('debug')('app:techTree');
 const militaryData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/military.json')));
 const infrastructureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/infrastructure.json')));
 const medicalData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/medical.json')));
-const consumerData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/consumer.json')));
 const agricultureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/agriculture.json')));
-const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData,...consumerData];
+const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData];
 
 const Technology = require('./technology');
 

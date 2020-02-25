@@ -28,7 +28,8 @@ const AircraftSchema = new Schema({
     sensors: { type: Number, default: 1 },
     compartments: { type: Number, default: 1 },
     utils: { type: Number, default: 1 },
-  },systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
+  },
+  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   stats: {
     hull: { type: Number, default: 3 },
     hullMax: { type: Number, default: 3 },
@@ -71,6 +72,21 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   }
 }
 
+AircraftSchema.methods.returnToBase = async (aircraft) => {
+  modelDebugger(`Returning ${aircraft.name} to ${baseOrig.name}...`);
+  aircraft.mission = "Docked";
+  aircraft.status.ready = true;
+  aircraft.status.deployed = false;
+  aircraft.country = update.baseOrig.country;
+  aircraft.site = update.baseOrig._id;
+  aircraft.zone = update.baseOrig.zone;
+
+  aircraft = await aircraft.save();
+
+  return aircraft;
+}
+
+
 AircraftSchema.methods.validateAircraft = function (aircraft) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
@@ -100,7 +116,8 @@ async function getAircrafts() {
     .populate('team', 'name shortName')
     .populate('zone', 'zoneName')
     .populate('country', 'name')
-    .populate('systems', 'name category');
+    .populate('systems', 'name category')
+    .populate('baseOrig', 'name');
   return aircrafts;
 };
 

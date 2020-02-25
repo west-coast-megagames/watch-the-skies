@@ -65,7 +65,7 @@ class Science extends Component {
                     <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20 }}>
+            <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
                         <h5>No dashboard has been coded for the Science Module!</h5>
