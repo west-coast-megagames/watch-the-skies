@@ -1,7 +1,6 @@
 import React from "react"; // React import
 import { Container } from "rsuite";
 import { Panel, PanelGroup } from "rsuite";
-import { Avatar } from "rsuite";
 
 const NewsFeed = props => {
   if (props.articles.length === 0) {
