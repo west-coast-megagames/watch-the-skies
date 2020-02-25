@@ -1,23 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Timeline, Icon, Alert } from 'rsuite';
+import { Timeline, Icon, Alert, Panel } from 'rsuite';
 import { gameServer } from '../config';
-
-let timelineIconStyle = {
-    position: 'absolute',
-    background: '#fff',
-    top: 0,
-    left: '-2px',
-    border: '2px solid #ddd',
-    width: 40,
-    height: 40,
-    borderRadius: '50%',
-    fontSize: 18,
-    paddingTop: 9,
-    color: '#999',
-    marginLeft: '-13px'
-}; 
-
 class GameTimeline extends Component {
     state = {
         logs: []
@@ -67,7 +51,7 @@ class GameTimeline extends Component {
         // let iconStyle = { background: '#ff4d4d', color: '#fff' };
         return(
         <Timeline.Item key={log._id} dot={<Icon icon="fighter-jet" size="2x" />}>
-            <p>Turn {log.timestamp.turnNum} | {log.timestamp.turn} - {log.timestamp.phase}</p>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
             <p><b>Team:</b> {log.team.name}</p> 
             <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
             <p><b>Report:</b> {log.report}</p>
@@ -79,10 +63,11 @@ class GameTimeline extends Component {
 
         return(
         <Timeline.Item key={log._id} dot={<Icon icon="credit-card-alt" size="2x" />}>
-            <p>Turn {log.timestamp.turnNum} | {log.timestamp.turn} - {log.timestamp.phase}</p>
-            <p><b>Team:</b> {log.team.name} | <b>Account:</b> {log.account}</p>
-            <p><b>Type:</b> {log.transaction} | <b>Amount:</b> {log.amount}</p>
-            <p><b>Note:</b> {log.note}</p>
+            <Panel style={{padding: '0px'}} header={`Transaction | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock}`} collapsible>
+                <p><b>Team:</b> {log.team.name} | <b>Account:</b> {log.account}</p>
+                <p><b>Type:</b> {log.transaction} | <b>Amount:</b> {log.amount}</p>
+                <p><b>Note:</b> {log.note}</p>
+            </Panel>
         </Timeline.Item>
         )
     }
