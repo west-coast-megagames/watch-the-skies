@@ -36,7 +36,7 @@ async function deposit (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     let { getTimeRemaining } = require('../gameClock/gameClock')
-    let { turn, phase, turnNum } = getTimeRemaining();
+    let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
     account = trackTransaction(account, amount, 'deposit');
 
@@ -45,7 +45,8 @@ async function deposit (account, amount, note) {
             date: Date.now(),
             turn,
             phase,
-            turnNum
+            turnNum,
+            clock: `${minutes}:${seconds}`
         },
         team: account.team,
         transaction: 'deposit',
@@ -71,7 +72,7 @@ async function withdrawal (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     const { getTimeRemaining } = require('../gameClock/gameClock')
-    let { turn, phase, turnNum } = getTimeRemaining();
+    let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
     account = trackTransaction(account, amount, 'withdrawal');
     
@@ -80,7 +81,8 @@ async function withdrawal (account, amount, note) {
             date: Date.now(),
             turn,
             phase,
-            turnNum
+            turnNum,
+            clock: `${minutes}:${seconds}`
         },
         team: account.team,
         transaction: 'withdrawal',
