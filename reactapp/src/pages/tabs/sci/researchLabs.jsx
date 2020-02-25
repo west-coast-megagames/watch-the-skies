@@ -5,7 +5,7 @@ import { gameServer } from '../../../config';
 
 const { Column, HeaderCell, Cell } = Table;
 
-// Check if the lab is in the labUpdates Array.  Return true if its a new Lab (not in array)
+// Check if a particular lab is in an Array.  Return -1 if its a new Lab (not in array) or the index if it does exist (already in array)
 function newLabCheck(lab, labArray) {
 	let i;
 	for (i = 0; i < labArray.length; i++) {
@@ -16,26 +16,48 @@ function newLabCheck(lab, labArray) {
 	return -1;
 }
 
+function findTechByID(_id, allKnowledge) {
+	let myResearchArray = [];
+	let i;
+	for (i = 0; i < allKnowledge.length; i++) {
+		if (allKnowledge[i]._id === _id) {
+			myResearchArray[0] = allKnowledge[i];
+			return myResearchArray;
+		}
+	}
+	return myResearchArray;
+}
+
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
+//	console.log("=============== PROGRESS CELL ===============");
+//	console.log("PROPS=",props);
 	function lookupPct () {
 		let myResearch = {};	// lookup entry in the allKnowledge Obj which holds the Pct for progress bar
 		let myProgress = 0;		// Progress of myResearch
 		let myLevel    = 0;		// Level of Tech of myResearch
 		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
-		const result = newLabCheck(rowData._id, props.labupdates);
+		const result = newLabCheck(rowData._id, props.labs);
+//		console.log("RESULT=",result);
 		if (result >= 0) {		// Lab was updated, so find the new %
-			if (props.labupdates[result].research.length <= 0) {		// Research currently has no focus in that lab object
+//			console.log("LENGTH=",props.labs[result].research.length);
+			if (props.labs[result].research.length <= 0) {		// Research currently has no focus in that lab object
 				return (-1);	// -1 and issue error instead of progress bar
 			} else {
-				let myResearchID = props.labupdates[result].research[0];	// ID of the tech being researched in this row
+				let myResearchID = props.labs[result].research[0];		// ID of the tech being researched in this row
+//				console.log("MYRESEARCHID=",myResearchID);		
 				if (myResearchID === null) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
-					props.labupdates[result].research = [];		// initialize the research array to a null instead of null array
+					props.labs[result].research = [];			// initialize the research array to a null instead of null array
 					return (-1);	// -1 and issue error instead of progress bar
 				} else {
-					myResearch = props.allknowledge.filter(el => el._id === myResearchID);
+//					console.log("ALLKNOW=",props.allknowledge);
+					myResearch = props.allknowledge.filter(el => el._id === myResearchID._id);
+//					console.log("MYRESEARCH=",myResearch);
 					myProgress = myResearch[0].status.progress;
+//					console.log("MYPROGRESS=",myProgress);
 					myLevel    = myResearch[0].level;
+//					console.log("MYLEVEL=",myLevel);
 					myTechCost = props.techcost[myLevel];
+//					console.log("MYTECHCOST=",myTechCost);
 					return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
 				}
 			}
@@ -44,7 +66,9 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 			return (-1);	// -1 and issue error instead of progress bar
 		}
 	}
+
 	const getPctResult = lookupPct();
+//	console.log("GETPCTRESULT=",getPctResult);
 	if (getPctResult < 0) {			// No updated Lab - return error instead of progress bar
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
@@ -69,7 +93,6 @@ class ResearchLabs extends Component {
 		super();
 		this.state = {
 			research: [],
-			labUpdates: [],
 			labs : [],
 			availFunding : 0
 		}
@@ -79,30 +102,38 @@ class ResearchLabs extends Component {
 	}
 	
 	handleLabUpdate(updatedLab) {
-		let labUpdates = this.state.labUpdates;
-		const result = newLabCheck(updatedLab._id, labUpdates);
-		if (result === -1) {				// New Entry
-			labUpdates.push(updatedLab);
+//		console.log("=============== HANDLE LAB UPDATE ===============");
+//		console.log("UPDATEDLAB=", updatedLab);
+		let labs = this.state.labs;
+//		console.log("LABS=", labs);
+		const result = newLabCheck(updatedLab._id, labs);
+//		console.log("RESULT=", result);
+		if (result === -1) {				// New Entry	
+			labs.push(updatedLab);  
 		} else {							// Existing Entry
-			labUpdates[result].research[0] = updatedLab.research[0];
-		}
-		this.setState({labUpdates});
+			labs[result] = updatedLab;
+		}	
+		this.setState({labs});
+//		console.log("LABSAFTER=", labs);
 		//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
 	}
   
 	handleFundingUpdate(updatedLab) {
-		let labUpdates = this.state.labUpdates;
-		const result = newLabCheck(updatedLab._id, labUpdates);
+//		console.log("=============== HANDLE FUNDING UPDATE ===============");
+		let labs = this.state.labs;
+		const result = newLabCheck(updatedLab._id, labs);
 		if (result === -1) {				// New Entry	
-			labUpdates.push(updatedLab);  
+			labs.push(updatedLab);  
 		} else {							// Existing Entry
-			labUpdates[result].funding = updatedLab.funding;
+			labs[result].funding = updatedLab.funding;
 		}
-		this.setState({labUpdates});
+		this.setState({labs});
 		//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
 	}
   
 	async confirmSubmit(lab) {
+//		console.log("=============== CONFIRM SUBMIT ===============");
+//		console.log("ROWDATA=", lab);
 		let labs = this.state.labs;
 		labs.forEach(el => {
 			if (el._id === lab._id) { 
@@ -110,7 +141,7 @@ class ResearchLabs extends Component {
 				el.funding = lab.funding;
 			}
 		});
-		console.log(this.state);
+//		console.log(this.state);
 		this.setState({ labs })
 
 		// bring up dialog box
@@ -128,19 +159,21 @@ class ResearchLabs extends Component {
 		}
 		const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, dummy_txn);
 		alert(mytxn.data)
-		console.log("MYTXN=", mytxn);
+//		console.log("MYTXN=", mytxn);
 		// for lab update, need to provide lab object
 		const myupdate = await axios.put(`${gameServer}api/facilities/research`, lab);
-		console.log(myupdate);
+//		console.log(myupdate);
 	}
 
 	componentDidMount(){
+//		console.log("=============== COMPONENT DID MOUNT ===============");
 		this.teamFilter();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+//		console.log("=============== COMPONENT DID UPDATE ===============");
 		if (prevProps !== this.props) {
-			console.log('Updating State...')
+//			console.log('Updating State...')
 			this.teamFilter();
 		}
 
@@ -169,14 +202,19 @@ class ResearchLabs extends Component {
 						<HeaderCell>Action</HeaderCell>
 						<Cell style={{ padding: 0 }} dataKey="name">
 						{rowData => {   
+//							console.log("ROWDATA=",rowData);
+							let defaultValue = "";
+							if (rowData.research.length !== 0) {		// New research is null
+								defaultValue = rowData.research[0]._id;
+							}
 							function handleChange(value) {
 								let updatedLab = rowData;
-								updatedLab.research[0] = value;
+								updatedLab.research = findTechByID(value, props.allKnowledge);
 								sendLabUpdate(updatedLab);
 							}          
 							return (
 								<SelectPicker
-									defaultValue={ rowData.research[0] }
+									defaultValue={ defaultValue }
 									groupBy='field'
 									valueKey='_id'
 									labelKey='name'
@@ -192,7 +230,7 @@ class ResearchLabs extends Component {
 					<Column verticalAlign='middle' width={200}>
 						<HeaderCell>Current Progress</HeaderCell>
 						<ProgressCell 
-							labupdates={this.state.labUpdates}
+							labs={this.state.labs}
 							allknowledge={ props.allKnowledge }
 							techcost={ props.techCost }
 						/>
@@ -226,12 +264,12 @@ class ResearchLabs extends Component {
 						<HeaderCell>Cost</HeaderCell>
 						<Cell dataKey="blah">
 						{rowData => {      
-							let labUpdates = this.state.labUpdates;
-							const result = newLabCheck(rowData._id, labUpdates);
+							let labs = this.state.labs;
+							const result = -1;
 							let myFundLevel = 0;
 							let myFunding = 0;
 							if (result >= 0) {	// existing entry
-								myFundLevel = labUpdates[result].funding;
+								myFundLevel = labs[result].funding;
 								myFunding = props.fundingCost[myFundLevel];
 							} 
 							return (
@@ -270,23 +308,7 @@ class ResearchLabs extends Component {
 			labs = labs.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
 			let availSciFunding = this.props.accounts.filter(el => el.name === 'Science' && el.team === this.props.team._id);
 			let availFunding = availSciFunding[0];
-
-//			while (typeof availFunding === "undefined") {
-//				availFunding = availSciFunding[0];
-//				console.log("It is undefined...");
-//			}
-				
-console.log("AVAILFUND=",availFunding);
-			availSciFunding.forEach(el => {
-				availFunding = el.balance;
-			})
-console.log("AVAILFUND2=",availFunding);
-//console.log("AVAILFUND=",availFunding.balance);		
-			labs.forEach(el => { 
-				el.funding > 0 ? el.disableFunding = true : el.disableFunding = false;
-				el.disableFunding = false;   // temporarily override to false for testing
-			});
-
+//			console.log("LABS=", labs);
 			this.setState({research, labs, availFunding});
 	  }
 }
