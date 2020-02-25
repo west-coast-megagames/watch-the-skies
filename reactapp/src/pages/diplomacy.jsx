@@ -32,7 +32,7 @@ class Diplomacy extends Component {
                     <Nav.Item eventKey="united-nations" to={`${url}/un`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUniversity} />}> UN Security Council</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20 }}>
+            <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
                         <h5>No dashboard has been coded for the Diplomacy Module!</h5>
