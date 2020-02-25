@@ -12,7 +12,7 @@ const Spacecraft = Site.discriminator('Spacecraft', new Schema({
     required: true,
     min: 2, 
     maxlength: 50,
-    enum: ["Satellite", "Spacecraft", "Gunship", "Transport", "Hauler", "Decoy"], 
+    enum: ["Satellite", "Spacecraft", "Gunship", "Transport", "Hauler", "Decoy", "Station"], 
     default: "Spacecraft"} ,
   stats: {
     hull: { type: Number, default: 2 },

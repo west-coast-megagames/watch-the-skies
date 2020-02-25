@@ -24,6 +24,8 @@
   {"loadType": "team", "name": "Republic of India", "code": "IND", "loadFlag": "true", "refNumber1":  0},
   {"loadType": "country", "code": "F1", "name": "Federation Space", "borderedBy" : [], "coastal" : false,
     "loadFlag": "true", "parentCode1": "SP", "parentCode2": "FFG",  "refNumber1":  0, "refBoolean1": false},
+  {"loadType": "country", "code": "O1", "name": "Neutral Space", "borderedBy" : [], "coastal" : false,
+    "loadFlag": "true", "parentCode1": "SP", "parentCode2": "TCN",  "refNumber1":  0, "refBoolean1": false},    
   {"loadType": "country", "code": "AF", "name": "Afghanistan", "borderedBy" : [{"code" : "IR"}, {"code": "PK"}, {"code" : "TJ"}, {"code" : "TM"}, {"code" : "UZ"}, {"code" : "CN"}], "coastal" : false,
     "loadFlag": "true", "parentCode1": "AS", "parentCode2": "",  "refNumber1":  0, "refBoolean1": false},
   {"loadType": "country", "code": "AL", "name": "Albania",  "borderedBy" : [ {"code" : "ME"}, {"code" : "RS"},{"code" : "MK"}, {"code" : "GR"} ], "coastal" : true,
