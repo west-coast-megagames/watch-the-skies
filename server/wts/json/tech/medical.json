@@ -2,6 +2,7 @@
 {   
     "_original": "Improved Trauma Treatment",
     "name": "Improved Trauma Treatment",
+    "code": "Bio1A",
     "level": 1,
     "prereq": ["Psychology I", "Social Science I"],
     "type": "Technology",
@@ -16,6 +17,7 @@
 {   
     "_original": "Improved Vaccines",
     "name": "Improved Vaccines",
+    "code": "Bio1B",
     "level": 1,
     "prereq": ["Genetics I", "Social Science I"],
     "type": "Technology",
@@ -26,6 +28,7 @@
 },
 {   
     "name": "Improved Antibiotics",
+    "code": "Bio1C",
     "level": 1,
     "prereq": ["Genetics I", "Biology I"],
     "type": "Technology",
@@ -36,6 +39,7 @@
 },
 {   
     "name": "Sensory enhancers",
+    "code": "Bio1D",
     "level": 1,
     "prereq": ["Social Science I", "Genetics I", "Psychology I"],
     "type": "Technology",
@@ -46,6 +50,7 @@
 },
 {   
     "name": "Alternative Splicing",
+    "code": "Bio1E",
     "level": 1,
     "prereq": ["Biology I", "Engineering I"],
     "type": "Technology",
@@ -56,8 +61,9 @@
 },
 {   
     "name": "Advanced Gene Modification",
+    "code": "Bio2A",
     "level": 2,
-    "prereq": ["Biology II", "Engineering II", "Electronic II"],
+    "prereq": ["Genetics II", "Computer Science II"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new more controlled methods of Gene Modification.",
@@ -66,6 +72,7 @@
 },
 {   
     "name": "Organ Fabrication",
+    "code": "Bio2B",
     "level": 2,
     "prereq": ["Biology II", "Engineering II", "Electronic II"],
     "type": "Technology",
@@ -76,8 +83,9 @@
 },
 {   
     "name": "Protein Synthesis",
+    "code": "Bio2C",
     "level": 2,
-    "prereq": ["Genetic II", "Biology II"],
+    "prereq": ["Genetics II", "Biology II"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
@@ -86,8 +94,9 @@
 },
 {   
     "name": "Resilient Bacteria",
+    "code": "Bio2D",
     "level": 2,
-    "prereq": ["Genetic II", "Biology II"],
+    "prereq": ["Genetics II", "Biology II"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Bacteria resistant to infection.",
@@ -96,8 +105,9 @@
 },
 {   
     "name": "Anti-Radiation Treatment",
+    "code": "Bio3A",
     "level": 3,
-    "prereq": ["Genetic III", "Physics III", "Electronic II"],
+    "prereq": ["Genetics III", "Physics III", "Electronic II"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
@@ -106,6 +116,7 @@
 },
 {   
     "name": "Biological Computing",
+    "code": "Bio3B",
     "level": 3,
     "prereq": ["Biology II", "Genetics III", "Computer Science III"],
     "type": "Technology",
@@ -116,6 +127,7 @@
 },
 {   
     "name": "Alpha Rhythm Generation",
+    "code": "Bio3C",
     "level": 3,
     "prereq": ["Biology III", "Social Science III", "Psychology III"],
     "type": "Technology",
@@ -126,8 +138,9 @@
 },
 {   
     "name": "Physical Augmentations",
+    "code": "Bio3D",
     "level": 3,
-    "prereq": ["Materials II", "Engineering III", "Psychology III"],
+    "prereq": ["Material Science II", "Engineering III", "Psychology III"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
@@ -136,6 +149,7 @@
 },
 {   
     "name": "Biological Nanites",
+    "code": "Bio4A",
     "level": 4,
     "prereq": ["Biology IV", "Electronic III", "Computer Science IV"],
     "type": "Technology",
@@ -146,8 +160,9 @@
 },
 {   
     "name": "Neurological Augmentation",
+    "code": "Bio4B",
     "level": 4,
-    "prereq": ["Genetic IV", "Psychology IV", "Electronics III"],
+    "prereq": ["Genetics IV", "Psychology IV", "Electronics III"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Neurological and sensory cybernetic replacements and enhancements.",
@@ -156,8 +171,9 @@
 },
 {   
     "name": "Brain Chemical Correction",
+    "code": "Bio5A",
     "level": 5,
-    "prereq": ["Genetic V", "Psychology V", "Social Science IV"],
+    "prereq": ["Genetics V", "Psychology V", "Social Science IV"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops methods that can correct and permanently alter brain chemistry.",
@@ -166,8 +182,9 @@
 },
 {   
     "name": "Robotic Nursing",
+    "code": "Bio5B",
     "level": 5,
-    "prereq": ["Genetic V", "Social Science V", "Computer Science IV"],
+    "prereq": ["Genetics V", "Social Science V", "Computer Science IV"],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
@@ -176,6 +193,7 @@
 },
 {   
     "name": "Auto Doctor System",
+    "code": "Bio5C",
     "level": 5,
     "prereq": ["Biology V", "Psychology IV", "Computer Science V"],
     "type": "Technology",
@@ -186,6 +204,7 @@
 },
 {   
     "name": "Terminal Illness Treatment",
+    "code": "Bio5D",
     "level": 5,
     "prereq": ["Biology V", "Engineering IV", "Social Science V"],
     "type": "Technology",

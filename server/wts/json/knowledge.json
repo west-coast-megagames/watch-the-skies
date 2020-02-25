@@ -5,7 +5,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund basic research in the field of biology to advance world knowledge."
+        "desc": "Fund basic research in the field of biology to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Biology I",
@@ -13,7 +14,8 @@
         "prereq": "Biology",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund cutting edge projects in biology to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in biology to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Agr1B"}, {"code": "Agr1C"}, {"code": "Bio1C"}, {"code": "Bio1E"}]
     },
     {
         "name": "Biology II",
@@ -21,7 +23,8 @@
         "prereq": "Biology I",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund advanced biology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced biology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr2C"}, {"code": "Mil3B"}, {"code": "Bio2A"}, {"code": "Bio2B"}, {"code": "Bio2C"}, {"code": "Bio2D"}, {"code": "Bio3B"}]
     },
     {
         "name": "Biology III",
@@ -29,7 +32,8 @@
         "prereq": "Biology II",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund revolutionary biology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary biology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr4A"}, {"code": "Bio3C"}]
     },
     {
         "name": "Biology IV",
@@ -37,7 +41,8 @@
         "prereq": "Biology III",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund previously theoretical biology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical biology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr4B"}, {"code": "Agr4C"}, {"code": "Agr5A"}, {"code": "Mil5D"}, {"code": "Bio4A"}]
     },
     {
         "name": "Biology V",
@@ -45,7 +50,8 @@
         "prereq": "Biology IV",
         "type": "Knowledge",
         "field": "Biology",
-        "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Bio5C"}, {"code": "Bio5D"}]
     },
     {
         "name": "Computer Science",
@@ -53,7 +59,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund basic research in the field of Computer Science to advance world knowledge."
+        "desc": "Fund basic research in the field of Computer Science to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Computer Science I",
@@ -61,7 +68,8 @@
         "prereq": "Computer Science",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Mil1D"}, {"code": "Mil2A"}, {"code": "Inf1H"}, {"code": "Inf1E"}, {"code": "Inf1F"}, {"code": "Inf2F"}]
     },
     {
         "name": "Computer Science II",
@@ -69,7 +77,8 @@
         "prereq": "Computer Science I",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund advanced computer science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced computer science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr2B"}, {"code": "Mil2B"}, {"code": "Mil2C"}, {"code": "Mil2E"}, {"code": "Mil3C"}, {"code": "Mil3H"}, {"code": "Inf2G"}, {"code": "Inf2B"}, {"code": "Inf2C"}, {"code": "Inf3A"}, {"code": "Inf3G"}, {"code": "Bio2A"}]
     },
     {
         "name": "Computer Science III",
@@ -77,7 +86,8 @@
         "prereq": "Computer Science II",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund revolutionary Computer Science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary Computer Science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil3E"}, {"code": "Mil4G"}, {"code": "Mil4L"}, {"code": "Inf3B"}, {"code": "Inf3C"}, {"code": "Inf3D"}, {"code": "Inf3F"}, {"code": "Inf4D"}, {"code": "Bio3B"}]
     },
     {
         "name": "Computer Science IV",
@@ -85,7 +95,8 @@
         "prereq": "Computer Science III",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund previously theoretical Computer Science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical Computer Science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil4A"}, {"code": "Mil4D"}, {"code": "Mil4H"}, {"code": "Mil4I"}, {"code": "Mil5A"}, {"code": "Inf4C"}, {"code": "Inf5A"}, {"code": "Inf5C"}, {"code": "Bio4A"}, {"code": "Bio5C"}]
     },
     {
         "name": "Computer Science V",
@@ -93,7 +104,8 @@
         "prereq": "Computer Science IV",
         "type": "Knowledge",
         "field": "Computer Science",
-        "desc": "Fund computer science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund computer science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Mil5G"}, {"code": "Mil5H"}, {"code": "Inf5B"}, {"code": "Bio5C"}]
     },
     {
         "name": "Electronics",
@@ -101,7 +113,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund basic research in the field of Electronics to advance world knowledge."
+        "desc": "Fund basic research in the field of Electronics to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Electronics I",
@@ -109,7 +122,8 @@
         "prereq": "Electronics",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund cutting edge projects in electronics to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in electronics to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Agr1A"}, {"code": "Mil2A"}, {"code": "Mil2C"}, {"code": "Inf1E"}, {"code": "Inf2A"}]
     },
     {
         "name": "Electronics II",
@@ -117,7 +131,8 @@
         "prereq": "Electronics I",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund advanced electronics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced electronics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil2B"}, {"code": "Mil2E"}, {"code": "Mil3B"}, {"code": "Mil3C"}, {"code": "Inf2D"}, {"code": "Inf2E"}, {"code": "Inf3C"}, {"code": "Inf3D"}]
     },
     {
         "name": "Electronics III",
@@ -125,7 +140,8 @@
         "prereq": "Electronics II",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund revolutionary electronics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary electronics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr3A"}, {"code": "Mil3E"}, {"code": "Mil4A"}, {"code": "Mil4D"}, {"code": "Inf3F"}, {"code": "Inf4B"}, {"code": "Bio4B"}]
     },
     {
         "name": "Electronics IV",
@@ -133,7 +149,8 @@
         "prereq": "Electronics III",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund preIvously theoretical electronics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical electronics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil4K"}, {"code": "Mil4L"}, {"code": "Mil5A"}, {"code": "Mil5A"}, {"code": "Inf4D"}, {"code": "Inf4E"}, {"code": "Inf4F"}]
     },
     {
         "name": "Electronics V",
@@ -141,7 +158,8 @@
         "prereq": "Electronics IV",
         "type": "Knowledge",
         "field": "Electronics",
-        "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Mil5E"}, {"code": "Mil5F"}, {"code": "Mil5G"}, {"code": "Inf5A"}]
     },
     {
         "name": "Engineering",
@@ -149,7 +167,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund basic research in the field of Engineering to advance world knowledge."
+        "desc": "Fund basic research in the field of Engineering to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Engineering I",
@@ -157,7 +176,8 @@
         "prereq": "Engineering",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Agr1A"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Mil1A"}, {"code": "Mil1B"}, {"code": "Inf1G"}, {"code": "Inf1A"}, {"code": "Inf1B"}, {"code": "Inf1C"}, {"code": "Inf1E"}, {"code": "Inf1F"}, {"code": "Inf2E"}, {"code": "Bio1E"}]
     },
     {
         "name": "Engineering II",
@@ -165,7 +185,8 @@
         "prereq": "Engineering I",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund advanced engineering research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced engineering research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr2A"}, {"code": "Agr2B"}, {"code": "Agr2C"}, {"code": "Agr3B"}, {"code": "Mil2F"}, {"code": "Mil2G"}, {"code": "Mil2C"}, {"code": "Mil2D"}, {"code": "Mil2E"}, {"code": "Inf2G"}, {"code": "Inf2A"}, {"code": "Inf2C"}, {"code": "Inf3E"}, {"code": "Bio2A"}, {"code": "Bio2B"}]
     },
     {
         "name": "Engineering III",
@@ -173,7 +194,8 @@
         "prereq": "Engineering II",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund revolutionary engineering research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary engineering research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil3D"}, {"code": "Mil3H"}, {"code": "Mil4B"}, {"code": "Mil4M"}, {"code": "Inf3A"}, {"code": "Inf3C"}, {"code": "Inf3D"}, {"code": "Inf3F"}, {"code": "Bio3D"}]
     },
     {
         "name": "Engineering IV",
@@ -181,7 +203,8 @@
         "prereq": "Engineering III",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund previously theoretical engineering research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical engineering research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr4A"}, {"code": "Agr4C"}, {"code": "Mil4C"}, {"code": "Mil4E"}, {"code": "Mil4I"}, {"code": "Mil4L"}, {"code": "Mil5B"}, {"code": "Mil5C"}, {"code": "Inf4A"}, {"code": "Inf4E"}, {"code": "Bio5D"}]
     },
     {
         "name": "Engineering V",
@@ -189,7 +212,8 @@
         "prereq": "Engineering IV",
         "type": "Knowledge",
         "field": "Engineering",
-        "desc": "Fund engineering research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund engineering research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Agr5A"}, {"code": "Agr5B"}, {"code": "Mil5A"}, {"code": "Mil5H"}, {"code": "Inf5B"}]
     },
     {
         "name": "Genetics",
@@ -197,7 +221,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund basic research in the field of Genetics to advance world knowledge."
+        "desc": "Fund basic research in the field of Genetics to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Genetics I",
@@ -205,7 +230,8 @@
         "prereq": "Genetics",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund cutting edge projects in genetics to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in genetics to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Agr1A"}, {"code": "Agr1C"}, {"code": "Bio1B"}, {"code": "Bio1C"}, {"code": "Bio1D"}]
     },
     {
         "name": "Genetics II",
@@ -213,7 +239,8 @@
         "prereq": "Genetics I",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund advanced genetics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced genetics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Bio2A"}, {"code": "Bio2C"}, {"code": "Bio2D"}, {}]
     },
     {
         "name": "Genetics III",
@@ -221,7 +248,8 @@
         "prereq": "Genetics II",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund revolutionary genetics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary genetics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr4A"}, {"code": "Bio3B"}, {"code": "Bio3A"}]
     },
     {
         "name": "Genetics IV",
@@ -229,7 +257,8 @@
         "prereq": "Genetics III",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund previously theoretical genetics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical genetics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr4B"}, {"code": "Agr4C"}, {"code": "Mil5C"}, {"code": "Bio4B"}]
     },
     {
         "name": "Genetics V",
@@ -237,15 +266,17 @@
         "prereq": "Genetics IV",
         "type": "Knowledge",
         "field": "Genetics",
-        "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Bio5A"}, {"code": "Bio5B"}]
     },
     {
-        "name": "Materical Science",
+        "name": "Material Science",
         "level": 0,
         "prereq": "None",
         "type": "Knowledge",
-        "field": "Materical Science",
-        "desc": "Fund basic research in the field of Materical Science to advance world knowledge."
+        "field": "Material Science",
+        "desc": "Fund basic research in the field of Material Science to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Material Science I",
@@ -253,7 +284,8 @@
         "prereq": "Material Science",
         "type": "Knowledge",
         "field": "Material Science",
-        "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Agr1B"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Mil1A"}, {"code": "Mil1B"}, {"code": "Inf1C"}, {"code": "Inf1G"}, {"code": "Inf1A"}]
     },
     {
         "name": "Material Science II",
@@ -261,7 +293,8 @@
         "prereq": "Material Science I",
         "type": "Knowledge",
         "field": "Material Science",
-        "desc": "Fund advanced material science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced material science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil2D"}, {"code": "Mil3A"}, {"code": "Inf2F"}, {"code": "Inf2C"}, {"code": "Bio3D"}]
     },
     {
         "name": "Material Science III",
@@ -269,7 +302,8 @@
         "prereq": "Material Science II",
         "type": "Knowledge",
         "field": "Material Science",
-        "desc": "Fund revolutionary material science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary material science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr3B"}, {"code": "Mil3D"}, {"code": "Mil3F"}, {"code": "Mil3G"}, {"code": "Mil4D"}, {"code": "Mil4I"}, {"code": "Inf3G"}]
     },
     {
         "name": "Material Science IV",
@@ -277,7 +311,8 @@
         "prereq": "Material Science III",
         "type": "Knowledge",
         "field": "Material Science",
-        "desc": "Fund previously theoretical material science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical material science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil4E"}, {"code": "Mil4F"}, {"code": "Mil4H"}, {"code": "Mil4J"}, {"code": "Mil4O"}, {"code": "Mil5D"}, {"code": "Mil5E"}, {"code": "Mil5F"}]
     },
     {
         "name": "Material Science V",
@@ -285,7 +320,8 @@
         "prereq": "Material Science IV",
         "type": "Knowledge",
         "field": "Material Science",
-        "desc": "Fund material science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund material science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Agr5A"}, {"code": "Agr5B"}, {"code": "Mil5H"}, {"code": "Mil5C"}]
     },
     {
         "name": "Physics",
@@ -293,7 +329,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund basic research in the field of Physics to advance world knowledge."
+        "desc": "Fund basic research in the field of Physics to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Physics I",
@@ -301,7 +338,8 @@
         "prereq": "Physics",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Mil2A"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Inf1B"}, {"code": "Inf1C"}, {"code": "Inf2A"}]
     },
     {
         "name": "Physics II",
@@ -309,7 +347,8 @@
         "prereq": "Physics I",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund advanced physics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced physics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil2G"}, {"code": "Mil3F"}, {"code": "Inf2B"}, {"code": "Inf2F"}]
     },
     {
         "name": "Physics III",
@@ -317,7 +356,8 @@
         "prereq": "Physics II",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund revolutionary physics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary physics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil3D"}, {"code": "Mil3G"}, {"code": "Mil4E"}, {"code": "Inf3A"}, {"code": "Inf3B"}, {"code": "Inf3E"}, {"code": "Bio3A"}]
     },
     {
         "name": "Physics IV",
@@ -325,7 +365,8 @@
         "prereq": "Physics III",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund previously theoretical physics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical physics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr5B"}, {"code": "Mil4A"}, {"code": "Mil4B"}, {"code": "Mil4G"}, {"code": "Mil4N"}, {"code": "Inf4A"}, {"code": "Inf4B"}, {"code": "Inf4G"}]
     },
     {
         "name": "Physics V",
@@ -333,7 +374,8 @@
         "prereq": "Physics IV",
         "type": "Knowledge",
         "field": "Physics",
-        "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Inf5C"}, {"code": "Mil5F"}]
     },
     {
         "name": "Psychology",
@@ -341,7 +383,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund basic research in the field of Psychology to advance world knowledge."
+        "desc": "Fund basic research in the field of Psychology to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Psychology I",
@@ -349,7 +392,8 @@
         "prereq": "Psychology",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund cutting edge projects in psychology to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in psychology to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Inf1H"}, {"code": "Bio1D"}, {"code": "Bio1A"}]
     },
     {
         "name": "Psychology II",
@@ -357,7 +401,8 @@
         "prereq": "Psychology I",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund advanced psychology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced psychology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr3C"}, {"code": "Mil3A"}]
     },
     {
         "name": "Psychology III",
@@ -365,7 +410,8 @@
         "prereq": "Psychology II",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund revolutionary psychology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary psychology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Bio3C"}, {"code": "Bio3D"}]
     },
     {
         "name": "Psychology IV",
@@ -373,7 +419,8 @@
         "prereq": "Psychology III",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund previously theoretical psychology research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical psychology research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Bio4B"}, {"code": "Bio5C"}, {"code": "Inf4C"}]
     },
     {
         "name": "Psychology V",
@@ -381,7 +428,8 @@
         "prereq": "Psychology IV",
         "type": "Knowledge",
         "field": "Psychology",
-        "desc": "Fund psychology research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund psychology research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Mil5B"}, {"code": "Mil5E"}, {"code": "Bio5A"}, {"code": "Inf5B"}]
     },
     {
         "name": "Social Science",
@@ -389,7 +437,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund basic research in the field of Social Science to advance world knowledge."
+        "desc": "Fund basic research in the field of Social Science to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Social Science I",
@@ -397,7 +446,8 @@
         "prereq": "Social Science",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund cutting edge projects in social science to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in social science to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Inf1H"}, {"code": "Bio1D"}, {"code": "Bio1B"}, {"code": "Bio1A"}]
     },
     {
         "name": "Social Science II",
@@ -405,7 +455,8 @@
         "prereq": "Social Science I",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund advanced social science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced social science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr2A"}, {"code": "Mil3B"}]
     },
     {
         "name": "Social Science III",
@@ -413,7 +464,8 @@
         "prereq": "Social Science II",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund revolutionary social science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary social science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Agr3C"}, {"code": "Mil3E"}, {"code": "Bio3C"}]
     },
     {
         "name": "Social Science IV",
@@ -421,7 +473,8 @@
         "prereq": "Social Science III",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund previously theoretical social science research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical social science research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil5B"}, {"code": "Mil4F"}, {"code": "Inf4F"}, {"code": "Bio5A"}]
     },
     {
         "name": "Social Science V",
@@ -429,7 +482,8 @@
         "prereq": "Social Science IV",
         "type": "Knowledge",
         "field": "Social Science",
-        "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Mil5G"}, {"code": "Bio5B"}, {"code": "Bio5D"}]
     },
     {
         "name": "Quantum Mechanics",
@@ -437,7 +491,8 @@
         "prereq": "None",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund basic research in the field of Quantum Mechanics to advance world knowledge."
+        "desc": "Fund basic research in the field of Quantum Mechanics to advance world knowledge.",
+        "unlocks": []
     },
     {
         "name": "Quantum Mechanics I",
@@ -445,7 +500,8 @@
         "prereq": "Quantum Mechanics",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund cutting edge projects in quantum mechanics to advance world knowledge and begin to apply that knowledge to new technologies."
+        "desc": "Fund cutting edge projects in quantum mechanics to advance world knowledge and begin to apply that knowledge to new technologies.",
+        "unlocks": [{"code": "Mil1A"}]
     },
     {
         "name": "Quantum Mechanics II",
@@ -453,7 +509,8 @@
         "prereq": "Quantum Mechanics I",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund advanced quantum mechanics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund advanced quantum mechanics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Inf3G"}, {"code": "Inf3E"}, {"code": "Inf3B"}, {"code": "Inf2D"}, {"code": "Inf2B"}]
     },
     {
         "name": "Quantum Mechanics III",
@@ -461,7 +518,8 @@
         "prereq": "Quantum Mechanics II",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund revolutionary quantum mechanics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund revolutionary quantum mechanics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil4N"}, {"code": "Mil4H"}, {"code": "Mil4G"}, {"code": "Mil4F"}, {"code": "Mil3H"}, {"code": "Mil3C"}]
     },
     {
         "name": "Quantum Mechanics IV",
@@ -469,7 +527,8 @@
         "prereq": "Quantum Mechanics III",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund previously theoretical quantum mechanics research to advance world knowledge and develop applicable technology."
+        "desc": "Fund previously theoretical quantum mechanics research to advance world knowledge and develop applicable technology.",
+        "unlocks": [{"code": "Mil4P"}, {"code": "Mil4O"}, {"code": "Mil4M"}, {"code": "Mil4J"}]
     },
     {
         "name": "Quantum Mechanics V",
@@ -477,6 +536,7 @@
         "prereq": "Quantum Mechanics IV",
         "type": "Knowledge",
         "field": "Quantum Mechanics",
-        "desc": "Fund quantum mechanics research in an attempt to push human understand to the point of theoretical mastery of the subject."
+        "desc": "Fund quantum mechanics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
+        "unlocks": [{"code": "Inf5C"}, {"code": "Inf5A"}]
     }
 ]
