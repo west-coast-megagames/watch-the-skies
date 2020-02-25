@@ -7,7 +7,7 @@ const NewsFeed = props => {
     return <h5>No articles published by {props.agency}</h5>;
   }
 
-  //  alternate background colors of headlines for easy differentiation {article.agency} for ID//
+  //  alternate background colors of headlines for easy differentiation. {article.agency} for ID//
 
   return (
     <Container>
