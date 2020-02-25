@@ -163,7 +163,7 @@ async function newNational(tData){
   national.roles    = tData.roles;
   national.prLevel  = tData.prLevel;
   national.agents   = tData.agents;
-  national.sciRate  = tData.sciRate;
+  //national.sciRate  = tData.sciRate;
 
   await national.save((err, national) => {
     if (err) return logger.error(`New Team Save Error: ${err}`);
@@ -254,7 +254,7 @@ async function newNPC(tData){
     return;
   }
   
-  npc.sciRate  = tData.sciRate;
+  //npc.sciRate  = tData.sciRate;
   
   await npc.save((err, npc) => {
     if (err) return logger.error(`New Team Save Error: ${err}`);
@@ -278,7 +278,7 @@ async function updNational(tData, tId){
   national.roles     = tData.roles;
   national.prLevel   = tData.prLevel;
   national.agents    = tData.agents;
-  national.sciRate   = tData.sciRate;
+  //national.sciRate   = tData.sciRate;
 
   const { error } = validateNational(national); 
   if (error) {
@@ -387,7 +387,7 @@ async function updNPC(tData, tId){
   npc.roles     = tData.roles;
   npc.prLevel   = tData.prLevel;
   npc.agents    = tData.agents;
-  npc.sciRate   = tData.sciRate;
+  //npc.sciRate   = tData.sciRate;
 
   const { error } = validateNpc(npc); 
   if (error) {

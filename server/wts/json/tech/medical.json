@@ -12,7 +12,8 @@
     "unlocks": [
         { "type": "Technology", "name": "Advanced Trauma Treatment" },
         { "type": "Facility", "name": "Remote Trauma Center" }
-    ]
+    ],
+    "breakthrough": [{"code": "Bio3C"}, {"code" : "Bio3A"}]
 },
 {   
     "_original": "Improved Vaccines",
@@ -23,8 +24,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for deploying vaccinations.",
-    "effects": { "type": "terror", "effect": -10 },
-    "unlocks": []
+    "effects": { "type": "terror", "effect": -4 },
+    "unlocks": [],
+    "breakthrough": [{"code" : "Bio3A"}]
 },
 {   
     "name": "Improved Antibiotics",
@@ -34,8 +36,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new forms of antibiotics.",
-    "effects": { },
-    "unlocks": [ ]
+    "effects": {"type": "terror", "effect": -6 },
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio2A"}, {"code" : "Mil3B"}]
 },
 {   
     "name": "Sensory enhancers",
@@ -46,7 +49,8 @@
     "field": "Biomedical",
     "desc": "Augments an individuals natural sense to increase their performance and sensitivity.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio3B"}, {"code" : "Mil2C"}]
 },
 {   
     "name": "Alternative Splicing",
@@ -57,7 +61,8 @@
     "field": "Biomedical",
     "desc": "Process of generating multiple transcriptions from a single pre-mRNA using enhanced lasers.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio2C"}, {"code" : "Bio2D"}, {"code" : "Mil3H"}]
 },
 {   
     "name": "Advanced Gene Modification",
@@ -67,8 +72,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new more controlled methods of Gene Modification.",
-    "effects": { },
-    "unlocks": [ ]
+    "effects": {"type": "terror", "effect": -10 },
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio2B"}]
 },
 {   
     "name": "Organ Fabrication",
@@ -78,8 +84,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
-    "effects": { },
-    "unlocks": [ ]
+    "effects": {"type": "terror", "effect": -10 },
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio3D"}]
 },
 {   
     "name": "Protein Synthesis",
@@ -90,7 +97,8 @@
     "field": "Biomedical",
     "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio2B"}, {"code" : "Mil3F"}, {"code" : "Agr4C"}]
 },
 {   
     "name": "Resilient Bacteria",
@@ -101,7 +109,8 @@
     "field": "Biomedical",
     "desc": "Bacteria resistant to infection.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio4B"}, {"code" : "Bio3A"}, {"code" : "Agr4B"}]
 },
 {   
     "name": "Anti-Radiation Treatment",
@@ -112,7 +121,8 @@
     "field": "Biomedical",
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Mil4J"}]
 },
 {   
     "name": "Biological Computing",
@@ -123,7 +133,8 @@
     "field": "Biomedical",
     "desc": "Allows brain and software integration for diagnosis and minor programmability.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio3C"}, {"code" : "Bio3D"}, {"code" : "Inf3D"}]
 },
 {   
     "name": "Alpha Rhythm Generation",
@@ -134,7 +145,8 @@
     "field": "Biomedical",
     "desc": "Stimulates alpha brain waves to ease thoughts and reduce pain levels.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio4A"}]
 },
 {   
     "name": "Physical Augmentations",
@@ -145,7 +157,8 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio4A"}, {"code" : "Mil4D"}]
 },
 {   
     "name": "Biological Nanites",
@@ -156,7 +169,8 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Inf4C"}, {"code" : "Inf4D"}, {"code" : "Mil4F"}]
 },
 {   
     "name": "Neurological Augmentation",
@@ -167,7 +181,8 @@
     "field": "Biomedical",
     "desc": "Neurological and sensory cybernetic replacements and enhancements.",
     "effects": { },
-    "unlocks": [ ]
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio5A"}, {"code" : "Bio5B"}, {"code" : "Mil5B"}]
 },
 {   
     "name": "Brain Chemical Correction",
@@ -177,8 +192,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops methods that can correct and permanently alter brain chemistry.",
-    "effects": { },
-    "unlocks": [ ]
+    "effects": {"type": "terror", "effect": -30 },
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio5C"}]
 },
 {   
     "name": "Robotic Nursing",
@@ -188,8 +204,9 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
-    "effects": { },
-    "unlocks": [ ]
+    "effects": {"type": "terror", "effect": -15 },
+    "unlocks": [ ],
+    "breakthrough": [{"code": "Bio5C"}, {"code" : "Mil5G"}]
 },
 {   
     "name": "Auto Doctor System",
@@ -199,7 +216,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops methods for an automated medical system using a large suite of technology.",
-    "effects": { },
+    "effects": {"type": "terror", "effect": -10 },
     "unlocks": [ ]
 },
 {   
