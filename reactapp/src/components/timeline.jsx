@@ -110,10 +110,12 @@ class GameTimeline extends Component {
         // let iconStyle = { background: '#ff4d4d', color: '#fff' };
         return(
         <Timeline.Item key={log._id} dot={<Icon icon="fighter-jet" size="2x" />}>
-            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-            <p><b>Team:</b> {log.team.name}</p> 
-            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-            <p><b>Report:</b> {log.report}</p>
+            <Panel style={{padding: '0px'}} header={`After Action Report - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock}`} collapsible>
+                <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+                <p><b>Team:</b> {log.team.name}</p> 
+                <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+                <p><b>Report:</b> {log.report}</p>
+            </Panel>
         </Timeline.Item>
         )
     }
@@ -122,9 +124,10 @@ class GameTimeline extends Component {
 
         return(
         <Timeline.Item key={log._id} dot={<Icon icon="credit-card-alt" size="2x" />}>
-            <Panel style={{padding: '0px'}} header={`Transaction - ${log.team.name} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock}`} collapsible>
-                <p><b>Team:</b> {log.team.name} | <b>Account:</b> {log.account}</p>
-                <p><b>Type:</b> {log.transaction} | <b>Amount:</b> {log.amount}</p>
+            <Panel style={{padding: '0px'}} header={`${log.transaction} - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock}`} collapsible>
+                <p><b>Team:</b> {log.team.name}</p>
+                <p><b>Account:</b> {log.account}</p>
+                <p><b>Amount:</b> {log.amount}</p>
                 <p><b>Note:</b> {log.note}</p>
             </Panel>
         </Timeline.Item>
