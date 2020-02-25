@@ -1,0 +1,35 @@
+[
+{"loadType": "spacecraft",
+"name" : "Fed Mothership Alpha",
+"code" : "FFGMA",
+"baseDefenses" : true,
+"facilities" :  [
+    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
+    { "type" : "Lab", "name" : "Lab A-1", "capacity": 1},
+    { "type" : "Hanger" , "name" : "Hangar A-1", "capacity": 5}
+],
+"loadout": 
+["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"latDMS": "90 00 00.0 S",
+"longDMS": "139 15 60.0 W",
+"latDecimal": -90.0,
+"longDecimal": -139.2667,
+"parentCode1" : "F1",
+"parentCode2" : "FFG",
+"stats":
+    {"hull": 5,
+     "hullMax": 5,
+     "damage": 3,
+     "passiveRolls": [2,4,7,9,11,12],
+     "activeRolls": [3,5,8,10,12] },
+"status": { 
+    "damaged" : false,
+    "deployed" : false,
+    "destroyed" : false,
+    "ready" : true,
+    "upgrade" : false,
+    "repair" : false,
+    "mission" : "Standby"},
+"shipType" : "Spacecraft"
+}
+]

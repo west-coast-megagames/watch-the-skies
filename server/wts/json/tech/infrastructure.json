@@ -1,20 +1,7 @@
 [
 {   
-    "name": "Distributed Network Capabilities",
-    "level": 1,
-    "prereq": ["Material Science I", "Computer Science I"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops a framework for large-scale implementation of distributed network computing.",
-    "effects": { },
-    "unlocks": [
-        { "type": "Equipment", "name": "Destributed Research Network" },
-        { "type": "Equipment", "name": "Destributed Military Network" },
-        { "type": "Technology", "name": "Flexible Fabrication" }
-    ]
-},
-{   
     "name": "Improved Composites",
+    "code": "Inf1G",
     "level": 1,
     "prereq": ["Material Science I", "Engineering I"],
     "type": "Technology",
@@ -28,6 +15,7 @@
 },
 {   
     "name": "Improved Disaster Response",
+    "code": "Inf1H",
     "level": 1,
     "prereq": ["Computer Science I", "Social Science I", "Psychology I"],
     "type": "Technology",
@@ -40,6 +28,7 @@
 },
 {   
     "name": "Flexible Fabrication",
+    "code": "Inf2G",
     "level": 2,
     "prereq": ["Computer Science II", "Engineering II", "Distributed Network Capabilities"],
     "type": "Technology",
@@ -55,8 +44,9 @@
 
 {   
     "name": "Improved Cathodes",
+    "code": "Inf1A",
     "level": 1,
-    "prereq": ["Materials I", "Engineering I"],
+    "prereq": ["Material Science I", "Engineering I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Increased battery capacity through cathode manipulation.",
@@ -65,8 +55,9 @@
 },
 {   
     "name": "Basic Geoengineering",
+    "code": "Inf1B",
     "level": 1,
-    "prereq": ["Physical I", "Engineering I"],
+    "prereq": ["Physics I", "Engineering I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
@@ -75,8 +66,9 @@
 },
 {   
     "name": "Improved Composites",
+    "code": "Inf1C",
     "level": 1,
-    "prereq": ["Materials I", "Physical I", "Engineering I"],
+    "prereq": ["Material Science I", "Physics I", "Engineering I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Developments new composite materials for future construction.",
@@ -85,6 +77,7 @@
 },
 {   
     "name": "AI Foundations",
+    "code": "Inf1D",
     "level": 1,
     "prereq": ["Computer Science I", "Engineering I"],
     "type": "Technology",
@@ -95,6 +88,7 @@
 },
 {   
     "name": "Distributed Network Capabilities",
+    "code": "Inf1E",
     "level": 1,
     "prereq": ["Electronics I", "Computer Science I", "Engineering I"],
     "type": "Technology",
@@ -105,6 +99,7 @@
 },
 {   
     "name": "Improved Recycling",
+    "code": "Inf1F",
     "level": 1,
     "prereq": ["Computer Science I", "Engineering I"],
     "type": "Technology",
@@ -115,6 +110,7 @@
 },
 {   
     "name": "Improved Power Grid",
+    "code": "Inf2A",
     "level": 2,
     "prereq": ["Physics I", "Electronics I", "Engineering II"],
     "type": "Technology",
@@ -125,6 +121,7 @@
 },
 {   
     "name": "Lightwave Restructuring",
+    "code": "Inf2B",
     "level": 2,
     "prereq": ["Physics II", "Computer Science II", "Quantum Mechanics II"],
     "type": "Technology",
@@ -135,16 +132,18 @@
 },
 {   
     "name": "Advanced Geoengineering",
+    "code": "Inf2C",
     "level": 2,
-    "prereq": ["Materials II", "Computer Science II", "Engineering II"],
+    "prereq": ["Material Science II", "Computer Science II", "Engineering II"],
     "type": "Technology",
     "field": "Infrastructure",
-    "desc": "Advanced techniques of geoneering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
+    "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
     "effects": { },
     "unlocks": [ ]
 },
 {   
     "name": "Nanoscaling",
+    "code": "Inf2D",
     "level": 2,
     "prereq": ["Physical III", "Quantum Mechanics II", "Electronics II"],
     "type": "Technology",
@@ -155,6 +154,7 @@
 },
 {   
     "name": "Holographic Projection",
+    "code": "Inf2E",
     "level": 2,
     "prereq": ["Engineering I", "Electronics II"],
     "type": "Technology",
@@ -165,8 +165,9 @@
 },
 {   
     "name": "Material Deconstruction",
+    "code": "Inf2F",
     "level": 2,
-    "prereq": ["Materials II", "Physics II", "Computer Science I"],
+    "prereq": ["Material Science II", "Physics II", "Computer Science I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "The break down of wastes into their constituent materials for re-use.",
@@ -175,6 +176,7 @@
 },
 {   
     "name": "Advanced Power Distribution",
+    "code": "Inf3A",
     "level": 3,
     "prereq": ["Engineering III", "Physics III", "Computer Science II"],
     "type": "Technology",
@@ -185,6 +187,7 @@
 },
 {   
     "name": "Minor Weather Alterations",
+    "code": "Inf3B",
     "level": 3,
     "prereq": ["Quantum Mechanics II", "Physics III", "Computer Science III"],
     "type": "Technology",
@@ -195,6 +198,7 @@
 },
 {   
     "name": "Nanorobotics",
+    "code": "Inf3C",
     "level": 3,
     "prereq": ["Electronics II", "Engineering III", "Computer Science III"],
     "type": "Technology",
@@ -205,6 +209,7 @@
 },
 {   
     "name": "Advanced AI",
+    "code": "Inf3D",
     "level": 3,
     "prereq": ["Electronics II", "Engineering III", "Computer Science III"],
     "type": "Technology",
@@ -215,6 +220,7 @@
 },
 {   
     "name": "Angular Momentum Optics",
+    "code": "Inf3E",
     "level": 3,
     "prereq": ["Quantum Mechanics II", "Engineering II", "Physics III"],
     "type": "Technology",
@@ -225,6 +231,7 @@
 },
 {   
     "name": "Smart Systems",
+    "code": "Inf3F",
     "level": 3,
     "prereq": ["Computer Science III", "Engineering III", "Electronics III"],
     "type": "Technology",
@@ -235,8 +242,9 @@
 },
 {   
     "name": "Red Mercury Mining",
+    "code": "Inf3G",
     "level": 3,
-    "prereq": ["Computer Science II", "Quantum Mechanics II", "Materials III"],
+    "prereq": ["Computer Science II", "Quantum Mechanics II", "Material Science III"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops Red Mercury mining capability.",
@@ -245,6 +253,7 @@
 },
 {   
     "name": "Fusion Reactor Prototyping",
+    "code": "Inf4A",
     "level": 4,
     "prereq": ["Physics IV", "Quantum Mechanics III", "Engineering IV"],
     "type": "Technology",
@@ -255,6 +264,7 @@
 },
 {   
     "name": "Compact Weather Systems",
+    "code": "Inf4B",
     "level": 4,
     "prereq": ["Physics IV", "Quantum Mechanics III", "Electronics III"],
     "type": "Technology",
@@ -265,8 +275,9 @@
 },
 {   
     "name": "Advanced Neural Networks",
+    "code": "Inf4C",
     "level": 4,
-    "prereq": ["Physics IV", "Computer Science IV", "Electronics IV"],
+    "prereq": ["Psychology IV", "Computer Science IV", "Electronics IV"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Basic supercomputing with machine optimization. Used on a large network scale, mimicking the human brain.",
@@ -275,6 +286,7 @@
 },
 {   
     "name": "Advanced Projection Systems",
+    "code": "Inf4D",
     "level": 4,
     "prereq": ["Engineering IV", "Computer Science III", "Electronics IV"],
     "type": "Technology",
@@ -285,6 +297,7 @@
 },
 {   
     "name": "Plasmatic Mining",
+    "code": "Inf4E",
     "level": 4,
     "prereq": ["Quantum Mechanics III", "Electronics IV"],
     "type": "Technology",
@@ -295,6 +308,7 @@
 },
 {   
     "name": "Arcology",
+    "code": "Inf4F",
     "level": 4,
     "prereq": ["Social Science IV", "Electronics IV"],
     "type": "Technology",
@@ -305,6 +319,7 @@
 },
 {   
     "name": "Stratospheric Architecture",
+    "code": "Inf4G",
     "level": 4,
     "prereq": ["Physics IV"],
     "type": "Technology",
@@ -315,6 +330,7 @@
 },
 {   
     "name": "FTL Communication",
+    "code": "Inf5A",
     "level": 5,
     "prereq": ["Quantum Mechanics V", "Computer Science IV", "Electronics V"],
     "type": "Technology",
@@ -325,8 +341,9 @@
 },
 {   
     "name": "Sentient Supercomputing",
+    "code": "Inf5B",
     "level": 5,
-    "prereq": ["Physics V", "Computer Science V", "Engineering V"],
+    "prereq": ["Psychology V", "Computer Science V", "Engineering V"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops and deploys a fully sentient distributed AI network.",
@@ -335,6 +352,7 @@
 },
 {   
     "name": "Inanimate Quantum Teleportation",
+    "code": "Inf5C",
     "level": 5,
     "prereq": ["Physics V", "Computer Science IV", "Quantum Mechanics V"],
     "type": "Technology",

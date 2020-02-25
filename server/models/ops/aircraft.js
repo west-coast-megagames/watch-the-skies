@@ -28,7 +28,8 @@ const AircraftSchema = new Schema({
     sensors: { type: Number, default: 1 },
     compartments: { type: Number, default: 1 },
     utils: { type: Number, default: 1 },
-  },systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
+  },
+  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   stats: {
     hull: { type: Number, default: 3 },
     hullMax: { type: Number, default: 3 },

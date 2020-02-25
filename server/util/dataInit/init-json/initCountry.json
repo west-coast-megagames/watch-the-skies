@@ -1,38 +1,52 @@
 [
 {"loadType": "country", 
+ "code": "F1", 
+ "name": "Federation Space", 
+ "borderedBy" : [], 
+ "coastal" : false,
+ "type": "A"
+},
+{"loadType": "country", 
   "code": "AF", 
   "name": "Afghanistan", 
   "borderedBy" : [{"code" : "IR"}, {"code": "PK"}, {"code" : "TJ"}, {"code" : "TM"}, {"code" : "UZ"}, {"code" : "CN"}], 
-  "coastal" : false},
+  "coastal" : false,
+  "type": "T"
+},
 {"loadType": "country", 
  "code": "AL", 
  "name": "Albania",  
  "borderedBy" : [ {"code" : "ME"}, {"code" : "RS"},{"code" : "MK"}, {"code" : "GR"} ], 
- "coastal" : true
+ "coastal" : true,
+ "type": "T"
 },
 {"loadType": "country", 
  "code": "DZ", 
  "name": "Algeria", 
  "borderedBy" : [{ "code" : "TN"}, {"code" : "LY"}, {"code" : "MA"}, {"code" : "MR"}, {"code" : "ML"}, {"code" : "NE"}], 
- "coastal": true}
- ,
+ "coastal": true,
+ "type": "T"
+ },
 {"loadType": "country", 
  "code": "AD", 
  "name": "Andorra",  
  "borderedBy" : [{ "code" : "FR"}, { "code" : "ES"}], 
- "coastal": false
+ "coastal": false,
+ "type": "T"
 },
 {"loadType": "country", 
  "code": "AO",
  "name": "Angola", 
  "borderedBy" : [{"code" : "NA"}, {"code" : "CD"}, {"code" : "ZM"}, {"code" : "NA"},{"code" : "CG"}], 
- "coastal": true
+ "coastal": true,
+ "type": "T"
 },
 {"loadType": "country", 
  "code": "AQ", 
  "name": "Antarctica", 
  "borderedBy" : [], 
- "coastal" :true
+ "coastal" :true,
+ "type": "T"
 },
 {"loadType": "country", 
  "code": "AG", 
