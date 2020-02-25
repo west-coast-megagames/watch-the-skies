@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
     routeDebugger('Looking up all facilities...');
     let facilities = await Facility.find()
       .populate('site', 'name type')
-      .populate('team', 'shortName name')
+      .populate('team', 'shortName name sciRate')
       .populate('research')
       .populate('equipment');
 

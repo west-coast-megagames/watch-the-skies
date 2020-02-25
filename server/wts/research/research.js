@@ -8,6 +8,7 @@ const techCost = [ 66, 133, 200, 250, 300, 350 ] // Arbitratily set at increment
 const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
 
 const { Facility } = require('../../models/gov/facility/facility');
+const { National } = require('../../models/team/national');
 
 async function startResearch () {
     for (let lab of await Facility.find({ type: 'Lab' })) {
@@ -26,11 +27,18 @@ async function startResearch () {
 async function calculateProgress(lab) {
     try {
         console.log(lab._id); // Future await request to get lab information from DB
-        let tech = await Research.findById(lab.research[0]).populate('team', 'name sciRate shortName'); // Imports the specific Research object by _id
-        let sciRate = tech.team.sciRate + lab.sciRate
+        let tech = await Research.findById(lab.research[0]); // Imports the specific Research object by _id
+        let team = await National.findById(tech.team);
+        // researchDebugger(tech)
+        // researchDebugger(lab)
+        // researchDebugger(team);
+        // let test = team.sciRate;
+        // researchDebugger(`Team Sci Rate: ${test} - type: ${typeof test}`);
+        // researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
+        let sciRate = team.sciRate + lab.sciRate
         let sciBonus = lab.bonus
-
-        console.log(tech);
+        researchDebugger(`Science Rate: ${sciRate}`)
+        researchDebugger(typeof sciRate)
         let progress = researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
         tech.status.progress += progress; // Adds progress to the current Research
