@@ -1,3 +1,5 @@
+const runCountryCheck = require('../dataCheck/countryCheck');
+/*
 const runLoad = require('../dataInit/initRefLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
@@ -9,20 +11,20 @@ const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
+*/
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
-async function fullInit(selStr){
+async function fullInitCheck(selStr){
   
   switch(selStr){
     case 'All':
     case 'RefData':
-      let initDone = await runLoad(true);   // load simple reference tables/documents from refdata.json
-      //console.log("Ref Init Done:", initDone);
-      logger.debug("Ref Init Done:", initDone);
+      let countryCheckDone = await runCountryCheck();   // check country records
+      logger.debug("Country Check Done:", countryCheckDone);
       if (selStr != 'All') {
         break;
       }
-
+/*
     case 'All':
     case 'Team':
       let teamDone = await runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
@@ -63,15 +65,6 @@ async function fullInit(selStr){
         break;
       }
 
-    /*
-    case 'All':
-    case 'Interceptor':
-      let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
-      logger.debug("Interceptor Load Done: ", interceptorDone);
-      if (selStr != 'All') {
-        break;
-      }
-    */
 
     case 'All':   
     case 'Aircraft':
@@ -104,18 +97,18 @@ async function fullInit(selStr){
       if (selStr != 'All') {
         break;
       }
-
+*/
 
     if (selStr = 'All') break;
 
     default:
-      logger.error("Invalid Init Load Selection:", selStr);
+      logger.error("Invalid Init Check Selection:", selStr);
     
   }
 
-  logger.info("initLoadAll Done");
+  logger.info("initCheckAll Done");
   return(true);
   
 }
 
-module.exports = fullInit; 
+module.exports = fullInitCheck; 
