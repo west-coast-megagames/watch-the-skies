@@ -17,7 +17,7 @@ const bcrypt = require('bcryptjs');
 
 // User Model - Using Mongoose Model
 const { User, validateUser, validateName, validateAddr } = require('../../models/user');
-const { Team, validateTeam } = require('../../models/team');
+const { Team, validateTeam } = require('../../models/team/team');
 
 const app = express();
 

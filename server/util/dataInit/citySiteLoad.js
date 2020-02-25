@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 // City Model - Using Mongoose Model
 const { CitySite, validateCity } = require('../../models/sites/citySite');
 const { Country } = require('../../models/country'); 
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 
 const app = express();
 

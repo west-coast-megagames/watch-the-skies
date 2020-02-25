@@ -8,7 +8,7 @@ const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
-const { Team } = require('../../models/team'); 
+const { Team } = require('../../models/team/team'); 
 const { BaseSite } = require('../../models/sites/baseSite');
 
 // @route   PATCH api/control/alien/deploy

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const gameClock = require('../wts/gameClock/gameClock');
+const gameClock = require('../../wts/gameClock/gameClock');
 const modelDebugger = require('debug')('app:teamModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
@@ -10,18 +10,13 @@ const RoleSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User'} 
 });
 
-//teamType is (N)ational, (A)lien, (M)edia, (C)ontrol
+//teamType is (N)ational, (A)lien, (M)edia, (C)ontrol, non-(P)layer-character
 const TeamSchema = new Schema({
   model: { type: String, default: 'Team'},
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, minlength: 2, maxlength: 30 },
   teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },
-  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C'] },
-  roles: [RoleSchema],
-  prTrack: [Number],
-  agents: { type: Number, min: 0, default: 0 },
-  prLevel: { type: Number },
-  sciRate: { type: Number, default: 25 }
+  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C', 'P'] }
 });
 
 TeamSchema.methods.validateTeam = function (team) {
@@ -50,6 +45,12 @@ function validateTeam(team) {
   return Joi.validate(team, schema, { "allowUnknown": true });
 };
 
+async function getTeam(team_id) {
+  let team = await Team.findOne({ _id: team_id });
+  return team;
+};
+
+
 async function getPR(team_id) {
   modelDebugger(`Trying to find PR for ${team_id}`)
   try {
@@ -70,9 +71,4 @@ async function getSciRate(team_id) {
   }
 };
 
-async function getTeam(team_id) {
-  let team = await Team.findOne({ _id: team_id });
-  return team;
-};
-
-module.exports = { Team, validateTeam, getPR, getTeam, getSciRate }
+module.exports = { Team, validateTeam, getTeam, getPR, getSciRate, RoleSchema }

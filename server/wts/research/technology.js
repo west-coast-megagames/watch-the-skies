@@ -1,6 +1,6 @@
 const techDebugger = require('debug')('app:tech');
 
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
 const TechResearch = require('../../models/sci/techResearch');
 

@@ -21,7 +21,12 @@ const bodyParser = require('body-parser');
 // Country Model - Using Mongoose Model
 const { Zone, validateZone } = require('../../models/zone');
 const { Country, validateCountry } = require('../../models/country'); 
-const { Team, validateTeam } = require('../../models/team');
+const { Team, validateTeam } = require('../../models/team/team');
+const { Alien, validateAlien } = require('../../models/team/alien');
+const { Control, validateControl } = require('../../models/team/control');
+const { Media, validateMedia } = require('../../models/team/media');
+const { National, validateNational } = require('../../models/team/national');
+const { Npc, validateNpc } = require('../../models/team/npc');
 
 const app = express();
 
@@ -156,24 +161,49 @@ async function loadTeam(tName, tCode, tLoadFlg){
   try {   
     let team = await Team.findOne( { teamCode: tCode } );
     if (!team) {
-       // New Team here
-       if (tLoadFlg === "false") return;   // don't load if not true
-       let team = new Team({ 
-           teamCode: tCode,
-           name: tName,
-           countryID: tName
-        }); 
+      
+      // New Team here
+      if (tLoadFlg === "false") return;   // don't load if not true
 
-        let { error } = validateTeam(team); 
-        if (error) {
-          teamInitDebugger("New Team Validate Error", team.teamCode, error.message);
-          return;
-        }
-        
-        await team.save((err, team) => {
-          if (err) return console.error(`New Team Save Error: ${err}`);
-          teamInitDebugger(team.name + " add saved to teams collection.");
-        });
+        switch(tData.teamType){
+          case "N":
+            newNational(tName, tCode);
+            break;
+
+          case "A":
+            newAlien(tName, tCode);
+            break;
+          
+          case "C":
+            newControl(tName, tCode);
+            break;
+          
+          case "P":
+            newNPC(tName, tCode);
+            break;
+          
+          case "M":
+            newMedia(tName, tCode);
+            break;            
+
+          default:
+            let team = new Team({ 
+              teamCode: tCode,
+              name: tName,
+              countryID: tName
+            }); 
+            let { error } = validateTeam(team); 
+            if (error) {
+              teamInitDebugger("New Team Validate Error", team.teamCode, error.message);
+              return;
+            }
+            
+            await team.save((err, team) => {
+              if (err) return console.error(`New Team Save Error: ${err}`);
+              teamInitDebugger(team.name + " add saved to teams collection.");
+            });            
+
+        }    
     } else {       
        // Existing Team here ... update
        let id = team._id;
@@ -360,4 +390,106 @@ async function deleteCountry(cName, cCode, cLoadFlg){
   }
 };
 
- module.exports = runLoad;
+async function newNational(tName, tCode){
+
+  let national = new National({ 
+    teamCode: tCode,
+    name: tName,
+    countryID: tName
+  });
+
+  let { error } = validateNational(national); 
+  if (error) {
+    teamInitDebugger("New Team Validate Error", national.teamCode, error.message);
+    return;
+  }
+
+  await national.save((err, national) => {
+    if (err) return console.error(`New Team Save Error: ${err}`);
+    teamInitDebugger(national.name + " add saved to teams collection.");
+  });
+}
+
+async function newAlien(tName, tCode){
+
+  let alien = new Alien({ 
+    teamCode: tCode,
+    name: tName,
+    countryID: tName
+  });
+
+  let { error } = validateAlien(alien); 
+  if (error) {
+    teamInitDebugger("New Team Validate Error", alien.teamCode, error.message);
+    return;
+  }
+
+  await alien.save((err, alien) => {
+    if (err) return console.error(`New Team Save Error: ${err}`);
+    teamInitDebugger(alien.name + " add saved to teams collection.");
+  });
+}
+
+async function newControl(tName, tCode){
+
+  let control = new Control({ 
+    teamCode: tCode,
+    name: tName,
+    countryID: tName
+  });
+
+  let { error } = validateControl(control); 
+  if (error) {
+    teamInitDebugger("New Team Validate Error", control.teamCode, error.message);
+    return;
+  }
+
+  await control.save((err, control) => {
+    if (err) return console.error(`New Team Save Error: ${err}`);
+    teamInitDebugger(control.name + " add saved to teams collection.");
+  });
+}
+
+async function newMedia(tName, tCode){
+
+  let media = new Media({ 
+    teamCode: tCode,
+    name: tName,
+    countryID: tName
+  });
+
+  let { error } = validateMedia(media); 
+  if (error) {
+    teamInitDebugger("New Team Validate Error", media.teamCode, error.message);
+    return;
+  }
+
+  await media.save((err, media) => {
+    if (err) return console.error(`New Team Save Error: ${err}`);
+    teamInitDebugger(media.name + " add saved to teams collection.");
+  });
+}
+
+
+async function newNpc(tName, tCode){
+
+  let npc = new Npc({ 
+    teamCode: tCode,
+    name: tName,
+    countryID: tName
+  });
+
+  let { error } = validateNpc(npc); 
+  if (error) {
+    teamInitDebugger("New Team Validate Error", npc.teamCode, error.message);
+    return;
+  }
+
+  await npc.save((err, npc) => {
+    if (err) return console.error(`New Team Save Error: ${err}`);
+    teamInitDebugger(npc.name + " add saved to teams collection.");
+  });
+}
+
+
+module.exports = runLoad;

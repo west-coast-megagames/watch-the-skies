@@ -2,7 +2,7 @@ const bankDebugging = require('debug')('app:bankingSystem'); // Debug console lo
 
 const transactionLog = require('../../models/logs/transactionLog') // WTS Game log function
 
-const { Team } = require('../../models/team'); // Mongoose Model - Team
+const { Team } = require('../../models/team/team'); // Mongoose Model - Team
 const { Aircraft } = require('../../models/ops/aircraft') // Mongoose Model - Aircraft
 const nexusEvent = require('../../startup/events'); // Import of server event carrior
 
