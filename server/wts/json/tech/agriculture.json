@@ -9,7 +9,7 @@
     "desc": "Improves national capacity for food processing.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr2A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr2A"}]
 },
 {   
     "name": "Improved Water Purification",
@@ -21,7 +21,7 @@
     "desc": "Improves national capacity for water purification and distribution.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Bio3A"}, {"code" : "Agr2B"}, {"code" : "Agr3B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code" : "Agr2B"}, {"type": "Technology", "code" : "Agr3B"}]
 },
 {   
     "name": "Improved Agriculture",
@@ -33,7 +33,7 @@
     "desc": "Improves national agriculture yields.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr2C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr2C"}]
 },
 {   
     "name": "Advanced Processing",
@@ -45,7 +45,7 @@
     "desc": "Improves the national capacity to preserve foods.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4C"}]
 },
 {   
     "name": "Advanced Water Distribution",
@@ -57,7 +57,7 @@
     "desc": "Decreases water loss during distribution through network.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr4B"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4B"}]
 },
 {   
     "name": "Advanced Agriculture",
@@ -69,7 +69,7 @@
     "desc": "Improves national agriculture yields.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr4A"}, {"code" : "Agr3C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code" : "Agr3C"}]
 },
 {   
     "name": "Autonomous Farming",
@@ -81,7 +81,7 @@
     "desc": "Launches a campaign to replace human agricultural labor with specialized robots.",
     "effects": {"type": "terror", "effect": -10 },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5A"}]
 },
 {   
     "name": "Advanced Hydroponics",
@@ -93,7 +93,7 @@
     "desc": "Improved techniques for growing food with little or no soil using less water and sunlight.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr4A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4A"}]
 },
 {   
     "name": "Integrated Farm Management",
@@ -105,7 +105,7 @@
     "desc": "Launches a program to train farm managers in effective methods and implementation of newer technology.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Inf4F"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4F"}]
 },
 {   
     "name": "Herbacloning (Plant Cloning)",
@@ -117,7 +117,7 @@
     "desc": "Cloning of genetic plant material.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr4B"}, {"code" : "Agr4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code" : "Agr4C"}]
 },
 {   
     "name": "Super Adaptable Crops",
@@ -129,7 +129,7 @@
     "desc": "Deploy versions of food crops that can grow in almost any conditions and are disease resistant.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5A"}]
 },
 {   
     "name": "Industrial Food Synthesis",
@@ -141,7 +141,7 @@
     "desc": "Large food synthesizers for distribution to masses.",
     "effects": { },
     "unlocks": [],
-    "breakthrough": [{"code": "Agr5B"}, {"code" : "Mil5G"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code" : "Mil5G"}]
 },
 {   
     "name": "Terraforming",

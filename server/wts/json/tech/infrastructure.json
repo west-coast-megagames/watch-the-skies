@@ -56,7 +56,7 @@
     "desc": "Increased battery capacity through cathode manipulation.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf2A"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf2A"}]
 },
 {   
     "name": "Basic Geoengineering",
@@ -68,7 +68,7 @@
     "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf2B"}, {"code" : "Inf2C"}, {"code" : "Agr3C"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code" : "Inf2C"}, {"type": "Technology", "code" : "Agr3C"}]
 },
 {   
     "name": "Improved Composites",
@@ -80,7 +80,7 @@
     "desc": "Developments new composite materials for future construction.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf2C"}, {"code" : "Inf2D"}, {"code" : "Mil2D"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code" : "Inf2D"}, {"type": "Technology", "code" : "Mil2D"}]
 },
 {   
     "name": "AI Foundations",
@@ -92,7 +92,7 @@
     "desc": "Basic Artificial Intelligence functionality and machine learning.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf3D"}, {"code" : "Mil2B"}, {"code" : "Mil2E"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code" : "Mil2B"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
     "name": "Distributed Network Capabilities",
@@ -104,7 +104,7 @@
     "desc": "Framework for large-scale implementation of faster than fiber connections.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf3E"}, {"code" : "Mil2D"}, {"code" : "Mil2E"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code" : "Mil2D"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
     "name": "Improved Recycling",
@@ -116,7 +116,7 @@
     "desc": "Improves national recycling capacity.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf2F"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf2F"}]
 },
 {   
     "name": "Improved Power Grid",
@@ -128,7 +128,7 @@
     "desc": "Improves your national power grid infrastructure.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4A"}, {"code" : "Mil3C"}, {"code" : "Mil2E"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil3C"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
     "name": "Lightwave Restructuring",
@@ -140,7 +140,7 @@
     "desc": "Restructuring of light waves and photons to reduce amplitude and effect of global warming.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf2E"}, {"code" : "Inf3E"}, {"code" : "Mil3H"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code" : "Inf3E"}, {"type": "Technology", "code" : "Mil3H"}]
 },
 {   
     "name": "Advanced Geoengineering",
@@ -152,7 +152,7 @@
     "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf3B"}, {"code" : "Inf3E"}, {"code" : "Inf4F"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code" : "Inf3E"}, {"type": "Technology", "code" : "Inf4F"}]
 },
 {   
     "name": "Nanoscaling",
@@ -164,7 +164,7 @@
     "desc": "Shrinking matter of inanimate objects down to near nano levels. Limitations occur based on object's density and inherent resistances.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4A"}, {"code" : "Inf3C"}, {"code" : "Mil3A"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Inf3C"}, {"type": "Technology", "code" : "Mil3A"}]
 },
 {   
     "name": "Holographic Projection",
@@ -176,7 +176,7 @@
     "desc": "Physical emittance of an interference pattern which uses diffraction to reproduce a three-dimensional light field.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4D"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4D"}]
 },
 {   
     "name": "Material Deconstruction",
@@ -188,7 +188,7 @@
     "desc": "The break down of wastes into their constituent materials for re-use.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil4E"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4E"}]
 },
 {   
     "name": "Advanced Power Distribution",
@@ -200,7 +200,7 @@
     "desc": "Improves and shields the national power grid infrastructure.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4A"}, {"code" : "Mil4A"}, {"code" : "Mil3H"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil4A"}, {"type": "Technology", "code" : "Mil3H"}]
 },
 {   
     "name": "Minor Weather Alterations",
@@ -212,7 +212,7 @@
     "desc": "Allows raising or lowering of temperature by a few degrees or wind by a few MPH over a small area.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4B"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4B"}]
 },
 {   
     "name": "Nanorobotics",
@@ -224,7 +224,7 @@
     "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Bio4B"}, {"code" : "Mil4J"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code" : "Mil4J"}]
 },
 {   
     "name": "Advanced AI",
@@ -236,7 +236,7 @@
     "desc": "Advanced Artificial Intelligence at a larger scale. Computers will think and optimize its own components as necessary.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4C"}, {"code" : "Mil3E"}, {"code" : "Mil4A"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code" : "Mil3E"}, {"type": "Technology", "code" : "Mil4A"}]
 },
 {   
     "name": "Angular Momentum Optics",
@@ -248,7 +248,7 @@
     "desc": "Photon twisting in wireless medium - allows lossless wirefree communication.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4A"}, {"code" : "Inf3F"}, {"code" : "Mil3C"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Inf3F"}, {"type": "Technology", "code" : "Mil3C"}]
 },
 {   
     "name": "Smart Systems",
@@ -260,7 +260,7 @@
     "desc": "Deploys integrated smart systems.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil4O"}, {"code" : "Inf5B"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code" : "Inf5B"}]
 },
 {   
     "name": "Red Mercury Mining",
@@ -272,7 +272,7 @@
     "desc": "Develops Red Mercury mining capability.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil4E"}, {"code" : "Mil4P"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code" : "Mil4P"}]
 },
 {   
     "name": "Fusion Reactor Prototyping",
@@ -284,7 +284,7 @@
     "desc": "Develops viable fusion reactor technology for Fusion Power.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf5C"}, {"code" : "Mil4M"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code" : "Mil4M"}]
 },
 {   
     "name": "Compact Weather Systems",
@@ -308,7 +308,7 @@
     "desc": "Basic supercomputing with machine optimization. Used on a large network scale, mimicking the human brain.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil5B"}, {"code" : "Inf5B"}, {"code" : "Bio5D"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code" : "Inf5B"}, {"type": "Technology", "code" : "Bio5D"}]
 },
 {   
     "name": "Advanced Projection Systems",
@@ -320,7 +320,7 @@
     "desc": "Pinnacle systems of light emitting technology, allowing realistic viewpoints and interaction with individuals.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil4G"}, {"code" : "Mil4H"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code" : "Mil4H"}]
 },
 {   
     "name": "Plasmatic Mining",
@@ -332,7 +332,7 @@
     "desc": "Develops Plasma mining capability.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Mil4I"}, {"code" : "Mil4J"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code" : "Mil4J"}]
 },
 {   
     "name": "Arcology",
@@ -344,7 +344,7 @@
     "desc": "Megastructures for densely populated, ecologically low-impact human habitats, reducing human impact on natural resources.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf4G"}, {"code" : "Mil4P"}, {"code" : "Agr5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code" : "Mil4P"}, {"type": "Technology", "code" : "Agr5A"}]
 },
 {   
     "name": "Stratospheric Architecture",
@@ -368,7 +368,7 @@
     "desc": "Faster Than Light communication for deep space interaction.",
     "effects": { },
     "unlocks": [ ],
-    "breakthrough": [{"code": "Inf5B"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf5B"}]
 },
 {   
     "name": "Sentient Supercomputing",
