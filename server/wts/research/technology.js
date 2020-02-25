@@ -11,6 +11,8 @@ function Technology(tech) {
     this.prereq = tech.prereq;
     this.desc = tech.desc;
     this.field = tech.field;
+    this.effects = tech.effects;
+    this.unlocks = tech.unlocks;
 
     // Async Method to check if this technology is availible for each team
     this.checkAvailible = async function() {

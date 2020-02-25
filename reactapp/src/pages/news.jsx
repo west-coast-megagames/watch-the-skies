@@ -30,7 +30,7 @@ class News extends Component {
                     <Nav.Item eventKey="add" to={`${url}/add`} componentClass={NavLink} > Add News</Nav.Item>
                 </Nav>
             </Header>
-            <Content  className='tabContent' style={{ paddingLeft: 20 }}>
+            <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
                         <NewsFeed agency='All' articles={ this.props.articles } teams={this.props.teams}  del={this.props.handleArtHide} />

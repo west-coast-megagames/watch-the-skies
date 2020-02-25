@@ -85,6 +85,8 @@ function Knowledge(knowledge) {
             prereq: this.prereq,
             desc: this.desc,
             field: this.field,
+            desc: this.desc,
+            unlocks: {},
             status: {
                 progress: techCost[this.level],
                 availible: false,
