@@ -19,7 +19,7 @@ const bodyParser = require('body-parser');
 // Spacecraft Model - Using Mongoose Model
 const { Spacecraft, validateSpacecraft, updateStats } = require('../../models/sites/spacecraft');
 const { Country } = require('../../models/country'); 
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const { Facility } = require('../../models/gov/facility/facility');
 const { Lab } = require('../../models/gov/facility/lab');
 const { Hanger } = require('../../models/gov/facility/hanger');

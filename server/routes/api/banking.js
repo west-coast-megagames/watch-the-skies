@@ -7,7 +7,7 @@ const { logger } = require('../../middleware/winston');
 
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/gov/account');
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts

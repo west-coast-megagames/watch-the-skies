@@ -6,7 +6,7 @@ const validateObjectId = require('../middleware/validateObjectId');
 
 // User Model - Using Mongoose Model
 const { User, validateUser, validateName, validateAddr } = require('../models/user');
-const { Team } = require('../models/team');
+const { Team } = require('../models/team/team');
 
 // @route   POST /user
 // @Desc    Post a new User
