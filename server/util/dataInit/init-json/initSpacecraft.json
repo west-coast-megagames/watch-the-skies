@@ -4,9 +4,9 @@
 "code" : "FFGMA",
 "baseDefenses" : true,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
-    { "type" : "Lab", "name" : "Lab A-1", "capacity": 1},
-    { "type" : "Hanger" , "name" : "Hangar A-1", "capacity": 5}
+    { "type" : "Factory", "name" : "Alien Eng A-1", "capacity": 1},
+    { "type" : "Lab", "name" : "Alien Lab A-1", "capacity": 1},
+    { "type" : "Hanger" , "name" : "Alien Hangar A-1", "capacity": 5}
 ],
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],

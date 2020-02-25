@@ -84,6 +84,16 @@ async function loadSpacecraft(iData){
         }
       }); 
 
+      if (iData.parentCode2 != ""){
+        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+        if (!team) {
+          spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.parentCode2);
+        } else {
+          spacecraft.team  = team._id;
+          spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+        }
+      }      
+
       spacecraft.systems = [];
       for (let sys of iData.loadout) {
         let sysRef = systems[systems.findIndex(system => system.name === sys )];
@@ -126,16 +136,7 @@ async function loadSpacecraft(iData){
       spacecraft.status       = iData.status;
       spacecraft.stats        = iData.stats;
 
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
-        if (!team) {
-          spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.parentCode2);
-        } else {
-          spacecraft.team  = team._id;
-          spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
-        }
-      }      
-
+      
       if (iData.parentCode1 != ""){
         let country = await Country.findOne({ code: iData.parentCode1 });  
         if (!country) {
