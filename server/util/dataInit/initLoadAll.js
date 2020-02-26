@@ -9,6 +9,7 @@ const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
+const runSquadLoad = require('../dataInit/squadLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 async function fullInit(selStr){
@@ -63,16 +64,6 @@ async function fullInit(selStr){
         break;
       }
 
-    /*
-    case 'All':
-    case 'Interceptor':
-      let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
-      logger.debug("Interceptor Load Done: ", interceptorDone);
-      if (selStr != 'All') {
-        break;
-      }
-    */
-
     case 'All':   
     case 'Aircraft':
       let aircraftDone = await runAircraftLoad(true);  // load expanded Aircraft fields
@@ -105,6 +96,13 @@ async function fullInit(selStr){
         break;
       }
 
+    case 'All':
+    case 'Squad':  
+      let squadDone = await runSquadLoad(true);   // load expanded Squad fields initSquad.json with gear
+      logger.debug("Squad Load Done: ", squadDone);
+      if (selStr != 'All') {
+        break;
+      }      
 
     if (selStr = 'All') break;
 
