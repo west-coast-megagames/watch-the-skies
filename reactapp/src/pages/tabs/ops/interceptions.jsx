@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Interceptors from '../../components/interceptorsTable';
-import Contacts from '../../components/contactsTable';
-import InterceptorDeployForm from '../../components/interceptorsDeploy';
-import InfoAircaft from '../../components/infoAircaft';
+import Interceptors from '../../../components/interceptorsTable';
+import Contacts from '../../../components/contactsTable';
+import InterceptorDeployForm from '../../../components/interceptorsDeploy';
+import InfoAircaft from '../../../components/infoAircaft';
 
 class Interception extends Component {
 

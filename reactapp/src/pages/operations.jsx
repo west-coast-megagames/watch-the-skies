@@ -1,9 +1,10 @@
 import React, { Component } from 'react'; // React import
 import { Nav, Container, Header, Content } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import Interception from './tabs/interceptions';
+import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
+import GlobalOps from './tabs/ops/global';
 class Operations extends Component {
     constructor() {
         super();
@@ -58,16 +59,11 @@ class Operations extends Component {
                         /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <React.Fragment>
-                            <h5>Military Operations</h5>
-                            <p>Table of all Military Units sorted by zone</p>
-                            <hr />
-                            <h5>Air Operations</h5>
-                            <p>Table of all air contacts...</p>
-                            <hr />
-                            <h5>Space Operations</h5>
-                            <p>Table of all space operations...</p>
-                        </React.Fragment>
+                        <GlobalOps
+                            sites={ this.props.sites }
+                            aircrafts={ this.props.sites }
+                            notify={ this.props.alert }
+                        />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
                         <h5>The nuclear has been cut for March 14th and won't be in the box...</h5>
