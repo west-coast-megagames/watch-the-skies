@@ -13,7 +13,15 @@ const { logger } = require('../../middleware/winston'); // IMPORT - Winston erro
 
 async function teamPhase(turn) {
     phaseChangeDebugging(`Now changing to the team phase for ${turn}...`);
-    await updatePR(); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
+    // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
+    setTimeout(async () => {
+        await updatePR()
+    }, 2000)
+    
+    // Iterate through set-automatic transfers [Implemented]
+    setTimeout(async () => {
+        await banking.automaticTransfer()
+    }, 4000)
     await banking.automaticTransfer(); // Iterate through set-automatic transfers [Implemented]
     phaseChangeDebugging(`Done with team phase change for ${turn}!`);
     logger.info(`Turn ${turn} team phase has begun...`);
