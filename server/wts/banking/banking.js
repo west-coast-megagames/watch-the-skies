@@ -41,8 +41,8 @@ async function deposit (account, amount, note) {
     account = trackTransaction(account, amount, 'deposit');
 
     let log = new transactionLog({
+        date: Date.now(),
         timestamp: {
-            date: Date.now(),
             turn,
             phase,
             turnNum,
@@ -77,8 +77,8 @@ async function withdrawal (account, amount, note) {
     account = trackTransaction(account, amount, 'withdrawal');
     
     let log = new transactionLog({
+        date: Date.now(),
         timestamp: {
-            date: Date.now(),
             turn,
             phase,
             turnNum,
