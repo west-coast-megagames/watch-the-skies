@@ -116,10 +116,10 @@ router.patch('/delAutoTransfer', async function (req, res){
 // @access  Public
 router.post('/withdrawal', async function (req, res) {
     let { account_id, amount, note } = req.body;
-    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
     let account = await Account.findById(account_id);
     await banking.withdrawal(account, amount, note);
     nexusEvent.emit('updateAccounts')
+    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
 })
 
 module.exports = router;

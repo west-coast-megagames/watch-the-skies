@@ -8,7 +8,7 @@ const UnlockSchema = new Schema({
 
 const ResearchSchema = new Schema({
     model: { type: String, default: 'Research'},
-    name: { type: String },
+    name: { type: String},
     code: {type: String},
     level: { type: Number },
     prereq: [String],
@@ -16,4 +16,4 @@ const ResearchSchema = new Schema({
     unlocks: [UnlockSchema]
 });
 
-module.exports = Log = mongoose.model('Research', ResearchSchema, 'research');
+module.exports = Research = mongoose.model('Research', ResearchSchema, 'research');

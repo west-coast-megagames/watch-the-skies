@@ -27,6 +27,8 @@ const { Control, validateControl } = require('../../models/team/control');
 const { Media, validateMedia } = require('../../models/team/media');
 const { National, validateNational } = require('../../models/team/national');
 const { Npc, validateNpc } = require('../../models/team/npc');
+const Research = require('../../models/sci/research');
+const Log = require('../../models/logs/log');
 
 const app = express();
 
@@ -45,6 +47,10 @@ async function initLoad(doLoad) {
   
   if (!doLoad) return;
 
+  // drop team-related tables
+  await Research.deleteMany();
+  await Log.deleteMany();
+  
   for (let i = 0; i < refDataIn.length; ++i ) {
     
     if (refDataIn[i].loadType == "zone") {     

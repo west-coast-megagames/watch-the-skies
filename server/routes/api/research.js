@@ -82,7 +82,7 @@ router.patch('/load/tech', async function (req, res) {
 // @Desc    Load all knowledge fields from JSON files
 // @access  Public
 router.patch('/load/knowledge', async function (req, res) {
-    let response = await loadKnowledge();
+    let response = await loadKnowledge(); // Loads all knowledge into the server
     nexusEvent.emit('updateResearch');
     return res.status(200).send(response);
 });
@@ -91,7 +91,7 @@ router.patch('/load/knowledge', async function (req, res) {
 // @Desc    Load all knowledge fields from JSON files
 // @access  Public
 router.patch('/load/knowledge/seed', async function (req, res) {
-    await knowledgeSeed();
+    let response = await knowledgeSeed();
     nexusEvent.emit('updateResearch');
     return res.status(200).send('We did it, such a seed!')
 });

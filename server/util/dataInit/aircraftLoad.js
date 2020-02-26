@@ -174,7 +174,7 @@ async function loadAircraft(iData){
         await aircraft.save((err, aircraft) => {
           if (err) return console.error(`New Aircraft Save Error: ${err}`);
           logger.debug(aircraft.name + " add saved to aircraft collection.");
-          //updateStats(aircraft._id);
+          updateStats(aircraft._id);
         });
 
         //console.log("jeff after save", aircraft.name,  " systems ", aircraft.systems, "saveSys:", saveSys);

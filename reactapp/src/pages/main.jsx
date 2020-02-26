@@ -108,6 +108,7 @@ class ContentArea extends Component {
                   <Route path="/gov" render={(props) => (
                     <Governance {...props}
                         team = { this.props.team }
+                        teams = { this.props.teams }
                         accounts = { this.props.accounts }
                         alert={ this.props.addAlert }
                         

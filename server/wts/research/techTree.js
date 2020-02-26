@@ -9,7 +9,7 @@ const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agr
 
 const Technology = require('./technology');
 
-const techTree = []
+const techTree = [] // Server side array to track all availible technology.
 
 function getTechTree() {
     return techTree;
@@ -32,8 +32,6 @@ async function loadTech () {
         techTree[count] = new Technology(tech);
         count++;
     });
-
-    await makeAvailible();
 
     return `${count} technology loaded into tech tree...`
 };

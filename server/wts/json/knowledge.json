@@ -15,7 +15,7 @@
         "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund cutting edge projects in biology to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Agr1B"}, {"code": "Agr1C"}, {"code": "Bio1C"}, {"code": "Bio1E"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr1C"}, {"type": "Technology", "code": "Bio1C"}, {"type": "Technology", "code": "Bio1E"}]
     },
     {
         "name": "Biology II",
@@ -24,7 +24,7 @@
         "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund advanced biology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr2C"}, {"code": "Mil3B"}, {"code": "Bio2A"}, {"code": "Bio2B"}, {"code": "Bio2C"}, {"code": "Bio2D"}, {"code": "Bio3B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr2C"}, {"type": "Technology", "code": "Mil3B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Bio3B"}]
     },
     {
         "name": "Biology III",
@@ -33,7 +33,7 @@
         "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund revolutionary biology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr4A"}, {"code": "Bio3C"}]
+        "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio3C"}]
     },
     {
         "name": "Biology IV",
@@ -42,7 +42,7 @@
         "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund previously theoretical biology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr4B"}, {"code": "Agr4C"}, {"code": "Agr5A"}, {"code": "Mil5D"}, {"code": "Bio4A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}, {"type": "Technology", "code": "Agr5A"}, {"type": "Technology", "code": "Mil5D"}, {"type": "Technology", "code": "Bio4A"}]
     },
     {
         "name": "Biology V",
@@ -51,7 +51,7 @@
         "type": "Knowledge",
         "field": "Biology",
         "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Bio5C"}, {"code": "Bio5D"}]
+        "unlocks": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Bio5D"}]
     },
     {
         "name": "Computer Science",
@@ -69,7 +69,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Mil1D"}, {"code": "Mil2A"}, {"code": "Inf1H"}, {"code": "Inf1E"}, {"code": "Inf1F"}, {"code": "Inf2F"}]
+        "unlocks": [{"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Inf1H"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2F"}]
     },
     {
         "name": "Computer Science II",
@@ -78,7 +78,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund advanced computer science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr2B"}, {"code": "Mil2B"}, {"code": "Mil2C"}, {"code": "Mil2E"}, {"code": "Mil3C"}, {"code": "Mil3H"}, {"code": "Inf2G"}, {"code": "Inf2B"}, {"code": "Inf2C"}, {"code": "Inf3A"}, {"code": "Inf3G"}, {"code": "Bio2A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Bio2A"}]
     },
     {
         "name": "Computer Science III",
@@ -87,7 +87,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund revolutionary Computer Science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil3E"}, {"code": "Mil4G"}, {"code": "Mil4L"}, {"code": "Inf3B"}, {"code": "Inf3C"}, {"code": "Inf3D"}, {"code": "Inf3F"}, {"code": "Inf4D"}, {"code": "Bio3B"}]
+        "unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Bio3B"}]
     },
     {
         "name": "Computer Science IV",
@@ -96,7 +96,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund previously theoretical Computer Science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil4A"}, {"code": "Mil4D"}, {"code": "Mil4H"}, {"code": "Mil4I"}, {"code": "Mil5A"}, {"code": "Inf4C"}, {"code": "Inf5A"}, {"code": "Inf5C"}, {"code": "Bio4A"}, {"code": "Bio5C"}]
+        "unlocks": [{"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil4D"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Bio5C"}]
     },
     {
         "name": "Computer Science V",
@@ -105,7 +105,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund computer science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Mil5G"}, {"code": "Mil5H"}, {"code": "Inf5B"}, {"code": "Bio5C"}]
+        "unlocks": [{"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5C"}]
     },
     {
         "name": "Electronics",
@@ -123,7 +123,7 @@
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund cutting edge projects in electronics to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Agr1A"}, {"code": "Mil2A"}, {"code": "Mil2C"}, {"code": "Inf1E"}, {"code": "Inf2A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1A"}, {"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf2A"}]
     },
     {
         "name": "Electronics II",
@@ -132,7 +132,7 @@
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund advanced electronics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil2B"}, {"code": "Mil2E"}, {"code": "Mil3B"}, {"code": "Mil3C"}, {"code": "Inf2D"}, {"code": "Inf2E"}, {"code": "Inf3C"}, {"code": "Inf3D"}]
+        "unlocks": [{"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Mil3B"}, {"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Inf3D"}]
     },
     {
         "name": "Electronics III",
@@ -141,7 +141,7 @@
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund revolutionary electronics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr3A"}, {"code": "Mil3E"}, {"code": "Mil4A"}, {"code": "Mil4D"}, {"code": "Inf3F"}, {"code": "Inf4B"}, {"code": "Bio4B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr3A"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil4D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Inf4B"}, {"type": "Technology", "code": "Bio4B"}]
     },
     {
         "name": "Electronics IV",
@@ -150,7 +150,7 @@
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund previously theoretical electronics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil4K"}, {"code": "Mil4L"}, {"code": "Mil5A"}, {"code": "Mil5A"}, {"code": "Inf4D"}, {"code": "Inf4E"}, {"code": "Inf4F"}]
+        "unlocks": [{"type": "Technology", "code": "Mil4K"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4F"}]
     },
     {
         "name": "Electronics V",
@@ -159,7 +159,7 @@
         "type": "Knowledge",
         "field": "Electronics",
         "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Mil5E"}, {"code": "Mil5F"}, {"code": "Mil5G"}, {"code": "Inf5A"}]
+        "unlocks": [{"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Inf5A"}]
     },
     {
         "name": "Engineering",
@@ -177,7 +177,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Agr1A"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Mil1A"}, {"code": "Mil1B"}, {"code": "Inf1G"}, {"code": "Inf1A"}, {"code": "Inf1B"}, {"code": "Inf1C"}, {"code": "Inf1E"}, {"code": "Inf1F"}, {"code": "Inf2E"}, {"code": "Bio1E"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1A"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology","code": "Mil1B"}, {"type": "Technology", "code": "Inf1G"}, {"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Inf1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Bio1E"}]
     },
     {
         "name": "Engineering II",
@@ -186,7 +186,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund advanced engineering research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr2A"}, {"code": "Agr2B"}, {"code": "Agr2C"}, {"code": "Agr3B"}, {"code": "Mil2F"}, {"code": "Mil2G"}, {"code": "Mil2C"}, {"code": "Mil2D"}, {"code": "Mil2E"}, {"code": "Inf2G"}, {"code": "Inf2A"}, {"code": "Inf2C"}, {"code": "Inf3E"}, {"code": "Bio2A"}, {"code": "Bio2B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr2A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr2C"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Mil2F"}, {"type": "Technology", "code": "Mil2G"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2B"}]
     },
     {
         "name": "Engineering III",
@@ -195,7 +195,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund revolutionary engineering research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil3D"}, {"code": "Mil3H"}, {"code": "Mil4B"}, {"code": "Mil4M"}, {"code": "Inf3A"}, {"code": "Inf3C"}, {"code": "Inf3D"}, {"code": "Inf3F"}, {"code": "Bio3D"}]
+        "unlocks": [{"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Bio3D"}]
     },
     {
         "name": "Engineering IV",
@@ -204,7 +204,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund previously theoretical engineering research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr4A"}, {"code": "Agr4C"}, {"code": "Mil4C"}, {"code": "Mil4E"}, {"code": "Mil4I"}, {"code": "Mil4L"}, {"code": "Mil5B"}, {"code": "Mil5C"}, {"code": "Inf4A"}, {"code": "Inf4E"}, {"code": "Bio5D"}]
+        "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr4C"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Bio5D"}]
     },
     {
         "name": "Engineering V",
@@ -213,7 +213,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund engineering research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Agr5A"}, {"code": "Agr5B"}, {"code": "Mil5A"}, {"code": "Mil5H"}, {"code": "Inf5B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr5A"}, {"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Inf5B"}]
     },
     {
         "name": "Genetics",
@@ -231,7 +231,7 @@
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund cutting edge projects in genetics to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Agr1A"}, {"code": "Agr1C"}, {"code": "Bio1B"}, {"code": "Bio1C"}, {"code": "Bio1D"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1A"}, {"type": "Technology", "code": "Agr1C"}, {"type": "Technology", "code": "Bio1B"}, {"type": "Technology", "code": "Bio1C"}, {"type": "Technology", "code": "Bio1D"}]
     },
     {
         "name": "Genetics II",
@@ -240,7 +240,7 @@
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund advanced genetics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Bio2A"}, {"code": "Bio2C"}, {"code": "Bio2D"}, {}]
+        "unlocks": [{"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code": "Bio2D"}]
     },
     {
         "name": "Genetics III",
@@ -249,7 +249,7 @@
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund revolutionary genetics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr4A"}, {"code": "Bio3B"}, {"code": "Bio3A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio3B"}, {"type": "Technology", "code": "Bio3A"}]
     },
     {
         "name": "Genetics IV",
@@ -258,7 +258,7 @@
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund previously theoretical genetics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr4B"}, {"code": "Agr4C"}, {"code": "Mil5C"}, {"code": "Bio4B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}, {"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Bio4B"}]
     },
     {
         "name": "Genetics V",
@@ -267,7 +267,7 @@
         "type": "Knowledge",
         "field": "Genetics",
         "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Bio5A"}, {"code": "Bio5B"}]
+        "unlocks": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio5B"}]
     },
     {
         "name": "Material Science",
@@ -285,7 +285,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Agr1B"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Mil1A"}, {"code": "Mil1B"}, {"code": "Inf1C"}, {"code": "Inf1G"}, {"code": "Inf1A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology", "code": "Mil1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1G"}, {"type": "Technology", "code": "Inf1A"}]
     },
     {
         "name": "Material Science II",
@@ -294,7 +294,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund advanced material science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil2D"}, {"code": "Mil3A"}, {"code": "Inf2F"}, {"code": "Inf2C"}, {"code": "Bio3D"}]
+        "unlocks": [{"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Mil3A"}, {"type": "Technology", "code": "Inf2F"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Bio3D"}]
     },
     {
         "name": "Material Science III",
@@ -303,7 +303,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund revolutionary material science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr3B"}, {"code": "Mil3D"}, {"code": "Mil3F"}, {"code": "Mil3G"}, {"code": "Mil4D"}, {"code": "Mil4I"}, {"code": "Inf3G"}]
+        "unlocks": [{"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Mil3G"}, {"type": "Technology", "code": "Mil4D"}, {"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Inf3G"}]
     },
     {
         "name": "Material Science IV",
@@ -312,7 +312,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund previously theoretical material science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil4E"}, {"code": "Mil4F"}, {"code": "Mil4H"}, {"code": "Mil4J"}, {"code": "Mil4O"}, {"code": "Mil5D"}, {"code": "Mil5E"}, {"code": "Mil5F"}]
+        "unlocks": [{"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4J"}, {"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code": "Mil5D"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil5F"}]
     },
     {
         "name": "Material Science V",
@@ -321,7 +321,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund material science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Agr5A"}, {"code": "Agr5B"}, {"code": "Mil5H"}, {"code": "Mil5C"}]
+        "unlocks": [{"type": "Technology", "code": "Agr5A"}, {"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Mil5C"}]
     },
     {
         "name": "Physics",
@@ -339,7 +339,7 @@
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Mil2A"}, {"code": "Mil1C"}, {"code": "Mil1D"}, {"code": "Inf1B"}, {"code": "Inf1C"}, {"code": "Inf2A"}]
+        "unlocks": [{"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Inf1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf2A"}]
     },
     {
         "name": "Physics II",
@@ -348,7 +348,7 @@
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund advanced physics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil2G"}, {"code": "Mil3F"}, {"code": "Inf2B"}, {"code": "Inf2F"}]
+        "unlocks": [{"type": "Technology", "code": "Mil2G"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code": "Inf2F"}]
     },
     {
         "name": "Physics III",
@@ -357,7 +357,7 @@
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund revolutionary physics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil3D"}, {"code": "Mil3G"}, {"code": "Mil4E"}, {"code": "Inf3A"}, {"code": "Inf3B"}, {"code": "Inf3E"}, {"code": "Bio3A"}]
+        "unlocks": [{"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3G"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Bio3A"}]
     },
     {
         "name": "Physics IV",
@@ -366,7 +366,7 @@
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund previously theoretical physics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr5B"}, {"code": "Mil4A"}, {"code": "Mil4B"}, {"code": "Mil4G"}, {"code": "Mil4N"}, {"code": "Inf4A"}, {"code": "Inf4B"}, {"code": "Inf4G"}]
+        "unlocks": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4N"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf4B"}, {"type": "Technology", "code": "Inf4G"}]
     },
     {
         "name": "Physics V",
@@ -375,7 +375,7 @@
         "type": "Knowledge",
         "field": "Physics",
         "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Inf5C"}, {"code": "Mil5F"}]
+        "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Mil5F"}]
     },
     {
         "name": "Psychology",
@@ -393,7 +393,7 @@
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund cutting edge projects in psychology to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Inf1H"}, {"code": "Bio1D"}, {"code": "Bio1A"}]
+        "unlocks": [{"type": "Technology", "code": "Inf1H"}, {"type": "Technology", "code": "Bio1D"}, {"type": "Technology", "code": "Bio1A"}]
     },
     {
         "name": "Psychology II",
@@ -402,7 +402,7 @@
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund advanced psychology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr3C"}, {"code": "Mil3A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr3C"}, {"type": "Technology", "code": "Mil3A"}]
     },
     {
         "name": "Psychology III",
@@ -411,7 +411,7 @@
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund revolutionary psychology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Bio3C"}, {"code": "Bio3D"}]
+        "unlocks": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Bio3D"}]
     },
     {
         "name": "Psychology IV",
@@ -420,7 +420,7 @@
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund previously theoretical psychology research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Bio4B"}, {"code": "Bio5C"}, {"code": "Inf4C"}]
+        "unlocks": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Inf4C"}]
     },
     {
         "name": "Psychology V",
@@ -429,7 +429,7 @@
         "type": "Knowledge",
         "field": "Psychology",
         "desc": "Fund psychology research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Mil5B"}, {"code": "Mil5E"}, {"code": "Bio5A"}, {"code": "Inf5B"}]
+        "unlocks": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Inf5B"}]
     },
     {
         "name": "Social Science",
@@ -447,7 +447,7 @@
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund cutting edge projects in social science to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Inf1H"}, {"code": "Bio1D"}, {"code": "Bio1B"}, {"code": "Bio1A"}]
+        "unlocks": [{"type": "Technology", "code": "Inf1H"}, {"type": "Technology", "code": "Bio1D"}, {"type": "Technology", "code": "Bio1B"}, {"type": "Technology", "code": "Bio1A"}]
     },
     {
         "name": "Social Science II",
@@ -456,7 +456,7 @@
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund advanced social science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr2A"}, {"code": "Mil3B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr2A"}, {"type": "Technology", "code": "Mil3B"}]
     },
     {
         "name": "Social Science III",
@@ -465,7 +465,7 @@
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund revolutionary social science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Agr3C"}, {"code": "Mil3E"}, {"code": "Bio3C"}]
+        "unlocks": [{"type": "Technology", "code": "Agr3C"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Bio3C"}]
     },
     {
         "name": "Social Science IV",
@@ -474,7 +474,7 @@
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund previously theoretical social science research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil5B"}, {"code": "Mil4F"}, {"code": "Inf4F"}, {"code": "Bio5A"}]
+        "unlocks": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Bio5A"}]
     },
     {
         "name": "Social Science V",
@@ -483,7 +483,7 @@
         "type": "Knowledge",
         "field": "Social Science",
         "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Mil5G"}, {"code": "Bio5B"}, {"code": "Bio5D"}]
+        "unlocks": [{"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Bio5D"}]
     },
     {
         "name": "Quantum Mechanics",
@@ -501,7 +501,7 @@
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund cutting edge projects in quantum mechanics to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"code": "Mil1A"}]
+        "unlocks": [{"type": "Technology", "code": "Mil1A"}]
     },
     {
         "name": "Quantum Mechanics II",
@@ -510,7 +510,7 @@
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund advanced quantum mechanics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Inf3G"}, {"code": "Inf3E"}, {"code": "Inf3B"}, {"code": "Inf2D"}, {"code": "Inf2B"}]
+        "unlocks": [{"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Inf2B"}]
     },
     {
         "name": "Quantum Mechanics III",
@@ -519,7 +519,7 @@
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund revolutionary quantum mechanics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil4N"}, {"code": "Mil4H"}, {"code": "Mil4G"}, {"code": "Mil4F"}, {"code": "Mil3H"}, {"code": "Mil3C"}]
+        "unlocks": [{"type": "Technology", "code": "Mil4N"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Mil3C"}]
     },
     {
         "name": "Quantum Mechanics IV",
@@ -528,7 +528,7 @@
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund previously theoretical quantum mechanics research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"code": "Mil4P"}, {"code": "Mil4O"}, {"code": "Mil4M"}, {"code": "Mil4J"}]
+        "unlocks": [{"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Mil4J"}]
     },
     {
         "name": "Quantum Mechanics V",
@@ -537,6 +537,6 @@
         "type": "Knowledge",
         "field": "Quantum Mechanics",
         "desc": "Fund quantum mechanics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
-        "unlocks": [{"code": "Inf5C"}, {"code": "Inf5A"}]
+        "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf5A"}]
     }
 ]
