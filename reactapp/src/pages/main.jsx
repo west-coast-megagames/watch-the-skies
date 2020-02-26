@@ -99,10 +99,15 @@ class ContentArea extends Component {
                   <Route path="/ops" render={(props) => (
                     <Operations {...props}
                       team={ this.props.team }
+                      teams={ this.props.teams }
                       accounts={ this.props.accounts }
+                      zones={ this.props.zones }
+                      countries={ this.props.countries }
+                      facilities={ this.props.facilities }
+                      sites={ this.props.sites }
                       aircrafts={ this.props.aircrafts }
-                      sites={this.props.sites}
-                      alert={ this.props.addAlert } 
+                      military={ this.props.military }
+                      alert={ this.props.addAlert }
                     />
                   )} />
                   <Route path="/gov" render={(props) => (
@@ -111,15 +116,14 @@ class ContentArea extends Component {
                         teams = { this.props.teams }
                         accounts = { this.props.accounts }
                         alert={ this.props.addAlert }
-                        
                     />
                   )}/>
                   <Route path="/sci" render={(props) => (
                     <Science {...props}
                         sites={ this.props.sites }
-                        accounts = { this.props.accounts }
+                        accounts={ this.props.accounts }
                         facilities={ this.props.facilities }
-                        team ={ this.props.team }
+                        team={ this.props.team }
                         alert={ this.props.addAlert }
                         research={ this.props.research }
                     />

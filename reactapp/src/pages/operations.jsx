@@ -60,8 +60,15 @@ class Operations extends Component {
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
                         <GlobalOps
+                            team={ this.props.team }
+                            teams={ this.props.teams }
+                            accounts={ this.props.accounts }
+                            zones={ this.props.zones }
+                            countries={ this.props.countries }
+                            facilities={ this.props.facilities }
                             sites={ this.props.sites }
                             aircrafts={ this.props.sites }
+                            military={ this.props.military }
                             notify={ this.props.alert }
                         />
                     )}/>
