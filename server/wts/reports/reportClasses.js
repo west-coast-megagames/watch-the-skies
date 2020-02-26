@@ -4,12 +4,13 @@ const ResearchLog = require('../../models/logs/researchLog');
 function makeTimestamp() {
     const gameClock = require('../gameClock/gameClock')
     let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
-    let timestamp = { timestamp: { date: Date.now(), turn, phase, turnNum, clock: `${minutes}:${seconds}` }}
+    let timestamp = { timestamp: { turn, phase, turnNum, clock: `${minutes}:${seconds}` }}
     return timestamp;
 }
 
 class ResearchReport {
     constructor() {
+        this.date = ''
         this.team = {}
         this.lab = {}
         this.project = {}
