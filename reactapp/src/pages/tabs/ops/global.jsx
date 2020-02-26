@@ -14,7 +14,7 @@ class GlobalOps extends Component {
     render() { 
         return (
             <React.Fragment>
-                <h5>Military Operations</h5>
+                <h5>Global Military Operations</h5>
                 <Table
                     isTree
                     defaultExpandAllRows
@@ -39,7 +39,7 @@ class GlobalOps extends Component {
 
                     <Column flexGrow={1}>
                         <HeaderCell>Status</HeaderCell>
-                        <Cell dataKey="status" />
+                        <Cell dataKey="type" />
                     </Column>
 
                     <Column flexGrow={4}>
@@ -49,7 +49,7 @@ class GlobalOps extends Component {
 
                     <Column flexGrow={2}>
                         <HeaderCell>Mission Location</HeaderCell>
-                        <Cell dataKey="country" />
+                        <Cell dataKey="country.name" />
                     </Column>
                     <Column width={150} fixed="right">
                         <HeaderCell>Action</HeaderCell>
@@ -85,30 +85,25 @@ class GlobalOps extends Component {
     }
 
     loadTable() {
-        let data = this.props.zones.map(el => {
-            return {
-                _id: el._id,
-                name: el.zoneName,
-                code: el.zoneCode,
-                terror: el.terror,
-                type: 'zone',
-                children: this.props.military.map(unit => {
-                    if (el.zoneName === unit.zone.zoneName){
-                        return {
-                            _id: unit._id,
-                            type: 'unit',
-                            name: unit.name,
-                            info: `Health ${unit.stats.health}/${unit.stats.healthMax} | Attack: ${unit.stats.attack} | Defense: ${unit.stats.defense}`,
-                            status: unit.status,
-                            // team: unit.team.name,
-                            zone: unit.zone.ZoneName,
-                            country: unit.country.name
-                        }
-                    }
-                    return;
-                })
+        let data = []
+        let military = this.props.military;
+        let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
+        for (let zone of zones) {
+            zone.children = []
+            zone.name = zone.zoneName
+            zone.type = 'zone'
+            for (let unit of military) {
+                let checkZone = zone;
+                console.log(unit)
+                console.log(checkZone)
+                if (unit.zone.zoneName === checkZone.zoneName) {
+                    unit.type = 'unit'
+                    unit.info = `Health ${unit.stats.health}/${unit.stats.healthMax} | Attack: ${unit.stats.attack} | Defense: ${unit.stats.defense}`;
+                    zone.children.push(unit);
+                }
             }
-        })
+            data.push(zone);
+        }
         this.setState({ data })
     };
 }

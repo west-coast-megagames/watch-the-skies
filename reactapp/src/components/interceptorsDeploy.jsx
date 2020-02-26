@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import { Drawer, Button, InputPicker, FlexboxGrid } from 'rsuite'
+import { Drawer, Button, InputPicker, FlexboxGrid, Alert } from 'rsuite'
 import { gameServer } from '../config';
 import axios from 'axios';
 
 let missions = [
-  { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false},
-  { value: "Escort", label: "Escort | Protect target aircraft" , aircraft: true, site: false},
-  { value: "Patrol", label: "Patrol | Protect target site", aircraft: false, site: true},
-  { value: "Transport", label: "Transport | Take cargo to/from target site", aircraft: false, site: true},
-  { value: "Recon Aircraft", label: "Recon | Gather info about target aircraft", aircraft: true, site: false},
-  { value: "Recon Site", label: "Recon | Gather info about target site", aircraft: false, site: true},
-  { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true}
+  { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false, type: 'Fighter' },
+  { value: "Escort", label: "Escort | Protect target aircraft" , aircraft: true, site: false, type: 'Fighter'},
+  { value: "Patrol", label: "Patrol | Protect target site", aircraft: false, site: true, type: 'Fighter'},
+  { value: "Transport", label: "Transport | Take cargo to/from target site", aircraft: false, site: true, type: 'Transport'},
+  { value: "Recon Aircraft", label: "Recon | Gather info about target aircraft", aircraft: true, site: false },
+  { value: "Recon Site", label: "Recon | Gather info about target site", aircraft: false, site: true, },
+  { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true, type: 'Decoy'}
 ]
 class InterceptorDeployForm extends Component {
 
@@ -94,7 +94,7 @@ class InterceptorDeployForm extends Component {
           </FlexboxGrid.Item>
           </FlexboxGrid>
           <br /><br /><br />
-          { model === 'Site' && this.state.interceptor !== undefined && this.state.groundMission &&
+          { model === 'Site' && this.state.interceptor !== undefined && this.state.mission === 'transport' &&
             <React.Fragment>
             <b>Ground Mission - Mission Perameters</b>
             <hr />
@@ -129,9 +129,9 @@ class InterceptorDeployForm extends Component {
     try {
       console.log(stats)
       let response = await axios.put(`${gameServer}api/intercept`, stats);    
-      this.props.alert({type: 'success', title: 'Interceptor Launch...', body: response.data })
+      Alert.success(response.data)
     } catch (err) {
-      this.props.alert({type: 'error', title: 'Launch Failed', body: `${err.data} - ${err.message}` })
+      Alert.error(`${err.data} - ${err.message}`)
     };
 
   }
