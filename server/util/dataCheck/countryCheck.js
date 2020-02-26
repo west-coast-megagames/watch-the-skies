@@ -13,6 +13,11 @@ async function chkCountry() {
     if (!country.populated("zone")) {  
       logger.error(`Zone link missing for Country ${country.name}`);
     }
+/*
+    //check borderedBy array of IDs
+    for ()
+*/
+    
   }
 };
 
