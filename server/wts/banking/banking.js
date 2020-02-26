@@ -49,7 +49,7 @@ async function deposit (account, amount, note) {
             clock: `${minutes}:${seconds}`
         },
         team: account.team,
-        transaction: 'deposit',
+        transaction: 'Deposit',
         account: account.name,
         amount,
         note
@@ -85,7 +85,7 @@ async function withdrawal (account, amount, note) {
             clock: `${minutes}:${seconds}`
         },
         team: account.team,
-        transaction: 'withdrawal',
+        transaction: 'Withdrawal',
         account: account.name,
         amount,
         note
