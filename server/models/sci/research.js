@@ -6,6 +6,11 @@ const UnlockSchema = new Schema({
     type: { type: String }
   });
 
+const BreakthroughSchema = new Schema({
+  code: { type: String },
+  type: { type: String }
+});
+
 const ResearchSchema = new Schema({
     model: { type: String, default: 'Research'},
     name: { type: String},
@@ -13,7 +18,8 @@ const ResearchSchema = new Schema({
     level: { type: Number },
     prereq: [String],
     desc: { type: String },
-    unlocks: [UnlockSchema]
+    unlocks: [UnlockSchema],
+    breakthrough: [BreakthroughSchema]
 });
 
 module.exports = Research = mongoose.model('Research', ResearchSchema, 'research');
