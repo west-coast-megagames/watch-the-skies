@@ -62,9 +62,9 @@ function interceptLogging (finalReport, attacker, defender) {
 async function interceptLog (log) {
     const gameClock = require('../gameClock/gameClock')
     let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
-    let timestamp = { timestamp: { date: Date.now(), turn, phase, turnNum, clock: `${minutes}:${seconds}` } }
-
-    let newLog = new IntercptLog({...timestamp,...log});
+    let timestamp = { timestamp: { turn, phase, turnNum, clock: `${minutes}:${seconds}` } }
+    let date = Date.now()
+    let newLog = new IntercptLog({date,...timestamp,...log});
 
     newLog = await newLog.save();
 

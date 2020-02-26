@@ -71,7 +71,7 @@ async function calculateProgress(lab) {
         report.rolls = progressInfo.rolls
         report.outcomes = progressInfo.outcomes
         report.stats.breakthroughCount = progressInfo.breakthroughs
-
+        report.date = Date.now();
         await report.saveReport();
      
         lab.funding = 0;
