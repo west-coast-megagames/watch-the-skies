@@ -15,6 +15,7 @@ import Chat from './chat';
 import News from './news';
 import Registration from './../components/registration';
 import Models from './models';
+import TerrorMap from './terror';
 
 const iconStyles = {
   width: 56,
@@ -71,10 +72,11 @@ class ContentArea extends Component {
                   <Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
                   <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
                   <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
-                  <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
+                  {/*<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>*/}
                   {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
+                  <Nav.Item eventKey="8" to="/map" componentClass={NavLink} icon={<Icon icon="map" />}>For Patrick!</Nav.Item>
                   {this.props.team.name === 'Control Team' ? <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}}}
                 </Nav>
               </Sidenav.Body>
@@ -157,6 +159,9 @@ class ContentArea extends Component {
                     <Models {...props}
                         alert = { this.props.addAlert } 
                     />
+                  )}/>
+                  <Route path="/map" render={(props) => (
+                    <TerrorMap />
                   )}/>
                   <Route path="/control" render={() => (
                     <h1>Does this thing work?!</h1>
