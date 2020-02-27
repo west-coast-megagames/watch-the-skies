@@ -93,14 +93,17 @@ class App extends Component {
           <MainContainer
             login={ this.state.login }
             user={ this.state.user }
-            teams={ this.state.teams }
             team={ this.state.team }
+            teams={ this.state.teams }
+            zones={ this.state.zones }
+            countries={ this.state.countries }
             sites={ this.state.sites }
+            facilities={ this.state.facilities }
+            aircrafts={ this.state.aircrafts }
+            military={ this.state.military }
             articles={ this.state.articles }
             research={ this.state.research }
-            facilities={ this.state.facilities }
             accounts={ this.state.accounts }
-            aircrafts={ this.state.aircrafts }
             addAlert={ this.addAlert }
             handleLogin={ this.handleLogin }
             handleSignout={ this.handleSignout }

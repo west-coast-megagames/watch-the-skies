@@ -14,7 +14,8 @@
 "dob" : "1997-12-08",
 "gender" : "Female",
 "discord" : "Rawr",
-"teamCode" : "USA"
+"teamCode" : "USA",
+"roles": ["Player"]
 },
 {
 "loadType" : "user",
@@ -32,7 +33,8 @@
 "dob" : "1992-08-03",
 "gender" : "Non-Binary",
 "discord" : "Pretty",
-"teamCode" : "TUK"
+"teamCode" : "TUK",
+"roles": ["Player"]
  },
  { 
 "loadType" : "user",
@@ -50,7 +52,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "RZA"
+"teamCode" : "RZA",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -68,7 +71,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "RFD"
+"teamCode" : "RFD",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -86,7 +90,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "JPN"
+"teamCode" : "JPN",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -104,7 +109,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "IRN"
+"teamCode" : "IRN",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -122,7 +128,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "IND"
+"teamCode" : "IND",
+"roles": ["Player"]
 },
 {
 "loadType" : "user",
@@ -140,7 +147,8 @@
 "dob" : "1994-03-12",
 "gender" : "Non-Binary",
 "discord" : "Free",
-"teamCode" : "TFR"
+"teamCode" : "TFR",
+"roles": ["Player"]
 },
 {
 "loadType" : "user",
@@ -158,7 +166,8 @@
 "dob" : "1994-03-12",
 "gender" : "Non-Binary",
 "discord" : "Free",
-"teamCode" : "EPT"
+"teamCode" : "EPT",
+"roles": ["Player"]
 },
 {
 "loadType" : "user",
@@ -176,7 +185,8 @@
 "dob" : "2013-10-03",
 "gender" : "Male",
 "discord" : "Jungle",
-"teamCode" : "PRC"
+"teamCode" : "PRC",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -194,7 +204,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "BRZ"
+"teamCode" : "BRZ",
+"roles": ["Player"]
 },
 { 
 "loadType" : "user",
@@ -212,7 +223,8 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "AUS"
+"teamCode" : "AUS",
+"roles": ["Player"]
 },
 
 {
@@ -231,7 +243,8 @@
 "dob" : "1987-09-06",
 "gender" : "Non-Binary",
 "discord" : "Federation",
-"teamCode" : "FFG"
+"teamCode" : "FFG",
+"roles": ["Player"]
 },
 {
 "loadType" : "user",
@@ -249,7 +262,8 @@
 "dob" : "1986-12-03",
 "gender" : "Male",
 "discord" : "FroBoyX#9805",
-"teamCode" : "USA"
+"teamCode" : "USA",
+"roles": ["Admin", "Control", "Player"]
 },
 {
     "loadType" : "user",
@@ -267,7 +281,8 @@
     "dob" : "1974-12-29",
     "gender" : "Male",
     "discord" : "illuminus#9763",
-    "teamCode" : "USA"
+    "teamCode" : "USA",
+    "roles": ["Control", "Player"]
 },
 {
     "loadType" : "user",
@@ -285,7 +300,8 @@
     "dob" : "1966-10-15",
     "gender" : "Male",
     "discord" : "eshen#4992",
-    "teamCode" : "TUK"
+    "teamCode" : "TUK",
+    "roles": ["Control", "Player"]
 },
 {
     "loadType" : "user",
@@ -303,7 +319,8 @@
     "dob" : "1975-04-05",
     "gender" : "Male",
     "discord" : "Drewwww#8011",
-    "teamCode" : "TUK"
+    "teamCode" : "TUK",
+    "roles": ["Control", "Player"]
 },
 {
     "loadType" : "user",
@@ -321,6 +338,7 @@
     "dob" : "1974-12-29",
     "gender" : "Male",
     "discord" : "control#9763",
-    "teamCode" : "TCN"
+    "teamCode" : "TCN",
+    "roles": ["Control", "Player"]
 }
 ]

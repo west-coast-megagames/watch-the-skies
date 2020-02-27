@@ -210,7 +210,7 @@ class ResearchLabs extends Component {
 		return(
 			<div>
 				<Table
-					height={400}
+					autoHeight
 					rowHeight={50}
 					data={this.state.labs}
 					>

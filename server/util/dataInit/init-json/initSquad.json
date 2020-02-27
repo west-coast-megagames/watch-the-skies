@@ -1,0 +1,152 @@
+[
+{
+    "model" : "Squad",
+    "name" : "FFG Raid Squad 1",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Raid"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Raid Squad 2",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Raid"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Raid Squad 3",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Raid"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Assault Squad 1",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Assault"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Assault Squad 2",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Assault"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Assault Squad 3",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Assault"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Infiltration Squad 1",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Infiltration"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Infiltration Squad 2",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Infiltration"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Infiltration Squad 3",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Infiltration"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Envoy Squad 1",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Envoy"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Envoy Squad 2",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Envoy"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Envoy Squad 3",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Envoy"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Science Squad 1",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Science"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Science Squad 2",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Science"
+},
+{
+    "model" : "Squad",
+    "name" : "FFG Science Squad 3",
+    "team" : "FFG",
+    "country" : "F1",
+    "homeBase" : "FFGMA",
+    "gear" : [  "Modern Tech Vehicles", "Corps" ],
+    "training" : "Corps",
+    "type" : "Science"
+}
+]

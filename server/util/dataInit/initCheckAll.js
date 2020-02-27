@@ -1,29 +1,33 @@
+const runZoneCheck = require('../dataCheck/zoneCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
-/*
-const runLoad = require('../dataInit/initRefLoad');
-const runTeamLoad = require('../dataInit/teamLoad');
-const runCountryLoad = require('../dataInit/countryLoad');
-//const runInterceptorLoad = require('../dataInit/interceptorLoad');
-const runAircraftLoad = require('../dataInit/aircraftLoad');
-const runUserLoad = require('../dataInit/userLoad');
-const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
-const runCitySiteLoad = require('../dataInit/citySiteLoad');
-const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
-const runAccountLoad = require('../dataInit/accountLoad');
-const runMilitaryLoad = require('../dataInit/militaryLoad');
-*/
+const runFacilityCheck = require('../dataCheck/facilityCheck');
+
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 async function fullInitCheck(selStr){
   
   switch(selStr){
+
     case 'All':
     case 'RefData':
+      let zoneCheckDone = await runZoneCheck();   // check zone records
+      logger.info("Zone Check Done:", zoneCheckDone);
+
       let countryCheckDone = await runCountryCheck();   // check country records
-      logger.debug("Country Check Done:", countryCheckDone);
+      logger.info("Country Check Done:", countryCheckDone);
       if (selStr != 'All') {
         break;
       }
+
+    case 'All':
+    case 'Facility':
+      let facilityCheckDone = await runFacilityCheck();   // check facility records
+      logger.info("Facility Check Done:", facilityCheckDone);
+
+      if (selStr != 'All') {
+        break;
+      }
+
 /*
     case 'All':
     case 'Team':

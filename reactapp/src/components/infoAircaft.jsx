@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Timeline, Alert, Panel, Whisper, Popover, Modal, SelectPicker } from 'rsuite'
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Timeline, Alert, Panel, Whisper, Popover, SelectPicker } from 'rsuite'
 import axios from 'axios'
 import { gameServer } from '../config'
 

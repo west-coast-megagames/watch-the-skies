@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { Table, Badge, Tag, Progress } from 'rsuite';
+import { Table, Tag, Progress, Checkbox, Button } from 'rsuite';
 
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 
 class Knowledge extends Component {
     state = { 
-        data: []
+        data: [],
+        checkedKeys: [],
+        cost: 0
     }
 
     componentDidMount() {
@@ -37,20 +39,50 @@ class Knowledge extends Component {
         return data;
     }
     
-    render() { 
+    render() {
+        const { data, checkedKeys } = this.state;
+
+        let checked = false;
+        let indeterminate = false;
+    
+        if (checkedKeys.length === data.length) {
+          checked = true;
+        } else if (checkedKeys.length === 0) {
+          checked = false;
+        } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
+          indeterminate = true;
+        }
         
         return ( 
             <div>
+                <h5 style={{display: 'inline'}}>Research Field Funding</h5><Button>Submit funding</Button>
+                <hr style={{margin: 10}} />
                 <Table
                     rowKey="field"
                     autoHeight
-                    data={this.state.data}
+                    data={data}
                     >
+                    <Column width={50} align="center">
+                        <HeaderCell style={{ padding: 0 }}>
+                        <div style={{ lineHeight: '40px' }}>
+                            <Checkbox
+                            inline
+                            checked={checked}
+                            indeterminate={indeterminate}
+                            onChange={this.handleCheckAll}
+                            />
+                        </div>
+                        </HeaderCell>
+                        <CheckCell
+                            dataKey="field"
+                            checkedKeys={checkedKeys}
+                            onChange={this.handleCheck}
+                        />
+                    </Column>
                     <Column width={200}>
                         <HeaderCell>Field</HeaderCell>
                         <Cell dataKey="field" />
                     </Column>
-                
                     <Column align='center' width={100}>
                         <HeaderCell>Global Level</HeaderCell>
                         <Cell>{rowData => {
@@ -60,17 +92,14 @@ class Knowledge extends Component {
                         )}}</Cell>
                     </Column>
 
-                    <Column width={300}>
-                        <HeaderCell>Global Progress Towards next Level</HeaderCell>
+                    <Column flexGrow={1}>
+                        <HeaderCell>Global Progress Towards next Level <Tag color="green" style={{float:'right'}}>Funding Cost: $M{this.state.cost}</Tag></HeaderCell>
                         <Cell dataKey="research.progress">{rowData => {
-                            let totalProgress = 0;
-                            // for (let [value] of rowData.research.progress) {
-                            //     totalProgress += value;
-                            // };
+                            let totalProgress = rowData.research.totalProgress;
                             let percent = totalProgress / this.props.techCost[rowData.research.level] * 100
                             console.log(percent);
                             return(
-                                <Progress.Line percent={5} />
+                                <Progress.Line percent={totalProgress} />
                         )}}</Cell>
 
                     </Column>
@@ -78,6 +107,37 @@ class Knowledge extends Component {
             </div>
         );
     }
+
+    handleCheckAll = (value, checked) => {
+        const checkedKeys = checked ? this.state.data.map(item => item.field) : [];
+        this.setState({
+          checkedKeys
+        });
+      }
+
+    handleCheck = (value, checked) => {
+        const { checkedKeys } = this.state;
+        const nextCheckedKeys = checked
+          ? [...checkedKeys, value]
+          : checkedKeys.filter(item => item !== value);
+    
+        this.setState({
+          checkedKeys: nextCheckedKeys
+        });
+    }
 }
+
+const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
+    <Cell {...props} style={{ padding: 0 }}>
+      <div style={{ lineHeight: '46px' }}>
+        <Checkbox
+          value={rowData[dataKey]}
+          inline
+          onChange={onChange}
+          checked={checkedKeys.some(item => item === rowData[dataKey])}
+        />
+      </div>
+    </Cell>
+  );
 
 export default Knowledge;

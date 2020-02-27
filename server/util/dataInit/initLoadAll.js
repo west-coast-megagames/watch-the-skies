@@ -1,7 +1,6 @@
 const runLoad = require('../dataInit/initRefLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
-//const runInterceptorLoad = require('../dataInit/interceptorLoad');
 const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runBaseSiteLoad = require('../dataInit/baseSiteLoad');
@@ -9,11 +8,22 @@ const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
+const runSquadLoad = require('../dataInit/squadLoad');
+const runDropAll = require('../dataInit/initDropAll');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 async function fullInit(selStr){
   
   switch(selStr){
+
+    case 'All':
+    case 'DropAll':
+      let dropAllDone = await runDropAll(true);   // drop all tables
+      logger.debug("Drop All Done:", dropAllDone);
+      if (selStr != 'All') {
+        break;
+      }
+
     case 'All':
     case 'RefData':
       let initDone = await runLoad(true);   // load simple reference tables/documents from refdata.json
@@ -63,16 +73,6 @@ async function fullInit(selStr){
         break;
       }
 
-    /*
-    case 'All':
-    case 'Interceptor':
-      let interceptorDone = await runInterceptorLoad(true);  // load expanded interceptor fields
-      logger.debug("Interceptor Load Done: ", interceptorDone);
-      if (selStr != 'All') {
-        break;
-      }
-    */
-
     case 'All':   
     case 'Aircraft':
       let aircraftDone = await runAircraftLoad(true);  // load expanded Aircraft fields
@@ -105,6 +105,13 @@ async function fullInit(selStr){
         break;
       }
 
+    case 'All':
+    case 'Squad':  
+      let squadDone = await runSquadLoad(true);   // load expanded Squad fields initSquad.json with gear
+      logger.debug("Squad Load Done: ", squadDone);
+      if (selStr != 'All') {
+        break;
+      }      
 
     if (selStr = 'All') break;
 

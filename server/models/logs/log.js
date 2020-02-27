@@ -3,8 +3,8 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 
 const LogSchema = new Schema({
+    date: { type: Date },
     timestamp: {
-        date: { type: Date, default: Date.now() },
         turn: { type: String },
         phase: { type: String },
         turnNum: { type: Number },
