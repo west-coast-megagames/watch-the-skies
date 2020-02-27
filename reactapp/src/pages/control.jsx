@@ -78,11 +78,11 @@ class Control extends Component {
                                 <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
                                     Load Knowledge
                                 </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
-                                    Seed Knowledge
-                                </MDBBtn>
                                 <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
                                     Load Tech
+                                </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
+                                    Seed Knowledge
                                 </MDBBtn>
                             </MDBBtnGroup>
                         </div>

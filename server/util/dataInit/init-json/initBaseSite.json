@@ -177,7 +177,7 @@
 },
 {"loadType": "baseSite",
 "name" : "BRZ Base Alpha",
-"code" : "BZBA",
+"code" : "BRBA",
 "baseDefenses" : false,
 "facilities" :  [
     { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
@@ -223,5 +223,21 @@
     "longDecimal": 64.35380,
     "parentCode1" : "AQ",
     "parentCode2" : "FFG"
-    }
+    },
+    {"loadType": "baseSite",
+        "name" : "TCN Base Alpha",
+        "code" : "TCNBA",
+        "baseDefenses" : false,
+        "facilities" :  [
+            { "type" : "Factory", "name" : "TCN Engineering A-1", "capacity": 1},
+            { "type" : "Lab", "name" : "TCN Lab  A-1", "capacity": 1},
+            { "type" : "Hanger" , "name" : "TCN Hangar  A-1", "capacity": 5}
+        ],
+        "latDMS": "3 3 56.75 S",
+        "longDMS": "59 54 12.48 W",
+        "latDecimal": -3.065764,
+        "longDecimal": -59.903469,
+        "parentCode1" : "MX",
+        "parentCode2" : "TCN"
+        }    
 ]

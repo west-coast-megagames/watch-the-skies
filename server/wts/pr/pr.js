@@ -5,7 +5,7 @@ const { deposit } = require('../banking/banking');
 
 async function updatePR() {
     const gameClock = require('../gameClock/gameClock');
-    const { Team } = require('../../models/team');
+    const { Team } = require('../../models/team/team');
     const { Account } = require('../../models/gov/account');
     let { turnNum } = gameClock.getTimeRemaining();
 

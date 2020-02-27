@@ -17,7 +17,7 @@ const bcrypt = require('bcryptjs');
 
 // User Model - Using Mongoose Model
 const { User, validateUser, validateName, validateAddr } = require('../../models/user');
-const { Team, validateTeam } = require('../../models/team');
+const { Team, validateTeam } = require('../../models/team/team');
 
 const app = express();
 
@@ -79,6 +79,7 @@ async function loadUser(iData){
        
         user.name.first = iData.name.first;
         user.name.last  = iData.name.last;
+        user.roles      = iData.roles;
 
         //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
@@ -135,6 +136,7 @@ async function loadUser(iData){
       user.gender      = iData.gender;
       user.discord     = iData.discord;
       user.dob         = convDate;
+      user.roles       = iData.roles;
 
       user.password = await bcrypt.hash(iData.password, salt);
 

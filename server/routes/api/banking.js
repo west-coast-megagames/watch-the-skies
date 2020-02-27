@@ -7,7 +7,7 @@ const { logger } = require('../../middleware/winston');
 
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/gov/account');
-const { Team } = require('../../models/team');
+const { Team } = require('../../models/team/team');
 const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts
@@ -93,7 +93,8 @@ router.put('/accounts', async function (req, res) {
     res.json(accounts);
 });
 
-router.put('/transfer', async function (req, res){
+router.patch('/delAutoTransfer', async function (req, res){
+    routeDebugger('Attempting to delete auto transaction...')
     console.log(req.body)
     let { account_id, transfer_id } = req.body;
     let account = await Account.findOne({ _id: account_id });
@@ -106,6 +107,7 @@ router.put('/transfer', async function (req, res){
     account.markModified('autoTransfers');
     await account.save();
     res.status(200).send('Automatic transfer deleted!');
+    nexusEvent.emit('updateAccounts')
 });
 
 
@@ -114,10 +116,10 @@ router.put('/transfer', async function (req, res){
 // @access  Public
 router.post('/withdrawal', async function (req, res) {
     let { account_id, amount, note } = req.body;
-    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
     let account = await Account.findById(account_id);
     await banking.withdrawal(account, amount, note);
     nexusEvent.emit('updateAccounts')
+    res.status(200).send(`You have submitted a ${amount} withdrawal due to ${note}`);
 })
 
 module.exports = router;

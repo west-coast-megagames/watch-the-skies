@@ -29,8 +29,8 @@ class Contacts extends Component {
         const { account } = this.props
         const disabled = account.balance < 1;
 
-        if (count === 0)
-            return <h4>No radar contacts decending from or flying in high orbit</h4>
+        //if (count === 0)
+        //    return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (
             
             <React.Fragment>

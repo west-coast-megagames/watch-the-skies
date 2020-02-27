@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
     routeDebugger('Looking up all facilities...');
     let facilities = await Facility.find()
       .populate('site', 'name type')
-      .populate('team', 'shortName name')
+      .populate('team', 'shortName name sciRate')
       .populate('research')
       .populate('equipment');
 
@@ -68,7 +68,7 @@ router.put('/research', async function (req, res) {
   
     facility = await facility.save();
     routeDebugger(facility)
-    res.status(200).json(facility);
+    res.status(200).send(`Research goals for ${facility.name} updated!`);
   }
 });
 

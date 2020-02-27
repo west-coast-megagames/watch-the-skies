@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
 
 import Budget from './tabs/gov/budget';
+import Timeline from '../components/timeline';
 
 class Governance extends Component {
     constructor() {
@@ -34,10 +35,14 @@ class Governance extends Component {
                     <Nav.Item eventKey="unrest" to={`${url}/unrest`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFistRaised} />}> Unrest</Nav.Item>
                 </Nav>
             </Header>
-            <Content style={{ paddingLeft: 20 }}>
+            <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        <h5>No dashboard has been coded for the Governance Module!</h5>
+                        <Timeline 
+                            teams={ this.props.teams }
+                            team={ this.props.team }
+                        />
+
                     )}/>
                     <Route path={`${url}/budget`}  render={() => (
                         <Budget

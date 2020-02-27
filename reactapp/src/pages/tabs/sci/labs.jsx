@@ -34,42 +34,42 @@ class Labs extends Component {
                     id: 'h2Physics',
                     labelName: 'Physics',
                     children: physicsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 },
                 {
                     id: 'h2SocialScience',
                     labelName: 'Social Science',
                     children: socialScienceKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 },
                 {
                     id: 'h2Biology',
                     labelName: 'Biology',
                     children: biologyKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 },
                 {
                     id: 'h2Engineering',
                     labelName: 'Engineering',
                     children: engineeringKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 },
                 {
                     id: 'h2Electronics',
                     labelName: 'Electronics',
                     children: electronicsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 },
                 {
                     id: 'h2Genetics',
                     labelName: 'Genetics',
                     children: geneticsKnowledge.map(index => {
-                        return {id:index._id, labelName:index.name, level:index.level, progress:index.status.progress  };
+                        return {id:index._id, labelName:index.name, level:index.level, progress:index.progress  };
                     })
                 }
               ]
@@ -149,7 +149,7 @@ class Labs extends Component {
 //                            <tr>
 //                                <td>{index.field}</td>
 //                                <td>{index.level}</td>
-//                                <td>{index.status.progress}</td>
+//                                <td>{index.progress}</td>
 //                                <td>{index.desc}</td>
 //                            </tr>
 //                        ))}

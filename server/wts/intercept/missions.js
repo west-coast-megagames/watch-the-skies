@@ -42,7 +42,7 @@ async function start (aircraft, target, mission) {
             transportMissions = [...transportMissions, ...newTransport]; // Adds Transport to be resolved
             missionDebugger(transportMissions);
             break;
-        case (mission === 'Recon'):
+        case (mission === 'Recon Site' || mission === 'Recon Airship'):
             let newRecon = [{ aircraft, target }]; // Saves the Recon combination
             reconMissions = [...ReconMissions, ...newRecon]; // Adds Recon to be resolved
             missionDebugger(reconMissions);
@@ -63,7 +63,7 @@ async function start (aircraft, target, mission) {
 
 // Function for resolving missions when the Team Phase ends.
 async function resolveMissions () {
-    missionDebugger('Resolving Missions...')
+    missionDebugger('Resolving Missions...');
 
     await runInterceptions();
     await runTransports();
@@ -84,7 +84,7 @@ async function runInterceptions () {
         let aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems');
         let target = await Aircraft.findById(interception.target).populate('systems');
         missionDebugger(`${aircraft.name} vs. ${target.name}`);
-        let atkReport = `${aircraft.name} is attempting to engaged a contact in ${aircraft.country.name} airspace.`;
+        let atkReport = `${aircraft.name} is attempting to engage a contact in ${aircraft.country.name} airspace.`;
         
         let escortCheck = await checkEscort(interception.target, atkReport)
 
@@ -193,7 +193,7 @@ async function checkEscort(target, atkReport) {
         }
     };
     target = await Aircraft.findById(target).populate('systems').populate('country');
-    let defReport = `${target.name} engaged over ${target.country.name} airspace.`;
+    let defReport = `${target.name} was engaged over ${target.country.name} airspace.`;
     return { target, atkReport, defReport };
 }
 

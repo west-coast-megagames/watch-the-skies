@@ -2,8 +2,8 @@ const bankDebugging = require('debug')('app:bankingSystem'); // Debug console lo
 
 const transactionLog = require('../../models/logs/transactionLog') // WTS Game log function
 
-const { Team } = require('../../models/team'); // Mongoose Model - Team
-const { Interceptor } = require('../../models/ops/interceptor') // Mongoose Model - Interceptor
+const { Team } = require('../../models/team/team'); // Mongoose Model - Team
+const { Aircraft } = require('../../models/ops/aircraft') // Mongoose Model - Aircraft
 const nexusEvent = require('../../startup/events'); // Import of server event carrior
 
 // FUNCTION - transfer [async]
@@ -36,19 +36,20 @@ async function deposit (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     let { getTimeRemaining } = require('../gameClock/gameClock')
-    let { turn, phase, turnNum } = getTimeRemaining();
+    let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
     account = trackTransaction(account, amount, 'deposit');
 
     let log = new transactionLog({
+        date: Date.now(),
         timestamp: {
-            date: Date.now(),
             turn,
             phase,
-            turnNum
+            turnNum,
+            clock: `${minutes}:${seconds}`
         },
         team: account.team,
-        transaction: 'deposit',
+        transaction: 'Deposit',
         account: account.name,
         amount,
         note
@@ -71,19 +72,20 @@ async function withdrawal (account, amount, note) {
     bankDebugging(`Reason: ${note}`);
 
     const { getTimeRemaining } = require('../gameClock/gameClock')
-    let { turn, phase, turnNum } = getTimeRemaining();
+    let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
     account = trackTransaction(account, amount, 'withdrawal');
     
     let log = new transactionLog({
+        date: Date.now(),
         timestamp: {
-            date: Date.now(),
             turn,
             phase,
-            turnNum
+            turnNum,
+            clock: `${minutes}:${seconds}`
         },
         team: account.team,
-        transaction: 'withdrawal',
+        transaction: 'Withdrawal',
         account: account.name,
         amount,
         note

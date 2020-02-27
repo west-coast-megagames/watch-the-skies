@@ -82,7 +82,7 @@ router.patch('/load/tech', async function (req, res) {
 // @Desc    Load all knowledge fields from JSON files
 // @access  Public
 router.patch('/load/knowledge', async function (req, res) {
-    let response = await loadKnowledge();
+    let response = await loadKnowledge(); // Loads all knowledge into the server
     nexusEvent.emit('updateResearch');
     return res.status(200).send(response);
 });
@@ -91,7 +91,7 @@ router.patch('/load/knowledge', async function (req, res) {
 // @Desc    Load all knowledge fields from JSON files
 // @access  Public
 router.patch('/load/knowledge/seed', async function (req, res) {
-    await knowledgeSeed();
+    let response = await knowledgeSeed();
     nexusEvent.emit('updateResearch');
     return res.status(200).send('We did it, such a seed!')
 });
@@ -105,14 +105,17 @@ router.delete('/', async function (req, res) {
     return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`)
 });
 
-// @route   put api/research/progress
+// @route   put api/research/knowledge
 // @Desc    Puts in a technology for RESEARCH
 // @access  Public
-router.put('/progress', async function (req, res) {
-    let { tech_id, funding } = req.body;
-    let progress = await science.calculateProgress(lab_id);
+router.put('/knowledge', async function (req, res) {
+    routeDebugger(req.body);
+    // let progress = await science.calculateProgress(lab_id);
+    
 
-    return res.status(200).send(progress);
+    return res.status(200).send(`You did it, welcome to reserch!`);
 });
+
+
 
 module.exports = router;

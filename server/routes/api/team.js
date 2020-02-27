@@ -7,7 +7,7 @@ const supportsColor = require('supports-color');
 const { logger } = require('../../middleware/winston');
 
 // Interceptor Model - Using Mongoose Model
-const { Team, validateTeam, getPR, getTeam, getSciRate } = require('../../models/team');
+const { Team, validateTeam, getPR, getTeam, getSciRate } = require('../../models/team/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams

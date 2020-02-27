@@ -1,7 +1,7 @@
 const salvageDebugger = require('debug')('app:intercept - salvage');
 
 async function generateSalvage (system, status) {
-    const { Team } = require('../../models/team');
+    const { Team } = require('../../models/team/team');
     if (status === 'Wreckage'|| system.status.damaged === true) {
         let team = await Team.findOne({ teamType: 'C' });
         system.status.salvage = true;

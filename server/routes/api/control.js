@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 const nexusEvent = require('../../startup/events');
 
-// Interceptor Model - Using Mongoose Model
-const { Interceptor, validateInterceptor } = require('../../models/ops/interceptor');
-const { Aircraft, updateStats } = require('../../models/ops/aircraft');
+// Aircraft Model - Using Mongoose Model
+const { Aircraft, updateStats, validateAircraft } = require('../../models/ops/aircraft');
 const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
-const { Team } = require('../../models/team'); 
+const { Team } = require('../../models/team/team'); 
 const { BaseSite } = require('../../models/sites/baseSite');
 
 // @route   PATCH api/control/alien/deploy
@@ -17,14 +16,14 @@ const { BaseSite } = require('../../models/sites/baseSite');
 // @access  Public
 router.patch('/alien/deploy', async function (req, res) {
     let count = 0;
-    let interceptors = await Interceptor.find().populate('team');
-    interceptors = interceptors.filter(i => i.team.teamType === 'A')
-    for await (const interceptor of interceptors) {
-        console.log(interceptor);
-        if (interceptor.status.deployed === false) {
+    let aircrafts = await Aircraft.find().populate('team');
+    aircrafts = aircrafts.filter(i => i.team.teamType === 'A')
+    for await (const aircraft of aircrafts) {
+        console.log(aircraft);
+        if (aircraft.status.deployed === false) {
             count++
-            interceptor.status.deployed = true;
-            await interceptor.save();    
+            aircraft.status.deployed = true;
+            await aircraft.save();    
         }
     }
     if (count === 0) {
@@ -38,17 +37,17 @@ router.patch('/alien/deploy', async function (req, res) {
 
 
 // @route   PATCH api/control/alien/return
-// @desc    Update all interceptors to be not be deployed
+// @desc    Update all aircrafts to be not be deployed
 // @access  Public
 router.patch('/alien/return', async function (req, res) {
     let count = 0;
-    let interceptors = await Interceptor.find().populate('team');
-    interceptors = interceptors.filter(i => i.team.teamType === 'A')
-    for await (const interceptor of interceptors) {
-        if (interceptor.status.deployed === true) {
+    let aircrafts = await Aircraft.find().populate('team');
+    aircrafts = aircrafts.filter(i => i.team.teamType === 'A')
+    for await (const aircraft of aircrafts) {
+        if (aircraft.status.deployed === true) {
         count++
-        interceptor.status.deployed = false;
-        await interceptor.save();
+        aircraft.status.deployed = false;
+        await aircraft.save();
         }
     }
     if (count === 0) {
@@ -60,17 +59,17 @@ router.patch('/alien/return', async function (req, res) {
 });
 
 // @route   PATCH api/control/resethull
-// @desc    Update all interceptors to max health
+// @desc    Update all aircrafts to max health
 // @access  Public
 router.patch('/resethull', async function (req, res) {
-    for await (const interceptor of Interceptor.find()) {    
-        console.log(`${interceptor.name} has ${interceptor.stats.hull} hull points`);
-        interceptor.stats.hull = interceptor.stats.hullMax;
-        interceptor.status.destroyed = false;
-        console.log(`${interceptor.name} now has ${interceptor.stats.hull} hull points`);
-        await interceptor.save();
+    for await (const aircraft of Aircraft.find()) {    
+        console.log(`${aircraft.name} has ${aircraft.stats.hull} hull points`);
+        aircraft.stats.hull = aircraft.stats.hullMax;
+        aircraft.status.destroyed = false;
+        console.log(`${aircraft.name} now has ${aircraft.stats.hull} hull points`);
+        await aircraft.save();
     }
-    res.send("Interceptors succesfully reset!");
+    res.send("Aircrafts succesfully reset!");
     nexusEvent.emit('updateAircrafts');
 });
 
@@ -105,7 +104,7 @@ router.post('/build', async function (req, res) {
   let aircraft = req.body;
     
   // does one already exist with this name?
-  let docs = await Interceptor.find({ name: aircraft.name });
+  let docs = await Aircraft.find({ name: aircraft.name });
   if (!docs.length) {
     // no ... add
     aircraft.systems = [];
@@ -114,7 +113,7 @@ router.post('/build', async function (req, res) {
       if (sysRef) {
         newSystem = await new System(sysRef);
         await newSystem.save(((err, newSystem) => {
-          if (err) return console.error(`Post Build Interceptor System Save Error: ${err}`);
+          if (err) return console.error(`Post Build Aircraft System Save Error: ${err}`);
         }));
         console.log(newSystem);
         aircraft.systems.push(newSystem._id);
@@ -126,7 +125,7 @@ router.post('/build', async function (req, res) {
     if (aircraft.zoneCode && aircraft.zoneCode != ""){
       let zone = await Zone.findOne({ zoneCode: aircraft.zoneCode });  
       if (!zone) {
-        console.log("Interceptor Build Zone Error, New Interceptor:", req.body.name, " Zone: ", req.body.zoneCode);
+        console.log("Aircraft Build Zone Error, New Aircraft:", req.body.name, " Zone: ", req.body.zoneCode);
       } else {
         newZone_Id = zone._id;
       }
@@ -135,7 +134,7 @@ router.post('/build', async function (req, res) {
     if (aircraft.teamCode && aircraft.teamCode != ""){
       let team = await Team.findOne({ teamCode: aircraft.teamCode });  
       if (!team) {
-        console.log("Interceptor Build Team Error, New Interceptor:", req.body.name, " Team: ", req.body.teamCode);
+        console.log("Aircraft Build Team Error, New Aircraft:", req.body.name, " Team: ", req.body.teamCode);
       } else {
         aircraft.team = team._id;
       }
@@ -144,7 +143,7 @@ router.post('/build', async function (req, res) {
     if (aircraft.countryCode && aircraft.countryCode != ""){
       let country = await Country.findOne({ code: aircraft.countryCode });  
       if (!country) {
-        console.log("Interceptor Build Country Error, New Interceptor:", req.body.name, " Country: ", req.body.countryCode);
+        console.log("Aircraft Build Country Error, New Aircraft:", req.body.name, " Country: ", req.body.countryCode);
       } else {
         newCountry_Id = country._id;
       }
@@ -153,44 +152,44 @@ router.post('/build', async function (req, res) {
     if (aircraft.baseCode && aircraft.baseCode != "" && aircraft.baseCode != "undefined" ){
       let baseSite = await BaseSite.findOne({ siteCode: aircraft.baseCode });  
       if (!baseSite) {
-        console.log("Interceptor Build Base Error, New Interceptor:", req.body.name, " Base: ", req.body.baseCode);
+        console.log("Aircraft Build Base Error, New Aircraft:", req.body.name, " Base: ", req.body.baseCode);
       } else {
         aircraft.baseOrig = baseSite._id;
       }
     }      
 
-    let { error } = validateInterceptor(aircraft); 
+    let { error } = validateAircraft(aircraft); 
     if (error) {
-      console.log("New Interceptor Validate Error", aircraft.name, error.message);
+      console.log("New Aircraft Validate Error", aircraft.name, error.message);
       // remove associated systems records
       for (let j = 0; j < aircraft.systems.length; ++j ) {
         sysId = aircraft.systems[j];
         let systemDel = await System.findByIdAndRemove(sysId);
         if (systemDel = null) {
-          console.log(`The Interceptor System with the ID ${sysId} was not found!`);
+          console.log(`The Aircraft System with the ID ${sysId} was not found!`);
         }
       }      
-      return res.status(400).send(`Interceptor Validate Error ${aircraft.name} Error: ${error.message}`);   
+      return res.status(400).send(`Aircraft Validate Error ${aircraft.name} Error: ${error.message}`);   
     }
     
-    let newInterceptor = new Interceptor(aircraft);
-    newInterceptor.country = newCountry_Id;
-    newInterceptor.zone    = newZone_Id;
-    newInterceptor = await newInterceptor.save();
-    newInterceptor = await Interceptor.findById(newInterceptor._id)
+    let newAircraft = new Aircraft(aircraft);
+    newAircraft.country = newCountry_Id;
+    newAircraft.zone    = newZone_Id;
+    newAircraft = await newAircraft.save();
+    newAircraft = await Aircraft.findById(newAircraft._id)
       .populate('team', 'shortName')
       .populate('systems', 'name category')
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('base', 'baseName');
-    await updateStats(newInterceptor._id);
+    await updateStats(newAircraft._id);
     
-    //console.log(newInterceptor);
+    //console.log(newAircraft);
    
-    res.status(200).send(newInterceptor);
+    res.status(200).send(newAircraft);
   } else {
-    console.log(`Interceptor already exists (control post build): ${aircraft.name}`);
-    res.status(400).send(`Interceptor ${aircraft.name} already exists!`);        
+    console.log(`Aircraft already exists (control post build): ${aircraft.name}`);
+    res.status(400).send(`Aircraft ${aircraft.name} already exists!`);        
   }
 });
 

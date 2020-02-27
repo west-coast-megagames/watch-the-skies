@@ -8,12 +8,12 @@ class SocketServer {
     saveTeam (team, client) {
         client.team = team;
         this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1, client);
-        console.log(this.connections);
+        //console.log(this.connections);
     }
     saveUser (user, client) {
         client.user = user;
         this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1, client);
-        console.log(this.connections);
+        //console.log(this.connections);
     }
 
     delClient (client) {

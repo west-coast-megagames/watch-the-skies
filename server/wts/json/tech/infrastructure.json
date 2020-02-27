@@ -1,53 +1,397 @@
 [
 {   
-    "_original": "Distributed Network Capabilities",
-    "name": "Distributed Network Capabilities",
-    "level": 1,
-    "prereq": ["Material Science I", "Computer Science I"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops a framework for large-scale implementation of distributed network computing.",
-    "unlocks": [
-        { "type": "Equipment", "name": "Destributed Research Network" },
-        { "type": "Equipment", "name": "Destributed Military Network" },
-        { "type": "Technology", "name": "Flexible Fabrication" }
-    ]
-},
-{   
-    "_original": "Improved Composites",
     "name": "Improved Composites",
+    "code": "Inf1G",
     "level": 1,
     "prereq": ["Material Science I", "Engineering I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new compositing techniques for stronger metal alloys.",
+    "effects": { },
     "unlocks": [
         { "type": "System", "name": "Durasteel Hull Plating" },
         { "type": "Technology", "name": "Composite Reinforced Manufacture" }
     ]
+    ,
+    "breakthrough": []
 },
 {   
-    "_original": "Improved Disaster Response",
     "name": "Improved Disaster Response",
+    "code": "Inf1H",
     "level": 1,
     "prereq": ["Computer Science I", "Social Science I", "Psychology I"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new fabrication techniques.",
+    "effects": { },
     "unlocks": [
         { "type": "Facility", "name": "Disaster Relief Center" }
-    ]
+    ],
+    "breakthrough": []
 },
 {   
-    "_original": "Flexible Fabrication",
     "name": "Flexible Fabrication",
+    "code": "Inf2G",
     "level": 2,
     "prereq": ["Computer Science II", "Engineering II", "Distributed Network Capabilities"],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new fabrication techniques.",
+    "effects": { },
     "unlocks": [
         { "type": "Equipment", "name": "Flexible Fabricator" }
-    ]
+    ],
+    "breakthrough": []
+},
+
+
+
+{   
+    "name": "Improved Cathodes",
+    "code": "Inf1A",
+    "level": 1,
+    "prereq": ["Material Science I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Increased battery capacity through cathode manipulation.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf2A"}]
+},
+{   
+    "name": "Basic Geoengineering",
+    "code": "Inf1B",
+    "level": 1,
+    "prereq": ["Physics I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code" : "Inf2C"}, {"type": "Technology", "code" : "Agr3C"}]
+},
+{   
+    "name": "Improved Composites",
+    "code": "Inf1C",
+    "level": 1,
+    "prereq": ["Material Science I", "Physics I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Developments new composite materials for future construction.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code" : "Inf2D"}, {"type": "Technology", "code" : "Mil2D"}]
+},
+{   
+    "name": "AI Foundations",
+    "code": "Inf1D",
+    "level": 1,
+    "prereq": ["Computer Science I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Basic Artificial Intelligence functionality and machine learning.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code" : "Mil2B"}, {"type": "Technology", "code" : "Mil2E"}]
+},
+{   
+    "name": "Distributed Network Capabilities",
+    "code": "Inf1E",
+    "level": 1,
+    "prereq": ["Electronics I", "Computer Science I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Framework for large-scale implementation of faster than fiber connections.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code" : "Mil2D"}, {"type": "Technology", "code" : "Mil2E"}]
+},
+{   
+    "name": "Improved Recycling",
+    "code": "Inf1F",
+    "level": 1,
+    "prereq": ["Computer Science I", "Engineering I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Improves national recycling capacity.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf2F"}]
+},
+{   
+    "name": "Improved Power Grid",
+    "code": "Inf2A",
+    "level": 2,
+    "prereq": ["Physics I", "Electronics I", "Engineering II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Improves your national power grid infrastructure.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil3C"}, {"type": "Technology", "code" : "Mil2E"}]
+},
+{   
+    "name": "Lightwave Restructuring",
+    "code": "Inf2B",
+    "level": 2,
+    "prereq": ["Physics II", "Computer Science II", "Quantum Mechanics II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Restructuring of light waves and photons to reduce amplitude and effect of global warming.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code" : "Inf3E"}, {"type": "Technology", "code" : "Mil3H"}]
+},
+{   
+    "name": "Advanced Geoengineering",
+    "code": "Inf2C",
+    "level": 2,
+    "prereq": ["Material Science II", "Computer Science II", "Engineering II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code" : "Inf3E"}, {"type": "Technology", "code" : "Inf4F"}]
+},
+{   
+    "name": "Nanoscaling",
+    "code": "Inf2D",
+    "level": 2,
+    "prereq": ["Physical III", "Quantum Mechanics II", "Electronics II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Shrinking matter of inanimate objects down to near nano levels. Limitations occur based on object's density and inherent resistances.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Inf3C"}, {"type": "Technology", "code" : "Mil3A"}]
+},
+{   
+    "name": "Holographic Projection",
+    "code": "Inf2E",
+    "level": 2,
+    "prereq": ["Engineering I", "Electronics II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Physical emittance of an interference pattern which uses diffraction to reproduce a three-dimensional light field.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4D"}]
+},
+{   
+    "name": "Material Deconstruction",
+    "code": "Inf2F",
+    "level": 2,
+    "prereq": ["Material Science II", "Physics II", "Computer Science I"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "The break down of wastes into their constituent materials for re-use.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil4E"}]
+},
+{   
+    "name": "Advanced Power Distribution",
+    "code": "Inf3A",
+    "level": 3,
+    "prereq": ["Engineering III", "Physics III", "Computer Science II"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Improves and shields the national power grid infrastructure.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil4A"}, {"type": "Technology", "code" : "Mil3H"}]
+},
+{   
+    "name": "Minor Weather Alterations",
+    "code": "Inf3B",
+    "level": 3,
+    "prereq": ["Quantum Mechanics II", "Physics III", "Computer Science III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Allows raising or lowering of temperature by a few degrees or wind by a few MPH over a small area.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4B"}]
+},
+{   
+    "name": "Nanorobotics",
+    "code": "Inf3C",
+    "level": 3,
+    "prereq": ["Electronics II", "Engineering III", "Computer Science III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code" : "Mil4J"}]
+},
+{   
+    "name": "Advanced AI",
+    "code": "Inf3D",
+    "level": 3,
+    "prereq": ["Electronics II", "Engineering III", "Computer Science III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Advanced Artificial Intelligence at a larger scale. Computers will think and optimize its own components as necessary.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code" : "Mil3E"}, {"type": "Technology", "code" : "Mil4A"}]
+},
+{   
+    "name": "Angular Momentum Optics",
+    "code": "Inf3E",
+    "level": 3,
+    "prereq": ["Quantum Mechanics II", "Engineering II", "Physics III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Photon twisting in wireless medium - allows lossless wirefree communication.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Inf3F"}, {"type": "Technology", "code" : "Mil3C"}]
+},
+{   
+    "name": "Smart Systems",
+    "code": "Inf3F",
+    "level": 3,
+    "prereq": ["Computer Science III", "Engineering III", "Electronics III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Deploys integrated smart systems.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code" : "Inf5B"}]
+},
+{   
+    "name": "Red Mercury Mining",
+    "code": "Inf3G",
+    "level": 3,
+    "prereq": ["Computer Science II", "Quantum Mechanics II", "Material Science III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops Red Mercury mining capability.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code" : "Mil4P"}]
+},
+{   
+    "name": "Fusion Reactor Prototyping",
+    "code": "Inf4A",
+    "level": 4,
+    "prereq": ["Physics IV", "Quantum Mechanics III", "Engineering IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops viable fusion reactor technology for Fusion Power.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code" : "Mil4M"}]
+},
+{   
+    "name": "Compact Weather Systems",
+    "code": "Inf4B",
+    "level": 4,
+    "prereq": ["Physics IV", "Quantum Mechanics III", "Electronics III"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Weather changes over a small area not usually lasting very long. Allows rain to fall in areas of drought and sunshine in areas where needed. Severe changes to weather not possible.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": []
+},
+{   
+    "name": "Advanced Neural Networks",
+    "code": "Inf4C",
+    "level": 4,
+    "prereq": ["Psychology IV", "Computer Science IV", "Electronics IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Basic supercomputing with machine optimization. Used on a large network scale, mimicking the human brain.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code" : "Inf5B"}, {"type": "Technology", "code" : "Bio5D"}]
+},
+{   
+    "name": "Advanced Projection Systems",
+    "code": "Inf4D",
+    "level": 4,
+    "prereq": ["Engineering IV", "Computer Science III", "Electronics IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Pinnacle systems of light emitting technology, allowing realistic viewpoints and interaction with individuals.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code" : "Mil4H"}]
+},
+{   
+    "name": "Plasmatic Mining",
+    "code": "Inf4E",
+    "level": 4,
+    "prereq": ["Quantum Mechanics III", "Electronics IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops Plasma mining capability.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code" : "Mil4J"}]
+},
+{   
+    "name": "Arcology",
+    "code": "Inf4F",
+    "level": 4,
+    "prereq": ["Social Science IV", "Electronics IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Megastructures for densely populated, ecologically low-impact human habitats, reducing human impact on natural resources.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code" : "Mil4P"}, {"type": "Technology", "code" : "Agr5A"}]
+},
+{   
+    "name": "Stratospheric Architecture",
+    "code": "Inf4G",
+    "level": 4,
+    "prereq": ["Physics IV"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Buildings or structures built to climb into the stratosphere.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": []
+},
+{   
+    "name": "FTL Communication",
+    "code": "Inf5A",
+    "level": 5,
+    "prereq": ["Quantum Mechanics V", "Computer Science IV", "Electronics V"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Faster Than Light communication for deep space interaction.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": [{"type": "Technology", "code": "Inf5B"}]
+},
+{   
+    "name": "Sentient Supercomputing",
+    "code": "Inf5B",
+    "level": 5,
+    "prereq": ["Psychology V", "Computer Science V", "Engineering V"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops and deploys a fully sentient distributed AI network.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": []
+},
+{   
+    "name": "Inanimate Quantum Teleportation",
+    "code": "Inf5C",
+    "level": 5,
+    "prereq": ["Physics V", "Computer Science IV", "Quantum Mechanics V"],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "A process in which quantum information (e.g. the exact state of an atom or photon) can be transmitted (exactly, in principle) from one location to another.",
+    "effects": { },
+    "unlocks": [ ],
+    "breakthrough": []
 }
 ]

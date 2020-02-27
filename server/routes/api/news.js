@@ -49,7 +49,8 @@ router.post('/', async function (req, res) {
     let timestamp = {
         turn: gameTime.turn,
         phase: gameTime.phase,
-        date: Date.now()
+        date: Date.now(),
+        clock: `${gameTime.minutes}:${gameTime.seconds}`
     }
     
     let article = new Article(

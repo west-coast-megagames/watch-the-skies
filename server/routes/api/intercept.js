@@ -4,8 +4,8 @@ const routeDebugger = require('debug')('app:routes');
 const airMission = require('../../wts/intercept/missions');
 const nexusEvent = require('../../startup/events');
 
-// Interceptor Model - Using Mongoose Model
-const { Interceptor } = require('../../models/ops/interceptor');
+// Aircraft Model - Using Mongoose Model
+const { Aircraft } = require('../../models/ops/aircraft');
 const { Site } = require('../../models/sites/site');
 
 // @route   PUT api/intercept   ... update
@@ -16,10 +16,10 @@ router.put('/', async (req, res) => {
     let { aircraft, target, mission } = req.body;
     routeDebugger(req.body)
 
-    aircraft = await Interceptor.findById(aircraft).populate('systems');
+    aircraft = await Aircraft.findById(aircraft).populate('systems');
 
     if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
-        target = await Interceptor.findById(target).populate('systems');
+        target = await Aircraft.findById(target).populate('systems');
         aircraft.site = target.site;
     } else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
         target = await Site.findById(target);

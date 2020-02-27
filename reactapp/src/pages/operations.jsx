@@ -1,21 +1,22 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content } from 'rsuite';
+import { Nav, Container, Header, Content, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import Interception from './tabs/interceptions';
+import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
-
-import map from '../img/worldMap_mergedRegions.svg'
-
+import GlobalOps from './tabs/ops/global';
+import nukeSound from '../audio/Nuclear_Launch.ogg'
 class Operations extends Component {
     constructor() {
         super();
         this.state = {
           tab: 'dashboard',
-          account: {}
+          account: {},
+          audio: new Audio(nukeSound)
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.setAccount = this.setAccount.bind(this);
+        this.playTrack = this.playTrack.bind(this);
     }
 
     componentDidMount() {
@@ -61,20 +62,40 @@ class Operations extends Component {
                         /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <img
-                            src={map}
-                            alt='Terror Map'
+                        <GlobalOps
+                            team={ this.props.team }
+                            teams={ this.props.teams }
+                            accounts={ this.props.accounts }
+                            zones={ this.props.zones }
+                            countries={ this.props.countries }
+                            facilities={ this.props.facilities }
+                            sites={ this.props.sites }
+                            aircrafts={ this.props.sites }
+                            military={ this.props.military }
+                            notify={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
-                        <h5>The nuclear system for the Operations Module has not been created!</h5>
+                        <div style={{verticalAlign:'middle', position: 'relative'}}>
+                            <Button block size='lg' color='red' onClick={() => this.playTrack()} >Launch Nuke!</Button>
+                        </div>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
             </Content>
         </Container>
          );
-     }
+    }
+
+    // Audio trigger code...
+    playTrack = () => {
+        const { audio } = this.state;
+        audio.type = 'audio/ogg';
+        audio.loop = false;
+        audio.play();
+    }
  }
+
+
 
 export default Operations;

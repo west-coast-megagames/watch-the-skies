@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Interceptors from '../../components/interceptorsTable';
-import Contacts from '../../components/contactsTable';
-import InterceptorDeployForm from '../../components/interceptorsDeploy';
-import InterceptorInfo from '../../components/interceptorInfo';
+import Interceptors from '../../../components/interceptorsTable';
+import Contacts from '../../../components/contactsTable';
+import InterceptorDeployForm from '../../../components/interceptorsDeploy';
+import InfoAircaft from '../../../components/infoAircaft';
 
 class Interception extends Component {
 
@@ -49,7 +49,7 @@ class Interception extends Component {
             onClick={ this.showInfo }
           />
 
-          { this.state.showInfo ? <InterceptorInfo
+          { this.state.showInfo ? <InfoAircaft
             aircraft={ this.state.aircraft }
             show={ this.state.showInfo }
             onClick={ this.showInfo }

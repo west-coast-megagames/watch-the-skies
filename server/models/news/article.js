@@ -4,17 +4,22 @@ const Joi = require('joi');
 
 const ArticleSchema = new Schema({
   model: { type: String, default: 'Article'},
-  agency: { type: String, uppercase: true, required: true },
+  publisher: { type: Schema.Types.ObjectId, ref: 'Team'},
+  date: { type: Date },
   timestamp: {
-    date: { type: Date, default: Date.now() },
-    turn: { type: String, default: "Test Turn"},
-    phase: { type: String, default: "Test Phase"},
+    turn: { type: String },
+    phase: { type: String },
+    turnNum: { type: Number },
+    clock: { type: String } 
   },
-  location: { type: String, required: true },
+  location: { type: Schema.Types.ObjectId, ref: 'Site'},
+  dateline: { type: String },
   headline: { type: String, required: true, minlength: 1, maxlength: 100 },
-  body: {type: String, required: true, minlength: 0, maxlength: 1000},
+  body: { type: String, required: true, minlength: 0, maxlength: 1000 },
+  likes: { type: Number },
+  tags: { type: String },
   imageSrc: { type: String }
-});
+  });
 
 let Article = mongoose.model('article', ArticleSchema);
 

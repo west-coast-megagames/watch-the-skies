@@ -71,6 +71,7 @@ class TransferForm extends Component {
     render() {
         let accounts = this.props.accounts;
         let max = this.state.account !== undefined ? this.state.account.balance : 0;
+        let { schedule } = this.state.transfer
         
         if (this.props.accounts.length <= 0)
         return <h4>No accounts available for transfer, select a team to use the application!</h4>
@@ -106,7 +107,7 @@ class TransferForm extends Component {
                     <Input style={{ width: 150 }} placeholder="Note" type="text" id='note' value={this.state.transfer.note} onChange={(value) => this.handleChange(value, 'note')}/>
                 </FormGroup>
 
-                <ButtonGroup><Button onClick={this.handleSubmit}>Submit</Button><Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
+                <ButtonGroup><Button onClick={this.handleSubmit}>{schedule === true ? "Submit Scheduled Transfer" : "Submit Transfer"}</Button><Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
             </Form>
 
             // <form className="form-inline" onSubmit={this.handleSubmit}>
