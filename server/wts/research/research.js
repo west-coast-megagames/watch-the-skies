@@ -12,6 +12,8 @@ const { Facility } = require('../../models/gov/facility/facility');
 const { Team } = require('../../models/team/team');
 const { ResearchReport } = require('../reports/reportClasses');
 
+
+
 async function startResearch () {
     for await (let lab of await Facility.find({ type: 'Lab' })) {
         if (lab.research.length < 1) {
@@ -27,67 +29,67 @@ async function startResearch () {
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
 async function calculateProgress(lab) {
-    let report = new ResearchReport
-    try {
-        console.log(lab._id); // Future await request to get lab information from DB
-        let tech = await Research.findById(lab.research[0]).populate('team'); // Imports the specific Research object by _id
-        report.progress.startingProgress = tech.progress;
-        researchDebugger(tech)
-        let team = await Team.findById(tech.team);
-        report.project = tech._id;
-        report.lab = lab._id;
-        // researchDebugger(lab)
-        // researchDebugger(team);
-        // let test = team.sciRate;
-        // researchDebugger(`Team Sci Rate: ${test} - type: ${typeof test}`);
-        // researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
-        let sciRate = team.sciRate + lab.sciRate
-        let sciBonus = lab.bonus
-        researchDebugger(`Science Rate: ${sciRate}`)
-        researchDebugger(typeof sciRate)
-        let progressInfo = await researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
+    researchDebugger(`${lab.name} has begun conducting research.`)
+    for await (let project of lab.research) {
+        let report = new ResearchReport
+        try {
+            let tech = await Research.findById(project).populate('team'); // Imports the specific Research object by _id
+            researchDebugger(`Current Progress: ${tech.progress}`)
+            report.progress.startingProgress = tech.progress; 
+            researchDebugger(tech)
+            let team = await Team.findById(lab.team);
+            report.project = tech._id;
+            report.lab = lab._id;
+            researchDebugger(lab)
+            researchDebugger(team);
+            let test = team.sciRate;
+            researchDebugger(`Team Sci Rate: ${test} - type: ${typeof test}`);
+            researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
+            let sciRate = team.sciRate + lab.sciRate
+            let sciBonus = lab.bonus
+            researchDebugger(`Science Rate: ${sciRate}`)
+            let progressInfo = await researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
-        tech.progress += progressInfo.progress; // Adds progress to the current Research
+            tech.progress += progressInfo.progress; // Adds progress to the current Research
 
-        tech.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
+            tech.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
-        if (tech.status.completed === true) {
-            researchDebugger(`${tech.name} completed!`)
-            tech = await completeTech(tech);
-            lab.research = [];
-        } else {
-            researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
+            if (tech.status.completed === true) {
+                researchDebugger(`${tech.name} completed!`)
+                tech = await completeTech(tech);
+                lab.research = [];
+            } else {
+                researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
+            }
+
+            report.team = team._id;
+            report.lab = lab._id;
+            report.project = tech._id;
+            report.funding = lab.funding;
+            report.progress.endingProgress = tech.progress;
+            report.stats.sciRate = sciRate;
+            report.stats.sciBonus = sciBonus;
+            report.stats.completed = tech.status.completed;
+            report.stats.finalMultiplyer = progressInfo.multiplyer
+            report.rolls = progressInfo.rolls
+            report.outcomes = progressInfo.outcomes
+            report.stats.breakthroughCount = progressInfo.breakthroughs
+            report.date = Date.now();
+            await report.saveReport();
+        
+            lab.funding = 0;
+            lab = await lab.save() // Saves the modified lab
+            tech = await tech.save(); // Saves the current project to the database
+
+            // researchDebugger(lab);
+            // researchDebugger(tech);
+
+        } catch (err) {
+            logger.error(err)
+            researchDebugger(`CalcProgress Error: ${err}`);
         }
-
-        report.team = team._id;
-        report.lab = lab._id;
-        report.project = tech._id;
-        report.funding = lab.funding;
-        report.progress.endingProgress = tech.progress;
-        report.stats.sciRate = sciRate;
-        report.stats.sciBonus = sciBonus;
-        report.stats.completed = tech.status.completed;
-        report.stats.finalMultiplyer = progressInfo.multiplyer
-        report.rolls = progressInfo.rolls
-        report.outcomes = progressInfo.outcomes
-        report.stats.breakthroughCount = progressInfo.breakthroughs
-        report.date = Date.now();
-        await report.saveReport();
-     
-        lab.funding = 0;
-        lab = await lab.save() // Saves the modified lab
-        tech = await tech.save(); // Saves the current project to the database
-
-        researchDebugger(lab);
-        researchDebugger(tech);
-
-        return tech;
-
-    } catch (err) {
-        logger.error(err)
-        researchDebugger(`CalcProgress Error: ${err}`);
-        return
     }
+    return;
 };
 
 // Calculates the multiplier for the current research project and returns the progress
