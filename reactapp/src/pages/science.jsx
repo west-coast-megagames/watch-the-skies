@@ -105,12 +105,12 @@ class Science extends Component {
                             techCost={this.state.techCost}
                             fundingCost={this.state.fundingCost}
                         />
+                        <br />
                         <Knowledge    
                             team={ this.props.team }
                             allResearch={this.props.research}
                             techCost={this.state.techCost}
-                            //accounts={ this.props.accounts }
-                            //alert={ this.props.alert }
+                            accounts={this.props.accounts}
                         />
                         </React.Fragment>
                     )}/>
