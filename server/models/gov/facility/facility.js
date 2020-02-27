@@ -17,4 +17,13 @@ const FacilitySchema = new Schema({
 
 let Facility = mongoose.model('Facility', FacilitySchema);
 
-module.exports = { Facility }
+function validateFacility(facility) {
+
+  const schema = {
+    name: Joi.string().min(2).max(50).required()
+  };
+  
+  return Joi.validate(facility, schema, { "allowUnknown": true });
+}
+
+module.exports = { Facility, validateFacility }

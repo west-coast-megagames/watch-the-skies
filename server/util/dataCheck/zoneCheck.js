@@ -26,6 +26,11 @@ async function chkZone() {
     if (countryCount < 1){
       logger.info(`No Countries Found In Zone ${zone.zoneCode} ${zone.zoneName}`);
     }
+
+    let { error } = await validateZone(zone); 
+    if (error) {
+      logger.error(`Zone Validation Error For ${zone.zoneCode} ${zone.zoneName} Error: ${error.details[0].message}`);
+    }
   }
 };
 

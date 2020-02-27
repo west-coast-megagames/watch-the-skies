@@ -1,5 +1,5 @@
 // Facility Model - Using Mongoose Model
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility, validateFacility } = require('../../models/gov/facility/facility');
 
 const facilityLoadDebugger = require('debug')('app:facilityLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
@@ -18,7 +18,11 @@ async function chkFacility() {
         logger.error(`Site link missing for Facility ${facility.name} ${facility._id}`);
     }    
 
-
+    let { error } = await validateFacility(facility); 
+    if (error) {
+      logger.error(`Facility Validation Error For ${facility.name} Error: ${error.details[0].message}`);
+    }
+    
   }
 };
 
