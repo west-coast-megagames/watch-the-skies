@@ -1,19 +1,22 @@
 import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content } from 'rsuite';
+import { Nav, Container, Header, Content, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
+import nukeSound from '../audio/Nuclear_Launch.ogg'
 class Operations extends Component {
     constructor() {
         super();
         this.state = {
           tab: 'dashboard',
-          account: {}
+          account: {},
+          audio: new Audio(nukeSound)
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.setAccount = this.setAccount.bind(this);
+        this.playTrack = this.playTrack.bind(this);
     }
 
     componentDidMount() {
@@ -73,14 +76,26 @@ class Operations extends Component {
                         />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
-                        <h5>The nuclear has been cut for March 14th and won't be in the box...</h5>
+                        <div style={{verticalAlign:'middle', position: 'relative'}}>
+                            <Button block size='lg' color='red' onClick={() => this.playTrack()} >Launch Nuke!</Button>
+                        </div>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
             </Content>
         </Container>
          );
-     }
+    }
+
+    // Audio trigger code...
+    playTrack = () => {
+        const { audio } = this.state;
+        audio.type = 'audio/ogg';
+        audio.loop = false;
+        audio.play();
+    }
  }
+
+
 
 export default Operations;
