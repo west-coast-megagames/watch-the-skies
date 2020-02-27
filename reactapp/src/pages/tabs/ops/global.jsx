@@ -32,8 +32,8 @@ class GlobalOps extends Component {
                         return icon;
                     }}
                     >
-                    <Column width={200}>
-                        <HeaderCell>Category</HeaderCell>
+                    <Column width={400}>
+                        <HeaderCell>Name</HeaderCell>
                         <Cell dataKey="name" />
                     </Column>
 
@@ -48,10 +48,10 @@ class GlobalOps extends Component {
                     </Column>
 
                     <Column flexGrow={2}>
-                        <HeaderCell>Mission Location</HeaderCell>
+                        <HeaderCell>Unit Location</HeaderCell>
                         <Cell dataKey="country.name" />
                     </Column>
-                    <Column width={150} fixed="right">
+                    {/* <Column width={150} fixed="right">
                         <HeaderCell>Action</HeaderCell>
                         <Cell>
                         {rowData => {
@@ -72,7 +72,7 @@ class GlobalOps extends Component {
                             } 
                         }}
                         </Cell>
-                    </Column>
+                    </Column> */}
                 </Table>
                 <hr />
                 <h5>Air Operations</h5>
