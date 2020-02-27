@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Table, Tag, Progress, Checkbox, Button } from 'rsuite';
+import axios from 'axios';
+import { gameServer } from '../../../config';
+import { Table, Tag, Progress, Checkbox, Button, Alert } from 'rsuite';
 
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
@@ -8,13 +10,23 @@ class Knowledge extends Component {
     state = { 
         data: [],
         checkedKeys: [],
-        cost: 0
+        cost: 0,
+        account: {}
     }
 
     componentDidMount() {
         let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge')
         let tableKnowlege = this.createTable(knowledge);
-        this.setState({ data: tableKnowlege });
+        let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
+        this.setState({ data: tableKnowlege, account });
+    }
+
+    componentDidUpdate (prevProps, prevState) {
+        if (prevState.checkedKeys !== this.state.checkedKeys) {
+            let cost = this.state.checkedKeys.length * 2;
+            this.setState({cost})    
+        }
+        
     }
     
     createTable = (knowledge) => {
@@ -26,12 +38,14 @@ class Knowledge extends Component {
             object.field = field;
             object.research = undefined;
             object.complete = []
+            object.research_id = ''
             let fieldResearch = knowledge.filter(el => el.field === field);
             for (let el of fieldResearch) {
                 if (el.status.completed === true) {
                     object.complete.push(el)
                 } else if (el.status.completed === false) {
                     object.research = el
+                    object.research_id = el._id
                 }
             };
             data.push(object);
@@ -44,6 +58,7 @@ class Knowledge extends Component {
 
         let checked = false;
         let indeterminate = false;
+        
     
         if (checkedKeys.length === data.length) {
           checked = true;
@@ -55,7 +70,7 @@ class Knowledge extends Component {
         
         return ( 
             <div>
-                <h5 style={{display: 'inline'}}>Research Field Funding</h5><Button>Submit funding</Button>
+                <h5 style={{display: 'inline'}}>Research Field Funding</h5><Button onClick={() => this.handleSubmit()} style={{float:'right'}}>Submit funding</Button>
                 <hr style={{margin: 10}} />
                 <Table
                     rowKey="field"
@@ -74,7 +89,7 @@ class Knowledge extends Component {
                         </div>
                         </HeaderCell>
                         <CheckCell
-                            dataKey="field"
+                            dataKey="research_id"
                             checkedKeys={checkedKeys}
                             onChange={this.handleCheck}
                         />
@@ -92,14 +107,14 @@ class Knowledge extends Component {
                         )}}</Cell>
                     </Column>
 
-                    <Column flexGrow={1}>
+                    <Column verticalAlign='middle' flexGrow={1}>
                         <HeaderCell>Global Progress Towards next Level <Tag color="green" style={{float:'right'}}>Funding Cost: $M{this.state.cost}</Tag></HeaderCell>
                         <Cell dataKey="research.progress">{rowData => {
-                            let totalProgress = rowData.research.totalProgress;
-                            let percent = totalProgress / this.props.techCost[rowData.research.level] * 100
+                            let progress = rowData.research.progress;
+                            let percent = progress / this.props.techCost[rowData.research.level] * 100
                             console.log(percent);
                             return(
-                                <Progress.Line percent={totalProgress} />
+                                <Progress.Line percent={progress} />
                         )}}</Cell>
 
                     </Column>
@@ -109,7 +124,7 @@ class Knowledge extends Component {
     }
 
     handleCheckAll = (value, checked) => {
-        const checkedKeys = checked ? this.state.data.map(item => item.field) : [];
+        const checkedKeys = checked ? this.state.data.map(item => item.research_id) : [];
         this.setState({
           checkedKeys
         });
@@ -125,7 +140,47 @@ class Knowledge extends Component {
           checkedKeys: nextCheckedKeys
         });
     }
+
+    handleSubmit = async () => {
+        let { account, cost, checkedKeys } = this.state
+        if (account.balance < cost) {
+            Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
+        } else {
+            try {
+                const txn = {
+                    account_id : account._id,
+                    note : `$M${cost} funding for ${checkedKeys.length} fields of study.`,
+                    amount : cost
+                }
+                let { data } = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+                console.log(data)
+                Alert.success(data, 4000)  
+                try {
+                    let submission = {
+                        research: checkedKeys,
+                        funding: 0,
+                        _id: '5e576cae7b1af50d0c02c70c'
+                    }
+                    let { data } = await axios.put(`${gameServer}api/facilities/research`, submission);
+                    console.log(data)
+                    Alert.success(data, 4000)
+
+                    this.setState({
+                        checkedKeys: []
+                      });
+                } catch (err) {
+                    Alert.error(`Error: ${err}`)
+                }
+            } catch (err) {
+                Alert.error(`Error: ${err}`)
+            }
+        }
+        this.setState({
+          checkedKeys: []
+        });
+    }
 }
+
 
 const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
     <Cell {...props} style={{ padding: 0 }}>

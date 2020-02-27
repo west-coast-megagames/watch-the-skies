@@ -286,13 +286,9 @@ class ResearchLabs extends Component {
 						<Cell dataKey="blah">
 						{rowData => {      
 							let labs = this.state.labs;
-							const result = -1;
-							let myFundLevel = 0;
-							let myFunding = 0;
-							if (result >= 0) {	// existing entry
-								myFundLevel = labs[result].funding;
-								myFunding = props.fundingCost[myFundLevel];
-							} 
+							const result = labs.find(el => el._id === rowData._id)
+							let myFundLevel = result.funding;
+							let myFunding = props.fundingCost[myFundLevel];
 							return (
 								<Tag 
 									color="green">
