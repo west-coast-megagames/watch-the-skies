@@ -14,7 +14,6 @@ const AnalysisResearch = Research.discriminator('AnalysisResearch', new Schema({
         site: { type: Schema.Types.ObjectId, ref: 'Site'},
         outcome: { type: String, enum: ['Destroy', 'Damage', 'Kill', 'Perserve']}
     }],
-    progress: { type: Number },
     status: {
         available: { type: Boolean },
         completed: { type: Boolean }

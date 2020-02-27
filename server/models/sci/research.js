@@ -16,6 +16,7 @@ const ResearchSchema = new Schema({
     name: { type: String},
     code: {type: String},
     level: { type: Number },
+    progress: { type: Number, default: 0},
     prereq: [String],
     desc: { type: String },
     unlocks: [UnlockSchema],

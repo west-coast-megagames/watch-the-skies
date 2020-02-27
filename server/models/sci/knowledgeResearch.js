@@ -13,7 +13,6 @@ const KnowledgeResearch = Research.discriminator('KnowledgeResearch', new Schema
     type: { type: String, default: 'Knowledge' },
     field: { type: String, enum: fields },
     credit: { type: Schema.Types.ObjectId, ref: 'Team'},
-    totalProgress: { type: Number, default: 0},
     status: {
         available: { type: Boolean, default: true },
         completed: { type: Boolean, default: false },
