@@ -79,7 +79,7 @@ async function knowledgeSeed() {
                 newKnowledge = await tree[index].seed()
                 rand = 1 + Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
                 knowledgeDebugger(rand);
-                newKnowledge.teamProgress[rand].progress = newKnowledge.totalProgress;
+                newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
                 knowledgeDebugger(newKnowledge);
                 await completeKnowledge(newKnowledge);
             }
@@ -110,7 +110,7 @@ function Knowledge(knowledge) {
             field: this.field,
             desc: this.desc,
             unlocks: this.unlocks,
-            totalProgress: techCost[this.level],
+            progress: techCost[this.level],
             status: {
                 availible: false,
                 completed: true,

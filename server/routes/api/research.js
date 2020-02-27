@@ -105,14 +105,17 @@ router.delete('/', async function (req, res) {
     return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`)
 });
 
-// @route   put api/research/progress
+// @route   put api/research/knowledge
 // @Desc    Puts in a technology for RESEARCH
 // @access  Public
-router.put('/progress', async function (req, res) {
-    let { tech_id, funding } = req.body;
-    let progress = await science.calculateProgress(lab_id);
+router.put('/knowledge', async function (req, res) {
+    routeDebugger(req.body);
+    // let progress = await science.calculateProgress(lab_id);
+    
 
-    return res.status(200).send(progress);
+    return res.status(200).send(`You did it, welcome to reserch!`);
 });
+
+
 
 module.exports = router;
