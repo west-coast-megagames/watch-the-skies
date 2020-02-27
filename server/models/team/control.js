@@ -7,6 +7,7 @@ const { Team, RoleSchema } = require('./team');
 
 const Control = Team.discriminator("Control", new Schema({
   type: { type: String, default: 'Control' },
+  sciRate: { type: Number, default: 25},
   roles: [RoleSchema]
 }));
 
