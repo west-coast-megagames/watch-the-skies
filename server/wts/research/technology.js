@@ -17,23 +17,31 @@ function Technology(tech) {
 
     // Async Method to check if this technology is availible for each team
     this.checkAvailible = async function() {
-        for (let team of await Team.find({ teamType: 'N' }, '_id name')) {
+        for await (let team of await Team.find({ teamType: 'N' }, '_id name')) {
             let currentTech = await Research.findOne({ name: this.name, team_id: team._id });
             techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
-            if (!currentTech) {
+            if (currentTech === null) {
                 let count = 0;
                 let unlock = false;
                 let msg = ""
 
-                for (let req of this.prereq) {
-                    techDebugger(`${this.name}: Checking for prereq ${req}...`);
-                    let checkTech = await Research.findOne({ name: req, team: team._id, 'status.completed': true });
-                    let checkKnowledge = await Research.findOne({ name: req, 'status.published':true });
+                for await (let req of this.prereq) {
+                    techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
+                    let checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
+                    let checkKnowledge = await Research.findOne({ code: req.code });
+                    // if (checkKnowledge !== null) {
+                    //     if (checkKnowledge.completed && checkKnowledge.credit === team._id) {
+                    //         techDebugger(`Knowledge level ${checkKnowledge.name} is availible to ${team.name}...`);
+                    //     } else {
+                    //         techDebugger(`Knowledge level ${checkKnowledge.name} is not availible to ${team.name}...`);
+                    //         checkKnowledge = null
+                    //     };
+                    // }
                     if (checkTech !== null || checkKnowledge !== null) {
                         count++;
-                        techDebugger(`${this.name}: prereq ${req} found...`);
+                        techDebugger(`${this.name}: prereq ${req.code} found...`);
                     } else {
-                        techDebugger(`${this.name}: prereq ${req} not found...`);
+                        techDebugger(`${this.name}: prereq ${req.code} not found...`);
                         break;
                     }
                 };

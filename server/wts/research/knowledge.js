@@ -53,7 +53,7 @@ async function knowledgeSeed() {
     for await (let field of fields) {
         knowledgeDebugger(field);
         knowledgeDebugger(`Seed count: ${i}`) 
-            let rand = 1 + Math.floor(Math.random() * 3);
+            let rand = 1 + Math.floor(Math.random() * 2);
             knowledgeDebugger(rand);
             let seed = await knowledgeTree.find(el => el.field === field && el.level === rand);
             seeded.push(seed);
@@ -63,8 +63,9 @@ async function knowledgeSeed() {
 
     for await (let knowledge of seeded) {
         let newKnowledge = await knowledge.unlock();
-        knowledgeDebugger(newKnowledge);
-
+        // knowledgeDebugger(seeded);
+        // knowledgeDebugger(newKnowledge);
+        
         let tree = knowledgeTree;
 
         // let index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level + 1);
@@ -75,17 +76,32 @@ async function knowledgeSeed() {
         while (newKnowledge.level !== 0 && index !== -1) {
             index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level - 1);
             console.log(`Index: ${index}`);
+
             if (index != -1) {
+                console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
-                rand = 1 + Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
+                knowledgeDebugger(newKnowledge)
+                rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
                 knowledgeDebugger(rand);
                 newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
-                knowledgeDebugger(newKnowledge);
+                // knowledgeDebugger(newKnowledge);
+                knowledgeDebugger(`Completing knowledge`)
                 await completeKnowledge(newKnowledge);
+                knowledgeDebugger(`Publishing Science`)
+                await publishKnowledge(newKnowledge);
             }
         }
     };
 
+    knowledgeDebugger(`Performing final unlock...`)
+    for await (let research of await Research.find({'status.completed': true})) {
+        for await (let tech of research.unlocks) {
+            let newTech = techTree.find(el => el.code === tech.code);
+            await newTech.checkAvailible();
+        }
+    }
+
+    knowledgeDebugger(`Knowledge seed complete...`)
     return;
 }
 
@@ -96,11 +112,13 @@ function Knowledge(knowledge) {
     this.prereq = knowledge.prereq;
     this.desc = knowledge.desc;
     this.field = knowledge.field;
+    this.code = knowledge.code;
     this.unlocks = knowledge.unlocks;
     this.teamProgress = tp;
 
 
     this.seed = async function() {
+        console.log(`seeding ${this.name}`)
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
             level: this.level,
@@ -109,6 +127,7 @@ function Knowledge(knowledge) {
             credit: controlTeam._id,
             field: this.field,
             desc: this.desc,
+            code: this.code,
             unlocks: this.unlocks,
             progress: techCost[this.level],
             status: {
@@ -118,7 +137,6 @@ function Knowledge(knowledge) {
             },
             teamProgress: this.teamProgress
         });
-
         await newKnowledge.save();
         knowledgeDebugger(`${newKnowledge.name} seeded...`)
         knowledgeDebugger(`${newKnowledge.name} has been completed pre-game...`)
@@ -127,12 +145,14 @@ function Knowledge(knowledge) {
     }
     
     this.unlock = async function() {
+        console.log(`Unlocking ${this.name}`)
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
             level: this.level,
             prereq: this.prereq,
             desc: this.desc,
             field: this.field,
+            code: this.code,
             unlocks: this.unlocks,
             status: {
                 availible: true,
@@ -144,7 +164,7 @@ function Knowledge(knowledge) {
 
         newKnowledge = await newKnowledge.save();
 
-        console.log(`${newKnowledge.name} has been unlocked for research!`)
+        knowledgeDebugger(`${newKnowledge.name} has been unlocked for research!`)
 
         return newKnowledge;
     }
@@ -157,25 +177,37 @@ async function completeKnowledge (research) {
   
     let high = 0;
     for await (let team of research.teamProgress) {
-      if (team.progress > high) research.credit = team._id;
+      if (team.progress > high) research.credit = team.team;
     }
-    knowledgeDebugger(research)
+    let team = await Team.findById(research.credit);
     // credit = await Team.findById(research.credit);
-    knowledgeDebugger(`${research.name} has been credited with advancing the world to ${research.name}`)
+    knowledgeDebugger(`${team.name} has been credited with advancing the world to ${research.name}`)
     
     if (research.level < 5) {
         let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
         nextKnowledge.unlock();
     };
 
-    for await (let tech of research.unlocks) {
-        let newTech = techTree.find(el => el.code === tech.code);
-        await newTech.checkAvailible();
-    }
+    reserach = await research.save();
+
+    // for await (let tech of research.unlocks) {
+    //     let newTech = techTree.find(el => el.code === tech.code);
+    //     await newTech.checkAvailible();
+    // }
+  
+    return research;
+}
+
+async function publishKnowledge (research) {
+    let team = await Team.findById(research.credit);
+    knowledgeDebugger(`${team.name} is publishing ${research.name}...`);
+    research.status.published = true;
 
     reserach = await research.save();
   
     return research;
-  }
+};
+
+
 
 module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge };

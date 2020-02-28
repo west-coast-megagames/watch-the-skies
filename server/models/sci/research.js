@@ -14,10 +14,10 @@ const BreakthroughSchema = new Schema({
 const ResearchSchema = new Schema({
     model: { type: String, default: 'Research'},
     name: { type: String},
-    code: {type: String},
+    code: {type: String },
     level: { type: Number },
     progress: { type: Number, default: 0},
-    prereq: [String],
+    prereq: [UnlockSchema],
     desc: { type: String },
     unlocks: [UnlockSchema],
     breakthrough: [BreakthroughSchema]
