@@ -94,7 +94,7 @@ class ResearchLabs extends Component {
 		this.state = {
 			research: [],
 			labs : [],
-			availFunding : 0
+			account: {}
 		}
 		this.handleLabUpdate = this.handleLabUpdate.bind(this);
 		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
@@ -134,22 +134,37 @@ class ResearchLabs extends Component {
 	async confirmSubmit(lab) {
 //		console.log("=============== CONFIRM SUBMIT ===============");
 //		console.log("ROWDATA=", lab);
-		try {
-			// bring up dialog box
-			// if OK, submit bank transaction and backend update
-			// if cancel, remove the dialog
-			let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
 
-			// For withdrawal, need to provide an opbject with
-			// account_id, note, amount
-			const txn = {
-				account_id : account._id,
-				note : `Level ${lab.funding} funding for science lab ${lab.name}`,
-				amount : this.props.fundingCost[lab.funding]
+//this.props.alert({type: 'success', title: 'Research Selected', body: `${updatedLab.lab} is working on ${updatedLab.research_id}`})
+		try {
+			let labs = this.state.labs;
+			const result = newLabCheck(lab._id, labs);
+			if (result === -1) {				// New Entry	
+				Alert.warning(`Lab ${lab._id} does not exist!!`, 6000)
+			} else {							// Existing Entry
+				console.log("fundingcost=",this.props.fundingCost);
+				console.log("balance=",this.state.account.balance);
+				console.log("funding=",labs[result].funding);
+				let cost = this.props.fundingCost[(labs[result].funding)];
+				console.log("COST=",cost);
+			
+				let account = this.state.account;
+				if (account.balance < cost) {
+					Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
+				} else {
+
+					// For withdrawal, need to provide an object with
+					// account_id, note, amount
+					const txn = {
+						account_id : account._id,
+						note : `Level ${lab.funding} funding for science lab ${lab.name}`,
+						amount : this.props.fundingCost[lab.funding]
+					}
+//					console.log("MYTXN=", mytxn);
+					const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+					Alert.success(mytxn.data, 4000)
+				}
 			}
-			// console.log("MYTXN=", mytxn);
-			const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
-			Alert.success(mytxn.data, 4000)
 		} catch (err) { 
 			console.log(err)
 			// Alert.error(err.data, 4000)
@@ -162,7 +177,7 @@ class ResearchLabs extends Component {
 			console.log(newLab)
 			
 			const myupdate = await axios.put(`${gameServer}api/facilities/research`, newLab);
-			//	console.log(myupdate);
+//			console.log(myupdate);
 			Alert.success(myupdate.data, 4000)
 
 			let labs = this.state.labs;
@@ -204,6 +219,7 @@ class ResearchLabs extends Component {
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
+		let account = this.state.account;
 		let sendLabUpdate = this.handleLabUpdate;
 		let sendFundingUpdate = this.handleFundingUpdate;
 		let confirmSubmit = this.confirmSubmit;
@@ -286,15 +302,25 @@ class ResearchLabs extends Component {
 						<Cell dataKey="blah">
 						{rowData => {      
 							let labs = this.state.labs;
+							let account = this.state.account;
 							const result = labs.find(el => el._id === rowData._id)
 							let myFundLevel = result.funding;
-							let myFunding = props.fundingCost[myFundLevel];
-							return (
-								<Tag 
-									color="green">
-									$ { myFunding } MB
-								</Tag>
-							)}}
+							let myCost = props.fundingCost[myFundLevel];
+							if (account.balance < myCost) {
+//								Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
+								return (
+									<Tag 
+										color="red">
+										$ { myCost - account.balance } MB More
+									</Tag>
+								)
+							} else {
+								return (
+									<Tag 
+										color="green">
+										$ { myCost } MB
+									</Tag>
+							)}}}
 						</Cell>
 					</Column>
 
@@ -321,12 +347,26 @@ class ResearchLabs extends Component {
 	  
 	  teamFilter = () => {
 			let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
+//			console.log("research=",research);
+			if (research.length !== 0) {
+//				console.log("research.length=",research.length);
+				this.setState({research});
+			}
 			let labs = this.props.facilities.filter(el => el.team !== null);
-			labs = labs.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
-			let availSciFunding = this.props.accounts.filter(el => el.name === 'Science' && el.team === this.props.team._id);
-			let availFunding = availSciFunding[0];
-//			console.log("LABS=", labs);
-			this.setState({research, labs, availFunding});
+//			console.log("labs=",labs);
+			if (labs.length !== 0) {
+				labs = labs.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
+//				console.log("LABS2=", labs);
+				this.setState({labs});
+			}
+			let account = this.props.accounts.filter(el => el.code === 'SCI');
+//			console.log("ACCOUNT=",account);
+			if (account.length !== 0) {
+				account = account[0];
+//				console.log("ACCOUNT2=",account);
+				this.setState({account});
+			}
+			
 	  }
 }
 

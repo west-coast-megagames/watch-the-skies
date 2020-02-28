@@ -100,10 +100,13 @@ class Science extends Component {
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
                         <React.Fragment>
-                        <ResearchLabs {...this.props}
+                        <ResearchLabs 
                             allKnowledge={this.props.research}
+                            facilities={this.props.facilities}
+                            team={this.props.team}
                             techCost={this.state.techCost}
                             fundingCost={this.state.fundingCost}
+                            accounts={this.props.accounts}
                         />
                         <br />
                         <Knowledge    
