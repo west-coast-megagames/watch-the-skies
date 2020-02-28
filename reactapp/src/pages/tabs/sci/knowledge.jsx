@@ -15,10 +15,12 @@ class Knowledge extends Component {
     }
 
     componentDidMount() {
-        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge')
-        let tableKnowlege = this.createTable(knowledge);
-        let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
-        this.setState({ data: tableKnowlege, account });
+        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge');
+        if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
+            let tableKnowlege = this.createTable(knowledge);
+            let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
+            this.setState({ data: tableKnowlege, account });
+        } 
     }
 
     componentDidUpdate (prevProps, prevState) {
@@ -33,8 +35,8 @@ class Knowledge extends Component {
         let data = this.state.data;
         console.log(fields)
         for (let field of fields) {
-            let object = {}
-            console.log(field)
+            let object = {};
+            console.log(field);
             object.field = field;
             object.research = undefined;
             object.complete = []
@@ -67,6 +69,7 @@ class Knowledge extends Component {
         } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
           indeterminate = true;
         }
+        
         
         return ( 
             <div>
@@ -121,6 +124,7 @@ class Knowledge extends Component {
                 </Table>
             </div>
         );
+        
     }
 
     handleCheckAll = (value, checked) => {
