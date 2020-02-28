@@ -1355,7 +1355,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "Interceptor",
+"type" : "Transport",
 "name" : "FFG Pioneer",
 "team" : "FFG", 
 "zone": "AN", 
@@ -1442,7 +1442,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "Interceptor",
+"type" : "Transport",
 "name" : "FFG Tristar",
 "team" : "FFG", 
 "zone": "AN", 
@@ -1469,4 +1469,33 @@
     "repair": false,
     "mission" : "Standby" }
 }
+{
+    "model" : "Aircraft",
+    "type" : "Decoy",
+    "name" : "FFG Don't Intercept",
+    "team" : "FFG", 
+    "zone": "AN", 
+    "country": "AQ", 
+    "site": "",
+    "base" : "undefined",
+    "loadout": 
+        ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+    "stats":
+        {"hull": 2,
+        "hullMax": 2,
+        "damage": 1,
+        "passiveRolls": [2,4,7,9,11,12],
+        "activeRolls": [3,5,8,10,12] },
+    "status":
+        {"aggressive": true,
+        "passive": false,
+        "disengage": false,
+        "damaged": false,
+        "deployed": false,
+        "destroyed": false,
+        "ready": true,
+        "upgrade": false,
+        "repair": false,
+        "mission" : "Standby" }
+    }
 ]
