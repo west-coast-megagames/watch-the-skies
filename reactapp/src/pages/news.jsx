@@ -4,7 +4,7 @@ import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
-import SubNews from '../components/subNews';
+import SubNews from './tabs/news/subNews';
 
 class News extends Component {
     state = {
@@ -47,7 +47,7 @@ class News extends Component {
                     )}/>
 
                     <Route path={`${url}/add`} render={(props) => (
-                        <SubNews {...props} alert={ this.props.alert } />
+                        <SubNews {...props} {...this.props} />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/feed`} />
                 </Switch>

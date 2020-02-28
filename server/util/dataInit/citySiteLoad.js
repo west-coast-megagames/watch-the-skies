@@ -80,24 +80,24 @@ async function loadCity(iData){
           return;
         }
         
-        if (iData.parentCode1 != ""){
-          let country = await Country.findOne({ code: iData.parentCode1 });  
+        if (iData.countryCode != ""){
+          let country = await Country.findOne({ code: iData.countryCode });  
           if (!country) {
-            citySiteLoadDebugger("CitySite Load Country Error, New City:", iData.name, " Country: ", iData.parentCode1);
+            citySiteLoadDebugger("CitySite Load Country Error, New City:", iData.name, " Country: ", iData.countryCode);
           } else {
             citySite.country = country._id;
             citySite.zone    = country.zone;
-            citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+            citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
           }      
         }
         
-        if (iData.parentCode2 != ""){
-          let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+        if (iData.teamCode != ""){
+          let team = await Team.findOne({ teamCode: iData.teamCode });  
           if (!team) {
-            citySiteLoadDebugger("CitySite Load Team Error, New City:", iData.name, " Team: ", iData.parentCode2);
+            citySiteLoadDebugger("CitySite Load Team Error, New City:", iData.name, " Team: ", iData.teamCode);
           } else {
             citySite.team = team._id;
-            citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
+            citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }  
 
@@ -117,24 +117,24 @@ async function loadCity(iData){
       citySite.geoDecimal.longDecimal = iData.longDecimal;
       citySite.dateline               = iData.dateline;
       
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+      if (iData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          citySiteLoadDebugger("CitySite Load Team Error, Update City:", iData.name, " Team: ", iData.parentCode2);
+          citySiteLoadDebugger("CitySite Load Team Error, Update City:", iData.name, " Team: ", iData.teamCode);
         } else {
           citySite.team = team._id;
-          citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
+          citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }  
       
-      if (iData.parentCode1 != ""){
-        let country = await Country.findOne({ code: iData.parentCode1 });  
+      if (iData.countryCode != ""){
+        let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          citySiteLoadDebugger("CitySite Load Country Error, Update City:", iData.name, " Country: ", iData.parentCode1);
+          citySiteLoadDebugger("CitySite Load Country Error, Update City:", iData.name, " Country: ", iData.countryCode);
         } else {
           citySite.country = country._id;
           citySite.zone    = country.zone;
-          citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+          citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 

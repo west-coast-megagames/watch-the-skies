@@ -38,7 +38,7 @@
  },
  { 
 "loadType" : "user",
-"username" : "HOS South Africa",
+"username" : "HOS RSA",
 "name" : {"first" : "Nelson", "last" : "M." },
 "email" : "SAfortheWin@gmail.com",
 "phone" : "9161234567",
@@ -52,7 +52,7 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "RZA",
+"teamCode" : "RSA",
 "roles": ["Player"]
 },
 { 
@@ -209,10 +209,10 @@
 },
 { 
 "loadType" : "user",
-"username" : "HOS Australia",
+"username" : "HOS AUS",
 "name" : {"first" : "Sue", "last" : "Doors" },
 "email" : "SueDoors@gmail.com",
-"phone" : "916758555",
+"phone" : "9167585555",
 "password" : "PWtest",
 "address" : 
     {"street1" : "500 Easy St",
@@ -222,11 +222,10 @@
      "zipcode" : "45792"},
 "dob" : "1994-05-08",
 "gender" : "Female",
-"discord" : "Money",
+"discord" : "Money2",
 "teamCode" : "AUS",
 "roles": ["Player"]
 },
-
 {
 "loadType" : "user",
 "username" : "HOS Fed",
@@ -339,6 +338,63 @@
     "gender" : "Male",
     "discord" : "control#9763",
     "teamCode" : "TCN",
+    "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "BobtheNinjaMan",
+    "name" : {"first" : "Scott", "last" : "McMann" },
+    "email" : "smcmann42@gmail.com",
+    "phone" : "9252653724",
+    "password" : "Zilster42",
+    "address" : 
+        {"street1" : "3135 Ameno Road",
+         "street2" : "",
+         "city" : "Concord",
+         "state" : "CA",
+         "zipcode" : "94519"},
+    "dob" : "1994-06-30",
+    "gender" : "Male",
+    "discord" : "BobtheNinjaMan#4242",
+    "teamCode" : "AUS",
+    "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "Jarred",
+    "name" : {"first" : "Jarred", "last" : "Caldwell" },
+    "email" : "jdcaldwell1980@gmail.com",
+    "phone" : "9167788150",
+    "password" : "sagan",
+    "address" : 
+        {"street1" : "4041 Bunker Hill Dr",
+        "street2" : "",
+        "city" : "Shingle Springs",
+        "state" : "CA",
+        "zipcode" : "95682"},
+    "dob" : "1980-03-05",
+    "gender" : "Male",
+    "discord" : "bookrat#3468",
+    "teamCode" : "USA",
+    "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "BardCicero",
+    "name": {"first" : "Mike", "last" : "Bowles" },
+    "email": "mjb235@gmail.com",
+    "phone" : "2099141120",
+    "password" : "BardCicero",
+    "address" : 
+        {"street1" : "2909 Stonecreek Dr",
+        "street2" : "",
+        "city" : "Sacramento",
+        "state" : "CA",
+        "zipcode" : "95833"},
+    "dob" : "1989-08-23",
+    "gender" : "Male",
+    "discord" : "BardCicero#2241",
+    "teamCode" : "RFD",
     "roles": ["Control", "Player"]
 }
 ]

@@ -93,24 +93,24 @@ async function loadBase(iData){
       }
       baseSite.baseDefenses = iData.baseDefenses;
 
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+      if (iData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          baseSiteLoadDebugger("BaseSite Load Team Error, New Base:", iData.name, " Team: ", iData.parentCode2);
+          baseSiteLoadDebugger("BaseSite Load Team Error, New Base:", iData.name, " Team: ", iData.teamCode);
         } else {
           baseSite.team  = team._id;
-          baseSiteLoadDebugger("BaseSite Load Team Found, Base:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          baseSiteLoadDebugger("BaseSite Load Team Found, Base:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
         }
       }      
 
-      if (iData.parentCode1 != ""){
-        let country = await Country.findOne({ code: iData.parentCode1 });  
+      if (iData.countryCode != ""){
+        let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          baseSiteLoadDebugger("BaseSite Load Country Error, New Base:", iData.name, " Country: ", iData.parentCode1);
+          baseSiteLoadDebugger("BaseSite Load Country Error, New Base:", iData.name, " Country: ", iData.countryCode);
         } else {
           baseSite.country = country._id;
           baseSite.zone    = country.zone;
-          baseSiteLoadDebugger("BaseSite Load Country Found, New Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+          baseSiteLoadDebugger("BaseSite Load Country Found, New Base:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 
@@ -164,24 +164,24 @@ async function loadBase(iData){
       baseSite.siteCode     = iData.code;
       baseSite.baseDefenses = iData.baseDefenses;
 
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+      if (iData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          baseSiteLoadDebugger("BaseSite Load Team Error, Update Base:", iData.name, " Team: ", iData.parentCode2);
+          baseSiteLoadDebugger("BaseSite Load Team Error, Update Base:", iData.name, " Team: ", iData.teamCode);
         } else {
           baseSite.team = team._id;
-          baseSiteLoadDebugger("BaseSite Load Update Team Found, Base:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
+          baseSiteLoadDebugger("BaseSite Load Update Team Found, Base:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }  
       
-      if (iData.parentCode1 != ""){
-        let country = await Country.findOne({ code: iData.parentCode1 });  
+      if (iData.countryCode != ""){
+        let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          baseSiteLoadDebugger("BaseSite Load Country Error, Update Base:", iData.name, " Country: ", iData.parentCode1);
+          baseSiteLoadDebugger("BaseSite Load Country Error, Update Base:", iData.name, " Country: ", iData.countryCode);
         } else {
           baseSite.country = country._id;
           baseSite.zone    = country.zone;
-          baseSiteLoadDebugger("BaseSite Load Country Found, Update Base:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+          baseSiteLoadDebugger("BaseSite Load Country Found, Update Base:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 

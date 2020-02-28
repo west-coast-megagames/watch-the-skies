@@ -6,7 +6,7 @@ require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
-async function chkCountry() {
+async function chkCountry(runFlag) {
   for (const country of await Country.find()
                                      .populate("zone", "name")) { 
     if (!country.populated("zone")) {  
@@ -63,6 +63,7 @@ async function checkBorderedByList(bBy, curCode, curIdString, curName){
       }
     }
   }  
+  return true;
 }
 
 module.exports = chkCountry;

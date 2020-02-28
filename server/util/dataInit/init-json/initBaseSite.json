@@ -12,8 +12,8 @@
 "longDMS": "104 12 24.1 W",
 "latDecimal": 38.67389,
 "longDecimal": -104.206696,
-"parentCode1" : "US",
-"parentCode2" : "USA"
+"countryCode" : "US",
+"teamCode" : "USA"
 },
 {"loadType": "baseSite",
 "name" : "USA Base Beta",
@@ -28,8 +28,8 @@
 "longDMS": "86 3 49.07 W",
 "latDecimal": 35.412403,
 "longDecimal": -86.063633,
-"parentCode1" : "US",
-"parentCode2" : "USA"
+"countryCode" : "US",
+"teamCode" : "USA"
 },
 {"loadType": "baseSite",
 "name" : "TUK Base Alpha",
@@ -44,8 +44,8 @@
 "longDMS": "1 55 26.17 W",
 "latDecimal": 52.468427,
 "longDecimal": -1.923938,
-"parentCode1" : "GB",
-"parentCode2" : "TUK"
+"countryCode" : "GB",
+"teamCode" : "TUK"
 },
 {"loadType": "baseSite",
 "name" : "RSA Base Alpha",
@@ -60,8 +60,8 @@
 "longDMS": "24 50 0.21 E",
 "latDecimal": -28.707618,
 "longDecimal": 24.833393,
-"parentCode1" : "ZA",
-"parentCode2" : "RSA"
+"countryCode" : "ZA",
+"teamCode" : "RSA"
 },
 {"loadType": "baseSite",
 "name" : "RFD Base Alpha",
@@ -76,8 +76,8 @@
 "longDMS": "37 35 56.98 E",
 "latDecimal": 55.446280,
 "longDecimal": 37.599163,
-"parentCode1" : "RU",
-"parentCode2" : "RFD"
+"countryCode" : "RU",
+"teamCode" : "RFD"
 },
 {"loadType": "baseSite",
 "name" : "JPN Base Alpha",
@@ -92,8 +92,8 @@
 "longDMS": "127 49 44.6 E",
 "latDecimal": 26.452750,
 "longDecimal": 127.829061,
-"parentCode1" : "JP",
-"parentCode2" : "JPN"
+"countryCode" : "JP",
+"teamCode" : "JPN"
 },
 {"loadType": "baseSite",
 "name" : "IRN Base Alpha",
@@ -108,8 +108,8 @@
 "longDMS": "51 45 9.67 E",
 "latDecimal": 32.686129,
 "longDecimal": 51.752687,
-"parentCode1" : "IR",
-"parentCode2" : "IRN"
+"countryCode" : "IR",
+"teamCode" : "IRN"
 },
 {"loadType": "baseSite",
 "name" : "IND Base Alpha",
@@ -124,8 +124,8 @@
 "longDMS": "75 51 36.29 E",
 "latDecimal": 23.172573,
 "longDecimal": 75.860081,
-"parentCode1" : "IN",
-"parentCode2" : "IND"
+"countryCode" : "IN",
+"teamCode" : "IND"
 },
 {"loadType": "baseSite",
 "name" : "TFR Base Alpha",
@@ -140,8 +140,8 @@
 "longDMS": "1 31 18.4 E",
 "latDecimal": 43.619935,
 "longDecimal": 1.521778,
-"parentCode1" : "FR",
-"parentCode2" : "TFR"
+"countryCode" : "FR",
+"teamCode" : "TFR"
 },
 {"loadType": "baseSite",
 "name" : "EPT Base Alpha",
@@ -156,8 +156,8 @@
 "longDMS": "27 18 58.69 E",
 "latDecimal": 31.330780,
 "longDecimal": 27.316303,
-"parentCode1" : "EG",
-"parentCode2" : "EPT"
+"countryCode" : "EG",
+"teamCode" : "EPT"
 },
 {"loadType": "baseSite",
 "name" : "PRC Base Alpha",
@@ -172,8 +172,8 @@
 "longDMS": "103 10 31.27 E",
 "latDecimal": 30.860031,
 "longDecimal": 103.175354,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "baseSite",
 "name" : "BRZ Base Alpha",
@@ -188,8 +188,8 @@
 "longDMS": "59 54 12.48 W",
 "latDecimal": -3.065764,
 "longDecimal": -59.903469,
-"parentCode1" : "BZ",
-"parentCode2" : "BRZ"
+"countryCode" : "BZ",
+"teamCode" : "BRZ"
 },
 {"loadType": "baseSite",
 "name" : "AUS Base Alpha",
@@ -204,8 +204,8 @@
 "longDMS": "133 31 25.3 E",
 "latDecimal": -22.672186,
 "longDecimal": 133.523712,
-"parentCode1" : "AU",
-"parentCode2" : "AUS"
+"countryCode" : "AU",
+"teamCode" : "AUS"
 },
 
 {"loadType": "baseSite",
@@ -221,8 +221,8 @@
     "longDMS": "064 21 13.7 E",
     "latDecimal": -81.59853,
     "longDecimal": 64.35380,
-    "parentCode1" : "AQ",
-    "parentCode2" : "FFG"
+    "countryCode" : "AQ",
+    "teamCode" : "FFG"
     },
     {"loadType": "baseSite",
         "name" : "TCN Base Alpha",
@@ -237,7 +237,7 @@
         "longDMS": "59 54 12.48 W",
         "latDecimal": -3.065764,
         "longDecimal": -59.903469,
-        "parentCode1" : "MX",
-        "parentCode2" : "TCN"
+        "countryCode" : "MX",
+        "teamCode" : "TCN"
         }    
 ]
