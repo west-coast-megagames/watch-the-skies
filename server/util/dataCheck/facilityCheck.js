@@ -12,7 +12,7 @@ require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
-async function chkFacility() {
+async function chkFacility(runFlag) {
   for (const facility of await Facility.find()
                                      .populate("team", "name")
                                      .populate("site", "siteName")) { 
@@ -96,6 +96,7 @@ async function chkFacility() {
     }
 
   }
+  return true;
 };
 
 module.exports = chkFacility;

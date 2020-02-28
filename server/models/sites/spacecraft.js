@@ -6,7 +6,6 @@ const { Site } = require('./site');
 
 const Spacecraft = Site.discriminator('Spacecraft', new Schema({
   type: { type: String, default: 'Spacecraft' },
-  name: { type: String, required: true, minlength: 2, maxlength: 50 },
   shipType: { 
     type: String,
     required: true,

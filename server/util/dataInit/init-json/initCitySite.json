@@ -7,8 +7,8 @@
 "longDMS": "122 25 52.7 W",
 "latDecimal": 37.615223,
 "longDecimal": -122.389977,
-"parentCode1" : "US",
-"parentCode2" : "USA"
+"countryCode" : "US",
+"teamCode" : "USA"
 },
 {"loadType": "citySite",
 "name" : "Moscow",
@@ -18,8 +18,8 @@
 "longDMS": "038 03 36.0 E",
 "latDecimal": 55.6172,
 "longDecimal": 38.06,
-"parentCode1" : "RU",
-"parentCode2" : "RFD"
+"countryCode" : "RU",
+"teamCode" : "RFD"
 },
 {"loadType": "citySite",
 "name" : "Beijing",
@@ -29,8 +29,8 @@
 "longDMS": "116 22 60.0 E",
 "latDecimal": 39.91667,
 "longDecimal": 116.38331,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Urumqi",
@@ -40,8 +40,8 @@
 "longDMS": "87 35 18.60 E",
 "latDecimal": 43.7988,
 "longDecimal": 87.5885,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Kashgar",
@@ -51,8 +51,8 @@
 "longDMS": "75 58 54.30 E",
 "latDecimal": 39.4601,
 "longDecimal": 75.9817,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Harbin",
@@ -62,19 +62,19 @@
 "longDMS": "126 39 0.00 E",
 "latDecimal": 45.7500,
 "longDecimal": 126.6500,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Chongqing",
 "dateline" : "CHONGQING, China",
-"code" : "CN CKG",
+"code" : "CN CQI",
 "latDMS": "29 32 53.76 N",
 "longDMS": "106 31 44.56 E",
 "latDecimal": 29.5482,
 "longDecimal": 106.5290,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Shanghai",
@@ -84,8 +84,8 @@
 "longDMS": "121 28 10.75 E",
 "latDecimal": 31.2315,
 "longDecimal": 121.4696,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Hong Kong",
@@ -95,8 +95,8 @@
 "longDMS": "114 9 28.06 E",
 "latDecimal": 22.2819,
 "longDecimal": 114.1577,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Taipei",
@@ -106,8 +106,8 @@
 "longDMS": "123 24 43.56 E",
 "latDecimal": 46.3855,
 "longDecimal": 123.4121,
-"parentCode1" : "CN",
-"parentCode2" : "PRC"
+"countryCode" : "CN",
+"teamCode" : "PRC"
 },
 {"loadType": "citySite",
 "name" : "Paris",
@@ -117,8 +117,8 @@
 "longDMS": "002 20 56.5 E",
 "latDecimal": 48.8566,
 "longDecimal": 2.3522,
-"parentCode1" : "FR",
-"parentCode2" : "TFR"
+"countryCode" : "FR",
+"teamCode" : "TFR"
 },
 {"loadType": "citySite",
 "name" : "London",
@@ -128,8 +128,8 @@
 "longDMS": "000 27 15.5 E",
 "latDecimal": 51.47,
 "longDecimal": 0.4543,
-"parentCode1" : "GB",
-"parentCode2" : "TUK"
+"countryCode" : "GB",
+"teamCode" : "TUK"
 },
 {"loadType": "citySite",
  "name" : "Amundsen-Scott South Pole",
@@ -139,8 +139,8 @@
  "longDMS": "139 15 60.0 W",
  "latDecimal": -90.0,
  "longDecimal": -139.2667,
- "parentCode1" : "AQ",
- "parentCode2" : "USA"
+ "countryCode" : "AQ",
+ "teamCode" : "USA"
 },
 {"loadType": "citySite",
 "name" : "Cape Town",
@@ -150,8 +150,8 @@
 "longDMS": "018 25 23.88 E",
 "latDecimal": 33.9249,
 "longDecimal": 18.4241,
-"parentCode1" : "ZA",
-"parentCode2" : "RSA"
+"countryCode" : "ZA",
+"teamCode" : "RSA"
 },
 {"loadType": "citySite",
 "name" : "Tokyo",
@@ -161,8 +161,8 @@
 "longDMS": "140 19 0.01 E",
 "latDecimal": 35.7833,
 "longDecimal": 140.3167,
-"parentCode1" : "JP",
-"parentCode2" : "JPN"
+"countryCode" : "JP",
+"teamCode" : "JPN"
 },
 {"loadType": "citySite",
 "name" : "Tehran",
@@ -172,8 +172,8 @@
 "longDMS": "051 09 08.0 E",
 "latDecimal": 35.4095,
 "longDecimal": 51.1552,
-"parentCode1" : "IR",
-"parentCode2" : "IRN"
+"countryCode" : "IR",
+"teamCode" : "IRN"
 },
 {"loadType": "citySite",
 "name" : "Mumbai",
@@ -183,8 +183,8 @@
 "longDMS": "072 52 38.73 E",
 "latDecimal": 19.0760,
 "longDecimal": 72.8777,
-"parentCode1" : "IN",
-"parentCode2" : "IND"
+"countryCode" : "IN",
+"teamCode" : "IND"
 },
 {"loadType": "citySite",
 "name" : "Cairo",
@@ -194,8 +194,8 @@
 "longDMS": "031 24 20.00 E",
 "latDecimal": 30.0444,
 "longDecimal": 31.2357,
-"parentCode1" : "EG",
-"parentCode2" : "EPT"
+"countryCode" : "EG",
+"teamCode" : "EPT"
 },
 {"loadType": "citySite",
 "name" : "Rio de Janeiro",
@@ -205,8 +205,8 @@
 "longDMS": "043 15 02.00 W",
 "latDecimal": -22.8053,
 "longDecimal": -43.2566,
-"parentCode1" : "BR",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Sydney",
@@ -216,8 +216,8 @@
 "longDMS": "151 10 45.94 E",
 "latDecimal": -33.9473,
 "longDecimal": 151.1794,
-"parentCode1" : "AU",
-"parentCode2" : "AUS"
+"countryCode" : "AU",
+"teamCode" : "AUS"
 },
 {"loadType": "citySite",
 "name" : "Perth",
@@ -227,8 +227,8 @@
 "longDMS": "115 55 25.01 E",
 "latDecimal": -31.7627,
 "longDecimal": 115.9236,
-"parentCode1" : "AU",
-"parentCode2" : "AUS"
+"countryCode" : "AU",
+"teamCode" : "AUS"
 },
 {"loadType": "citySite",
 "name" : "Brisbane",
@@ -238,8 +238,8 @@
 "longDMS": "152 56 36.31 E",
 "latDecimal": -27.4736,
 "longDecimal": 152.9434,
-"parentCode1" : "AU",
-"parentCode2" : "AUS"
+"countryCode" : "AU",
+"teamCode" : "AUS"
 },
 {"loadType": "citySite",
 "name" : "Melbourne",
@@ -249,8 +249,8 @@
 "longDMS": "144 49 38.17 E",
 "latDecimal": -37.4513,
 "longDecimal": 144.8272,
-"parentCode1" : "AU",
-"parentCode2" : "AUS"
+"countryCode" : "AU",
+"teamCode" : "AUS"
 },
 {"loadType": "citySite",
 "name" : "Kabul",
@@ -260,8 +260,8 @@
 "longDMS": "69 13 12.17 E",
 "latDecimal": 34.5612,
 "longDecimal": 69.2200,
-"parentCode1" : "AS",
-"parentCode2" : ""
+"countryCode" : "AF",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Tirana",
@@ -271,19 +271,19 @@
 "longDMS": "19 53 29.16 E",
 "latDecimal": 41.3570,
 "longDecimal": 19.8914,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "AL",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Algiers",
 "dateline" : "ALGIERS, Algeria",
-"code" : "AL TIA",
+"code" : "DZ ALG",
 "latDMS": "36 33 11.20 N",
 "longDMS": "3 11 39.39 E",
 "latDecimal": 36.5531,
 "longDecimal": 3.1942,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "DZ",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Luanda",
@@ -293,8 +293,8 @@
 "longDMS": "13 20 59.14 E",
 "latDecimal": -8.8337,
 "longDecimal": 13.3497,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "AO",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Cordoba",
@@ -304,8 +304,8 @@
 "longDMS": "4 46 35.93 W",
 "latDecimal": 37.9161,
 "longDecimal": -4.7766,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "AR",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Buenos Aires",
@@ -315,8 +315,8 @@
 "longDMS": "58 46 16.90 W",
 "latDecimal": -34.5875,
 "longDecimal": -58.7713,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "AR",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Yerevan",
@@ -326,8 +326,8 @@
 "longDMS": "44 33 50.32 E",
 "latDecimal": 40.1585,
 "longDecimal": 44.5639,
-"parentCode1" : "AS",
-"parentCode2" : ""
+"countryCode" : "AM",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Vienna",
@@ -337,8 +337,8 @@
 "longDMS": "16 25 3.69 E",
 "latDecimal": 48.0766,
 "longDecimal": 16.4177,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "AT",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Baku",
@@ -348,8 +348,8 @@
 "longDMS": "49 45 50.20 E",
 "latDecimal": 40.3741,
 "longDecimal": 49.7639,
-"parentCode1" : "AS",
-"parentCode2" : ""
+"countryCode" : "AZ",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Dhaka",
@@ -359,8 +359,8 @@
 "longDMS": "90 26 56.63 E",
 "latDecimal": 23.8084,
 "longDecimal": 90.4490,
-"parentCode1" : "AU",
-"parentCode2" : ""
+"countryCode" : "BD",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Minsk",
@@ -370,8 +370,8 @@
 "longDMS": "27 32 53.58 E",
 "latDecimal": 53.8496,
 "longDecimal": 27.5482,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "BY",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Brussels",
@@ -379,10 +379,10 @@
 "code" : "BE BRU",
 "latDMS": "50 51 30.58 N",
 "longDMS": "4 24 8.74 E",
-"latDecimal": 550.8584,
+"latDecimal": 50.8584,
 "longDecimal": 4.4024,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "BE",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Belize",
@@ -392,8 +392,8 @@
 "longDMS": "88 22 51.20 W",
 "latDecimal": 17.5908,
 "longDecimal": -88.3808,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "BZ",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Cotonou",
@@ -403,8 +403,8 @@
 "longDMS": "2 25 11.06 E",
 "latDecimal": 6.3737,
 "longDecimal": 2.4197,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "BJ",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Milan",
@@ -414,8 +414,8 @@
 "longDMS": "9 20 23.10 E",
 "latDecimal": 45.6979,
 "longDecimal": 9.3397,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "BO",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Sarajevo",
@@ -425,8 +425,8 @@
 "longDMS": "18 25 11.82 E",
 "latDecimal": 43.8415,
 "longDecimal": 18.4199,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "BA",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Gaborone",
@@ -436,8 +436,8 @@
 "longDMS": "25 57 8.83 E",
 "latDecimal": -24.6016,
 "longDecimal": 25.9524,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "BW",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Fortaleza",
@@ -447,8 +447,8 @@
 "longDMS": "38 28 15.71 W",
 "latDecimal": -3.7246,
 "longDecimal": -38.4710,
-"parentCode1" : "SA",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Recife",
@@ -458,8 +458,8 @@
 "longDMS": "34 55 56.65 W",
 "latDecimal": -8.0325,
 "longDecimal": -34.9324,
-"parentCode1" : "SA",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Salvador",
@@ -469,8 +469,8 @@
 "longDMS": "38 29 28.32 W",
 "latDecimal": -12.9514,
 "longDecimal": -38.4912,
-"parentCode1" : "SA",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Brasilia",
@@ -480,8 +480,8 @@
 "longDMS": "47 57 8.03 W",
 "latDecimal": -15.9265,
 "longDecimal": -47.9522,
-"parentCode1" : "SA",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Sao Paulo",
@@ -491,8 +491,8 @@
 "longDMS": "46 38 10.59 W",
 "latDecimal": -23.5641,
 "longDecimal": -46.6362,
-"parentCode1" : "SA",
-"parentCode2" : "BRZ"
+"countryCode" : "BR",
+"teamCode" : "BRZ"
 },
 {"loadType": "citySite",
 "name" : "Bucharest",
@@ -502,8 +502,8 @@
 "longDMS": "12 41 0.13 E",
 "latDecimal": 41.5760,
 "longDecimal": 12.6833,
-"parentCode1" : "EU",
-"parentCode2" : ""
+"countryCode" : "BG",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Ouagadougou",
@@ -513,8 +513,8 @@
 "longDMS": "1 30 1.15 W",
 "latDecimal": 12.4065,
 "longDecimal": -1.5003,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "BF",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Bujumbura",
@@ -524,8 +524,8 @@
 "longDMS": "29 22 53.61 E",
 "latDecimal": -3.3751,
 "longDecimal": 29.3815,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "BI",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Phnom Penh",
@@ -535,8 +535,8 @@
 "longDMS": "104 53 49.62 E",
 "latDecimal": 11.5637,
 "longDecimal": 104.8971,
-"parentCode1" : "AU",
-"parentCode2" : ""
+"countryCode" : "KH",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Vancouver",
@@ -546,8 +546,8 @@
 "longDMS": "-123 8 18.85 W",
 "latDecimal": 49.2635,
 "longDecimal": -123.1385,
-"parentCode1" : "NA",
-"parentCode2" : ""
+"countryCode" : "CA",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Montreal",
@@ -557,8 +557,8 @@
 "longDMS": "-73 33 12.10 W",
 "latDecimal": 45.5090,
 "longDecimal": -73.5533,
-"parentCode1" : "NA",
-"parentCode2" : ""
+"countryCode" : "CA",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Toronto",
@@ -568,8 +568,8 @@
 "longDMS": "-79 22 54.16 W",
 "latDecimal": 43.6518,
 "longDecimal": -79.3817,
-"parentCode1" : "NA",
-"parentCode2" : ""
+"countryCode" : "CA",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Bangui",
@@ -579,8 +579,8 @@
 "longDMS": "-79 22 54.16 E",
 "latDecimal": 43.6518,
 "longDecimal": -79.3817,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "CF",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "N'Djamena",
@@ -590,30 +590,30 @@
 "longDMS": "15 2 27.96 E",
 "latDecimal": 12.1064,
 "longDecimal": 15.0411,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "TD",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Santiago",
 "dateline" : "SANTIAGO, Chile",
 "code" : "CL SCL",
-"latDMS": "-33 26 45.58 S",
-"longDMS": "-70 40 1.40 W",
+"latDMS": "33 26 45.58 S",
+"longDMS": "70 40 1.40 W",
 "latDecimal": -33.4459,
 "longDecimal": -70.6670,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "SA",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Medellian",
 "dateline" : "MEDELLIAN, Colombia",
 "code" : "CO MLN",
-"latDMS": "6 14 35.7144 N",
+"latDMS": "6 14 35.71 N",
 "longDMS": "-75 34 23.63 W",
 "latDecimal": 6.2432,
 "longDecimal": -75.5732,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "CO",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Bogota",
@@ -623,8 +623,8 @@
 "longDMS": "-74 3 12.04 W",
 "latDecimal": 4.6585,
 "longDecimal": -74.0533,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "CO",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "San Juan",
@@ -634,8 +634,8 @@
 "longDMS": "-84 4 55.84 W",
 "latDecimal": 9.9611,
 "longDecimal": -84.0821,
-"parentCode1" : "SA",
-"parentCode2" : ""
+"countryCode" : "CR",
+"teamCode" : "NPC"
 },
 {"loadType": "citySite",
 "name" : "Abidjan",
@@ -645,18 +645,7 @@
 "longDMS": "-4 1 10.83 W",
 "latDecimal": 5.3208,
 "longDecimal": -4.0196,
-"parentCode1" : "AF",
-"parentCode2" : ""
-},
-{"loadType": "citySite",
-"name" : "Abidjan",
-"dateline" : "ABADJAN, Cote d’Ivoire",
-"code" : "CI ABJ",
-"latDMS": "5 19 15.22 N",
-"longDMS": "-4 1 10.83 W",
-"latDecimal": 5.3208,
-"longDecimal": -4.0196,
-"parentCode1" : "AF",
-"parentCode2" : ""
+"countryCode" : "CI",
+"teamCode" : "NPC"
 }
 ]

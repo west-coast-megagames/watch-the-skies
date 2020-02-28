@@ -8,7 +8,7 @@ require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
-async function chkZone() {
+async function chkZone(runFlag) {
   // get countries once
   let cFinds = await Country.find();    
   for (const zone of await Zone.find()) { 
@@ -32,6 +32,7 @@ async function chkZone() {
       logger.error(`Zone Validation Error For ${zone.zoneCode} ${zone.zoneName} Error: ${error.details[0].message}`);
     }
   }
+  return true;
 };
 
 module.exports = chkZone;
