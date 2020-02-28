@@ -146,8 +146,12 @@ class ContentArea extends Component {
                     <News {...props} {...this.props}
                       articles={ this.props.articles }
                       alert={ this.props.addAlert }
-                      teams={this.props.teams}
+                      teams={ this.props.teams }
+                      team={ this.props.team }
+                      sites={ this.props.sites }
                       handleArtHide={this.props.handleArtHide}
+                      zones={ this.props.zones }
+                      countries={ this.props.countries }
                     />
                   )}/>
                   <Route path="/control" render={(props) => (

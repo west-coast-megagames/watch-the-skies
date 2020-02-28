@@ -123,7 +123,8 @@ class App extends Component {
     let { data: zones } = await axios.get(`${gameServer}api/zones`) // Axios call to server for all zones
     let { data: facilities } = await axios.get(`${gameServer}api/facilities`) // Axios call to server for all facilities
     let { data: military } = await axios.get(`${gameServer}api/military`) // Axios call to server for all military
-    this.setState({ teams, sites, aircrafts, articles, research, zones, facilities, military })
+    let { data: countries } = await axios.get(`${gameServer}api/country`) // Axios call to server for all countries
+    this.setState({ teams, sites, aircrafts, articles, research, zones, facilities, military, countries })
   }
 
   async getNews () {
