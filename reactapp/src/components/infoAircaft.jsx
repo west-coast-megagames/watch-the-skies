@@ -101,15 +101,18 @@ class InfoAircraft extends Component {
         <FlexboxGrid>
           <FlexboxGrid.Item colspan={12}>
             <p>
-            <Whisper placement="top" speaker={hullSpeaker} trigger="click">
-            <IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b>Hull Integrity:</b> { stats.hull }/{ stats.hullMax } {stats.hull < stats.hullMax && <span> <Badge content="Damaged" /> <IconButton size="xs" disabled={stats.hull === stats.hullMax} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}</p> 
-            <p><IconButton size="xs" icon={<Icon icon="info-circle" />} /> <b> Weapons Rating:</b> { stats.attack }</p>
-            <p><IconButton size="xs" icon={<Icon icon="info-circle" />} /> <b> Evade Rating:</b> { stats.evade }</p>
+              <Whisper placement="top" speaker={hullSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper>
+              <b>Hull Integrity:</b> { stats.hull }/{ stats.hullMax } {stats.hull < stats.hullMax && <span> <Badge content="Damaged" /> <IconButton size="xs" disabled={stats.hull === stats.hullMax} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+            </p> 
+            <p><Whisper placement="top" speaker={weaponSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Weapons Rating:</b> { stats.attack }</p>
+            <p><Whisper placement="top" speaker={evadeSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Evade Rating:</b> { stats.evade }</p>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={12}>
             <p><Whisper placement="top" speaker={armorSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Armor Rating:</b> { stats.armor }</p>
-            <p><IconButton size="xs" icon={<Icon icon="info-circle" />} /><b> Weapon Pentration:</b> { stats.penetration }</p>
-            <p><IconButton size="xs" icon={<Icon icon="info-circle" />} /> <b> Mission Range:</b> { stats.range }km</p>
+            <p><Whisper placement="top" speaker={penetrationSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Weapon Pentration:</b> { stats.penetration }</p>
+            <p><Whisper placement="top" speaker={rangeSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Mission Range:</b> { stats.range }km</p>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={24}>
             <br />
@@ -171,6 +174,30 @@ const hullSpeaker = (
 const armorSpeaker = (
   <Popover title="Armor Information">
     <p>Armor protects your crafts systems from damage or destruction. If a system looses its cockpit or engines it can crash.</p>
+  </Popover>
+)
+
+const penetrationSpeaker = (
+  <Popover title="Penetration Information">
+    <p>Penetration is your Weapons systems ability to do internal damage to an opponent. Destroying opponent systems can cause them to crash.</p>
+  </Popover>
+)
+
+const rangeSpeaker = (
+  <Popover title="Range Information">
+    <p>Range is the distance your aircraft can travel for a mission in km. The distance is calculated from your base.</p>
+  </Popover>
+)
+
+const weaponSpeaker = (
+  <Popover title="Penetration Information">
+    <p>Weapon rating is how much hull damage your weapons can do on a succesful hit.</p>
+  </Popover>
+)
+
+const evadeSpeaker = (
+  <Popover title="Penetration Information">
+    <p>Evade is your crafts ability to avoid damage even when succefully hit, it also effects ability to disengage.</p>
   </Popover>
 )
 
