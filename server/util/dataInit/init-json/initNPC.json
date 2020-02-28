@@ -1,0 +1,112 @@
+[
+{
+"loadType" : "team", 
+"name": "Republic of Angola", 
+"shortName" : "Angola",
+"teamType" : "P",
+"code" : "ROA", 
+"sciLevel": 2,
+"balance" : 1,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["AO"]}]
+},
+{
+"loadType" : "team", 
+"name": "Republic of Kyrgyzstan", 
+"shortName" : "Kyrgyzstan",
+"teamType" : "P",
+"code" : "KGZ", 
+"sciLevel": 0,
+"balance" : 1,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["KG"]}]
+},
+{
+"loadType" : "team", 
+"name": "Republic of Madagascar", 
+"shortName" : "Madagascar",
+"teamType" : "P",
+"code" : "KGZ", 
+"sciLevel": 2,
+"balance" : 1,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["MG"]}]
+},
+{
+"loadType" : "team", 
+"name": "Kingdom of Norway", 
+"shortName" : "Norway",
+"teamType" : "P",
+"code" : "KNW", 
+"sciLevel": 4,
+"balance" : 1,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["NO"]}]
+},
+{
+"loadType" : "team", 
+"name": "Swiss Confederation", 
+"shortName" : "Switzerland",
+"teamType" : "P",
+"code" : "SWS", 
+"sciLevel": 5,
+"balance" : 8,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["CH"]}]
+},
+{
+"loadType" : "team", 
+"name": "United Republic of Tanzania", 
+"shortName" : "Tanzania",
+"teamType" : "P",
+"code" : "URT", 
+"sciLevel": 1,
+"balance" : 0,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["TZ"]}]
+},
+{
+"loadType" : "team", 
+"name": "Western Sahara", 
+"shortName" : "Sahara",
+"teamType" : "P",
+"code" : "WSA", 
+"sciLevel": 0,
+"balance" : 0,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["EH"]}]
+},
+{
+"loadType" : "team", 
+"name": "Central African Republic", 
+"shortName" : "CAR",
+"teamType" : "P",
+"code" : "CAR", 
+"sciLevel": 3,
+"balance" : 3,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["CF"]}]
+},
+{
+"loadType" : "team", 
+"name": "Kingdom of Eswatini (formerly Swaziland)", 
+"shortName" : "eSwatini",
+"teamType" : "P",
+"code" : "ESW", 
+"sciLevel": 2,
+"balance" : 2,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["SZ"]}]
+},
+{
+"loadType" : "team", 
+"name": "Czech Republic", 
+"shortName" : "Czechia",
+"teamType" : "P",
+"code" : "CZH", 
+"sciLevel": 1,
+"balance" : 4,
+"loadFlag" : "true",
+"parent" : [{"type" : "country", "code" : ["CZ"]}]
+}
+]
