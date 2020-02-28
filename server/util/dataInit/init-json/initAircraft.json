@@ -1468,7 +1468,7 @@
     "upgrade": false,
     "repair": false,
     "mission" : "Standby" }
-}
+},
 {
     "model" : "Aircraft",
     "type" : "Decoy",

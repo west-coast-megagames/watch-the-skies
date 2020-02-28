@@ -340,5 +340,62 @@
     "discord" : "control#9763",
     "teamCode" : "TCN",
     "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "BobtheNinjaMan",
+    "name" : {"first" : "Scott", "last" : "McMann" },
+    "email" : "smcmann42@gmail.com",
+    "phone" : "9252653724",
+    "password" : "Zilster42",
+    "address" : 
+        {"street1" : "3135 Ameno Road",
+         "street2" : "",
+         "city" : "Concord",
+         "state" : "CA",
+         "zipcode" : "94519"},
+    "dob" : "1994-06-30",
+    "gender" : "Male",
+    "discord" : "BobtheNinjaMan#4242",
+    "teamCode" : "AUS",
+    "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "Jarred",
+    "name" : {"first" : "Jarred", "last" : "Caldwell" },
+    "email" : "jdcaldwell1980@gmail.com",
+    "phone" : "9167788150",
+    "password" : "sagan",
+    "address" : 
+        {"street1" : "4041 Bunker Hill Dr",
+        "street2" : "",
+        "city" : "Shingle Springs",
+        "state" : "CA",
+        "zipcode" : "95682"},
+    "dob" : "1980-03-05",
+    "gender" : "Male",
+    "discord" : "bookrat#3468",
+    "teamCode" : "USA",
+    "roles": ["Control", "Player"]
+},
+{
+    "loadType" : "user",
+    "username" : "BardCicero",
+    "name": {"first" : "Mike", "last" : "Bowles" },
+    "email": "mjb235@gmail.com",
+    "phone" : "2099141120",
+    "password" : "BardCicero",
+    "address" : 
+        {"street1" : "2909 Stonecreek Dr",
+        "street2" : "",
+        "city" : "Sacramento",
+        "state" : "CA",
+        "zipcode" : "95833"},
+    "dob" : "1989-08-23",
+    "gender" : "Male",
+    "discord" : "BardCicero#2241",
+    "teamCode" : "RUS",
+    "roles": ["Control", "Player"]
 }
 ]
