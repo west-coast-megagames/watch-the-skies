@@ -4,7 +4,7 @@ const { Factory } = require('../../models/gov/facility/factory');
 const { Hanger } = require('../../models/gov/facility/hanger');
 const { Lab } = require('../../models/gov/facility/lab');
 const { Equipment } = require('../../models/gov/equipment/equipment');
-const { Research } = require('../../models/sci/research');
+const Research = require('../../models/sci/research');
 
 const facilityCheckDebugger = require('debug')('app:facilityCheck');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
@@ -66,7 +66,7 @@ async function chkFacility(runFlag) {
 
     if (facility.type === 'Lab'){
       //check equipment/research references
-      //facilityCheckDebugger(`Lab ${facility.name} ${facility._id} Check of Equipment ${facility.equipment.length} and project ${facility.research.length}`)
+      //facilityCheckDebugger(`Lab ${facility.name} ${facility._id} Check of Equipment ${facility.equipment.length} and research ${facility.research.length}`)
       for (let i = 0; i < facility.equipment.length; ++i){
         let eFind = await Equipment.findById(facility.equipment[i]);
         if (!eFind) {
@@ -74,7 +74,9 @@ async function chkFacility(runFlag) {
         }
       }
 
+      facilityCheckDebugger(`Lab ${facility.name} ${facility._id} Check of Research ${facility.research.length}`);
       for (let i = 0; i < facility.research.length; ++i){
+        facilityCheckDebugger(`Lab ${facility.name} ${facility._id} about to find research for ID ${facility.research[i]}`);
         let rFind = await Research.findById(facility.research[i]);
         if (!rFind) {
           logger.error(`Lab Facility ${facility.name} ${facility._id} has an invalid research reference ${i}: ${facility.research[i]}`);
