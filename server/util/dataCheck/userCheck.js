@@ -16,6 +16,11 @@ async function chkUser(runFlag) {
       logger.error(`Team link missing for User ${user.username} ${user._id}`);
     }
     
+    //has at least on role
+    if (user.roles.length < 1) {
+      logger.error(`No Roles Assigned to ${user.username} ${user._id}`);
+    } 
+
     let test1 = validateUser(user);
     if (test1.error) {
       logger.error(`User Validation Error For ${user.username} Error: ${test1.error.details[0].message}`);
