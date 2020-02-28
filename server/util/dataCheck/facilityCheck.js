@@ -74,9 +74,9 @@ async function chkFacility(runFlag) {
         }
       }
 
-      facilityCheckDebugger(`Lab ${facility.name} ${facility._id} Check of Research ${facility.research.length}`);
+      //facilityCheckDebugger(`Lab ${facility.name} ${facility._id} Check of Research ${facility.research.length}`);
       for (let i = 0; i < facility.research.length; ++i){
-        facilityCheckDebugger(`Lab ${facility.name} ${facility._id} about to find research for ID ${facility.research[i]}`);
+        //facilityCheckDebugger(`Lab ${facility.name} ${facility._id} about to find research for ID ${facility.research[i]}`);
         let rFind = await Research.findById(facility.research[i]);
         if (!rFind) {
           logger.error(`Lab Facility ${facility.name} ${facility._id} has an invalid research reference ${i}: ${facility.research[i]}`);
