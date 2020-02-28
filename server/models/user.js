@@ -18,7 +18,7 @@ const UserSchema = new Schema({
     street1: { type: String },
     street2: { type: String },
     city: { type: String },
-    state: { type: String, minlength: 2, maxlength: 2 },
+    state: { type: String, minlength: 2, maxlength: 3 },
     zipcode: { type: String, minlength: 5, maxlength: 10 }
   },
   dob: { type: Date },
@@ -63,7 +63,7 @@ function validateAddr(address) {
       street1: Joi.string().min(1).max(75),
       street2: Joi.string().empty(''),
       city: Joi.string().min(1).max(50),
-      state: Joi.string().min(2).max(2),
+      state: Joi.string().min(2).max(3),
       zipcode: Joi.string().min(5).max(10)
   };
 
