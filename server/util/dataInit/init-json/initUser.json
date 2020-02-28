@@ -38,7 +38,7 @@
  },
  { 
 "loadType" : "user",
-"username" : "HOS South Africa",
+"username" : "HOS RSA",
 "name" : {"first" : "Nelson", "last" : "M." },
 "email" : "SAfortheWin@gmail.com",
 "phone" : "9161234567",
@@ -52,7 +52,7 @@
 "dob" : "1994-05-08",
 "gender" : "Female",
 "discord" : "Money",
-"teamCode" : "RZA",
+"teamCode" : "RSA",
 "roles": ["Player"]
 },
 { 
@@ -209,10 +209,10 @@
 },
 { 
 "loadType" : "user",
-"username" : "HOS Australia",
+"username" : "HOS AUS",
 "name" : {"first" : "Sue", "last" : "Doors" },
 "email" : "SueDoors@gmail.com",
-"phone" : "916758555",
+"phone" : "9167585555",
 "password" : "PWtest",
 "address" : 
     {"street1" : "500 Easy St",
@@ -222,11 +222,10 @@
      "zipcode" : "45792"},
 "dob" : "1994-05-08",
 "gender" : "Female",
-"discord" : "Money",
+"discord" : "Money2",
 "teamCode" : "AUS",
 "roles": ["Player"]
 },
-
 {
 "loadType" : "user",
 "username" : "HOS Fed",
@@ -395,7 +394,7 @@
     "dob" : "1989-08-23",
     "gender" : "Male",
     "discord" : "BardCicero#2241",
-    "teamCode" : "RUS",
+    "teamCode" : "RFD",
     "roles": ["Control", "Player"]
 }
 ]
