@@ -19,7 +19,7 @@ async function fullInit(selStr){
     case 'All':
     case 'DropAll':
       let dropAllDone = await runDropAll(true);   // drop all tables
-      logger.debug("Drop All Done:", dropAllDone);
+      logger.debug(`Drop All Done: ${dropAllDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -28,7 +28,7 @@ async function fullInit(selStr){
     case 'RefData':
       let initDone = await runLoad(true);   // load simple reference tables/documents from refdata.json
       //console.log("Ref Init Done:", initDone);
-      logger.debug("Ref Init Done:", initDone);
+      logger.debug(`Ref Init Done: ${initDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -36,7 +36,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Team':
       let teamDone = await runTeamLoad(true);   // load expanded team fields beyond simple reference from initTeams.json
-      logger.debug("Team Load Done:", teamDone);
+      logger.debug(`Team Load Done: ${teamDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -44,7 +44,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Country':
       let countryDone = await runCountryLoad(true);   // load expanded Country fields beyond simple reference from initCountry.json
-      logger.debug("Country Load Done:", countryDone);
+      logger.debug(`Country Load Done: ${countryDone}`);
       if (selStr != 'All') {
         break;
     }
@@ -52,7 +52,7 @@ async function fullInit(selStr){
     case 'All':
     case 'BaseSite':
       let baseSiteDone = await runBaseSiteLoad(true);  // load expanded Base Sites fields
-      logger.debug("Base Sites Load Done: ", baseSiteDone);
+      logger.debug(`Base Sites Load Done: ${baseSiteDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -60,7 +60,7 @@ async function fullInit(selStr){
     case 'All':
     case 'CitySite':
       let citySiteDone = await runCitySiteLoad(true);  // load expanded City Sites fields
-      logger.debug("City Sites Load Done: ", citySiteDone);
+      logger.debug(`City Sites Load Done: ${citySiteDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -68,7 +68,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Spacecraft':
       let spacecraftDone = await runSpacecraftLoad(true);  // load expanded Spacecraft Sites fields
-      logger.debug("Spacecraft Sites Load Done: ", spacecraftDone);
+      logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -76,7 +76,7 @@ async function fullInit(selStr){
     case 'All':   
     case 'Aircraft':
       let aircraftDone = await runAircraftLoad(true);  // load expanded Aircraft fields
-      logger.debug("Aircraft Load Done: ", aircraftDone);
+      logger.debug(`Aircraft Load Done: ${aircraftDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -84,7 +84,7 @@ async function fullInit(selStr){
     case 'All':
     case 'User':
       let userDone = await runUserLoad(true);  // load expanded User fields
-      logger.debug("User Load Done: ", userDone );
+      logger.debug(`User Load Done: ${userDone}` );
       if (selStr != 'All') {
         break;
       }
@@ -92,7 +92,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Accounts':
       let accountsDone = await runAccountLoad(true);   // load expanded team accounts fields beyond simple reference from initAccounts.json
-      logger.debug("Accounts Load Done: ", accountsDone);
+      logger.debug(`Accounts Load Done: ${accountsDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -100,7 +100,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Military':  
       let militaryDone = await runMilitaryLoad(true);   // load expanded military fields initMilitary.json with gear
-      logger.debug("Military Load Done: ", militaryDone);
+      logger.debug(`Military Load Done: ${militaryDone}`);
       if (selStr != 'All') {
         break;
       }
@@ -108,7 +108,7 @@ async function fullInit(selStr){
     case 'All':
     case 'Squad':  
       let squadDone = await runSquadLoad(true);   // load expanded Squad fields initSquad.json with gear
-      logger.debug("Squad Load Done: ", squadDone);
+      logger.debug(`Squad Load Done: ${squadDone}`);
       if (selStr != 'All') {
         break;
       }      
@@ -116,7 +116,7 @@ async function fullInit(selStr){
     if (selStr = 'All') break;
 
     default:
-      logger.error("Invalid Init Load Selection:", selStr);
+      logger.error(`Invalid Init Load Selection: ${selStr}`);
     
   }
 

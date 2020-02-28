@@ -5,9 +5,7 @@ const Joi = require('joi');
 
 const CitySite = Site.discriminator('CitySite', new Schema({
   type: { type: String, default: 'City' },
-  name: { type: String, required: true, minlength: 2, maxlength: 50 },
   dateline: { type: String, default : 'Dateline'},
-  team: { type: Schema.Types.ObjectId, ref: 'Team'}
 }));
 
 function validateCity(citySite) {

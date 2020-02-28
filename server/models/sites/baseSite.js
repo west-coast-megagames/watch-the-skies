@@ -16,7 +16,6 @@ const FacilitySchema = new Schema({
 
 const BaseSite = Site.discriminator('BaseSite', new Schema({
   type: { type: String, default: 'Base' },
-  name: { type: String, required: true, minlength: 2, maxlength: 50 },
   defenses: { type: Boolean, default: false },
   facilities: [{ type: Schema.Types.ObjectId, ref: 'Facility' }],
   public: { type: Boolean, default: false }
