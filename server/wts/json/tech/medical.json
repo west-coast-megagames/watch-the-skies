@@ -10,9 +10,7 @@
     "desc": "Develops new trauma center methodology.",
     "effects": { "type": "terror", "effect": -2 },
     "unlocks": [
-        { "type": "Technology", "name": "Advanced Trauma Treatment" },
-        { "type": "Facility", "name": "Remote Trauma Center" }
-    ],
+        {"type": "Technology", "code" : "Bio3A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3C"}, { "type": "Technology", "code" : "Bio3A"}]
 },
 {   
@@ -37,7 +35,7 @@
     "field": "Biomedical",
     "desc": "Develops new forms of antibiotics.",
     "effects": {"type": "terror", "effect": -6 },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Bio2D"}],
     "breakthrough": [{"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code" : "Mil3B"}]
 },
 {   
@@ -49,7 +47,7 @@
     "field": "Biomedical",
     "desc": "Augments an individuals natural sense to increase their performance and sensitivity.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Mil2C"} ],
     "breakthrough": [{"type": "Technology", "code": "Bio3B"}, {"type": "Technology", "code" : "Mil2C"}]
 },
 {   
@@ -61,7 +59,7 @@
     "field": "Biomedical",
     "desc": "Process of generating multiple transcriptions from a single pre-mRNA using enhanced lasers.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [  ],
     "breakthrough": [{"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code" : "Bio2D"}, {"type": "Technology", "code" : "Mil3H"}]
 },
 {   
@@ -73,38 +71,41 @@
     "field": "Biomedical",
     "desc": "Develops new more controlled methods of Gene Modification.",
     "effects": {"type": "terror", "effect": -10 },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Bio2B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio2B"}]
 },
 {   
     "name": "Organ Fabrication",
     "code": "Bio2B",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" :"Biology II"}, {"type": "Knowledge", "name" :"Engineering II"}, {"type": "Knowledge", "name" :"Electronic II"}],
+    "prereq": [ {"type": "Technology", "code" : "Bio2A"}, {"type": "Technology", "code" : "Inf2G"}, {"type": "Technology", "code" : "Bio2C"},
+        {"type": "Knowledge", "name" :"Biology II"}, {"type": "Knowledge", "name" :"Engineering II"}, {"type": "Knowledge", "name" :"Electronic II"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
     "effects": {"type": "terror", "effect": -10 },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Inf3E"} ],
     "breakthrough": [{"type": "Technology", "code": "Bio3D"}]
 },
 {   
     "name": "Protein Synthesis",
     "code": "Bio2C",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" :"Genetics II"}, {"type": "Knowledge", "name" :"Biology II"}],
+    "prereq": [ 
+        {"type": "Knowledge", "name" :"Genetics II"}, {"type": "Knowledge", "name" :"Biology II"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Bio2B"}, {"type": "Technology", "code" : "Bio2D"} ],
     "breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code" : "Mil3F"}, {"type": "Technology", "code" : "Agr4C"}]
 },
 {   
     "name": "Resilient Bacteria",
     "code": "Bio2D",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" :"Genetics II"}, {"type": "Knowledge", "name" :"Biology II"}],
+    "prereq": [{"type": "Technology", "code" : "Bio1C"}, {"type": "Technology", "code" : "Bio2C"},
+        {"type": "Knowledge", "name" :"Genetics II"}, {"type": "Knowledge", "name" :"Biology II"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Bacteria resistant to infection.",
@@ -116,7 +117,8 @@
     "name": "Anti-Radiation Treatment",
     "code": "Bio3A",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" :"Genetics III"}, {"type": "Knowledge", "name" :"Physics III"}, {"type": "Knowledge", "name" :"Electronic II"}],
+    "prereq": [{"type": "Technology", "code" : "Bio1A"}, {"type": "Analysis", "code" : ""},
+        {"type": "Knowledge", "name" :"Genetics III"}, {"type": "Knowledge", "name" :"Physics III"}, {"type": "Knowledge", "name" :"Electronic II"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
@@ -128,12 +130,13 @@
     "name": "Biological Computing",
     "code": "Bio3B",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" :"Biology II"}, {"type": "Knowledge", "name" :"Genetics III"}, {"type": "Knowledge", "name" :"Computer Science III"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf3F"}, {"type": "Technology", "code" : "Mil2C"}, {"type": "Technology", "code" : "Bio3C"},
+        {"type": "Knowledge", "name" :"Biology II"}, {"type": "Knowledge", "name" :"Genetics III"}, {"type": "Knowledge", "name" :"Computer Science III"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Allows brain and software integration for diagnosis and minor programmability.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Inf3E"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code" : "Bio3D"}, {"type": "Technology", "code" : "Inf3D"}]
 },
 {   
@@ -145,7 +148,7 @@
     "field": "Biomedical",
     "desc": "Stimulates alpha brain waves to ease thoughts and reduce pain levels.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Bio3B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4A"}]
 },
 {   
@@ -157,7 +160,7 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Mil3D"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code" : "Mil4D"}]
 },
 {   

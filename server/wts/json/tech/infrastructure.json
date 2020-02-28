@@ -15,20 +15,7 @@
     ,
     "breakthrough": []
 },
-{   
-    "name": "Flexible Fabrication",
-    "code": "Inf2G",
-    "level": 2,
-  //  "prereq": [{"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Engineering II"}, "Distributed Network Capabilities"],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops new fabrication techniques.",
-    "effects": { },
-    "unlocks": [
-        { "type": "Equipment", "name": "Flexible Fabricator" }
-    ],
-    "breakthrough": []
-},
+
 
 
 
@@ -36,12 +23,13 @@
     "name": "Improved Cathodes",
     "code": "Inf1A",
     "level": 1,
-    "prereq": [{"type": "Knowledge", "name" : "Material Science I"}, {"type": "Knowledge", "name" : "Engineering I"}],
+    "prereq": [{"type": "Technology", "code" : "Inf1D"}, 
+        {"type": "Knowledge", "name" : "Material Science I"}, {"type": "Knowledge", "name" : "Engineering I"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Increased battery capacity through cathode manipulation.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Mil2B"}, {"type": "Technology", "code" : "Inf2G"}, {"type": "Technology", "code" : "Inf2A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2A"}]
 },
 {   
@@ -53,7 +41,7 @@
     "field": "Infrastructure",
     "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Inf2C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code" : "Inf2C"}, {"type": "Technology", "code" : "Agr3C"}]
 },
 {   
@@ -77,7 +65,7 @@
     "field": "Infrastructure",
     "desc": "Basic Artificial Intelligence functionality and machine learning.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Inf1A"}, {"type": "Technology", "code" : "Mil2D"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code" : "Mil2B"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
@@ -89,7 +77,7 @@
     "field": "Infrastructure",
     "desc": "Framework for large-scale implementation of faster than fiber connections.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Inf2B" }, {"type": "Technology", "code" : "Mil2E"}, {"type": "Technology", "code" : "Inf2A"}, {"type": "Technology", "code" : "Inf3D"}, {"type": "Technology", "code" : "Inf2E"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code" : "Mil2D"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
@@ -101,26 +89,41 @@
     "field": "Infrastructure",
     "desc": "Improves national recycling capacity.",
     "effects": {},
-    "unlocks": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil3C"}, {"type": "Technology", "code" : "Mil2E"}],
+    "unlocks": [{"type": "Technology", "code": "Agr 1B"}, {"type": "Technology", "code" : "Agr1A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2F"}]
+},
+{
+    "name": "Improved Disaster Response",
+    "code": "Inf1H",
+    "level": 1,
+    "prereq": [{"type": "Knowledge", "name" : "Computer Science I"}, {"type": "Knowledge", "name" : "Social Science I"}, {"type": "Knowledge", "name" : "Psychology I"}],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops new fabrication techniques.",
+    "effects": { },
+    "unlocks": [
+    ],
+    "breakthrough": []
 },
 {   
     "name": "Improved Power Grid",
     "code": "Inf2A",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" : "Physics I"}, {"type": "Knowledge", "name" : "Electronics I"}, {"type": "Knowledge", "name" : "Engineering II"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf1E"}, {"type": "Technology", "code" : "Inf1A"}, 
+        {"type": "Knowledge", "name" : "Physics I"}, {"type": "Knowledge", "name" : "Electronics I"}, {"type": "Knowledge", "name" : "Engineering II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Improves your national power grid infrastructure.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Inf3A"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil3C"}, {"type": "Technology", "code" : "Mil2E"}]
 },
 {   
     "name": "Lightwave Restructuring",
     "code": "Inf2B",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" : "Physics II"}, {"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Quantum Mechanics II"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf1E"}, {"type": "Analysis", "code" : ""},
+        {"type": "Knowledge", "name" : "Physics II"}, {"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Quantum Mechanics II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Restructuring of light waves and photons to reduce amplitude and effect of global warming.",
@@ -132,7 +135,8 @@
     "name": "Advanced Geoengineering",
     "code": "Inf2C",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" : "Material Science II"}, {"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Engineering II"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf1B"}, 
+        {"type": "Knowledge", "name" : "Material Science II"}, {"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Engineering II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
@@ -144,19 +148,21 @@
     "name": "Nanoscaling",
     "code": "Inf2D",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" : "Physical III"}, {"type": "Knowledge", "name" : "Quantum Mechanics II"}, {"type": "Knowledge", "name" : "Electronics II"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf2G"}, {"type": "Analysis", "code" : ""},
+        {"type": "Knowledge", "name" : "Physical III"}, {"type": "Knowledge", "name" : "Quantum Mechanics II"}, {"type": "Knowledge", "name" : "Electronics II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Shrinking matter of inanimate objects down to near nano levels. Limitations occur based on object's density and inherent resistances.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Inf3C"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Inf3C"}, {"type": "Technology", "code" : "Mil3A"}]
 },
 {   
     "name": "Holographic Projection",
     "code": "Inf2E",
     "level": 2,
-    "prereq": [{"type": "Knowledge", "name" : "Engineering I"}, {"type": "Knowledge", "name" : "Electronics II"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf1E"}, {"type": "Analysis", "code" : ""},
+        {"type": "Knowledge", "name" : "Engineering I"}, {"type": "Knowledge", "name" : "Electronics II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Physical emittance of an interference pattern which uses diffraction to reproduce a three-dimensional light field.",
@@ -173,19 +179,34 @@
     "field": "Infrastructure",
     "desc": "The break down of wastes into their constituent materials for re-use.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Mil3F"} ],
     "breakthrough": [{"type": "Technology", "code": "Mil4E"}]
+},
+{   
+    "name": "Flexible Fabrication",
+    "code": "Inf2G",
+    "level": 2,
+    "prereq": [ {"type": "Technology", "code" : "Inf1A"}, {"type": "Technology", "code" : "Bio2C"},
+        {"type": "Knowledge", "name" : "Computer Science II"}, {"type": "Knowledge", "name" : "Engineering II"}],
+    "type": "Technology",
+    "field": "Infrastructure",
+    "desc": "Develops new fabrication techniques.",
+    "effects": { },
+    "unlocks": [ {"type": "Technology", "code" : "Inf2D"}, {"type": "Technology", "code" : "Bio2B"}
+    ],
+    "breakthrough": []
 },
 {   
     "name": "Advanced Power Distribution",
     "code": "Inf3A",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Physics III"}, {"type": "Knowledge", "name" : "Computer Science II"}],
+    "prereq": [{"type": "Technology", "code" : "Mil3F"}, {"type": "Technology", "code" : "Inf2A"},
+        {"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Physics III"}, {"type": "Knowledge", "name" : "Computer Science II"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Improves and shields the national power grid infrastructure.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Inf3E"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code" : "Mil4A"}, {"type": "Technology", "code" : "Mil3H"}]
 },
 {   
@@ -204,7 +225,8 @@
     "name": "Nanorobotics",
     "code": "Inf3C",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" : "Electronics II"}, {"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Computer Science III"}],
+    "prereq": [{"type": "Technology", "code" : "Inf2D"},
+        {"type": "Knowledge", "name" : "Electronics II"}, {"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Computer Science III"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
@@ -216,19 +238,21 @@
     "name": "Advanced AI",
     "code": "Inf3D",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" : "Electronics II"}, {"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Computer Science III"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf1E"}, {"type": "Analysis", "code" : ""},
+        {"type": "Knowledge", "name" : "Electronics II"}, {"type": "Knowledge", "name" : "Engineering III"}, {"type": "Knowledge", "name" : "Computer Science III"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Advanced Artificial Intelligence at a larger scale. Computers will think and optimize its own components as necessary.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [{"type": "Technology", "code" : "Mil3E"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code" : "Mil3E"}, {"type": "Technology", "code" : "Mil4A"}]
 },
 {   
     "name": "Angular Momentum Optics",
     "code": "Inf3E",
     "level": 3,
-    "prereq": [{"type": "Knowledge", "name" : "Quantum Mechanics II"}, {"type": "Knowledge", "name" : "Engineering II"}, {"type": "Knowledge", "name" : "Physics III"}],
+    "prereq": [ {"type": "Technology", "code" : "Inf3A"}, {"type": "Technology", "code" : "Bio2B"},
+        {"type": "Knowledge", "name" : "Quantum Mechanics II"}, {"type": "Knowledge", "name" : "Engineering II"}, {"type": "Knowledge", "name" : "Physics III"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Photon twisting in wireless medium - allows lossless wirefree communication.",
@@ -245,7 +269,7 @@
     "field": "Infrastructure",
     "desc": "Deploys integrated smart systems.",
     "effects": { },
-    "unlocks": [ ],
+    "unlocks": [ {"type": "Technology", "code" : "Bio3B"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code" : "Inf5B"}]
 },
 {   
