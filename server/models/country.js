@@ -38,7 +38,12 @@ const CountrySchema = new Schema({
     type: Boolean,
     default: false
   },
-  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}]
+  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}],
+  stats: {
+    population: { type: String },
+    gdp: { type: String },
+    size: { type: String }
+  }
 });
 
 CountrySchema.methods.validateCountry = function (country) {
