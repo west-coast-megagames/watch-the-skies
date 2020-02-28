@@ -84,13 +84,13 @@ async function loadSpacecraft(iData){
         }
       }); 
 
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+      if (iData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.parentCode2);
+          spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.teamCode);
         } else {
           spacecraft.team  = team._id;
-          spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.parentCode1, "Team ID:", team._id);
+          spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
         }
       }      
 
@@ -137,14 +137,14 @@ async function loadSpacecraft(iData){
       spacecraft.stats        = iData.stats;
 
       
-      if (iData.parentCode1 != ""){
-        let country = await Country.findOne({ code: iData.parentCode1 });  
+      if (iData.countryCode != ""){
+        let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          spacecraftDebugger("Spacecraft Load Country Error, New Spacecraft:", iData.name, " Country: ", iData.parentCode1);
+          spacecraftDebugger("Spacecraft Load Country Error, New Spacecraft:", iData.name, " Country: ", iData.countryCode);
         } else {
           spacecraft.country = country._id;
           spacecraft.zone    = country.zone;
-          spacecraftDebugger("Spacecraft Load Country Found, New Spacecraft:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+          spacecraftDebugger("Spacecraft Load Country Found, New Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 
@@ -203,24 +203,24 @@ async function loadSpacecraft(iData){
       spacecraft.status       = iData.status;
       spacecraft.stats        = iData.stats;
 
-      if (iData.parentCode2 != ""){
-        let team = await Team.findOne({ teamCode: iData.parentCode2 });  
+      if (iData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          spacecraftDebugger("Spacecraft Load Team Error, Update Spacecraft:", iData.name, " Team: ", iData.parentCode2);
+          spacecraftDebugger("Spacecraft Load Team Error, Update Spacecraft:", iData.name, " Team: ", iData.teamCode);
         } else {
           spacecraft.team = team._id;
-          spacecraftDebugger("Spacecraft Load Update Team Found, Spacecraft:", iData.name, " Team: ", iData.parentCode2, "Team ID:", team._id);
+          spacecraftDebugger("Spacecraft Load Update Team Found, Spacecraft:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }  
       
-      if (iData.parentCode1 != ""){
-        let country = await Country.findOne({ code: iData.parentCode1 });  
+      if (iData.countryCode != ""){
+        let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          spacecraftDebugger("Spacecraft Load Country Error, Update Spacecraft:", iData.name, " Country: ", iData.parentCode1);
+          spacecraftDebugger("Spacecraft Load Country Error, Update Spacecraft:", iData.name, " Country: ", iData.countryCode);
         } else {
           spacecraft.country = country._id;
           spacecraft.zone    = country.zone;
-          spacecraftDebugger("Spacecraft Load Country Found, Update Spacecraft:", iData.name, " Country: ", iData.parentCode1, "Country ID:", country._id);
+          spacecraftDebugger("Spacecraft Load Country Found, Update Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 

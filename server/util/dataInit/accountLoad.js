@@ -44,21 +44,21 @@ async function initLoad(doLoad) {
 
   for (let i = 0; i < accountDataIn.length; ++i ) {
     
-    //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].parentCode1, accountDataIn[i].name);    
+    //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].teamCode, accountDataIn[i].name);    
     
     if (accountDataIn[i].loadType == "accounts") {     
       
-      if (accountDataIn[i].parentCode1 != ""){
-        let team = await Team.findOne({ teamCode: accountDataIn[i].parentCode1 });  
+      if (accountDataIn[i].teamCode != ""){
+        let team = await Team.findOne({ teamCode: accountDataIn[i].teamCode });  
         if (!team) {
-          accountLoadDebugger("Account Load Team Error:", accountDataIn[i].name, " Team: ", accountDataIn[i].parentCode1);
+          accountLoadDebugger("Account Load Team Error:", accountDataIn[i].name, " Team: ", accountDataIn[i].teamCode);
           continue;
         } else {
           found_team_id = team._id;
           found_owner   = team.shortName;
         }  
       } else {
-        accountLoadDebugger("Account Load Blank Team:", accountDataIn[i].name, " Team: ", accountDataIn[i].parentCode1);
+        accountLoadDebugger("Account Load Blank Team:", accountDataIn[i].name, " Team: ", accountDataIn[i].teamCode);
         continue;
       }
 
