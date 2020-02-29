@@ -32,7 +32,7 @@
     "stats": { "cargo": 0 }
 },
 {   
-    "name": "High Volacity Thrusters",
+    "name": "High Velocity Thrusters",
     "cost": 0,
     "prereq": [],
     "category": "Engine",
