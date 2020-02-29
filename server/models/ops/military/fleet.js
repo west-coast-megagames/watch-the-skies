@@ -14,8 +14,7 @@ const Fleet = Military.discriminator('Fleet', new Schema({
     localDeploy: { type: Number, default: 2 },
     globalDeploy: { type: Number, default: 5 },
     invasion: { type: Number, default: 2 },
-  },
-  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
+  }
 }));
 
 module.exports = { Fleet }

@@ -36,6 +36,7 @@ class TechList extends Component {
         return (            
                 <Table
                     isTree
+                    wordWrap
                     defaultExpandAllRows
                     rowKey="id"
                     autoHeight
@@ -50,26 +51,46 @@ class TechList extends Component {
                         return icon;
                     }}
                     >
-                    <Column width={300}>
-                        <HeaderCell>Category</HeaderCell>
+                    <Column verticalAlign='middle' width={275}>
+                        <HeaderCell>Known Technologies</HeaderCell>
                         <Cell dataKey="labelName" />
                     </Column>
 
-                    <Column flexGrow={1}>
+                    <Column align='center' verticalAlign='middle' width={50}>
                         <HeaderCell>Level</HeaderCell>
-                        <Cell dataKey="info" />
+                        <Cell dataKey="level" style={{ padding: 0 }}>
+                            {/*<div
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    //background: '#f5f5f5',
+                                    //borderRadius: 20,
+                                    //marginTop: 2,
+                                    //overflow: 'hidden',
+                                    display: 'inline-block'
+                            }}
+                            >
+                            <img src={(rowData) => {
+                                if (rowData.level !== null) {
+                                    return 'rowData[dataKey]} width="44" '
+                                }
+                                return 'rowData[dataKey]} width="44" '
+                            }}
+                        </div>*/}
+                        </Cell>
                     </Column>
 
-                    <Column flexGrow={1}>
+                    <Column align='center' verticalAlign='middle' width={150}  >
                         <HeaderCell>Current Progress</HeaderCell>
-                        <Cell dataKey="status" />
+                        <Cell dataKey="progress" />
                     </Column>
 
-                    <Column flexGrow={4}>
+                    <Column width={100} flexGrow={1} >
                         <HeaderCell>Description</HeaderCell>
-                        <Cell dataKey="location" />
+                        <Cell dataKey="desc" />
                     </Column>
-                    <Column verticalAlign='middle' width={150} fixed="right">
+
+                    <Column align='center' verticalAlign='middle' width={150} fixed="right">
                         <HeaderCell>Action</HeaderCell>
                         <Cell style={{ padding: 0 }} >
                         {rowData => {
@@ -127,13 +148,19 @@ class TechList extends Component {
                 id: id_count,
                 type: `category`,
                 labelName: field,
+                level: '--',
+                progress: '--',
+                desc: '--',
 //            status: this.props.contacts.length !== 0 ? `${this.props.contacts.length} contacts` : 'No contacts',
 //            info: `Advanced high orbit contacts...`,
                 children: research.map(el => {
                     return {
                     id:el._id,
                     type:el.type,
-                    labelName:el.name
+                    labelName:el.name,
+                    level:el.level,
+                    progress:el.progress,
+                    desc:el.desc
 //                    status:'Unknown',
 //                    location:el.country.name,
 //                    target: el,
