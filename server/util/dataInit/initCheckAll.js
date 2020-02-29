@@ -5,6 +5,7 @@ const runSiteCheck = require('../dataCheck/siteCheck');
 const runUserCheck = require('../dataCheck/userCheck');
 const runEquipmentCheck = require('../dataCheck/equipmentCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
+const runMilitaryCheck = require('../dataCheck/militaryCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -68,6 +69,15 @@ async function fullInitCheck(selStr){
         break;
       }
 
+    case 'All':
+    case 'Military':
+      let militaryCheckDone = await runMilitaryCheck(true);   // check military records
+      logger.info(`Military Check Done: ${militaryCheckDone}`);
+                
+      if (selStr != 'All') {
+        break;
+      }
+    
     if (selStr = 'All') break;
 
     default:
