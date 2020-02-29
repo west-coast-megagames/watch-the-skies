@@ -123,6 +123,6 @@ async function orbitalStrike (site) {
     return {zone, terror, reason:`An orbital strike on ${site.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
 }
 
-let terror = { battle, coverage, crisis, cityDestruction, nuclearStrike, war, industryDestruction, alienActivity, alienRaid, alienGroundForces, orbitalStrike, invasion, publicAnnouncement, }
+let terror = { battle, coverage, crisis, cityDestruction, nuclearStrike, industryDestruction, alienActivity, alienRaid, alienGroundForces, orbitalStrike, invasion, publicAnnouncement, }
 
 module.exports = terror
