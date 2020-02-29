@@ -1332,7 +1332,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "undefined",
+"base" : "FFGMA",
 "loadout": 
 ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1361,7 +1361,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "undefined",
+"base" : "FFGMA",
 "loadout": 
     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1390,7 +1390,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "undefined",
+"base" : "FFGMA",
 "loadout": 
     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1419,7 +1419,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "undefined",
+"base" : "FFGMA",
 "loadout": 
     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1448,7 +1448,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "undefined",
+"base" : "FFGMA",
 "loadout": 
     ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "stats":
@@ -1477,7 +1477,7 @@
     "zone": "AN", 
     "country": "AQ", 
     "site": "",
-    "base" : "undefined",
+    "base" : "FFGMA",
     "loadout": 
         ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
     "stats":

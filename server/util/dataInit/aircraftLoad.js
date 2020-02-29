@@ -23,7 +23,7 @@ const { Country } = require('../../models/country');
 const { Team } = require('../../models/team/team');
 const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
-const { BaseSite } = require('../../models/sites/baseSite');
+const { Site } = require('../../models/sites/site');
 const app = express();
 
 // Bodyparser Middleware
@@ -112,12 +112,13 @@ async function loadAircraft(iData){
         }
 
         if (iData.base != "" && iData.base != "undefined" ){
-          let baseSite = await BaseSite.findOne({ siteCode: iData.base });  
-          if (!baseSite) {
+          // changed to use site to handle both base and spacecraft if Alien
+          let site = await Site.findOne({ siteCode: iData.base });  
+          if (!site) {
             logger.debug(`Aircraft Load Base Error, New Aircraft:  ${iData.name}  Base:  ${iData.base}`);
           } else {
-            aircraft.baseOrig = baseSite._id;
-            logger.debug(`Aircraft Load Base Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${baseSite._id}`);
+            aircraft.baseOrig = site._id;
+            logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${site._id}`);
           }
         }      
 
@@ -217,12 +218,13 @@ async function loadAircraft(iData){
       }
 
       if (iData.base != "" && iData.base != "undefined" ){
-        let baseSite = await BaseSite.findOne({ siteCode: iData.base });  
-        if (!baseSite) {
-          logger.debug("Aircraft Load Base Error, Update Aircraft:", iData.name, " Base: ", iData.base);
+        //changed to site to handle both Base and Spacecraft (for Alien)
+        let site = await Site.findOne({ siteCode: iData.base });  
+        if (!site) {
+          logger.debug("Aircraft Load Base Site Error, Update Aircraft:", iData.name, " Base: ", iData.base);
         } else {
-          aircraft.baseOrig = baseSite._id;
-          logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", baseSite._id);
+          aircraft.baseOrig = site._id;
+          logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", site._id);
         }
       }      
 
