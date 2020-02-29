@@ -1,8 +1,10 @@
 const phaseChangeDebugging = require('debug')('app:phaseChange');
+
 const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the PR system
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
 const banking = require('../banking/banking'); // IMPORT - Banking System
 const { startResearch } = require('../research/research');
+const repairSequence = require('../construction/repair');
 
 const nexusEvent = require('../../startup/events');
 
@@ -13,16 +15,8 @@ const { logger } = require('../../middleware/winston'); // IMPORT - Winston erro
 
 async function teamPhase(turn) {
     phaseChangeDebugging(`Now changing to the team phase for ${turn}...`);
-    // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
-    setTimeout(async () => {
-        await updatePR()
-    }, 2000)
-    
-    // Iterate through set-automatic transfers [Implemented]
-    setTimeout(async () => {
-        await banking.automaticTransfer()
-    }, 4000)
-    await banking.automaticTransfer(); // Iterate through set-automatic transfers [Implemented]
+    setTimeout(async () => { await updatePR() }, 2000) // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
+    setTimeout(async () => { await banking.automaticTransfer() }, 4000) // Iterate through set-automatic transfers [Implemented]
     phaseChangeDebugging(`Done with team phase change for ${turn}!`);
     logger.info(`Turn ${turn} team phase has begun...`);
     return 0;
@@ -31,6 +25,7 @@ async function teamPhase(turn) {
 async function actionPhase(turn) {
     phaseChangeDebugging(`Now changing to the action phase for ${turn}...`)
     await resolveMissions(); // Resolve Interceptions that have been sent [coded]
+    setTimeout(async () => { await repairSequence() }, 14000)
     phaseChangeDebugging(`Done with action phase change for ${turn}!`)
     logger.info(`Turn ${turn} action phase has begun...`);
 };
