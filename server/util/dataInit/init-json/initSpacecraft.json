@@ -9,7 +9,7 @@
     { "type" : "Hanger" , "name" : "Alien Hangar A-1", "capacity": 5}
 ],
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Velocity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,

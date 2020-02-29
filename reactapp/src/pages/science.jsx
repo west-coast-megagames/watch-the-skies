@@ -2,13 +2,15 @@ import React, { Component } from 'react'; // React import
 import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlask, faAtom, faVials, faTools } from '@fortawesome/free-solid-svg-icons'
+import { faFlask, faAtom, faVials, faTools, faMicrochip } from '@fortawesome/free-solid-svg-icons'
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
 import Salvage from '../pages/tabs/sci/salvage';
 import axios from 'axios';
 import { gameServer } from '../config';
 import ResearchLabs from './tabs/sci/researchLabs';
+import TechList from './tabs/sci/techList';
+
 class Science extends Component {
     constructor() {
         super();
@@ -59,10 +61,10 @@ class Science extends Component {
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
-                    <Nav.Item eventKey="trial" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faFlask} />}> Research Labs</Nav.Item>
-                    {/* <Nav.Item eventKey="knowledge" to={`${url}/knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
-                    <Nav.Item eventKey="applied" to={`${url}/applied`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faVials} />}> Applied Tech</Nav.Item>
-                    <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools} />}> Salvage</Nav.Item> */}
+                    <Nav.Item eventKey="Research Labs" to={`${url}/Research Labs`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faFlask} />}> Research Labs</Nav.Item>
+                    <Nav.Item eventKey="Knowledge" to={`${url}/Knowledge`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtom} />}> Scientific Knowledge</Nav.Item>
+                    <Nav.Item eventKey="Tech List" to={`${url}/Tech List`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMicrochip} />}> Tech List</Nav.Item>
+                    {/* <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools faVials} />}> Salvage</Nav.Item> */}
                 </Nav>
             </Header>
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
@@ -78,17 +80,13 @@ class Science extends Component {
                             //alert={ this.props.alert }
                         />
                     )}/>
-                    <Route path={`${url}/knowledge`} render={() => (
-                        <Knowledge    
+                    <Route path={`${url}/Tech List`}  render={() => (
+                        <TechList    
                         team={ this.props.team }
                         allResearch={this.props.research}
-                        techCost={this.state.techCost}
                         //accounts={ this.props.accounts }
                         //alert={ this.props.alert }
                         />
-                    )}/>
-                    <Route path={`${url}/applied`}  render={() => (
-                        <h5>Nothing Exists here yet...</h5>
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
@@ -99,7 +97,6 @@ class Science extends Component {
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
-                        <React.Fragment>
                         <ResearchLabs 
                             allKnowledge={this.props.research}
                             facilities={this.props.facilities}
@@ -108,14 +105,14 @@ class Science extends Component {
                             fundingCost={this.state.fundingCost}
                             accounts={this.props.accounts}
                         />
-                        <br />
+                    )}/>
+                    <Route path={`${url}/Knowledge`} render={() => (
                         <Knowledge    
                             team={ this.props.team }
                             allResearch={this.props.research}
                             techCost={this.state.techCost}
                             accounts={this.props.accounts}
                         />
-                        </React.Fragment>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>

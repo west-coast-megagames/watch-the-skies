@@ -109,7 +109,7 @@
 {
     "model" : "Military",
     "name" : "South Africa Standard Attack Sub Fleet 1",
-    "team" : "RSA",
+    "team" : "RZA",
     "country" : "ZA",
     "homeBase": "ZA CPT",
     "gear" : [ "Submarine Group"],

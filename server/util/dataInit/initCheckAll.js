@@ -4,7 +4,6 @@ const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
 const runUserCheck = require('../dataCheck/userCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
-const runEquipmentCheck = require('../dataCheck/equipmentCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -58,15 +57,6 @@ async function fullInitCheck(selStr){
       if (selStr != 'All') {
         break;
       }
-
-    case 'All':
-    case 'Equipment':
-      let equipmentCheckDone = await runEquipmentCheck(true);   // check equipment records
-      logger.info(`Equipment Check Done: ${equipmentCheckDone}`);
-                
-      if (selStr != 'All') {
-        break;
-      } 
 
     if (selStr = 'All') break;
 

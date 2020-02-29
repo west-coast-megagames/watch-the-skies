@@ -57,15 +57,9 @@ async function chkAircraft(runFlag) {
     }
 
     //has at least one system
-    if (!aircraft.status.destroyed) {
-      if (aircraft.systems.length < 1) {
-        logger.error(`No Systems Assigned to ${aircraft.name} ${aircraft._id}`);
-      }
-    } else {
-      if (aircraft.systems.length > 0) {
-        logger.error(`Systems Assigned Destroyed Aircraft ${aircraft.name} ${aircraft._id}`);
-      }
-    }   
+    if (aircraft.systems.length < 1) {
+      logger.error(`No Systems Assigned to ${aircraft.name} ${aircraft._id}`);
+    } 
 
     //aircraftCheckDebugger(`Aircraft ${aircraft.name} ${aircraft._id} Check of Systems ${aircraft.systems.length}`);
     for (let i = 0; i < aircraft.systems.length; ++i){

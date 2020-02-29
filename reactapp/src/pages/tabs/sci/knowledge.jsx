@@ -33,10 +33,8 @@ class Knowledge extends Component {
     
     createTable = (knowledge) => {
         let data = this.state.data;
-        console.log(fields)
         for (let field of fields) {
             let object = {};
-            console.log(field);
             object.field = field;
             object.research = undefined;
             object.complete = []
