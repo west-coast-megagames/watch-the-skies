@@ -7,6 +7,7 @@ const runEquipmentCheck = require('../dataCheck/equipmentCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runMilitaryCheck = require('../dataCheck/militaryCheck');
 const runSquadCheck = require('../dataCheck/squadCheck');
+const runTeamCheck = require('../dataCheck/teamCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -21,6 +22,15 @@ async function fullInitCheck(selStr){
 
       let countryCheckDone = await runCountryCheck(true);   // check country records
       logger.info(`Country Check Done: ${countryCheckDone}`);
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'Team':
+      let teamCheckDone = await runTeamCheck(true);   // check team records
+      logger.info(`Team Check Done: ${teamCheckDone}`);
+    
       if (selStr != 'All') {
         break;
       }
