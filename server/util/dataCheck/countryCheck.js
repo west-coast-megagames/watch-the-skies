@@ -24,6 +24,7 @@ async function chkCountry(runFlag) {
     await checkBorderedByList(country.borderedBy, currentCode, currentCountryIdString, country.name);
 
   }
+  return true;
 };
 
 async function checkBorderedByList(bBy, curCode, curIdString, curName){
@@ -63,7 +64,6 @@ async function checkBorderedByList(bBy, curCode, curIdString, curName){
       }
     }
   }  
-  return true;
 }
 
 module.exports = chkCountry;
