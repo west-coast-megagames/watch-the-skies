@@ -109,7 +109,7 @@
 {
     "model" : "Military",
     "name" : "South Africa Standard Attack Sub Fleet 1",
-    "team" : "RZA",
+    "team" : "RSA",
     "country" : "ZA",
     "homeBase": "ZA CPT",
     "gear" : [ "Submarine Group"],
@@ -318,7 +318,7 @@
     "name" : "Brazil Standard Attack Sub Fleet 1",
     "team" : "BRZ",
     "country" : "BR",
-    "homeBase" : "BR GIG ",
+    "homeBase" : "BR GIG",
     "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
@@ -327,7 +327,7 @@
     "name" : "Australia Standard Attack Sub Fleet 1",
     "team" : "AUS",
     "country" : "AU",
-    "homeBase" : "AU SYD ",
+    "homeBase" : "AU SYD",
     "gear" : [ "Submarine Group"],
     "type" : "Fleet"
 },
@@ -516,7 +516,7 @@
     "name" : "Australia Surface Fleet 1",
     "team" : "AUS",
     "country" : "AU",
-    "homeBase" : "AU SYD ",
+    "homeBase" : "AU SYD",
     "gear" : [ "Surface Group"],
     "type" : "Fleet"
 },
@@ -650,7 +650,7 @@
     "name" : "Brazil Carrier Fleet 1",
     "team" : "BRZ",
     "country" : "BR",
-    "homeBase" : "BR GIG ",
+    "homeBase" : "BR GIG",
     "gear" : [ "Carrier Group"],
     "type" : "Fleet"
 },
@@ -857,7 +857,7 @@
     "name" : "Brazil Old Technology Corps 1",
     "team" : "BRZ",
     "country" : "BR",
-    "homeBase" : "BR GIG ",
+    "homeBase" : "BR GIG",
     "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
@@ -866,7 +866,7 @@
     "name" : "Australia Old Technology Corps 1",
     "team" : "AUS",
     "country" : "AU",
-    "homeBase" : "AU SYD ",
+    "homeBase" : "AU SYD",
     "gear" : [  "Old Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
@@ -958,7 +958,7 @@
     "name" : "Australia Modern Technology Corps 1",
     "team" : "AUS",
     "country" : "AU",
-    "homeBase" : "AU SYD ",
+    "homeBase" : "AU SYD",
     "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
@@ -1048,7 +1048,7 @@
     "name" : "Brazil Modern Technology Corps 1",
     "team" : "BRZ",
     "country" : "BR",
-    "homeBase" : "BR GIG ",
+    "homeBase" : "BR GIG",
     "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 },
@@ -1057,7 +1057,7 @@
     "name" : "Brazil Modern Technology Corps 2",
     "team" : "BRZ",
     "country" : "BR",
-    "homeBase" : "BR GIG ",
+    "homeBase" : "BR GIG",
     "gear" : [  "Modern Tech Vehicles", "Corps" ],
     "type" : "Corps"
 }

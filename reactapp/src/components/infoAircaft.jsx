@@ -81,7 +81,6 @@ class InfoAircraft extends Component {
       console.log(this.props.aircraft._id)
       let res = await axios.get(`${gameServer}api/logs`);
       let logs = res.data; 
-      logs = logs.filter(l => l.logType === 'Interception');
       logs = logs.filter(l => l.unit === this.props.aircraft._id);
       this.setState({ logs })
     } catch (err) {
@@ -163,8 +162,9 @@ function aircraftLogs(logs) {
       {logs.map(log => (
         <Timeline.Item key={log._id} style={{paddingLeft: '35px', paddingTop: '15px'}} dot={<Icon style={timelineIconStyle} icon="fighter-jet" size="2x" />}>
           <p>Turn {log.timestamp.turnNum} | {log.timestamp.turn} - {log.timestamp.phase}</p>
+          <p><b>Type:</b> {log.logType}</p>
           <p><b>Opponent</b> ENTER INFO HERE</p>
-          <p><b>Frame Damage:</b> {log.atkStats.damage.frameDmg}</p>
+          {log.logType === 'Interception' && <p><b>Frame Damage:</b> {log.atkStats.damage.frameDmg}</p>}
           <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
           <p><b>Report:</b> {log.report}</p>
         </Timeline.Item>

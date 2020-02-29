@@ -126,6 +126,7 @@ async function dmgCalc(unit, report) {
         sysDmg: systemHits > 0 ? true : false,
         dmgDesc: `${unit.name} took ${hullDmg} damage!`,
         outcome: `${unit.name} returns to base!`,
+        destroyed: false,
         salvage: salvageArray,
         aar: battleReport,
     };
@@ -134,6 +135,7 @@ async function dmgCalc(unit, report) {
         interceptDebugger(`${unit.name} shot down in combat...`);
         unit.status.destroyed = true;
         dmgReport.outcome = `${unit.name} shot down in combat...`;
+        dmgReport.destroyed = true,
         dmgReport.aar = `${dmgReport.aar} ${unit.name} shot down in combat...`;
 
         for (let i = 0; i < unit.systems.length; i++) {
