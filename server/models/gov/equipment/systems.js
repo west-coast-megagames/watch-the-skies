@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const System = Equipment.discriminator('System', new Schema({
     type: { type: String, default: 'System' },
-    category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util', 'Chassis' ] },
+    category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util' ] },
     stats: {
         hullMax: { type: Number },
         attack: { type: Number },

@@ -11,6 +11,7 @@
     "cost": 1,
     "category": "Vehicles",
     "desc": "Modern Tech Vehicle",
+    
     "stats": { "attack": 4, "defense": 3, "health": 1 }
 },
 {

@@ -16,7 +16,9 @@ const MilitarySchema = new Schema({
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
+    secret: { type: Boolean, default: false }
   },
+  hidden: { type: Boolean },
   gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 });
 

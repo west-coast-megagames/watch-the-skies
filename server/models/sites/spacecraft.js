@@ -11,26 +11,13 @@ const Spacecraft = Site.discriminator('Spacecraft', new Schema({
     required: true,
     min: 2, 
     maxlength: 50,
-    enum: ["Satellite", "Spacecraft", "Gunship", "Transport", "Hauler", "Decoy", "Station"], 
-    default: "Spacecraft"} ,
-  stats: {
-    hull: { type: Number, default: 2 },
-    hullMax: { type: Number, default: 2 },
-    damage: { type: Number, default: 1 },
-    passiveRolls: [Number],
-    activeRolls: [Number]
-  },
+    enum: ["Satellite", "Cruiser", "Battleship", "Hauler", "Station"]},
   status: {
-    aggressive: { type: Boolean, default: true },
-    passive: { type: Boolean, default: false },
-    disengage: { type: Boolean, default: false },
     damaged: { type: Boolean, default: false },
-    deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
-    ready: { type: Boolean, default: true },
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
-    mission: { type: String }
+    secret: { type: Boolean }
   },
   systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 }));

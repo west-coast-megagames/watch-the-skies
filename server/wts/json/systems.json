@@ -45,6 +45,6 @@
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": { "penetration": 1 }
+    "stats": { "type": "Fighter", "penetration": 1 }
 }
 ]

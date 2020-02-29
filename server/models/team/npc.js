@@ -6,9 +6,7 @@ const Joi = require('joi');
 const { Team } = require('./team');
 
 const Npc = Team.discriminator("Npc", new Schema({
-  type: { type: String, default: 'Npc' },
-  sciRate: { type: Number, default: 25 },
-  balance: { type: Number }
+  type: { type: String, default: 'Npc' }
 }));
 
 function validateNpc(npc) {

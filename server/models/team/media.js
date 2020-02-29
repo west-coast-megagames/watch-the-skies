@@ -6,7 +6,8 @@ const Joi = require('joi');
 const { Team } = require('./team');
 
 const Media = Team.discriminator("Media", new Schema({
-  type: { type: String, default: 'Media' }
+  type: { type: String, default: 'Media' },
+  agents: { type: Number }
 }));
 
 function validateMedia(media) {

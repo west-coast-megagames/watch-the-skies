@@ -17,16 +17,8 @@ const SquadSchema = new Schema({
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
-    repair: { type: Boolean, default: false }
-  },
-  stats: {
-    health: { type: Number, default: 2 },
-    healthMax: { type: Number, default: 2 },
-    attack: { type: Number, default: 0 },
-    defense: { type: Number, default: 2 },
-    localDeploy: { type: Number, default: 2 },
-    globalDeploy: { type: Number, default: 5 },
-    invasion: { type: Number, default: 2 },
+    repair: { type: Boolean, default: false },
+    secret: { type: Boolean }
   },
   gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 });

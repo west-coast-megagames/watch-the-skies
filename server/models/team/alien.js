@@ -8,6 +8,7 @@ const { Team, RoleSchema } = require('./team');
 const Alien = Team.discriminator("Alien", new Schema({
   type: { type: String, default: 'Alien' },
   roles: [RoleSchema],
+  actionPts: { type: Number, default: 25 },
   agents: { type: Number, min: 0, default: 0 },
   sciRate: { type: Number, default: 25 }
 }));
