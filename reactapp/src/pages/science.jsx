@@ -108,7 +108,7 @@ class Science extends Component {
                             fundingCost={this.state.fundingCost}
                             accounts={this.props.accounts}
                         />
-                        <br />
+                        <hr />
                         <Knowledge    
                             team={ this.props.team }
                             allResearch={this.props.research}

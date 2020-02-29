@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert} from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
+import { newLabCheck } from '../sci/newLabCheck'
 
 const { Column, HeaderCell, Cell } = Table;
 
-// Check if a particular lab is in an Array.  Return -1 if its a new Lab (not in array) or the index if it does exist (already in array)
-function newLabCheck(lab, labArray) {
-	let i;
-	for (i = 0; i < labArray.length; i++) {
-		if (labArray[i]._id === lab) {
-			return i;
-		}
-	}
-	return -1;
-}
+//// Check if a particular lab is in an Array.  Return -1 if its a new Lab (not in array) or the index if it does exist (already in array)
+//function newLabCheck(lab, labArray) {
+//	let i;
+//	for (i = 0; i < labArray.length; i++) {
+//		if (labArray[i]._id === lab) {
+//			return i;
+//		}
+//	}
+//	return -1;
+//}
 
 function findTechByID(_id, allKnowledge) {
 	let myResearchArray = [];
@@ -87,6 +88,10 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 		);
 	}
 };
+
+
+
+
 
 class ResearchLabs extends Component {
 	constructor() {
@@ -216,6 +221,9 @@ class ResearchLabs extends Component {
 	
 	}
 	
+
+	  
+	  
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
@@ -223,8 +231,17 @@ class ResearchLabs extends Component {
 		let sendLabUpdate = this.handleLabUpdate;
 		let sendFundingUpdate = this.handleFundingUpdate;
 		let confirmSubmit = this.confirmSubmit;
+
+
+
 		return(
 			<div>
+				<Affix>
+      				<h5 style={{display: 'inline'}}>Research Lab Assignment</h5>
+					<Tag style={{display: 'inline', float: 'right'}} color="green">$ { account.balance } MB</Tag>
+					<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} >Current Science Account Balance:</h6>
+					<hr />
+    			</Affix>
 				<Table
 					autoHeight
 					rowHeight={50}
@@ -283,6 +300,7 @@ class ResearchLabs extends Component {
 								sendFundingUpdate(updatedLab);
 							}          
 							return (
+
 								<InputNumber 
 									prefix="Funding" 
 									defaultValue={rowData.funding}
@@ -292,7 +310,7 @@ class ResearchLabs extends Component {
 									step={1} 
 									style={{ width: 140 } }
 									onChange={ handleChange }
-								/>
+									/>
 							)}}
 						</Cell>
 					</Column>
@@ -312,7 +330,7 @@ class ResearchLabs extends Component {
 									<Tag 
 										color="red">
 										$ { myCost - account.balance } MB More
-									</Tag>
+									</Tag>									
 								)
 							} else {
 								return (
@@ -325,7 +343,7 @@ class ResearchLabs extends Component {
 					</Column>
 
 					<Column verticalAlign='middle' width={120} fixed="right">
-						<HeaderCell></HeaderCell>
+						<HeaderCell/>
 						<Cell style={{ padding: 0 }} >
 						{rowData => {
 							return(
@@ -333,7 +351,7 @@ class ResearchLabs extends Component {
 									disabled={rowData.disableFunding}
 									onClick={() => confirmSubmit(rowData) }
 								>
-									Update Project
+									Lock Research
 								</Button>
 							)
 						}}	
