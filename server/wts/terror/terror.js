@@ -7,7 +7,7 @@ let gonePublic = false;
 
 async function crisis(zone, crisis) {
     let terror = d6();
-    let zone = await Zone.findById(zone);
+    zone = await Zone.findById(zone);
     zone.terror += terror;
     zone = await zone.save(); 
     console.log(`${crisis.name} has caused ${terror}pts in ${zone.zoneName}.`);
