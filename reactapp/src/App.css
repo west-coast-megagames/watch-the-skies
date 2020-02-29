@@ -24,9 +24,10 @@
 }
 
 .tabContent {
-  padding-left: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   overflow-y: auto;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
 }
 
 .game-timeline {
