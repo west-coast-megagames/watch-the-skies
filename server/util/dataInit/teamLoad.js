@@ -163,6 +163,16 @@ async function newNational(tData){
   national.roles    = tData.roles;
   national.prLevel  = tData.prLevel;
   national.agents   = tData.agents;
+
+  if (tData.homeCountry != ""){
+    let country = await Country.findOne({ code: tData.homeCountry });  
+    if (!country) {
+      teamLoadDebugger("Team Load Country Error, New Team:", tData.name, " Country: ", tData.homeCountry);
+    } else {
+      national.homeCountry = country._id;
+      teamLoadDebugger("Team Load Country Found, New Team:", tData.name, " Country: ", tData.homeCountry, "Country ID:", country._id);
+    }      
+  }
   //national.sciRate  = tData.sciRate;
 
   await national.save((err, national) => {

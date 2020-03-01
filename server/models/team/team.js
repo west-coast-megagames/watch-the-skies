@@ -16,7 +16,8 @@ const TeamSchema = new Schema({
   name: { type: String, required: true, unique: true, minlength: 2, maxlength: 50 },
   shortName: { type: String, minlength: 2, maxlength: 30 },
   teamCode: { type: String, required: true, unique: true, minlength: 2, maxlength: 3 },
-  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C', 'P'] }
+  teamType: { type: String, required: true, minlength: 1, maxlength: 1, default: 'N', enum: ['N', 'A', 'M', 'C', 'P'] },
+  homeCountry: { type: Schema.Types.ObjectId, ref: 'Country' }
 });
 
 TeamSchema.methods.validateTeam = function (team) {

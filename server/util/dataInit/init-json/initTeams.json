@@ -20,7 +20,7 @@
 "prLevel" : 5,
 "agents" : 5,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["US"]}]
+"homeCountry": "US"
 },
 {
 "loadType" : "team", 
@@ -40,7 +40,7 @@
 "prLevel" : 5,
 "agents" : 3,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["GB"]}]
+"homeCountry": "GB"
 },
 {
 "loadType" : "team",
@@ -60,7 +60,7 @@
 "prLevel" : 5,
 "agents" : 2,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["ZA"]}]
+"homeCountry": "ZA"
 },
 {
 "loadType" : "team", 
@@ -81,7 +81,7 @@
 "prLevel" : 5,
 "agents" : 3,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["RU"]}]
+"homeCountry": "RU"
 },
 {
 "loadType" : "team", 
@@ -100,7 +100,7 @@
 "prLevel" : 5,
 "agents" : 4,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["JP"]}]
+"homeCountry": "JP"
 },
 {
 "loadType" : "team", 
@@ -120,7 +120,7 @@
 "prLevel" : 5,
 "agents" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["IR"]}]
+"homeCountry": "IR"
 },
 {
 "loadType" : "team", 
@@ -140,7 +140,7 @@
 "prLevel" : 5,
 "agents" : 4,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["IN"]}]
+"homeCountry": "IN"
 },
 {
 "loadType" : "team", 
@@ -160,7 +160,7 @@
 "prLevel" : 5,
 "agents" : 3,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["FR"]}]
+"homeCountry": "FR"
 },
 {
 "loadType" : "team", 
@@ -180,7 +180,7 @@
 "prLevel" : 5,
 "agents" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["EG"]}]
+"homeCountry": "EG"
 },
 {
 "loadType" : "team", 
@@ -202,7 +202,7 @@
 "prLevel" : 5,
 "agents" : 5,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["CN"]}]
+"homeCountry": "CN"
 },
 {
 "loadType" : "team", 
@@ -222,7 +222,7 @@
 "prLevel" : 5,
 "agents" : 3,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["BR"]}]
+"homeCountry": "BR"
 },
 {
 "loadType" : "team", 
@@ -241,7 +241,7 @@
 "prLevel" : 5,
 "agents" : 2,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["AU"]}]
+"homeCountry": "AU"
 },
 {
 "loadType" : "team",
@@ -273,8 +273,7 @@
 ],
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
-"loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["GB"]}]
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
