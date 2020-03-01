@@ -1,17 +1,5 @@
 [
 {   
-    "name": "Improved Composites",
-    "code": "Inf1G",
-    "level": 1,
-    "prereq": [{"type": "Knowledge", "code": "Material Science I"}, {"type": "Knowledge", "code": "Engineering I"}],
-    "type": "Technology",
-    "field": "Infrastructure",
-    "desc": "Develops new compositing techniques for stronger metal alloys.",
-    "effects": {},
-    "unlocks": [],
-    "breakthrough": []
-},
-{   
     "name": "Improved Cathodes",
     "code": "Inf1A",
     "level": 1,
