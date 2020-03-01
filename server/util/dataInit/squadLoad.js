@@ -113,6 +113,7 @@ async function loadSquad(iData){
           newGear = await new Gear(gerRef);
           newGear.team         = squad.team;
           newGear.manufacturer = squad.team;  
+          newGear.status.building = false;
           await newGear.save(((err, newGear) => {
           if (err) {
             logger.error(`New Squad Gear Save Error: ${err}`);
@@ -191,6 +192,7 @@ async function loadSquad(iData){
           newGear = await new Gear(gerRef);
           newGear.team         = squad.team;
           newGear.manufacturer = squad.team;  
+          newGear.status.building = false;
           await newGear.save(((err, newGear) => {
             if (err) {
               logger.error(`New Squad Gear Save Error: ${err}`);
