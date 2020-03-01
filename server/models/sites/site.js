@@ -18,7 +18,8 @@ const SiteSchema = new Schema({
     geoDecimal: {
       latDecimal: { type: Number, min: -90, max: 90 },           // Positive is North, Negative is South
       longDecimal: { type: Number, min: -180, max: 180 }         // Postive is East, Negative is West 
-    }
+    },
+    hidden: {type: Boolean, default: false }                     // just in case and to be consistent
 });
 
 let Site = mongoose.model('Site', SiteSchema);

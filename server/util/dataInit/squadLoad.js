@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Squad Model - Using Mongoose Model
-const { Squad, validateSquad, updateStats } = require('../../models/ops/squad');
+const { Squad, validateSquad } = require('../../models/ops/squad');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Gear } = require('../../models/gov/equipment/gear');
@@ -145,7 +145,7 @@ async function loadSquad(iData){
         if (err) return console.error(`New Squad Save Error: ${err}`);
         squadLoadDebugger(squad.name + " add saved to squad collection.");
         logger.info(squad.name + " add saved to squad collection.");
-        updateStats(squad._id);
+        //updateStats(squad._id);
       });
     } else {
       let id = squad._id;
@@ -223,7 +223,7 @@ async function loadSquad(iData){
       await squad.save((err, squad) => {
         if (err) return console.error(`Update Squad Save Error: ${err}`);
         squadLoadDebugger(squad.name + " add saved to squad collection.");
-        updateStats(squad._id);
+        //updateStats(squad._id);
       });
     }
   } catch (err) {

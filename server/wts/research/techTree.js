@@ -18,8 +18,11 @@ function getTechTree() {
 
 async function techSeed() {
     for await (let research of await Research.find({'status.completed': true})) {
+        console.log(`JESSICA - FIX MEEH: ${research.name}`)
         for await (let tech of research.unlocks) {
+            console.log(tech)
             let newTech = techTree.find(el => el.code === tech.code);
+            console.log(newTech)
             await newTech.checkAvailable();
         }
     }

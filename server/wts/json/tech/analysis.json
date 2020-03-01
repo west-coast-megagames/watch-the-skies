@@ -1,0 +1,102 @@
+[
+{   
+"code": "Red Mercury Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}]
+},
+{   
+"code": "Biological Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil3B"}]
+},
+{   
+"code": "Communicator Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}]
+},
+{   
+"code": "Nanites Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+}
+},
+{   
+"code": "Robot Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil4D"}]
+},
+{   
+"code": "Weapon Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil2B"}]
+},
+{   
+"code": "Reactor Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4A"}]
+},
+{   
+"code": "Plasma Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}]
+},
+{   
+"code": "Environment Unit Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+}
+,
+"unlocks": [{"type": "Technology", "code": "Inf4B"}]
+}
+
+]

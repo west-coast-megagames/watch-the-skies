@@ -54,7 +54,7 @@ async function knowledgeSeed() {
     for await (let field of fields) {
         knowledgeDebugger(field);
         knowledgeDebugger(`Seed count: ${i}`) 
-            let rand = 1 + Math.floor(Math.random() * 3);
+            let rand = 1 + Math.floor(Math.random() * 5);
             knowledgeDebugger(rand);
             let seed = await knowledgeTree.find(el => el.field === field && el.level === rand);
             seeded.push(seed);

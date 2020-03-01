@@ -1,7 +1,7 @@
 // Equipment Model - Using Mongoose Model
 const { Equipment, validateEquipment } = require('../../models/gov/equipment/equipment');
 const { Gear } = require('../../models/gov/equipment/gear');
-const { Infrustructure } = require('../../models/gov/equipment/infrustructure');
+const { kit } = require('../../models/gov/equipment/kit');
 const { System } = require('../../models/gov/equipment/systems');
 
 

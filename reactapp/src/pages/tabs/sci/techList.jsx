@@ -1,7 +1,55 @@
 import React, { Component } from 'react';
-import { Table, Icon, Button } from 'rsuite';
+import { Table, Icon, Button, Progress, Affix } from 'rsuite';
+import { lookupPct } from './../../../scripts/labs';
+import sci1logo from '../../../img/sci1.svg';
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture'];
+
+
+const ProgressCell = ({ rowData, dataKey, ...props }) => {
+    let getPctResult = rowData.progressPct;
+    if (getPctResult < 0) {     // If it is -1, then its a category.  Print "--"
+        return (
+            <Cell dataKey="progress" style={{ padding: 0 }} ></Cell>
+        )
+    } else {
+        return (                // If it is >= 0, then its a research item.  Print the progress line
+            <Cell {...props} style={{ padding: 0 }}>
+                <div> <Progress.Line percent={ rowData.progressPct } status='active' /> </div>
+            </Cell>
+        )
+    }
+};
+
+
+const ImageCell = ({ rowData, dataKey, ...props }) => {
+    console.log("ROWDATA=",rowData);
+    console.log("DATAKEY=",dataKey);
+    console.log("PROPS=",props);
+    return (    
+        <Cell {...props} style={{ padding: 0 }}>
+                          {/*<div
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    //background: '#f5f5f5',
+                                    //borderRadius: 20,
+                                    //marginTop: 2,
+                                    //overflow: 'hidden',
+                                    display: 'inline-block'
+                            }}
+                            >
+                            <img src={(rowData) => {
+                                if (rowData.level !== null) {
+                                    return 'rowData[dataKey]} width="44" '
+                                }
+                                return 'rowData[dataKey]} width="44" '
+                            }}
+                        </div>*/}
+        </Cell>
+    )
+};
+
 
 class TechList extends Component {
 
@@ -17,7 +65,8 @@ class TechList extends Component {
         if (prevProps !== this.props) {
             this.loadTable();
         }
-    }
+    };
+
 
 //    async toggleDeploy(){
 //        this.setState({
@@ -26,6 +75,7 @@ class TechList extends Component {
 //    }
 
     render() {
+        let props = this.props;
 //        console.log(`Render: Count ${this.props.contacts.length}`);
 //        const { length: count } = this.props.contacts;
 //        const { account } = this.props
@@ -34,6 +84,13 @@ class TechList extends Component {
 //        //if (count === 0)
 //        //    return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (            
+            <div>
+                <Affix>
+                    <img style={{height: 50, width: 50}} src={sci1logo} alt='Terror Map' />
+                    <Icon icon="spinner" spin />
+                    <Icon icon={sci1logo} size="lg" />
+                    <hr />
+                </Affix>
                 <Table
                     isTree
                     wordWrap
@@ -42,7 +99,7 @@ class TechList extends Component {
                     autoHeight
                     data={this.state.data}
                     onExpandChange={(isOpen, rowData) => {
-//                        console.log(isOpen, rowData);
+    //                        console.log(isOpen, rowData);
                     }}
                     renderTreeToggle={(icon, rowData) => {
                         if (rowData.children && rowData.children.length === 0) {
@@ -58,7 +115,16 @@ class TechList extends Component {
 
                     <Column align='center' verticalAlign='middle' width={50}>
                         <HeaderCell>Level</HeaderCell>
-                        <Cell dataKey="level" style={{ padding: 0 }}>
+                        <Cell style={{ padding: 0 }} >
+                        {rowData => {
+                            let myImg = "";
+                            return (
+                                <div>
+                                    <Icon icon={sci1logo} size="lg" />
+                                </div>
+                            )
+                        }}
+                        </Cell>
                             {/*<div
                                 style={{
                                     width: 40,
@@ -77,12 +143,14 @@ class TechList extends Component {
                                 return 'rowData[dataKey]} width="44" '
                             }}
                         </div>*/}
-                        </Cell>
                     </Column>
 
                     <Column align='center' verticalAlign='middle' width={150}  >
                         <HeaderCell>Current Progress</HeaderCell>
-                        <Cell dataKey="progress" />
+                        <ProgressCell 
+                            allresearch={ props.allResearch }
+                            techcost={ props.techCost }
+                        />
                     </Column>
 
                     <Column width={100} flexGrow={1} >
@@ -107,29 +175,8 @@ class TechList extends Component {
                         </Cell>
                     </Column>
                 </Table>
+            </div>
         );
-    }
-
-    createTable = (knowledge) => {
-        let data = this.state.data;
-        for (let field of fields) {
-            let object = {};
-            object.field = field;
-            object.research = undefined;
-            object.complete = []
-            object.research_id = ''
-            let fieldResearch = knowledge.filter(el => el.field === field);
-            for (let el of fieldResearch) {
-                if (el.status.completed === true) {
-                    object.complete.push(el)
-                } else if (el.status.completed === false) {
-                    object.research = el
-                    object.research_id = el._id
-                }
-            };
-            data.push(object);
-        }
-        return data;
     }
 
     loadTable() {
@@ -150,17 +197,17 @@ class TechList extends Component {
                 labelName: field,
                 level: '--',
                 progress: '--',
+                progressPct: -1,
                 desc: '--',
-//            status: this.props.contacts.length !== 0 ? `${this.props.contacts.length} contacts` : 'No contacts',
-//            info: `Advanced high orbit contacts...`,
                 children: research.map(el => {
                     return {
-                    id:el._id,
-                    type:el.type,
-                    labelName:el.name,
-                    level:el.level,
-                    progress:el.progress,
-                    desc:el.desc
+                        id:el._id,
+                        type:el.type,
+                        labelName:el.name,
+                        level:el.level,
+                        progress:el.progress,
+                        progressPct:lookupPct(el._id, research, this.props.techCost),
+                        desc:el.desc
 //                    status:'Unknown',
 //                    location:el.country.name,
 //                    target: el,
@@ -172,7 +219,6 @@ class TechList extends Component {
         }    
 
         this.setState({ data })
-    
     }
 }
 
