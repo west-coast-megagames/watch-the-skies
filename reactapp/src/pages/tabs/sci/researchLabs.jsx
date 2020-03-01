@@ -271,7 +271,7 @@ class ResearchLabs extends Component {
 			}
 			let labs = this.props.facilities.filter(el => el.team !== null);
 			if (labs.length !== 0) {
-				labs = labs.filter(el => el.type === 'Lab' && el.team._id === this.props.team._id);
+				labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
 				this.setState({labs});
 			}
 			let account = this.props.accounts.filter(el => el.code === 'SCI');
