@@ -16,40 +16,12 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
     } else {
         return (                // If it is >= 0, then its a research item.  Print the progress line
             <Cell {...props} style={{ padding: 0 }}>
-                <div> <Progress.Line percent={ rowData.progressPct } status='active' /> </div>
+                <div> <Progress.Line strokeWidth={10} percent={ rowData.progressPct } status='active' /> </div>
             </Cell>
         )
     }
 };
 
-
-const ImageCell = ({ rowData, dataKey, ...props }) => {
-    console.log("ROWDATA=",rowData);
-    console.log("DATAKEY=",dataKey);
-    console.log("PROPS=",props);
-    return (    
-        <Cell {...props} style={{ padding: 0 }}>
-                          {/*<div
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    //background: '#f5f5f5',
-                                    //borderRadius: 20,
-                                    //marginTop: 2,
-                                    //overflow: 'hidden',
-                                    display: 'inline-block'
-                            }}
-                            >
-                            <img src={(rowData) => {
-                                if (rowData.level !== null) {
-                                    return 'rowData[dataKey]} width="44" '
-                                }
-                                return 'rowData[dataKey]} width="44" '
-                            }}
-                        </div>*/}
-        </Cell>
-    )
-};
 
 
 class TechList extends Component {
@@ -86,6 +58,7 @@ class TechList extends Component {
 //        //    return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (            
             <div>
+                {/*
                 <Affix>
                     <SciIcon size={50} level={0} />
                     <SciIcon size={45} level={1} />
@@ -95,9 +68,9 @@ class TechList extends Component {
                     <Icon icon={sci1logo} size="lg" />
                     <hr />
                 </Affix>
+                */}
                 <Table
                     isTree
-                    wordWrap
                     defaultExpandAllRows
                     rowKey="id"
                     autoHeight
@@ -121,10 +94,9 @@ class TechList extends Component {
                         <HeaderCell>Level</HeaderCell>
                         <Cell style={{ padding: 0 }} >
                         {rowData => {
-                            let myImg = "";
                             return (
                                 <div>
-                                    <Icon icon={sci1logo} size="lg" />
+                                    <SciIcon size={50} level={rowData.level} />
                                 </div>
                             )
                         }}
@@ -199,17 +171,15 @@ class TechList extends Component {
                 id: id_count,
                 type: `category`,
                 labelName: field,
-                level: '--',
-                progress: '--',
+                level: '',
                 progressPct: -1,
-                desc: '--',
+                desc: '',
                 children: research.map(el => {
                     return {
                         id:el._id,
                         type:el.type,
                         labelName:el.name,
                         level:el.level,
-                        progress:el.progress,
                         progressPct:lookupPct(el._id, research, this.props.techCost),
                         desc:el.desc
 //                    status:'Unknown',

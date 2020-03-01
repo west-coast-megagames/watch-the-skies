@@ -8,11 +8,11 @@ import flask4 from '../../img/sci4.svg'
 const SciIcon = (props) => {
     return (
         <React.Fragment>
-            {props.level === 0 && <img style={{height: props.size, width: props.size}} src={flask} alt='Sciience Flask' />}
-            {props.level === 1 && <img style={{height: props.size, width: props.size}} src={flask1} alt='Sciience Flask' />}
-            {props.level === 2 && <img style={{height: props.size, width: props.size}} src={flask2} alt='Sciience Flask' />}
-            {props.level === 3 && <img style={{height: props.size, width: props.size}} src={flask3} alt='Sciience Flask' />}
-            {props.level === 4 && <img style={{height: props.size, width: props.size}} src={flask4} alt='Sciience Flask' />}
+            {props.level === 0 && <img style={{height: props.size, width: props.size}} src={flask} alt='Science Flask' />}
+            {props.level === 1 && <img style={{height: props.size, width: props.size}} src={flask1} alt='Science Flask' />}
+            {props.level === 2 && <img style={{height: props.size, width: props.size}} src={flask2} alt='Science Flask' />}
+            {props.level === 3 && <img style={{height: props.size, width: props.size}} src={flask3} alt='Science Flask' />}
+            {props.level === 4 && <img style={{height: props.size, width: props.size}} src={flask4} alt='Science Flask' />}
         </React.Fragment>
     );
 }
