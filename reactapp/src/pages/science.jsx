@@ -16,7 +16,7 @@ class Science extends Component {
         super();
         this.state = {
           tab: 'dashboard',
-          allKnowledge : [],
+          allResearch : [],
           fundingCost: [],
           techCost: []
         };
@@ -28,12 +28,12 @@ class Science extends Component {
     }
 
     async loadScience() {
-        // const {data: rawData} = await axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allKnowledge"
+        // const {data: rawData} = await axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allResearch"
         const { data } = await axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
-        // const allKnowledge = this.removeDuplicates(rawData, 'name');
-        // console.log('DUPREMOVE=', allKnowledge);
+        // const allResearch = this.removeDuplicates(rawData, 'name');
+        // console.log('DUPREMOVE=', allResearch);
         this.setState({ techCost, fundingCost });
     }
 
@@ -75,7 +75,7 @@ class Science extends Component {
                     <Route path={`${url}/research`}  render={() => (
                         <Labs    
                             team={ this.props.team }
-                            allKnowledge={this.props.research}
+                            allResearch={this.props.research}
                             //accounts={ this.props.accounts }
                             //alert={ this.props.alert }
                         />
@@ -91,14 +91,14 @@ class Science extends Component {
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
                         team={ this.props.team }
-                        allKnowledge={this.props.research}
+                        allResearch={this.props.research}
                         //accounts={ this.props.accounts }
                         //alert={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
                         <ResearchLabs 
-                            allKnowledge={this.props.research}
+                            allResearch={this.props.research}
                             facilities={this.props.facilities}
                             team={this.props.team}
                             techCost={this.state.techCost}
