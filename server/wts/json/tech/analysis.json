@@ -1,102 +1,242 @@
 [
-{   
-"code": "Red Mercury Analysis",
+{ 
+"name": "Red Mercury Analysis",  
+"code": "A-1",
 "level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this red material...",
+"effect": {
+    "cost": 0,
+    "desc":"Must be discarded after successful research."
 },
-"unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}]
+"unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}],
+"breakthrough": []
 },
-{   
-"code": "Biological Analysis",
+{
+"name": "Biological Analysis",
+"code": "A-2",
 "level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this material...",
+"effect": {
+   "cost": 0,
+   "desc":"Must be discarded after successful research."
 },
-"unlocks": [{"type": "Technology", "code": "Mil3B"}]
-},
-{   
-"code": "Communicator Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-},
-"unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}]
+"unlocks": [{"type": "Technology", "code": "Bio2D"}],
+"breakthrough": []
 },
 {   
-"code": "Nanites Analysis",
+"name": "Plasma Analysis",
+"code": "A-3",
 "level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
+"prereq": [],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}],
+"breakthrough": []
+},
+{   
+"name": "Mining Unit Analysis",
+"code": "A-4",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "Shield Analysis",
+"code": "A-5",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "Laser Analysis",
+"code": "A-6",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil2B"}],
+"breakthrough": []
+},
+{   
+"name": "Nanites Analysis",
+"code": "A-7",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "Robot Analysis",
+"code": "A-8",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil4D"}],
+"breakthrough": []
+},
+{   
+"name": "Reactor Analysis",
+"code": "A-9",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4A"}],
+"breakthrough": []
+},
+{   
+"name": "Comm. Panel Analysis",
+"code": "A-10",
+"level": 2,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}],
+"breakthrough": []
+},
+{   
+"name": "Healing Device Analysis",
+"code": "A-11",
+"level": 2,
+"prereq": [],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Agr4A"}]
+},
+{   
+"name": "AI Analysis",
+"code": "A-12",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "CPU Analysis",
+"code": "A-13",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": [{"type": "Technology", "code": "Bio3B"}]
+},
+{   
+"name": "FTL Analysis",
+"code": "A-14",
+"level": 1,
+"prereq": [ ],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "Space Tools Analysis",
+"code": "A-15",
+"level": 2,
+"prereq": [],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": []
+},
+{   
+"name": "Environment Unit Analysis",
+"code": "A-16",
+"level": 2,
+"prereq": [],
+"type": "Analysis",
+"field": "Analysis",
+"desc": "We found this...",
+"effect": {
+  "cost": 0,
+  "desc":"Must be discarded after successful research."
+},
+"unlocks": [],
+"breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"},]
 }
-},
-{   
-"code": "Robot Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-},
-"unlocks": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil4D"}]
-},
-{   
-"code": "Weapon Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-},
-"unlocks": [{"type": "Technology", "code": "Mil2B"}]
-},
-{   
-"code": "Reactor Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-},
-"unlocks": [{"type": "Technology", "code": "Inf4A"}]
-},
-{   
-"code": "Plasma Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-},
-"unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}]
-},
-{   
-"code": "Environment Unit Analysis",
-"level": 1,
-"prereq": [ 
-  ],
-  "effect": {
-      "cost": 0,
-      "desc":"Must be discarded after successful research."
-}
-,
-"unlocks": [{"type": "Technology", "code": "Inf4B"}]
-}
-
 ]
