@@ -157,7 +157,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund cutting edge projects in engineering to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"type": "Technology", "code": "Agr1A"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology","code": "Mil1B"}, {"type": "Technology", "code": "Inf1G"}, {"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Inf1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Bio1E"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1A"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology","code": "Mil1B"}, {"type": "Technology", "code": "Inf1D"}, {"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Inf1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Bio1E"}]
     },
     {
         "name": "Engineering II",
@@ -167,7 +167,7 @@
         "type": "Knowledge",
         "field": "Engineering",
         "desc": "Fund advanced engineering research to advance world knowledge and develop applicable technology.",
-        "unlocks": [{"type": "Technology", "code": "Agr2A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr2C"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Mil2F"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2B"}]
+        "unlocks": [{"type": "Technology", "code": "Agr2A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr2C"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2B"}]
     },
     {
         "name": "Engineering III",
@@ -257,7 +257,7 @@
         "type": "Knowledge",
         "field": "Material Science",
         "desc": "Fund cutting edge projects in material science to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology", "code": "Mil1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1G"}, {"type": "Technology", "code": "Inf1A"}]
+        "unlocks": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology", "code": "Mil1B"}, {"type": "Technology", "code": "Inf1C"}, {"type": "Technology", "code": "Inf1A"}]
     },
     {
         "name": "Material Science II",

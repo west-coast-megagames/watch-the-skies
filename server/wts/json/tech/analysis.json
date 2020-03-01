@@ -1,6 +1,6 @@
 [
 {   
-"field": "Red Mercury Analysis",
+"code": "Red Mercury Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -11,7 +11,7 @@
 "unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}]
 },
 {   
-"field": "Biological Analysis",
+"code": "Biological Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -22,7 +22,7 @@
 "unlocks": [{"type": "Technology", "code": "Mil3B"}]
 },
 {   
-"field": "Communicator Analysis",
+"code": "Communicator Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -33,7 +33,7 @@
 "unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}]
 },
 {   
-"field": "Nanites Analysis",
+"code": "Nanites Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -43,7 +43,7 @@
 }
 },
 {   
-"field": "Robot Analysis",
+"code": "Robot Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -54,7 +54,7 @@
 "unlocks": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil4D"}]
 },
 {   
-"field": "Weapon Analysis",
+"code": "Weapon Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -65,7 +65,7 @@
 "unlocks": [{"type": "Technology", "code": "Mil2B"}]
 },
 {   
-"field": "Reactor Analysis",
+"code": "Reactor Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -76,7 +76,7 @@
 "unlocks": [{"type": "Technology", "code": "Inf4A"}]
 },
 {   
-"field": "Plasma Analysis",
+"code": "Plasma Analysis",
 "level": 1,
 "prereq": [ 
   ],
@@ -87,7 +87,7 @@
 "unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}]
 },
 {   
-"field": "Environment Unit Analysis",
+"code": "Environment Unit Analysis",
 "level": 1,
 "prereq": [ 
   ],

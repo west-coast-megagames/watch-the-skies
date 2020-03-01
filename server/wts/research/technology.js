@@ -27,6 +27,7 @@ function Technology(tech) {
                 let msg = ""
 
                 for await (let req of this.prereq) {
+                  
                   techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
                   let checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
                   let checkKnowledge = await Research.findOne({ code: req.code });
