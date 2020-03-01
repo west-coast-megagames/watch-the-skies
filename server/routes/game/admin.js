@@ -17,7 +17,7 @@ const { loadSystems, systems } = require('../../wts/construction/systems/systems
 const banking = require('../../wts/banking/banking')
 
 // MUST BUILD - Initiation
-route.get('/initialteGame', async (req, res) => {
+router.get('/initialteGame', async (req, res) => {
     try {
         // Load Knowledge
         // Load Tech
@@ -46,4 +46,6 @@ router.patch('/resethull', async function (req, res) {
     res.send("Aircrafts succesfully reset!");
     nexusEvent.emit('updateAircrafts');
 });
+
+module.exports = router
 
