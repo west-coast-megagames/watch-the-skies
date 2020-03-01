@@ -84,6 +84,7 @@ class Science extends Component {
                         <TechList    
                         team={ this.props.team }
                         allResearch={this.props.research}
+                        techCost={this.state.techCost}
                         //accounts={ this.props.accounts }
                         //alert={ this.props.alert }
                         />
