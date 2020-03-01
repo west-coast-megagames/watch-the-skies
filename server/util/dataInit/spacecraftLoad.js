@@ -349,17 +349,25 @@ async function addSatelliteToZone(satId, zoneId, teamId) {
 
 
   let useZoneId = zoneId;
-  /*
   let team = await Team.findById( teamId );
   if (team) {
-    assign useZoneId = team.zone;
+    spacecraftDebugger(`About to find home country for team ${team.name}`);
+    if (team.homeCountry) {
+      spacecraftDebugger(`Aboit to find home country for ${team.name} ${team.homeCountry}`);
+      let country = await Country.findById( {"_id": team.homeCountry} );
+      if (country) {
+        if (country.zone) {
+          useZoneId = country.zone;
+          spacecraftDebugger(`Found home country ${country.name} zone ${country.zone} for ${team.name}`);
+        }
+      }
+    }
   }
-  */
 
   let zoneUpd = await Zone.findById( useZoneId );
 
   if (!zoneUpd) {
-    spacecraftDebugger(`Unable to add satellite with id ${satId} to zone with id ${zoneId}`);
+    spacecraftDebugger(`Unable to add satellite with id ${satId} to zone with id ${useZoneId}`);
   } else {
     zoneUpd.satellite.push(satId);  
     await zoneUpd.save();
