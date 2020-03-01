@@ -140,12 +140,15 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
 };
 
 async function completeTech (research) {
-    knowledgeDebugger(`Enough progress has been made to complete ${research.name}...`);
+    researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.availible = false;
     research.status.completed = true;
+    
+    researchDebugger(research.unlocks)
 
     for await (let item of research.unlocks) {
-        techDebugger(`${item.type} - ${item.name}`);
+        researchDebugger(`${item.type} - ${item.name}`);
+
     }
 
     reserach = await research.save();
