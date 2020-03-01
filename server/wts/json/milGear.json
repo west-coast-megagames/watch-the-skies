@@ -1,70 +1,77 @@
 [
 {
     "name": "Old Tech Vehicles",
-    "cost": 1,
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Old Tech Vehicle",
     "stats": { "attack": 2 }
 },
 {
     "name": "Modern Tech Vehicles",
-    "cost": 1,
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Modern Tech Vehicle",
     "stats": { "attack": 4, "defense": 3, "health": 1 }
 },
 {
     "name": "Marine Vehicles",
-    "cost": 1,
+    "cost": 0,
+    "category": "Vehicles",
+    "desc": "Vehicles that allow for amphibious assults",
+    "stats": { "attack": 4, "defense": 2 }
+},
+{
+    "name": "Futuristic Vehicles",
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Marine Vehicle",
     "stats": { "attack": 4, "defense": 2 }
 },
 {
     "name": "Carrier Group",
-    "cost": 1,
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Fleet Carrier Group",
     "stats": { "attack": 6, "defense": 2 }
 },
 {
     "name": "Submarine Group",
-    "cost": 1,
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Fleet Submarine Group",
     "stats": { "attack": 5, "defense": 1 }
 },
 {
     "name": "Surface Group",
-    "cost": 1,
+    "cost": 0,
     "category": "Vehicles",
     "desc": "Fleet Surface Group",
     "stats": { "attack": 4, "defense": 1 }
 },
 {
     "name": "Militia",
-    "cost": 1,
+    "cost": 0,
     "category": "Training",
     "desc": "Militia Training",
     "stats": { "health": 2 }
 },
 {
     "name": "Insurgents",
-    "cost": 1,
+    "cost": 0,
     "category": "Training",
     "desc": "Insurgent Training",
     "stats": { "health": 2, "defense": 1 }
 },
 {
     "name": "Corps",
-    "cost": 1,
+    "cost": 0,
     "category": "Training",
     "desc": "Corps Training",
     "stats": { "health": 2 }
 },
 {
     "name": "Marine",
-    "cost": 1,
+    "cost": 0,
     "category": "Training",
     "desc": "Marine Training",
     "stats": { "health": 1, "defense": 1 }
