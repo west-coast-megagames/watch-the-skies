@@ -91,6 +91,12 @@ async function runInterceptions () {
         missionDebugger(`Mission #${count} - Intercept Mission`)
         let stance = 'passive' // Targets stance for interception defaults to 'passive'
         let aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems');
+
+        if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+            console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+            continue;
+        } 
+        
         let target = await Aircraft.findById(interception.target).populate('systems');
         missionDebugger(`${aircraft.name} vs. ${target.name}`);
         let atkReport = `${aircraft.name} is attempting to engage a contact in ${aircraft.country.name} airspace.`;
@@ -101,6 +107,14 @@ async function runInterceptions () {
         atkReport = escortCheck.atkReport;
         defReport = escortCheck.defReport;
         
+        if (target.status.destroyed || target.systems.length < 1) {
+            atkReport = `${atkReport} Target has been shot down prior to engagement.`;
+            missionDebugger(atkReport);
+            // Intercept Report
+
+            continue;
+        }
+
         missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
         atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
         await intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
@@ -114,6 +128,12 @@ async function runTransports () {
         count++ // Count iteration for each mission
         missionDebugger(`Mission #${count} - Transport Mission`);
         let aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems');
+
+        if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+            console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+            continue;
+        }
+
         let target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
         missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
         let atkReport = `${aircraft.name} hauling cargo through ${aircraft.country.name} airspace from ${target.name}`;
@@ -150,6 +170,15 @@ async function runRecon() {
         let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
         if (aircraft.status.mission === 'Recon Aircraft') {
             let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
+            
+            if (target.status.destroyed || target.systems.length < 1) {
+                atkReport = `${atkReport} Target has been shot down prior to recon.`;
+                console.log(atkReport);
+                // Recon Report
+
+                continue;
+            }
+            
             let escortCheck = await checkEscort(recon.target, atkReport)
 
             target = escortCheck.target;
