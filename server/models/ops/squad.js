@@ -73,6 +73,7 @@ function validateSquad(squad) {
   return Joi.validate(squad, schema, { "allowUnknown": true });
 };
 
+/* does not have stats
 async function updateStats(id) {
   let squad = await Squad.findById(id).populate('gear');
   let { stats } = squad
@@ -93,5 +94,6 @@ async function updateStats(id) {
 
   return;
 }
+*/
 
-module.exports = { Squad, validateSquad, updateStats }
+module.exports = { Squad, validateSquad }

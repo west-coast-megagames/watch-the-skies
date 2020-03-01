@@ -25,7 +25,7 @@ const ZoneSchema = new Schema({
             max: 250,
             default: 0
         },
-  sattillite: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
+  satellite: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
   
 });
 
