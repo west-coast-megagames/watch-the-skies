@@ -9,7 +9,7 @@
     "field": "Infrastructure",
     "desc": "Increased battery capacity through cathode manipulation.",
     "effects": {},
-    "unlocks": [{"type": "Technology", "code": "Inf2F"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}],
+    "unlocks": [{"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Inf2F"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2A"}]
 },
 {   
@@ -32,8 +32,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Developments new composite materials for future construction.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf2C"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Inf2C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Mil2D"}]
 },
 {   
@@ -44,8 +44,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Basic Artificial Intelligence functionality and machine learning.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Mil2D"} ],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Inf1A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}]
 },
 {   
@@ -56,8 +56,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Framework for large-scale implementation of faster than fiber connections.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf2E"} ],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf2E"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Mil2D"}, {"type": "Technology", "code": "Mil2E"}]
 },
 {   
@@ -80,9 +80,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new fabrication techniques.",
-    "effects": { },
-    "unlocks": [
-    ],
+    "effects": {},
+    "unlocks": [],
     "breakthrough": []
 },
 {   
@@ -94,8 +93,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Improves your national power grid infrastructure.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Inf3A"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Inf3A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Mil2E"}]
 },
 {   
@@ -106,8 +105,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Restructuring of light waves and photons to reduce amplitude and effect of global warming.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf2E"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf2E"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Mil3H"}]
 },
 {   
@@ -118,7 +117,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Agr5A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf4F"}]
 },
@@ -130,8 +129,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Shrinking matter of inanimate objects down to near nano levels. Limitations occur based on object's density and inherent resistances.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf3C"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Mil3A"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf3C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3A"}]
 },
 {   
@@ -142,7 +141,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Physical emittance of an interference pattern which uses diffraction to reproduce a three-dimensional light field.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4D"}]
 },
@@ -154,8 +153,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "The break down of wastes into their constituent materials for re-use.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil3F"} ],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Inf4G"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4E"}]
 },
 {   
@@ -166,7 +165,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new fabrication techniques.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Bio2B"}],
     "breakthrough": []
 },
@@ -178,8 +177,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Improves and shields the national power grid infrastructure.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf4A"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Inf4A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil3H"}]
 },
 {   
@@ -190,7 +189,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Allows raising or lowering of temperature by a few degrees or wind by a few MPH over a small area.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Inf4B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4B"}]
 },
@@ -202,8 +201,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil4J"}, {"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Mil4J"}]
 },
 {   
@@ -214,8 +213,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Advanced Artificial Intelligence at a larger scale. Computers will think and optimize its own components as necessary.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4A"}]
 },
 {   
@@ -226,32 +225,32 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Photon twisting in wireless medium - allows lossless wirefree communication.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf3F"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf3F"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Mil3C"}]
 },
 {   
     "name": "Smart Systems",
     "code": "Inf3F",
     "level": 3,
-    "prereq": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1D"}, {"type": "Knowledge", "code": "Computer Science III"}, {"type": "Knowledge", "code": "Engineering III"}, {"type": "Knowledge", "code": "Electronics III"}],
+    "prereq": [{"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1D"}, {"type": "Knowledge", "code": "Computer Science III"}, {"type": "Knowledge", "code": "Engineering III"}, {"type": "Knowledge", "code": "Electronics III"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Deploys integrated smart systems.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf4F"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf4F"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code": "Inf5B"}]
 },
 {   
     "name": "Red Mercury Mining",
     "code": "Inf3G",
     "level": 3,
-    "prereq": [{"type": "Analysis", "code": "Non-terrestial Material Analysis"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Knowledge", "code": "Computer Science II"}, {"type": "Knowledge", "code": "Quantum Mechanics II"}, {"type": "Knowledge", "code": "Material Science III"}],
+    "prereq": [{"type": "Analysis", "code": "Red Mercury Analysis Analysis"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Knowledge", "code": "Computer Science II"}, {"type": "Knowledge", "code": "Quantum Mechanics II"}, {"type": "Knowledge", "code": "Material Science III"}],
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops Red Mercury mining capability.",
-    "effects": { },
-    "unlocks": [],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4P"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Mil4P"}]
 },
 {   
@@ -262,8 +261,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops viable fusion reactor technology for Fusion Power.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf5C"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Inf5C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Mil4M"}]
 },
 {   
@@ -274,7 +273,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Weather changes over a small area not usually lasting very long. Allows rain to fall in areas of drought and sunshine in areas where needed. Severe changes to weather not possible.",
-    "effects": { },
+    "effects": {},
     "unlocks": [],
     "breakthrough": []
 },
@@ -286,8 +285,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Basic supercomputing with machine optimization. Used on a large network scale, mimicking the human brain.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5D"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5D"}],
     "breakthrough": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5D"}]
 },
 {   
@@ -298,8 +297,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Pinnacle systems of light emitting technology, allowing realistic viewpoints and interaction with individuals.",
-    "effects": { },
-    "unlocks": [],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4H"}]
 },
 {   
@@ -310,8 +309,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops Plasma mining capability.",
-    "effects": { },
-    "unlocks": [],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4H"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Mil4J"}]
 },
 {   
@@ -322,8 +321,8 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Megastructures for densely populated, ecologically low-impact human habitats, reducing human impact on natural resources.",
-    "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf4G"}],
+    "effects": {},
+    "unlocks": [{"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Inf4G"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Agr5A"}]
 },
 {   
@@ -334,7 +333,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Buildings or structures built to climb into the stratosphere.",
-    "effects": { },
+    "effects": {},
     "unlocks": [],
     "breakthrough": []
 },
@@ -346,7 +345,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Faster Than Light communication for deep space interaction.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Inf5B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf5B"}]
 },
@@ -358,7 +357,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops and deploys a fully sentient distributed AI network.",
-    "effects": { },
+    "effects": {},
     "unlocks": [],
     "breakthrough": []
 },
@@ -370,7 +369,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "A process in which quantum information (e.g. the exact state of an atom or photon) can be transmitted (exactly, in principle) from one location to another.",
-    "effects": { },
+    "effects": {},
     "unlocks": [],
     "breakthrough": []
 }
