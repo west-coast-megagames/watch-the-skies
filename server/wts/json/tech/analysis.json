@@ -237,6 +237,6 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"},]
+"breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}]
 }
 ]
