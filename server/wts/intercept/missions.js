@@ -146,7 +146,7 @@ async function runTransports () {
             // Make a mission log
             // Schedule a ground mission.
 
-            aircraft.status.mission = "Docked"
+            aircraft.mission = "Docked"
             aircraft.status.ready = true;
             aircraft.status.deployed = false;
             aircraft.country = aircraft.baseOrig.country;
@@ -168,7 +168,7 @@ async function runRecon() {
         missionDebugger(`Mission #${count} - Recon Mission`);
         let aircraft = await Aircraft.findById(recon.aircraft).populate('country', 'name').populate('systems').populate('baseOrig');
         let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
-        if (aircraft.status.mission === 'Recon Aircraft') {
+        if (aircraft.mission === 'Recon Aircraft') {
             let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
             
             if (target.status.destroyed || target.systems.length < 1) {
@@ -202,7 +202,7 @@ async function runRecon() {
 
                 console.log(aircraft)
 
-                aircraft.status.mission = "Docked"
+                aircraft.mission = "Docked"
                 aircraft.status.ready = true;
                 aircraft.status.deployed = false;
                 aircraft.country = aircraft.baseOrig.country;
@@ -222,7 +222,7 @@ async function runRecon() {
 
                 return 0;
             }
-        } else if (aircraft.status.mission === 'Recon Site') {
+        } else if (aircraft.mission === 'Recon Site') {
             let patrolCheck = await checkPatrol(recon.target, atkReport, aircraft);
             let target = await Site.findById(recon.target); // Loading Aircraft that the recon is heading to.
             if (patrolCheck === 'continue') {
@@ -242,7 +242,7 @@ async function runRecon() {
                 MissionReport.saveReport()
 
                 console.log(aircraft)
-                aircraft.status.mission = "Docked"
+                aircraft.mission = "Docked"
                 aircraft.status.ready = true;
                 aircraft.status.deployed = false;
                 aircraft.country = aircraft.baseOrig.country;
@@ -265,7 +265,7 @@ async function runDiversions () {
 
         // Diversion mission log
 
-        aircraft.status.mission = "Docked"
+        aircraft.mission = "Docked"
         aircraft.status.ready = true;
         aircraft.status.deployed = false;
         aircraft.country = aircraft.baseOrig.country;

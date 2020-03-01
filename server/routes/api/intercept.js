@@ -29,7 +29,7 @@ router.put('/', async (req, res) => {
     result = `${aircraft.name} launching.`;
     aircraft.country = target.country;
     aircraft.zone = target.zone;
-    aircraft.status.mission = mission;
+    aircraft.mission = mission;
     
     routeDebugger(aircraft);
 

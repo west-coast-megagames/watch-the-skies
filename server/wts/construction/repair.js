@@ -10,7 +10,7 @@ async function repairSequence () {
             aircraft.status.damaged = false;
             aircraft.status.ready = true;
             aircraft.status.repair = false;
-            aircraft.status.mission = 'Ready'
+            aircraft.mission = 'Ready'
 
             await aircraft.save();
             nexusEvent.emit('updateAircraft');

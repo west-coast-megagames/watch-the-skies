@@ -346,7 +346,7 @@ router.patch('/return', async function (req, res) {
     let count = 0;
     for await (const aircraft of Aircraft.find()) {  
       if (aircraft.site.toHexString() !== aircraft.baseOrig.toHexString() || aircraft.status.deployed) {
-        aircraft.status.mission = "Docked"
+        aircraft.mission = "Docked"
         aircraft.status.ready = true;
         aircraft.status.deployed = false;
         aircraft.country = aircraft.baseOrig.country;

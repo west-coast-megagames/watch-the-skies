@@ -47,7 +47,7 @@ async function launchSpacecraft (spacecraft) {
     modelDebugger(`Attempting to launchSpacecraft ${spacecraft.name}`)
     spacecraft.status.deployed = true;
     spacecraft.status.ready = false;
-    spacecraft.status.mission = true;
+    spacecraft.mission = "Deployed";
 
     modelDebugger(spacecraft);
 

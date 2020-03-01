@@ -164,7 +164,7 @@ async function applyDmg(unit) {
     update.systems = unit.systems;
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;
-    update.status.mission = "Docked"
+    update.mission = "Docked"
     update.status.ready = true;
     update.status.deployed = false;
     update.country = update.baseOrig.country;
