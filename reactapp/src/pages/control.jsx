@@ -58,6 +58,9 @@ class Control extends Component {
                                 <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
                                     Update Aircraft
                                 </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.restoreAircraft() }>
+                                    Restore Location
+                                </MDBBtn>
                             </MDBBtnGroup>
                         </div>
                         <hr />
@@ -146,7 +149,16 @@ class Control extends Component {
 
     repairAll = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/control/resethull`)
+            const response = await axios.patch(`${gameServer}game/admin/resethull`)
+            this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    restoreAircraft = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/interceptor/restore`)
             this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })

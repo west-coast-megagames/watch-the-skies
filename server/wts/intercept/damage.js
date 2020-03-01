@@ -158,8 +158,8 @@ async function applyDmg(unit) {
     if (update.team.teamType === 'A') {
         return 0;
     }
-    interceptDebugger(unit);
-    interceptDebugger(update);
+    // interceptDebugger(unit);
+    // interceptDebugger(update);
 
     update.systems = unit.systems;
     update.stats.hull = unit.stats.hull;

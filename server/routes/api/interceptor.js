@@ -343,25 +343,38 @@ router.patch('/resethull', auth, async function (req, res) {
 // @desc    Update all aircrafts to return to base
 // @access  Public
 router.patch('/return', async function (req, res) {
-    for await (const aircraft of Aircraft.find()) {    
-        aircraft.status.deployed = false;
+    let count = 0;
+    for await (const aircraft of Aircraft.find()) {  
+      if (aircraft.site.toHexString() !== aircraft.baseOrig.toHexString() || aircraft.status.deployed) {
+        aircraft.status.mission = "Docked"
         aircraft.status.ready = true;
-        console.log(aircraft);
+        aircraft.status.deployed = false;
+        aircraft.country = aircraft.baseOrig.country;
+        aircraft.site = aircraft.baseOrig._id
+        aircraft.zone = aircraft.baseOrig.zone
         await aircraft.save();
+        count++
+      }
     }
-    res.send("Aircrafts succesfully returned!");
+    res.status(200).send(`${count} aircrafts succesfully returned!`);
     nexusEvent.emit('updateAircrafts');
+    
 });
 
-// @route   PATCH api/aircraft/china
+// @route   PATCH api/aircraft/restore
 // @desc    Update all aircrafts to be deployed
 // @access  Public
-router.patch('/china', async function (req, res) {
-    for await (const aircraft of Aircraft.find({ name: /PRC/i })) {    
-        aircraft.status.deployed = true;
-        await aircraft.save();
+router.patch('/restore', async function (req, res) {
+  let count = 0;
+    for await (let aircraft of Aircraft.find().populate('baseOrig')) {    
+      aircraft.country = aircraft.baseOrig.country;
+      aircraft.site = aircraft.baseOrig._id
+      aircraft.zone = aircraft.baseOrig.zone
+      await aircraft.save();
+      count++
     }
-    res.send("China's aircraft deployed...");
+    res.send("Restore Base...");
+    nexusEvent.emit('updateAircrafts');
 });
 
 module.exports = router;

@@ -1,4 +1,10 @@
 const salvageDebugger = require('debug')('app:intercept - salvage');
+const { Site } = require('../../models/sites/site')
+const { CrashSite } = require('../../models/sites/crashSite');
+const { d4 } = require('../../util/systems/dice')
+const geo = require('../../util/systems/geo') 
+
+let count = 0;
 
 async function generateSalvage (system, status) {
     const { Team } = require('../../models/team/team');
@@ -14,4 +20,55 @@ async function generateSalvage (system, status) {
     return system;
 }
 
-module.exports = { generateSalvage }
+async function generateCrash (salvage, site, country) {
+    let currentSite = await Site.findById({_id: site}).populate('country');
+
+    salvageDebugger(currentSite);
+    salvageDebugger(salvage);
+
+    let newDMS = {
+        latDMS: decimalCrash(currentSite.geoDecimal.latDecimal, false),
+        longDMS: decimalCrash(currentSite.geoDecimal.longDecimal, true) 
+    }
+
+    let newDecimal = geo.parseDMS(`${newDMS.latDMS} ${newDMS.longDMS}`)
+
+    let crash = {
+        name: `${currentSite.country.name} Crash - ${currentSite.country.code}0${count}`,
+        team: currentSite.team,
+        country: currentSite.country,
+        zone: currentSite.zone,
+        siteCode: `${currentSite.country.code}0${count}`,
+        geoDMS: newDMS,
+        geoDecimal: newDecimal,
+        salvage: [...salvage],
+        status: {
+            public: false,
+            secret: true
+        }
+    }
+
+    console.log(crash)
+}
+
+
+function decimalCrash(dd, isLng) {
+    let rand = d4()
+    let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+    
+    let dir = dd < 0
+      ? isLng ? 'W' : 'S'
+      : isLng ? 'E' : 'N';
+  
+    let absDd = Math.abs(dd);
+    let deg = absDd | 0;
+    let frac = absDd - deg;
+    let min = (frac * 60) | 0;
+    let sec = frac * 3600 - min * 60;
+
+    // Round it to 2 decimal points.
+    sec = Math.round(sec * 100) / 100;
+    return deg + "°" + (min + (rand * plusOrMinus)) + "'" + sec + '"' + dir;
+  }
+
+module.exports = { generateSalvage, generateCrash }

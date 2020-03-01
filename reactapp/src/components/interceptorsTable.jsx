@@ -13,7 +13,7 @@ class Interceptors extends Component {
     }
 
     getLocation = (aircraft) => {
-        let location = aircraft.country.name !== undefined ? aircraft.country.name : aircraft.country.name;
+        let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
         return location;
     }
 
