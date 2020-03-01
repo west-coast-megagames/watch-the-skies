@@ -4,7 +4,6 @@
 "code" : "USBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar A-1", "capacity": 5},
     { "type" : "Lab", "name" : "USA Lab H-1", "capacity": 1, "hidden": true}
@@ -21,7 +20,6 @@
 "code" : "USBB",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering B-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab B-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar B-1", "capacity": 5}
 ],
@@ -37,7 +35,6 @@
 "code" : "GBBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "TUK Lab H-1", "capacity": 1, "hidden": true}
@@ -54,7 +51,6 @@
 "code" : "ZABA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "RSA Lab H-1", "capacity": 1, "hidden": true}
@@ -71,7 +67,6 @@
 "code" : "RUBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "RFD Lab H-1", "capacity": 1, "hidden": true}
@@ -88,7 +83,6 @@
 "code" : "JPBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "JPN Lab H-1", "capacity": 1, "hidden": true}
@@ -105,7 +99,6 @@
 "code" : "IRBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "IRN Lab H-1", "capacity": 1, "hidden": true}
@@ -122,7 +115,6 @@
 "code" : "INBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "IND Lab H-1", "capacity": 1, "hidden": true}
@@ -139,7 +131,6 @@
 "code" : "FRBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "TFR Lab H-1", "capacity": 1, "hidden": true}
@@ -156,7 +147,6 @@
 "code" : "EGBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "EPT Lab H-1", "capacity": 1, "hidden": true}
@@ -173,7 +163,6 @@
 "code" : "CNBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "PRC Lab H-1", "capacity": 1, "hidden": true}
@@ -190,7 +179,6 @@
 "code" : "BRBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "BRZ Lab H-1", "capacity": 1, "hidden": true}
@@ -207,7 +195,6 @@
 "code" : "AUBA",
 "baseDefenses" : false,
 "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
     { "type" : "Lab", "name" : "AUS Lab H-1", "capacity": 1, "hidden": true}
@@ -225,7 +212,6 @@
  "code" : "FFGBA",
  "baseDefenses" : false,
  "facilities" :  [
-    { "type" : "Factory", "name" : "Engineering A-1", "capacity": 1},
     { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
     { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5}
 ],
@@ -241,7 +227,6 @@
         "code" : "TCNBA",
         "baseDefenses" : false,
         "facilities" :  [
-            { "type" : "Factory", "name" : "TCN Engineering A-1", "capacity": 1},
             { "type" : "Lab", "name" : "TCN Lab  A-1", "capacity": 1},
             { "type" : "Hanger" , "name" : "TCN Hangar  A-1", "capacity": 5}
         ],
