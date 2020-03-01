@@ -5,7 +5,7 @@ class Interceptors extends Component {
     retreiveStatus = (aircraft) => {
       if (!aircraft.status.deployed) {
         return 'Idle';
-      } else if (aircraft.status.deployed && aircraft.status.mission !== false ){
+      } else if (aircraft.status.deployed && aircraft.mission !== "Standby" ){
         return 'Intercepting Target...';
       } else if (aircraft.status.deployed) {
         return 'On mission...';

@@ -30,6 +30,10 @@ async function chkEquipment(runFlag) {
       logger.error(`Equipment Validation Error For ${equipment.name} Error: ${error.details[0].message}`);
     }
 
+    if (equipment.status.building) {
+      logger.info(`Equipment Status Is Building For ${equipment.name} ${equipment._id}`);
+    }
+
   }
   return true;
 };

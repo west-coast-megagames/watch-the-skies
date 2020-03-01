@@ -21,8 +21,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -47,8 +48,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -73,8 +75,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -99,8 +102,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -125,8 +129,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -151,8 +156,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+  },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -177,8 +183,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -203,8 +210,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+  },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -229,8 +237,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -255,8 +264,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -281,8 +291,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -307,8 +318,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -333,8 +345,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -359,8 +372,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },    
 {
 "model" : "Aircraft",
@@ -385,8 +399,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -411,8 +426,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"
 },    
 {
 "model" : "Aircraft",
@@ -437,8 +453,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -463,8 +480,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -489,8 +507,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -515,8 +534,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair" : false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -541,8 +561,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -567,8 +588,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -593,8 +615,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -619,8 +642,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -645,8 +669,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -671,8 +696,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -697,8 +723,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -723,8 +750,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -749,8 +777,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -775,8 +804,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -801,8 +831,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -827,8 +858,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -853,8 +885,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -879,8 +912,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -905,8 +939,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -931,8 +966,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -957,8 +993,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -983,8 +1020,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1009,8 +1047,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1035,8 +1074,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1061,8 +1101,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1087,8 +1128,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1113,8 +1155,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1139,8 +1182,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1165,8 +1209,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1191,8 +1236,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1217,8 +1263,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1243,8 +1290,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1269,8 +1317,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1295,8 +1344,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1321,8 +1371,9 @@
     "destroyed" : false,
     "ready" : true,
     "upgrade" : false,
-    "repair" : false,
-    "mission" : "Standby"}
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1350,8 +1401,9 @@
     "destroyed": false,
     "ready": true,
     "upgrade": false,
-    "repair": false,
-    "mission" : "Standby" }
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1379,8 +1431,9 @@
     "destroyed": false,
     "ready": true,
     "upgrade": false,
-    "repair": false,
-    "mission" : "Standby" }
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1408,8 +1461,9 @@
     "destroyed": false,
     "ready": true,
     "upgrade": false,
-    "repair": false,
-    "mission" : "Standby" }
+    "repair": false
+     },
+"mission" : "Standby"
 },
 {
 "model" : "Aircraft",
@@ -1437,8 +1491,9 @@
     "destroyed": false,
     "ready": true,
     "upgrade": false,
-    "repair": false,
-    "mission" : "Standby" }
+    "repair": false
+    },
+"mission" : "Standby"    
 },
 {
 "model" : "Aircraft",
@@ -1466,8 +1521,9 @@
     "destroyed": false,
     "ready": true,
     "upgrade": false,
-    "repair": false,
-    "mission" : "Standby" }
+    "repair": false
+    },
+"mission" : "Standby"
 },
 {
     "model" : "Aircraft",
@@ -1495,7 +1551,8 @@
         "destroyed": false,
         "ready": true,
         "upgrade": false,
-        "repair": false,
-        "mission" : "Standby" }
+        "repair": false
+        },
+    "mission" : "Standby"
     }
 ]

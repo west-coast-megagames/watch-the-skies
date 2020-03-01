@@ -69,7 +69,8 @@ async function loadAircraft(iData){
        // New Aircraft here
        let aircraft = new Aircraft({ 
            name: iData.name,
-           type: iData.type
+           type: iData.type,
+           mission: iData.mission
         }); 
 
         aircraft.stats  = iData.stats;
@@ -95,6 +96,7 @@ async function loadAircraft(iData){
             newSystem = await new System(sysRef);
             newSystem.team         = aircraft.team;
             newSystem.manufacturer = aircraft.team;  
+            newSystem.status.building = false;
             //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
             await newSystem.save(((err, newSystem) => {
               if (err) {
@@ -188,6 +190,7 @@ async function loadAircraft(iData){
       aircraft.type        = iData.type;
       aircraft.status      = iData.status;
       aircraft.stats       = iData.stats;
+      aircraft.mission     = iData.mission;
 
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });  
@@ -208,6 +211,7 @@ async function loadAircraft(iData){
           newSystem = await new System(sysRef);
           newSystem.team   = aircraft.team;
           newSystem.manufacturer = aircraft.team;
+          newSystem.status.building = false;
           await newSystem.save(((err, newSystem) => {
           if (err) return console.error(`New Aircraft System Save Error: ${err}`);
           //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
