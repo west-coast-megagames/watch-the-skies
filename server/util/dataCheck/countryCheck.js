@@ -8,6 +8,10 @@ require ('winston-mongodb');
 const supportsColor = require('supports-color');
 
 async function chkCountry(runFlag) {
+  
+  // get sites once
+  let sFinds = await Site.find();    
+  
   for (const country of await Country.find()
                                      .populate("zone", "name")) { 
     if (!country.populated("zone")) {  
@@ -21,8 +25,6 @@ async function chkCountry(runFlag) {
 
     //if not space, should have at least 1 city site
     //if space, should have at least 1 spacecraft
-    // get sites once
-    let sFinds = await Site.find();    
     let countryId = country._id.toHexString();
     let cityCount = 0;
     let spacecraftCount = 0;
