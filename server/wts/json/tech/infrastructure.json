@@ -21,7 +21,7 @@
     "field": "Infrastructure",
     "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
     "effects": {},
-    "unlocks": [{"type": "Technology", "code": "Inf2C"}],
+    "unlocks": [{"type": "Technology", "code": "Agr3C"}, {"type": "Technology", "code": "Inf2C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Agr3C"}]
 },
 {   
@@ -121,7 +121,7 @@
     "field": "Infrastructure",
     "desc": "Advanced techniques of geoengineering, like seeding stratocumulus clouds, installing sun-shields or mirrors in space to reflect the sun, or injecting sun-blocking particulates into space.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Agr5A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf4F"}]
 },
 {   
@@ -171,7 +171,7 @@
     "field": "Infrastructure",
     "desc": "Develops new fabrication techniques.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Bio2B"}
+    "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Inf2D"}, {"type": "Technology", "code": "Bio2B"}
     ],
     "breakthrough": []
 },
@@ -210,7 +210,7 @@
     "field": "Infrastructure",
     "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}],
+    "unlocks": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Mil4J"}]
 },
 {   

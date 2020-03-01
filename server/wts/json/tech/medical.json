@@ -57,7 +57,7 @@
     "field": "Biomedical",
     "desc": "Process of generating multiple transcriptions from a single pre-mRNA using enhanced lasers.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio3A"}],
+    "unlocks": [{"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio3A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Mil3H"}]
 },
 {   
@@ -93,7 +93,7 @@
     "field": "Biomedical",
     "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2D"} ],
+    "unlocks": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2D"} ],
     "breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Agr4C"}]
 },
 {   
@@ -117,7 +117,7 @@
     "field": "Biomedical",
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio5C"}],
+    "unlocks": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4J"}]
 },
 {   

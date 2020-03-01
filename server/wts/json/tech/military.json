@@ -183,7 +183,7 @@
     "field": "Military",
     "desc": "An energy absorbent coating applied to hardened composites to reduce friction.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Mil3G"} ],
+    "unlocks": [{"type": "Technology", "code": "Agr3A"}, {"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Mil3G"} ],
     "breakthrough": [{"type": "Technology", "code": "Mil3G"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4L"}]
 },
 {   
