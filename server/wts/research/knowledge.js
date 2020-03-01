@@ -13,9 +13,10 @@ const { techTree } = require('./techTree'); // Import of the tech tree array fro
 const { techCost } = require('./research');
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
-const knowledgeTree = []
-let controlTeam = {}
-let tp = []
+const knowledgeTree = [];
+let controlTeam = {};
+let tp = [];
+let seed = true;
 
 loadGlobalVariables();
 
@@ -45,7 +46,7 @@ async function loadKnowledge () {
 };
 
 async function knowledgeSeed() {
-    await Research.deleteMany({ type: 'Knowledge'})
+    await Research.deleteMany()
     let seeded = []
     let i = 1;
 
@@ -53,7 +54,7 @@ async function knowledgeSeed() {
     for await (let field of fields) {
         knowledgeDebugger(field);
         knowledgeDebugger(`Seed count: ${i}`) 
-            let rand = 1 + Math.floor(Math.random() * 2);
+            let rand = 1 + Math.floor(Math.random() * 3);
             knowledgeDebugger(rand);
             let seed = await knowledgeTree.find(el => el.field === field && el.level === rand);
             seeded.push(seed);
@@ -80,7 +81,7 @@ async function knowledgeSeed() {
             if (index != -1) {
                 console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
-                knowledgeDebugger(newKnowledge)
+                // knowledgeDebugger(newKnowledge)
                 rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
                 knowledgeDebugger(rand);
                 newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
@@ -92,14 +93,6 @@ async function knowledgeSeed() {
             }
         }
     };
-
-    knowledgeDebugger(`Performing final unlock...`)
-    for await (let research of await Research.find({'status.completed': true})) {
-        for await (let tech of research.unlocks) {
-            let newTech = techTree.find(el => el.code === tech.code);
-            await newTech.checkAvailible();
-        }
-    }
 
     knowledgeDebugger(`Knowledge seed complete...`)
     return;
@@ -190,10 +183,12 @@ async function completeKnowledge (research) {
 
     reserach = await research.save();
 
-    // for await (let tech of research.unlocks) {
-    //     let newTech = techTree.find(el => el.code === tech.code);
-    //     await newTech.checkAvailible();
-    // }
+    if (!seed) {
+        for await (let tech of research.unlocks) {
+            let newTech = techTree.find(el => el.code === tech.code);
+            await newTech.checkAvailible();
+        }
+    }
   
     return research;
 }
