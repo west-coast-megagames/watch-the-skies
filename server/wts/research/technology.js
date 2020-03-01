@@ -18,8 +18,8 @@ function Technology(tech) {
 
     // Async Method to check if this technology is available for each team
     this.checkAvailable = async function() {
-        for await (let team of await Team.find({ teamType: 'N', teamCode: 'USA' }, '_id name')) {
-            let currentTech = await Research.findOne({ name: this.name, team_id: team._id });
+        for await (let team of await Team.find({ teamType: 'N' }, '_id name')) {
+            let currentTech = await Research.findOne({ name: this.name, team: team._id });
             techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
             if (currentTech === null) {
                 let count = 0;
