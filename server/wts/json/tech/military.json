@@ -24,7 +24,6 @@
     "breakthrough": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil3G"}]
 },
 {   
-    "_original": "Damage Lasers",
     "name": "Damage Lasers",
     "code": "Mil1C",
     "level": 1,
@@ -45,7 +44,7 @@
     "prereq": [{"type": "Technology", "code": "Mil1C"}, {"type": "Knowledge", "code": "Engineering I"}, {"type": "Knowledge", "code": "Material Science I"}, {"type": "Knowledge", "code": "Physics I"}, {"type": "Knowledge", "code": "Computer Science I"}],
     "type": "Technology",
     "field": "Military",
-    "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy satellites",
+    "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy satellites.",
     "effects": { },
     "unlocks": [
     ],
@@ -58,7 +57,7 @@
     "prereq": [{"type": "Technology", "code": "Mil1A"}, {"type": "Knowledge", "code": "Physics I"}, {"type": "Knowledge", "code": "Computer Science I"}, {"type": "Knowledge", "code": "Electronics I"}],
     "type": "Technology",
     "field": "Military",
-    "desc": "Weaponizing laser beams for aircraft and satellites.",
+    "desc": "Precision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems.",
     "effects": { },
     "unlocks": [],
     "breakthrough": [{"type": "Technology", "code": "Mil4I"}]
@@ -86,7 +85,7 @@
     "field": "Military",
     "desc": "Enhancements to existing robotics to improve sensory input and mechanical limitations.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio3B"}],
+    "unlocks": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3E"}]
 },
 {   
@@ -113,20 +112,6 @@
     "effects": { },
     "unlocks": [{"type": "Technology", "code": "Mil3G"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3C"}]
-},
-{   
-    "_original": "Improved SIF Weapons",
-    "name": "Ship Mounted Laser Weapons", 
-    "code": "Mil2F",
-    "level": 2,
-    "prereq": [{"type": "Knowledge", "code": "Engineering II"} ],
-    "type": "Technology",
-    "field": "Military",
-    "desc": "Precision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems",
-    "effects": { },
-    "unlocks": [
-    ],
-    "breakthrough": []
 },
 {   
     "name": "Laser Munitions",
@@ -186,7 +171,7 @@
     "field": "Military",
     "desc": "Develops flexible and intelligent robotic workforce.",
     "effects": {"type": "terror", "effect": 10 },
-    "unlocks": [{"type": "Technology", "code": "Mil3D"}],
+    "unlocks": [{"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil3D"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Agr3A"}]
 },
 {   
@@ -270,7 +255,7 @@
     "field": "Military",
     "desc": "Allows nearly every possible 3 dimensional task in robotics, with increased strength and dexterity.",
     "effects": {"type": "terror", "effect": -10 },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio5B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio5B"}]
 },
 {   

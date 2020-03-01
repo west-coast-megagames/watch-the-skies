@@ -20,7 +20,7 @@
     "field": "Agriculture",
     "desc": "Improves national capacity for water purification and distribution.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio3A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr3B"}]
 },
 {   
@@ -164,7 +164,7 @@
     "field": "Agriculture",
     "desc": "Individualized food synthesis.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio5D"}],
     "breakthrough": []
 }
 ]

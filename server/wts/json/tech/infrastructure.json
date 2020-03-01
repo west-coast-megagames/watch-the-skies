@@ -45,7 +45,7 @@
     "field": "Infrastructure",
     "desc": "Basic Artificial Intelligence functionality and machine learning.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Mil2D"} ],
+    "unlocks": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Inf1A"}, {"type": "Technology", "code": "Mil2D"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}]
 },
 {   
@@ -147,7 +147,7 @@
     "field": "Infrastructure",
     "desc": "Physical emittance of an interference pattern which uses diffraction to reproduce a three-dimensional light field.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4D"}]
 },
 {   
@@ -210,7 +210,7 @@
     "field": "Infrastructure",
     "desc": "Technology of creating machines or robots at or close to the scale of a nanometer.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Mil4J"}]
 },
 {   
@@ -296,7 +296,7 @@
     "field": "Infrastructure",
     "desc": "Basic supercomputing with machine optimization. Used on a large network scale, mimicking the human brain.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Bio5D"}],
     "breakthrough": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5D"}]
 },
 {   
