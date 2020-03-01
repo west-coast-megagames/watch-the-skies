@@ -103,6 +103,7 @@ async function loadSpacecraft(iData){
           newSystem = await new System(sysRef);
           newSystem.team         = spacecraft.team;
           newSystem.manufacturer = spacecraft.team;  
+          newSystem.status.building = false;
           //console.log("jeff in spacecraft before systems save ... sysRef:", sysRef);            
           await newSystem.save(((err, newSystem) => {
             if (err) {
@@ -285,6 +286,7 @@ async function loadSpacecraft(iData){
           newSystem = await new System(sysRef);
           newSystem.team         = spacecraft.team;
           newSystem.manufacturer = spacecraft.team;  
+          newSystem.status.building = false;
           //console.log("jeff in spacecraft before systems save ... sysRef:", sysRef);            
           await newSystem.save(((err, newSystem) => {
             if (err) {
