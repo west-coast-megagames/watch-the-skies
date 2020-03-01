@@ -6,7 +6,11 @@ const Joi = require('joi');
 const CrashSite = Site.discriminator('Crash', new Schema({
   type: { type: String, default: 'Crash' },
   salvage: [{ type: Schema.Types.ObjectId, ref: 'System'}],
-  public: { type: Boolean, default: false }
+  status: {
+    public: { type: Boolean, default: false },
+    secret: { type: Boolean, default: false }
+  }
+
 }));
 
 function validateCrash(crashSite) {
