@@ -32,7 +32,7 @@ async function chkZone(runFlag) {
 
     //zoneCheckDebugger(`Zone ${zone.zoneCode} has ${countryCount} countries`);
     if (countryCount < 1){
-      logger.info(`No Countries Found In Zone ${zone.zoneCode} ${zone.zoneName}`);
+      logger.error(`No Countries Found In Zone ${zone.zoneCode} ${zone.zoneName}`);
     }
 
     //zoneCheckDebugger(`Zone ${zone.zoneName} ${zone._id} Check of Satellite ${zone.satellite.length}`);
