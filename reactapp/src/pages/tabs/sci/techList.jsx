@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Table, Icon, Button, Progress, Affix } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import sci1logo from '../../../img/sci1.svg';
+import SciIcon from './../../../components/common/sciencIcon';
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture'];
 
@@ -86,7 +87,10 @@ class TechList extends Component {
         return (            
             <div>
                 <Affix>
-                    <img style={{height: 50, width: 50}} src={sci1logo} alt='Terror Map' />
+                    <SciIcon size={50} level={0} />
+                    <SciIcon size={45} level={1} />
+                    <SciIcon size={100} level={2} />
+                    <SciIcon size={100} level={3} />
                     <Icon icon="spinner" spin />
                     <Icon icon={sci1logo} size="lg" />
                     <hr />
