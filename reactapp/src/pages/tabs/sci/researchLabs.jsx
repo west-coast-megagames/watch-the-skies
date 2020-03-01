@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
-import { newLabCheck, lookupPct } from './../../../scripts/labs';
+import { newLabCheck, getLabPct } from './../../../scripts/labs';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -21,7 +21,7 @@ function findTechByID(_id, allResearch) {
 
 
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
-	let getPctResult = lookupPct(rowData._id, props.labs, props.allResearch, props.techCost);
+	let getPctResult = getLabPct(rowData._id, props.labs, props.allresearch, props.techcost);
 	if (getPctResult < 0) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
@@ -203,8 +203,8 @@ class ResearchLabs extends Component {
 						<HeaderCell>Current Progress</HeaderCell>
 						<ProgressCell 
 							labs={this.state.labs}
-							allResearch={ props.allResearch }
-							techCost={ props.techCost }
+							allresearch={ props.allResearch }
+							techcost={ props.techCost }
 						/>
 					</Column>
 			
