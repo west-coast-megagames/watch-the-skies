@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Spacecraft Model - Using Mongoose Model
-const { Spacecraft, validateSpacecraft, updateStats } = require('../../models/sites/spacecraft');
+const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Facility } = require('../../models/gov/facility/facility');
@@ -26,6 +26,7 @@ const { Hanger } = require('../../models/gov/facility/hanger');
 const { Factory } = require('../../models/gov/facility/factory');
 const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { Zone } = require('../../models/zone');
 
 const app = express();
 
@@ -120,12 +121,12 @@ async function loadSpacecraft(iData){
 
       let { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        // remove associated facility records
-        for (let j = 0; j < spacecraft.facilities.length; ++j ) {
-          facilityId = spacecraft.facilities[j];
-          let facilityDel = await Facility.findByIdAndRemove(facilityId);
-          if (facilityDel = null) {
-            spacecraftDebugger(`The Spacecraft Facility with the ID ${facilityId} was not found!`);
+        // remove associated system records
+        for (let j = 0; j < spacecraft.systems.length; ++j ) {
+          systemId = spacecraft.systems[j];
+          let systemDel = await System.findByIdAndRemove(systemId);
+          if (systemDel = null) {
+            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
           }
         }
         spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
@@ -135,6 +136,7 @@ async function loadSpacecraft(iData){
       spacecraft.shipType     = iData.shipType;
       spacecraft.status       = iData.status;
       spacecraft.stats        = iData.stats;
+      spacecraft.hidden       = iData.hidden;
 
       
       if (iData.countryCode != ""){
@@ -148,8 +150,7 @@ async function loadSpacecraft(iData){
         }      
       }
 
-      // create facility records for spacecraft and store ID in spacecraft.facilities
-      spacecraft.facilities = [];
+      // create facility records for spacecraft 
       for (let i = 0; i < iData.facilities.length; ++i ) {
         let fac = iData.facilities[i];
         let facError = false;
@@ -179,17 +180,19 @@ async function loadSpacecraft(iData){
               logger.error(`New Spacecraft Facility Save Error: ${err}`);
               return console.error(`New Spacecraft Facility Save Error: ${err}`);
             }
-            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
+            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to system collection.");
           }));
-    
-          spacecraft.facilities.push(facId);
         }
       }  
 
       await spacecraft.save((err, spacecraft) => {
         if (err) return console.error(`New Spacecraft Save Error: ${err}`);
         spacecraftDebugger(spacecraft.name + " add saved to spacecraft collection.");
-        updateStats(spacecraft._id);
+        //updateStats(spacecraft._id);
+
+        if (spacecraft.shipType === "Satellite") {
+           addSatelliteToZone(spacecraft._id, spacecraft.zone, spacecraft.team);
+        };
       });
     } else {       
       // Existing Spacecraft here ... update
@@ -202,6 +205,7 @@ async function loadSpacecraft(iData){
       spacecraft.shipType     = iData.shipType;
       spacecraft.status       = iData.status;
       spacecraft.stats        = iData.stats;
+      spacecraft.hidden       = iData.hidden;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
@@ -226,23 +230,21 @@ async function loadSpacecraft(iData){
 
       const { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        // remove associated facility records
-        for (let j = 0; j < spacecraft.facilities.length; ++j ) {
-          facilityId = spacecraft.facilities[j];
-          let facilityDel = await Facility.findByIdAndRemove(facilityId);
-          if (facilityDel = null) {
-            spacecraftDebugger(`The Spacecraft Facility with the ID ${facilityId} was not found!`);
+        // remove associated system records
+        for (let j = 0; j < spacecraft.systems.length; ++j ) {
+          systemId = spacecraft.systems[j];
+          let systemDel = await System.findByIdAndRemove(systemId);
+          if (systemDel = null) {
+            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
           }
         }
         spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
         return
       }
    
-      // create facility records for spacecraft and store ID in spacecraft.facilities
-      // create facility records for spacecraft and store ID in spacecraft.facilities
-      spacecraft.facilities = [];
+      // create facility records for spacecraft
       for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.facilities[i];
+        let fac = iData.systems[i];
         let facError = false;
         let facType  = fac.type;
         let facId    = null;
@@ -267,13 +269,11 @@ async function loadSpacecraft(iData){
     
           await newFacility.save(((err, newFacility) => {
             if (err) {
-              logger.error(`New Spacecraft Facility Save Error: ${err}`);
-              return console.error(`New Spacecraft Facility Save Error: ${err}`);
+              logger.error(`Update Spacecraft Facility Save Error: ${err}`);
+              return console.error(`Update Spacecraft Facility Save Error: ${err}`);
             }
             spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
           }));
-    
-          spacecraft.facilities.push(facId)              
         }
       }  
 
@@ -304,7 +304,7 @@ async function loadSpacecraft(iData){
       await spacecraft.save((err, spacecraft) => {
         if (err) return console.error(`Update Spacecraft Save Error: ${err}`);
         spacecraftDebugger(spacecraft.name + " add saved to spacecraft collection.");
-        updateStats(spacecraft._id);
+        //updateStats(spacecraft._id);
       });
     }
   } catch (err) {
@@ -323,12 +323,12 @@ async function deleteAllSpacecraft(doLoad) {
     for await (const spacecraft of Spacecraft.find()) {    
       let id = spacecraft._id;
       try {
-        // remove associated facility records
-        for (let j = 0; j < spacecraft.facilities.length; ++j ) {
-          facilityId = spacecraft.facilities[j];
-          let facilityDel = await Facility.findByIdAndRemove(facilityId);
-          if (facilityDel = null) {
-            spacecraftDebugger(`The Spacecraft Facility with the ID ${facilityId} was not found!`);
+        // remove associated system records
+        for (let j = 0; j < spacecraft.systems.length; ++j ) {
+          systemId = spacecraft.systems[j];
+          let systemDel = await System.findByIdAndRemove(systemId);
+          if (systemDel = null) {
+            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
           }
         }
         let spacecraftDel = await Spacecraft.findByIdAndRemove(id);
@@ -344,5 +344,26 @@ async function deleteAllSpacecraft(doLoad) {
     spacecraftDebugger(`Delete All Spacecrafts Catch Error: ${err.message}`);
   }
 };  
+
+async function addSatelliteToZone(satId, zoneId, teamId) {
+
+
+  let useZoneId = zoneId;
+  /*
+  let team = await Team.findById( teamId );
+  if (team) {
+    assign useZoneId = team.zone;
+  }
+  */
+
+  let zoneUpd = await Zone.findById( useZoneId );
+
+  if (!zoneUpd) {
+    spacecraftDebugger(`Unable to add satellite with id ${satId} to zone with id ${zoneId}`);
+  } else {
+    zoneUpd.satellite.push(satId);  
+    await zoneUpd.save();
+  }
+}
 
 module.exports = runSpacecraftLoad;

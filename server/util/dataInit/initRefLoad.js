@@ -100,6 +100,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror){
            terror: randomTerror                       //zTerror
         }); 
 
+        zone.satellite = [];
         let { error } = validateZone(zone); 
         if (error) {
           zoneInitDebugger("New Zone Validate Error", zone.zoneCode, error.message);

@@ -56,12 +56,14 @@ async function chkFacility(runFlag) {
         }
       }
 
+      /*
       for (let i = 0; i < facility.project.length; ++i){
         let pFind = await Equipment.findById(facility.project[i]);
         if (!pFind) {
           logger.error(`Hanger Facility ${facility.name} ${facility._id} has an invalid project(equipment) reference ${i}: ${facility.project[i]}`);
         }
       }
+      */
     }
 
     if (facility.type === 'Lab'){
