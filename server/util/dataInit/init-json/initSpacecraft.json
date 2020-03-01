@@ -29,7 +29,6 @@
     "ready": true,
     "upgrade": false,
     "repair": false,
-    "mission": "Standby",
     "secret": false},
 "hidden": false,
 "shipType": "Cruiser"
@@ -60,7 +59,6 @@
   "ready": true,
   "upgrade": false,
   "repair": false,
-  "mission": "Standby", 
   "secret": false},
 "hidden": false,
 "shipType": "Station"
@@ -91,7 +89,6 @@
   "ready": true,
   "upgrade": false,
   "repair": false,
-  "mission": "Standby", 
   "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -122,7 +119,6 @@
  "ready": true,
  "upgrade": false,
  "repair": false,
- "mission": "Standby", 
  "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -153,7 +149,6 @@
   "ready": true,
   "upgrade": false,
   "repair": false,
-  "mission": "Standby", 
   "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -177,14 +172,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
    "repair": false,
-   "mission": "Standby", 
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -208,14 +202,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
    "repair": false,
-   "mission": "Standby", 
    "secret": false},
 "hidden": false,   
 "shipType": "Satellite"
@@ -239,14 +232,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
    "repair": false,
-   "mission": "Standby", 
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -270,14 +262,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby",
+   "repair": false,   
    "secret": false},
 "hidden": false,   
 "shipType": "Satellite"
@@ -301,14 +292,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby", 
+   "repair": false,    
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -332,14 +322,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby", 
+   "repair": false,    
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -363,14 +352,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby", 
+   "repair": false,    
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -394,14 +382,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby", 
+   "repair": false,    
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -425,14 +412,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
    "repair": false,
-   "mission": "Standby", 
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -458,14 +444,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
-   "repair": false,
-   "mission": "Standby", 
+   "repair": false,    
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -489,14 +474,13 @@
    "damage": 3,
    "passiveRolls": [2,4,7,9,11,12],
    "activeRolls": [3,5,8,10,12] },
-   "status": { 
+"status": { 
    "damaged": false,
    "deployed": false,
    "destroyed": false,
    "ready": true,
    "upgrade": false,
    "repair": false,
-   "mission": "Standby", 
    "secret": false},
 "hidden": false,
 "shipType": "Satellite"
@@ -520,14 +504,13 @@
   "damage": 3,
   "passiveRolls": [2,4,7,9,11,12],
   "activeRolls": [3,5,8,10,12] },
-  "status": { 
+"status": { 
   "damaged": false,
   "deployed": false,
   "destroyed": false,
   "ready": true,
   "upgrade": false,
-  "repair": false,
-  "mission": "Standby", 
+  "repair": false,   
   "secret": false},
 "hidden": false,  
 "shipType": "Satellite"
