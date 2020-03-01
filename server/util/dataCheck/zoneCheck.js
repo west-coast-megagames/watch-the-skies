@@ -18,10 +18,15 @@ async function chkZone(runFlag) {
     // should be at least one country in the zone
     let countryCount = 0;
     let zoneId = zone._id.toHexString();
+    countryLoop:
     for (let j = 0; j < cFinds.length; ++j){
       let cZoneId = cFinds[j].zone.toHexString();
       if (cZoneId === zoneId) {
         ++countryCount;
+      }
+      //only need one
+      if (countryCount > 0) {
+        break countryLoop;
       }
     }
 
