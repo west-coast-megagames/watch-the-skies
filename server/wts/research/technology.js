@@ -16,8 +16,8 @@ function Technology(tech) {
     this.effects = tech.effects;
     this.unlocks = tech.unlocks;
 
-    // Async Method to check if this technology is availible for each team
-    this.checkAvailible = async function() {
+    // Async Method to check if this technology is available for each team
+    this.checkAvailable = async function() {
         for await (let team of await Team.find({ teamType: 'N', teamCode: 'USA' }, '_id name')) {
             let currentTech = await Research.findOne({ name: this.name, team_id: team._id });
             techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
@@ -27,27 +27,30 @@ function Technology(tech) {
                 let msg = ""
 
                 for await (let req of this.prereq) {
-                    techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
-                    let checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
-                    let checkKnowledge = await Research.findOne({ code: req.code });
-                    console.log(checkKnowledge);
-                    if (checkKnowledge !== null) {
-                        if (checkKnowledge.completed && checkKnowledge.credit === team._id) {
-                            techDebugger(`COMPLETED - ${this.name} is availible to research for ${team.name}...`);
-                        } else if (checkKnowledge.published === true) {
-                            techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
-                        } else {
+                  techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
+                  let checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
+                  let checkKnowledge = await Research.findOne({ code: req.code });
+                  //console.log("checkKnowledge here ", checkKnowledge);
+                  if (checkKnowledge !== null) {
+                    if (checkKnowledge.status.completed) {              
+                      if (checkKnowledge.credit.toHexString() === team._id.toHexString()) {
+                        techDebugger(`COMPLETED - ${this.name} is availible to research for ${team.name}...`);
+                      } else if (checkKnowledge.status.published) {
+                        techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
+                      } else {
                         techDebugger(`UNKNOWN - ${checkKnowledge.name} is not availible to ${team.name}...`);
                         checkKnowledge = null
-                    };
+                      };
                     }
-                    if (checkTech !== null || checkKnowledge !== null) {
+                  }
+                    
+                  if (checkTech !== null || checkKnowledge !== null) {
                         count++;
                         techDebugger(`${this.name}: Prereq ${req.code} found...`);
-                    } else {
+                  } else {
                         techDebugger(`${this.name}: Prereq ${req.code} not found...`);
                         break;
-                    }
+                  }
                 };
 
                 if (count === this.prereq.length) {

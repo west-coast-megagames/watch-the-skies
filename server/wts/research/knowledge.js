@@ -186,7 +186,7 @@ async function completeKnowledge (research) {
     if (!seed) {
         for await (let tech of research.unlocks) {
             let newTech = techTree.find(el => el.code === tech.code);
-            await newTech.checkAvailible();
+            await newTech.checkAvailable();
         }
     }
   
