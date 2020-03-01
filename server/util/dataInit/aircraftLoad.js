@@ -69,7 +69,8 @@ async function loadAircraft(iData){
        // New Aircraft here
        let aircraft = new Aircraft({ 
            name: iData.name,
-           type: iData.type
+           type: iData.type,
+           mission: iData.mission
         }); 
 
         aircraft.stats  = iData.stats;
@@ -188,6 +189,7 @@ async function loadAircraft(iData){
       aircraft.type        = iData.type;
       aircraft.status      = iData.status;
       aircraft.stats       = iData.stats;
+      aircraft.mission     = iData.mission;
 
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });  
