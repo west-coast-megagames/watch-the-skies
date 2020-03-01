@@ -3,6 +3,7 @@ import { Table, Icon, Button, Progress, Affix } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import sci1logo from '../../../img/sci1.svg';
 import SciIcon from './../../../components/common/sciencIcon';
+import InfoTech from './InfoTech';
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture'];
 
@@ -27,7 +28,9 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 class TechList extends Component {
 
     state = {
-        data: []
+        showInfo: false,    // Boolean to tell whether to open the Info Drawer
+        research: {},       // The research item to display inside the Info Drawer
+        data: []            // All of the data to display in the tech list table
     };
 
     componentDidMount() {
@@ -69,91 +72,89 @@ class TechList extends Component {
                     <hr />
                 </Affix>
                 */}
-                <Table
-                    isTree
-                    defaultExpandAllRows
-                    rowKey="id"
-                    autoHeight
-                    data={this.state.data}
-                    onExpandChange={(isOpen, rowData) => {
-    //                        console.log(isOpen, rowData);
-                    }}
-                    renderTreeToggle={(icon, rowData) => {
-                        if (rowData.children && rowData.children.length === 0) {
-                        return <Icon icon="spinner" spin />;
-                        }
-                        return icon;
-                    }}
-                    >
-                    <Column verticalAlign='middle' width={275}>
-                        <HeaderCell>Known Technologies</HeaderCell>
-                        <Cell dataKey="labelName" />
-                    </Column>
-
-                    <Column align='center' verticalAlign='middle' width={50}>
-                        <HeaderCell>Level</HeaderCell>
-                        <Cell style={{ padding: 0 }} >
-                        {rowData => {
-                            return (
-                                <div>
-                                    <SciIcon size={50} level={rowData.level} />
-                                </div>
-                            )
+                <React.Fragment>
+                    <Table
+                        isTree
+                        defaultExpandAllRows
+                        rowKey="id"
+                        autoHeight
+                        data={this.state.data}
+                        onExpandChange={(isOpen, rowData) => {
+//                            console.log(isOpen, rowData);
                         }}
-                        </Cell>
-                            {/*<div
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    //background: '#f5f5f5',
-                                    //borderRadius: 20,
-                                    //marginTop: 2,
-                                    //overflow: 'hidden',
-                                    display: 'inline-block'
-                            }}
-                            >
-                            <img src={(rowData) => {
-                                if (rowData.level !== null) {
-                                    return 'rowData[dataKey]} width="44" '
-                                }
-                                return 'rowData[dataKey]} width="44" '
-                            }}
-                        </div>*/}
-                    </Column>
-
-                    <Column align='center' verticalAlign='middle' width={150}  >
-                        <HeaderCell>Current Progress</HeaderCell>
-                        <ProgressCell 
-                            allresearch={ props.allResearch }
-                            techcost={ props.techCost }
-                        />
-                    </Column>
-
-                    <Column width={100} flexGrow={1} >
-                        <HeaderCell>Description</HeaderCell>
-                        <Cell dataKey="desc" />
-                    </Column>
-
-                    <Column align='center' verticalAlign='middle' width={150} fixed="right">
-                        <HeaderCell>Action</HeaderCell>
-                        <Cell style={{ padding: 0 }} >
-                        {rowData => {
-                            function handleAction() {
-                                {/*rowData.deploy('deploy', rowData.target, null)*/}
+                        renderTreeToggle={(icon, rowData) => {
+                            if (rowData.children && rowData.children.length === 0) {
+                            return <Icon icon="spinner" spin />;
                             }
-                            if (rowData.type !== 'category') {
-                            return (
-                                <div style={{ verticalAlign: 'top'}}>
-                                    <Button color='blue' size='sm' onClick={handleAction}> Add'l Info </Button>
-                                </div>)
-                            } 
+                            return icon;
                         }}
-                        </Cell>
-                    </Column>
-                </Table>
+                        >
+                        <Column verticalAlign='middle' width={275}>
+                            <HeaderCell>Known Technologies</HeaderCell>
+                            <Cell dataKey="labelName" />
+                        </Column>
+
+                        <Column align='center' verticalAlign='middle' width={50}>
+                            <HeaderCell>Level</HeaderCell>
+                            <Cell style={{ padding: 0 }} >
+                            {rowData => {
+                                return (
+                                    <div>
+                                        <SciIcon size={50} level={rowData.level} />
+                                    </div>
+                                )
+                            }}
+                            </Cell>
+                        </Column>
+
+                        <Column align='center' verticalAlign='middle' width={150}  >
+                            <HeaderCell>Current Progress</HeaderCell>
+                            <ProgressCell 
+                                allresearch={ props.allResearch }
+                                techcost={ props.techCost }
+                            />
+                        </Column>
+
+                        <Column width={100} flexGrow={1} >
+                            <HeaderCell>Description</HeaderCell>
+                            <Cell dataKey="desc" />
+                        </Column>
+
+                        <Column align='center' verticalAlign='middle' width={150} fixed="right">
+                            <HeaderCell>Action</HeaderCell>
+                            <Cell style={{ padding: 0 }} >
+                            {rowData => {
+                                if (rowData.type !== 'category') {
+                                return (
+                                    <div style={{ verticalAlign: 'top'}}>
+                                        <Button color='blue' size='sm' onClick={ () => this.infoPressed(rowData) } > Add'l Info </Button>
+                                    </div>)
+                                } 
+                            }}
+                            </Cell>
+                        </Column>
+                    </Table>
+                
+                    { this.state.showInfo ? 
+                        <InfoTech
+                            show={ this.state.showInfo }
+                            onClick={ this.infoPressed }
+                            research={ this.state.research}
+                        /> 
+                        : 
+                        null 
+                    }
+                </React.Fragment>
             </div>
         );
     }
+
+    infoPressed = async (rowData) => {
+        this.setState({
+            showInfo: !this.state.showInfo,
+            research: rowData
+        });
+    };
 
     loadTable() {
         let data = this.state.data;
