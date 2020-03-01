@@ -20,7 +20,7 @@
     "field": "Agriculture",
     "desc": "Improves national capacity for water purification and distribution.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Bio3A"}],
+    "unlocks": [{"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Bio3A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr3B"}]
 },
 {   
@@ -56,7 +56,7 @@
     "field": "Agriculture",
     "desc": "Decreases water loss during distribution through network.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4B"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4B"}]
 },
 {   
@@ -104,7 +104,7 @@
     "field": "Agriculture",
     "desc": "Launches a program to train farm managers in effective methods and implementation of newer technology.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Agr4B"}],
+    "unlocks": [{"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Agr4B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4F"}]
 },
 {   

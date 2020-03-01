@@ -85,7 +85,7 @@
     "field": "Military",
     "desc": "Enhancements to existing robotics to improve sensory input and mechanical limitations.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
+    "unlocks": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3E"}]
 },
 {   
@@ -110,7 +110,7 @@
     "field": "Military",
     "desc": "Framework for autonomous vehicles.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Mil3G"} ],
+    "unlocks": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3G"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3C"}]
 },
 {   
@@ -165,13 +165,12 @@
     "name": "Intelligent Droid Labor",
     "code": "Mil3E",
     "level": 3,
-    "prereq": [{"type": "Technology", "code": "Inf3D"}, 
-        {"type": "Knowledge", "code": "Electronics III"}, {"type": "Knowledge", "code": "Computer Science III"}, {"type": "Knowledge", "code": "Social Science III"}],
+    "prereq": [{"type": "Technology", "code": "Inf3D"}, {"type": "Knowledge", "code": "Electronics III"}, {"type": "Knowledge", "code": "Computer Science III"}, {"type": "Knowledge", "code": "Social Science III"}],
     "type": "Technology",
     "field": "Military",
     "desc": "Develops flexible and intelligent robotic workforce.",
     "effects": {"type": "terror", "effect": 10 },
-    "unlocks": [{"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil3D"}],
+    "unlocks": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil3D"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Agr3A"}]
 },
 {   
@@ -255,7 +254,7 @@
     "field": "Military",
     "desc": "Allows nearly every possible 3 dimensional task in robotics, with increased strength and dexterity.",
     "effects": {"type": "terror", "effect": -10 },
-    "unlocks": [{"type": "Technology", "code": "Bio5B"}],
+    "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Bio5B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio5B"}]
 },
 {   
@@ -267,7 +266,7 @@
     "field": "Military",
     "desc": "Alloys combined with Red Mercury to strengthen and stabilize.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Inf4E"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Mil4M"}]
 },
 {   

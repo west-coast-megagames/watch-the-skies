@@ -81,7 +81,7 @@
     "field": "Biomedical",
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
     "effects": {"type": "terror", "effect": -10 },
-    "unlocks": [{"type": "Technology", "code": "Inf3E"} ],
+    "unlocks": [],
     "breakthrough": [{"type": "Technology", "code": "Bio3D"}]
 },
 {   
@@ -124,12 +124,12 @@
     "name": "Biological Computing",
     "code": "Bio3B",
     "level": 3,
-    "prereq": [{"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Knowledge", "code": "Biology II"}, {"type": "Knowledge", "code": "Genetics III"}, {"type": "Knowledge", "code": "Computer Science III"}],
+    "prereq": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Knowledge", "code": "Biology II"}, {"type": "Knowledge", "code": "Genetics III"}, {"type": "Knowledge", "code": "Computer Science III"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Allows brain and software integration for diagnosis and minor programmability.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Inf3E"}],
+    "unlocks": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Inf3E"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Inf3D"}]
 },
 {   
@@ -141,7 +141,7 @@
     "field": "Biomedical",
     "desc": "Stimulates alpha brain waves to ease thoughts and reduce pain levels.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
+    "unlocks": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio4A"}]
 },
 {   
@@ -153,7 +153,7 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": { },
-    "unlocks": [{"type": "Technology", "code": "Mil3D"}],
+    "unlocks": [{"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Mil3D"}],
     "breakthrough": [{"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Mil4D"}]
 },
 {   
@@ -165,7 +165,7 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": { },
-    "unlocks": [],
+    "unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Mil4F"}]
 },
 {   

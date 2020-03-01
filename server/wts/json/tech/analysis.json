@@ -1,0 +1,69 @@
+[
+{   
+"field": "Non-terrestial Material Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf3G"}]
+},
+{   
+"field": "Communicator Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf5A"}]
+},
+{   
+"field": "Nanites Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+}
+},
+{   
+"field": "Reactor Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4A"}]
+},
+{   
+"field": "Plasma Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+},
+"unlocks": [{"type": "Technology", "code": "Inf4E"}]
+},
+{   
+"field": "Environment Unit Analysis",
+"level": 1,
+"prereq": [ 
+  ],
+  "effect": {
+      "cost": 0,
+      "desc":"Must be discarded after successful research."
+}
+,
+"unlocks": [{"type": "Technology", "code": "Inf4B"}]
+}
+
+]
