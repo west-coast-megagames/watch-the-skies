@@ -20,7 +20,7 @@ async function techSeed() {
     for await (let research of await Research.find({'status.completed': true})) {
         for await (let tech of research.unlocks) {
             let newTech = techTree.find(el => el.code === tech.code);
-            await newTech.checkAvailible();
+            await newTech.checkAvailable();
         }
     }
     return;

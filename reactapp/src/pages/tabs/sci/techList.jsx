@@ -42,7 +42,7 @@ class TechList extends Component {
                     autoHeight
                     data={this.state.data}
                     onExpandChange={(isOpen, rowData) => {
-                        console.log(isOpen, rowData);
+//                        console.log(isOpen, rowData);
                     }}
                     renderTreeToggle={(icon, rowData) => {
                         if (rowData.children && rowData.children.length === 0) {
@@ -141,9 +141,9 @@ class TechList extends Component {
         data = [];
         for (let field of fields) {   
             id_count++; 
-            console.log(field," ",id_count);
+//            console.log(field," ",id_count);
             research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id && el.field === field);
-            console.log("RES=",research);
+//            console.log("RES=",research);
             obj = {
                 id: id_count,
                 type: `category`,

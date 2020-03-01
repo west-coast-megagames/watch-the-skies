@@ -2,68 +2,38 @@ import React, { Component } from 'react';
 import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
-import { newLabCheck } from './../../../scripts/labs';
+import { newLabCheck, lookupPct } from './../../../scripts/labs';
 
 const { Column, HeaderCell, Cell } = Table;
 
-function findTechByID(_id, allKnowledge) {
+function findTechByID(_id, allResearch) {
 	let myResearchArray = [];
 	let i;
-	for (i = 0; i < allKnowledge.length; i++) {
-		if (allKnowledge[i]._id === _id) {
-			myResearchArray[0] = allKnowledge[i];
+	for (i = 0; i < allResearch.length; i++) {
+		if (allResearch[i]._id === _id) {
+			myResearchArray[0] = allResearch[i];
 			return myResearchArray;
 		}
 	}
 	return myResearchArray;
 }
 
+
+
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
-	function lookupPct () {
-		let myResearch = {};	// lookup entry in the allKnowledge Obj which holds the Pct for progress bar
-		let myProgress = 0;		// Progress of myResearch
-		let myLevel    = 0;		// Level of Tech of myResearch
-		let myTechCost = 1;		// Tech Cost for 100% completion of myResearch 	
-		const result = newLabCheck(rowData._id, props.labs);
-		if (result >= 0) {		// Lab was updated, so find the new %
-			if (props.labs[result].research.length <= 0) {		// Research currently has no focus in that lab object
-				return (-1);	// -1 and issue error instead of progress bar
-			} else {
-				let myResearchID = props.labs[result].research[0];		// ID of the tech being researched in this row
-				if (myResearchID === null) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
-					props.labs[result].research = [];			// initialize the research array to a null instead of null array
-					return (-1);	// -1 and issue error instead of progress bar
-				} else {
-					myResearch = props.allknowledge.filter(el => el._id === myResearchID._id);
-					myProgress = myResearch[0].progress;
-					myLevel    = myResearch[0].level;
-					myTechCost = props.techcost[myLevel];
-					return (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost
-				}
-			}
-
-		} else {  	// Could not find an updated lab
-			return (-1);	// -1 and issue error instead of progress bar
-		}
-	}
-
-	const getPctResult = lookupPct();
-	if (getPctResult < 0) {			// No updated Lab - return error instead of progress bar
+	let getPctResult = lookupPct(rowData._id, props.labs, props.allResearch, props.techCost);
+	if (getPctResult < 0) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
-				  <div>
-					  Choose a research
-				  </div>
+				<div>Choose a research</div>
 			</Cell>
-			);
+		)
 	} else {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
-				<div>
-					<Progress.Line percent={lookupPct()} status='active' />
-				</div>
+				<div> <Progress.Line percent={ getPctResult } status='active' /> </div>
 			</Cell>
-		);
+		)
 	}
 };
 
@@ -110,11 +80,11 @@ class ResearchLabs extends Component {
 			if (result === -1) {				// New Entry	
 				Alert.warning(`Lab ${lab._id} does not exist!!`, 6000)
 			} else {							// Existing Entry
-				console.log("fundingcost=",this.props.fundingCost);
-				console.log("balance=",this.state.account.balance);
-				console.log("funding=",labs[result].funding);
+//				console.log("fundingcost=",this.props.fundingCost);
+//				console.log("balance=",this.state.account.balance);
+//				console.log("funding=",labs[result].funding);
 				let cost = this.props.fundingCost[(labs[result].funding)];
-				console.log("COST=",cost);
+//				console.log("COST=",cost);
 			
 				let account = this.state.account;
 				if (account.balance < cost) {
@@ -211,7 +181,7 @@ class ResearchLabs extends Component {
 							}
 							function handleChange(value) {
 								let updatedLab = rowData;
-								updatedLab.research = findTechByID(value, props.allKnowledge);
+								updatedLab.research = findTechByID(value, props.allResearch);
 								sendLabUpdate(updatedLab);
 							}          
 							return (
@@ -233,8 +203,8 @@ class ResearchLabs extends Component {
 						<HeaderCell>Current Progress</HeaderCell>
 						<ProgressCell 
 							labs={this.state.labs}
-							allknowledge={ props.allKnowledge }
-							techcost={ props.techCost }
+							allResearch={ props.allResearch }
+							techCost={ props.techCost }
 						/>
 					</Column>
 			
@@ -295,7 +265,7 @@ class ResearchLabs extends Component {
 	  }
 	  
 	  teamFilter = () => {
-			let research = this.props.allKnowledge.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
+			let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
 			if (research.length !== 0) {
 				this.setState({research});
 			}
