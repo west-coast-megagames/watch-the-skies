@@ -153,6 +153,32 @@ class BattleReport {
     }
 };
 
+class CrashReport {
+    constructor() {
+        this.team = {}
+        this.salvage = []
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+        this.saveReport = this.saveReport.bind(this);
+    }
 
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Crash report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new CrashLog({...timestamp,...this});
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport };
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Crash Log Error: ${err}`);
+            return
+        }
+    }
+}
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport };
