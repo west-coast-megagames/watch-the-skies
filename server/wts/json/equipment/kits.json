@@ -1,0 +1,13 @@
+[
+    {
+        "name": "",
+        "unitType": "",
+        "cost": "",
+        "buildTime": "",
+        "desc": "",
+        "prereq": [{
+          "type": "",
+          "name": ""
+        }]
+    }
+]

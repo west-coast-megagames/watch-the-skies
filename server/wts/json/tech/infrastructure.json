@@ -7,15 +7,10 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Develops new compositing techniques for stronger metal alloys.",
-    "effects": { },
-    "unlocks": [
-    ],
+    "effects": {},
+    "unlocks": [],
     "breakthrough": []
 },
-
-
-
-
 {   
     "name": "Improved Cathodes",
     "code": "Inf1A",
@@ -25,7 +20,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Increased battery capacity through cathode manipulation.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Inf2G"}, {"type": "Technology", "code": "Inf2A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2A"}]
 },
@@ -37,7 +32,7 @@
     "type": "Technology",
     "field": "Infrastructure",
     "desc": "Projects designed to tackle the effects of climate change directly, usually by removing CO2 from the air or limiting the amount of sunlight reaching the planet's surface.",
-    "effects": { },
+    "effects": {},
     "unlocks": [{"type": "Technology", "code": "Inf2C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf2B"}, {"type": "Technology", "code": "Inf2C"}, {"type": "Technology", "code": "Agr3C"}]
 },

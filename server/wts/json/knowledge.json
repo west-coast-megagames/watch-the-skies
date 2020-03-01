@@ -1,15 +1,5 @@
 [
     {
-        "name": "Biology",
-        "code": "Biology",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Biology",
-        "desc": "Fund basic research in the field of biology to advance world knowledge.",
-        "unlocks": []
-    },
-    {
         "name": "Biology I",
         "code": "Biology I",
         "level": 1,
@@ -58,16 +48,6 @@
         "field": "Biology",
         "desc": "Fund biology research in an attempt to push human understand to the point of theoretical mastery of the subject.",
         "unlocks": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Bio5D"}]
-    },
-    {
-        "name": "Computer Science",
-        "code": "Computer Science",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Computer Science",
-        "desc": "Fund basic research in the field of Computer Science to advance world knowledge.",
-        "unlocks": []
     },
     {
         "name": "Computer Science I",
@@ -120,16 +100,6 @@
         "unlocks": [{"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Inf5B"}, {"type": "Technology", "code": "Bio5C"}]
     },
     {
-        "name": "Electronics",
-        "code": "Electronics",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Electronics",
-        "desc": "Fund basic research in the field of Electronics to advance world knowledge.",
-        "unlocks": []
-    },
-    {
         "name": "Electronics I",
         "code": "Electronics I",
         "level": 1,
@@ -178,16 +148,6 @@
         "field": "Electronics",
         "desc": "Fund electronics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
         "unlocks": [{"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Inf5A"}]
-    },
-    {
-        "name": "Engineering",
-        "code": "Engineering",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Engineering",
-        "desc": "Fund basic research in the field of Engineering to advance world knowledge.",
-        "unlocks": []
     },
     {
         "name": "Engineering I",
@@ -240,16 +200,6 @@
         "unlocks": [{"type": "Technology", "code": "Agr5A"}, {"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Inf5B"}]
     },
     {
-        "name": "Genetics",
-        "code": "Genetics",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Genetics",
-        "desc": "Fund basic research in the field of Genetics to advance world knowledge.",
-        "unlocks": []
-    },
-    {
         "name": "Genetics I",
         "code": "Genetics I",
         "level": 1,
@@ -298,16 +248,6 @@
         "field": "Genetics",
         "desc": "Fund genetics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
         "unlocks": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio5B"}]
-    },
-    {
-        "name": "Material Science",
-        "code": "Material Science",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Material Science",
-        "desc": "Fund basic research in the field of Material Science to advance world knowledge.",
-        "unlocks": []
     },
     {
         "name": "Material Science I",
@@ -360,16 +300,6 @@
         "unlocks": [{"type": "Technology", "code": "Agr5A"}, {"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Mil5C"}]
     },
     {
-        "name": "Physics",
-        "code": "Physics",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Physics",
-        "desc": "Fund basic research in the field of Physics to advance world knowledge.",
-        "unlocks": []
-    },
-    {
         "name": "Physics I",
         "code": "Physics I",
         "level": 1,
@@ -418,16 +348,6 @@
         "field": "Physics",
         "desc": "Fund physics research in an attempt to push human understand to the point of theoretical mastery of the subject.",
         "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Mil5F"}]
-    },
-    {
-        "name": "Psychology",
-        "code": "Psychology",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Psychology",
-        "desc": "Fund basic research in the field of Psychology to advance world knowledge.",
-        "unlocks": []
     },
     {
         "name": "Psychology I",
@@ -480,16 +400,6 @@
         "unlocks": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Inf5B"}]
     },
     {
-        "name": "Social Science",
-        "code": "Social Science",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Social Science",
-        "desc": "Fund basic research in the field of Social Science to advance world knowledge.",
-        "unlocks": []
-    },
-    {
         "name": "Social Science I",
         "code": "Social Science I",
         "level": 1,
@@ -538,16 +448,6 @@
         "field": "Social Science",
         "desc": "Fund social science research in an attempt to push human understand to the point of theoretical mastery of the subject.",
         "unlocks": [{"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Bio5D"}]
-    },
-    {
-        "name": "Quantum Mechanics",
-        "code": "Quantum Mechanics",
-        "level": 0,
-        "prereq": [],
-        "type": "Knowledge",
-        "field": "Quantum Mechanics",
-        "desc": "Fund basic research in the field of Quantum Mechanics to advance world knowledge.",
-        "unlocks": []
     },
     {
         "name": "Quantum Mechanics I",
