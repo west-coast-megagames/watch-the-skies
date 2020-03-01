@@ -57,7 +57,7 @@
         "type": "Knowledge",
         "field": "Computer Science",
         "desc": "Fund cutting edge projects in computer science to advance world knowledge and begin to apply that knowledge to new technologies.",
-        "unlocks": [{"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Inf1H"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2F"}]
+        "unlocks": [{"type": "Technology", "code": "A-17"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Inf1H"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf1F"}, {"type": "Technology", "code": "Inf2F"}]
     },
     {
         "name": "Computer Science II",

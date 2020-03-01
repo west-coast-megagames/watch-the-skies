@@ -238,5 +238,20 @@
 },
 "unlocks": [],
 "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf4B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}]
-}
+},
+{   
+  "name": "Drew's System Analysis",
+  "code": "A-17",
+  "level": 3,
+  "prereq": [],
+  "type": "Analysis",
+  "field": "Analysis",
+  "desc": "We found this...",
+  "effect": {
+    "cost": 0,
+    "desc":"Must be discarded after successful research."
+  },
+  "unlocks": [],
+  "breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}]
+  }
 ]
