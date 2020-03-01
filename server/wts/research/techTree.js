@@ -5,7 +5,8 @@ const militaryData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/mi
 const infrastructureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/infrastructure.json')));
 const medicalData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/medical.json')));
 const agricultureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/agriculture.json')));
-const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData];
+const analysisData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/analysis.json')));
+const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
 const { Technology } = require('./technology');
 const KnowledgeResearch = require('../../models/sci/research')
