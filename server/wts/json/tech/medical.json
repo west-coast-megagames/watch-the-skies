@@ -100,7 +100,7 @@
     "name": "Resilient Bacteria",
     "code": "Bio2D",
     "level": 2,
-    "prereq": [{"type": "Technology", "code": "Bio1C"}, {"type": "Technology", "code": "Bio2C"}, {"type": "Knowledge", "code": "Genetics II"}, {"type": "Knowledge", "code": "Biology II"}],
+    "prereq": [{"type": "Analysis", "code": "A-2"}, {"type": "Technology", "code": "Bio1C"}, {"type": "Technology", "code": "Bio2C"}, {"type": "Knowledge", "code": "Genetics II"}, {"type": "Knowledge", "code": "Biology II"}],
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Bacteria resistant to infection.",
