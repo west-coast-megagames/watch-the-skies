@@ -2,6 +2,7 @@ const techDebugger = require('debug')('app:tech');
 
 const { Team } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
+const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const TechResearch = require('../../models/sci/techResearch');
 
 // Technology Constructor Function
@@ -17,7 +18,7 @@ function Technology(tech) {
 
     // Async Method to check if this technology is availible for each team
     this.checkAvailible = async function() {
-        for await (let team of await Team.find({ teamType: 'N' }, '_id name')) {
+        for await (let team of await Team.find({ teamType: 'N', teamCode: 'USA' }, '_id name')) {
             let currentTech = await Research.findOne({ name: this.name, team_id: team._id });
             techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
             if (currentTech === null) {
@@ -29,19 +30,22 @@ function Technology(tech) {
                     techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
                     let checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
                     let checkKnowledge = await Research.findOne({ code: req.code });
-                    // if (checkKnowledge !== null) {
-                    //     if (checkKnowledge.completed && checkKnowledge.credit === team._id) {
-                    //         techDebugger(`Knowledge level ${checkKnowledge.name} is availible to ${team.name}...`);
-                    //     } else {
-                    //         techDebugger(`Knowledge level ${checkKnowledge.name} is not availible to ${team.name}...`);
-                    //         checkKnowledge = null
-                    //     };
-                    // }
+                    console.log(checkKnowledge);
+                    if (checkKnowledge !== null) {
+                        if (checkKnowledge.completed && checkKnowledge.credit === team._id) {
+                            techDebugger(`COMPLETED - ${this.name} is availible to research for ${team.name}...`);
+                        } else if (checkKnowledge.published === true) {
+                            techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
+                        } else {
+                        techDebugger(`UNKNOWN - ${checkKnowledge.name} is not availible to ${team.name}...`);
+                        checkKnowledge = null
+                    };
+                    }
                     if (checkTech !== null || checkKnowledge !== null) {
                         count++;
-                        techDebugger(`${this.name}: prereq ${req.code} found...`);
+                        techDebugger(`${this.name}: Prereq ${req.code} found...`);
                     } else {
-                        techDebugger(`${this.name}: prereq ${req.code} not found...`);
+                        techDebugger(`${this.name}: Prereq ${req.code} not found...`);
                         break;
                     }
                 };
@@ -77,4 +81,4 @@ function Technology(tech) {
     }
 }
 
-module.exports = Technology;
+module.exports = { Technology };

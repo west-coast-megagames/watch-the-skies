@@ -3,7 +3,7 @@ const nexusEvent = require('../../startup/events');
 const express = require('express');
 const router = express.Router();
 
-const { loadTech } = require('../../wts/research/techTree');
+const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
 const science = require('../../wts/research/research');
 
@@ -93,7 +93,16 @@ router.patch('/load/knowledge', async function (req, res) {
 router.patch('/load/knowledge/seed', async function (req, res) {
     let response = await knowledgeSeed();
     nexusEvent.emit('updateResearch');
-    return res.status(200).send('We did it, such a seed!')
+    return res.status(200).send('We did it, such a knowledge seed!')
+});
+
+// @route   PATCH api/research/load/tech/seed
+// @Desc    Load all technology from JSON files
+// @access  Public
+router.patch('/load/tech/seed', async function (req, res) {
+    let response = await techSeed();
+    nexusEvent.emit('updateResearch');
+    return res.status(200).send(`We did it, we seeded Technology`);
 });
 
 // @route   DEL api/research/delete
