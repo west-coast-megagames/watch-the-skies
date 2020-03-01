@@ -16,7 +16,7 @@ async function crisis(zone, crisis) {
 
 async function battle(country) {
     let terror = 10; // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror;
     zone = await zone.save();
@@ -26,7 +26,7 @@ async function battle(country) {
 
 async function invasion(country) {
     let terror = 2 // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -61,7 +61,7 @@ async function coverage() {
 
 async function nuclearStrike(site) {
     let terror = 15 // Initial Terror caused by this event
-    let site = Site.findById(site).populate('zone').populate('country');
+    site = Site.findById(site).populate('zone').populate('country');
     let zone = site.zone;
     let country = site.country;
     zone.terror += terror; // Assigns terror to zone
@@ -71,7 +71,7 @@ async function nuclearStrike(site) {
 
 async function cityDestruction(site) {
     let terror = 20 // Initial Terror caused by this event
-    let site = Site.findById(site).populate('zone').populate('country');
+    site = Site.findById(site).populate('zone').populate('country');
     let zone = site.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -80,7 +80,7 @@ async function cityDestruction(site) {
 
 async function industryDestruction(country) {
     let terror = 15 // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -89,7 +89,7 @@ async function industryDestruction(country) {
 
 async function alienActivity (country) {
     let terror = gonePublic ? 2 : 1; // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -98,7 +98,7 @@ async function alienActivity (country) {
 
 async function alienRaid (country) {
     let terror = gonePublic ? 3 : 2; // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -107,7 +107,7 @@ async function alienRaid (country) {
 
 async function alienGroundForces (country) {
     let terror = gonePublic ? 4 : 3; // Initial Terror caused by this event
-    let country = Country.findById(country).populate('zone');
+    country = Country.findById(country).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
@@ -116,7 +116,7 @@ async function alienGroundForces (country) {
 
 async function orbitalStrike (site) {
     let terror = 20; // Initial Terror caused by this event
-    let site = Site.findById(site).populate('zone').populate('country');
+    site = Site.findById(site).populate('zone').populate('country');
     let zone = site.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
