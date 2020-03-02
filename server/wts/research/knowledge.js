@@ -203,6 +203,4 @@ async function publishKnowledge (research) {
     return research;
 };
 
-
-
 module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree };

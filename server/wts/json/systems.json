@@ -13,6 +13,7 @@
     "prereq": [],
     "category": "Weapon",
     "desc": "Basic terrestrial mounted railgun",
+    "unlocks": "",
     "stats": { "attack": 1 }
 },
 {   
