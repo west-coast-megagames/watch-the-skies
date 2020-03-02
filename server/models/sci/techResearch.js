@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const Research = require('../sci/research');
 const Schema = mongoose.Schema;
 
+const TheorySchema = new Schema({
+    name: { type: String },
+    type: { type: String },
+    code: { type: String },
+    desc: { type: String }
+  });
+  
+
 const TechResearch = Research.discriminator('TechResearch', new Schema({
     type: { type: String, default: 'Technology' },
     field: { type: String, enum: ['Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis']},
@@ -11,7 +19,8 @@ const TechResearch = Research.discriminator('TechResearch', new Schema({
         visible: { type: Boolean, default: true },
         available: { type: Boolean, default: true },
         completed: { type: Boolean, default: false }
-    }
+    },
+    theoretical: [TheorySchema]
 }));
 
 module.exports = TechResearch;
