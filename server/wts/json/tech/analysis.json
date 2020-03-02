@@ -12,7 +12,7 @@
     "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil4E"}]
 },
 {
 "name": "Biological Analysis",
@@ -27,7 +27,7 @@
    "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Bio2D"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil3B"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Bio3B"}]
 },
 {   
 "name": "Plasma Analysis",
@@ -42,7 +42,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil5D"}]
 },
 {   
 "name": "Mining Unit Analysis",
@@ -57,7 +57,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Inf3G"}]
 },
 {   
 "name": "Shield Analysis",
@@ -71,8 +71,8 @@
   "cost": 0,
   "desc":"Must be discarded after successful research."
 },
-"unlocks": [],
-"breakthrough": []
+"unlocks": [{"type": "Technology", "code": "Mil4A"}],
+"breakthrough": [{"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Mil3F"}]
 },
 {   
 "name": "Laser Analysis",
@@ -87,7 +87,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Mil2B"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Inf2A"}]
 },
 {   
 "name": "Nanites Analysis",
@@ -102,7 +102,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Inf2D"}]
 },
 {   
 "name": "Robot Analysis",
@@ -116,8 +116,8 @@
   "cost": 0,
   "desc":"Must be discarded after successful research."
 },
-"unlocks": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil4D"}],
-"breakthrough": []
+"unlocks": [{"type": "Technology", "code": "Mil4D"}],
+"breakthrough": [{"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil2C"}]
 },
 {   
 "name": "Reactor Analysis",
@@ -132,7 +132,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Inf4A"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Mil4M"}]
 },
 {   
 "name": "Comm. Panel Analysis",
@@ -147,7 +147,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Inf2B"}]
 },
 {   
 "name": "Healing Device Analysis",
@@ -162,7 +162,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Agr4A"}]
+"breakthrough": [{"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Agr4A"}]
 },
 {   
 "name": "AI Analysis",
@@ -177,7 +177,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Inf1D"}, {"type": "Technology", "code": "Mil3E"}]
 },
 {   
 "name": "CPU Analysis",
@@ -192,7 +192,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": [{"type": "Technology", "code": "Bio3B"}]
+"breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Bio3B"}]
 },
 {   
 "name": "FTL Analysis",
@@ -207,7 +207,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf2B"}]
 },
 {   
 "name": "Space Tools Analysis",
@@ -222,7 +222,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": []
+"breakthrough": [{"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4O"}]
 },
 {   
 "name": "Environment Unit Analysis",
@@ -237,7 +237,7 @@
   "desc":"Must be discarded after successful research."
 },
 "unlocks": [],
-"breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}]
+"breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf4B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}]
 },
 {   
   "name": "Drew's System Analysis",
