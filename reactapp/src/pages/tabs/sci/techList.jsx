@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Icon, Button, Progress, Affix } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
-import sci1logo from '../../../img/sci1.svg';
 import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';
 const { Column, HeaderCell, Cell } = Table;
@@ -175,6 +174,8 @@ class TechList extends Component {
                 level: '',
                 progressPct: -1,
                 desc: '',
+                prereqs: {},
+                unlocks: {},
                 children: research.map(el => {
                     return {
                         id:el._id,
@@ -182,7 +183,9 @@ class TechList extends Component {
                         labelName:el.name,
                         level:el.level,
                         progressPct:lookupPct(el._id, research, this.props.techCost),
-                        desc:el.desc
+                        desc:el.desc,
+                        prereqs:el.prereq,
+                        unlocks:el.unlocks
 //                    status:'Unknown',
 //                    location:el.country.name,
 //                    target: el,
