@@ -11,7 +11,6 @@ class GameTimeline extends Component {
         logs: [],
         filteredLogs: [],
         teamFilter: [],
-        teamFilter: [],
         typeFilter: []
     }
 
