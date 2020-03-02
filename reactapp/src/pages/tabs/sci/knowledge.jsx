@@ -16,7 +16,6 @@ class Knowledge extends Component {
     }
 
     componentDidMount() {
-        console.log("PROPS=",this.props);
         let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge');
         if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
             let myHiddenLab = this.props.facilities.filter(el => el.type === 'Lab' && el.hidden && el.team._id === this.props.team._id);
@@ -116,7 +115,6 @@ class Knowledge extends Component {
                         <Cell dataKey="research.progress">{rowData => {
                             let progress = rowData.research.progress;
                             let percent = progress / this.props.techCost[rowData.research.level] * 100
-                            console.log(percent);
                             return(
                                 <Progress.Line percent={progress} />
                         )}}</Cell>
@@ -148,10 +146,6 @@ class Knowledge extends Component {
 
     handleSubmit = async () => {
         let { account, cost, checkedKeys, myHiddenLab } = this.state
-        
-        console.log("myHiddenLab=", myHiddenLab[0]._id)
-        console.log("account=", account)
-
         if (account.balance < cost) {
             Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
         } else {
@@ -170,7 +164,6 @@ class Knowledge extends Component {
                         _id: myHiddenLab[0]._id 
                     }
                     let { data } = await axios.put(`${gameServer}api/facilities/research`, submission);
-                    console.log(data)
                     Alert.success(data, 4000)
 
                     this.setState({

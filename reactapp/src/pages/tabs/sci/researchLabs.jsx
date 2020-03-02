@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, Badge, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { newLabCheck, getLabPct } from './../../../scripts/labs';
 
 const { Column, HeaderCell, Cell } = Table;
+
 
 function findTechByID(_id, allResearch) {
 	let myResearchArray = [];
@@ -21,19 +22,36 @@ function findTechByID(_id, allResearch) {
 
 
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
-	let getPctResult = getLabPct(rowData._id, props.labs, props.allresearch, props.techcost);
-	if (getPctResult < 0) {
+
+	if ( rowData.status.destroyed) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
-				<div>Choose a research</div>
+				<div style={{fontSize: 16, color: 'red'	}} >DESTROYED</div>
 			</Cell>
-		)
+		);
+	} else if (!rowData.status.damaged) {
+		return (
+			<Cell {...props} style={{ padding: 0 }}>
+				<div style={{fontSize: 18, color: 'orange'	}} >
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => this.props.onClick} disabled={rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+				</div> 
+			</Cell>
+		);
 	} else {
-		return (
-			<Cell {...props} style={{ padding: 0 }}>
-				<div> <Progress.Line percent={ getPctResult } status='active' /> </div>
-			</Cell>
-		)
+		let getPctResult = getLabPct(rowData._id, props.labs, props.allresearch, props.techcost);
+		if (getPctResult < 0) {
+			return (
+				<Cell {...props} style={{ padding: 0 }}>
+					<div>Choose a research</div>
+				</Cell>
+			)
+		} else {
+			return (
+				<Cell {...props} style={{ padding: 0 }}>
+					<div> <Progress.Line percent={ getPctResult } status='active' /> </div>
+				</Cell>
+			)
+		}
 	}
 };
 
@@ -51,6 +69,7 @@ class ResearchLabs extends Component {
 		this.confirmSubmit = this.confirmSubmit.bind(this);
 	}
 	
+
 	handleLabUpdate(updatedLab) {
 		let labs = this.state.labs;
 		const result = newLabCheck(updatedLab._id, labs);
@@ -175,27 +194,35 @@ class ResearchLabs extends Component {
 						<HeaderCell>Research Focus</HeaderCell>
 						<Cell style={{ padding: 0 }} dataKey="name">
 						{rowData => {   
-							let defaultValue = "";
-							if (rowData.research.length !== 0) {		// New research is null
-								defaultValue = rowData.research[0]._id;
-							}
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.research = findTechByID(value, props.allResearch);
 								sendLabUpdate(updatedLab);
-							}          
-							return (
-								<SelectPicker
-									defaultValue={ defaultValue }
-									groupBy='field'
-									valueKey='_id'
-									labelKey='name'
-									disabled={rowData.disableFunding}
-									onChange={handleChange}
-									data={ research }
-									style={{ width: 200 }}
-								/>
-							)}}
+							}
+							if ( rowData.status.destroyed) {
+								rowData.disableFunding = true;
+								return (
+									<div style={{fontSize: 18, color: 'red'	}} >DESTROYED</div>
+								);
+							} else {  
+								let defaultValue = "";
+								if (rowData.research.length !== 0) {		// New research is null
+									defaultValue = rowData.research[0]._id;
+								}
+								return (
+									<SelectPicker
+										defaultValue={ defaultValue }
+										groupBy='field'
+										valueKey='_id'
+										labelKey='name'
+										disabled={rowData.disableFunding}
+										onChange={handleChange}
+										data={ research }
+										style={{ width: 200 }}
+									/>
+								)
+							}
+						}}
 						</Cell>
 					</Column>
 			
@@ -205,6 +232,7 @@ class ResearchLabs extends Component {
 							labs={this.state.labs}
 							allresearch={ props.allResearch }
 							techcost={ props.techCost }
+							onClick={this.repair}
 						/>
 					</Column>
 			
@@ -218,7 +246,6 @@ class ResearchLabs extends Component {
 								sendFundingUpdate(updatedLab);
 							}          
 							return (
-
 								<InputNumber 
 									prefix="Funding" 
 									defaultValue={rowData.funding}
@@ -235,7 +262,7 @@ class ResearchLabs extends Component {
 
 					<Column verticalAlign='middle' width={100}>
 						<HeaderCell>Cost</HeaderCell>
-						<Cell dataKey="blah">
+						<Cell>
 							{rowData => {      
 								let labs = this.state.labs;
 								let account = this.state.account;
@@ -262,25 +289,52 @@ class ResearchLabs extends Component {
 
 			</div>
     	);
-	  }
+	}
 	  
-	  teamFilter = () => {
-			let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id);
-			if (research.length !== 0) {
-				this.setState({research});
+	repair = async () => {
+//		if (this.props.account.balance < 2) Alert.warning(`Lack of Funds: You need to transfer funds to your operations account to repair ${this.props.aircraft.name}`)
+		try {
+//			  let response = await axios.put(`${gameServer}game/repairAircraft/`, {_id: this.props.aircraft._id});
+//			  console.log(response.data)
+//			  Alert.success(response.data);
+			console.log("REPAIRING...");
+		} catch (err) {
+			  console.error(err.message)
+		}
+	}
+	
+	teamFilter = () => {
+		// Fake research entry for repairing a lab
+		const repairEntry = {
+			_id: "repair",
+			type: "Repair",
+			team: this.props.team._id,
+			name: "Repair Lab $5MB",
+			field: "Repair"
+		}
+
+		let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
+		if (research.length !== 0) {
+			this.setState({research});
+		}
+		let labs = this.props.facilities.filter(el => el.team !== null);
+		if (labs.length !== 0) {
+			labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
+
+			// check for damaged labs.  If any exist, add a research called "Repair"
+			const damagedLabs = labs.findIndex(el => el.status.damaged && !el.status.destroyed);
+			if (damagedLabs >= 0) {
+				research.push(repairEntry);
 			}
-			let labs = this.props.facilities.filter(el => el.team !== null);
-			if (labs.length !== 0) {
-				labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
-				this.setState({labs});
-			}
-			let account = this.props.accounts.filter(el => el.code === 'SCI');
-			if (account.length !== 0) {
-				account = account[0];
-				this.setState({account});
-			}
-			
-	  }
+			this.setState({labs});
+		}
+		let account = this.props.accounts.filter(el => el.code === 'SCI');
+		if (account.length !== 0) {
+			account = account[0];
+			this.setState({account});
+		}
+		
+	}
 }
 
 export default ResearchLabs;
