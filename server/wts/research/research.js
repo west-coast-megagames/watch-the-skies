@@ -1,18 +1,18 @@
 const researchDebugger = require('debug')('app:research');
+const majorDebugger = require('debug')('app:major');
 const nexusEvent = require('../../startup/events');
 const { logger } = require('../../middleware/winston');
 
 const Research = require('../../models/sci/research') // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
 
-const techCost = [ 30, 80, 120, 250, 300, 350 ] // Arbitratily set at increments of 50 currently
-const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
+const { techCost, fundingCost } = require('./sciState')
 
 const { Facility } = require('../../models/gov/facility/facility');
 const { Team } = require('../../models/team/team');
 const { ResearchReport } = require('../reports/reportClasses');
-
-
+const { techTree } = require('./techTree');
+const { knowledgeTree } = require('./knowledge'); 
 
 async function startResearch () {
     for await (let lab of await Facility.find({ type: 'Lab' })) {
@@ -36,12 +36,12 @@ async function calculateProgress(lab) {
             let tech = await Research.findById(project).populate('team'); // Imports the specific Research object by _id
             researchDebugger(`Current Progress: ${tech.progress}`)
             report.progress.startingProgress = tech.progress; 
-            researchDebugger(tech)
+            // researchDebugger(tech)
             let team = await Team.findById(lab.team);
             report.project = tech._id;
             report.lab = lab._id;
-            researchDebugger(lab)
-            researchDebugger(team);
+            // researchDebugger(lab)
+            // researchDebugger(team);
             let test = team.sciRate;
             researchDebugger(`Team Sci Rate: ${test} - type: ${typeof test}`);
             researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
@@ -81,8 +81,8 @@ async function calculateProgress(lab) {
             lab = await lab.save() // Saves the modified lab
             tech = await tech.save(); // Saves the current project to the database
 
-            // researchDebugger(lab);
-            // researchDebugger(tech);
+            majorDebugger(lab);
+            majorDebugger(tech);
 
         } catch (err) {
             logger.error(err)
@@ -144,11 +144,25 @@ async function completeTech (research) {
     research.status.availible = false;
     research.status.completed = true;
     
-    researchDebugger(research.unlocks)
+    majorDebugger(research.unlocks)
 
     for await (let item of research.unlocks) {
-        researchDebugger(`${item.type} - ${item.name}`);
+        console.log(item)
+        if (item.type === 'Technology') {
+            let newTech = techTree.find(el => el.code === item.code);
+            researchDebugger(`UNLOCKING: ${item.type} - ${newTech.name}`);
+            console.log(newTech)
+            await newTech.checkAvailable();
+        } else if (research.type === 'Knowledge') {
+            if (research.level < 5) {
+                let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
+                await nextKnowledge.unlock();
+                researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
+                console.log(nextKnowledge);
+            };
 
+        
+        }
     }
 
     reserach = await research.save();
