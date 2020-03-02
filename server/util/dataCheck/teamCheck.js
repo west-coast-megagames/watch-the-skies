@@ -1,10 +1,7 @@
 // Team Model - Using Mongoose Model
-const { Team, validateTeam } = require('../../models/team/team');
-const { National, validateNational } = require('../../models/team/national');
-const { Alien, validateAlien } = require('../../models/team/alien');
-const { Control, validateControl } = require('../../models/team/control');
-const { Media, validateMedia } = require('../../models/team/media');
-const { Npc, validateNpc } = require('../../models/team/npc');
+//const { Team, validateTeam } = require('../../models/team/team');
+const { Team, validateTeam, National, validateNational, Alien, validateAlien, Control, validateControl, Npc, validateNpc, Media, validateMedia } = require('../../models/team/team');
+
 const { Account } = require('../../models/gov/account');
 
 const teamCheckDebugger = require('debug')('app:teamCheck');

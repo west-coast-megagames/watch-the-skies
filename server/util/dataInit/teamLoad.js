@@ -17,13 +17,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Team Model - Using Mongoose Model
-const { Team, validateTeam } = require('../../models/team/team');
-const { Alien, validateAlien } = require('../../models/team/alien');
-const { Control, validateControl } = require('../../models/team/control');
-const { Media, validateMedia } = require('../../models/team/media');
-const { National, validateNational } = require('../../models/team/national');
-const { Npc, validateNpc } = require('../../models/team/npc');
-
+const { Team, validateTeam, National, validateNational, Alien, validateAlien, Control, validateControl, Npc, validateNpc, Media, validateMedia } = require('../../models/team/team');
 const { Country } = require('../../models/country');
 
 const app = express();
