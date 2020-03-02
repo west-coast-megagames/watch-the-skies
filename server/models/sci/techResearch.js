@@ -8,6 +8,7 @@ const TechResearch = Research.discriminator('TechResearch', new Schema({
     team: { type: Schema.Types.ObjectId, ref: 'Team'},
     progress: { type: Number, default: 0 },
     status: {
+        visible: { type: Boolean, default: true },
         available: { type: Boolean, default: true },
         completed: { type: Boolean, default: false }
     }

@@ -15,7 +15,7 @@ const EquipmentSchema = new Schema({
   desc: { type: String },
   prereq: [{
     type: { type: String },
-    name: {type: String },
+    code: {type: String },
   }],
   status: {
     building: { type: Boolean, default: true },

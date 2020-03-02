@@ -5,12 +5,12 @@ const knowledgeData = JSON.parse(file);
 knowledgeDebugger = require('debug')('app:knowledge');
 
 const { Team } = require('../../models/team/team');
-const { National } = require('../../models/team/national');
-const { Control } = require('../../models/team/control');
 const Research = require('../../models/sci/research');
 const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
-const { techCost } = require('./research');
+const { techCost } = require('./sciState');
+
+console.log(techCost)
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = [];
@@ -205,4 +205,4 @@ async function publishKnowledge (research) {
 
 
 
-module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge };
+module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree };

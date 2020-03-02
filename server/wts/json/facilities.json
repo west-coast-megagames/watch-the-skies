@@ -1,0 +1,20 @@
+[
+{"loadType": "baseSite",
+"name" : "Temp Insecurity Aid",
+"code" : "FacCrisis",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
+    { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
+    { "type" : "Lab", "name" : "TFR Lab H-1", "capacity": 1, "hidden": true}]
+},
+{"loadType": "baseSite",
+"name" : "Farm",
+"code" : "FacFarm",
+"baseDefenses" : false,
+"facilities" :  [
+    { "type" : "Lab", "name" : "Lab  A-1", "capacity": 1},
+    { "type" : "Hanger" , "name" : "Hangar  A-1", "capacity": 5},
+    { "type" : "Lab", "name" : "TFR Lab H-1", "capacity": 1, "hidden": true}]
+}
+]

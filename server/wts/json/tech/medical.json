@@ -8,7 +8,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new trauma center methodology.",
-    "effects": { "type": "terror", "effect": -2 },
+    "effects": { "type": "terror", "effect": -5 },
     "unlocks": [ {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio3C"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3C"}, { "type": "Technology", "code": "Bio3A"}]
 },
@@ -20,7 +20,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for deploying vaccinations.",
-    "effects": { "type": "terror", "effect": -4 },
+    "effects": { "type": "terror", "effect": -6 },
     "unlocks": [],
     "breakthrough": [{"type": "Technology", "code": "Bio3A"}]
 },
@@ -67,7 +67,7 @@
     "prereq": [{"type": "Technology", "code": "Bio1E"}, {"type": "Technology", "code": "Bio1C"}, {"type": "Knowledge", "code": "Genetics II"}, {"type": "Knowledge", "code": "Computer Science II"}],
     "type": "Technology",
     "field": "Biomedical",
-    "desc": "Develops new more controlled methods of Gene Modification.",
+    "desc": "Develops new more controlled methods of Gene Modification. Both terrifying and amazing.",
     "effects": {"type": "terror", "effect": -10 },
     "unlocks": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio2B"}],
     "breakthrough": [{"type": "Technology", "code": "Bio2B"}]
@@ -80,7 +80,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
-    "effects": {"type": "terror", "effect": -10 },
+    "effects": {"type": "terror", "effect": -15 },
     "unlocks": [],
     "breakthrough": [{"type": "Technology", "code": "Bio3D"}]
 },
