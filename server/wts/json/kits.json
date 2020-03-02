@@ -178,5 +178,5 @@
     "effects": [{"type": "terror", "effect": -15}, {"type": "$M", "effect": -1}],
     "prereq": [{ "type": "Technology", "code": "Inf4D"}],
     "stats": {}
-},
+}
 ]

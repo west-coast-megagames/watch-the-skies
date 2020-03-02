@@ -200,7 +200,7 @@
     "type": "Technology",
     "field": "Biomedical",
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
-    "effects": [{"type": "terror", "effect": -15 }, {"type": "pr", "effect": 1}]],
+    "effects": [{"type": "terror", "effect": -15 }, {"type": "pr", "effect": 1}],
     "unlocks": [{"type": "Equipment", "code": "KB-3"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Mil5G"}]
 },
