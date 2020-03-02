@@ -7,6 +7,7 @@ const cors = require('cors');
 // Routes - Using Express
 const game = require('../routes/game/game');
 const admin = require('../routes/game/admin');
+const del = require('../routes/game/delete');
 const home = require('../routes/api/home');
 const auth = require('../routes/api/auth');
 const interceptor = require('../routes/api/interceptor');
@@ -39,6 +40,7 @@ module.exports = function(app) {
     app.use('/', home);
     app.use('/game', game);
     app.use('/game/admin', admin);
+    app.use('/game/delete', del);
     app.use('/api/auth', auth);
     app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
     app.use('/api/team', team); // Route for Teams
