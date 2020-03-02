@@ -143,9 +143,12 @@ async function completeTech (research) {
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.availible = false;
     research.status.completed = true;
+    
+    researchDebugger(research.unlocks)
 
     for await (let item of research.unlocks) {
         researchDebugger(`${item.type} - ${item.name}`);
+
     }
 
     reserach = await research.save();

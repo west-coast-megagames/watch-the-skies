@@ -8,6 +8,7 @@ const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Ge
 
 class Knowledge extends Component {
     state = { 
+        myHiddenLab: {},    // The hidden lab used for scientific knowledge for this team (SRC)
         data: [],
         checkedKeys: [],
         cost: 0,
@@ -15,11 +16,13 @@ class Knowledge extends Component {
     }
 
     componentDidMount() {
+        console.log("PROPS=",this.props);
         let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge');
         if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
+            let myHiddenLab = this.props.facilities.filter(el => el.type === 'Lab' && el.hidden && el.team._id === this.props.team._id);
             let tableKnowlege = this.createTable(knowledge);
             let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
-            this.setState({ data: tableKnowlege, account });
+            this.setState({ data: tableKnowlege, account, myHiddenLab });
         } 
     }
 
@@ -144,7 +147,11 @@ class Knowledge extends Component {
     }
 
     handleSubmit = async () => {
-        let { account, cost, checkedKeys } = this.state
+        let { account, cost, checkedKeys, myHiddenLab } = this.state
+        
+        console.log("myHiddenLab=", myHiddenLab[0]._id)
+        console.log("account=", account)
+
         if (account.balance < cost) {
             Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
         } else {
@@ -155,13 +162,12 @@ class Knowledge extends Component {
                     amount : cost
                 }
                 let { data } = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
-                console.log(data)
                 Alert.success(data, 4000)  
                 try {
                     let submission = {
                         research: checkedKeys,
                         funding: 0,
-                        _id: '5e576cae7b1af50d0c02c70c'
+                        _id: myHiddenLab[0]._id 
                     }
                     let { data } = await axios.put(`${gameServer}api/facilities/research`, submission);
                     console.log(data)

@@ -111,8 +111,10 @@ class Science extends Component {
                         <Knowledge    
                             team={ this.props.team }
                             allResearch={this.props.research}
-                            techCost={this.state.techCost}
+                            facilities={this.props.facilities}
                             accounts={this.props.accounts}
+                            techCost={this.state.techCost}
+                            
                         />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
