@@ -81,8 +81,8 @@ async function loadBase(iData){
       let { error } = validateBase(baseSite); 
       if (error) {
         // remove associated facility records
-        for (let j = 0; j < baseSite.facilities.length; ++j ) {
-          facilityId = baseSite.facilities[j];
+        for (let j = 0; j < baseSite.Inf1C.length; ++j ) {
+          facilityId = baseSite.Inf1C[j];
           let facilityDel = await Facility.findByIdAndRemove(facilityId);
           if (facilityDel = null) {
             baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);
@@ -114,10 +114,10 @@ async function loadBase(iData){
         }      
       }
 
-      // create facility records for baseSite and store ID in baseSite.facilities
-      baseSite.facilities = [];
-      for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.facilities[i];
+      // create facility records for baseSite and store ID in baseSite.Inf1C
+      baseSite.Inf1C = [];
+      for (let i = 0; i < iData.Inf1C.length; ++i ) {
+        let fac = iData.Inf1C[i];
         let facError = false;
         let facType  = fac.type;
         let facId    = null;
@@ -148,7 +148,7 @@ async function loadBase(iData){
             baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
           }));
     
-          baseSite.facilities.push(facId);
+          baseSite.Inf1C.push(facId);
         }
       }  
 
@@ -188,8 +188,8 @@ async function loadBase(iData){
       const { error } = validateBase(baseSite); 
       if (error) {
         // remove associated facility records
-        for (let j = 0; j < baseSite.facilities.length; ++j ) {
-          facilityId = baseSite.facilities[j];
+        for (let j = 0; j < baseSite.Inf1C.length; ++j ) {
+          facilityId = baseSite.Inf1C[j];
           let facilityDel = await Facility.findByIdAndRemove(facilityId);
           if (facilityDel = null) {
             baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);
@@ -199,11 +199,11 @@ async function loadBase(iData){
         return
       }
    
-      // create facility records for baseSite and store ID in baseSite.facilities
-      // create facility records for baseSite and store ID in baseSite.facilities
-      baseSite.facilities = [];
-      for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.facilities[i];
+      // create facility records for baseSite and store ID in baseSite.Inf1C
+      // create facility records for baseSite and store ID in baseSite.Inf1C
+      baseSite.Inf1C = [];
+      for (let i = 0; i < iData.Inf1C.length; ++i ) {
+        let fac = iData.Inf1C[i];
         let facError = false;
         let facType  = fac.type;
         let facId    = null;
@@ -234,7 +234,7 @@ async function loadBase(iData){
             baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
           }));
     
-          baseSite.facilities.push(facId)              
+          baseSite.Inf1C.push(facId)              
         }
       }  
       await baseSite.save((err, baseSite) => {
@@ -259,8 +259,8 @@ async function deleteAllBases(doLoad) {
       let id = baseSite._id;
       try {
         // remove associated facility records
-        for (let j = 0; j < baseSite.facilities.length; ++j ) {
-          facilityId = baseSite.facilities[j];
+        for (let j = 0; j < baseSite.Inf1C.length; ++j ) {
+          facilityId = baseSite.Inf1C[j];
           let facilityDel = await Facility.findByIdAndRemove(facilityId);
           if (facilityDel = null) {
             baseSiteLoadDebugger(`The Base Facility with the ID ${facilityId} was not found!`);

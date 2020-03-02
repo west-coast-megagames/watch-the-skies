@@ -322,7 +322,7 @@
     "field": "Infrastructure",
     "desc": "Megastructures for densely populated, ecologically low-impact human habitats, reducing human impact on natural resources.",
     "effects": [],
-    "unlocks": [{"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Inf4G"}],
+    "unlocks": [{"type":"Equipment", "code": "KI-6"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Inf4G"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Agr5A"}]
 },
 {   
@@ -334,7 +334,7 @@
     "field": "Infrastructure",
     "desc": "Buildings or structures built to climb into the stratosphere.",
     "effects": [],
-    "unlocks": [],
+    "unlocks": [{"type":"Equipment", "code": "KI-7"}, {"type":"Equipment", "code": "KI-8"}],
     "breakthrough": []
 },
 {   
@@ -358,7 +358,7 @@
     "field": "Infrastructure",
     "desc": "Develops and deploys a fully sentient distributed AI network.",
     "effects": [],
-    "unlocks": [],
+    "unlocks": [{"type":"Equipment", "code": "KI-9"}],
     "breakthrough": []
 },
 {   
@@ -370,7 +370,7 @@
     "field": "Infrastructure",
     "desc": "A process in which quantum information (e.g. the exact state of an atom or photon) can be transmitted (exactly, in principle) from one location to another.",
     "effects": [],
-    "unlocks": [],
+    "unlocks": [{"type":"Equipment", "code": "KI-10"}],
     "breakthrough": []
 }
 ]

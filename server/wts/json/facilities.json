@@ -1,0 +1,26 @@
+[
+{
+"name": "Clivilian Facilities",
+"code": "Clivilian",
+"unitType": "citySite",
+"effect": [],
+"status": {
+  "secret": false 
+}},
+{
+"name": "MegaProject Facilites",
+"code": "MegaProject",
+"unitType": "citySite",
+"effect": [{ "type": "pr", "effect": 1}],
+"status": {
+  "secret": false 
+}},
+{
+"name": "Crisis",
+"code": "Crisis",
+"unitType": "crisisSite",
+"effect": [],
+"status": {
+  "secret": false 
+}}
+]
