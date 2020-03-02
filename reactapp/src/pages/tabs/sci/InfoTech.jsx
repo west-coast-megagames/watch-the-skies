@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Popover } from 'rsuite'
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Popover, Table } from 'rsuite'
+import SciIcon from './../../../components/common/sciencIcon';
 //import axios from 'axios'
 //import { gameServer } from '../config'
-
+const { Column, HeaderCell, Cell } = Table;
 
 class InfoTech extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            prereqs : {}
 //            logs: {},
 //            update: false,
 //            hideTransfer: true
@@ -24,8 +26,9 @@ class InfoTech extends Component {
 
 
     render() {
-//        let { name, zone, country, type, baseOrig } = this.props.aircraft;
         let research = this.props.research;
+        let prereqs = research.prereqs;
+        let unlocks = research.unlocks;
 
         return (
             <Drawer
@@ -33,14 +36,54 @@ class InfoTech extends Component {
                 show={this.props.show}
                 onHide={() => this.props.onClick('cancel', null)}
             >
-                <Drawer.Header>
-                    <Drawer.Title>{research.labelName}</Drawer.Title>
+                <Drawer.Header >
+                    <Drawer.Title style={{fontSize: 32, color: 'blue' }}>
+                        <SciIcon size={100} level={research.level} />
+                        {research.labelName}
+                    </Drawer.Title>
                 </Drawer.Header>
 
                 <Drawer.Body>
-                    <p><b>Description:</b></p>
+                    <p style={{fontSize: 18, color: 'blue' }}><b>Description:</b></p>
                     <p>{ research.desc }</p>
+                    <hr />
+                    <p style={{fontSize: 18, color: 'blue' }}><b>Prerequisites:</b></p>
+                    <Table
+                        rowKey="id"
+                        autoHeight
+                        data={prereqs}
+                        rowHeight={40}
+                        style={{ padding: 0 }}
+                    >
+                        <Column verticalAlign='middle' width={200}>
+                            <HeaderCell>Type</HeaderCell>
+                            <Cell dataKey="type" />
+                        </Column>
+
+                        <Column verticalAlign='middle' width={350}>
+                            <HeaderCell>Name</HeaderCell>
+                            <Cell dataKey="code" />
+                        </Column>
+                    </Table>
                     <br />
+                    <p style={{fontSize: 18, color: 'blue' }}><b>Unlocks:</b></p>
+                    <Table
+                        rowKey="id"
+                        autoHeight
+                        data={unlocks}
+                    >
+                        <Column verticalAlign='middle' width={200}>
+                            <HeaderCell>Type</HeaderCell>
+                            <Cell dataKey="type" />
+                        </Column>
+
+                        <Column verticalAlign='middle' width={350}>
+                            <HeaderCell>Name</HeaderCell>
+                            <Cell dataKey="code" />
+                        </Column>
+                    </Table>
+                    <br />
+                    {/*}
                     <FlexboxGrid>
                         <FlexboxGrid.Item colspan={12}>
                             <p><b>CRAP:</b> { "more crap" } | { "stuff" } morestuff</p> 
@@ -55,7 +98,7 @@ class InfoTech extends Component {
                     <br />
                     
                     <br />
-                    
+                    */}
                 </Drawer.Body>
 
                 <Drawer.Footer>
