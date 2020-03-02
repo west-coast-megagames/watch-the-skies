@@ -1,0 +1,44 @@
+[
+{   
+    "model": "kits",
+    "name": "Preservation Improvements",
+    "code": "KA-1",
+    "unitType": "Temp Insecurity Aid",
+    "cost": 2,
+    "buildtime": 1,
+    "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
+    "effects": {"type": "terror", "effect": -5 },
+    "prereq": [{ "type": "Technology", "code": "Agr2A"}],
+    "category": "Crisis Response",
+    "site": "Crisis Activity Site",
+    "stats": {}
+},
+{   
+    "model": "kits",
+    "name": "Water Supply Improvements",
+    "code": "KA-2",
+    "unitType": "Temp Insecurity Aid",
+    "cost": 3,
+    "buildtime": 1,
+    "desc": "Better water supply techniques have been implemented, so water is more readily available than in the past.",
+    "effects": {"type": "terror", "effect": -5 },
+    "prereq": [{ "type": "Technology", "code": "Agr2B"}],
+    "category": "Crisis Response",
+    "site": "Crisis Activity Site",
+    "stats": {}
+},
+{   
+    "model": "kits",
+    "name": "Farm Intergration Improvements",
+    "code": "KA-2",
+    "unitType": "Farm",
+    "cost": 2,
+    "buildtime": 1,
+    "desc": "Farming techinques have been come easier to track and implement.",
+    "effects": {"type": "terror", "effect": -8 },
+    "prereq": [{ "type": "Technology", "code": "Agr3C"}],
+    "category": "Cultural Development",
+    "site": "City Site",
+    "stats": {}
+},
+]
