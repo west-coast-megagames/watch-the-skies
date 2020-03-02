@@ -86,8 +86,14 @@ async function loadCountry(cData){
         }
       }
       country.borderedBy = borderedBy_Ids;
-
-      //country.accounts  = cData.accounts;  ... moved to it's own load
+      country.stats      = cData.stats;
+      if (!cData.formalName) {
+        country.formalName = country.name;
+      } else {
+        country.formalName = cData.formalName;
+      }
+      country.milAlliance = [];
+      country.sciAllience = [];
 
       const { error } = validateCountry(country); 
       if (error) {

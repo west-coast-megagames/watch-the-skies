@@ -2,6 +2,12 @@ const runZoneCheck = require('../dataCheck/zoneCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
+const runUserCheck = require('../dataCheck/userCheck');
+const runEquipmentCheck = require('../dataCheck/equipmentCheck');
+const runAircraftCheck = require('../dataCheck/aircraftCheck');
+const runMilitaryCheck = require('../dataCheck/militaryCheck');
+const runSquadCheck = require('../dataCheck/squadCheck');
+const runTeamCheck = require('../dataCheck/teamCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -21,6 +27,15 @@ async function fullInitCheck(selStr){
       }
 
     case 'All':
+    case 'Team':
+      let teamCheckDone = await runTeamCheck(true);   // check team records
+      logger.info(`Team Check Done: ${teamCheckDone}`);
+    
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
     case 'Facility':
       let facilityCheckDone = await runFacilityCheck(true);   // check facility records
       logger.info(`Facility Check Done: ${facilityCheckDone}`);
@@ -34,6 +49,51 @@ async function fullInitCheck(selStr){
       let siteCheckDone = await runSiteCheck(true);   // check site records
       logger.info(`Site Check Done: ${siteCheckDone}`);
     
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'User':
+      let userCheckDone = await runUserCheck(true);   // check user records
+      logger.info(`User Check Done: ${userCheckDone}`);
+        
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'Equipment':
+      let equipmentCheckDone = await runEquipmentCheck(true);   // check equipment records
+      logger.info(`Equipment Check Done: ${equipmentCheckDone}`);
+                
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'Aircraft':
+      let aircraftCheckDone = await runAircraftCheck(true);   // check aircraft records
+      logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
+            
+      if (selStr != 'All') {
+        break;
+      }
+
+    case 'All':
+    case 'Military':
+      let militaryCheckDone = await runMilitaryCheck(true);   // check military records
+      logger.info(`Military Check Done: ${militaryCheckDone}`);
+                
+      if (selStr != 'All') {
+        break;
+      }
+    
+    case 'All':
+    case 'Squad':
+      let squadCheckDone = await runSquadCheck(true);   // check squad records
+      logger.info(`Squad Check Done: ${squadCheckDone}`);
+                    
       if (selStr != 'All') {
         break;
       }

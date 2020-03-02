@@ -126,6 +126,7 @@ async function dmgCalc(unit, report) {
         sysDmg: systemHits > 0 ? true : false,
         dmgDesc: `${unit.name} took ${hullDmg} damage!`,
         outcome: `${unit.name} returns to base!`,
+        destroyed: false,
         salvage: salvageArray,
         aar: battleReport,
     };
@@ -134,6 +135,7 @@ async function dmgCalc(unit, report) {
         interceptDebugger(`${unit.name} shot down in combat...`);
         unit.status.destroyed = true;
         dmgReport.outcome = `${unit.name} shot down in combat...`;
+        dmgReport.destroyed = true,
         dmgReport.aar = `${dmgReport.aar} ${unit.name} shot down in combat...`;
 
         for (let i = 0; i < unit.systems.length; i++) {
@@ -156,13 +158,13 @@ async function applyDmg(unit) {
     if (update.team.teamType === 'A') {
         return 0;
     }
-    interceptDebugger(unit);
-    interceptDebugger(update);
+    // interceptDebugger(unit);
+    // interceptDebugger(update);
 
     update.systems = unit.systems;
     update.stats.hull = unit.stats.hull;
     update.status.destroyed = unit.status.destroyed;
-    update.status.mission = "Docked"
+    update.mission = "Docked"
     update.status.ready = true;
     update.status.deployed = false;
     update.country = update.baseOrig.country;

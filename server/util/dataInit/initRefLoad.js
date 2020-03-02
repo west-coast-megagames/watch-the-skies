@@ -21,12 +21,7 @@ const bodyParser = require('body-parser');
 // Country Model - Using Mongoose Model
 const { Zone, validateZone } = require('../../models/zone');
 const { Country, validateCountry } = require('../../models/country'); 
-const { Team, validateTeam } = require('../../models/team/team');
-const { Alien, validateAlien } = require('../../models/team/alien');
-const { Control, validateControl } = require('../../models/team/control');
-const { Media, validateMedia } = require('../../models/team/media');
-const { National, validateNational } = require('../../models/team/national');
-const { Npc, validateNpc } = require('../../models/team/npc');
+const { Team, validateTeam, National, validateNational, Alien, validateAlien, Control, validateControl, Npc, validateNpc, Media, validateMedia } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
 const Log = require('../../models/logs/log');
 
@@ -100,6 +95,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror){
            terror: randomTerror                       //zTerror
         }); 
 
+        zone.satellite = [];
         let { error } = validateZone(zone); 
         if (error) {
           zoneInitDebugger("New Zone Validate Error", zone.zoneCode, error.message);

@@ -193,7 +193,8 @@ async function createFleet(iData){
     if (gerRef) {
       newGear = await new Gear(gerRef);
       newGear.team         = fleet.team;
-      newGear.manufacturer = fleet.team;  
+      newGear.manufacturer = fleet.team; 
+      newGear.status.building = false; 
       await newGear.save(((err, newGear) => {
       if (err) {
         logger.error(`New Military Gear Save Error: ${err}`);
@@ -283,6 +284,7 @@ async function createCorps(iData){
       newGear = await new Gear(gerRef);
       newGear.team         = corps.team;
       newGear.manufacturer = corps.team;  
+      newGear.status.building = false;
       await newGear.save(((err, newGear) => {
       if (err) {
         logger.error(`New Military Gear Save Error: ${err}`);
@@ -373,6 +375,7 @@ async function updateFleet(iData){
       newGear = await new Gear(gerRef);
       newGear.team         = fleet.team;
       newGear.manufacturer = fleet.team;  
+      newGear.status.building = false;
       await newGear.save(((err, newGear) => {
       if (err) {
         logger.error(`New Military Gear Save Error: ${err}`);
@@ -461,7 +464,8 @@ async function updateCorps(iData){
     if (gerRef) {
       newGear = await new Gear(gerRef);
       newGear.team         = corps.team;
-      newGear.manufacturer = corps.team;  
+      newGear.manufacturer = corps.team; 
+      newGear.status.building = false; 
       await newGear.save(((err, newGear) => {
       if (err) {
         logger.error(`New Military Gear Save Error: ${err}`);

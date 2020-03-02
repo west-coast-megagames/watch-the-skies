@@ -23,7 +23,7 @@ const { Country } = require('../../models/country');
 const { Team } = require('../../models/team/team');
 const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
-const { BaseSite } = require('../../models/sites/baseSite');
+const { Site } = require('../../models/sites/site');
 const app = express();
 
 // Bodyparser Middleware
@@ -69,7 +69,8 @@ async function loadAircraft(iData){
        // New Aircraft here
        let aircraft = new Aircraft({ 
            name: iData.name,
-           type: iData.type
+           type: iData.type,
+           mission: iData.mission
         }); 
 
         aircraft.stats  = iData.stats;
@@ -95,6 +96,7 @@ async function loadAircraft(iData){
             newSystem = await new System(sysRef);
             newSystem.team         = aircraft.team;
             newSystem.manufacturer = aircraft.team;  
+            newSystem.status.building = false;
             //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
             await newSystem.save(((err, newSystem) => {
               if (err) {
@@ -112,12 +114,13 @@ async function loadAircraft(iData){
         }
 
         if (iData.base != "" && iData.base != "undefined" ){
-          let baseSite = await BaseSite.findOne({ siteCode: iData.base });  
-          if (!baseSite) {
+          // changed to use site to handle both base and spacecraft if Alien
+          let site = await Site.findOne({ siteCode: iData.base });  
+          if (!site) {
             logger.debug(`Aircraft Load Base Error, New Aircraft:  ${iData.name}  Base:  ${iData.base}`);
           } else {
-            aircraft.baseOrig = baseSite._id;
-            logger.debug(`Aircraft Load Base Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${baseSite._id}`);
+            aircraft.baseOrig = site._id;
+            logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${site._id}`);
           }
         }      
 
@@ -187,6 +190,7 @@ async function loadAircraft(iData){
       aircraft.type        = iData.type;
       aircraft.status      = iData.status;
       aircraft.stats       = iData.stats;
+      aircraft.mission     = iData.mission;
 
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });  
@@ -207,6 +211,7 @@ async function loadAircraft(iData){
           newSystem = await new System(sysRef);
           newSystem.team   = aircraft.team;
           newSystem.manufacturer = aircraft.team;
+          newSystem.status.building = false;
           await newSystem.save(((err, newSystem) => {
           if (err) return console.error(`New Aircraft System Save Error: ${err}`);
           //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
@@ -217,12 +222,13 @@ async function loadAircraft(iData){
       }
 
       if (iData.base != "" && iData.base != "undefined" ){
-        let baseSite = await BaseSite.findOne({ siteCode: iData.base });  
-        if (!baseSite) {
-          logger.debug("Aircraft Load Base Error, Update Aircraft:", iData.name, " Base: ", iData.base);
+        //changed to site to handle both Base and Spacecraft (for Alien)
+        let site = await Site.findOne({ siteCode: iData.base });  
+        if (!site) {
+          logger.debug("Aircraft Load Base Site Error, Update Aircraft:", iData.name, " Base: ", iData.base);
         } else {
-          aircraft.baseOrig = baseSite._id;
-          logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", baseSite._id);
+          aircraft.baseOrig = site._id;
+          logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", site._id);
         }
       }      
 

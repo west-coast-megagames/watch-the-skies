@@ -5,9 +5,11 @@ const militaryData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/mi
 const infrastructureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/infrastructure.json')));
 const medicalData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/medical.json')));
 const agricultureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/agriculture.json')));
-const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData];
+const analysisData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/analysis.json')));
+const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
-const Technology = require('./technology');
+const { Technology } = require('./technology');
+const KnowledgeResearch = require('../../models/sci/research')
 
 const techTree = [] // Server side array to track all availible technology.
 
@@ -15,12 +17,17 @@ function getTechTree() {
     return techTree;
 }
 
-// TEMP function that goes through the whole tech tree and checks the availibility of each
-async function makeAvailible() {
-    for (let tech of techTree) {
-        let res = await tech.checkAvailible();
-        techTreeDebugger(res)
+async function techSeed() {
+    for await (let research of await Research.find({'status.completed': true})) {
+        console.log(`JESSICA - FIX MEEH: ${research.name}`)
+        for await (let tech of research.unlocks) {
+            console.log(tech)
+            let newTech = techTree.find(el => el.code === tech.code);
+            console.log(newTech)
+            await newTech.checkAvailable();
+        }
     }
+    return;
 }
 
 // Load function to load all technology into the the server side tech-tree.
@@ -36,4 +43,4 @@ async function loadTech () {
     return `${count} technology loaded into tech tree...`
 };
 
-module.exports = { techTree, getTechTree, makeAvailible, loadTech };
+module.exports = { techTree, getTechTree, loadTech, techSeed };

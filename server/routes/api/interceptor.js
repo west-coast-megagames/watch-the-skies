@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nexusEvent = require('../../startup/events');
-
+const routeDebugger = require('debug')('app:routes:interceptor');
 const auth = require('../../middleware/auth');
 const validateObjectId = require('../../middleware/validateObjectId');
 
@@ -29,6 +29,29 @@ router.get('/', async function (req, res) {
       .populate('baseOrig', 'name')
     ;
     res.json(aircrafts);
+});
+
+// @route   PUT api/aircraft/repair
+// @desc    Update aircraft to max health
+// @access  Public
+router.put('/repair', async function (req, res) {
+  let aircraft = await Aircraft.findById(req.body._id);
+  console.log(req.body);
+  let account = await Account.findOne({ name: 'Operations', 'team': aircraft.team });
+  if (account.balance < 2) {
+    res.status(402).send(`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`)
+  } else {
+    account = await banking.withdrawal(account, 2, `Repairs for ${aircraft.name}`);
+    await account.save();
+    modelDebugger(account)
+
+    aircraft.status.repair = true;
+    aircraft.ready = false;
+    await aircraft.save();
+
+    res.status(200).send(`${Aircraft.name} put in for repairs...`);
+    nexusEvent.emit('updateAircrafts');
+  }
 });
 
 // @route   GET api/aircraft
@@ -61,9 +84,9 @@ router.post('/', async function (req, res) {
   if (systems.length == 0) {
     await loadSystems();                         // load wts/json/systems.json data into array   
   }
-  let { name, team, country, zone, site, stats, zoneCode, teamCode, countryCode, baseCode } = req.body;
+  let { name, team, country, zone, baseOrig, stats, status, zoneCode, teamCode, countryCode, baseCode } = req.body;
   const newAircraft = new Aircraft(
-    { name, team, country, zone, site, stats }
+    { name, team, country, zone, baseOrig, stats, status }
     );
   let docs = await Aircraft.find({ name })
   if (!docs.length) {
@@ -101,8 +124,8 @@ router.post('/', async function (req, res) {
       if (!baseSite) {
         console.log("Aircraft Post Base Error, New Aircraft:", req.body.name, " Base: ", baseCode);
       } else {
-        newAircraft.base = baseSite._id;
-        aircraftLoadDebugger("Aircraft Post Base Found, Aircraft:", req.body.name, " Base: ", baseCode, "Base ID:", baseSite._id);
+        newAircraft.baseOrig = baseSite._id;
+        routeDebugger("Aircraft Post Base Found, Aircraft:", req.body.name, " Base: ", baseCode, "Base ID:", baseSite._id);
       }
     }      
 
@@ -149,7 +172,7 @@ router.post('/', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('base', 'name');
+      .populate('baseOrig', 'name');
 
     updateStats(aircraft._id);
     res.status(200).json(aircraft);
@@ -186,7 +209,7 @@ router.put('/:id', async function (req, res) {
     newTeam_Id         = oldAircraft.team;
     newCountry_Id      = oldAircraft.country;
     newAircraftSystems = oldAircraft.systems;
-    newBase_Id         = oldAircraft.base;
+    newBase_Id         = oldAircraft.baseOrig;
   };
 
   if (zoneCode && zoneCode != "") {
@@ -259,7 +282,7 @@ router.put('/:id', async function (req, res) {
       zone: newZone_Id,
       country: newCountry_Id,
       team: newTeam_Id,
-      base: newBase_Id,
+      baseOrig: newBase_Id,
       systems: newAircraftSystems
     }, 
     { new: true,
@@ -272,7 +295,7 @@ router.put('/:id', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('base', 'name');
+      .populate('baseOrig', 'name');
 
     res.status(200).json(aircraft);
     console.log(`Aircraft ${req.params.id} updated...`);
@@ -320,25 +343,38 @@ router.patch('/resethull', auth, async function (req, res) {
 // @desc    Update all aircrafts to return to base
 // @access  Public
 router.patch('/return', async function (req, res) {
-    for await (const aircraft of Aircraft.find()) {    
-        aircraft.status.deployed = false;
+    let count = 0;
+    for await (const aircraft of Aircraft.find()) {  
+      if (aircraft.site.toHexString() !== aircraft.baseOrig.toHexString() || aircraft.status.deployed) {
+        aircraft.mission = "Docked"
         aircraft.status.ready = true;
-        console.log(aircraft);
+        aircraft.status.deployed = false;
+        aircraft.country = aircraft.baseOrig.country;
+        aircraft.site = aircraft.baseOrig._id
+        aircraft.zone = aircraft.baseOrig.zone
         await aircraft.save();
+        count++
+      }
     }
-    res.send("Aircrafts succesfully returned!");
+    res.status(200).send(`${count} aircrafts succesfully returned!`);
     nexusEvent.emit('updateAircrafts');
+    
 });
 
-// @route   PATCH api/aircraft/china
+// @route   PATCH api/aircraft/restore
 // @desc    Update all aircrafts to be deployed
 // @access  Public
-router.patch('/china', async function (req, res) {
-    for await (const aircraft of Aircraft.find({ name: /PRC/i })) {    
-        aircraft.status.deployed = true;
-        await aircraft.save();
+router.patch('/restore', async function (req, res) {
+  let count = 0;
+    for await (let aircraft of Aircraft.find().populate('baseOrig')) {    
+      aircraft.country = aircraft.baseOrig.country;
+      aircraft.site = aircraft.baseOrig._id
+      aircraft.zone = aircraft.baseOrig.zone
+      await aircraft.save();
+      count++
     }
-    res.send("China's aircraft deployed...");
+    res.send("Restore Base...");
+    nexusEvent.emit('updateAircrafts');
 });
 
 module.exports = router;

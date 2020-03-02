@@ -647,5 +647,27 @@
 "longDecimal": -4.0196,
 "countryCode" : "CI",
 "teamCode" : "NPC"
+},
+{"loadType": "citySite",
+"name" : "Havana",
+"dateline" : "HAVANA",
+"code" : "CU HAV",
+"latDMS": "23 7 54.99 N",
+"longDMS": "-82 21 51.00 W",
+"latDecimal": 23.1319,
+"longDecimal": -82.3641,
+"countryCode" : "CU",
+"teamCode" : "NPC"
+},
+{"loadType": "citySite",
+"name" : "Prague",
+"dateline" : "PRAGUE",
+"code" : "CZ PRG",
+"latDMS": "23 7 54.99 N",
+"longDMS": "-82 21 51.00 W",
+"latDecimal": 50.0870,
+"longDecimal": 14.4176,
+"countryCode" : "CZ",
+"teamCode" : "NPC"
 }
 ]

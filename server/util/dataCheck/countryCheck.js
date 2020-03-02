@@ -1,5 +1,6 @@
 // Country Model - Using Mongoose Model
 const { Country, validateCountry } = require('../../models/country');
+const { Site } = require('../../models/sites/site');
 const countryCheckDebugger = require('debug')('app:countryLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 require ('winston-mongodb');
@@ -7,6 +8,10 @@ require ('winston-mongodb');
 const supportsColor = require('supports-color');
 
 async function chkCountry(runFlag) {
+  
+  // get sites once
+  let sFinds = await Site.find();    
+  
   for (const country of await Country.find()
                                      .populate("zone", "name")) { 
     if (!country.populated("zone")) {  
@@ -18,12 +23,50 @@ async function chkCountry(runFlag) {
       logger.error(`Country Validation Error For ${country.code} ${country.name} Error: ${error.details[0].message}`);
     }
 
+    //if not space, should have at least 1 city site
+    //if space, should have at least 1 spacecraft
+    let countryId = country._id.toHexString();
+    let cityCount = 0;
+    let spacecraftCount = 0;
+
+    siteLoop:
+    for (let j = 0; j < sFinds.length; ++j){
+      let sCountryId = sFinds[j].country.toHexString();
+
+      if (sCountryId === countryId) {
+        
+        if (sFinds[j].type === "City") {
+          ++cityCount;
+        } else if (sFinds[j].type === "Spacecraft") {
+          ++spacecraftCount;
+        }
+      }  
+      
+      // only need 1
+      if (country.type === "T" && cityCount > 0) {
+        break siteLoop;
+      } else if ((country.type === "A" && spacecraftCount > 0) ) {
+        break siteLoop;
+      }
+    }
+
+    if (country.type === "T") {
+      if (cityCount < 1){
+        logger.error(`No Cities Found In Country ${country.code} ${country.name}`);
+      }
+    } else if (country.type === "A") {
+      if (spacecraftCount < 1){
+        logger.error(`No Spacecraft Found In Country ${country.code} ${country.name}`);
+      }
+    } 
+
     let currentCode = country.code;
     let currentCountryIdString = country._id.toHexString();
 
     await checkBorderedByList(country.borderedBy, currentCode, currentCountryIdString, country.name);
 
   }
+  return true;
 };
 
 async function checkBorderedByList(bBy, curCode, curIdString, curName){
@@ -63,7 +106,6 @@ async function checkBorderedByList(bBy, curCode, curIdString, curName){
       }
     }
   }  
-  return true;
 }
 
 module.exports = chkCountry;

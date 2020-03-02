@@ -12,6 +12,7 @@ const AircraftSchema = new Schema({
   country: { type: Schema.Types.ObjectId, ref: 'Country'},
   site: { type: Schema.Types.ObjectId, ref: 'Site' },
   baseOrig: { type: Schema.Types.ObjectId, ref: 'Site'},
+  mission: { type: String },
   status: {
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
@@ -19,15 +20,7 @@ const AircraftSchema = new Schema({
     ready: { type: Boolean, default: true },
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
-    mission: { type: String }
-  },
-  loadout: {
-    cpu: { type: Number, default: 1 },
-    weapons: { type: Number, default: 1 },
-    engines: { type: Number, default: 1 },
-    sensors: { type: Number, default: 1 },
-    compartments: { type: Number, default: 1 },
-    utils: { type: Number, default: 1 },
+    secret: { type: Boolean }
   },
   systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   stats: {

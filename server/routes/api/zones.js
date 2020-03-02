@@ -15,7 +15,9 @@ mongoose.set('useCreateIndex', true);
 // @Desc    Get all zones
 // @access  Public
 router.get('/', async (req, res) => {
-      let zones = await Zone.find().sort('zoneCode: 1');
+      let zones = await Zone.find()
+                            .populate('satellite', 'name')
+                            .sort('zoneCode: 1');
       res.json(zones);
 });
 
@@ -24,7 +26,8 @@ router.get('/', async (req, res) => {
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
-      const zone = await Zone.findById(id);
+      const zone = await Zone.findById(id)
+                             .populate('satellite', 'name');
       if (zone != null) {
         res.json(zone);
       } else {
@@ -37,7 +40,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.get('/code/:zoneCode', async (req, res) => {
   let zoneCode = req.params.zoneCode;
-    let zone = await Zone.find({ zoneCode });
+    let zone = await Zone.find({ zoneCode })
+                         .populate('satellite', 'name');
     if (zone.length) {
       res.json(zone);
     } else {
@@ -51,7 +55,7 @@ router.get('/code/:zoneCode', async (req, res) => {
 router.get('/withCountries', async (req, res) => {
   // get countries once
   let cFinds = await Country.find()
-                  .sort('code: 1');
+                            .sort('code: 1');
   let zones = await Zone.find().sort('zoneCode: 1')
                         .select('zoneCode zoneName terror _id');
 

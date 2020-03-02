@@ -8,6 +8,7 @@ const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Ge
 
 class Knowledge extends Component {
     state = { 
+        myHiddenLab: {},    // The hidden lab used for scientific knowledge for this team (SRC)
         data: [],
         checkedKeys: [],
         cost: 0,
@@ -15,10 +16,13 @@ class Knowledge extends Component {
     }
 
     componentDidMount() {
-        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge')
-        let tableKnowlege = this.createTable(knowledge);
-        let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
-        this.setState({ data: tableKnowlege, account });
+        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge');
+        if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
+            let myHiddenLab = this.props.facilities.filter(el => el.type === 'Lab' && el.hidden && el.team._id === this.props.team._id);
+            let tableKnowlege = this.createTable(knowledge);
+            let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
+            this.setState({ data: tableKnowlege, account, myHiddenLab });
+        } 
     }
 
     componentDidUpdate (prevProps, prevState) {
@@ -31,10 +35,8 @@ class Knowledge extends Component {
     
     createTable = (knowledge) => {
         let data = this.state.data;
-        console.log(fields)
         for (let field of fields) {
-            let object = {}
-            console.log(field)
+            let object = {};
             object.field = field;
             object.research = undefined;
             object.complete = []
@@ -67,6 +69,7 @@ class Knowledge extends Component {
         } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
           indeterminate = true;
         }
+        
         
         return ( 
             <div>
@@ -101,6 +104,7 @@ class Knowledge extends Component {
                     <Column align='center' width={100}>
                         <HeaderCell>Global Level</HeaderCell>
                         <Cell>{rowData => {
+                            console.log("ROWDATA=",rowData);
                             let currentLevel = rowData.research.level - 1;
                             return(
                                 <Tag color='green'>{currentLevel}</Tag>
@@ -112,7 +116,6 @@ class Knowledge extends Component {
                         <Cell dataKey="research.progress">{rowData => {
                             let progress = rowData.research.progress;
                             let percent = progress / this.props.techCost[rowData.research.level] * 100
-                            console.log(percent);
                             return(
                                 <Progress.Line percent={progress} />
                         )}}</Cell>
@@ -121,6 +124,7 @@ class Knowledge extends Component {
                 </Table>
             </div>
         );
+        
     }
 
     handleCheckAll = (value, checked) => {
@@ -142,7 +146,7 @@ class Knowledge extends Component {
     }
 
     handleSubmit = async () => {
-        let { account, cost, checkedKeys } = this.state
+        let { account, cost, checkedKeys, myHiddenLab } = this.state
         if (account.balance < cost) {
             Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
         } else {
@@ -153,16 +157,14 @@ class Knowledge extends Component {
                     amount : cost
                 }
                 let { data } = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
-                console.log(data)
                 Alert.success(data, 4000)  
                 try {
                     let submission = {
                         research: checkedKeys,
                         funding: 0,
-                        _id: '5e576cae7b1af50d0c02c70c'
+                        _id: myHiddenLab[0]._id 
                     }
                     let { data } = await axios.put(`${gameServer}api/facilities/research`, submission);
-                    console.log(data)
                     Alert.success(data, 4000)
 
                     this.setState({

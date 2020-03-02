@@ -13,6 +13,7 @@
     "prereq": [],
     "category": "Weapon",
     "desc": "Basic terrestrial mounted railgun",
+    "unlocks": "",
     "stats": { "attack": 1 }
 },
 {   
@@ -45,6 +46,6 @@
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": { "penetration": 1 }
+    "stats": { "type": "Fighter", "penetration": 1 }
 }
 ]

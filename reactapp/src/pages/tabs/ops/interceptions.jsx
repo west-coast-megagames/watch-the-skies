@@ -29,10 +29,6 @@ class Interception extends Component {
     }
   }
 
-  componentWillUnmount() {
-    clearInterval(this.radarSweep);
-  };
-
   render(){
     return (
       <React.Fragment>
@@ -45,11 +41,13 @@ class Interception extends Component {
           />
           <hr />
           <Interceptors
+            account={ this.props.account }
             aircrafts={this.state.aircrafts}
             onClick={ this.showInfo }
           />
 
           { this.state.showInfo ? <InfoAircaft
+            account={ this.props.account }
             aircraft={ this.state.aircraft }
             show={ this.state.showInfo }
             onClick={ this.showInfo }

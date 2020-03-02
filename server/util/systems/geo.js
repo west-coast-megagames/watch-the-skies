@@ -22,12 +22,45 @@ return deg * (Math.PI/180)
 let test = getDistance(50, 4, 44, 7)
 console.log(`Distance is ${test}`);
 
-function distance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;    // Math.PI / 180
-    var c = Math.cos;
-    var a = 0.5 - c((lat2 - lat1) * p)/2 + 
-            c(lat1 * p) * c(lat2 * p) * 
-            (1 - c((lon2 - lon1) * p))/2;
-  
-    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
-  }
+function parseDMS(fullDMS) {
+  let parts = fullDMS.split(/[^\d\w\.]+/);
+  let lat = ConvertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
+  let lng = ConvertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
+
+  return { latDecimal: lat, longDecimal: lng }
+}
+
+function ConvertDMSToDD(degrees, minutes, seconds, direction) {
+  let dd = Number(degrees) + Number(minutes)/60 + Number(seconds)/(60*60);
+
+  if (direction == "S" || direction == "W") {
+      dd = dd * -1;
+  } // Don't do anything for N or E
+  return dd;
+
+}
+
+let response = parseDMS("36°57'9\" N 110°4'21\" W")
+console.log(response)
+
+let latDMS = convertToDms(11.5622, false)
+let longDMS = convertToDms(43.1428, true)
+
+console.log(`Lat: ${latDMS}, Long: ${longDMS}`);
+
+function convertToDms(dd, isLng) {
+  var dir = dd < 0
+    ? isLng ? 'W' : 'S'
+    : isLng ? 'E' : 'N';
+
+  var absDd = Math.abs(dd);
+  var deg = absDd | 0;
+  var frac = absDd - deg;
+  var min = (frac * 60) | 0;
+  var sec = frac * 3600 - min * 60;
+  // Round it to 2 decimal points.
+  sec = Math.round(sec * 100) / 100;
+  return deg + "°" + min + "'" + sec + '"' + dir;
+}
+
+module.exports = { getDistance, parseDMS, convertToDms, ConvertDMSToDD }

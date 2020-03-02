@@ -90,18 +90,27 @@ async function loadUser(iData){
         }
 
         //userLoadDebugger("Before Save Validate Name ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
-
-        const test2 = validateName(user);
-        if (test2.error) {
-          userLoadDebugger("New User Name Validate Error", iData.username, test2.error.details[0].message);
+        try {
+          const test2 = validateName(user);
+          if (test2.error) {
+            userLoadDebugger("New User Name Validate Error", iData.username, test2.error.details[0].message);
+            return;
+          }
+        } catch ( err ) {
+          userLoadDebugger("New User Name Validate Error", iData.username, err.message);
           return;
         }
         
         //userLoadDebugger("Before Save Validate Addr ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
-        const test3 = validateAddr(user);
-        if (test3.error) {
-          userLoadDebugger("New User Addr Validate Error", iData.username, test3.error.details[0].message);
+        try {
+          const test3 = validateAddr(user);
+          if (test3.error) {
+            userLoadDebugger("New User Addr Validate Error", iData.username, test3.error.details[0].message);
+            return;
+          }
+        } catch ( err ) {
+          userLoadDebugger("New User Addr Validate Error", iData.username, err.message);
           return;
         }
     
@@ -156,15 +165,25 @@ async function loadUser(iData){
           return;
         }
 
-        const test2 = validateName(user.name);
-        if (test2.error) {
-          userLoadDebugger("User Update Name Validate Error", iData.username, test2.error.details[0].message);
+        try{
+          const test2 = validateName(user.name);
+          if (test2.error) {
+            userLoadDebugger("User Update Name Validate Error", iData.username, test2.error.details[0].message);
+            return;
+          }
+        } catch ( err ) {
+          userLoadDebugger("User Update Name Validate Error", iData.username, err.message);
           return;
         }
         
-        const test3 = validateAddr(user.address);
-        if (test3.error) {
-          userLoadDebugger("User Update Addr Validate Error", iData.username, test3.error.details[0].message);
+        try {
+          const test3 = validateAddr(user.address);
+          if (test3.error) {
+            userLoadDebugger("User Update Addr Validate Error", iData.username, test3.error.details[0].message);
+            return;
+          }
+        } catch ( err ) {
+          userLoadDebugger("User Update Addr Validate Error", err.message);
           return;
         }
    

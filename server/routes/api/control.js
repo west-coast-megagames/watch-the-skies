@@ -58,20 +58,7 @@ router.patch('/alien/return', async function (req, res) {
     nexusEvent.emit('updateAircrafts');
 });
 
-// @route   PATCH api/control/resethull
-// @desc    Update all aircrafts to max health
-// @access  Public
-router.patch('/resethull', async function (req, res) {
-    for await (const aircraft of Aircraft.find()) {    
-        console.log(`${aircraft.name} has ${aircraft.stats.hull} hull points`);
-        aircraft.stats.hull = aircraft.stats.hullMax;
-        aircraft.status.destroyed = false;
-        console.log(`${aircraft.name} now has ${aircraft.stats.hull} hull points`);
-        await aircraft.save();
-    }
-    res.send("Aircrafts succesfully reset!");
-    nexusEvent.emit('updateAircrafts');
-});
+
 
 // @route   PATCH api/control/loadSystems
 // @desc    Loads all systems into game server

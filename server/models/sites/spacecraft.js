@@ -11,28 +11,14 @@ const Spacecraft = Site.discriminator('Spacecraft', new Schema({
     required: true,
     min: 2, 
     maxlength: 50,
-    enum: ["Satellite", "Spacecraft", "Gunship", "Transport", "Hauler", "Decoy", "Station"], 
-    default: "Spacecraft"} ,
-  stats: {
-    hull: { type: Number, default: 2 },
-    hullMax: { type: Number, default: 2 },
-    damage: { type: Number, default: 1 },
-    passiveRolls: [Number],
-    activeRolls: [Number]
-  },
+    enum: ["Satellite", "Cruiser", "Battleship", "Hauler", "Station"]},
   status: {
-    aggressive: { type: Boolean, default: true },
-    passive: { type: Boolean, default: false },
-    disengage: { type: Boolean, default: false },
     damaged: { type: Boolean, default: false },
-    deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
-    ready: { type: Boolean, default: true },
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
-    mission: { type: String }
-  },
-  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
+    secret: { type: Boolean }
+  }
 }));
 
 function validateSpacecraft(spacecraft) {
@@ -60,7 +46,7 @@ async function launchSpacecraft (spacecraft) {
     modelDebugger(`Attempting to launchSpacecraft ${spacecraft.name}`)
     spacecraft.status.deployed = true;
     spacecraft.status.ready = false;
-    spacecraft.status.mission = true;
+    spacecraft.mission = "Deployed";
 
     modelDebugger(spacecraft);
 
@@ -80,25 +66,4 @@ async function launchSpacecraft (spacecraft) {
   }
 }
 
-async function updateStats(id) {
-  let spacecraft = await Spacecraft.findById(id).populate('systems');
-  let { stats } = spacecraft
-  for (let system of spacecraft.systems) {
-    for (let [key, value] of Object.entries(system.stats)) {
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value; 
-      }
-    }
-    console.log(`${system.name} loaded into ${spacecraft.type}...`)
-  }
-  console.log(`All systems for ${spacecraft.type} ${spacecraft.name} loaded...`);
-  spacecraft.stats = stats;
-  spacecraft.markModified('stats');
-  spacecraft = await spacecraft.save();
-  console.log(spacecraft.stats);
-
-  return;
-}
-
-module.exports = { Spacecraft, launchSpacecraft, validateSpacecraft, getSpacecraft, updateStats }
+module.exports = { Spacecraft, launchSpacecraft, validateSpacecraft, getSpacecraft }

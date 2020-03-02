@@ -1,9 +1,13 @@
 const missionDebugger = require('debug')('app:missions - air');
 const nexusEvent = require('../../startup/events');
 const { intercept } = require('./intercept')
+const { d6 } = require('../../util/systems/dice')
+const terror = require('../terror/terror');
 
 const { Aircraft } = require('../../models/ops/aircraft')
 const { Site } = require('../../models/sites/site');
+
+const { ReconReport } = require('../reports/reportClasses');
 
 let interceptionMissions = []; // Attempted Interception missions for the round
 let escortMissions = []; // Attempted Escort missions for the round
@@ -13,6 +17,7 @@ let reconMissions = []; // Attempted Recon missions for the round
 let diversionMissions = []; // Attempted Diversion missions for the round
 
 let count = 0; // Mission Counter.
+let totalCount = 0
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start (aircraft, target, mission) {
@@ -44,7 +49,7 @@ async function start (aircraft, target, mission) {
             break;
         case (mission === 'Recon Site' || mission === 'Recon Airship'):
             let newRecon = [{ aircraft, target }]; // Saves the Recon combination
-            reconMissions = [...ReconMissions, ...newRecon]; // Adds Recon to be resolved
+            reconMissions = [...reconMissions, ...newRecon]; // Adds Recon to be resolved
             missionDebugger(reconMissions);
             break;
         case (mission === 'Diversion'):
@@ -68,8 +73,12 @@ async function resolveMissions () {
     await runInterceptions();
     await runTransports();
     await runRecon();
+    await runDiversions();
     await clearMissions();
 
+    missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
+    totalCount += count;
+    count = 0;
     nexusEvent.emit('updateAircrafts');
 
     return 0;
@@ -82,6 +91,12 @@ async function runInterceptions () {
         missionDebugger(`Mission #${count} - Intercept Mission`)
         let stance = 'passive' // Targets stance for interception defaults to 'passive'
         let aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems');
+
+        if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+            console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+            continue;
+        } 
+        
         let target = await Aircraft.findById(interception.target).populate('systems');
         missionDebugger(`${aircraft.name} vs. ${target.name}`);
         let atkReport = `${aircraft.name} is attempting to engage a contact in ${aircraft.country.name} airspace.`;
@@ -92,6 +107,14 @@ async function runInterceptions () {
         atkReport = escortCheck.atkReport;
         defReport = escortCheck.defReport;
         
+        if (target.status.destroyed || target.systems.length < 1) {
+            atkReport = `${atkReport} Target has been shot down prior to engagement.`;
+            missionDebugger(atkReport);
+            // Intercept Report
+
+            continue;
+        }
+
         missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
         atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
         await intercept(aircraft, 'aggresive', atkReport, target, stance, defReport );
@@ -105,38 +128,91 @@ async function runTransports () {
         count++ // Count iteration for each mission
         missionDebugger(`Mission #${count} - Transport Mission`);
         let aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems');
+
+        if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+            console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+            continue;
+        }
+
         let target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
         missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
         let atkReport = `${aircraft.name} hauling cargo through ${aircraft.country.name} airspace from ${target.name}`;
 
         let patrolCheck = await checkPatrol(transport.target, atkReport, aircraft)
 
-        if (patrolCheck === 'continue') {
+        if (patrolCheck.continue === true) {
             atkReport = `${atkReport} ${aircraft.name} arrived safely at ${target.name}.`;
             missionDebugger(`${aircraft.name} arrived safely at ${target.name}`)
             // Make a mission log
             // Schedule a ground mission.
+
+            aircraft.mission = "Docked"
+            aircraft.status.ready = true;
+            aircraft.status.deployed = false;
+            aircraft.country = aircraft.baseOrig.country;
+            aircraft.site = aircraft.baseOrig._id
+            aircraft.zone = aircraft.baseOrig.zone
+
+            await aircraft.save();
         }
     }
     
     return;
 }
 
-// Iterate over all remaining Recon missions
+// Iterate over all remaining Recon missions - DONE [NOT TESTED]
 async function runRecon() {
     for await (let recon of reconMissions) {
+        let MissionReport = new ReconReport
         count++ // Count iteration for each mission
         missionDebugger(`Mission #${count} - Recon Mission`);
-        let aircraft = await Aircraft.findById(recon.aircraft).populate('country', 'name').populate('systems');
+        let aircraft = await Aircraft.findById(recon.aircraft).populate('country', 'name').populate('systems').populate('baseOrig');
         let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
-        if (aircraft.status.mission === 'Recon Aircraft') {
+        if (aircraft.mission === 'Recon Aircraft') {
             let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
+            
+            if (target.status.destroyed || target.systems.length < 1) {
+                atkReport = `${atkReport} Target has been shot down prior to recon.`;
+                console.log(atkReport);
+                // Recon Report
+
+                continue;
+            }
+            
             let escortCheck = await checkEscort(recon.target, atkReport)
 
             target = escortCheck.target;
             atkReport = escortCheck.atkReport;
+
+            // Check if we are still doing a recon mission or being intercepted.
             if (target.toHexString() === recon.target.toHexString()) { // toHexString allows checking equality for _id
-                atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type}.`;
+                atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
+                let roll = d6();
+
+                MissionReport.team = aircraft.team._id;
+                MissionReport.unit = aircraft._id;
+                MissionReport.targetAircraft = target._id
+                MissionReport.report = atkReport;
+                MissionReport.country = aircraft.country._id;
+                MissionReport.zone = aircraft.zone._id;
+                MissionReport.rolls.push(roll)
+                MissionReport.date = Date.now();
+
+                MissionReport.saveReport()
+
+                console.log(aircraft)
+
+                aircraft.mission = "Docked"
+                aircraft.status.ready = true;
+                aircraft.status.deployed = false;
+                aircraft.country = aircraft.baseOrig.country;
+                aircraft.site = aircraft.baseOrig._id
+                aircraft.zone = aircraft.baseOrig.zone
+
+                await aircraft.save();
+
+                return;
+
             } else {
                 defReport = escortCheck.defReport;
             
@@ -146,16 +222,57 @@ async function runRecon() {
 
                 return 0;
             }
-        } else if (aircraft.status.mission === 'Recon Site') {
+        } else if (aircraft.mission === 'Recon Site') {
             let patrolCheck = await checkPatrol(recon.target, atkReport, aircraft);
             let target = await Site.findById(recon.target); // Loading Aircraft that the recon is heading to.
             if (patrolCheck === 'continue') {
-                atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type}.`;
+                atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
                 missionDebugger(`${aircraft.name} safely gathered information on ${target.name}`)
-                // Trigger information unlock
-                // Make mission log
+                let roll = d6();
+
+                MissionReport.team = aircraft.team._id;
+                MissionReport.unit = aircraft._id;
+                MissionReport.targetSite = target._id
+                MissionReport.country = aircraft.country._id;
+                MissionReport.zone = aircraft.zone._id;
+                MissionReport.report = atkReport;
+                MissionReport.rolls.push(roll)
+                MissionReport.date = Date.now();
+
+                MissionReport.saveReport()
+
+                console.log(aircraft)
+                aircraft.mission = "Docked"
+                aircraft.status.ready = true;
+                aircraft.status.deployed = false;
+                aircraft.country = aircraft.baseOrig.country;
+                aircraft.site = aircraft.baseOrig._id
+                aircraft.zone = aircraft.baseOrig.zone
+
+                await aircraft.save();
+
+                return;
             }
         }
+    }
+}
+
+async function runDiversions () {
+    for await (let mission of diversionMissions) {
+        missionDebugger(`Running diversion for ${mission.aircraft.name}`)
+        let aircraft = await Aircraft.findById(mission.aircraft).populate('country', 'name').populate('systems').populate('baseOrig').populate('team');
+        if (team.type === 'Alien') terror.alienActivity(aircraft.country._id)
+
+        // Diversion mission log
+
+        aircraft.mission = "Docked"
+        aircraft.status.ready = true;
+        aircraft.status.deployed = false;
+        aircraft.country = aircraft.baseOrig.country;
+        aircraft.site = aircraft.baseOrig._id
+        aircraft.zone = aircraft.baseOrig.zone
+
+        await aircraft.save();
     }
 }
 
@@ -165,15 +282,27 @@ async function checkPatrol(target, atkReport, aircraft) {
         missionDebugger('Checking patrol missions...')
         if (target.toHexString() === patrol.target.toHexString()) { // toHexString allows checking equality for _id
             missionDebugger('Patrol engaging!');
+
             target = await Aircraft.findById(patrol.aircraft).populate('systems');
             patrolMissions.splice(patrolMissions.indexOf(patrol), 1);
-            atkReport = `${atkReport} patrol sited over target site, being engaged by ${target.type}.`;
+
             let defReport = `${target.name} breaking off from patrol to engage ${aircraft.type}.`
-            await intercept(aircraft, 'passive', atkReport, target, 'aggresive', defReport);
-            return 'intercepted';
+            atkReport = `${atkReport} patrol sited over target site, being engaged by ${target.type}.`;
+
+            let escortCheck = checkEscort(aircraft_id, defReport); // Checking to see if the mission ship has a Escort;
+
+            if (aircraft._id.toHexString() === escortCheck.target.toHexString()) {
+                defReport = escortCheck.atkReport;
+                let escortReport = `${atkReport} ${escortCheck.defReport}`
+                await intercept(escortReport.target, 'aggresive', escortReport, target, 'aggresive', defReport);
+                atkReport = `${atkReport} Escort has broken off to engage patrol.`
+            } else {
+                await intercept(aircraft, 'passive', atkReport, target, 'aggresive', defReport);
+                return { continue: false };
+            }
         };
     };
-    return 'continue';
+    return { continue: true, atkReport };
 }
 
 // Check for all escort missions for any that are guarding (Aircraft)
@@ -208,4 +337,4 @@ function clearMissions() {
     return 0;
 }
 
-module.exports = { start, resolveMissions }
+module.exports = { start, resolveMissions, clearMissions }

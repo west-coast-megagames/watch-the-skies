@@ -7,6 +7,7 @@ import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 
 import { gameServer } from '../config';
 import LogList from '../components/common/logList';
+import MilitaryControl from './tabs/control/militaryControl';
 
 class Control extends Component {
 
@@ -57,6 +58,9 @@ class Control extends Component {
                                 <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
                                     Update Aircraft
                                 </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.restoreAircraft() }>
+                                    Restore Location
+                                </MDBBtn>
                             </MDBBtnGroup>
                         </div>
                         <hr />
@@ -84,6 +88,9 @@ class Control extends Component {
                                 <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
                                     Seed Knowledge
                                 </MDBBtn>
+                                <MDBBtn color="info" size="sm" onClick={ () => this.seedTechnology() }>
+                                    Seed Technology
+                                </MDBBtn>
                             </MDBBtnGroup>
                         </div>
                         <div>
@@ -101,7 +108,7 @@ class Control extends Component {
                         <LogList />
                     )}/>
                     <Route path={`${url}/military`}  render={() => (
-                        <h5>Grrr...</h5>
+                        <MilitaryControl {...this.props}/>
                     )}/>
                     <Route path={`${url}/alien`}  render={() => (
                         <h5>Grrr...</h5>
@@ -142,7 +149,16 @@ class Control extends Component {
 
     repairAll = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/control/resethull`)
+            const response = await axios.patch(`${gameServer}game/admin/resethull`)
+            this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    restoreAircraft = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/interceptor/restore`)
             this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
@@ -195,6 +211,16 @@ class Control extends Component {
             this.props.alert({type: 'success', title: 'Initial Knowledge Seeded', body: response.data})
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to seed knowledge', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    seedTechnology = async () => {
+        try {
+            const response = await axios.patch(`${gameServer}api/research/load/tech/seed`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Initial Tech Seeded', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to seed tech', body: `${err.response.data} - ${err.message}` })
         };
     }
 

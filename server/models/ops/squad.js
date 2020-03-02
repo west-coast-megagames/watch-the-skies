@@ -17,16 +17,8 @@ const SquadSchema = new Schema({
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
-    repair: { type: Boolean, default: false }
-  },
-  stats: {
-    health: { type: Number, default: 2 },
-    healthMax: { type: Number, default: 2 },
-    attack: { type: Number, default: 0 },
-    defense: { type: Number, default: 2 },
-    localDeploy: { type: Number, default: 2 },
-    globalDeploy: { type: Number, default: 5 },
-    invasion: { type: Number, default: 2 },
+    repair: { type: Boolean, default: false },
+    secret: { type: Boolean }
   },
   gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
 });
@@ -81,6 +73,7 @@ function validateSquad(squad) {
   return Joi.validate(squad, schema, { "allowUnknown": true });
 };
 
+/* does not have stats
 async function updateStats(id) {
   let squad = await Squad.findById(id).populate('gear');
   let { stats } = squad
@@ -101,5 +94,6 @@ async function updateStats(id) {
 
   return;
 }
+*/
 
-module.exports = { Squad, validateSquad, updateStats }
+module.exports = { Squad, validateSquad }

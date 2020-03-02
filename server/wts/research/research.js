@@ -1,18 +1,18 @@
 const researchDebugger = require('debug')('app:research');
+const majorDebugger = require('debug')('app:major');
 const nexusEvent = require('../../startup/events');
 const { logger } = require('../../middleware/winston');
 
 const Research = require('../../models/sci/research') // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
 
-const techCost = [ 30, 80, 120, 250, 300, 350 ] // Arbitratily set at increments of 50 currently
-const fundingCost = [ 0, 4, 9, 15, 22 ] // A cost of 3 + funding level per roll currently
+const { techCost, fundingCost } = require('./sciState')
 
 const { Facility } = require('../../models/gov/facility/facility');
 const { Team } = require('../../models/team/team');
 const { ResearchReport } = require('../reports/reportClasses');
-
-
+const { techTree } = require('./techTree');
+const { knowledgeTree } = require('./knowledge'); 
 
 async function startResearch () {
     for await (let lab of await Facility.find({ type: 'Lab' })) {
@@ -30,20 +30,21 @@ async function startResearch () {
 // FUNCTION for calculating the progress applied to a single RESEARCH project
 async function calculateProgress(lab) {
     researchDebugger(`${lab.name} has begun conducting research.`)
+    let completedResearch = 0
     for await (let project of lab.research) {
         let report = new ResearchReport
+    
         try {
             let tech = await Research.findById(project).populate('team'); // Imports the specific Research object by _id
             researchDebugger(`Current Progress: ${tech.progress}`)
-            report.progress.startingProgress = tech.progress; 
-            researchDebugger(tech)
-            let team = await Team.findById(lab.team);
-            report.project = tech._id;
-            report.lab = lab._id;
-            researchDebugger(lab)
-            researchDebugger(team);
-            let test = team.sciRate;
-            researchDebugger(`Team Sci Rate: ${test} - type: ${typeof test}`);
+            report.progress.startingProgress = tech.progress; // Tracks progress in the Research Report
+            // researchDebugger(tech)
+            let team = await Team.findById(lab.team); // Finds the owner of the Lab
+            report.project = tech._id; // Records the research being worked on
+            report.lab = lab._id; // Records the lab working on the project
+            // researchDebugger(lab)
+            // researchDebugger(team);
+            researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof test}`);
             researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
             let sciRate = team.sciRate + lab.sciRate
             let sciBonus = lab.bonus
@@ -52,12 +53,14 @@ async function calculateProgress(lab) {
 
             tech.progress += progressInfo.progress; // Adds progress to the current Research
 
-            tech.progress > techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
+            console.log(techCost)
+            console.log(tech.progress)
+            tech.progress >= techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
             if (tech.status.completed === true) {
                 researchDebugger(`${tech.name} completed!`)
                 tech = await completeTech(tech);
-                lab.research = [];
+                completedResearch++;
             } else {
                 researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
             }
@@ -81,14 +84,17 @@ async function calculateProgress(lab) {
             lab = await lab.save() // Saves the modified lab
             tech = await tech.save(); // Saves the current project to the database
 
-            // researchDebugger(lab);
-            // researchDebugger(tech);
+            // majorDebugger(lab);
+            // majorDebugger(tech);
 
         } catch (err) {
             logger.error(err)
             researchDebugger(`CalcProgress Error: ${err}`);
         }
     }
+    if (completedResearch === lab.research.length) {
+        lab.research = [];
+    };
     return;
 };
 
@@ -140,12 +146,31 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
 };
 
 async function completeTech (research) {
-    knowledgeDebugger(`Enough progress has been made to complete ${research.name}...`);
+    researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.availible = false;
     research.status.completed = true;
+    
+    majorDebugger(research.unlocks)
 
     for await (let item of research.unlocks) {
-        techDebugger(`${item.type} - ${item.name}`);
+        console.log(item)
+        if (item.type === 'Technology') {
+            let newTech = techTree.find(el => el.code === item.code);
+            researchDebugger(`UNLOCKING: ${item.type} - ${newTech.name}`);
+            console.log(newTech)
+            await newTech.checkAvailable();
+        }
+        
+        if (research.type === 'Knowledge') {
+            if (research.level < 5) {
+                let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
+                await nextKnowledge.unlock();
+                researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
+                console.log(nextKnowledge);
+            };
+
+        
+        }
     }
 
     reserach = await research.save();

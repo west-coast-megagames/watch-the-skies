@@ -1,6 +1,8 @@
 const reportDebugger = require('debug')('app:reports');
 const ResearchLog = require('../../models/logs/researchLog');
+const ReconLog = require('../../models/logs/reconLog');
 
+// Function that makes a timestamp for log files
 function makeTimestamp() {
     const gameClock = require('../gameClock/gameClock')
     let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
@@ -8,6 +10,7 @@ function makeTimestamp() {
     return timestamp;
 }
 
+// After Action Report for Lab activity
 class ResearchReport {
     constructor() {
         this.date = ''
@@ -35,6 +38,7 @@ class ResearchReport {
         try {
         reportDebugger(`Saving report!`);
             let timestamp = makeTimestamp();
+            this.date = Date.now();
             let submission = new ResearchLog({...timestamp,...this})
 
             submission = await submission.save();
@@ -48,4 +52,133 @@ class ResearchReport {
     }
 };
 
-module.exports = { ResearchReport };
+// After Action Report for Recon Missions (Ground/Air)
+class ReconReport {
+    constructor() {
+        this.date = ''
+        this.team = {}
+        this.unit = {}
+        this.report = {}
+        this.rolls = []
+        this.country = {}
+        this.zone = {}
+
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Recon report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new ReconLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Recon Log Error: ${err}`);
+            return
+        }
+    }
+};
+
+class TransportReport {
+    constructor() {
+        this.date = ''
+        this.team = {}
+        this.unit = {}
+        this.report = {}
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Transport report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new TransportLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Transport Log Error: ${err}`);
+            return
+        }
+    }
+};
+
+class BattleReport {
+    constructor() {
+        this.team = {}
+        this.attackers = []
+        this.defenders = []
+        this.stats = {}
+        this.stats.atkTotal = 0
+        this.stats.atkDamage = 0
+        this.stats.defTotal = 0
+        this.stats.defDamage = 0
+        this.casualties = []
+        this.salvage = []
+        this.report = {}
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Battle report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new TransportLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Transport Log Error: ${err}`);
+            return
+        }
+    }
+};
+
+class CrashReport {
+    constructor() {
+        this.team = {}
+        this.salvage = []
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Crash report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new CrashLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Crash Log Error: ${err}`);
+            return
+        }
+    }
+}
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport };

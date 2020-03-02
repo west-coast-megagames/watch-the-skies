@@ -8,7 +8,6 @@ const Lab = Facility.discriminator('Lab', new Schema({
   sciRate: { type: Number, default: 0 },
   bonus: { type: Number, default: 0 },
   funding: { type: Number, default: 0 },
-  equipment: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   research: [{ type: Schema.Types.ObjectId, ref: 'Research' }]
 }));
 

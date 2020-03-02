@@ -24,9 +24,10 @@
 }
 
 .tabContent {
-  padding-left: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
   overflow-y: auto;
-  height: calc(100vh - 100px);
+  height: calc(100vh - 150px);
 }
 
 .game-timeline {
@@ -57,9 +58,24 @@
 }
 
 .game-timeline .rs-panel-collapsible .rs-panel-heading::before {
-  top: 12px
+  top: 12px;
 }
 
+/* News Feed & Articles */
+.newsFeedHeader {
+  padding-bottom: 10px;
+}
+
+.artCont {
+  border: solid 1px #d9d9d9;
+  margin: 10px;
+  padding: 5px 2px 0px 5px;
+  border-radius: 6px 6px 6px 6px;
+  background-color: #f2f2f2;
+}
+.artCont button {
+  float: right;
+}
 
 @keyframes App-logo-spin {
   from {

@@ -24,7 +24,8 @@ const ZoneSchema = new Schema({
             min: 0,
             max: 250,
             default: 0
-        }
+        },
+  satellite: [{ type: Schema.Types.ObjectId, ref: 'Site' }]
   
 });
 

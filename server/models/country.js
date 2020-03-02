@@ -38,7 +38,15 @@ const CountrySchema = new Schema({
     type: Boolean,
     default: false
   },
-  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}]
+  borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}],
+  milAlliance: [{type: Schema.Types.ObjectId, ref: 'Team'}],
+  sciAllience: [{type: Schema.Types.ObjectId, ref: 'Team'}],
+  stats: {
+    sciRate: { type: Number },
+    balance: { type: Number }
+  },
+  formalName: { type: String }
+
 });
 
 CountrySchema.methods.validateCountry = function (country) {
