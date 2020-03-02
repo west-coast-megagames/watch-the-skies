@@ -26,5 +26,3 @@ function validateNational(national) {
   
   return Joi.validate(national, schema, { "allowUnknown": true });
 };
-
-module.exports = { National, validateNational }
