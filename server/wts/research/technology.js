@@ -68,7 +68,7 @@ function Technology(tech) {
                         desc: this.desc,
                         field: this.field,
                         team: team._id,
-                        unlock: this.unlocks
+                        unlocks: this.unlocks
                     });
 
                     await newTech.save();
