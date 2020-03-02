@@ -84,9 +84,9 @@ router.post('/', async function (req, res) {
   if (systems.length == 0) {
     await loadSystems();                         // load wts/json/systems.json data into array   
   }
-  let { name, team, country, zone, site, stats, zoneCode, teamCode, countryCode, baseCode } = req.body;
+  let { name, team, country, zone, baseOrig, stats, status, zoneCode, teamCode, countryCode, baseCode } = req.body;
   const newAircraft = new Aircraft(
-    { name, team, country, zone, site, stats }
+    { name, team, country, zone, baseOrig, stats, status }
     );
   let docs = await Aircraft.find({ name })
   if (!docs.length) {
@@ -124,8 +124,8 @@ router.post('/', async function (req, res) {
       if (!baseSite) {
         console.log("Aircraft Post Base Error, New Aircraft:", req.body.name, " Base: ", baseCode);
       } else {
-        newAircraft.base = baseSite._id;
-        aircraftLoadDebugger("Aircraft Post Base Found, Aircraft:", req.body.name, " Base: ", baseCode, "Base ID:", baseSite._id);
+        newAircraft.baseOrig = baseSite._id;
+        routeDebugger("Aircraft Post Base Found, Aircraft:", req.body.name, " Base: ", baseCode, "Base ID:", baseSite._id);
       }
     }      
 
@@ -172,7 +172,7 @@ router.post('/', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('base', 'name');
+      .populate('baseOrig', 'name');
 
     updateStats(aircraft._id);
     res.status(200).json(aircraft);
@@ -209,7 +209,7 @@ router.put('/:id', async function (req, res) {
     newTeam_Id         = oldAircraft.team;
     newCountry_Id      = oldAircraft.country;
     newAircraftSystems = oldAircraft.systems;
-    newBase_Id         = oldAircraft.base;
+    newBase_Id         = oldAircraft.baseOrig;
   };
 
   if (zoneCode && zoneCode != "") {
@@ -282,7 +282,7 @@ router.put('/:id', async function (req, res) {
       zone: newZone_Id,
       country: newCountry_Id,
       team: newTeam_Id,
-      base: newBase_Id,
+      baseOrig: newBase_Id,
       systems: newAircraftSystems
     }, 
     { new: true,
@@ -295,7 +295,7 @@ router.put('/:id', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('base', 'name');
+      .populate('baseOrig', 'name');
 
     res.status(200).json(aircraft);
     console.log(`Aircraft ${req.params.id} updated...`);
