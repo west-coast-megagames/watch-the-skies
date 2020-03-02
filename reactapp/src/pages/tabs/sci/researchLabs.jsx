@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, Badge, IconButton, Icon } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { newLabCheck, getLabPct } from './../../../scripts/labs';
@@ -19,9 +19,7 @@ function findTechByID(_id, allResearch) {
 	return myResearchArray;
 }
 
-
-
-const ProgressCell = ({ rowData, dataKey, ...props }) => {
+const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 
 	if ( rowData.status.destroyed) {
 		return (
@@ -33,7 +31,7 @@ const ProgressCell = ({ rowData, dataKey, ...props }) => {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
-					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => this.props.onClick} disabled={rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick()} disabled={rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
 				</div> 
 			</Cell>
 		);
@@ -297,7 +295,7 @@ class ResearchLabs extends Component {
 //			  let response = await axios.put(`${gameServer}game/repairAircraft/`, {_id: this.props.aircraft._id});
 //			  console.log(response.data)
 //			  Alert.success(response.data);
-			console.log("REPAIRING...");
+			Alert.success("REPAIRING...");
 		} catch (err) {
 			  console.error(err.message)
 		}

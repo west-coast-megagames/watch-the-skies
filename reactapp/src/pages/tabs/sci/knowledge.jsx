@@ -104,6 +104,7 @@ class Knowledge extends Component {
                     <Column align='center' width={100}>
                         <HeaderCell>Global Level</HeaderCell>
                         <Cell>{rowData => {
+                            console.log("ROWDATA=",rowData);
                             let currentLevel = rowData.research.level - 1;
                             return(
                                 <Tag color='green'>{currentLevel}</Tag>

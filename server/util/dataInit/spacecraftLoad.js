@@ -24,8 +24,6 @@ const { Facility } = require('../../models/gov/facility/facility');
 const { Lab } = require('../../models/gov/facility/lab');
 const { Hanger } = require('../../models/gov/facility/hanger');
 const { Factory } = require('../../models/gov/facility/factory');
-const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { Zone } = require('../../models/zone');
 
 const app = express();
@@ -40,8 +38,6 @@ async function runSpacecraftLoad(runFlag){
     //spacecraftDebugger("Jeff in runSpacecraftLoad", runFlag);    
     if (!runFlag) return false;
     if (runFlag) {
-      
-      await loadSystems();                         // load wts/json/systems.json data into array 
       
       await deleteAllSpacecraft(runFlag);
       await initLoad(runFlag);
@@ -95,41 +91,8 @@ async function loadSpacecraft(iData){
         }
       }      
 
-      spacecraft.systems = [];
-      for (let sys of iData.loadout) {
-        let sysRef = systems[systems.findIndex(system => system.name === sys )];
-        //console.log("jeff in spacecraft systems ", sys, "sysRef:", sysRef);
-        if (sysRef) {
-          newSystem = await new System(sysRef);
-          newSystem.team         = spacecraft.team;
-          newSystem.manufacturer = spacecraft.team;  
-          newSystem.status.building = false;
-          //console.log("jeff in spacecraft before systems save ... sysRef:", sysRef);            
-          await newSystem.save(((err, newSystem) => {
-            if (err) {
-              logger.error(`New Spacecraft System Save Error: ${err}`);
-              return console.error(`New Spacecraft System Save Error: ${err}`);
-            }
-            logger.debug(`spacecraft.name, system ${sys} add saved to system collection.`);
-          }));
-
-          spacecraft.systems.push(newSystem._id)
-
-        } else {
-          logger.debug(`Error in creation of system ${sys} for  ${spacecraft.name}`);
-        }
-      }
-
       let { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        // remove associated system records
-        for (let j = 0; j < spacecraft.systems.length; ++j ) {
-          systemId = spacecraft.systems[j];
-          let systemDel = await System.findByIdAndRemove(systemId);
-          if (systemDel = null) {
-            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
-          }
-        }
         spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
         return;
       }
@@ -181,7 +144,7 @@ async function loadSpacecraft(iData){
               logger.error(`New Spacecraft Facility Save Error: ${err}`);
               return console.error(`New Spacecraft Facility Save Error: ${err}`);
             }
-            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to system collection.");
+            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
           }));
         }
       }  
@@ -231,21 +194,13 @@ async function loadSpacecraft(iData){
 
       const { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        // remove associated system records
-        for (let j = 0; j < spacecraft.systems.length; ++j ) {
-          systemId = spacecraft.systems[j];
-          let systemDel = await System.findByIdAndRemove(systemId);
-          if (systemDel = null) {
-            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
-          }
-        }
         spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
         return
       }
    
       // create facility records for spacecraft
       for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.systems[i];
+        let fac = iData.facilities[i];
         let facError = false;
         let facType  = fac.type;
         let facId    = null;
@@ -277,31 +232,6 @@ async function loadSpacecraft(iData){
           }));
         }
       }  
-
-      spacecraft.systems = [];
-      for (let sys of iData.loadout) {
-        let sysRef = systems[systems.findIndex(system => system.name === sys )];
-        //console.log("jeff in spacecraft systems ", sys, "sysRef:", sysRef);
-        if (sysRef) {
-          newSystem = await new System(sysRef);
-          newSystem.team         = spacecraft.team;
-          newSystem.manufacturer = spacecraft.team;  
-          newSystem.status.building = false;
-          //console.log("jeff in spacecraft before systems save ... sysRef:", sysRef);            
-          await newSystem.save(((err, newSystem) => {
-            if (err) {
-              logger.error(`New Spacecraft System Save Error: ${err}`);
-              return console.error(`New Spacecraft System Save Error: ${err}`);
-            }
-            logger.debug(`spacecraft.name, system ${sys} add saved to system collection.`);
-          }));
-
-          spacecraft.systems.push(newSystem._id)
-
-        } else {
-          logger.debug(`Error in creation of system ${sys} for  ${spacecraft.name}`);
-        }
-      }
             
       await spacecraft.save((err, spacecraft) => {
         if (err) return console.error(`Update Spacecraft Save Error: ${err}`);
@@ -325,14 +255,6 @@ async function deleteAllSpacecraft(doLoad) {
     for await (const spacecraft of Spacecraft.find()) {    
       let id = spacecraft._id;
       try {
-        // remove associated system records
-        for (let j = 0; j < spacecraft.systems.length; ++j ) {
-          systemId = spacecraft.systems[j];
-          let systemDel = await System.findByIdAndRemove(systemId);
-          if (systemDel = null) {
-            spacecraftDebugger(`The Spacecraft System with the ID ${systemId} was not found!`);
-          }
-        }
         let spacecraftDel = await Spacecraft.findByIdAndRemove(id);
         if (spacecraftDel = null) {
           spacecraftDebugger(`The Spacecraft with the ID ${id} was not found!`);

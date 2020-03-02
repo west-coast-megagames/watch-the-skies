@@ -6,7 +6,6 @@ const { CrashSite, validateCrash } = require('../../models/sites/crashSite');
 const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
 const { Equipment } = require('../../models/gov/equipment/equipment');
 const { Facility } = require('../../models/gov/facility/facility');
-const { System } = require('../../models/gov/equipment/systems');
 const siteCheckDebugger = require('debug')('app:siteCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
@@ -86,18 +85,18 @@ async function chkSite(runFlag) {
     
     if (site.type === 'Crash'){
 
-      let { error } = await validateCrash(site); 
-      if (error) {
-        logger.error(`Crash Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`);
-      }
-
       //check system references
-      //siteCheckDebugger(`CrashSite ${site.name} ${site._id} Check of Salvage ${site.salvage.length}`)
+      //siteCheckDebugger(`Spacecraft ${site.name} ${site._id} Check of Salvage ${site.salvage.length}`)
       for (let i = 0; i < site.salvage.length; ++i){
         let sFind = await System.findById(site.salvage[i]);
         if (!sFind) {
-          logger.error(`crashSite Site ${site.name} ${site._id} has an invalid salvage reference ${i}: ${site.salvage[i]}`);
+          logger.error(`Spacecraft Site ${site.name} ${site._id} has an invalid salvage reference ${i}: ${site.salvage[i]}`);
         }
+      }
+
+      let { error } = await validateCrash(site); 
+      if (error) {
+        logger.error(`Crash Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`);
       }
     }
 
@@ -106,15 +105,6 @@ async function chkSite(runFlag) {
       let { error } = await validateSpacecraft(site); 
       if (error) {
         logger.error(`Spacecraft Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`);
-      }
-  
-      //check system references
-      //siteCheckDebugger(`Spacecraft ${site.name} ${site._id} Check of Systems ${site.systems.length}`)
-      for (let i = 0; i < site.systems.length; ++i){
-        let sFind = await System.findById(site.systems[i]);
-        if (!sFind) {
-          logger.error(`Spacecraft Site ${site.name} ${site._id} has an invalid systems reference ${i}: ${site.systems[i]}`);
-        }
       }
     }    
   }

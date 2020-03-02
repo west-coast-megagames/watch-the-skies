@@ -18,8 +18,7 @@ const Spacecraft = Site.discriminator('Spacecraft', new Schema({
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
     secret: { type: Boolean }
-  },
-  systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
+  }
 }));
 
 function validateSpacecraft(spacecraft) {
@@ -66,35 +65,5 @@ async function launchSpacecraft (spacecraft) {
     modelDebugger('Error:', err.message);
   }
 }
-
-/* No more stats to update
-async function updateStats(id) {
-  let spacecraft = await Spacecraft.findById(id).populate('systems');
-  if (!spacecraft) {
-    modelDebugger(`Spacecraft not available for updateStats ${id}`);
-    return;
-  }
-  let { stats } = spacecraft
-  console.log("Jeff 1 here ... stats ", stats);
-  for (let system of spacecraft.systems) {
-    console.log("jeff 2 ... system ", system);
-    for (let [key, value] of Object.entries(system.stats)) {
-      console.log("jeff3 ... key", key, "value" , value, "type of value ", typeof value);
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value; 
-      }
-    }
-    console.log(`${system.name} loaded into ${spacecraft.type}...`)
-  }
-  console.log(`All systems for ${spacecraft.type} ${spacecraft.name} loaded...`);
-  spacecraft.stats = stats;
-  spacecraft.markModified('stats');
-  spacecraft = await spacecraft.save();
-  console.log(spacecraft.stats);
-
-  return;
-}
-*/
 
 module.exports = { Spacecraft, launchSpacecraft, validateSpacecraft, getSpacecraft }
