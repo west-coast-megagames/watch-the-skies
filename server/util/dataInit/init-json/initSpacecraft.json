@@ -7,8 +7,7 @@
     { "type": "Lab", "name": "Alien Lab A-1", "capacity": 1},
     { "type": "Hanger" , "name": "Alien Hangar A-1", "capacity": 5}
 ],
-"loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -37,8 +36,7 @@
 "code": "ISS",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
- ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -67,8 +65,7 @@
 "code": "TCN S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-    ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -97,8 +94,7 @@
 "code": "USA S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -127,8 +123,7 @@
 "code": "FFG S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -157,8 +152,7 @@
 "code": "TUK S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -187,8 +181,7 @@
 "code": "RSA S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-    ["High Orbital Sensor Suite"],
+"loadout":  [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -217,8 +210,7 @@
 "code": "RFD S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -247,8 +239,7 @@
 "code": "JPN S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -277,8 +268,7 @@
 "code": "IRN S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-    ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -307,8 +297,7 @@
 "code": "IND S1",
 "baseDefenses": false,
    "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -337,8 +326,7 @@
 "code": "TFR S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -367,8 +355,7 @@
 "code": "EPT S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -397,8 +384,7 @@
 "code": "PRC S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout":  [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -429,8 +415,7 @@
 "facilities":  [
   { "type": "Lab", "name": "BRZ-S1 Lab A-1", "capacity": 1}
   ],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -459,8 +444,7 @@
 "code": "AUS S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-  ["High Orbital Sensor Suite"],
+"loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
@@ -489,8 +473,7 @@
 "code": "NPC S1",
 "baseDefenses": false,
 "facilities":  [],
-"loadout": 
-    ["High Orbital Sensor Suite"],
+"loadout":  [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
 "latDecimal": -90.0,
