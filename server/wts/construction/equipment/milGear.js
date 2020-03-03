@@ -1,7 +1,7 @@
 const fs = require('fs')
 const config = require('config');
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/milGear.json'));
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/equipment/milGear.json'));
 const gearData = JSON.parse(file);
 
 equipmentDebugger = require('debug')('app:equipment');
