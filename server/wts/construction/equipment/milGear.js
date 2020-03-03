@@ -30,7 +30,10 @@ function Equip(gear) {
     this.prereq = gear.prereq;
     this.desc = gear.desc;
     this.category = gear.category;
-    this.stats = gear.stats
+    this.stats = gear.stats;
+    this.code  = gear.code;
+    this.unitType = gear.unitType;
+    this.buildTime = gear.buildTime;
 
     this.build = async function() {
         let newGear = new Gear(this)
