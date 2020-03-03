@@ -4,7 +4,7 @@ import { Timeline, Alert, CheckPicker } from 'rsuite';
 import { transactionLog, interceptLog, researchLog } from '../components/common/logs'
 import { gameServer } from '../config';
 
-const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deployment' }]
+const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deployment' }, { value: 'Crash' }]
 
 class GameTimeline extends Component {
     state = {
@@ -55,9 +55,9 @@ class GameTimeline extends Component {
                 {count === 0 && <h4>No timeline for the game.</h4>}
                 {count > 0 && <Timeline className='game-timeline'>
                     {this.state.filteredLogs.map(log => {
-                        if (log.logType === 'Interception') return interceptLog(log);
-                        if (log.logType === 'Transaction') return transactionLog(log);
-                        if (log.logType === 'Research') return researchLog(log);
+                        if (log.logType === 'Interception') return <interceptLog log={log} />
+                        if (log.logType === 'Transaction') return <transactionLog log={log} />
+                        if (log.logType === 'Research') return <researchLog log={log} />
                     })}
                 </Timeline>}
             </React.Fragment>

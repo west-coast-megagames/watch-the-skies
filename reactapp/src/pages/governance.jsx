@@ -21,6 +21,7 @@ class Governance extends Component {
     };
 
     render() {
+        if (!this.props.login) return <LoginLink />
         const url = this.props.match.path;
         const { tab } = this.state; 
 

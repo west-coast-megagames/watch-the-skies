@@ -14,6 +14,7 @@ class TerrorMap extends Component {
 
     // RENDER - React lifecycle hook that triggers as the last stage of mounting, returns JSX in the return.
     render() {
+        if (!this.props.login) return <LoginLink />
         return (
         <Container style={{ height: "100vh" }}>
             <img

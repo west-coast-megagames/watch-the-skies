@@ -32,6 +32,7 @@ import 'rsuite/dist/styles/rsuite-default.css';
 // import 'rsuite/dist/styles/rsuite-dark.css';
 import './App.css';
 
+
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
 
@@ -117,17 +118,7 @@ class App extends Component {
   }
 
   render() {
-    const { expand, active, team, login } = this.state;
-
-    // if (login === false) {
-    //   return(
-    //       <Registration
-    //         addAlert={ this.addAlert }
-    //         handleLogin={ this.handleLogin }
-    //         login={ this.state.login }
-    //       />
-    //   )
-    // }
+    const { expand, active, team } = this.state;
 
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
@@ -160,7 +151,6 @@ class App extends Component {
                   {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
-                  <Nav.Item eventKey="8" to="/map" componentClass={NavLink} icon={<Icon icon="map" />}>For Patrick!</Nav.Item>
                   {team !== null ? team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
                 </Nav>
               </Sidenav.Body>
@@ -261,7 +251,7 @@ class App extends Component {
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>
-        </Container>
+        </Container>}
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
     );

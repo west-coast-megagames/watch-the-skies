@@ -1,7 +1,9 @@
 import React from 'react';
 import { Timeline, Icon, Panel } from 'rsuite';
 
-const transactionLog = (log) => {
+// TIMELINE - Log for Transactions for a timeline component
+const transactionLog = (props) => {
+    let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon="credit-card-alt" size="2x" />}>
         <Panel style={{padding: '0px'}} header={`${log.transaction} - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date: ${new Date(log.date).toTimeString()}`} collapsible>
@@ -14,7 +16,9 @@ const transactionLog = (log) => {
     );
 }
 
-const researchLog = (log) => {
+// TODO - Research log should be fleshed out for March.
+const researchLog = (props) => {
+    let { log } = props
     let results = []
     for (let i = 0; i < log.rolls.length; i++) {
         let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${log.rolls[i]}`
@@ -35,7 +39,9 @@ const researchLog = (log) => {
     )
 }
 
-const interceptLog = (log) => {
+// TODO for MARCH - Look of an Intercept log should be fleshed out for march.
+const interceptLog = (props) => {
+    let { log } = props;
     // let iconStyle = { background: '#ff4d4d', color: '#fff' };
     return(
     <Timeline.Item key={log._id} dot={<Icon icon="fighter-jet" size="2x" />}>
@@ -49,7 +55,9 @@ const interceptLog = (log) => {
     )
 }
 
-const constructionLog = (log) => {
+// TODO for MARCH - Look of an Construction log should be fleshed out for march.
+const constructionLog = (props) => {
+    let { log } = props;
     return (
         <Panel style={{padding: '0px'}} header={`Placeholder Construction - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
         <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
@@ -59,7 +67,9 @@ const constructionLog = (log) => {
     )
 }
 
-const deploymentLog = (log) => {
+// TODO for MARCH - Look of an Deployment log should be fleshed out for march.
+const deploymentLog = (props) => {
+    let { log } = props;
     return (
         <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
         <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
@@ -69,20 +79,42 @@ const deploymentLog = (log) => {
     )
 }
 
-const crisisLog = () => {
+// TODO for MARCH - This timeline log needs to be filled out...
+const crisisLog = (props) => {
+    let { log } = props
+    return (
+        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+        <p><b>Team:</b> {log.team.name}</p> 
+        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+    </Panel>
+    )
+}
+
+const terrorLog = (props) => {
+    let { log } = props
+    return (
+        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+        <p><b>Team:</b> {log.team.name}</p> 
+        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+    </Panel>
+    )
+}
+
+const treatyLog = (props) => {
 
 }
 
-const terrorLog = () => {
-
-}
-
-const treatyLog = () => {
-
-}
-
-const tradeLog = () => {
-    
+const tradeLog = (props) => {
+    let { log } = props
+    return (
+        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+        <p><b>Team:</b> {log.team.name}</p> 
+        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+    </Panel>
+    )
 }
 
  
