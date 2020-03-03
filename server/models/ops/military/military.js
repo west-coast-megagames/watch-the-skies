@@ -19,7 +19,8 @@ const MilitarySchema = new Schema({
     secret: { type: Boolean, default: false }
   },
   hidden: { type: Boolean },
-  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
+  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 MilitarySchema.methods.deploy = async (unit ,country) => {

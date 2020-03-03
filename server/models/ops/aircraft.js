@@ -34,7 +34,8 @@ const AircraftSchema = new Schema({
     cargo: { type: Number, default: 0 },
     passiveRolls: [Number],
     activeRolls: [Number]
-  }
+  },
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 AircraftSchema.methods.launch = async (aircraft, mission) => {
