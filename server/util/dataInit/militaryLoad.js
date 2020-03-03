@@ -39,7 +39,7 @@ async function runMilitaryLoad(runFlag){
     //militaryLoadDebugger("Jeff in runMilitaryLoad", runFlag);    
     if (!runFlag) return false;
     if (runFlag) {
-      await loadMilGears();                         // load wts/json/milGear.json data into array    
+      await loadMilGears();                         // load wts/json/equipment/milGear.json data into array    
       
       await deleteAllMilitarys(runFlag);
       await initLoad(runFlag);
@@ -188,22 +188,26 @@ async function createFleet(iData){
   //console.log("jeff military gears  iData.gear", iData.gear);
   fleet.equipment = [];
   for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      newGear = await new Gear(gerRef);
-      newGear.team         = fleet.team;
-      newGear.manufacturer = fleet.team; 
-      newGear.status.building = false; 
-      await newGear.save(((err, newGear) => {
-      if (err) {
-        logger.error(`New Military Gear Save Error: ${err}`);
-        return console.error(`New Military Gear Save Error: ${err}`);
-      }
-      militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
-      }));
+      if (gerRef.unitType === "Fleet") {
+        newGear = await new Gear(gerRef);
+        newGear.team         = fleet.team;
+        newGear.manufacturer = fleet.team; 
+        newGear.status.building = false; 
+        await newGear.save(((err, newGear) => {
+        if (err) {
+          logger.error(`New Military Gear Save Error: ${err}`);
+          return console.error(`New Military Gear Save Error: ${err}`);
+        }
+        militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+        }));
 
-      fleet.gear.push(newGear._id)
+        fleet.gear.push(newGear._id)
+      } else {
+        logger.error('Error in creation of gear - invalid unitType ', ger, "for ", fleet.name);  
+      }
     } else {
       logger.error('Error in creation of gear', ger, "for ", fleet.name);
     }
@@ -278,22 +282,26 @@ async function createCorps(iData){
   //console.log("jeff military gears  iData.gear", iData.gear);
   corps.equipment = [];
   for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      newGear = await new Gear(gerRef);
-      newGear.team         = corps.team;
-      newGear.manufacturer = corps.team;  
-      newGear.status.building = false;
-      await newGear.save(((err, newGear) => {
-      if (err) {
-        logger.error(`New Military Gear Save Error: ${err}`);
-        return console.error(`New Military Gear Save Error: ${err}`);
-      }
-      //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
-      }));
+      if (gerRef.unitType === "Corps") {
+        newGear = await new Gear(gerRef);
+        newGear.team         = corps.team;
+        newGear.manufacturer = corps.team;  
+        newGear.status.building = false;
+        await newGear.save(((err, newGear) => {
+        if (err) {
+          logger.error(`New Military Gear Save Error: ${err}`);
+          return console.error(`New Military Gear Save Error: ${err}`);
+        }
+        //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
+        }));
 
-      corps.gear.push(newGear._id)
+        corps.gear.push(newGear._id)
+      } else {
+        logger.error('Error in creation of gear - invalid Unittype', ger, "for ", corps.name);  
+      }
     } else {
       logger.error('Error in creation of gear', ger, "for ", corps.name);
     }
@@ -369,22 +377,26 @@ async function updateFleet(iData){
   //console.log("jeff military gears  iData.gear", iData.gear);
   fleet.equipment = [];
   for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      newGear = await new Gear(gerRef);
-      newGear.team         = fleet.team;
-      newGear.manufacturer = fleet.team;  
-      newGear.status.building = false;
-      await newGear.save(((err, newGear) => {
-      if (err) {
-        logger.error(`New Military Gear Save Error: ${err}`);
-        return console.error(`New Military Gear Save Error: ${err}`);
-      }
-      militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
-      }));
+      if (gerRef.unitType === "Fleet") {
+        newGear = await new Gear(gerRef);
+        newGear.team         = fleet.team;
+        newGear.manufacturer = fleet.team;  
+        newGear.status.building = false;
+        await newGear.save(((err, newGear) => {
+        if (err) {
+          logger.error(`New Military Gear Save Error: ${err}`);
+          return console.error(`New Military Gear Save Error: ${err}`);
+        }
+        militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+        }));
 
-      fleet.gear.push(newGear._id)
+        fleet.gear.push(newGear._id)
+      } else {
+        militaryLoadDebugger('Error in creation of gear - Invalid UnitType', ger, "for ", fleet.name);
+      }
     } else {
       militaryLoadDebugger('Error in creation of gear', ger, "for ", fleet.name);
     }
@@ -459,22 +471,26 @@ async function updateCorps(iData){
   //console.log("jeff military gears  iData.gear", iData.gear);
   corps.equipment = [];
   for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      newGear = await new Gear(gerRef);
-      newGear.team         = corps.team;
-      newGear.manufacturer = corps.team; 
-      newGear.status.building = false; 
-      await newGear.save(((err, newGear) => {
-      if (err) {
-        logger.error(`New Military Gear Save Error: ${err}`);
-        return console.error(`New Military Gear Save Error: ${err}`);
-      }
-      militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
-      }));
+      if (gerRef.unitType === "Corps") {  
+        newGear = await new Gear(gerRef);
+        newGear.team         = corps.team;
+        newGear.manufacturer = corps.team; 
+        newGear.status.building = false; 
+        await newGear.save(((err, newGear) => {
+        if (err) {
+          logger.error(`New Military Gear Save Error: ${err}`);
+          return console.error(`New Military Gear Save Error: ${err}`);
+        }
+        militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
+        }));
 
-      corps.gear.push(newGear._id)
+        corps.gear.push(newGear._id)
+      } else {
+        militaryLoadDebugger('Error in creation of gear - Invalid UnitType', ger, "for ", corps.name);  
+      }
     } else {
       militaryLoadDebugger('Error in creation of gear', ger, "for ", corps.name);
     }
