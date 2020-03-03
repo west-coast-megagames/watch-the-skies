@@ -164,7 +164,7 @@ class TechList extends Component {
         data = [];
         for (let field of fields) {   
             id_count++; 
-//            console.log(field," ",id_count);
+//            console.log("TEAM=",this.props.team);
             research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id && el.field === field);
 //            console.log("RES=",research);
             obj = {
@@ -175,7 +175,7 @@ class TechList extends Component {
                 progressPct: -1,
                 desc: '',
                 prereqs: {},
-                unlocks: {},
+                theoretical: {},
                 children: research.map(el => {
                     return {
                         id:el._id,
@@ -185,7 +185,7 @@ class TechList extends Component {
                         progressPct:lookupPct(el._id, research, this.props.techCost),
                         desc:el.desc,
                         prereqs:el.prereq,
-                        unlocks:el.unlocks
+                        theoretical:el.theoretical
 //                    status:'Unknown',
 //                    location:el.country.name,
 //                    target: el,

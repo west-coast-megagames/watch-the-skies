@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Popover, Table } from 'rsuite'
+import { Drawer, Button, Popover, Table } from 'rsuite'
 import SciIcon from './../../../components/common/sciencIcon';
 //import axios from 'axios'
 //import { gameServer } from '../config'
@@ -28,7 +28,7 @@ class InfoTech extends Component {
     render() {
         let research = this.props.research;
         let prereqs = research.prereqs;
-        let unlocks = research.unlocks;
+        let theoretical = research.theoretical;
 
         return (
             <Drawer
@@ -55,31 +55,51 @@ class InfoTech extends Component {
                         rowHeight={40}
                         style={{ padding: 0 }}
                     >
-                        <Column verticalAlign='middle' width={200}>
+                        <Column verticalAlign='middle' width={125}>
                             <HeaderCell>Type</HeaderCell>
                             <Cell dataKey="type" />
                         </Column>
 
-                        <Column verticalAlign='middle' width={350}>
+                        <Column verticalAlign='middle' width={200}>
                             <HeaderCell>Name</HeaderCell>
                             <Cell dataKey="code" />
                         </Column>
                     </Table>
                     <br />
-                    <p style={{fontSize: 18, color: 'blue' }}><b>Unlocks:</b></p>
+                    <p style={{fontSize: 18, color: 'blue' }}><b>Theoretical Applications:</b></p>
                     <Table
                         rowKey="id"
                         autoHeight
-                        data={unlocks}
+                        wordWrap
+                        data={theoretical}
                     >
-                        <Column verticalAlign='middle' width={200}>
+                        <Column verticalAlign='middle' width={125}>
                             <HeaderCell>Type</HeaderCell>
-                            <Cell dataKey="type" />
+                            <Cell dataKey="field" />
                         </Column>
 
-                        <Column verticalAlign='middle' width={350}>
+                        <Column verticalAlign='middle' width={200}>
                             <HeaderCell>Name</HeaderCell>
-                            <Cell dataKey="code" />
+                            <Cell dataKey="name" />
+                        </Column>
+
+                        
+                        <Column align='center' verticalAlign='middle' width={50}>
+                            <HeaderCell>Level</HeaderCell>
+                            <Cell style={{ padding: 0 }} >
+                            {rowData => {
+                                return (
+                                    <div>
+                                        <SciIcon size={25} level={rowData.level} />
+                                    </div>
+                                )
+                            }}
+                            </Cell>
+                        </Column>
+                        
+                        <Column verticalAlign='middle' width={350}>
+                            <HeaderCell>Description</HeaderCell>
+                            <Cell dataKey="desc" />
                         </Column>
                     </Table>
                     <br />
@@ -223,42 +243,12 @@ return(
 </Panel>
 )
 }
-*/      
+ 
 const hullSpeaker = (
 <Popover title="Hull Information">
     <p>Hull is the strangth of your aircrafts chassis, if it goes to 0 your aircraft will crash!</p>
 </Popover>
 )
-
-const armorSpeaker = (
-<Popover title="Armor Information">
-    <p>Armor protects your crafts systems from damage or destruction. If a system looses its cockpit or engines it can crash.</p>
-</Popover>
-)
-
-const penetrationSpeaker = (
-<Popover title="Penetration Information">
-    <p>Penetration is your Weapons systems ability to do internal damage to an opponent. Destroying opponent systems can cause them to crash.</p>
-</Popover>
-)
-
-const rangeSpeaker = (
-<Popover title="Range Information">
-    <p>Range is the distance your aircraft can travel for a mission in km. The distance is calculated from your base.</p>
-</Popover>
-)
-
-const weaponSpeaker = (
-<Popover title="Penetration Information">
-    <p>Weapon rating is how much hull damage your weapons can do on a succesful hit.</p>
-</Popover>
-)
-
-const evadeSpeaker = (
-<Popover title="Penetration Information">
-    <p>Evade is your crafts ability to avoid damage even when succefully hit, it also effects ability to disengage.</p>
-</Popover>
-)
-
+*/     
 
 export default InfoTech;
