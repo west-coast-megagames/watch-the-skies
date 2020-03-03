@@ -9,7 +9,7 @@ const { Account } = require('../../models/gov/account');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
-const { BaseSite } = require('../../models/sites/baseSite');
+const { BaseSite } = require('../../models/sites/site');
 
 // Game State - Server side template items
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');

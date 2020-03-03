@@ -10,7 +10,7 @@ const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/ai
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
-const { BaseSite } = require('../../models/sites/baseSite');
+const { BaseSite } = require('../../models/sites/site');
 const { System } = require('../../models/gov/equipment/systems');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 
@@ -134,16 +134,20 @@ router.post('/', async function (req, res) {
       // create systems records for aircraft and store ID in aircraft.system
       newAircraft.systems = [];
       for (let sys of req.body.loadout) {
-        let sysRef = systems[systems.findIndex(system => system.name === sys )];
+        let sysRef = systems[systems.findIndex(system => system.code === sys )];
         if (sysRef) {
-          newSystem = await new System(sysRef);
-          await newSystem.save(((err, newSystem) => {
-            if (err) {
-              console.error(`New Aircraft System Save Error: ${err}`);
-              res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);   
-            }
-          }));
-          newAircraft.systems.push(newSystem._id);
+          if (sysRef.unitType === "Interceptor") {
+            newSystem = await new System(sysRef);
+            await newSystem.save(((err, newSystem) => {
+              if (err) {
+                console.error(`New Aircraft System Save Error: ${err}`);
+                res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);   
+              }
+            }));
+            newAircraft.systems.push(newSystem._id);
+          } else {
+            console.log('Error in creation of system - wrong UnitType', sys, " for ", name );
+          }
         } else {
           console.log('Error in creation of system', sys, " for ", name );
         }
@@ -261,16 +265,20 @@ router.put('/:id', async function (req, res) {
     // create systems records for aircraft and store ID in aircraft.system
     newAircraftSystems = [];
     for (let sys of req.body.loadout) {
-      let sysRef = systems[systems.findIndex(system => system.name === sys )];
+      let sysRef = systems[systems.findIndex(system => system.code === sys )];
       if (sysRef) {
-        newSystem = await new System(sysRef);
-        await newSystem.save(((err, newSystem) => {
-          if (err) {
-            console.error(`New Aircraft System Save Error: ${err}`);
-            res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);  
-          }
-        }));
-        newAircraftSystems.push(newSystem._id)
+        if (sysRef.unitType === "Interceptor") {
+          newSystem = await new System(sysRef);
+          await newSystem.save(((err, newSystem) => {
+            if (err) {
+              console.error(`New Aircraft System Save Error: ${err}`);
+              res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);  
+            }
+          }));
+          newAircraftSystems.push(newSystem._id)
+        } else {
+          console.log('Error in creation of system - wrong UnitType ', sys, " for ", name );
+        }  
       } else {
         console.log('Error in creation of system', sys, " for ", name );
       }

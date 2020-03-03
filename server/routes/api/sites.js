@@ -6,12 +6,14 @@ const validateObjectId = require('../../middleware/validateObjectId');
 const { logger } = require('../../middleware/winston');
 
 // Interceptor Model - Using Mongoose Model
-const { Site } = require('../../models/sites/site')
-const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
-//const { BaseSite, validateBase } = require('../../models/sites/baseSite');
+const { Site, validateSite, BaseSite, validateBase, 
+        CitySite, validateCity, CrashSite, validateCrash, Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
+const { convertToDms } = require('../../util/systems/geo');
+const { System } = require('../../models/gov/equipment/systems');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 
 // @route   GET api/sites
 // @Desc    Get all sites
@@ -101,6 +103,7 @@ router.get('/crash/', async function (req, res) {
     .populate('team', 'shortName name')
     .populate('facilities', 'name type')
     .populate('zone', 'model zoneName zoneCode')
+    .populate('salvage', 'category name')
     .sort({team: 1});
 
   res.status(200).json(sites);
@@ -113,12 +116,17 @@ router.post('/spacecraft/', async function (req, res) {
   let { name, siteCode, shipType, team, country, status, teamCode, countryCode, hidden } = req.body;
 
   // check if unique ... if not gen one that will be
-  let genCode = await genSiteCode(siteCode);
+  let genCode = await genSiteCode(siteCode, "Spacecraft");
   
   siteCode = genCode;
 
+  let newLatDMS = convertToDms(req.body.latDecimal, false);
+  let newLongDMS = convertToDms(req.body.longDecimal, true); 
   const newSpacecraft = new Spacecraft(
-    { name, siteCode, shipType, team, country, status }
+    { name, siteCode, shipType, team, country, status,
+      geoDMS: {latDMS: newLatDMS, longDMS: newLongDMS},
+      geoDecimal: {latDecimal: req.body.latDecimal, longDecimal: req.body.longDecimal} 
+    }
     );
   
   let docs = await Spacecraft.find({ siteCode })
@@ -253,10 +261,405 @@ async function addSatelliteToZone(satId, zoneId, teamId) {
   }
 }
 
-async function genSiteCode(startCode) {
+// @route   POST api/sites/base/
+// @Desc    Post a new base
+// @access  Public
+router.post('/base/', async function (req, res) {
+  let { name, siteCode, team, country, teamCode, countryCode, hidden } = req.body;
+
+  // check if unique ... if not gen one that will be
+  let genCode = await genSiteCode(siteCode, "Base");
   
+  siteCode = genCode;
+
+  let newLatDMS = convertToDms(req.body.latDecimal, false);
+  let newLongDMS = convertToDms(req.body.longDecimal, true); 
+  const newBaseSite = new BaseSite(
+    { name, siteCode, team, country,
+      geoDMS: {latDMS: newLatDMS, longDMS: newLongDMS},
+      geoDecimal: {latDecimal: req.body.latDecimal, longDecimal: req.body.longDecimal} 
+    }
+    );
+  
+  let docs = await BaseSite.find({ siteCode })
+  if (!docs.length) {
+
+    if (teamCode != ""){
+      let team = await Team.findOne({ teamCode });  
+      if (!team) {
+        routeDebugger("Base Post Team Error, New Base:", name, " Team: ", teamCode);
+        logger.error(`Base Post Team Error, New Base: ${name} Team Code ${teamCode}`);
+      } else {
+        newBaseSite.team  = team._id;
+        routeDebugger("Base Post Team Found, Base:", name, " Team: ", teamCode, "Team ID:", team._id);
+      }
+    }      
+
+    let { error } = validateBase(newBaseSite); 
+    if (error) {
+      routeDebugger("New Base Validate Error", siteCode, error.message);
+      logger.error(`New Base Validate Error ${siteCode} ${error.message}`);
+      return res.status(404).send(`New Base Validate Error ${siteCode} ${error.message}`);
+    }
+
+    newBaseSite.defenses     = req.body.defenses;
+    newBaseSite.public       = req.body.public;
+    newBaseSite.hidden       = hidden;
+    
+    if (countryCode != ""){
+      let country = await Country.findOne({ code: countryCode });  
+      if (!country) {
+        routeDebugger("Base Post Country Error, New Base:", name, " Country: ", countryCode);
+        logger.error(`New Base Country Code Error ${siteCode} ${countryCode}`);
+      } else {
+        newBaseSite.country = country._id;
+        newBaseSite.zone    = country.zone;
+        routeDebugger("Base Post Country Found, New Base:", name, " Country: ", countryCode, "Country ID:", country._id);
+      }      
+    } else {
+      let country = await Country.findById({ country });  
+      if (!country) {
+        routeDebugger("Base Post Country Error, New Base:", name, " Country: ", country);
+        logger.error(`New Base Country ID Error ${siteCode} ${country}`);
+      } else {
+        newBaseSite.country = country._id;
+        newBaseSite.zone    = country.zone;
+        routeDebugger("Base Post Country Found, New Base:", name, " Country: ", country.code, "Country ID:", country._id);
+      }      
+    }
+
+    // create facility records for Base 
+    for (let i = 0; i < req.body.facilities.length; ++i ) {
+      let fac = req.body.facilities[i];
+      let facError = false;
+      let facType  = fac.type;
+      let facId    = null;
+      //switch not working ... using if else
+      if (facType == 'Factory') {
+        newFacility = await new Factory(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Lab') {
+        newFacility = await new Lab(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Hanger') {
+        newFacility = await new Hanger(fac);
+        facId = newFacility._id;
+      } else {
+        logger.error("Invalid Facility Type In Base Post:", fac.type);
+        facError = true;
+      }
+       
+      if (!facError) {
+        newFacility.site = newBaseSite._id;
+        newFacility.team = newBaseSite.team;
+  
+        await newFacility.save(((err, newFacility) => {
+          if (err) {
+            logger.error(`New Base Facility Save Error: ${err}`);
+            return res.status(404).send(`New Base Facility Save Error ${siteCode} ${err}`);
+          }
+          routeDebugger(newBaseSite.name, "Facility", fac.name, " add saved to facility collection.");
+        }));
+      }
+    }  
+
+    await newBaseSite.save((err, newBaseSite) => {
+      if (err) {
+        logger.error(`New Base Save Error ${siteCode} ${err}`);
+        return res.status(404).send(`New Base Save Error ${siteCode} ${err}`);
+      }
+      routeDebugger(newBaseSite.name + " add saved to Base collection.");
+      //updateStats(newBaseSite._id);
+
+      res.status(200).json(newBaseSite);
+
+    });    
+  } else {                
+    logger.info(`Base already exists: ${siteCode}`);
+    res.status(400).send(`Base ${siteCode} already exists!`);
+  }    
+});
+
+
+// @route   POST api/sites/city/
+// @Desc    Post a new city
+// @access  Public
+router.post('/city/', async function (req, res) {
+  let { name, siteCode, team, country, teamCode, countryCode, hidden, dateline } = req.body;
+
+  // check if unique ... if not gen one that will be
+  let genCode = await genSiteCode(siteCode, "City");
+  
+  siteCode = genCode;
+
+  let newLatDMS = convertToDms(req.body.latDecimal, false);
+  let newLongDMS = convertToDms(req.body.longDecimal, true); 
+  const newCitySite = new CitySite(
+    { name, siteCode, team, country, dateline,
+      geoDMS: {latDMS: newLatDMS, longDMS: newLongDMS},
+      geoDecimal: {latDecimal: req.body.latDecimal, longDecimal: req.body.longDecimal} 
+    }
+    );
+  
+  let docs = await CitySite.find({ siteCode })
+  if (!docs.length) {
+
+    if (teamCode != ""){
+      let team = await Team.findOne({ teamCode });  
+      if (!team) {
+        routeDebugger("City Post Team Error, New City:", name, " Team: ", teamCode);
+        logger.error(`City Post Team Error, New City: ${name} Team Code ${teamCode}`);
+      } else {
+        newCitySite.team  = team._id;
+        routeDebugger("City Post Team Found, City:", name, " Team: ", teamCode, "Team ID:", team._id);
+      }
+    }      
+
+    let { error } = validateCity(newCitySite); 
+    if (error) {
+      routeDebugger("New City Validate Error", siteCode, error.message);
+      logger.error(`New City Validate Error ${siteCode} ${error.message}`);
+      return res.status(404).send(`New City Validate Error ${siteCode} ${error.message}`);
+    }
+
+    newCitySite.defenses     = req.body.defenses;
+    newCitySite.public       = req.body.public;
+    newCitySite.hidden       = hidden;
+    
+    if (countryCode != ""){
+      let country = await Country.findOne({ code: countryCode });  
+      if (!country) {
+        routeDebugger("City Post Country Error, New City:", name, " Country: ", countryCode);
+        logger.error(`New City Country Code Error ${siteCode} ${countryCode}`);
+      } else {
+        newCitySite.country = country._id;
+        newCitySite.zone    = country.zone;
+        routeDebugger("City Post Country Found, New City:", name, " Country: ", countryCode, "Country ID:", country._id);
+      }      
+    } else {
+      let country = await Country.findById({ country });  
+      if (!country) {
+        routeDebugger("City Post Country Error, New City:", name, " Country: ", country);
+        logger.error(`New City Country ID Error ${siteCode} ${country}`);
+      } else {
+        newCitySite.country = country._id;
+        newCitySite.zone    = country.zone;
+        routeDebugger("City Post Country Found, New City:", name, " Country: ", country.code, "Country ID:", country._id);
+      }      
+    }
+
+    // create facility records for City 
+    for (let i = 0; i < req.body.facilities.length; ++i ) {
+      let fac = req.body.facilities[i];
+      let facError = false;
+      let facType  = fac.type;
+      let facId    = null;
+      //switch not working ... using if else
+      if (facType == 'Factory') {
+        newFacility = await new Factory(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Lab') {
+        newFacility = await new Lab(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Hanger') {
+        newFacility = await new Hanger(fac);
+        facId = newFacility._id;
+      } else {
+        logger.error("Invalid Facility Type In City Post:", fac.type);
+        facError = true;
+      }
+       
+      if (!facError) {
+        newFacility.site = newCitySite._id;
+        newFacility.team = newCitySite.team;
+  
+        await newFacility.save(((err, newFacility) => {
+          if (err) {
+            logger.error(`New City Facility Save Error: ${err}`);
+            return res.status(404).send(`New City Facility Save Error ${siteCode} ${err}`);
+          }
+          routeDebugger(newCitySite.name, "Facility", fac.name, " add saved to facility collection.");
+        }));
+      }
+    }  
+
+    await newCitySite.save((err, newCitySite) => {
+      if (err) {
+        logger.error(`New City Save Error ${siteCode} ${err}`);
+        return res.status(404).send(`New City Save Error ${siteCode} ${err}`);
+      }
+      routeDebugger(newCitySite.name + " add saved to City collection.");
+      //updateStats(newCitySite._id);
+
+      res.status(200).json(newCitySite);
+
+    });    
+  } else {                
+    logger.info(`City already exists: ${siteCode}`);
+    res.status(400).send(`City ${siteCode} already exists!`);
+  }    
+});
+
+
+// @route   POST api/sites/crash/
+// @Desc    Post a new crash
+// @access  Public
+router.post('/crash/', async function (req, res) {
+  let { name, siteCode, team, country, teamCode, countryCode, hidden, status} = req.body;
+
+  if (systems.length == 0) {
+    await loadSystems();                         // load wts/json/equipment/systems.json data into array   
+  }
+
+  // check if unique ... if not gen one that will be
+  let genCode = await genSiteCode(siteCode, "Crash");
+  
+  siteCode = genCode;
+
+  let newLatDMS = convertToDms(req.body.latDecimal, false);
+  let newLongDMS = convertToDms(req.body.longDecimal, true); 
+  const newCrashSite = new CrashSite(
+    { name, siteCode, team, country, status,
+      geoDMS: {latDMS: newLatDMS, longDMS: newLongDMS},
+      geoDecimal: {latDecimal: req.body.latDecimal, longDecimal: req.body.longDecimal} 
+    }
+    );
+  
+  let docs = await CrashSite.find({ siteCode })
+  if (!docs.length) {
+
+    if (teamCode != ""){
+      let team = await Team.findOne({ teamCode });  
+      if (!team) {
+        routeDebugger("Crash Post Team Error, New Crash Site:", name, " Team: ", teamCode);
+        logger.error(`Crash Post Team Error, New Crash Site: ${name} Team Code ${teamCode}`);
+      } else {
+        newCrashSite.team  = team._id;
+        routeDebugger("Crash Post Team Found, City:", name, " Team: ", teamCode, "Team ID:", team._id);
+      }
+    }      
+
+    let { error } = validateCity(newCrashSite); 
+    if (error) {
+      routeDebugger("New Crash Site Validate Error", siteCode, error.message);
+      logger.error(`New Crash Site Validate Error ${siteCode} ${error.message}`);
+      return res.status(404).send(`New Crash Site Validate Error ${siteCode} ${error.message}`);
+    }
+
+    newCrashSite.hidden       = hidden;
+    
+    if (countryCode != ""){
+      let country = await Country.findOne({ code: countryCode });  
+      if (!country) {
+        routeDebugger("Crash Post Country Error, New Crash Site:", name, " Country: ", countryCode);
+        logger.error(`New Crash Site Country Code Error ${siteCode} ${countryCode}`);
+      } else {
+        newCrashSite.country = country._id;
+        newCrashSite.zone    = country.zone;
+        routeDebugger("Crash Post Country Found, New Crash Site:", name, " Country: ", countryCode, "Country ID:", country._id);
+      }      
+    } else {
+      let country = await Country.findById({ country });  
+      if (!country) {
+        routeDebugger("Crash Post Country Error, New Crash Site:", name, " Country: ", country);
+        logger.error(`New Crash Site Country ID Error ${siteCode} ${country}`);
+      } else {
+        newCrashSite.country = country._id;
+        newCrashSite.zone    = country.zone;
+        routeDebugger("Crash Post Country Found, New Crash Site:", name, " Country: ", country.code, "Country ID:", country._id);
+      }      
+    }
+
+    // create facility records for Crash Site
+    for (let i = 0; i < req.body.facilities.length; ++i ) {
+      let fac = req.body.facilities[i];
+      let facError = false;
+      let facType  = fac.type;
+      let facId    = null;
+      //switch not working ... using if else
+      if (facType == 'Factory') {
+        newFacility = await new Factory(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Lab') {
+        newFacility = await new Lab(fac);
+        facId = newFacility._id;
+      } else if (facType == 'Hanger') {
+        newFacility = await new Hanger(fac);
+        facId = newFacility._id;
+      } else {
+        logger.error("Invalid Facility Type In Crash Post:", fac.type);
+        facError = true;
+      }
+       
+      if (!facError) {
+        newFacility.site = newCrashSite._id;
+        newFacility.team = newCrashSite.team;
+  
+        await newFacility.save(((err, newFacility) => {
+          if (err) {
+            logger.error(`New Crash Site Facility Save Error: ${err}`);
+            return res.status(404).send(`New Crash Site Facility Save Error ${siteCode} ${err}`);
+          }
+          routeDebugger(newCrashSite.name, "Facility", fac.name, " add saved to facility collection.");
+        }));
+      }
+    }  
+
+    newCrashSite.salvage = [];
+    for (let sys of req.body.salvage) {
+      let sysRef = systems[systems.findIndex(system => system.code === sys )];
+      //console.log("jeff in crash site systems ", sys, "sysRef:", sysRef);
+      if (sysRef) {
+        //if (sysRef.unitType === "Interceptor") { don't care about unitType here
+        newSystem = await new System(sysRef);
+        newSystem.team         = newCrashSite.team;
+        newSystem.manufacturer = newCrashSite.team;  
+        newSystem.status.building = false;
+        //console.log("jeff in newCrashSite before systems save ... sysRef:", sysRef);            
+        await newSystem.save(((err, newSystem) => {
+          if (err) {
+            logger.error(`New Crash Site System Save Error: ${err}`);
+            return console.error(`New Crash Site System Save Error: ${err}`);
+          }
+          logger.debug(`newCrashSite.name, system ${sys} add saved to system collection.`);
+        }));
+
+        newCrashSite.salvage.push(newSystem._id)
+        /*
+        } else {
+              logger.debug(`Error in creation of system ${sys} for  ${newCrashSite.name} - wrong unitType`);
+            }
+        */
+      } else {
+        logger.debug(`Error in creation of system ${sys} for  ${newCrashSite.name}`);
+      }
+    }
+
+    await newCrashSite.save((err, newCrashSite) => {
+      if (err) {
+        logger.error(`New Crash Site Save Error ${siteCode} ${err}`);
+        return res.status(404).send(`New Crash Site Save Error ${siteCode} ${err}`);
+      }
+      routeDebugger(newCrashSite.name + " add saved to City collection.");
+      //updateStats(newCrashSite._id);
+
+      res.status(200).json(newCrashSite);
+
+    });    
+  } else {                
+    logger.info(`Crash Site already exists: ${siteCode}`);
+    res.status(400).send(`City ${siteCode} already exists!`);
+  }    
+});
+
+
+async function genSiteCode(startCode, siteType) {
+  
+  if (!startCode) {
+    startCode = siteType;
+  }
   // are we good?
-  let chkDoc = await Spacecraft.find({ siteCode: startCode });
+  let chkDoc = await Site.find({ siteCode: startCode });
   if (!chkDoc.length) {
     return startCode;
   } 
@@ -265,11 +668,11 @@ async function genSiteCode(startCode) {
   let sFind = await Site.find();
 
   //need to gen one
-  let sCode =  startCode + "-SC-";
+  let sCode =  startCode + "-" + siteType;
   
-  // 100 tries to get one
+  // 300 tries to get one
   genLoop1:
-  for (let i = 0; i < 100; ++i ) {
+  for (let i = 0; i < 300; ++i ) {
     testCode = sCode + i.toString();
     oneFound = false;
     genLoop2:

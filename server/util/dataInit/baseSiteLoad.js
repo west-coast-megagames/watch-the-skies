@@ -18,7 +18,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Base Model - Using Mongoose Model
-const { BaseSite, validateBase } = require('../../models/sites/baseSite');
+const { BaseSite, validateBase } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');

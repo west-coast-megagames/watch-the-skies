@@ -8,7 +8,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -35,7 +35,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -62,7 +62,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -89,7 +89,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -116,7 +116,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -143,7 +143,7 @@
 "site" : "",
 "base" : "USBB",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -170,7 +170,7 @@
 "site" : "",
 "base" : "USBB",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats": 
     {"hull": 2,
      "hullMax": 2,
@@ -197,7 +197,7 @@
 "site" : "",
 "base" : "GBBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -224,7 +224,7 @@
 "site" : "",
 "base" : "GBBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -251,7 +251,7 @@
 "site": "",
 "base" : "GBBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -278,7 +278,7 @@
 "site": "",
 "base" : "GBBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -305,7 +305,7 @@
 "site": "",
 "base" : "ZABA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -332,7 +332,7 @@
 "site": "",
 "base" : "ZABA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
      "hullMax": 2,
@@ -359,7 +359,7 @@
 "site": "",
 "base" : "RUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -386,7 +386,7 @@
 "site": "",
 "base" : "RUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -413,7 +413,7 @@
 "site": "",
 "base" : "RUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -440,7 +440,7 @@
 "site": "",
 "base" : "RUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -467,7 +467,7 @@
 "site": "",
 "base" : "RUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -494,7 +494,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -521,7 +521,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -548,7 +548,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -575,7 +575,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -602,7 +602,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -629,7 +629,7 @@
 "site": "",
 "base" : "JPBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -656,7 +656,7 @@
 "site": "",
 "base" : "IRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -683,7 +683,7 @@
 "site": "",
 "base" : "IRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -710,7 +710,7 @@
 "site": "",
 "base" : "INBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -737,7 +737,7 @@
 "site": "",
 "base" : "INBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -764,7 +764,7 @@
 "site": "",
 "base" : "INBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -791,7 +791,7 @@
 "site": "",
 "base" : "INBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -818,7 +818,7 @@
 "site": "",
 "base" : "INBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -845,7 +845,7 @@
 "site": "",
 "base" : "FRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -872,7 +872,7 @@
 "site": "",
 "base" : "FRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -899,7 +899,7 @@
 "site": "",
 "base" : "FRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -926,7 +926,7 @@
 "site": "",
 "base" : "FRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -953,7 +953,7 @@
 "site": "",
 "base" : "EGBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -980,7 +980,7 @@
 "site": "",
 "base" : "EGBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1007,7 +1007,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1034,7 +1034,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1061,7 +1061,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1088,7 +1088,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1115,7 +1115,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1142,7 +1142,7 @@
 "site": "",
 "base" : "CNBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1169,7 +1169,7 @@
 "site": "",
 "base" : "BRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1196,7 +1196,7 @@
 "site": "",
 "base" : "BRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1223,7 +1223,7 @@
 "site": "",
 "base" : "BRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1250,7 +1250,7 @@
 "site": "",
 "base" : "BRBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1277,7 +1277,7 @@
 "site": "",
 "base" : "AUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1304,7 +1304,7 @@
 "site": "",
 "base" : "AUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1331,7 +1331,7 @@
 "site": "",
 "base" : "AUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1358,7 +1358,7 @@
 "site": "",
 "base" : "AUBA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 5,
      "hullMax": 5,
@@ -1385,7 +1385,7 @@
 "site": "",
 "base" : "FFGMA",
 "loadout": 
-["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
     "hullMax": 2,
@@ -1415,7 +1415,7 @@
 "site": "",
 "base" : "FFGMA",
 "loadout": 
-    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+    ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
     "hullMax": 2,
@@ -1445,7 +1445,7 @@
 "site": "",
 "base" : "FFGMA",
 "loadout": 
-    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+    ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
     "hullMax": 2,
@@ -1475,7 +1475,7 @@
 "site": "",
 "base" : "FFGMA",
 "loadout": 
-    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+    ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
     "hullMax": 2,
@@ -1505,7 +1505,7 @@
 "site": "",
 "base" : "FFGMA",
 "loadout": 
-    ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+    ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
     {"hull": 2,
     "hullMax": 2,
@@ -1535,7 +1535,7 @@
     "site": "",
     "base" : "FFGMA",
     "loadout": 
-        ["BS Railgun Mk. I", "High Orbital Sensor Suite", "High Volacity Thrusters", "Targeting CPU", "Standard Cockpit"],
+        ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
     "stats":
         {"hull": 2,
         "hullMax": 2,

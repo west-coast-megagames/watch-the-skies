@@ -1,9 +1,6 @@
 // Site Model - Using Mongoose Model
-const { Site, validateSite } = require('../../models/sites/site');
-const { BaseSite, validateBase } = require('../../models/sites/baseSite');
-const { CitySite, validateCity } = require('../../models/sites/citySite');
-const { CrashSite, validateCrash } = require('../../models/sites/crashSite');
-const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
+const { Site, validateSite, BaseSite, validateBase, CrashSite, validateCrash,
+        CitySite, validateCity, Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Equipment } = require('../../models/gov/equipment/equipment');
 const { Facility } = require('../../models/gov/facility/facility');
 const siteCheckDebugger = require('debug')('app:siteCheck');

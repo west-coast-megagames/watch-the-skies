@@ -36,7 +36,7 @@ async function runaircraftLoad(runFlag){
     //logger.debug("Jeff in runaircraftLoad", runFlag);    
     if (!runFlag) return false;
     if (runFlag) {
-      await loadSystems();                         // load wts/json/systems.json data into array    
+      await loadSystems();                         // load wts/json/equipment/systems.json data into array    
       
       await deleteAllAircrafts(runFlag);
       await initLoad(runFlag);
@@ -90,24 +90,27 @@ async function loadAircraft(iData){
         //console.log("jeff aircraft systems  iData.loadout", iData.loadout);
         aircraft.systems = [];
         for (let sys of iData.loadout) {
-          let sysRef = systems[systems.findIndex(system => system.name === sys )];
+          let sysRef = systems[systems.findIndex(system => system.code === sys )];
           //console.log("jeff in aircraft systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
-            newSystem = await new System(sysRef);
-            newSystem.team         = aircraft.team;
-            newSystem.manufacturer = aircraft.team;  
-            newSystem.status.building = false;
-            //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
-            await newSystem.save(((err, newSystem) => {
-              if (err) {
-                logger.error(`New Aircraft System Save Error: ${err}`);
-                return console.error(`New Aircraft System Save Error: ${err}`);
-              }
-              logger.debug(`aircraft.name, system ${sys} add saved to system collection.`);
-            }));
+            if (sysRef.unitType === "Interceptor") {
+              newSystem = await new System(sysRef);
+              newSystem.team         = aircraft.team;
+              newSystem.manufacturer = aircraft.team;  
+              newSystem.status.building = false;
+              //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
+              await newSystem.save(((err, newSystem) => {
+                if (err) {
+                  logger.error(`New Aircraft System Save Error: ${err}`);
+                  return console.error(`New Aircraft System Save Error: ${err}`);
+                }
+                logger.debug(`aircraft.name, system ${sys} add saved to system collection.`);
+              }));
 
-            aircraft.systems.push(newSystem._id)
-
+              aircraft.systems.push(newSystem._id)
+            } else {
+              logger.debug(`Error in creation of system ${sys} for  ${aircraft.name} - wrong unitType`);
+            }
           } else {
             logger.debug(`Error in creation of system ${sys} for  ${aircraft.name}`);
           }
@@ -207,17 +210,19 @@ async function loadAircraft(iData){
         // create systems records for aircraft and store ID in aircraft.system
         aircraft.systems = [];
         for (let sys of iData.loadout) {
-          let sysRef = systems[systems.findIndex(system => system.name === sys )];
-          newSystem = await new System(sysRef);
-          newSystem.team   = aircraft.team;
-          newSystem.manufacturer = aircraft.team;
-          newSystem.status.building = false;
-          await newSystem.save(((err, newSystem) => {
-          if (err) return console.error(`New Aircraft System Save Error: ${err}`);
-          //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
-          }));
+          let sysRef = systems[systems.findIndex(system => system.code === sys )];
+          if (sysRef.unitType === "Interceptor") {
+            newSystem = await new System(sysRef);
+            newSystem.team   = aircraft.team;
+            newSystem.manufacturer = aircraft.team;
+            newSystem.status.building = false;
+            await newSystem.save(((err, newSystem) => {
+            if (err) return console.error(`New Aircraft System Save Error: ${err}`);
+            //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
+            }));
 
-          aircraft.systems.push(newSystem._id)
+            aircraft.systems.push(newSystem._id)
+          }
         }
       }
 

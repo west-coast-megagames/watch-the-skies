@@ -18,7 +18,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Spacecraft Model - Using Mongoose Model
-const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
+const { Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');

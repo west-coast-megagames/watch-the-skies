@@ -16,7 +16,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // City Model - Using Mongoose Model
-const { CitySite, validateCity } = require('../../models/sites/citySite');
+const { CitySite, validateCity } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 

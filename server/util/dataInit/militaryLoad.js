@@ -25,8 +25,7 @@ const { Country } = require('../../models/country');
 const { Team } = require('../../models/team/team');
 const { Gear } = require('../../models/gov/equipment/gear');
 const { loadMilGears, gears } = require('../../wts/construction/equipment/milGear');
-const { BaseSite } = require('../../models/sites/baseSite');
-const { Site } = require('../../models/sites/site');
+const { Site, BaseSite } = require('../../models/sites/site');
 const app = express();
 
 // Bodyparser Middleware
