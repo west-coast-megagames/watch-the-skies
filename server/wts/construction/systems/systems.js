@@ -46,4 +46,17 @@ function Sys(system) {
     }
 }
 
-module.exports = { loadSystems, systems };
+// determines if system is valid for passed unitType (i.e., is it in the unitType array)
+function validUnitType(unitTypeArray, testUT) {
+  let utFound = false;
+  chkLoop:
+  for (var i = 0; i < unitTypeArray.length; i++) {
+    if (unitTypeArray[i] === testUT) {
+      utFound = true;  
+      break chkLoop;
+    }
+  }
+  return utFound;
+}
+
+module.exports = { loadSystems, systems, validUnitType };

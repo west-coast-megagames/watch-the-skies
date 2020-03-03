@@ -2,7 +2,7 @@
 {   
     "name": "Cutting Laser",
     "code": "W-CL1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 2,
     "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers"}],
@@ -13,7 +13,7 @@
 {   
     "name": "BS Railgun Mk. I",
     "code": "W-RG1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
@@ -25,7 +25,7 @@
 {   
     "name": "High Orbital Sensor Suite",
     "code": "S-HO1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
@@ -36,7 +36,7 @@
 {   
     "name": "Standard Cockpit",
     "code": "C-S1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Transport", "Decoy"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
@@ -47,7 +47,7 @@
 {   
     "name": "High Volacity Thrusters",
     "code": "E-HVT1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport" ],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
@@ -58,7 +58,7 @@
 {   
     "name": "Targeting CPU",
     "code": "U-TC1",
-    "unitType": "Interceptor",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],

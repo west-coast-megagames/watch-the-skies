@@ -5,7 +5,7 @@ const nexusEvent = require('../../startup/events');
 // Aircraft Model - Using Mongoose Model
 const { Aircraft, updateStats, validateAircraft } = require('../../models/ops/aircraft');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
@@ -98,8 +98,9 @@ router.post('/build', async function (req, res) {
     for (let sys of aircraft.loadout) {
       let sysRef = systems[systems.findIndex(system => system.code === sys )];
       if (sysRef) {
-        if (sysRef.unitType === "Interceptor") {
+        if (validUnitType(sysRef.unitType, aircraft.type))  {
           newSystem = await new System(sysRef);
+          newSystem.unitType = aircraft.type;
           await newSystem.save(((err, newSystem) => {
             if (err) return console.error(`Post Build Aircraft System Save Error: ${err}`);
           }));

@@ -12,7 +12,7 @@ const { Team } = require('../../models/team/team');
 const { BaseSite } = require('../../models/sites/site');
 
 // Game State - Server side template items
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 
 const banking = require('../../wts/banking/banking')
 

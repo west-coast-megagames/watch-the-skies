@@ -13,7 +13,7 @@ const { Zone } = require('../../models/zone');
 const { Team } = require('../../models/team/team'); 
 const { convertToDms } = require('../../util/systems/geo');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 
 // @route   GET api/sites
 // @Desc    Get all sites
@@ -610,11 +610,12 @@ router.post('/crash/', async function (req, res) {
       let sysRef = systems[systems.findIndex(system => system.code === sys )];
       //console.log("jeff in crash site systems ", sys, "sysRef:", sysRef);
       if (sysRef) {
-        //if (sysRef.unitType === "Interceptor") { don't care about unitType here
+        //don't care about unitType here
         newSystem = await new System(sysRef);
         newSystem.team         = newCrashSite.team;
         newSystem.manufacturer = newCrashSite.team;  
         newSystem.status.building = false;
+        newSystem.unitType = "CrashSite";
         //console.log("jeff in newCrashSite before systems save ... sysRef:", sysRef);            
         await newSystem.save(((err, newSystem) => {
           if (err) {

@@ -22,7 +22,7 @@ const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 const { Site } = require('../../models/sites/site');
 const app = express();
 
@@ -62,7 +62,7 @@ async function initLoad(doLoad) {
 };
 
 async function loadAircraft(iData){
-  try {   
+  try {
     //logger.debug(`Jeff in loadAircraft  ${iData.name} ${iData.type}`); 
     let aircraft = await Aircraft.findOne( { name: iData.name } );
     if (!aircraft) {
@@ -88,16 +88,17 @@ async function loadAircraft(iData){
 
         // create systems records for aircraft and store ID in aircraft.system
         //console.log("jeff aircraft systems  iData.loadout", iData.loadout);
-        aircraft.systems = [];
+        aircraft.systems = [];       
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.code === sys )];
           //console.log("jeff in aircraft systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
-            if (sysRef.unitType === "Interceptor") {
+            if (validUnitType(sysRef.unitType, aircraft.type)) {
               newSystem = await new System(sysRef);
               newSystem.team         = aircraft.team;
               newSystem.manufacturer = aircraft.team;  
               newSystem.status.building = false;
+              newSystem.unitType     = aircraft.type;
               //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
               await newSystem.save(((err, newSystem) => {
                 if (err) {
@@ -211,11 +212,12 @@ async function loadAircraft(iData){
         aircraft.systems = [];
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.code === sys )];
-          if (sysRef.unitType === "Interceptor") {
+          if (validUnitType(sysRef.unitType, aircraft.type)) {
             newSystem = await new System(sysRef);
-            newSystem.team   = aircraft.team;
-            newSystem.manufacturer = aircraft.team;
+            newSystem.team            = aircraft.team;
+            newSystem.manufacturer    = aircraft.team;
             newSystem.status.building = false;
+            newSystem.unitType        = aircraft.type;
             await newSystem.save(((err, newSystem) => {
             if (err) return console.error(`New Aircraft System Save Error: ${err}`);
             //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
@@ -281,7 +283,7 @@ async function loadAircraft(iData){
       });
     }
   } catch (err) {
-    logger.debug('Catch Aircraft Error:', err.message);
+    logger.debug(`Catch Aircraft Error: ${err.message}`);
     return;
 }
 

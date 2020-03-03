@@ -1,4 +1,5 @@
-[{
+[
+{
 "model" : "Aircraft",
 "type" : "Interceptor",
 "name" : "USA Air 1",
@@ -23,6 +24,33 @@
     "upgrade" : false,
     "repair" : false
     },
+"mission" : "Standby"
+},
+{
+"model" : "Aircraft",
+"type" : "Fighter",
+"name" : "USA Air Fighter 1",
+"team" : "USA",
+"zone" : "NA",
+"country" : "US",
+"site" : "",
+"base" : "USBA",
+"loadout": 
+["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
+"stats": 
+    {"hull": 2,
+    "hullMax": 2,
+    "damage": 1,
+    "passiveRolls": [2,4,7,9,11,12],
+    "activeRolls": [3,5,8,10,12]},
+"status": {
+   "damaged" : false,
+   "deployed" : false,
+   "destroyed" : false,
+   "ready" : true,
+   "upgrade" : false,
+   "repair" : false
+   },
 "mission" : "Standby"
 },
 {
@@ -1437,7 +1465,7 @@
 },
 {
 "model" : "Aircraft",
-"type" : "SSU",
+"type" : "Transport",
 "name" : "FFG Civil Technician",
 "team" : "FFG", 
 "zone": "AN", 
