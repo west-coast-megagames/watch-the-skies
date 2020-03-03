@@ -5,18 +5,18 @@ import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
-import nukeSound from '../audio/Nuclear_Launch.ogg'
+import LoginLink from '../components/common/loginLink'
+import playTrack from './../scripts/audio';
+
 class Operations extends Component {
     constructor() {
         super();
         this.state = {
           tab: 'dashboard',
-          account: {},
-          audio: new Audio(nukeSound)
+          account: {}
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.setAccount = this.setAccount.bind(this);
-        this.playTrack = this.playTrack.bind(this);
     }
 
     componentDidMount() {
@@ -34,6 +34,7 @@ class Operations extends Component {
     }
 
     render() {
+        if (!this.props.login) return <LoginLink history={this.props.history} />
         const url = this.props.match.path;
         const { tab } = this.state; 
 
@@ -77,7 +78,7 @@ class Operations extends Component {
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
                         <div style={{verticalAlign:'middle', position: 'relative'}}>
-                            <Button block size='lg' color='red' onClick={() => this.playTrack()} >Launch Nuke!</Button>
+                            <Button block size='lg' color='red' onClick={() => playTrack('nuclear')} >DO NOT PRESS!</Button>
                         </div>
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
@@ -85,14 +86,6 @@ class Operations extends Component {
             </Content>
         </Container>
          );
-    }
-
-    // Audio trigger code...
-    playTrack = () => {
-        const { audio } = this.state;
-        audio.type = 'audio/ogg';
-        audio.loop = false;
-        audio.play();
     }
  }
 
