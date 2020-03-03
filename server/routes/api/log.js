@@ -16,6 +16,7 @@ router.get('/', async function (req, res) {
         .populate('zone')
         .populate('project')
         .populate('lab')
+        .populate('units')
         .sort({date: 1});
     res.json(logs);
 });
