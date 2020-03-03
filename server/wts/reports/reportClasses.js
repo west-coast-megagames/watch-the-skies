@@ -181,4 +181,35 @@ class CrashReport {
     }
 }
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport };
+class DeploymentReport {
+    constructor() {
+        this.team = {}
+        this.units = []
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+        this.cost = 0,
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Deployment report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new CrashLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Deployment Log Error: ${err}`);
+            return
+        }
+    }
+}
+
+
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport };
