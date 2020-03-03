@@ -20,10 +20,7 @@ const bodyParser = require('body-parser');
 const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
-const { Facility } = require('../../models/gov/facility/facility');
-const { Lab } = require('../../models/gov/facility/lab');
-const { Hanger } = require('../../models/gov/facility/hanger');
-const { Factory } = require('../../models/gov/facility/factory');
+const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');
 const { Zone } = require('../../models/zone');
 
 const app = express();

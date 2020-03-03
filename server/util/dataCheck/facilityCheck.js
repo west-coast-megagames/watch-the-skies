@@ -1,8 +1,5 @@
 // Facility Model - Using Mongoose Model
 const { Facility, validateFacility } = require('../../models/gov/facility/facility');
-const { Factory } = require('../../models/gov/facility/factory');
-const { Hanger } = require('../../models/gov/facility/hanger');
-const { Lab } = require('../../models/gov/facility/lab');
 const { Equipment } = require('../../models/gov/equipment/equipment');
 const Research = require('../../models/sci/research');
 

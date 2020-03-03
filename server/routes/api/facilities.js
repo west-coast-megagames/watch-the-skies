@@ -7,9 +7,6 @@ const { logger } = require('../../middleware/winston');
 
 // Facility Model - Using Mongoose Model
 const { Facility } = require('../../models/gov/facility/facility');
-const { Lab } = require('../../models/gov/facility/lab');
-const { Factory } = require('../../models/gov/facility/factory');
-const { Hanger } = require('../../models/gov/facility/hanger');
 
 // @route   GET api/facilities
 // @Desc    Get all facilities

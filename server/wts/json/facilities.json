@@ -1,26 +1,164 @@
 [
 {
-"name": "Clivilian Facilities",
-"code": "Clivilian",
-"unitType": "citySite",
+"name": "Civilian Facilities",
+"code": "CF-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "City",
+"desc": "Civilian Improvment Facility",
+"capacity": 2,
 "effect": [],
+"prereq": [],
 "status": {
   "secret": false 
-}},
+  },
+"hidden": false
+},
 {
 "name": "MegaProject Facilites",
-"code": "MegaProject",
-"unitType": "citySite",
+"code": "MF-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "City",
+"desc": "Civilian Improvment Facility",
+"capacity": 2,
 "effect": [{ "type": "pr", "effect": 1}],
+"prereq": [],
 "status": {
   "secret": false 
-}},
+  },
+"hidden": false
+},
 {
-"name": "Crisis",
-"code": "Crisis",
-"unitType": "crisisSite",
+"name": "Crisis Control",
+"code": "CC-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Crisis",
+"desc": "Mobile Crisis Control Facility",
+"capacity": 2,
 "effect": [],
+"prereq": [],
 "status": {
   "secret": false 
-}}
+  },
+"hidden": false
+},
+{
+"name": "Base Lab",
+"code": "BL-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Base",
+"desc": "Standard Base Lab Facility",
+"capacity": 1,
+"effect": [],
+"prereq": [],
+"status": {
+  "secret": false 
+  },
+"hidden": false,
+"sciRate": 3,
+"bonus": 0,
+"funding": 0
+},
+{
+"name": "Base Hanger",
+"code": "BH-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Base",
+"desc": "Standard Base Hanger Facility",
+"capacity": 5,
+"effect": [],
+"prereq": [],
+"status": {
+"secret": false 
+  },
+"hidden": false
+},
+{
+"name": "Base Secret Lab",
+"code": "BSL-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Base",
+"desc": "Secret Base Lab Facility",
+"capacity": 1,
+"effect": [],
+"prereq": [],
+"status": {
+  "secret": false 
+  },
+"hidden": true,
+"sciRate": 3,
+"bonus": 0,
+"funding": 0
+},
+{
+"name": "Base Factory",
+"code": "BF-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Base",
+"desc": "Base Factory Facility",
+"capacity": 1,
+"effect": [],
+"prereq": [],
+"status": {
+  "secret": false 
+  },
+"hidden": false
+},
+{
+"name": "Spacecraft Lab",
+"code": "SL-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Spacecraft",
+"desc": "Standard Spacecraft Lab Facility",
+"capacity": 1,
+"effect": [],
+"prereq": [],
+"status": {
+  "secret": false 
+  },
+"hidden": false,
+"sciRate": 3,
+"bonus": 0,
+"funding": 0
+},
+{
+"name": "Spacecraft Hanger",
+"code": "SH-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Spacecraft",
+"desc": "Standard Spacecraft Hanger Facility",
+"capacity": 3,
+"effect": [],
+"prereq": [],
+"status": {
+"secret": false 
+  },
+"hidden": false
+},
+{
+"name": "Crash Site Mobile Lab",
+"code": "CSL-1",
+"cost": 2,
+"buildtime": 1,
+"unitType": "Crash",
+"desc": "Mobile Research Lab Facility",
+"capacity": 1,
+"effect": [],
+"prereq": [],
+"status": {
+  "secret": false 
+  },
+"hidden": false,
+"sciRate": 3,
+"bonus": 0,
+"funding": 0
+}
 ]
