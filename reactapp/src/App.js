@@ -1,15 +1,29 @@
 import React, { Component } from 'react'; // React
-import { updateEvents, clockSocket, updateSocket } from './api'
+import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content } from 'rsuite';
+import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
+import { updateEvents, clockSocket, updateSocket, gameClock } from './api'
 import jwtDecode from 'jwt-decode'
-import { Header } from 'rsuite';
 import { gameServer } from './config';
 import axios from 'axios';
 
 // Components
 import NavBar from './components/navBar';
 import Registration from './components/registration';
-import MainContainer from './pages/main';
 import AlertPage from './components/common/alert';
+
+// Pages
+import Governance from './pages/governance';
+import Home from './pages/home';
+import Control from './pages/control';
+import NotFound from './pages/404';
+import MoshTest from './pages/mosh'; // Mosh test
+import Operations from "./pages/operations";
+import Science from './pages/science';
+import Diplomacy from './pages/diplomacy';
+import Chat from './pages/chat';
+import News from './pages/news';
+import Models from './pages/models';
+import TerrorMap from './pages/terror';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
@@ -18,12 +32,17 @@ import 'rsuite/dist/styles/rsuite-default.css';
 // import 'rsuite/dist/styles/rsuite-dark.css';
 import './App.css';
 
+const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
 
 // React App Component
 class App extends Component {
-  // Main App state
   state = {
+    clock: {
+      minutes: '00',
+      seconds: '00',
+      turn: null
+    },
     login: false,
     user: {},
     team: null,
@@ -31,13 +50,30 @@ class App extends Component {
     zones: [],
     countries: [],
     sites: [],
+    military: [],
     facilities: [],
     aircrafts: [],
     accounts: [],
     megabucks: 0,
     alerts: [],
     articles: [],
-    research: []
+    research: [],
+    expand: true,
+    active: '1'
+  }
+
+  handleToggle = () => {
+    this.setState({
+      expand: !this.state.expand
+    });
+  }
+
+  handleSelect = (activeKey) => {
+    this.setState({ active: activeKey });
+  }
+
+  setKey = (key) => {
+    this.setState({ active: key })
   }
 
   componentDidMount() {
@@ -71,46 +107,163 @@ class App extends Component {
       this.addAlert({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
       this.setState({facilities})
     })
+
+    gameClock.subscribeToClock((err, clock) => {
+      if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.state.team !== null) {
+          updateEvents.updateTeam(this.state.team._id);
+      }
+      this.setState({clock})
+    })
   }
 
   render() {
-    if (this.state.team === null) {
-      return(
-          <Registration
-          addAlert={ this.addAlert }
-          handleLogin={ this.handleLogin }/>
-      )
-    }
+    const { expand, active, team, login } = this.state;
+
+    // if (login === false) {
+    //   return(
+    //       <Registration
+    //         addAlert={ this.addAlert }
+    //         handleLogin={ this.handleLogin }
+    //         login={ this.state.login }
+    //       />
+    //   )
+    // }
 
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
-            <NavBar 
+            <NavBar
+              clock={ this.state.clock }
               team={ this.state.team }
               megabucks={ this.state.megabucks }
             />
           </Header>
-          <MainContainer
-            login={ this.state.login }
-            user={ this.state.user }
-            team={ this.state.team }
-            teams={ this.state.teams }
-            zones={ this.state.zones }
-            countries={ this.state.countries }
-            sites={ this.state.sites }
-            facilities={ this.state.facilities }
-            aircrafts={ this.state.aircrafts }
-            military={ this.state.military }
-            articles={ this.state.articles }
-            research={ this.state.research }
-            accounts={ this.state.accounts }
-            addAlert={ this.addAlert }
-            handleLogin={ this.handleLogin }
-            handleSignout={ this.handleSignout }
-            handleArtHide={this.handleArtHide}
-          />
-          <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
-        </div>
+          <Container>
+          <Sidebar
+            style={{ display: 'flex', flexDirection: 'column' }}
+            width={expand ? 200 : 56}
+            collapsible
+          >
+            <Sidenav
+              expanded={expand}
+              defaultOpenKeys={['9']}
+              appearance="subtle"
+              activeKey={active}
+              onSelect={this.handleSelect}
+            >
+              <Sidenav.Body>
+                <Nav>
+                  <Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
+                  <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
+                  <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
+                  {/*<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>*/}
+                  {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
+                  <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
+                  <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
+                  <Nav.Item eventKey="8" to="/map" componentClass={NavLink} icon={<Icon icon="map" />}>For Patrick!</Nav.Item>
+                  {team !== null ? team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
+                </Nav>
+              </Sidenav.Body>
+            </Sidenav>
+            <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.handleSignout} />
+            </Sidebar>
+            <Content>
+                <Switch>
+                    <Route path="/login" render={(props) => (
+                      <Registration {...props}
+                        addAlert={ this.addAlert }
+                        handleLogin={ this.handleLogin }
+                        login={ this.state.login }
+                      />
+                    )}/>
+                    <Route path="/home" render={(props) => (
+                      <Home {...props}
+                          login={ this.state.login }
+                          teams={ this.state.teams }
+                          onChange={ this.handleLogin }
+                      />
+                    )} />
+                    <Route path="/ops" render={(props) => (
+                      <Operations {...props}
+                        team={ this.state.team }
+                        teams={ this.state.teams }
+                        accounts={ this.state.accounts }
+                        zones={ this.state.zones }
+                        countries={ this.state.countries }
+                        facilities={ this.state.facilities }
+                        sites={ this.state.sites }
+                        aircrafts={ this.state.aircrafts }
+                        military={ this.state.military }
+                        alert={ this.addAlert }
+                      />
+                    )} />
+                    <Route path="/gov" render={(props) => (
+                      <Governance {...props}
+                          team = { this.state.team }
+                          teams = { this.state.teams }
+                          accounts = { this.state.accounts }
+                          alert={ this.addAlert }
+                      />
+                    )}/>
+                    <Route path="/sci" render={(props) => (
+                      <Science {...props}
+                          sites={ this.state.sites }
+                          accounts={ this.state.accounts }
+                          facilities={ this.state.facilities }
+                          team={ this.state.team }
+                          alert={ this.addAlert }
+                          research={ this.state.research }
+                      />
+                    )}/>
+                    <Route path="/dip" render={(props) => (
+                      <Diplomacy {...props}
+                          team = { this.state.team }
+                          alert={ this.addAlert }
+                      />
+                    )}/>
+                    <Route path="/comms" render={(props) => (
+                      <Chat {...props}
+                        team = { this.state.team }
+                        alert={ this.addAlert }
+                      />
+                    )}/>
+                    <Route path="/news" render={(props) => (
+                      <News {...props} {...this.state}
+                        articles={ this.state.articles }
+                        alert={ this.addAlert }
+                        teams={ this.state.teams }
+                        team={ this.state.team }
+                        sites={ this.state.sites }
+                        handleArtHide={this.handleArtHide}
+                        zones={ this.state.zones }
+                        countries={ this.state.countries }
+                      />
+                    )}/>
+                    <Route path="/control" render={(props) => (
+                      <Control {...props} {...this.state}
+                          alert = { this.addAlert }
+                      />
+                    )}/>
+                    <Route path="/editor" render={(props) => (
+                      <Models {...props}
+                          alert = { this.addAlert } 
+                      />
+                    )}/>
+                    <Route path="/map" render={(props) => (
+                      <TerrorMap />
+                    )}/>
+                    <Route path="/control" render={() => (
+                      <h1>Does this thing work?!</h1>
+                    )}/>
+                    <Route path="/mosh" component={ MoshTest } />
+                    <Route path="/not-found" component={ NotFound } />
+                    <Redirect from="/" exact to="login" />
+                    <Redirect to="/not-found" />
+                </Switch>
+            </Content>
+        </Container>
+        <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
+      </div>
     );
   }
 
@@ -204,5 +357,36 @@ class App extends Component {
     this.setState({articles});
   }
 }
+
+// Defines the side/panel taggle navigation
+const NavToggle = ({ login, expand, onChange, signOut }) => {
+  return (
+    <Navbar appearance="subtle" className="nav-toggle">
+      <Navbar.Body>
+        <Nav>
+          <Dropdown
+            placement="topStart"
+            trigger="click"
+            renderTitle={children => {
+              return <Icon style={iconStyles} icon="cog" />;
+            }}
+          >
+            <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
+            <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
+            <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
+            { login && (<React.Fragment>
+              <Dropdown.Item to="/" onClick={signOut} componentClass={NavLink}>Sign out</Dropdown.Item>
+            </React.Fragment>)}
+          </Dropdown>
+        </Nav>
+        <Nav pullRight>
+          <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
+            <Icon icon={expand ? 'angle-left' : 'angle-right'} />
+          </Nav.Item>
+        </Nav>
+      </Navbar.Body>
+    </Navbar>
+  );
+};
 
 export default App

@@ -108,7 +108,7 @@ class Control extends Component {
                         <LogList />
                     )}/>
                     <Route path={`${url}/military`}  render={() => (
-                        <MilitaryControl />
+                        <MilitaryControl {...this.props}/>
                     )}/>
                     <Route path={`${url}/alien`}  render={() => (
                         <h5>Grrr...</h5>
