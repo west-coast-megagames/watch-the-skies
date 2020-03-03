@@ -21,7 +21,7 @@ const EquipmentSchema = new Schema({
     building: { type: Boolean, default: true },
     salvage: { type: Boolean, default: false },
     damaged: { type: Boolean, default: false },
-    destroyed: { type: Boolean, default: false },
+    destroyed: { type: Boolean, default: false }
   }
 });
 
