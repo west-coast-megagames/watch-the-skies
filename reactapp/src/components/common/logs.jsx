@@ -1,8 +1,9 @@
 import React from 'react';
 import { Timeline, Icon, Panel } from 'rsuite';
+import TerrorMap from './../../pages/terror';
 
 // TIMELINE - Log for Transactions for a timeline component
-const transactionLog = (props) => {
+const TransactionLog = (props) => {
     let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon="credit-card-alt" size="2x" />}>
@@ -17,8 +18,7 @@ const transactionLog = (props) => {
 }
 
 // TODO - Research log should be fleshed out for March.
-const researchLog = (props) => {
-    let { log } = props
+const ResearchLog = (log) => {
     let results = []
     for (let i = 0; i < log.rolls.length; i++) {
         let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${log.rolls[i]}`
@@ -40,8 +40,7 @@ const researchLog = (props) => {
 }
 
 // TODO for MARCH - Look of an Intercept log should be fleshed out for march.
-const interceptLog = (props) => {
-    let { log } = props;
+const InterceptLog = (log) => {
     // let iconStyle = { background: '#ff4d4d', color: '#fff' };
     return(
     <Timeline.Item key={log._id} dot={<Icon icon="fighter-jet" size="2x" />}>
@@ -56,66 +55,83 @@ const interceptLog = (props) => {
 }
 
 // TODO for MARCH - Look of an Construction log should be fleshed out for march.
-const constructionLog = (props) => {
-    let { log } = props;
+const ConstructionLog = (log) => {
     return (
+    <Timeline.Item key={log._id} dot={<Icon icon='wrench' size="2x" />}>
         <Panel style={{padding: '0px'}} header={`Placeholder Construction - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
-        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-        <p><b>Team:</b> {log.team.name}</p> 
-        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-    </Panel>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+            <p><b>Team:</b> {log.team.name}</p> 
+            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+        </Panel>
+    </Timeline.Item>
     )
 }
 
 // TODO for MARCH - Look of an Deployment log should be fleshed out for march.
-const deploymentLog = (props) => {
-    let { log } = props;
+const DeployLog = (props) => {
+    let { log } = props
     return (
-        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
-        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-        <p><b>Team:</b> {log.team.name}</p> 
-        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-    </Panel>
+    <Timeline.Item key={log._id} dot={<Icon icon='plane' size="2x" />}>
+            <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+            <p><b>Team:</b> {log.team.name}</p> 
+            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+        </Panel>
+    </Timeline.Item>
     )
 }
 
 // TODO for MARCH - This timeline log needs to be filled out...
-const crisisLog = (props) => {
-    let { log } = props
+const CrisisLog = (log) => {
     return (
-        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
-        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-        <p><b>Team:</b> {log.team.name}</p> 
-        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-    </Panel>
+    <Timeline.Item key={log._id} dot={<Icon icon='question-circle' size="2x" />}>
+        <Panel style={{padding: '0px'}} header={`Placeholder Crisis - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+            <p><b>Team:</b> {log.team.name}</p> 
+            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+        </Panel>
+    </Timeline.Item>
     )
 }
 
-const terrorLog = (props) => {
-    let { log } = props
+// TODO for MARCH - This terror log needs to be filled out...
+const TerrorLog = (log) => {
     return (
-        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
-        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-        <p><b>Team:</b> {log.team.name}</p> 
-        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-    </Panel>
+    <Timeline.Item key={log._id} dot={<Icon icon='bomb' size="2x" />}>
+        <Panel style={{padding: '0px'}} header={`Placeholder Terror - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+            <p><b>Team:</b> {log.team.name}</p> 
+            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+        </Panel>
+    </Timeline.Item>
     )
 }
 
-const treatyLog = (props) => {
-
+// TODO for MARCH - This teary log needs to be filled out...
+const TreatyLog = (log) => {
+    return (
+        <Timeline.Item key={log._id} dot={<Icon icon='briefcase' size="2x" />}>
+            <Panel style={{padding: '0px'}} header={`Placeholder Treaty - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+                <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+                <p><b>Team:</b> {log.team.name}</p> 
+                <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+            </Panel>
+        </Timeline.Item>
+    )
 }
 
-const tradeLog = (props) => {
-    let { log } = props
+// TODO for MARCH - This trade log needs to be filled out...
+const TradeLog = (log) => {
     return (
-        <Panel style={{padding: '0px'}} header={`Placeholder Deployment - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
-        <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
-        <p><b>Team:</b> {log.team.name}</p> 
-        <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-    </Panel>
+    <Timeline.Item key={log._id} dot={<Icon icon='briefcase' size="2x" />}>
+        <Panel style={{padding: '0px'}} header={`Placeholder Trade - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
+            <p>{log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} - Turn {log.timestamp.turnNum}</p>
+            <p><b>Team:</b> {log.team.name}</p> 
+            <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
+        </Panel>
+    </Timeline.Item>
     )
 }
 
  
-export { transactionLog, researchLog, interceptLog }
+export { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog }

@@ -19,7 +19,7 @@ class Diplomacy extends Component {
     }
 
     render() {
-        if (!this.props.login) return <LoginLink />
+        if (!this.props.login) return <LoginLink history={this.props.history} />
         const url = this.props.match.path;
         const { tab } = this.state; 
 
