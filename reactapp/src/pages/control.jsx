@@ -8,6 +8,7 @@ import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 import { gameServer } from '../config';
 import LogList from '../components/common/logList';
 import MilitaryControl from './tabs/control/militaryControl';
+import LoginLink from '../components/common/loginLink';
 
 class Control extends Component {
 

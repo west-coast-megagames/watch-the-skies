@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; // React import
 import { Container } from 'rsuite'; // rsuite component import
 import map from '../img/worldMap_mergedRegions.svg' // worldmap SVG improt
+import LoginLink from '../components/common/loginLink';
 
 // Terror map Class component
 class TerrorMap extends Component {
