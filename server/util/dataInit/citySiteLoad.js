@@ -4,6 +4,7 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initCitySite.js
 const cityDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const citySiteLoadDebugger = require('debug')('app:citySiteLoad');
+const { convertToDms } = require('../../util/systems/geo');
 
 const supportsColor = require('supports-color');
 
@@ -60,12 +61,14 @@ async function loadCity(iData){
     let citySite = await CitySite.findOne( { name: iData.name } );
     if (!citySite) {
        // New City here
+       let newLatDMS = convertToDms(iData.latDecimal, false);
+       let newLongDMS = convertToDms(iData.longDecimal, true); 
        let citySite = new CitySite({ 
            name: iData.name,
            siteCode: iData.code,
            geoDMS: { 
-             latDMS: iData.latDMS,
-             longDMS: iData.longDMS
+             latDMS: newLatDMS,
+             longDMS: newLongDMS
            },
            geoDecimal: {
              latDecimal: iData.latDecimal,
@@ -109,10 +112,12 @@ async function loadCity(iData){
       // Existing City here ... update
       let id = citySite._id;
       
+      let newLatDMS = convertToDms(iData.latDecimal, false);
+      let newLongDMS = convertToDms(iData.longDecimal, true); 
       citySite.name                   = iData.name;
       citySite.siteCode               = iData.code;
-      citySite.geoDMS.latDMS          = iData.latDMS;
-      citySite.geoDMS.longDMS         = iData.longDMS;
+      citySite.geoDMS.latDMS          = newLatDMS;
+      citySite.geoDMS.longDMS         = newLongDMS;
       citySite.geoDecimal.latDecimal  = iData.latDecimal;
       citySite.geoDecimal.longDecimal = iData.longDecimal;
       citySite.dateline               = iData.dateline;
