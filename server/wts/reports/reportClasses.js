@@ -1,6 +1,8 @@
 const reportDebugger = require('debug')('app:reports');
 const ResearchLog = require('../../models/logs/researchLog');
 const ReconLog = require('../../models/logs/reconLog');
+const DeployLog = require('../../models/logs/deployLog');
+const CrashLog = require('../../models/logs/crashLog');
 
 // Function that makes a timestamp for log files
 function makeTimestamp() {
@@ -197,7 +199,7 @@ class DeploymentReport {
             reportDebugger(`Saving Deployment report!`);
             let timestamp = makeTimestamp();
             this.date = Date.now();
-            let submission = new CrashLog({...timestamp,...this});
+            let submission = new DeployLog({...timestamp,...this});
 
             submission = await submission.save();
             reportDebugger(submission);
