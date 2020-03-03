@@ -3,10 +3,67 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 const routeDebugger = require('debug')('app:routes:interceptor');
 
+// Mongoose Models - Used to save and validate objects into MongoDB
 const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/aircraft');
+const { Team } = require('../../models/team/team');
+const { Military } = require('../../models/ops/military/military')
+const { Site } = require('../../models/sites/site');
 const { Account } = require('../../models/gov/account');
 
-const banking = require('../../wts/banking/banking')
+// Game Systems - Used to run Game functions
+const banking = require('../../wts/banking/banking');
+
+
+// Report Classes - Used to log game interactions
+const { DeploymentReport } = require('../../wts/reports/reportClasses');
+
+// @route   PUT game/military/deploy
+// @Desc    Deploy a group of units for a country
+// @access  Public
+router.put('/military/deploy', async function (req, res) {
+  let { units, cost, destination, team } = req.body;
+  console.log(req.body)
+  let teamObj = await Team.findOne({name: team});
+  let account = await Account.findOne({ name: 'Operations', team: teamObj._id })
+
+  console.log(account)
+  if (account.balance < cost) {
+    routeDebugger('Not enough funding to deploy units...')
+    res.status(402).send(`Not enough funding! Assign ${cost - account.balance} more money teams operations account to deploy these units.`)
+  } else {
+    console.log(destination)
+    let siteObj = await Site.findById(destination).populate('country').populate('zone');
+    let unitArray = []
+
+
+    for await (let unit of units) {
+      let update = await Military.findById(unit)
+      update.site = siteObj._id;
+      update.country = siteObj.country._id;
+      update.zone = siteObj.zone._id;
+      unitArray.push(update._id);
+    }
+ 
+    account = await banking.withdrawal(account, cost, `Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`);
+    await account.save();
+    routeDebugger(account)
+
+    let report = new DeploymentReport;
+    
+    report.team = teamObj._id
+    report.site = siteObj._id;
+    report.country = siteObj.country._id;
+    report.zone = siteObj.zone._id;
+    report.units = unitArray;
+    report.cost = cost;
+
+    // March TODO - ADD report to service record...
+
+    report.saveReport();
+    await update.save();
+    res.status(200).send(`Unit deployment to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`);
+  }
+})
 
 // @route   PUT game/repairAircraft
 // @desc    Update aircraft to max health
