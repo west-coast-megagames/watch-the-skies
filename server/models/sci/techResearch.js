@@ -4,9 +4,12 @@ const Schema = mongoose.Schema;
 
 const TheorySchema = new Schema({
     name: { type: String },
+    level: { type: Number },
     type: { type: String },
+    prereq: { type: Object },
     code: { type: String },
-    desc: { type: String }
+    desc: { type: String },
+    field: { type: String }
   });
   
 

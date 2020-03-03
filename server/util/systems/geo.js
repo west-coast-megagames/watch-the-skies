@@ -16,11 +16,11 @@ function getDistance(lat1,lon1,lat2,lon2) {
 }
   
 function deg2rad(deg) {
-return deg * (Math.PI/180)
+  return deg * (Math.PI/180)
 }
 
-let test = getDistance(50, 4, 44, 7)
-console.log(`Distance is ${test}`);
+// let test = getDistance(50, 4, 44, 7)
+// console.log(`Distance is ${test}`);
 
 function parseDMS(fullDMS) {
   let parts = fullDMS.split(/[^\d\w\.]+/);
@@ -40,13 +40,13 @@ function ConvertDMSToDD(degrees, minutes, seconds, direction) {
 
 }
 
-let response = parseDMS("36°57'9\" N 110°4'21\" W")
-console.log(response)
+// let response = parseDMS("36°57'9\" N 110°4'21\" W")
+// console.log(response)
 
-let latDMS = convertToDms(11.5622, false)
-let longDMS = convertToDms(43.1428, true)
+// let latDMS = convertToDms(11.5622, false)
+// let longDMS = convertToDms(43.1428, true)
 
-console.log(`Lat: ${latDMS}, Long: ${longDMS}`);
+// console.log(`Lat: ${latDMS}, Long: ${longDMS}`);
 
 function convertToDms(dd, isLng) {
   var dir = dd < 0

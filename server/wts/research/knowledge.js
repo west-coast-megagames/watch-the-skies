@@ -27,7 +27,7 @@ async function loadGlobalVariables () {
         let el = { team: team._id, progress: 0 }
         progress.push(el);
     }
-    knowledgeDebugger(progress);
+    // knowledgeDebugger(progress);
     tp = progress;
     controlTeam = control;
 }
