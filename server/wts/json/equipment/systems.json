@@ -1,6 +1,9 @@
-[
+[   
 {   
     "name": "Cutting Laser",
+    "code": "W-CL1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 2,
     "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers"}],
     "category": "Weapon",
@@ -9,6 +12,9 @@
 },
 {   
     "name": "BS Railgun Mk. I",
+    "code": "W-RG1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Weapon",
@@ -18,6 +24,9 @@
 },
 {   
     "name": "High Orbital Sensor Suite",
+    "code": "S-HO1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Sensor",
@@ -26,6 +35,9 @@
 },
 {   
     "name": "Standard Cockpit",
+    "code": "C-S1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Compartment",
@@ -34,6 +46,9 @@
 },
 {   
     "name": "High Volacity Thrusters",
+    "code": "E-HVT1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Engine",
@@ -42,6 +57,9 @@
 },
 {   
     "name": "Targeting CPU",
+    "code": "U-TC1",
+    "unitType": "Interceptor",
+    "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Util",
