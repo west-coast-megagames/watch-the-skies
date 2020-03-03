@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Drawer, Button, Popover, Table } from 'rsuite'
+import { Drawer, Button, Table } from 'rsuite'
 import SciIcon from './../../../components/common/sciencIcon';
 //import axios from 'axios'
 //import { gameServer } from '../config'

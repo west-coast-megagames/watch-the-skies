@@ -60,8 +60,9 @@ class TechList extends Component {
 //        //    return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (            
             <div>
-                {/*
+                
                 <Affix>
+                {/*}
                     <SciIcon size={50} level={0} />
                     <SciIcon size={45} level={1} />
                     <SciIcon size={100} level={2} />
@@ -69,8 +70,8 @@ class TechList extends Component {
                     <Icon icon="spinner" spin />
                     <Icon icon={sci1logo} size="lg" />
                     <hr />
-                </Affix>
                 */}
+                </Affix>
                 <React.Fragment>
                     <Table
                         isTree
