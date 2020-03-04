@@ -36,7 +36,7 @@
 "site" : "",
 "base" : "USBA",
 "loadout": 
-["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
+["W-RG1", "S-HO1", "E-HVT1", "U-FTC1", "C-S1"],
 "stats": 
     {"hull": 2,
     "hullMax": 2,

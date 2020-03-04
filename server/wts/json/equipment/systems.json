@@ -36,7 +36,7 @@
 {   
     "name": "Standard Cockpit",
     "code": "C-S1",
-    "unitType": ["Interceptor", "Fighter", "Transport", "Decoy"],
+    "unitType": ["Any"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
@@ -58,12 +58,24 @@
 {   
     "name": "Targeting CPU",
     "code": "U-TC1",
-    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
+    "unitType": ["Interceptor", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": { "type": "Fighter", "penetration": 1 }
+    "stats": { }
+},
+{   
+    "name": "Fighter Targeting CPU",
+    "code": "U-FTC1",
+    "unitType": ["Fighter"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Util",
+    "desc": "Basic terrestrial sensor system",
+    "stats": { "penetration": 1 }
 }
+
 ]

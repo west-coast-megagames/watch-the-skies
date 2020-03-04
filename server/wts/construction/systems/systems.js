@@ -51,7 +51,10 @@ function validUnitType(unitTypeArray, testUT) {
   let utFound = false;
   chkLoop:
   for (var i = 0; i < unitTypeArray.length; i++) {
-    if (unitTypeArray[i] === testUT) {
+    if (unitTypeArray[i] === "Any") {
+      utFound = true;    
+      break chkLoop; 
+    } else if (unitTypeArray[i] === testUT) {
       utFound = true;  
       break chkLoop;
     }

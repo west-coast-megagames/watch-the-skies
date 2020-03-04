@@ -92,13 +92,13 @@ async function loadAircraft(iData){
         for (let sys of iData.loadout) {
           let sysRef = systems[systems.findIndex(system => system.code === sys )];
           //console.log("jeff in aircraft systems ", sys, "sysRef:", sysRef);
-          if (sysRef) {
+          if (sysRef) {           
             if (validUnitType(sysRef.unitType, aircraft.type)) {
               newSystem = await new System(sysRef);
               newSystem.team         = aircraft.team;
               newSystem.manufacturer = aircraft.team;  
               newSystem.status.building = false;
-              newSystem.unitType     = aircraft.type;
+              newSystem.unitType     = aircraft.type;           
               //console.log("jeff in aircraft before systems save ... sysRef:", sysRef);            
               await newSystem.save(((err, newSystem) => {
                 if (err) {
