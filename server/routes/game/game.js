@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nexusEvent = require('../../startup/events');
-const routeDebugger = require('debug')('app:routes:interceptor');
+const routeDebugger = require('debug')('app:routes:game');
 
 // Mongoose Models - Used to save and validate objects into MongoDB
 const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/aircraft');
@@ -25,8 +25,8 @@ router.put('/military/deploy', async function (req, res) {
   console.log(req.body)
   let teamObj = await Team.findOne({name: team});
   let account = await Account.findOne({ name: 'Operations', team: teamObj._id })
-
-  console.log(account)
+  routeDebugger(`${teamObj.name} is attempting to deploy.`)
+  routeDebugger(`Deployment cost: $M${cost} | Account Balance: $M${account.balance}`)
   if (account.balance < cost) {
     routeDebugger('Not enough funding to deploy units...')
     res.status(402).send(`Not enough funding! Assign ${cost - account.balance} more money teams operations account to deploy these units.`)
@@ -35,13 +35,13 @@ router.put('/military/deploy', async function (req, res) {
     let siteObj = await Site.findById(destination).populate('country').populate('zone');
     let unitArray = []
 
-
     for await (let unit of units) {
       let update = await Military.findById(unit)
       update.site = siteObj._id;
       update.country = siteObj.country._id;
       update.zone = siteObj.zone._id;
       unitArray.push(update._id);
+      await update.save();
     }
  
     account = await banking.withdrawal(account, cost, `Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`);
@@ -57,10 +57,15 @@ router.put('/military/deploy', async function (req, res) {
     report.units = unitArray;
     report.cost = cost;
 
-    // March TODO - ADD report to service record...
+    report = await report.saveReport();
 
-    report.saveReport();
-    await update.save();
+    // for await (let unit of units) {
+    //   let update = await Military.findById(unit)
+    //   unit.serviceRecord.push(report);
+    //   await update.save();
+    // }
+
+    nexusEvent.emit('updateMilitary');    
     res.status(200).send(`Unit deployment to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`);
   }
 })

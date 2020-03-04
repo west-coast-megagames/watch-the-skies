@@ -26,7 +26,7 @@ router.get('/', async function (req, res) {
       .populate('country', 'name')
       .populate('gear', 'name category')
       .populate('site', 'name')
-      .populate('homeBase', 'name')
+      .populate('homeBase')
     ;
     res.json(militarys);
 });
@@ -296,7 +296,7 @@ router.put('/:id', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('homeBase', 'name');
+      .populate('homeBase');
 
     res.status(200).json(military);
     console.log(`Military ${req.params.id} updated...`);
