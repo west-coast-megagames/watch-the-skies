@@ -21,7 +21,7 @@ const { Squad, validateSquad } = require('../../models/ops/squad');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Gear } = require('../../models/gov/equipment/gear');
-const { loadMilGears, gears } = require('../../wts/construction/equipment/milGear');
+const { loadMilGears, gears, validUnitType } = require('../../wts/construction/equipment/milGear');
 const { Site } = require('../../models/sites/site');
 const app = express();
 
@@ -110,11 +110,12 @@ async function loadSquad(iData){
         let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
         //console.log("jeff in squad gears ", sys, "gerRef:", gerRef);
         if (gerRef) {
-          if (gerRef.unitType === "Corps") { 
+          if (validUnitType(gerRef.unitType, squad.type)) { 
             newGear = await new Gear(gerRef);
             newGear.team         = squad.team;
             newGear.manufacturer = squad.team;  
             newGear.status.building = false;
+            newGear.unitType        = squad.type;
             await newGear.save(((err, newGear) => {
             if (err) {
               logger.error(`New Squad Gear Save Error: ${err}`);
@@ -193,11 +194,12 @@ async function loadSquad(iData){
         let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
         //console.log("jeff in squad gears ", sys, "gerRef:", gerRef);
         if (gerRef) {
-          if (gerRef.unitType === "Corps") { 
+          if (validUnitType(gerRef.unitType, squad.type)) { 
             newGear = await new Gear(gerRef);
             newGear.team         = squad.team;
             newGear.manufacturer = squad.team;  
             newGear.status.building = false;
+            newGear.unitType     = squad.type;
             await newGear.save(((err, newGear) => {
               if (err) {
                 logger.error(`New Squad Gear Save Error: ${err}`);
@@ -237,7 +239,7 @@ async function loadSquad(iData){
       });
     }
   } catch (err) {
-    logger.error('Catch Squad Error:', err.message);
+    logger.error(`Catch Squad Error: ${err.message}`);
     return;
   }
 };

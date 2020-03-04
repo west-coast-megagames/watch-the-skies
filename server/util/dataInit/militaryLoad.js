@@ -24,7 +24,7 @@ const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Gear } = require('../../models/gov/equipment/gear');
-const { loadMilGears, gears } = require('../../wts/construction/equipment/milGear');
+const { loadMilGears, gears, validUnitType } = require('../../wts/construction/equipment/milGear');
 const { Site, BaseSite } = require('../../models/sites/site');
 const app = express();
 
@@ -190,11 +190,12 @@ async function createFleet(iData){
     let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      if (gerRef.unitType === "Fleet") {
+      if (validUnitType(gerRef.unitType, fleet.type)) {
         newGear = await new Gear(gerRef);
-        newGear.team         = fleet.team;
-        newGear.manufacturer = fleet.team; 
+        newGear.team            = fleet.team;
+        newGear.manufacturer    = fleet.team; 
         newGear.status.building = false; 
+        newGear.unitType        = fleet.type;
         await newGear.save(((err, newGear) => {
         if (err) {
           logger.error(`New Military Gear Save Error: ${err}`);
@@ -284,11 +285,12 @@ async function createCorps(iData){
     let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      if (gerRef.unitType === "Corps") {
+      if (validUnitType(gerRef.unitType, corps.type)) {
         newGear = await new Gear(gerRef);
         newGear.team         = corps.team;
         newGear.manufacturer = corps.team;  
         newGear.status.building = false;
+        newGear.unitType        = corps.type;
         await newGear.save(((err, newGear) => {
         if (err) {
           logger.error(`New Military Gear Save Error: ${err}`);
@@ -379,11 +381,12 @@ async function updateFleet(iData){
     let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      if (gerRef.unitType === "Fleet") {
+      if (validUnitType(gerRef.unitType, fleet.type)) {
         newGear = await new Gear(gerRef);
         newGear.team         = fleet.team;
         newGear.manufacturer = fleet.team;  
         newGear.status.building = false;
+        newGear.unitType        = fleet.type;
         await newGear.save(((err, newGear) => {
         if (err) {
           logger.error(`New Military Gear Save Error: ${err}`);
@@ -473,11 +476,12 @@ async function updateCorps(iData){
     let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
     //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
     if (gerRef) {
-      if (gerRef.unitType === "Corps") {  
+      if (validUnitType(gerRef.unitType, corps.type)) {
         newGear = await new Gear(gerRef);
         newGear.team         = corps.team;
         newGear.manufacturer = corps.team; 
         newGear.status.building = false; 
+        newGear.unitType        = corps.type;
         await newGear.save(((err, newGear) => {
         if (err) {
           logger.error(`New Military Gear Save Error: ${err}`);
