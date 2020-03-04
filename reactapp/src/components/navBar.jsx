@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-
 import TeamAvatar from './common/teamAvatar';
-import alert from '../audio/breaking-news-5.ogg';
+import playTrack from './../scripts/audio';
+
 
 class NavBar extends Component {
     state = { 
@@ -12,12 +12,11 @@ class NavBar extends Component {
         seconds: 0,
         phase: 'Test Phase',
         turn:  'Test Turn',
-        turnNum: 0,
-        audio: new Audio(alert)
+        turnNum: 0
      }
 
     componentDidMount() {
-        this.playTrack();
+        playTrack('bootup');
     }
 
     componentDidUpdate(prevProps) {
@@ -32,13 +31,7 @@ class NavBar extends Component {
         }
     }
 
-    // Audio trigger code...
-    playTrack = () => {
-        const {audio} = this.state;
-        audio.type = 'audio/ogg';
-        audio.loop = false;
-        audio.play();
-    }
+
 
     render() {
         const { minutes, seconds, phase, turn } = this.props.clock;

@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { Avatar } from "rsuite";
 
 const team = {
-  USA:
-    "https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png",
+  USA: "https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png",
   RFD: "https://cdn.countryflags.com/thumbs/russia/flag-square-250.png",
   PRC: "https://cdn.countryflags.com/thumbs/china/flag-square-250.png",
   TUK: "https://cdn.countryflags.com/thumbs/united-kingdom/flag-square-250.png",

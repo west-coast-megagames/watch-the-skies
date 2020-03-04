@@ -21,7 +21,6 @@ import MoshTest from './pages/mosh'; // Mosh test
 import Operations from "./pages/operations";
 import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
-import Chat from './pages/chat';
 import News from './pages/news';
 import Models from './pages/models';
 
@@ -107,7 +106,7 @@ class App extends Component {
 
     updateEvents.updateMilitary((err, military) => {
       this.addAlert({type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
-      this.setState({ research });
+      this.setState({ military });
     });
 
     updateEvents.updateFacilities((err, facilities) => {
@@ -154,14 +153,13 @@ class App extends Component {
                   <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
                   <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
                   {/*<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>*/}
-                  {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   {team !== null ? team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
-            <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.handleSignout} />
+            <NavToggle login={this.state.login} expand={expand} onChange={this.handleToggle} signOut={this.handleSignout} />
             </Sidebar>
             <Content>
                 <Switch>
@@ -219,13 +217,6 @@ class App extends Component {
                           team = { this.state.team }
                           alert={ this.addAlert }
                           login={ this.state.login }
-                      />
-                    )}/>
-                    <Route path="/comms" render={(props) => (
-                      <Chat {...props}
-                        team = { this.state.team }
-                        alert={ this.addAlert }
-                        login={ this.state.login }
                       />
                     )}/>
                     <Route path="/news" render={(props) => (

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Timeline, Icon, Panel } from 'rsuite';
-import TerrorMap from './../../pages/terror';
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = (props) => {
@@ -18,7 +17,8 @@ const TransactionLog = (props) => {
 }
 
 // TODO - Research log should be fleshed out for March.
-const ResearchLog = (log) => {
+const ResearchLog = (props) => {
+    let { log } = props
     let results = []
     for (let i = 0; i < log.rolls.length; i++) {
         let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${log.rolls[i]}`
@@ -40,7 +40,8 @@ const ResearchLog = (log) => {
 }
 
 // TODO for MARCH - Look of an Intercept log should be fleshed out for march.
-const InterceptLog = (log) => {
+const InterceptLog = (props) => {
+    let { log } = props
     // let iconStyle = { background: '#ff4d4d', color: '#fff' };
     return(
     <Timeline.Item key={log._id} dot={<Icon icon="fighter-jet" size="2x" />}>
@@ -55,7 +56,8 @@ const InterceptLog = (log) => {
 }
 
 // TODO for MARCH - Look of an Construction log should be fleshed out for march.
-const ConstructionLog = (log) => {
+const ConstructionLog = (props) => {
+    let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon='wrench' size="2x" />}>
         <Panel style={{padding: '0px'}} header={`Placeholder Construction - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
@@ -82,7 +84,8 @@ const DeployLog = (props) => {
 }
 
 // TODO for MARCH - This timeline log needs to be filled out...
-const CrisisLog = (log) => {
+const CrisisLog = (props) => {
+    let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon='question-circle' size="2x" />}>
         <Panel style={{padding: '0px'}} header={`Placeholder Crisis - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
@@ -95,7 +98,8 @@ const CrisisLog = (log) => {
 }
 
 // TODO for MARCH - This terror log needs to be filled out...
-const TerrorLog = (log) => {
+const TerrorLog = (props) => {
+    let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon='bomb' size="2x" />}>
         <Panel style={{padding: '0px'}} header={`Placeholder Terror - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
@@ -108,7 +112,8 @@ const TerrorLog = (log) => {
 }
 
 // TODO for MARCH - This teary log needs to be filled out...
-const TreatyLog = (log) => {
+const TreatyLog = (props) => {
+    let { log } = props
     return (
         <Timeline.Item key={log._id} dot={<Icon icon='briefcase' size="2x" />}>
             <Panel style={{padding: '0px'}} header={`Placeholder Treaty - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>
@@ -121,7 +126,8 @@ const TreatyLog = (log) => {
 }
 
 // TODO for MARCH - This trade log needs to be filled out...
-const TradeLog = (log) => {
+const TradeLog = (props) => {
+    let { log } = props
     return (
     <Timeline.Item key={log._id} dot={<Icon icon='briefcase' size="2x" />}>
         <Panel style={{padding: '0px'}} header={`Placeholder Trade - ${log.team.teamCode} | ${log.timestamp.turn} ${log.timestamp.phase} - ${log.timestamp.clock} Date:${new Date(log.date).toTimeString()}`} collapsible>

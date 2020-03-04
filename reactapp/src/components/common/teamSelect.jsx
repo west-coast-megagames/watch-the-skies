@@ -1,6 +1,8 @@
 import React from "react";
 import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdbreact";
 
+// TODO - Make this REUSABLE to switch the TEAM VIEW
+
 const TeamSelect = (props) => {
   return (
       <MDBDropdown>
