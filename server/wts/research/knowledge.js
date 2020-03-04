@@ -8,9 +8,8 @@ const { Team } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
 const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
-const { techCost } = require('./sciState');
 
-//console.log(techCost)
+const techCost = [ 20, 30, 40, 50, 60, 70 ] // Arbitratily set at increments of 50 currently
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = [];
@@ -18,16 +17,16 @@ let controlTeam = {};
 let tp = [];
 let seed = true;
 
-loadGlobalVariables();
-
-async function loadGlobalVariables () {
-    let progress = []
+async function loadGlobalVariables() {
+    let progress = [];
+    let count = 0;
     let control = await Team.find({teamCode: 'TCN'});
     for (let team of await Team.find({teamType: 'N'})) {
         let el = { team: team._id, progress: 0 }
         progress.push(el);
+        count++
     }
-    // knowledgeDebugger(progress);
+    knowledgeDebugger(`Loaded ${count} teams into progress...`);
     tp = progress;
     controlTeam = control;
 }
@@ -93,6 +92,9 @@ async function knowledgeSeed() {
             }
         }
     };
+    for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
+        console.log(knowledge);
+    }
 
     knowledgeDebugger(`Knowledge seed complete...`)
     return;
@@ -111,6 +113,7 @@ function Knowledge(knowledge) {
 
 
     this.seed = async function() {
+        
         console.log(`seeding ${this.name}`)
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
@@ -203,4 +206,4 @@ async function publishKnowledge (research) {
     return research;
 };
 
-module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree };
+module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree, loadGlobalVariables };

@@ -17,9 +17,18 @@ const { knowledgeTree } = require('./knowledge');
 async function startResearch () {
     for await (let lab of await Facility.find({ type: 'Lab' })) {
         if (lab.research.length < 1) {
-            researchDebugger(`${lab.name} does not have research to conduct...`);
+            researchDebugger(`${lab.name} has no research to conduct...`);
+            let projects = await Research.find({team: lab.team, 'status.completed': false});
+            let rand = Math.floor(Math.random() * (projects.length - 1));
+
+            if (projects.length > 0) {
+                let project = projects[rand];
+                researchDebugger(`${lab.name} has independently choosen to work on ${project.name}...`);
+                lab.research.push(project);
+                await calculateProgress(lab);
+            }
         } else {
-            researchDebugger(`${lab.name} has research to conduct`);
+            researchDebugger(`${lab.name} has ${lab.research.length} research to conduct`);
             await calculateProgress(lab);
         }
     }
@@ -33,66 +42,72 @@ async function calculateProgress(lab) {
     let completedResearch = 0
     for await (let project of lab.research) {
         let report = new ResearchReport
+        // majorDebugger(lab);
     
         try {
             let tech = await Research.findById(project).populate('team'); // Imports the specific Research object by _id
-            researchDebugger(`Current Progress: ${tech.progress}`)
-            report.progress.startingProgress = tech.progress; // Tracks progress in the Research Report
-            // researchDebugger(tech)
-            let team = await Team.findById(lab.team); // Finds the owner of the Lab
-            report.project = tech._id; // Records the research being worked on
-            report.lab = lab._id; // Records the lab working on the project
-            // researchDebugger(lab)
-            // researchDebugger(team);
-            researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof team.sciRate}`);
-            researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
-            let sciRate = team.sciRate + lab.sciRate
-            let sciBonus = lab.bonus
-            researchDebugger(`Science Rate: ${sciRate}`)
-            let progressInfo = await researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
+            if (tech != null) {
+                researchDebugger(`Current Progress: ${tech.progress}`)
+                report.progress.startingProgress = tech.progress; // Tracks progress in the Research Report
+                // researchDebugger(tech)
+                let team = await Team.findById(lab.team); // Finds the owner of the Lab
+                report.project = tech._id; // Records the research being worked on
+                report.lab = lab._id; // Records the lab working on the project
+                // researchDebugger(lab)
+                // researchDebugger(team);
+                researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof team.sciRate}`);
+                researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
+                let sciRate = team.sciRate + lab.sciRate
+                let sciBonus = lab.bonus
+                researchDebugger(`Science Rate: ${sciRate}`)
+                let progressInfo = await researchMultiplyer(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
-            tech.progress += progressInfo.progress; // Adds progress to the current Research
+                if (tech.type === 'Knowledge') {
+                    tech.teamProgress[team._id] += progressInfo.progress;
+                } else {
+                    tech.progress += progressInfo.progress; // Adds progress to the current Research
+                }
 
-            // console.log(techCost)
-            // console.log(tech.progress)
-            tech.progress >= techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
+                // console.log(techCost)
+                // console.log(tech.progress)
+                tech.progress >= techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
-            if (tech.status.completed === true) {
-                researchDebugger(`${tech.name} completed!`)
-                tech = await completeTech(tech);
-                completedResearch++;
-            } else {
-                researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
+                if (tech.status.completed === true) {
+                    researchDebugger(`${tech.name} completed!`)
+                    tech = await completeTech(tech, lab);
+                    completedResearch++;
+                } else {
+                    researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
+                }
+
+                report.team = team._id;
+                report.lab = lab._id;
+                report.project = tech._id;
+                report.funding = lab.funding;
+                report.progress.endingProgress = tech.progress;
+                report.stats.sciRate = sciRate;
+                report.stats.sciBonus = sciBonus;
+                report.stats.completed = tech.status.completed;
+                report.stats.finalMultiplyer = progressInfo.multiplyer
+                report.rolls = progressInfo.rolls
+                report.outcomes = progressInfo.outcomes
+                report.stats.breakthroughCount = progressInfo.breakthroughs
+                report.date = Date.now();
+                await report.saveReport();
+            
+                lab.funding = 0;
+                lab = await lab.save() // Saves the modified lab
+                tech = await tech.save(); // Saves the current project to the database
+
+                // majorDebugger(lab);
+                // majorDebugger(tech);
             }
-
-            report.team = team._id;
-            report.lab = lab._id;
-            report.project = tech._id;
-            report.funding = lab.funding;
-            report.progress.endingProgress = tech.progress;
-            report.stats.sciRate = sciRate;
-            report.stats.sciBonus = sciBonus;
-            report.stats.completed = tech.status.completed;
-            report.stats.finalMultiplyer = progressInfo.multiplyer
-            report.rolls = progressInfo.rolls
-            report.outcomes = progressInfo.outcomes
-            report.stats.breakthroughCount = progressInfo.breakthroughs
-            report.date = Date.now();
-            await report.saveReport();
-        
-            lab.funding = 0;
-            lab = await lab.save() // Saves the modified lab
-            tech = await tech.save(); // Saves the current project to the database
-
-            // majorDebugger(lab);
-            // majorDebugger(tech);
-
         } catch (err) {
             logger.error(err)
             researchDebugger(`CalcProgress Error: ${err}`);
         }
     }
-    if (completedResearch === lab.research.length) {
+    if (completedResearch === lab.research.length || lab.status.hidden === true ) {
         lab.research = [];
         lab = await lab.save() // Saves the modified lab
     };
@@ -146,7 +161,7 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
     return { progress, multiplyer, rolls, outcomes, breakthroughs } // Returns progress to the Calculate Progress function.
 };
 
-async function completeTech (research) {
+async function completeTech (research, lab) {
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.availible = false;
     research.status.completed = true;
@@ -157,9 +172,9 @@ async function completeTech (research) {
         console.log(item)
         if (item.type === 'Technology') {
             let newTech = techTree.find(el => el.code === item.code);
-            researchDebugger(`CHECK UNLOCK: ${item.type} - ${newTech.name}`);
-            console.log(newTech)
-            await newTech.checkAvailable();
+            researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
+            // console.log(newTech)
+            await newTech.unlock(lab);
         }
         
         if (research.type === 'Knowledge') {
@@ -169,8 +184,6 @@ async function completeTech (research) {
                 researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
                 console.log(nextKnowledge);
             };
-
-        
         }
     }
 

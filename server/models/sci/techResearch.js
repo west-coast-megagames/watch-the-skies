@@ -20,7 +20,7 @@ const TechResearch = Research.discriminator('TechResearch', new Schema({
     progress: { type: Number, default: 0 },
     status: {
         visible: { type: Boolean, default: true },
-        available: { type: Boolean, default: true },
+        available: { type: Boolean, default: false },
         completed: { type: Boolean, default: false }
     },
     theoretical: [TheorySchema]

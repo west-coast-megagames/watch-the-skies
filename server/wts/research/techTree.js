@@ -34,11 +34,11 @@ async function techSeed() {
 async function loadTech () {
     let count = 0;
 
-    await techData.forEach(tech => {
+    for await (let tech of techData) {
         // techTreeDebugger(tech);
         techTree[count] = new Technology(tech);
         count++;
-    });
+    };
 
     techTreeDebugger(`${count} technology loaded into tech tree...`)
     return `${count} technology loaded into tech tree...`
