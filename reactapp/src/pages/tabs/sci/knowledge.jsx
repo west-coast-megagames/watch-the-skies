@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { Table, Tag, Progress, Checkbox, Button, Alert } from 'rsuite';
+import BalanceHeader from '../../../components/common/BalanceHeader';
 
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
@@ -73,13 +74,16 @@ class Knowledge extends Component {
         
         return ( 
             <div>
-                <h5 style={{display: 'inline'}}>Research Field Funding</h5><Button onClick={() => this.handleSubmit()} style={{float:'right'}}>Submit funding</Button>
-                <hr style={{margin: 10}} />
+                <BalanceHeader 
+					accounts={this.props.accounts}
+					code={"SCI"}
+					title={"Scientific Knowledge Field Funding"}
+				/>
                 <Table
                     rowKey="field"
                     autoHeight
                     data={data}
-                    >
+                >
                     <Column width={50} align="center">
                         <HeaderCell style={{ padding: 0 }}>
                         <div style={{ lineHeight: '40px' }}>
@@ -122,6 +126,8 @@ class Knowledge extends Component {
 
                     </Column>
                 </Table>
+                <hr  />
+                <Button appearance="primary" onClick={() => this.handleSubmit()} style={{float:'right'}}>Submit funding</Button>
             </div>
         );
         
