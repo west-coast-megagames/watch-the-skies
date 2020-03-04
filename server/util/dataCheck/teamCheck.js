@@ -61,6 +61,14 @@ async function chkTeam(runFlag) {
         logger.error(`National Team ${team.name} ${team._id} prLevel is not a number ${team.prLevel}`);
       }
 
+      if (team.prTrack.length < 9) {
+        logger.error(`National Team ${team.name} ${team._id} prTrack is less than 9 ${team.prTrack}`);
+      }
+
+      if (team.prTrack[0] != 0) {
+        logger.error(`National Team ${team.name} ${team._id} prTrack first element is not zero ${team.prTrack[0]}`);
+      }
+
       let { error } = validateNational(team);
       if ( error)  {
         logger.error(`National Team Validation Error For ${team.name} Error: ${error.details[0].message}`);
