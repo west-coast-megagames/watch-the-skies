@@ -20,8 +20,6 @@ const bodyParser = require('body-parser');
 const { Squad, validateSquad } = require('../../models/ops/squad');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
-const { Gear } = require('../../models/gov/equipment/gear');
-const { loadMilGears, gears, validUnitType } = require('../../wts/construction/equipment/milGear');
 const { Site } = require('../../models/sites/site');
 const app = express();
 
@@ -35,8 +33,7 @@ async function runSquadLoad(runFlag){
     //squadLoadDebugger("Jeff in runSquadLoad", runFlag);    
     if (!runFlag) return false;
     if (runFlag) {
-      await loadMilGears();                         // load wts/json/milGear.json data into array    
-      
+
       await deleteAllSquads(runFlag);
       await initLoad(runFlag);
     }
@@ -103,55 +100,16 @@ async function loadSquad(iData){
         }
       }
 
-      // create gears records for squad and store ID in squad.system
-      //console.log("jeff squad gears  iData.gear", iData.gear);
-      squad.equipment = [];
-      for (let ger of iData.gear) {
-        let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-        //console.log("jeff in squad gears ", sys, "gerRef:", gerRef);
-        if (gerRef) {
-          if (validUnitType(gerRef.unitType, squad.type)) { 
-            newGear = await new Gear(gerRef);
-            newGear.team         = squad.team;
-            newGear.manufacturer = squad.team;  
-            newGear.status.building = false;
-            newGear.unitType        = squad.type;
-            await newGear.save(((err, newGear) => {
-            if (err) {
-              logger.error(`New Squad Gear Save Error: ${err}`);
-              return console.error(`New Squad Gear Save Error: ${err}`);
-            }
-            squadLoadDebugger(squad.name, "Gear", ger, " add saved to Equipment collection.");
-            }));
-
-            squad.gear.push(newGear._id)
-          } else {
-            logger.error('Error in creation of gear - Invalid UnitType', ger, "for ", squad.name);  
-          }
-        } else {
-          logger.error('Error in creation of gear', ger, "for ", squad.name);
-        }
-      }
-
       let { error } = validateSquad(squad); 
       if (error) {
-        logger.error("New Squad Validate Error", squad.name, error.message);
-        // remove associated gears records
-        for (let j = 0; j < squad.gear.length; ++j ) {
-          gerId = squad.equipment[j];
-          let gearDel = await Gear.findByIdAndRemove(gerId);
-          if (gearDel = null) {
-             logger.error(`The Squad Gear with the ID ${gerId} was not found!`);
-          }
-          logger.info(`The Squad Gear with the ID ${gerId} was DELETED ... Squad validate error!`);
-        }
+        logger.error(`New Squad Validate Error ${squad.name} ${error.message}`);
+        return console.error(`New Squad validate Error: ${err}`);
       }
 
       await squad.save((err, squad) => {
         if (err) return console.error(`New Squad Save Error: ${err}`);
         squadLoadDebugger(squad.name + " add saved to squad collection.");
         logger.info(squad.name + " add saved to squad collection.");
-        //updateStats(squad._id);
       });
     } else {
       let id = squad._id;
@@ -187,55 +145,15 @@ async function loadSquad(iData){
         }
       }         
 
-      // create gears records for squad and store ID in squad.system
-      //console.log("jeff squad gears  iData.gear", iData.gear);
-      squad.equipment = [];
-      for (let ger of iData.gear) {
-        let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-        //console.log("jeff in squad gears ", sys, "gerRef:", gerRef);
-        if (gerRef) {
-          if (validUnitType(gerRef.unitType, squad.type)) { 
-            newGear = await new Gear(gerRef);
-            newGear.team         = squad.team;
-            newGear.manufacturer = squad.team;  
-            newGear.status.building = false;
-            newGear.unitType     = squad.type;
-            await newGear.save(((err, newGear) => {
-              if (err) {
-                logger.error(`New Squad Gear Save Error: ${err}`);
-                return console.error(`New Squad Gear Save Error: ${err}`);
-              }
-              squadLoadDebugger(squad.name, "Gear", ger, " add saved to Equipment collection.");
-            }));
-
-            squad.gear.push(newGear._id)
-          } else {
-            squadLoadDebugger('Error in creation of gear - Invalid Unit Type', ger, "for ", squad.name);  
-          }
-        } else {
-          squadLoadDebugger('Error in creation of gear', ger, "for ", squad.name);
-        }
-      }
-
       let { error } = validateSquad(squad); 
       if (error) {
         squadLoadDebugger("Update Squad Validate Error", squad.name, error.message);
-        // remove associated gears records
-        for (let j = 0; j < squad.gear.length; ++j ) {
-          gerId = squad.equipment[j];
-          let gearDel = await Gear.findByIdAndRemove(gerId);
-          if (gearDel = null) {
-             console.log(`The Squad Gear with the ID ${gerId} was not found!`);
-          }
-          console.log(`The Squad Gear with the ID ${gerId} was DELETED ... Squad validate error!`);
-        }      
         return; 
       }
 
       await squad.save((err, squad) => {
         if (err) return console.error(`Update Squad Save Error: ${err}`);
         squadLoadDebugger(squad.name + " add saved to squad collection.");
-        //updateStats(squad._id);
       });
     }
   } catch (err) {
@@ -254,15 +172,6 @@ async function deleteAllSquads(doLoad) {
 
       //squadLoadDebugger("Jeff in deleteAllSquads loop", squad.name); 
       try {
-
-        // remove associated gears records
-        for (let j = 0; j < squad.gear.length; ++j ) {
-          gerId = squad.gear[j];
-          let gearDel = await Gear.findByIdAndRemove(gerId);
-          if (gearDel = null) {
-            squadLoadDebugger(`The Squad Gear with the ID ${gerId} was not found!`);
-          }
-        }
 
         let squadDel = await Squad.findByIdAndRemove(id);
         if (squadDel = null) {

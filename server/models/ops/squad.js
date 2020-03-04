@@ -19,8 +19,7 @@ const SquadSchema = new Schema({
     destroyed: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
     secret: { type: Boolean }
-  },
-  gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }]
+  }
 });
 
 SquadSchema.methods.deploy = async (unit ,country) => {
@@ -72,28 +71,5 @@ function validateSquad(squad) {
   
   return Joi.validate(squad, schema, { "allowUnknown": true });
 };
-
-/* does not have stats
-async function updateStats(id) {
-  let squad = await Squad.findById(id).populate('gear');
-  let { stats } = squad
-  for (let gear of squad.gear) {
-    for (let [key, value] of Object.entries(gear.stats)) {
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value; 
-      }
-    }
-    console.log(`${gear.name} loaded into ${squad.type}...`)
-  }
-  console.log(`All gear for ${squad.type} ${squad.name} loaded...`);
-  squad.stats = stats;
-  squad.markModified('stats');
-  squad = await squad.save();
-  console.log(squad.stats);
-
-  return;
-}
-*/
 
 module.exports = { Squad, validateSquad }

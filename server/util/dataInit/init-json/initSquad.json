@@ -5,8 +5,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Raid"
 },
 {
@@ -15,8 +13,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Raid"
 },
 {
@@ -25,8 +21,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Raid"
 },
 {
@@ -35,8 +29,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Assault"
 },
 {
@@ -45,8 +37,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Assault"
 },
 {
@@ -55,8 +45,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Assault"
 },
 {
@@ -65,8 +53,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Infiltration"
 },
 {
@@ -75,8 +61,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Infiltration"
 },
 {
@@ -85,8 +69,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Infiltration"
 },
 {
@@ -95,8 +77,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Envoy"
 },
 {
@@ -105,8 +85,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Envoy"
 },
 {
@@ -115,8 +93,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Envoy"
 },
 {
@@ -125,8 +101,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Science"
 },
 {
@@ -135,8 +109,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Science"
 },
 {
@@ -145,8 +117,6 @@
     "team" : "FFG",
     "country" : "F1",
     "homeBase" : "FFGMA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training": "COR-1",
     "type" : "Science"
 }
 ]

@@ -33,19 +33,6 @@ async function chkSquad(runFlag) {
       logger.error(`homeBase link missing for Squad ${squad.name} ${squad._id}`);
     }
 
-    if (squad.gear.length < 1) {
-      logger.error(`No gear assigned for Squad ${squad.name} ${squad._id}`);
-    }
-
-    //squadCheckDebugger(`Squad ${squad.name} ${squad._id} Check of Gear ${squad.gear.length}`);
-    for (let i = 0; i < squad.gear.length; ++i){
-      //squadCheckDebugger(`Squad ${squad.name} ${squad._id} about to find gear for ID ${squad.gear[i]}`);
-      let gFind = await Gear.findById(squad.gear[i]);
-      if (!gFind) {
-        logger.error(`Squad ${squad.name} ${squad._id} has an invalid gear reference ${i}: ${squad.gear[i]}`);
-      }
-    }
-
     let { error } = validateSquad(squad);
     if ( error)  {
       logger.error(`Squad Validation Error For ${squad.name} Error: ${error.details[0].message}`);
