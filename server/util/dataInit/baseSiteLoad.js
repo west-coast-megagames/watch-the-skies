@@ -6,6 +6,7 @@ const baseDataIn = JSON.parse(file);
 const baseSiteLoadDebugger = require('debug')('app:baseLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 require ('winston-mongodb');
+const { convertToDms } = require('../../util/systems/geo');
 
 const supportsColor = require('supports-color');
 
@@ -17,7 +18,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Base Model - Using Mongoose Model
-const { BaseSite, validateBase } = require('../../models/sites/baseSite');
+const { BaseSite, validateBase } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
 const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');
@@ -63,12 +64,14 @@ async function loadBase(iData){
     let baseSite = await BaseSite.findOne( { name: iData.name } );
     if (!baseSite) {
       // New Base here
+      let newLatDMS = convertToDms(iData.latDecimal, false);
+      let newLongDMS = convertToDms(iData.longDecimal, true); 
       let baseSite = new BaseSite({ 
         name: iData.name,
         siteCode: iData.code,
         geoDMS: { 
-        latDMS: iData.latDMS,
-        longDMS: iData.longDMS
+        latDMS: newLatDMS,
+        longDMS: newLongDMS
         },
         geoDecimal: {
          latDecimal: iData.latDecimal,
@@ -157,9 +160,15 @@ async function loadBase(iData){
       // Existing Base here ... update
       let id = baseSite._id;
       
+      let newLatDMS = convertToDms(iData.latDecimal, false);
+      let newLongDMS = convertToDms(iData.longDecimal, true); 
       baseSite.name         = iData.name;
       baseSite.siteCode     = iData.code;
       baseSite.baseDefenses = iData.baseDefenses;
+      baseSite.latDMS       = newLatDMS;
+      baseSite.longDMS      = newLongDMS;
+      baseSite.latDecimal   = iData.latDecimal;
+      baseSite.longDecimal  = iData.longDecimal;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  

@@ -31,17 +31,19 @@ async function chkCountry(runFlag) {
 
     siteLoop:
     for (let j = 0; j < sFinds.length; ++j){
-      let sCountryId = sFinds[j].country.toHexString();
+      if (sFinds[j].country) {     
+        let sCountryId = sFinds[j].country.toHexString();
 
-      if (sCountryId === countryId) {
+        if (sCountryId === countryId) {
         
-        if (sFinds[j].type === "City") {
-          ++cityCount;
-        } else if (sFinds[j].type === "Spacecraft") {
-          ++spacecraftCount;
-        }
-      }  
-      
+          if (sFinds[j].type === "City") {
+            ++cityCount;
+          } else if (sFinds[j].type === "Spacecraft") {
+            ++spacecraftCount;
+          }
+        }  
+      }
+
       // only need 1
       if (country.type === "T" && cityCount > 0) {
         break siteLoop;

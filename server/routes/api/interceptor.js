@@ -10,9 +10,9 @@ const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/ai
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
-const { BaseSite } = require('../../models/sites/baseSite');
+const { BaseSite } = require('../../models/sites/site');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts
@@ -88,6 +88,7 @@ router.post('/', async function (req, res) {
   const newAircraft = new Aircraft(
     { name, team, country, zone, baseOrig, stats, status }
     );
+  newAircraft.type = req.body.type;
   let docs = await Aircraft.find({ name })
   if (!docs.length) {
 
@@ -134,16 +135,21 @@ router.post('/', async function (req, res) {
       // create systems records for aircraft and store ID in aircraft.system
       newAircraft.systems = [];
       for (let sys of req.body.loadout) {
-        let sysRef = systems[systems.findIndex(system => system.name === sys )];
+        let sysRef = systems[systems.findIndex(system => system.code === sys )];
         if (sysRef) {
-          newSystem = await new System(sysRef);
-          await newSystem.save(((err, newSystem) => {
-            if (err) {
-              console.error(`New Aircraft System Save Error: ${err}`);
-              res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);   
-            }
-          }));
-          newAircraft.systems.push(newSystem._id);
+          if (validUnitType(sysRef.unitType, NewAircraft.type))  {
+            newSystem = await new System(sysRef);
+            newSystem.unitType = newAircraft.type;
+            await newSystem.save(((err, newSystem) => {
+              if (err) {
+                console.error(`New Aircraft System Save Error: ${err}`);
+                res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);   
+              }
+            }));
+            newAircraft.systems.push(newSystem._id);
+          } else {
+            console.log('Error in creation of system - wrong UnitType', sys, " for ", name );
+          }
         } else {
           console.log('Error in creation of system', sys, " for ", name );
         }
@@ -202,6 +208,7 @@ router.put('/:id', async function (req, res) {
   let newCountry_Id;
   let newAircraftSystems;
   let newBase_Id;
+  let newType;
 
   const oldAircraft = await Aircraft.findById({ _id: req.params.id });
   if (oldAircraft != null ) {
@@ -210,8 +217,12 @@ router.put('/:id', async function (req, res) {
     newCountry_Id      = oldAircraft.country;
     newAircraftSystems = oldAircraft.systems;
     newBase_Id         = oldAircraft.baseOrig;
+    newType            = oldAircraft.type;
   };
 
+  if (req.body.type && req.body.type != "") {
+    newType = req.body.type;
+  }
   if (zoneCode && zoneCode != "") {
     let zone = await Zone.findOne({ zoneCode: zoneCode });  
     if (!zone) {
@@ -261,16 +272,21 @@ router.put('/:id', async function (req, res) {
     // create systems records for aircraft and store ID in aircraft.system
     newAircraftSystems = [];
     for (let sys of req.body.loadout) {
-      let sysRef = systems[systems.findIndex(system => system.name === sys )];
+      let sysRef = systems[systems.findIndex(system => system.code === sys )];
       if (sysRef) {
-        newSystem = await new System(sysRef);
-        await newSystem.save(((err, newSystem) => {
-          if (err) {
-            console.error(`New Aircraft System Save Error: ${err}`);
-            res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);  
-          }
-        }));
-        newAircraftSystems.push(newSystem._id)
+        if (validUnitType(sysRef.unitType, newType))  {
+          newSystem = await new System(sysRef);
+          newSystem.unitType = newType;
+          await newSystem.save(((err, newSystem) => {
+            if (err) {
+              console.error(`New Aircraft System Save Error: ${err}`);
+              res.status(400).send(`Aircraft System Save Error ${name} Error: ${err}`);  
+            }
+          }));
+          newAircraftSystems.push(newSystem._id)
+        } else {
+          console.log('Error in creation of system - wrong UnitType ', sys, " for ", name );
+        }  
       } else {
         console.log('Error in creation of system', sys, " for ", name );
       }
@@ -283,7 +299,8 @@ router.put('/:id', async function (req, res) {
       country: newCountry_Id,
       team: newTeam_Id,
       baseOrig: newBase_Id,
-      systems: newAircraftSystems
+      systems: newAircraftSystems,
+      type: newType
     }, 
     { new: true,
       omitUndefined: true });

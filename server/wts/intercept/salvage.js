@@ -1,6 +1,5 @@
 const salvageDebugger = require('debug')('app:intercept - salvage');
-const { Site } = require('../../models/sites/site')
-const { CrashSite } = require('../../models/sites/crashSite');
+const { Site, CrashSite } = require('../../models/sites/site')
 const { d4 } = require('../../util/systems/dice')
 const geo = require('../../util/systems/geo') 
 

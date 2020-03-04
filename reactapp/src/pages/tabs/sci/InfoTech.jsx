@@ -78,7 +78,7 @@ class InfoTech extends Component {
                             <Cell dataKey="field" />
                         </Column>
 
-                        <Column verticalAlign='middle' width={200}>
+                        <Column verticalAlign='middle' width={225}>
                             <HeaderCell>Name</HeaderCell>
                             <Cell dataKey="name" />
                         </Column>

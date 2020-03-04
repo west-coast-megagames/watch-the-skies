@@ -5,11 +5,11 @@ const nexusEvent = require('../../startup/events');
 // Aircraft Model - Using Mongoose Model
 const { Aircraft, updateStats, validateAircraft } = require('../../models/ops/aircraft');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
-const { BaseSite } = require('../../models/sites/baseSite');
+const { BaseSite } = require('../../models/sites/site');
 
 // @route   PATCH api/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
@@ -96,14 +96,19 @@ router.post('/build', async function (req, res) {
     // no ... add
     aircraft.systems = [];
     for (let sys of aircraft.loadout) {
-      let sysRef = systems[systems.findIndex(system => system.name === sys )];
+      let sysRef = systems[systems.findIndex(system => system.code === sys )];
       if (sysRef) {
-        newSystem = await new System(sysRef);
-        await newSystem.save(((err, newSystem) => {
-          if (err) return console.error(`Post Build Aircraft System Save Error: ${err}`);
-        }));
-        console.log(newSystem);
-        aircraft.systems.push(newSystem._id);
+        if (validUnitType(sysRef.unitType, aircraft.type))  {
+          newSystem = await new System(sysRef);
+          newSystem.unitType = aircraft.type;
+          await newSystem.save(((err, newSystem) => {
+            if (err) return console.error(`Post Build Aircraft System Save Error: ${err}`);
+          }));
+          console.log(newSystem);
+          aircraft.systems.push(newSystem._id);
+        } else {
+          console.log('Error in creation of system - wrong UnitType', sys);
+        }    
       } else {
         console.log('Error in creation of system', sys);
       }
