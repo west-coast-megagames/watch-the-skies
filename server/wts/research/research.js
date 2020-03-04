@@ -44,7 +44,7 @@ async function calculateProgress(lab) {
             report.lab = lab._id; // Records the lab working on the project
             // researchDebugger(lab)
             // researchDebugger(team);
-            researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof test}`);
+            researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof team.sciRate}`);
             researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
             let sciRate = team.sciRate + lab.sciRate
             let sciBonus = lab.bonus
@@ -53,8 +53,8 @@ async function calculateProgress(lab) {
 
             tech.progress += progressInfo.progress; // Adds progress to the current Research
 
-            console.log(techCost)
-            console.log(tech.progress)
+            // console.log(techCost)
+            // console.log(tech.progress)
             tech.progress >= techCost[tech.level] ? tech.status.completed = true : null; // Checks for compleation of current research
 
             if (tech.status.completed === true) {
@@ -94,6 +94,7 @@ async function calculateProgress(lab) {
     }
     if (completedResearch === lab.research.length) {
         lab.research = [];
+        lab = await lab.save() // Saves the modified lab
     };
     return;
 };
@@ -156,7 +157,7 @@ async function completeTech (research) {
         console.log(item)
         if (item.type === 'Technology') {
             let newTech = techTree.find(el => el.code === item.code);
-            researchDebugger(`UNLOCKING: ${item.type} - ${newTech.name}`);
+            researchDebugger(`CHECK UNLOCK: ${item.type} - ${newTech.name}`);
             console.log(newTech)
             await newTech.checkAvailable();
         }
