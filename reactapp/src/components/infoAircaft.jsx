@@ -1,22 +1,9 @@
 import React, { Component } from 'react'
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Timeline, Alert, Panel, Whisper, Popover, SelectPicker } from 'rsuite'
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker } from 'rsuite'
 import axios from 'axios'
-import { gameServer } from '../config'
 
-let timelineIconStyle = {
-    position: 'absolute',
-    background: '#fff',
-    top: 0,
-    left: '-2px',
-    border: '2px solid #ddd',
-    width: 40,
-    height: 40,
-    borderRadius: '50%',
-    fontSize: 18,
-    paddingTop: 9,
-    color: '#999',
-    marginLeft: '-13px'
-}; 
+import { gameServer } from '../config'
+import ServiceRecord from './common/serviceRecord';
 
 class InfoAircraft extends Component {
   constructor(props) {
@@ -64,7 +51,7 @@ class InfoAircraft extends Component {
             <br />
             {aircraftSystems(this.props.aircraft)}
             <br />
-            {aircraftLogs(this.state.logs)}
+            <ServiceRecord logs={this.state.logs} />
           </Drawer.Body>
           <Drawer.Footer>
             <Button onClick={() => this.props.onClick('cancel', null)} appearance="primary">Confirm</Button>
@@ -149,28 +136,6 @@ function aircraftSystems(aircraft) {
         ))}
       </ul>
     </Panel>
-  )
-}
-
-function aircraftLogs(logs) {
-  let s = logs.length !== 1 ? 's' : '';
-  return(
-  <Panel header={`Service Record - ${logs.length} Report${s}`} collapsible bordered>
-    {logs.length === 0 && <p>No service record availible...</p>}
-    {logs.length >= 1 &&
-    <Timeline style={{marginLeft: '16px'}}>
-      {logs.map(log => (
-        <Timeline.Item key={log._id} style={{paddingLeft: '35px', paddingTop: '15px'}} dot={<Icon style={timelineIconStyle} icon="fighter-jet" size="2x" />}>
-          <p>Turn {log.timestamp.turnNum} | {log.timestamp.turn} - {log.timestamp.phase}</p>
-          <p><b>Type:</b> {log.logType}</p>
-          <p><b>Opponent</b> ENTER INFO HERE</p>
-          {log.logType === 'Interception' && <p><b>Frame Damage:</b> {log.atkStats.damage.frameDmg}</p>}
-          <p><b>Location:</b> {log.country.name} - {log.zone.zoneName}</p>
-          <p><b>Report:</b> {log.report}</p>
-        </Timeline.Item>
-      ))}
-  </Timeline>}
-  </Panel>
   )
 }
 
