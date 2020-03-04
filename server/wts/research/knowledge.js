@@ -10,7 +10,7 @@ const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
 const { techCost } = require('./sciState');
 
-console.log(techCost)
+//console.log(techCost)
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = [];
