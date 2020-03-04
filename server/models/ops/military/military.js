@@ -23,6 +23,34 @@ const MilitarySchema = new Schema({
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
+let Military = mongoose.model('Military', MilitarySchema);
+
+const Fleet = Military.discriminator('Fleet', new Schema({
+  type: { type: String, default: 'Fleet'},
+  stats: {
+    health: { type: Number, default: 4 },
+    healthMax: { type: Number, default: 4 },
+    attack: { type: Number, default: 0 },
+    defense: { type: Number, default: 2 },
+    localDeploy: { type: Number, default: 2 },
+    globalDeploy: { type: Number, default: 5 },
+    invasion: { type: Number, default: 2 }
+    }  
+}));
+
+const Corps = Military.discriminator('Corps', new Schema({
+  type: { type: String, default: 'Corps'},
+  stats: {
+    health: { type: Number, default: 2 },
+    healthMax: { type: Number, default: 2 },
+    attack: { type: Number, default: 0 },
+    defense: { type: Number, default: 2 },
+    localDeploy: { type: Number, default: 2 },
+    globalDeploy: { type: Number, default: 5 },
+    invasion: { type: Number, default: 2 }
+  }
+}));
+
 MilitarySchema.methods.deploy = async (unit ,country) => {
   const banking = require('../../../wts/banking/banking');
   const { Account } = require('../../gov/account');
@@ -61,8 +89,6 @@ MilitarySchema.methods.validateMilitary = function (military) {
   return Joi.validate(military, schema, { "allowUnknown": true });
 }
 
-let Military = mongoose.model('Military', MilitarySchema);
-
 function validateMilitary(military) {
   //modelDebugger(`Validating ${military.name}...`);
 
@@ -94,4 +120,4 @@ async function updateStats(id) {
   return;
 }
 
-module.exports = { Military, validateMilitary, updateStats }
+module.exports = { Military, validateMilitary, updateStats, Fleet, Corps }

@@ -1,7 +1,5 @@
 // Military Model - Using Mongoose Model
-const { Military, validateMilitary } = require('../../models/ops/military/military');
-const { Fleet } = require('../../models/ops/military/fleet');
-const { Corps } = require('../../models/ops/military/corps');
+const { Military, validateMilitary, Fleet, Corps } = require('../../models/ops/military/military');
 const { Gear } = require('../../models/gov/equipment/gear');
 const { Site } = require('../../models/sites/site');
 

@@ -17,9 +17,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Military Model - Using Mongoose Model
-const { Military, validateMilitary, updateStats } = require('../../models/ops/military/military');
-const { Fleet } = require('../../models/ops/military/fleet');
-const { Corps } = require('../../models/ops/military/corps');
+const { Military, validateMilitary, updateStats, Fleet, Corps } = require('../../models/ops/military/military');
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
@@ -149,8 +147,8 @@ async function createFleet(iData){
     code: iData.code
   }); 
 
-  //fleet.stats  = iData.stats;
-  //fleet.status = iData.status;
+  fleet.stats  = iData.stats;
+  fleet.status = iData.status;
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
@@ -244,8 +242,8 @@ async function createCorps(iData){
     code: iData.code
   }); 
 
-  //corps.stats  = iData.stats;
-  //corps.status = iData.status;
+  corps.stats  = iData.stats;
+  corps.status = iData.status;
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
@@ -339,9 +337,9 @@ async function updateFleet(iData){
   }
 
   let id = fleet._id;
-  //fleet.name  = iData.name;
-  //fleet.stats  = iData.stats;
-  //fleet.status = iData.status;
+  fleet.name  = iData.name;
+  fleet.stats  = iData.stats;
+  fleet.status = iData.status;
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
@@ -434,9 +432,9 @@ async function updateCorps(iData){
   }
 
   let id = corps._id;
-  //corps.name  = iData.name;
-  //corps.stats  = iData.stats;
-  //corps.status = iData.status;
+  corps.name  = iData.name;
+  corps.stats  = iData.stats;
+  corps.status = iData.status;
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
