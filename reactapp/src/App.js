@@ -1,7 +1,8 @@
 import React, { Component } from 'react'; // React
-import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content } from 'rsuite';
+import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import { updateEvents, clockSocket, updateSocket, gameClock } from './api'
+import playTrack from './scripts/audio';
 import jwtDecode from 'jwt-decode'
 import { gameServer } from './config';
 import axios from 'axios';
@@ -20,10 +21,8 @@ import MoshTest from './pages/mosh'; // Mosh test
 import Operations from "./pages/operations";
 import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
-import Chat from './pages/chat';
 import News from './pages/news';
 import Models from './pages/models';
-import TerrorMap from './pages/terror';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
@@ -31,6 +30,8 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css';
 // import 'rsuite/dist/styles/rsuite-dark.css';
 import './App.css';
+
+
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
@@ -103,10 +104,15 @@ class App extends Component {
       this.setState({ research });
     });
 
+    updateEvents.updateMilitary((err, military) => {
+      this.addAlert({type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
+      this.setState({ military });
+    });
+
     updateEvents.updateFacilities((err, facilities) => {
       this.addAlert({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
       this.setState({facilities})
-    })
+    });
 
     gameClock.subscribeToClock((err, clock) => {
       if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.state.team !== null) {
@@ -117,17 +123,7 @@ class App extends Component {
   }
 
   render() {
-    const { expand, active, team, login } = this.state;
-
-    // if (login === false) {
-    //   return(
-    //       <Registration
-    //         addAlert={ this.addAlert }
-    //         handleLogin={ this.handleLogin }
-    //         login={ this.state.login }
-    //       />
-    //   )
-    // }
+    const { expand, active, team } = this.state;
 
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
@@ -157,15 +153,13 @@ class App extends Component {
                   <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
                   <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
                   {/*<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>*/}
-                  {/*<Nav.Item eventKey="5" to="/comms" componentClass={NavLink} icon={<Icon icon="comments" />}>Comms</Nav.Item>*/}
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
-                  <Nav.Item eventKey="8" to="/map" componentClass={NavLink} icon={<Icon icon="map" />}>For Patrick!</Nav.Item>
                   {team !== null ? team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
                 </Nav>
               </Sidenav.Body>
             </Sidenav>
-            <NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.handleSignout} />
+            <NavToggle login={this.state.login} expand={expand} onChange={this.handleToggle} signOut={this.handleSignout} />
             </Sidebar>
             <Content>
                 <Switch>
@@ -195,6 +189,7 @@ class App extends Component {
                         aircrafts={ this.state.aircrafts }
                         military={ this.state.military }
                         alert={ this.addAlert }
+                        login={ this.state.login }
                       />
                     )} />
                     <Route path="/gov" render={(props) => (
@@ -203,6 +198,7 @@ class App extends Component {
                           teams = { this.state.teams }
                           accounts = { this.state.accounts }
                           alert={ this.addAlert }
+                          login={ this.state.login }
                       />
                     )}/>
                     <Route path="/sci" render={(props) => (
@@ -213,18 +209,14 @@ class App extends Component {
                           team={ this.state.team }
                           alert={ this.addAlert }
                           research={ this.state.research }
+                          login={ this.state.login }
                       />
                     )}/>
                     <Route path="/dip" render={(props) => (
                       <Diplomacy {...props}
                           team = { this.state.team }
                           alert={ this.addAlert }
-                      />
-                    )}/>
-                    <Route path="/comms" render={(props) => (
-                      <Chat {...props}
-                        team = { this.state.team }
-                        alert={ this.addAlert }
+                          login={ this.state.login }
                       />
                     )}/>
                     <Route path="/news" render={(props) => (
@@ -237,11 +229,13 @@ class App extends Component {
                         handleArtHide={this.handleArtHide}
                         zones={ this.state.zones }
                         countries={ this.state.countries }
+                        login={ this.state.login }
                       />
                     )}/>
                     <Route path="/control" render={(props) => (
                       <Control {...props} {...this.state}
                           alert = { this.addAlert }
+                          login={ this.state.login }
                       />
                     )}/>
                     <Route path="/editor" render={(props) => (
@@ -249,19 +243,13 @@ class App extends Component {
                           alert = { this.addAlert } 
                       />
                     )}/>
-                    <Route path="/map" render={(props) => (
-                      <TerrorMap />
-                    )}/>
-                    <Route path="/control" render={() => (
-                      <h1>Does this thing work?!</h1>
-                    )}/>
                     <Route path="/mosh" component={ MoshTest } />
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="login" />
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>
-        </Container>
+        </Container>}
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
     );
@@ -307,12 +295,13 @@ class App extends Component {
     const jwt = localStorage.getItem('token');
     const user = jwtDecode(jwt);
     this.setState({ user, login: true })
-    console.log(`${user.username} logged in...`);
+    Alert.success(`${user.username} logged in...`);
     if (user.team) {
       this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
       this.setState({ team: user.team });
       this.updateAccounts(this.state.team);
     }
+    playTrack('login');
     clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
     updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
   }
@@ -337,7 +326,7 @@ class App extends Component {
 
   handleArtHide = (article) => {
     let articles = this.state.articles;
-    console.log('in hide');
+    Alert.warning(`Hiding ${article.body} article...`);
 
     /*if(article.agency === 'BNC') {
         console.log(article.agency);

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const config = require('config');
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/milGear.json'));
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/equipment/milGear.json'));
 const gearData = JSON.parse(file);
 
 equipmentDebugger = require('debug')('app:equipment');
@@ -30,7 +30,10 @@ function Equip(gear) {
     this.prereq = gear.prereq;
     this.desc = gear.desc;
     this.category = gear.category;
-    this.stats = gear.stats
+    this.stats = gear.stats;
+    this.code  = gear.code;
+    this.unitType = gear.unitType;
+    this.buildTime = gear.buildTime;
 
     this.build = async function() {
         let newGear = new Gear(this)
@@ -43,4 +46,20 @@ function Equip(gear) {
     }
 }
 
-module.exports = { loadMilGears, gears };
+// determines if milGear is valid for passed unitType (i.e., is it in the unitType array)
+function validUnitType(unitTypeArray, testUT) {
+    let utFound = false;
+    chkLoop:
+    for (var i = 0; i < unitTypeArray.length; i++) {
+      if (unitTypeArray[i] === "Any") {
+        utFound = true;    
+        break chkLoop; 
+      } else if (unitTypeArray[i] === testUT) {
+        utFound = true;  
+        break chkLoop;
+      }
+    }
+    return utFound;
+}
+
+module.exports = { loadMilGears, gears, validUnitType };

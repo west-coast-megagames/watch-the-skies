@@ -10,6 +10,7 @@ import axios from 'axios';
 import { gameServer } from '../config';
 import ResearchLabs from './tabs/sci/researchLabs';
 import TechList from './tabs/sci/techList';
+import LoginLink from '../components/common/loginLink';
 
 class Science extends Component {
     constructor() {
@@ -52,6 +53,7 @@ class Science extends Component {
       }
       
     render() {
+        if (!this.props.login) return <LoginLink />
         const url = this.props.match.path;
         const { tab } = this.state; 
         

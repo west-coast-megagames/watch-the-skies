@@ -26,7 +26,7 @@ router.get('/', async function (req, res) {
       .populate('country', 'name')
       .populate('gear', 'name category')
       .populate('site', 'name')
-      .populate('homeBase', 'name')
+      .populate('homeBase')
     ;
     res.json(militarys);
 });
@@ -59,7 +59,7 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 router.post('/', async function (req, res) {
 
   if (gear.length == 0) {
-    await loadGears();                         // load wts/json/gear.json data into array   
+    await loadGears();                         // load wts/json/equipment/gear.json data into array   
   }
   let { name, team, country, zone, siteCode, stats, zoneCode, teamCode, countryCode, homeBase } = req.body;
   const newMilitary = new Military(
@@ -120,7 +120,7 @@ router.post('/', async function (req, res) {
       // create gear records for military and store ID in military.gear
       newMilitary.gear = [];
       for (let ger of req.body.gear) {
-        let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+        let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
         if (gerRef) {
           newGear = await new Gear(gerRef);
           await newGear.save(((err, newGear) => {
@@ -261,7 +261,7 @@ router.put('/:id', async function (req, res) {
     // create gear records for military and store ID in military.gear
     newMilitaryGear = [];
     for (let ger of req.body.gear) {
-      let gerRef = gears[gears.findIndex(gear => gear.name === ger )];
+      let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
       if (gerRef) {
         newGear = await new Gear(gerRef);
         await newGear.save(((err, newGear) => {
@@ -296,7 +296,7 @@ router.put('/:id', async function (req, res) {
       .populate('zone', 'zoneName')
       .populate('country', 'name')
       .populate('site', 'name')
-      .populate('homeBase', 'name');
+      .populate('homeBase');
 
     res.status(200).json(military);
     console.log(`Military ${req.params.id} updated...`);

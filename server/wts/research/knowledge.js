@@ -10,7 +10,7 @@ const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
 const { techCost } = require('./sciState');
 
-console.log(techCost)
+//console.log(techCost)
 
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = [];
@@ -27,7 +27,7 @@ async function loadGlobalVariables () {
         let el = { team: team._id, progress: 0 }
         progress.push(el);
     }
-    knowledgeDebugger(progress);
+    // knowledgeDebugger(progress);
     tp = progress;
     controlTeam = control;
 }

@@ -6,6 +6,7 @@ const spacecraftDataIn = JSON.parse(file);
 const spacecraftDebugger = require('debug')('app:spacecraftLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 require ('winston-mongodb');
+const { convertToDms } = require('../../util/systems/geo');
 
 const supportsColor = require('supports-color');
 
@@ -17,13 +18,10 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Spacecraft Model - Using Mongoose Model
-const { Spacecraft, validateSpacecraft } = require('../../models/sites/spacecraft');
+const { Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
-const { Facility } = require('../../models/gov/facility/facility');
-const { Lab } = require('../../models/gov/facility/lab');
-const { Hanger } = require('../../models/gov/facility/hanger');
-const { Factory } = require('../../models/gov/facility/factory');
+const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');
 const { Zone } = require('../../models/zone');
 
 const app = express();
@@ -68,12 +66,14 @@ async function loadSpacecraft(iData){
     let spacecraft = await Spacecraft.findOne( { name: iData.name } );
     if (!spacecraft) {
       // New Spacecraft here
+      let newLatDMS = convertToDms(iData.latDecimal, false);
+      let newLongDMS = convertToDms(iData.longDecimal, true); 
       let spacecraft = new Spacecraft({ 
         name: iData.name,
         siteCode: iData.code,
         geoDMS: { 
-        latDMS: iData.latDMS,
-        longDMS: iData.longDMS
+        latDMS: newLatDMS,
+        longDMS: newLongDMS
         },
         geoDecimal: {
          latDecimal: iData.latDecimal,
@@ -162,6 +162,8 @@ async function loadSpacecraft(iData){
       // Existing Spacecraft here ... update
       let id = spacecraft._id;
       
+      let newLatDMS = convertToDms(iData.latDecimal, false);
+      let newLongDMS = convertToDms(iData.longDecimal, true); 
       spacecraft.name         = iData.name;
       spacecraft.siteCode     = iData.code;
       spacecraft.baseDefenses = iData.baseDefenses;
@@ -170,6 +172,10 @@ async function loadSpacecraft(iData){
       spacecraft.status       = iData.status;
       spacecraft.stats        = iData.stats;
       spacecraft.hidden       = iData.hidden;
+      spacecraft.latDMS       = newLatDMS;
+      spacecraft.longDMS      = newLongDMS;
+      spacecraft.latDecimal   = iData.latDecimal;
+      spacecraft.longDecimal  = iData.longDecimal;
 
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  

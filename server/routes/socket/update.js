@@ -9,6 +9,7 @@ const { getAircrafts } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
 const Research = require('../../models/sci/research');
 const { Facility } = require('../../models/gov/facility/facility')
+const { Military } = require('../../models/ops/military/military')
 
 module.exports = function(io) {
     let UpdateClients = new SocketServer
@@ -62,5 +63,19 @@ module.exports = function(io) {
         .populate('research')
         .populate('equipment');
         updateSocket.emit('updateFacilities', facilities);
+    })
+
+    nexusEvent.on('updateMilitary', async () => {
+        socketDebugger('Event: Updating Military...')
+        let military = await Military.find()
+        .sort({team: 1})
+        .populate('team', 'name shortName')
+        .populate('zone', 'zoneName')
+        .populate('country', 'name')
+        .populate('gear', 'name category')
+        .populate('site', 'name')
+        .populate('homeBase')
+      ;
+        updateSocket.emit('updateMilitary', military);
     })
 }

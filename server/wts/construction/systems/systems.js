@@ -1,7 +1,7 @@
 const fs = require('fs')
 const config = require('config');
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/systems.json'));
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/equipment/systems.json'));
 const systemData = JSON.parse(file);
 
 systemsDebugger = require('debug')('app:systems');
@@ -30,7 +30,10 @@ function Sys(system) {
     this.prereq = system.prereq;
     this.desc = system.desc;
     this.category = system.category;
-    this.stats = system.stats
+    this.stats = system.stats;
+    this.code  = system.code;
+    this.unitType = system.unitType;
+    this.buildTime = system.buildTime;
 
     this.build = async function() {
         let newSystem = new System(this)
@@ -43,4 +46,20 @@ function Sys(system) {
     }
 }
 
-module.exports = { loadSystems, systems };
+// determines if system is valid for passed unitType (i.e., is it in the unitType array)
+function validUnitType(unitTypeArray, testUT) {
+  let utFound = false;
+  chkLoop:
+  for (var i = 0; i < unitTypeArray.length; i++) {
+    if (unitTypeArray[i] === "Any") {
+      utFound = true;    
+      break chkLoop; 
+    } else if (unitTypeArray[i] === testUT) {
+      utFound = true;  
+      break chkLoop;
+    }
+  }
+  return utFound;
+}
+
+module.exports = { loadSystems, systems, validUnitType };

@@ -1,6 +1,8 @@
 const reportDebugger = require('debug')('app:reports');
 const ResearchLog = require('../../models/logs/researchLog');
 const ReconLog = require('../../models/logs/reconLog');
+const DeployLog = require('../../models/logs/deployLog');
+const CrashLog = require('../../models/logs/crashLog');
 
 // Function that makes a timestamp for log files
 function makeTimestamp() {
@@ -181,4 +183,35 @@ class CrashReport {
     }
 }
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport };
+class DeploymentReport {
+    constructor() {
+        this.team = {}
+        this.units = []
+        this.site = {}
+        this.country = {}
+        this.zone = {}
+        this.cost = 0,
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Deployment report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new DeployLog({...timestamp,...this});
+
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Deployment Log Error: ${err}`);
+            return
+        }
+    }
+}
+
+
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport };

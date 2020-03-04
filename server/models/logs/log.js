@@ -14,4 +14,4 @@ const LogSchema = new Schema({
     team: { type: Schema.Types.ObjectId, ref: 'Team'}
 });
 
-module.exports = Log = mongoose.model('log', LogSchema);
+module.exports = Log = mongoose.model('Log', LogSchema);

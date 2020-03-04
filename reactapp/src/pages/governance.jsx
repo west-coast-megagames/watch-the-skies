@@ -3,6 +3,7 @@ import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
+import LoginLink from '../components/common/loginLink';
 
 import Budget from './tabs/gov/budget';
 import Timeline from '../components/timeline';
@@ -21,6 +22,7 @@ class Governance extends Component {
     };
 
     render() {
+        if (!this.props.login) return <LoginLink />
         const url = this.props.match.path;
         const { tab } = this.state; 
 

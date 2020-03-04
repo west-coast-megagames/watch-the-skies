@@ -104,7 +104,7 @@ class Knowledge extends Component {
                     <Column align='center' width={100}>
                         <HeaderCell>Global Level</HeaderCell>
                         <Cell>{rowData => {
-                            console.log("ROWDATA=",rowData);
+//                            console.log("ROWDATA=",rowData);
                             let currentLevel = rowData.research.level - 1;
                             return(
                                 <Tag color='green'>{currentLevel}</Tag>
@@ -117,7 +117,7 @@ class Knowledge extends Component {
                             let progress = rowData.research.progress;
                             let percent = progress / this.props.techCost[rowData.research.level] * 100
                             return(
-                                <Progress.Line percent={progress} />
+                                <Progress.Line percent={percent} />
                         )}}</Cell>
 
                     </Column>

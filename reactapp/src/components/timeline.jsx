@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Timeline, Alert, CheckPicker } from 'rsuite';
-import { transactionLog, interceptLog, researchLog } from '../components/common/logs'
+import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from '../components/common/logs'
 import { gameServer } from '../config';
 
-const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deployment' }]
+const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deployment' }, { value: 'Crash' }]
 
 class GameTimeline extends Component {
     state = {
@@ -55,9 +55,11 @@ class GameTimeline extends Component {
                 {count === 0 && <h4>No timeline for the game.</h4>}
                 {count > 0 && <Timeline className='game-timeline'>
                     {this.state.filteredLogs.map(log => {
-                        if (log.logType === 'Interception') return interceptLog(log);
-                        if (log.logType === 'Transaction') return transactionLog(log);
-                        if (log.logType === 'Research') return researchLog(log);
+                        if (log.logType === 'Interception') return (<InterceptLog key={log._id} log={log} />)
+                        if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
+                        if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />)
+                        if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />)
+
                     })}
                 </Timeline>}
             </React.Fragment>

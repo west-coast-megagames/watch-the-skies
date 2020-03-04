@@ -3,6 +3,7 @@ import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileContract, faHandsHelping, faUniversity, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import { Switch, Route, NavLink, Redirect } from 'react-router-dom';
+import LoginLink from '../components/common/loginLink';
 
 class Diplomacy extends Component {
     constructor() {
@@ -18,6 +19,7 @@ class Diplomacy extends Component {
     }
 
     render() {
+        if (!this.props.login) return <LoginLink history={this.props.history} />
         const url = this.props.match.path;
         const { tab } = this.state; 
 

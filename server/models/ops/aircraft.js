@@ -5,7 +5,8 @@ const Joi = require('joi');
 
 const AircraftSchema = new Schema({
   model: { type: String, default: 'Aircraft'},
-  type: { type: String, min: 2, maxlength: 50, default: 'Interceptor'},
+  type: { type: String, min: 2, maxlength: 50, 
+          enum:['Interceptor', 'Transport', 'Decoy', 'Fighter' ], default: 'Interceptor'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   zone: { type: Schema.Types.ObjectId, ref: 'Zone'},
@@ -34,7 +35,8 @@ const AircraftSchema = new Schema({
     cargo: { type: Number, default: 0 },
     passiveRolls: [Number],
     activeRolls: [Number]
-  }
+  },
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 AircraftSchema.methods.launch = async (aircraft, mission) => {

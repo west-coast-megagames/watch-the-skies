@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { gameServer } from '../../config';
+
 import axios from 'axios';
 
 import { Table } from 'rsuite';

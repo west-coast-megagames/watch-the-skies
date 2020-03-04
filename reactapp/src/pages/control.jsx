@@ -8,6 +8,7 @@ import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 import { gameServer } from '../config';
 import LogList from '../components/common/logList';
 import MilitaryControl from './tabs/control/militaryControl';
+import LoginLink from '../components/common/loginLink';
 
 class Control extends Component {
 
@@ -20,6 +21,7 @@ class Control extends Component {
     }
 
     render() {
+        if (!this.props.login) return <LoginLink />
         const url = this.props.match.path;
         const { tab } = this.state; 
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'; // React import
 import { Nav, Container, Header, Content } from 'rsuite';
-import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
 import SubNews from './tabs/news/subNews';
+import LoginLink from '../components/common/loginLink';
 
 class News extends Component {
     state = {
@@ -16,10 +17,12 @@ class News extends Component {
     }
 
     render() {
+        if (!this.props.login) return <LoginLink />
+
         const url = this.props.match.path;
         const { tab } = this.state; 
 
-         return (
+        return (
         <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>

@@ -27,11 +27,11 @@ const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 				<div style={{fontSize: 16, color: 'red'	}} >DESTROYED</div>
 			</Cell>
 		);
-	} else if (!rowData.status.damaged) {
+	} else if (rowData.status.damaged) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
-					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick()} disabled={rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick()} disabled={!rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
 				</div> 
 			</Cell>
 		);
