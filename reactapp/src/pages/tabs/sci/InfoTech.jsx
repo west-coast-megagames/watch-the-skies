@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Drawer, Button, Table } from 'rsuite'
+import { Drawer, Button, Table, Whisper, Icon, IconButton, Popover } from 'rsuite'
 import SciIcon from './../../../components/common/sciencIcon';
 const { Column, HeaderCell, Cell } = Table;
 
@@ -22,7 +22,7 @@ class InfoTech extends Component {
 
         return (
             <Drawer
-                size='md'
+                size='lg'
                 show={this.props.show}
                 onHide={() => this.props.onClick('cancel', null)}
             >
@@ -86,7 +86,22 @@ class InfoTech extends Component {
                             </Cell>
                         </Column>
                         
-                        <Column verticalAlign='middle' width={350}>
+                        <Column verticalAlign='middle' width={50}>
+                            <HeaderCell>Info</HeaderCell>
+                            <Cell>
+                            {rowData => {
+                                return (
+                                    <div>
+                                        <Whisper placement="top" speaker={infoSpeaker(rowData.name, rowData.prereq)} trigger="click">
+                                            <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+                                        </Whisper>
+                                    </div>
+                                )
+                            }}
+                            </Cell>
+                        </Column>
+
+                        <Column verticalAlign='middle' width={375}>
                             <HeaderCell>Description</HeaderCell>
                             <Cell dataKey="desc" />
                         </Column>
@@ -100,6 +115,15 @@ class InfoTech extends Component {
             </Drawer>
         );
     }
-
 }
+
+const infoSpeaker = (title, theoreticalPrereqs) => {
+    let fullTitle = "'" + title + "' Prerequisites";
+    return (
+        <Popover title={fullTitle} >
+            <p>Place all the prereqs here</p>
+        </Popover>
+    )
+}
+
 export default InfoTech;
