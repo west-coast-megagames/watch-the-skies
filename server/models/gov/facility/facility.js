@@ -11,6 +11,7 @@ const FacilitySchema = new Schema({
   equipment: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   capacity: { type: Number },
   status: {
+    repair: { type: Boolean, default: true },
     damaged: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     secret: { type: Boolean, default: false }
