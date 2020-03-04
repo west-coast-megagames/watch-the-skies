@@ -19,11 +19,11 @@ function getTechTree() {
 
 async function techSeed() {
     for await (let research of await Research.find({'status.completed': true})) {
-        console.log(`JESSICA - FIX MEEH: ${research.name}`)
+        // console.log(`JESSICA - FIX MEEH: ${research.name}`)
         for await (let tech of research.unlocks) {
-            console.log(tech)
+            // console.log(tech)
             let newTech = techTree.find(el => el.code === tech.code);
-            console.log(newTech)
+            // console.log(newTech)
             await newTech.checkAvailable();
         }
     }
@@ -35,11 +35,12 @@ async function loadTech () {
     let count = 0;
 
     await techData.forEach(tech => {
-        techTreeDebugger(tech);
+        // techTreeDebugger(tech);
         techTree[count] = new Technology(tech);
         count++;
     });
 
+    techTreeDebugger(`${count} technology loaded into tech tree...`)
     return `${count} technology loaded into tech tree...`
 };
 

@@ -38,10 +38,10 @@ async function loadKnowledge () {
 
     await knowledgeData.forEach(knowledge => {
         knowledgeTree[count] = new Knowledge(knowledge);
-        knowledgeDebugger(`${knowledge.name} Loaded...`)
+        // knowledgeDebugger(`${knowledge.name} Loaded...`)
         count++;
     });
-
+    knowledgeDebugger(`${count} knowledge loaded into tree...`)
     return `${count} knowledge loaded into tree...`
 };
 
