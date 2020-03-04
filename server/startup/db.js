@@ -5,11 +5,11 @@ const config = require('config');
 // DB Config | Saved in the config folder | Mogoose Key
 const dbURI = require('../config/keys').mongoURI;
 const mongoOptions =  {
-    useNewUrlParser: true,
     dbName: config.get('dbName'),
     useFindAndModify: false,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true
 };
 
 module.exports = function () {
