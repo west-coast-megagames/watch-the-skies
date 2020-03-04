@@ -3,6 +3,7 @@ import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, 
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { newLabCheck, getLabPct } from './../../../scripts/labs';
+import BalanceHeader from '../../../components/common/BalanceHeader';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -172,12 +173,11 @@ class ResearchLabs extends Component {
 
 		return(
 			<div>
-				<Affix>
-      				<h5 style={{display: 'inline'}}>Research Lab Assignment</h5>
-					<Tag style={{display: 'inline', float: 'right'}} color="green">$ { account.balance } MB</Tag>
-					<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} >Current Science Account Balance:</h6>
-					<hr />
-    			</Affix>
+				<BalanceHeader 
+					accounts={this.props.accounts}
+					code={"SCI"}
+					title={"Research Lab Assignment"}
+				/>
 				<Table
 					autoHeight
 					rowHeight={50}
@@ -253,7 +253,7 @@ class ResearchLabs extends Component {
 									step={1} 
 									style={{ width: 140 } }
 									onChange={ handleChange }
-									/>
+								/>
 							)}}
 						</Cell>
 					</Column>
@@ -319,11 +319,11 @@ class ResearchLabs extends Component {
 		if (labs.length !== 0) {
 			labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
 
-			// check for damaged labs.  If any exist, add a research called "Repair"
-			const damagedLabs = labs.findIndex(el => el.status.damaged && !el.status.destroyed);
-			if (damagedLabs >= 0) {
-				research.push(repairEntry);
-			}
+//			// check for damaged labs.  If any exist, add a research called "Repair"
+//			const damagedLabs = labs.findIndex(el => el.status.damaged && !el.status.destroyed);
+//			if (damagedLabs >= 0) {
+//				research.push(repairEntry);
+//			}
 			this.setState({labs});
 		}
 		let account = this.props.accounts.filter(el => el.code === 'SCI');

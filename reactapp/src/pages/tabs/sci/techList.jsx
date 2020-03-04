@@ -3,6 +3,7 @@ import { Table, Icon, Button, Progress, Affix } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';
+import BalanceHeader from '../../../components/common/BalanceHeader';
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture'];
 
@@ -49,18 +50,11 @@ class TechList extends Component {
 
         return (            
             <div>
-                
-                <Affix>
-                {/*}
-                    <SciIcon size={50} level={0} />
-                    <SciIcon size={45} level={1} />
-                    <SciIcon size={100} level={2} />
-                    <SciIcon size={100} level={3} />
-                    <Icon icon="spinner" spin />
-                    <Icon icon={sci1logo} size="lg" />
-                    <hr />
-                */}
-                </Affix>
+				<BalanceHeader 
+					accounts={this.props.accounts}
+					code={"SCI"}
+					title={"Currently Known Applied Technologies"}
+				/>
                 <React.Fragment>
                     <Table
                         isTree

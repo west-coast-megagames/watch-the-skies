@@ -29,12 +29,9 @@ class Science extends Component {
     }
 
     async loadScience() {
-        // const {data: rawData} = await axios.get(`${gameServer}api/research`);  // research.data is stored in variable "allResearch"
-        const { data } = await axios.get(`${gameServer}api/research/sciState`);  // DREW - data includes fundingCost and techCost array
+        const { data } = await axios.get(`${gameServer}api/research/sciState`);  
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
-        // const allResearch = this.removeDuplicates(rawData, 'name');
-        // console.log('DUPREMOVE=', allResearch);
         this.setState({ techCost, fundingCost });
     }
 
@@ -78,25 +75,12 @@ class Science extends Component {
                         <Labs    
                             team={ this.props.team }
                             allResearch={this.props.research}
-                            //accounts={ this.props.accounts }
-                            //alert={ this.props.alert }
-                        />
-                    )}/>
-                    <Route path={`${url}/Tech List`}  render={() => (
-                        <TechList    
-                        team={ this.props.team }
-                        allResearch={this.props.research}
-                        techCost={this.state.techCost}
-                        //accounts={ this.props.accounts }
-                        //alert={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
                         team={ this.props.team }
                         allResearch={this.props.research}
-                        //accounts={ this.props.accounts }
-                        //alert={ this.props.alert }
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
@@ -117,6 +101,14 @@ class Science extends Component {
                             accounts={this.props.accounts}
                             techCost={this.state.techCost}
                             
+                        />
+                    )}/>
+                    <Route path={`${url}/Tech List`}  render={() => (
+                        <TechList    
+                        team={ this.props.team }
+                        allResearch={this.props.research}
+                        techCost={this.state.techCost}
+                        accounts={this.props.accounts}
                         />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
