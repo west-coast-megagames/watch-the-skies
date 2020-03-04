@@ -1,9 +1,10 @@
-let { Aircraft } =  require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/ops/aircraft');
+const { Facility } = require('../../models/gov/facility/facility');
 const nexusEvent = require('../../startup/events');
 const Debugger = require('debug')('app:construction:repair');
 
 async function repairSequence () {
-    for (let aircraft of await Aircraft.find()) {
+    for await (let aircraft of await Aircraft.find({'status.repair': true})) {
         if (aircraft.status.repair) {
             Debugger(`${aircraft.name} is being repaired...`);
             aircraft.stats.hull = aircraft.stats.hullMax;
@@ -14,10 +15,16 @@ async function repairSequence () {
 
             await aircraft.save();
             nexusEvent.emit('updateAircraft');
-
         }
-
     }
+    for (let structure of await Facility.find({'status.repair': true})) {
+        if (structure.status.repair) {
+            structure.status.repair = false;
+            structure.save();
+            Debugger(`${structure.name} is being repaired...`);
+        }
+    }
+
 }
 
 module.exports = repairSequence;
