@@ -2,13 +2,22 @@ import React, { Component } from 'react';
 import { Table, Icon, Button } from 'rsuite';
 const { HeaderCell, Cell, Column } = Table;
 
-class GlobalOps extends Component {
+class ExcomOps extends Component {
     state = {
-        data: []
+        data: [],
+        count: 0
     }
 
     componentDidMount() {
+        let count = this.props.aircrafts.filter(el => el.status.deployed === true);
         this.loadTable();
+        this.setState({count})
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.count !== prevState.count) {
+            this.loadTable();
+        }
     }
 
     render() { 
@@ -44,7 +53,7 @@ class GlobalOps extends Component {
 
                     <Column flexGrow={4}>
                         <HeaderCell>Information</HeaderCell>
-                        <Cell dataKey="globeinfo" />
+                        <Cell dataKey="info" />
                     </Column>
 
                     <Column flexGrow={2}>
@@ -64,26 +73,30 @@ class GlobalOps extends Component {
 
     loadTable() {
         let data = []
-        let military = this.props.military.filter(el => el.__t === 'Military');
+        let contacts = this.props.aircrafts.filter(el => el.team.name !== this.props.team.name && el.status.deployed === true)
         let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
+
         for (let zone of zones) {
+            console.log(zone)
             zone.children = []
             zone.name = zone.zoneName
-            zone.type = 'zone'
-            for (let unit of military) {
+            zone.type = 'Zone'
+            zone.children = []
+            for (let unit of contacts) {
                 let checkZone = zone;
                 console.log(unit)
                 console.log(checkZone)
                 if (unit.zone.zoneName === checkZone.zoneName) {
-                    unit.type = 'unit'
-                    unit.info = `Health ${unit.stats.health}/${unit.stats.healthMax} | Attack: ${unit.stats.attack} | Defense: ${unit.stats.defense}`;
+                    unit.type = unit.type
+                    unit.info = `Contact information?`;
                     zone.children.push(unit);
                 }
             }
+            zone.info = `${zone.children.length} contacts being tracked in ${zone.zoneName}`
             data.push(zone);
         }
         this.setState({ data })
     };
-}
+};
  
-export default GlobalOps;
+export default ExcomOps;

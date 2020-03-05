@@ -9,6 +9,7 @@ const { TheoryReport } = require('../reports/reportClasses');
 // Technology Constructor Function
 function Technology(tech) {
   this.name = tech.name;
+  this.type = tech.type;
   this.level = tech.level;
   this.code = tech.code;
   this.prereq = tech.prereq;
