@@ -1,38 +1,49 @@
-import React, { Component } from 'react'; // React import
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
-import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFlask, faAtom, faVials, faTools, faMicrochip } from '@fortawesome/free-solid-svg-icons'
+import React, { Component } from 'react'; // React import - used for react rendering
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom'; // React router for URL links
+import { gameServer } from '../config'; // Used for the current server URL.
+import axios from 'axios'; // Axios import - used for HTTP calls
+import { updateEvents } from '../api' // Socket.IO commands - used for socket communication with server
+
+// Science Tabs
 import Labs from '../pages/tabs/sci/labs';
 import Knowledge from '../pages/tabs/sci/knowledge';
 import Salvage from '../pages/tabs/sci/salvage';
-import axios from 'axios';
-import { gameServer } from '../config';
 import ResearchLabs from './tabs/sci/researchLabs';
 import TechList from './tabs/sci/techList';
+
+// Components
+import { Nav, Container, Header, Content, Icon, Alert } from 'rsuite'; // rsuite common components
 import LoginLink from '../components/common/loginLink';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome Icon
+import { faFlask, faAtom, faMicrochip } from '@fortawesome/free-solid-svg-icons' // Font awesome symbols
 
 class Science extends Component {
     constructor() {
         super();
         this.state = {
           tab: 'dashboard',
-          allResearch : [],
+          research : [],
           fundingCost: [],
           techCost: []
         };
         this.handleSelect = this.handleSelect.bind(this);
+        this.loadScience = this.loadScience.bind(this);
     }
 
     componentDidMount() {
         this.loadScience();
+        updateEvents.updateResearch((err, research) => {
+            Alert.success('Research Update - The current state of research has been updated...')
+            this.setState({ research });
+          });
     }
 
     async loadScience() {
-        const { data } = await axios.get(`${gameServer}api/research/sciState`);  
+        const { data } = await axios.get(`${gameServer}api/research/sciState`);
+        let { data: research } = await axios.get(`${gameServer}api/research`);  // Axios call to server for all research
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
-        this.setState({ techCost, fundingCost });
+        this.setState({ techCost, fundingCost, research });
     }
 
     getActive(element) {
@@ -74,18 +85,18 @@ class Science extends Component {
                     <Route path={`${url}/research`}  render={() => (
                         <Labs    
                             team={ this.props.team }
-                            allResearch={this.props.research}
+                            allResearch={this.state.research}
                         />
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
                         team={ this.props.team }
-                        allResearch={this.props.research}
+                        allResearch={this.state.research}
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
                         <ResearchLabs 
-                            allResearch={this.props.research}
+                            allResearch={this.state.research}
                             facilities={this.props.facilities}
                             team={this.props.team}
                             techCost={this.state.techCost}
@@ -96,7 +107,7 @@ class Science extends Component {
                     <Route path={`${url}/Knowledge`} render={() => (
                         <Knowledge    
                             team={ this.props.team }
-                            allResearch={this.props.research}
+                            allResearch={this.state.research}
                             facilities={this.props.facilities}
                             accounts={this.props.accounts}
                             techCost={this.state.techCost}
@@ -106,7 +117,7 @@ class Science extends Component {
                     <Route path={`${url}/Tech List`}  render={() => (
                         <TechList    
                         team={ this.props.team }
-                        allResearch={this.props.research}
+                        allResearch={this.state.research}
                         techCost={this.state.techCost}
                         accounts={this.props.accounts}
                         />
