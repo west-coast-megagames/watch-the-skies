@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, IconButton, Icon } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { newLabCheck, getLabPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 
 const { Column, HeaderCell, Cell } = Table;
+const labRepairCost = 5;
 
 
 function findTechByID(_id, allResearch) {
@@ -21,18 +22,17 @@ function findTechByID(_id, allResearch) {
 }
 
 const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
-
 	if ( rowData.status.destroyed) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 16, color: 'red'	}} >DESTROYED</div>
 			</Cell>
 		);
-	} else if (rowData.status.damaged) {
+	} else if (!rowData.status.damaged) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
-					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick()} disabled={!rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick(rowData)} disabled={rowData.status.damaged} icon={<Icon icon="wrench" />}>${labRepairCost} MB</IconButton></span>}
 				</div> 
 			</Cell>
 		);
@@ -59,13 +59,19 @@ class ResearchLabs extends Component {
 	constructor() {
 		super();
 		this.state = {
-			research: [],
-			labs : [],
-			account: {}
+			research: [],			// Array of research that this team has visible
+			labs : [],				// Array of all the labs this team owns
+			account: {},			// Account of SCI for the current team
+			showModal: false,		// Boolean to tell whether to open the Repair Modal
+			repairLab: {}			// Obj that holds the lab to repair
 		}
 		this.handleLabUpdate = this.handleLabUpdate.bind(this);
 		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
 		this.confirmSubmit = this.confirmSubmit.bind(this);
+		this.repair = this.repair.bind(this);
+		this.open = this.open.bind(this);
+		this.close = this.close.bind(this);
+		this.submitRepair = this.submitRepair.bind(this);
 	}
 	
 
@@ -98,12 +104,7 @@ class ResearchLabs extends Component {
 			if (result === -1) {				// New Entry	
 				Alert.warning(`Lab ${lab._id} does not exist!!`, 6000)
 			} else {							// Existing Entry
-//				console.log("fundingcost=",this.props.fundingCost);
-//				console.log("balance=",this.state.account.balance);
-//				console.log("funding=",labs[result].funding);
 				let cost = this.props.fundingCost[(labs[result].funding)];
-//				console.log("COST=",cost);
-			
 				let account = this.state.account;
 				if (account.balance < cost) {
 					Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
@@ -155,12 +156,9 @@ class ResearchLabs extends Component {
 		if (prevProps !== this.props) {
 			this.teamFilter();
 		}
-
-	
 	}
 	
 
-	  
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
@@ -168,8 +166,6 @@ class ResearchLabs extends Component {
 		let sendLabUpdate = this.handleLabUpdate;
 		let sendFundingUpdate = this.handleFundingUpdate;
 		let confirmSubmit = this.confirmSubmit;
-
-
 
 		return(
 			<div>
@@ -284,33 +280,83 @@ class ResearchLabs extends Component {
 						</Cell>
 					</Column>
                 </Table>
+				<div>
+							<Modal show={this.state.showModal} onHide={this.close}>
+								<Modal.Header>
+									<Modal.Title>Repair {this.state.repairLab.name}</Modal.Title>
+								</Modal.Header>
+								<Modal.Body>
+									<p>Are you sure that you want to spend ${labRepairCost} MB to repair {this.state.repairLab.name}?</p>
+								</Modal.Body>
+								<Modal.Footer>
+									<Button onClick={this.submitRepair} appearance="primary">Ok</Button>
+									<Button onClick={this.close} appearance="subtle">Cancel</Button>
+								</Modal.Footer>
+							</Modal>
 
+				</div>
 			</div>
     	);
 	}
-	  
-	repair = async () => {
-//		if (this.props.account.balance < 2) Alert.warning(`Lack of Funds: You need to transfer funds to your operations account to repair ${this.props.aircraft.name}`)
+	
+	// Function to close the MODAL when repair is canceled or submitted
+	close() {
+		this.setState({ showModal: false });
+	}
+		
+	// Function to open the MODAL when repair of lab is requested
+	open(lab) {
+		this.setState({ 
+			showModal: true,
+			repairLab: lab
+		});
+	}
+
+	// Function to submit the AXIOS calls to repair a damaged lab
+	submitRepair() {		// NOTE TODO: This is so much like ConfirmSubmit - make it a function
 		try {
-//			  let response = await axios.put(`${gameServer}game/repairAircraft/`, {_id: this.props.aircraft._id});
-//			  console.log(response.data)
-//			  Alert.success(response.data);
-			Alert.success("REPAIRING...");
-		} catch (err) {
-			  console.error(err.message)
+			let labs = this.state.labs;
+			let repairLab = this.state.repairLab;
+
+			const result = newLabCheck(repairLab._id, labs);
+			if (result === -1) {				// New Entry	
+				Alert.warning(`Lab ${repairLab._id} does not exist!!`, 6000)
+			} else {							// Existing Entry			
+				let account = this.state.account;
+
+				// For withdrawal, need to provide an object with
+				// account_id, note, amount
+				const txn = {
+					account_id : account._id,
+					note : `Repair of science lab ${repairLab.name} for team ${repairLab.team.shortName}`,
+					amount : labRepairCost
+				}
+//					const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+//					Alert.success(mytxn.data, 4000)
+				Alert.success(`Successfully repaired ${repairLab.name}`, 4000);
+				console.log("SUCCESS!  TXN=",txn);
+			}
+		} catch (err) { 
+			console.log(err)
+			// Alert.error(err.data, 4000)
+		};
+
+		this.close();
+	}
+		
+	// Function is called when the repair button is pressed.  Essentially, it opens up the Modal if there are enough funds to cover a repair
+	repair = async (lab) => {
+		if (this.state.account.balance < labRepairCost) {
+			Alert.warning(`Lack of Funds: You need sufficient funds ($${labRepairCost} MB) in your SCI account to repair ${lab.name}`,5000);
+			console.log("Lack of Funds: You need to transfer funds to your SCI account to repair",lab.name);
+		} else {
+			this.open(lab);
 		}
 	}
 	
-	teamFilter = () => {
-		// Fake research entry for repairing a lab
-		const repairEntry = {
-			_id: "repair",
-			type: "Repair",
-			team: this.props.team._id,
-			name: "Repair Lab $5MB",
-			field: "Repair"
-		}
 
+	// Function run at start.  Initializes research, labs, and account states by this team
+	teamFilter = () => {
 		let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
 		if (research.length !== 0) {
 			this.setState({research});
@@ -318,12 +364,6 @@ class ResearchLabs extends Component {
 		let labs = this.props.facilities.filter(el => el.team !== null);
 		if (labs.length !== 0) {
 			labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
-
-//			// check for damaged labs.  If any exist, add a research called "Repair"
-//			const damagedLabs = labs.findIndex(el => el.status.damaged && !el.status.destroyed);
-//			if (damagedLabs >= 0) {
-//				research.push(repairEntry);
-//			}
 			this.setState({labs});
 		}
 		let account = this.props.accounts.filter(el => el.code === 'SCI');
@@ -331,7 +371,6 @@ class ResearchLabs extends Component {
 			account = account[0];
 			this.setState({account});
 		}
-		
 	}
 }
 

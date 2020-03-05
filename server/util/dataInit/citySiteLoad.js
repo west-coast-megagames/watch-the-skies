@@ -5,6 +5,8 @@ const cityDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const citySiteLoadDebugger = require('debug')('app:citySiteLoad');
 const { convertToDms } = require('../../util/systems/geo');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -28,8 +30,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 async function runcitySiteLoad(runFlag){
-  try {  
-    //citySiteLoadDebugger("Jeff in runcitySiteLoad", runFlag);    
+  try {    
     if (!runFlag) return false;
     if (runFlag) {
       await deleteAllCitys(runFlag);
@@ -37,28 +38,32 @@ async function runcitySiteLoad(runFlag){
     }
     return true;
   } catch (err) {
-    citySiteLoadDebugger('Catch runcitySiteLoad Error:', err.message);
+    logger.error(`Catch runcitySiteLoad Error: ${err.message}`);
     return; 
   }
 };
 
 async function initLoad(doLoad) {
-  
-  //citySiteLoadDebugger("Jeff in initLoad", doLoad, cityDataIn.length);    
+   
   if (!doLoad) return;
 
   for (let i = 0; i < cityDataIn.length; ++i ) {
-    
-    //citySiteLoadDebugger("Jeff in runcitySiteLoad loop", i, cityDataIn[i].name );    
-    //citySiteLoadDebugger("Jeff in runcitySiteLoad loop", i, cityDataIn[i] );
     
     await loadCity(cityDataIn[i]);
   }
 };
 
 async function loadCity(iData){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+  let loadCode = "";
   try {   
     let citySite = await CitySite.findOne( { name: iData.name } );
+
+    loadName = iData.name;
+    loadCode = iData.code;
+
     if (!citySite) {
        // New City here
        let newLatDMS = convertToDms(iData.latDecimal, false);
@@ -79,35 +84,45 @@ async function loadCity(iData){
 
         let { error } = validateCity(citySite); 
         if (error) {
-          citySiteLoadDebugger("New CitySite Validate Error", iData.name, error.message);
-          return;
+          //citySiteLoadDebugger("New CitySite Validate Error", iData.name, error.message);
+          loadError = true;
+          loadErrorMsg = "Validation Error: " + error.message;
+          
+          //return;
         }
         
         if (iData.countryCode != ""){
           let country = await Country.findOne({ code: iData.countryCode });  
           if (!country) {
-            citySiteLoadDebugger("CitySite Load Country Error, New City:", iData.name, " Country: ", iData.countryCode);
+            //citySiteLoadDebugger("CitySite Load Country Error, New City:", iData.name, " Country: ", iData.countryCode);
+            loadError = true;
+            loadErrorMsg = "Country Not Found: " + iData.countryCode;
           } else {
             citySite.country = country._id;
             citySite.zone    = country.zone;
-            citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+            //citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
           }      
         }
         
         if (iData.teamCode != ""){
           let team = await Team.findOne({ teamCode: iData.teamCode });  
           if (!team) {
-            citySiteLoadDebugger("CitySite Load Team Error, New City:", iData.name, " Team: ", iData.teamCode);
+            //citySiteLoadDebugger("CitySite Load Team Error, New City:", iData.name, " Team: ", iData.teamCode);
+            loadError = true;
+            loadErrorMsg = "Team Not Found: " + iData.teamCode;
           } else {
             citySite.team = team._id;
-            citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
+            //citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
           }
         }  
-
-        await citySite.save((err, citySite) => {
-          if (err) return console.error(`New CitySite Save Error: ${err}`);
-          citySiteLoadDebugger(citySite.name + " add saved to citySite collection.");
-        });
+        if (loadError) {
+          logger.error(`City Site skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
+        } else {
+          await citySite.save((err, citySite) => {
+            if (err) return logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+            //citySiteLoadDebugger(citySite.name + " add saved to citySite collection.");
+          });
+        }
     } else {       
       // Existing City here ... update
       let id = citySite._id;
@@ -125,45 +140,53 @@ async function loadCity(iData){
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          citySiteLoadDebugger("CitySite Load Team Error, Update City:", iData.name, " Team: ", iData.teamCode);
+          //citySiteLoadDebugger("CitySite Load Team Error, Update City:", iData.name, " Team: ", iData.teamCode);
+          loadError = true;
+          loadErrorMsg = "Team not found: " + iData.teamCode;
         } else {
           citySite.team = team._id;
-          citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
+          //citySiteLoadDebugger("CitySite Load Update Team Found, City:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }  
       
       if (iData.countryCode != ""){
         let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          citySiteLoadDebugger("CitySite Load Country Error, Update City:", iData.name, " Country: ", iData.countryCode);
+          //citySiteLoadDebugger("CitySite Load Country Error, Update City:", iData.name, " Country: ", iData.countryCode);
+          loadError = true;
+          loadErrorMsg = "Country not found: " + iData.countryCode;
         } else {
           citySite.country = country._id;
           citySite.zone    = country.zone;
-          citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+          //citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 
       const { error } = validateCity(citySite); 
       if (error) {
-        citySiteLoadDebugger("CitySite Update Validate Error", iData.name, error.message);
-        return
+        //citySiteLoadDebugger("CitySite Update Validate Error", iData.name, error.message);
+        loadError = true;
+        loadErrorMsg = "Validation Error: " + error.message;
+        //return
       }
    
-      await citySite.save((err, citySite) => {
-      if (err) return console.error(`City Update Save Error: ${err}`);
-      citySiteLoadDebugger(citySite.name + " update saved to city collection.");
-      });
+      if (loadError) {
+        logger.error(`City Site skipped due to errors: ${loadCode} ${loadName} ${cittySite.sitecode} ${citySite.name}`);
+      } else {
+        await citySite.save((err, citySite) => {
+        if (err) return logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+        //citySiteLoadDebugger(citySite.name + " update saved to city collection.");
+        });
+      }
     }
   } catch (err) {
-    citySiteLoadDebugger('Catch City Error:', err.message);
+    logger.error(`Catch City Error: ${err.message}`);
     return;
-}
-
+  }
 };
 
 async function deleteAllCitys(doLoad) {
   
-  citySiteLoadDebugger("Jeff in deleteAllCitySites", doLoad);    
   if (!doLoad) return;
 
   try {

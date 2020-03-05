@@ -121,7 +121,7 @@ const infoSpeaker = (title, theoreticalPrereqs) => {
     let fullTitle = "'" + title + "' Prerequisites";
     return (
         <Popover title={fullTitle} >
-            <p>Place all the prereqs here</p>
+            <p>Prereqs are unknown for theoreticals</p>
         </Popover>
     )
 }
