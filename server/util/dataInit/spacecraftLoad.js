@@ -21,8 +21,9 @@ const bodyParser = require('body-parser');
 const { Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
-const { Facility, Lab, Hanger, Factory } = require('../../models/gov/facility/facility');
+const { Facility, Lab, Hanger, Factory, Crisis, Civilian } = require('../../models/gov/facility/facility');
 const { Zone } = require('../../models/zone');
+const { loadFacilitys, facilitys, validUnitType } = require('../../wts/construction/facilities/facilities');
 
 const app = express();
 
@@ -37,33 +38,47 @@ async function runSpacecraftLoad(runFlag){
     if (!runFlag) return false;
     if (runFlag) {
       
+      await loadFacilitys();                    // load wts/json/facilities/facilitys.json data into array 
+
       await deleteAllSpacecraft(runFlag);
       await initLoad(runFlag);
     }
     return true;
   } catch (err) {
-    spacecraftDebugger('Catch runSpacecraftLoad Error:', err.message);
+    logger.error(`Catch runSpacecraftLoad Error: ${err.message}`);
     return; 
   }
 };
 
 async function initLoad(doLoad) {
   
-  //spacecraftDebugger("Jeff in initLoad", doLoad, spacecraftDataIn.length);    
   if (!doLoad) return;
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
 
-  for (let i = 0; i < spacecraftDataIn.length; ++i ) {
-    
-    //spacecraftDebugger("Jeff in runSpacecraftLoad loop", i, spacecraftDataIn[i].name );    
-    //spacecraftDebugger("Jeff in runSpacecraftLoad loop", i, spacecraftDataIn[i] );
-    
-    await loadSpacecraft(spacecraftDataIn[i]);
+  for (let i = 0; i < spacecraftDataIn.length; ++i ) {  
+    ++recReadCount;
+    await loadSpacecraft(spacecraftDataIn[i], recCounts);
   }
+
+  logger.info(`Spacecraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
+
 };
 
-async function loadSpacecraft(iData){
+
+async function loadSpacecraft(iData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+  let loadCode = "";
   try {   
     let spacecraft = await Spacecraft.findOne( { name: iData.name } );
+    
+    loadName = iData.name;
+    loadCode = iData.code;
+
     if (!spacecraft) {
       // New Spacecraft here
       let newLatDMS = convertToDms(iData.latDecimal, false);
@@ -84,17 +99,21 @@ async function loadSpacecraft(iData){
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.teamCode);
+          //spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.teamCode);
+          loadError = true;
+          loadErrorMsg = "Team Not Found: " + iData.teamCode;
         } else {
           spacecraft.team  = team._id;
-          spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
+          //spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
         }
       }      
 
       let { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
-        return;
+        //spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
+        loadError = true;
+        loadErrorMsg = "Validation Error: " + error.message;
+        //return;
       }
       spacecraft.baseDefenses = iData.baseDefenses;
       spacecraft.shipType     = iData.shipType;
@@ -106,58 +125,100 @@ async function loadSpacecraft(iData){
       if (iData.countryCode != ""){
         let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          spacecraftDebugger("Spacecraft Load Country Error, New Spacecraft:", iData.name, " Country: ", iData.countryCode);
+          //spacecraftDebugger("Spacecraft Load Country Error, New Spacecraft:", iData.name, " Country: ", iData.countryCode);
+          loadError = true;
+          loadErrorMsg = "Country Not Found: " + iData.countryCode;
         } else {
           spacecraft.country = country._id;
           spacecraft.zone    = country.zone;
-          spacecraftDebugger("Spacecraft Load Country Found, New Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+          //spacecraftDebugger("Spacecraft Load Country Found, New Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 
-      // create facility records for spacecraft 
-      for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.facilities[i];
-        let facError = false;
-        let facType  = fac.type;
-        let facId    = null;
-        //switch not working ... using if else
-        if (facType == 'Factory') {
-          newFacility = await new Factory(fac);
-          facId = newFacility._id;
-        } else if (facType == 'Lab') {
-          newFacility = await new Lab(fac);
-          facId = newFacility._id;
-        } else if (facType == 'Hanger') {
-          newFacility = await new Hanger(fac);
-          facId = newFacility._id;
-        } else {
-          logger.error("Invalid Facility Type In spacecraft Load:", fac.type);
-          facError = true;
-        }
-         
-        if (!facError) {
-          newFacility.site = spacecraft._id;
-          newFacility.team = spacecraft.team;
-    
-          await newFacility.save(((err, newFacility) => {
-            if (err) {
-              logger.error(`New Spacecraft Facility Save Error: ${err}`);
-              return console.error(`New Spacecraft Facility Save Error: ${err}`);
+      spacecraft.facilities = [];      
+      if (!loadError) {
+
+        // create facility records for spacecraft 
+        for (let fac of iData.facilities) {
+          let facError = true;
+          let facId    = null;
+          let facRef = facilitys[facilitys.findIndex(facility => facility.code === fac.code )];
+          if (facRef) {
+            if (validUnitType(facRef.unitType, "Spacecraft")) {
+              facError     = false;
+              let facType  = facRef.type;
+              //switch not working ... using if else
+              if (facType == 'Factory') {
+                newFacility = await new Factory(facRef);
+                facId = newFacility._id;
+              } else if (facType == 'Lab') {
+                newFacility = await new Lab(facRef);
+                newFacility.sciRate = facRef.sciRate;
+                newFacility.bonus   = facRef.bonus;
+                newFacility.funding = facRef.funding;
+                facId = newFacility._id;
+              } else if (facType == 'Hanger') {
+                newFacility = await new Hanger(facRef);
+                facId = newFacility._id;
+              } else if (facType == 'Crisis') {
+                newFacility = await new Crisis(facRef);
+                facId = newFacility._id;
+              } else if (facType == 'Civilian') {
+                newFacility = await new Civilian(facRef);
+                facId = newFacility._id;
+              } else {
+                logger.error(`Invalid Facility Type In spacecraft Load: ${facRef.type}`);
+                facError = true;
+              }
+            } else {
+              logger.debug(`Error in creation of facility ${fac} for  ${spacraft.name} - wrong unitType`);
+              facError = true;
             }
-            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
-          }));
+          } else {
+            logger.debug(`Error in creation of facility ${fac} for  ${spacecraft.name}`);
+            facError = true;
+          }
+
+          if (!facError) {
+            newFacility.site = spacecraft._id;
+            newFacility.team = spacecraft.team;
+            newFacility.name = fac.name;
+      
+            await newFacility.save(((err, newFacility) => {
+              if (err) {
+                logger.error(`New Spacecraft Facility Save Error: ${err}`);
+                facError = true;
+              }
+              //spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
+            }));
+
+            if (!facError) {
+              spacecraft.facilities.push(facId);
+            }
+          }
         }
-      }  
+      }
+                 
+      if (loadError) {
+        logger.error(`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
+        delFacilities(spacecraft.facilities);
+      } else {
+        await spacecraft.save((err, spacecraft) => {
+          if (err) {
+            ++rCounts.loadErrCount;
+            delFacilities(spacecraft.facilities);
+            logger.error(`New Spacecraft Save Error: ${err}`);
+            return;
+          }
+          ++rCounts.loadCount;
+          spacecraftDebugger(`${spacecraft.name} add saved to spacecraft collection.`);
+          //updateStats(spacecraft._id);
 
-      await spacecraft.save((err, spacecraft) => {
-        if (err) return console.error(`New Spacecraft Save Error: ${err}`);
-        spacecraftDebugger(spacecraft.name + " add saved to spacecraft collection.");
-        //updateStats(spacecraft._id);
-
-        if (spacecraft.shipType === "Satellite") {
-           addSatelliteToZone(spacecraft._id, spacecraft.zone, spacecraft.team);
-        };
-      });
+          if (spacecraft.shipType === "Satellite") {
+             addSatelliteToZone(spacecraft._id, spacecraft.zone, spacecraft.team);
+          }
+        });
+      }
     } else {       
       // Existing Spacecraft here ... update
       let id = spacecraft._id;
@@ -180,76 +241,126 @@ async function loadSpacecraft(iData){
       if (iData.teamCode != ""){
         let team = await Team.findOne({ teamCode: iData.teamCode });  
         if (!team) {
-          spacecraftDebugger("Spacecraft Load Team Error, Update Spacecraft:", iData.name, " Team: ", iData.teamCode);
+          //spacecraftDebugger("Spacecraft Load Team Error, Update Spacecraft:", iData.name, " Team: ", iData.teamCode);
+          loadError = true;
+          loadErrorMsg = "Team Not Found: " + iData.teamCode;
         } else {
           spacecraft.team = team._id;
-          spacecraftDebugger("Spacecraft Load Update Team Found, Spacecraft:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
+          //spacecraftDebugger("Spacecraft Load Update Team Found, Spacecraft:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
         }
       }  
       
       if (iData.countryCode != ""){
         let country = await Country.findOne({ code: iData.countryCode });  
         if (!country) {
-          spacecraftDebugger("Spacecraft Load Country Error, Update Spacecraft:", iData.name, " Country: ", iData.countryCode);
+          //spacecraftDebugger("Spacecraft Load Country Error, Update Spacecraft:", iData.name, " Country: ", iData.countryCode);
+          loadError = true;
+          loadErrorMsg = "Country Not Found: " + iData.countryCode;
         } else {
           spacecraft.country = country._id;
           spacecraft.zone    = country.zone;
-          spacecraftDebugger("Spacecraft Load Country Found, Update Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+          //spacecraftDebugger("Spacecraft Load Country Found, Update Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
         }      
       }
 
       const { error } = validateSpacecraft(spacecraft); 
       if (error) {
-        spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
-        return
+        //spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
+        loadError = true;
+        loadErrorMsg = "Validation Error: " + error.message;
+        //return
       }
    
-      // create facility records for spacecraft
-      for (let i = 0; i < iData.facilities.length; ++i ) {
-        let fac = iData.facilities[i];
-        let facError = false;
-        let facType  = fac.type;
-        let facId    = null;
-        //switch not working ... using if else
-        if (facType == 'Factory') {
-          newFacility = await new Factory(fac);
-          facId = newFacility._id;
-        } else if (facType == 'Lab') {
-          newFacility = await new Lab(fac);
-          facId = newFacility._id;
-        } else if (facType == 'Hanger') {
-          newFacility = await new Hanger(fac);
-          facId = newFacility._id;
-        } else {
-          logger.error("Invalid Facility Type In spacecraft Load:", fac.type);
-          facError = true;
-        }
-         
-        if (!facError) {
-          newFacility.site = spacecraft._id;
-          newFacility.team = spacecraft.team;
-    
-          await newFacility.save(((err, newFacility) => {
-            if (err) {
-              logger.error(`Update Spacecraft Facility Save Error: ${err}`);
-              return console.error(`Update Spacecraft Facility Save Error: ${err}`);
+      spacecraft.facilities = [];
+      if (!loadError) {
+        // create facility records for spacecraft
+        for (let fac of iData.facilities) {
+          let facRef = facilitys[facilitys.findIndex(facility => facility.code === fac.code )];
+          let facError = true;
+          let facId    = null;
+          if (facRef) {
+            if (validUnitType(facRef.unitType, "Spacecraft")) {
+              let facType  = facRef.type;
+              facError     = false;
+              //switch not working ... using if else
+              if (facType == 'Factory') {
+                newFacility = await new Factory(facRef);
+                facId = newFacility._id;
+              } else if (facType == 'Lab') {
+                newFacility = await new Lab(facRef);
+                facId = newFacility._id;
+                newFacility.sciRate = facRef.sciRate;
+                newFacility.bonus   = facRef.bonus;
+                newFacility.funding = facRef.funding;
+              } else if (facType == 'Hanger') {
+                newFacility = await new Hanger(fac);
+                facId = newFacility._id;
+              } else if (facType == 'Crisis') {
+                newFacility = await new Crisis(facRef);
+                facId = newFacility._id;
+              } else if (facType == 'Civilian') {
+                newFacility = await new Civilian(facRef);
+                facId = newFacility._id;
+              } else {
+                logger.error("Invalid Facility Type In Spacecraft Load:", facRef.type);
+                facError = true;
+              }
+            } else {
+              logger.debug(`Error in creation of facility ${fac} for  ${spacecraft.name} - wrong unitType`);
+              facError = true;
             }
-            spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
-          }));
+          } else {
+            logger.debug(`Error in creation of facility ${fac} for  ${spacecraft.name}`);
+            facError = true;
+          } 
+
+          if (!facError) {
+            newFacility.site = spacecraft._id;
+            newFacility.team = spacecraft.team;
+            newFacility.name = fac.name;
+      
+            await newFacility.save(((err, newFacility) => {
+              if (err) {
+                delFacilities(spacecraft.facilities);
+                logger.error(`Update Spacecraft Facility Save Error: ${err}`);
+                facError = true;
+              }
+              //spacecraftDebugger(spacecraft.name, "Facility", fac.name, " add saved to facility collection.");
+  
+            }));
+  
+            if (!facError) {
+              spacecraft.facilities.push(facId);
+            }
+          }
         }
       }  
             
-      await spacecraft.save((err, spacecraft) => {
-        if (err) return console.error(`Update Spacecraft Save Error: ${err}`);
-        spacecraftDebugger(spacecraft.name + " add saved to spacecraft collection.");
-        //updateStats(spacecraft._id);
-      });
+      if (loadError) {
+        delFacilities(spacecraft.facilities);
+        logger.error(`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      } else {    
+        await spacecraft.save((err, spacecraft) => {
+          if (err) {
+            delFacilities(spacecraft.facilities);
+            logger.error(`Update Spacecraft Save Error: ${err}`);
+            ++rCounts.loadErrCount;
+            return;
+          }
+          spacecraftDebugger(`${spacecraft.name}  add saved to spacecraft collection.`);
+          ++rCounts.loadCount;
+          //updateStats(spacecraft._id);
+          return;
+        });
+      }
     }
   } catch (err) {
-    spacecraftDebugger('Catch Spacecraft Error:', err.message);
+    ++rCounts.loadErrCount;
+    logger.error(`Catch Spacecraft Error: ${err.message}`);
     return;
-}
-
+  }
 };
 
 async function deleteAllSpacecraft(doLoad) {
@@ -281,14 +392,14 @@ async function addSatelliteToZone(satId, zoneId, teamId) {
   let useZoneId = zoneId;
   let team = await Team.findById( teamId );
   if (team) {
-    spacecraftDebugger(`About to find home country for team ${team.name}`);
+    //spacecraftDebugger(`About to find home country for team ${team.name}`);
     if (team.homeCountry) {
-      spacecraftDebugger(`Aboit to find home country for ${team.name} ${team.homeCountry}`);
+      //spacecraftDebugger(`Aboit to find home country for ${team.name} ${team.homeCountry}`);
       let country = await Country.findById( {"_id": team.homeCountry} );
       if (country) {
         if (country.zone) {
           useZoneId = country.zone;
-          spacecraftDebugger(`Found home country ${country.name} zone ${country.zone} for ${team.name}`);
+          //spacecraftDebugger(`Found home country ${country.name} zone ${country.zone} for ${team.name}`);
         }
       }
     }
@@ -302,6 +413,17 @@ async function addSatelliteToZone(satId, zoneId, teamId) {
     zoneUpd.satellite.push(satId);  
     await zoneUpd.save();
   }
+}
+
+async function delFacilities(arrayIds) {
+  // remove associated facility records
+  for (let j = 0; j < arrayIds.length; ++j ) {
+    facId = arrayIds[j];
+    let facDel = await Facility.findByIdAndRemove(facId);
+    if (facDel = null) {
+      logger.debug(`The Spacecraft Facility with the ID ${facId} was not found!`);
+    }
+  }   
 }
 
 module.exports = runSpacecraftLoad;

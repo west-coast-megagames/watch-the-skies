@@ -11,10 +11,17 @@ require ('winston-mongodb');
 const supportsColor = require('supports-color');
 
 async function chkSite(runFlag) {
-  for (const site of await Site.find()
+  for (const site of await Site.find( {siteCode: "USBB"})
                                      .populate("team", "name")
                                      .populate("country", "name")
                                      .populate("zone", "zoneName")) { 
+                                      
+
+/*
+for (let [key, value] of Object.entries(site)) {
+  logger.info(`${key} ${value}`);
+}                                
+*/      
     if (!site.populated("team")) {  
       logger.error(`Team link missing for Site ${site.name} ${site._id} ${site.type}`);
     }

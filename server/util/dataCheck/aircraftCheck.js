@@ -17,12 +17,27 @@ async function chkAircraft(runFlag) {
                                .populate("country", "name")
                                .populate("site", "name")) { 
     
+    
+    let testPropertys = aircraft.toObject();
+                         
+    if (!testPropertys.hasOwnProperty('team')) {
+      logger.error(`Team Field missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+    }
+    
     if (!aircraft.populated("team")) {  
       logger.error(`Team link missing for Aircraft ${aircraft.name} ${aircraft._id}`);
     }
 
+  
+    if (!testPropertys.hasOwnProperty('zone')) {
+      logger.error(`Zone Field missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+    }
     if (!aircraft.populated("zone")) {  
       logger.error(`Zone link missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+    }
+
+    if (!testPropertys.hasOwnProperty('country')) {
+      logger.error(`Country Field missing for Aircraft ${aircraft.name} ${aircraft._id}`);
     }
 
     if (!aircraft.populated("country")) {  
