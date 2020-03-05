@@ -1411,7 +1411,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "FFGMA",
+"base" : "FFGBA",
 "loadout": 
 ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
@@ -1441,7 +1441,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "FFGMA",
+"base" : "FFGBA",
 "loadout": 
     ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
@@ -1471,7 +1471,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "FFGMA",
+"base" : "FFGBA",
 "loadout": 
     ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
@@ -1501,7 +1501,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "FFGMA",
+"base" : "FFGBA",
 "loadout": 
     ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
@@ -1531,7 +1531,7 @@
 "zone": "AN", 
 "country": "AQ", 
 "site": "",
-"base" : "FFGMA",
+"base" : "FFGBA",
 "loadout": 
     ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
 "stats":
@@ -1561,7 +1561,7 @@
     "zone": "AN", 
     "country": "AQ", 
     "site": "",
-    "base" : "FFGMA",
+    "base" : "FFGBA",
     "loadout": 
         ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
     "stats":

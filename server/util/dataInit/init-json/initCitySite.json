@@ -635,7 +635,7 @@
 "latDecimal": 0,
 "longDecimal": 0, 
 "countryCode" : "EG",
-"teamCode" : "EGT"
+"teamCode" : "EPT"
 },
 {"loadType": "citySite",
 "name" : "San Salvador",
@@ -1372,7 +1372,7 @@
 "latDecimal": -22.2666,
 "longDecimal": 166.4500,
 "countryCode" : "NC",
-"teamCode" : "NPC"
+"teamCode" : ""
 }, 
 {"loadType": "citySite",
 "name" : "Wellington",
