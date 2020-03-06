@@ -18,7 +18,9 @@ const { BaseSite, validateBase } = require('../../models/sites/site');
 const { Country } = require('../../models/country');
 const { Team } = require('../../models/team/team');
 const { Facility, Lab, Hanger, Factory, Crisis, Civilian } = require('../../models/gov/facility/facility');
-const { loadFacilitys, facilitys, validUnitType } = require('../../wts/construction/facilities/facilities');
+const { loadFacilitys, facilitys } = require('../../wts/construction/facilities/facilities');
+const { validUnitType } = require('../../wts/util/construction/validateUnitType');
+const { delFacilities } = require('../../wts/util/construction/deleteFacilities');
 
 const app = express();
 
@@ -53,13 +55,13 @@ async function initLoad(doLoad) {
   let recCounts = { loadCount: 0,
                     loadErrCount: 0,
                     updCount: 0};
-  
+
   for (let i = 0; i < baseDataIn.length; ++i ) {
 
     ++recReadCount;
 
     await loadBase(baseDataIn[i], recCounts);
-    
+
   }
 
   logger.info(`baseSite Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
@@ -71,7 +73,7 @@ async function loadBase(iData, rCounts){
   let loadErrorMsg = "";
   let loadName = "";
   let loadCode = "";
-  
+
   try {
     let baseSite = await BaseSite.findOne( { name: iData.name } );
 
@@ -177,7 +179,7 @@ async function loadBase(iData, rCounts){
             newFacility.site = baseSite._id;
             newFacility.team = baseSite.team;
             newFacility.name = fac.name;
-  
+
             await newFacility.save(((err, newFacility) => {
               if (err) {
                 logger.error(`New BaseSite Facility Save Error: ${err}`);
@@ -186,7 +188,7 @@ async function loadBase(iData, rCounts){
               }
               //baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
             }));
-  
+
             if (!facError) {
               baseSite.facilities.push(facId);
             }
@@ -195,8 +197,8 @@ async function loadBase(iData, rCounts){
       }
 
       if (loadError) {
-        logger.error(`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
-        delFacilities(spacecraft.facilities);
+        logger.error(`Base skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
+        delFacilities(baseSite.facilities);
         ++rCounts.loadErrCount;
         return;
       } else {
@@ -380,16 +382,5 @@ async function deleteAllBases(doLoad) {
     baseSiteLoadDebugger(`Delete All BaseSites Catch Error: ${err.message}`);
   }
 };
-
-async function delFacilities(arrayIds) {
-  // remove associated facility records
-  for (let j = 0; j < arrayIds.length; ++j ) {
-    facId = arrayIds[j];
-    let facDel = await Facility.findByIdAndRemove(facId);
-    if (facDel = null) {
-      logger.debug(`The Base Facility with the ID ${facId} was not found!`);
-    }
-  }
-}
 
 module.exports = runbaseSiteLoad;

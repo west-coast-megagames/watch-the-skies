@@ -5,7 +5,8 @@ const nexusEvent = require('../../startup/events');
 // Aircraft Model - Using Mongoose Model
 const { Aircraft, updateStats, validateAircraft } = require('../../models/ops/aircraft');
 const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { validUnitType } = require('../../wts/util/construction/validateUnitType');
 const { Country } = require('../../models/country'); 
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 

@@ -49,6 +49,9 @@ function ConvertDMSToDD(degrees, minutes, seconds, direction) {
 // console.log(`Lat: ${latDMS}, Long: ${longDMS}`);
 
 function convertToDms(dd, isLng) {
+  if (!dd || isNaN(dd)) {
+    dd = 0
+  }
   var dir = dd < 0
     ? isLng ? 'W' : 'S'
     : isLng ? 'E' : 'N';
