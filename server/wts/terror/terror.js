@@ -2,22 +2,29 @@ const { d6 } = require('../../util/systems/dice');
 
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 let gonePublic = false;
 
 async function crisis(zone, crisis) {
-    let terror = d6(); // Initial Terror caused by this event
-    zone = await Zone.findById(zone);
+  let terror = d6(); // Initial Terror caused by this event
+  zone = await Zone.findById(zone);
+  if (zone) {
     zone.terror += terror;
     zone = await zone.save(); 
-    console.log(`${crisis.name} has caused ${terror}pts in ${zone.zoneName}.`);
+    await console.log(`${crisis.name} has caused ${terror}pts in ${zone.zoneName}.`);
     return {zone, terror, reason: `${crisis.name} has caused ${terror}pts in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+  } else {
+    logger.error(`Zone not available for teror crisis function for crisis: ${crisis.name} terror change ${terror}pts `);    
+  }
 };
 
 async function battle(country) {
     let terror = 10; // Initial Terror caused by this event
-    country = Country.findById(country).populate('zone');
+    country = Country.findById(country);
     let zone = country.zone;
+    zone = await Zone.findById(zone);
     zone.terror += terror;
     zone = await zone.save();
     console.log(`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}.`);
