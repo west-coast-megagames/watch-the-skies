@@ -28,9 +28,9 @@ const logger = createLogger({
       // Debug / Verbose/ Http / Info / Warnings / Errors combined
       new transports.File({ filename: 'prototype-debug-combined.log', level: 'debug' }),
       // Error DB to log collection
-      new transports.MongoDB({ db: dbURI, level: 'error', collection: 'log'}),
+      new transports.MongoDB({ db: dbURI, level: 'error', metaKey: 'meta', collection: 'log'}),
       // Info / Warnings / Errors combined
-      new transports.MongoDB({ db: dbURI, level: 'info', collection: 'log-info'})
+      new transports.MongoDB({ db: dbURI, level: 'info', metaKey: 'meta', collection: 'log-info'})
     ]
   });
 
@@ -47,7 +47,8 @@ const logger = createLogger({
   }
 
   function routeError (err, req, res, next) {
-    logger.error(err);
+    
+    logger.error(`${err.message}`, {meta: err});
 
     errorDebugger('Error:', err.message);
     res.status(500).send(`Error: ${err.message}`);
