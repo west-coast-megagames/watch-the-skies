@@ -7,37 +7,58 @@ require ('winston-mongodb');
 
 let gonePublic = false;
 
-async function crisis(zone, crisis) {
+async function crisis(zoneId, crisis) {
   let terror = d6(); // Initial Terror caused by this event
-  zone = await Zone.findById(zone);
+  let newTerror = 0;
+
+  zone = await Zone.findById(zoneId);
   if (zone) {
     zone.terror += terror;
+    newTerror = zone.terror;
     zone = await zone.save(); 
     await console.log(`${crisis.name} has caused ${terror}pts in ${zone.zoneName}.`);
-    return {zone, terror, reason: `${crisis.name} has caused ${terror}pts in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+    return {newTerror, terror, reason: `${crisis.name} has caused ${terror}pts in ${zone.zoneName}. Current Terror: ${zone.terror}`};
   } else {
-    logger.error(`Zone not available for teror crisis function for crisis: ${crisis.name} terror change ${terror}pts `);    
+    logger.error(`Zone not available for terror crisis function for crisis: ${crisis.name} terror change ${terror}pts `);    
+    await console.log(`Zone not available for terror crisis function for crisis: ${crisis.name} terror change ${terror}pts `);    
+    return {newTerror, terror, reason: `Zone not available for teror update for crisis: ${crisis.name} terror change ${terror}pts `};
   }
 };
 
-async function battle(country) {
-    let terror = 10; // Initial Terror caused by this event
-    country = Country.findById(country);
-    let zone = country.zone;
-    zone = await Zone.findById(zone);
-    zone.terror += terror;
-    zone = await zone.save();
-    console.log(`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}.`);
-    return {zone, terror, reason:`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+async function battle(countryId) {
+    
+  let terror = 10; // Initial Terror caused by this event
+  let newTerror = 0;
+    
+  country = await Country.findById(countryId);
+  if (country) {
+    let zoneId = country.zone;
+    zone = await Zone.findById(zoneId);
+    if (zone) {
+      zone.terror += terror;
+      newTerror = zone.terror;
+      zone = await zone.save();
+      await console.log(`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}.`);
+      return {newTerror, terror, reason:`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+    } else {
+      logger.error(`Zone not available for terror battle function: terror change ${terror}pts `);    
+      await console.log(`Zone not available for terror battle function terror change ${terror}pts `);    
+      return {newTerror, terror, reason: `Zone not available for battle terror change ${terror}pts `};          
+    }
+  } else {
+    logger.error(`Country not available for terror battle function: terror change ${terror}pts `);    
+    await console.log(`Country not available for terror battle function terror change ${terror}pts `);    
+    return {newTerror, terror, reason: `Country not available for battle terror change ${terror}pts `};        
+  }
 };
 
-async function invasion(country) {
+async function invasion(countryId) {
     let terror = 2 // Initial Terror caused by this event
-    country = Country.findById(country).populate('zone');
+    country = Country.findById(countryId).populate('zone');
     let zone = country.zone;
     zone.terror += terror; // Assigns terror to zone
     zone = await zone.save(); // Saves Terror to Database
-    return {zone, terror, reason:`A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+    return {zone, terror, reason:`An Invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
 };
 
 async function publicAnnouncement() {
