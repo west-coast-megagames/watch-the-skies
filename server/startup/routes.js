@@ -24,6 +24,7 @@ const logs = require('../routes/api/log');
 const banking = require('../routes/api/banking');
 const research = require('../routes/api/research');
 const military = require('../routes/api/military');
+const article = require('../routes/api/articles');
 //const initData = require('../routes/api/initData');
 
 const control = require('../routes/api/control');
@@ -56,6 +57,7 @@ module.exports = function(app) {
     app.use('/api/banking', banking); // Route for banking functions
     app.use('/api/research', research); // Route for banking functions
     app.use('/api/military', military); // Route for manipulating militarys
+    app.use('/api/articles', article); // Route for manipulating articles
     //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use('/api/control', control)

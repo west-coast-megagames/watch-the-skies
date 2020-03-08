@@ -10,27 +10,24 @@ const ArticleSchema = new Schema({
     turn: { type: String },
     phase: { type: String },
     turnNum: { type: Number },
-    clock: { type: String } 
+    clock: { type: String }
   },
   location: { type: Schema.Types.ObjectId, ref: 'Site'},
   dateline: { type: String },
   headline: { type: String, required: true, minlength: 1, maxlength: 100 },
-  body: { type: String, required: true, minlength: 0, maxlength: 1000 },
+  articleBody: { type: String, minlength: 1, maxlength: 1000 },
   likes: { type: Number },
-  tags: { type: String },
-  imageSrc: { type: String }
+  tags: [{ type: String }],
+  imageSrc: { type: String },
+  agency: { type: String }
   });
 
 let Article = mongoose.model('article', ArticleSchema);
 
 function validateArticle(article) {
   const schema = {
-    agency: Joi.string().required(),
-    //turn: Joi.string().required(),
-    location: Joi.string().min(2).max(2).required(),
     headline: Joi.string().min(1).max(100).required(),
-    body: Joi.string().min(1).max(1000).required(), 
-    imageSrc: Joi.string()
+    articleBody: Joi.string().min(1).max(1000)
   };
 
   return Joi.validate(article, schema);

@@ -277,10 +277,23 @@
 },
 {
 "loadType" : "team", 
-"name": "Daily News", 
-"shortName" : "D-News",
+"name": "BNC News", 
+"shortName" : "BNC",
 "teamType" : "M",
-"code" : "MED", 
+"code" : "BNC", 
+"roles" : [
+    {"role": "Editor", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Public Relations", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"}
+],
+"loadFlag" : "true"
+},
+{
+"loadType" : "team", 
+"name": "GNN News", 
+"shortName" : "GNN",
+"teamType" : "M",
+"code" : "GNN", 
 "roles" : [
     {"role": "Editor", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
     {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},

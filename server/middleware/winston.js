@@ -28,7 +28,7 @@ const logger = createLogger({
       // Debug / Verbose/ Http / Info / Warnings / Errors combined
       new transports.File({ filename: 'prototype-debug-combined.log', level: 'debug' }),
       // Error DB to log collection
-      new transports.MongoDB({ db: dbURI, level: 'error', metaKey: 'meta', collection: 'log'}),
+      new transports.MongoDB({ db: dbURI, level: 'error', metaKey: 'meta', collection: 'log-errors'}),
       // Info / Warnings / Errors combined
       new transports.MongoDB({ db: dbURI, level: 'info', metaKey: 'meta', collection: 'log-info'})
     ]

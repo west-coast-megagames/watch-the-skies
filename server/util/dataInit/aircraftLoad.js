@@ -45,7 +45,7 @@ async function runaircraftLoad(runFlag){
     }
     return true;
   } catch (err) {
-    logger.info(`Catch runaircraftLoad Error: ${err.message}`);
+    logger.error(`Catch runaircraftLoad Error: ${err.message}`, {meta: err});
     return false;
   }
 };
@@ -66,7 +66,7 @@ async function initLoad(doLoad) {
 
   }
 
-  logger.info(`baseSite Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
+  logger.info(`Aircraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
 };
 
 async function loadAircraft(iData, rCounts){
@@ -213,7 +213,7 @@ async function loadAircraft(iData, rCounts){
           if (err) {
             delSystems(aircraft.systems);
             ++rCounts.loadErrCount;
-            logger.error(`New Aircraft Save Error: ${err}`);
+            logger.error(`New Aircraft Save Error: ${err}`, {meta: err});
             return;
           }
           ++rCounts.loadCount;
@@ -336,24 +336,26 @@ async function loadAircraft(iData, rCounts){
       if (loadError) {
         logger.error(`Aircraft skipped due to errors: ${loadName} ${loadErrorMsg}`);
         delSystems(aircraft.systems);
-
+        ++rCounts.loadErrCount;
+        return;
       } else {
         await aircraft.save((err, aircraft) => {
           if (err) {
             delSystems(aircraft.systems);
             ++rCounts.loadErrCount;
-            logger.error(`Aircraft Update Save Error: ${err}`)
+            logger.error(`Aircraft Update Save Error: ${err}`, {meta: err})
             return;
           }
           ++rCounts.loadCount;
-          logger.debug(`${aircraft.name} update saved to aircraft collection.`);
+          logger.info(`${aircraft.name} update saved to aircraft collection.`);
           updateStats(aircraft._id);
+          return;
         });
       }
     }
   } catch (err) {
     ++rCounts.loadErrCount;
-    logger.error(`Catch Aircraft Error: ${err.message}`);
+    logger.error(`Catch Aircraft Error: ${err.message}`, {meta: err});
     delSystems(aircraft.systems);
     return;
   }
@@ -376,16 +378,16 @@ async function deleteAllAircrafts(doLoad) {
 
         let aircraftDel = await Aircraft.findByIdAndRemove(id);
         if (aircraftDel = null) {
-          logger.debug(`The Aircraft with the ID ${id} was not found!`);
+          logger.error(`The Aircraft with the ID ${id} was not found!`);
         }
         //logger.debug("Jeff in deleteAllAircrafts loop after remove", aircraft.name);
       } catch (err) {
-        logger.debug('Aircraft Delete All Error:', err.message);
+        logger.error(`Aircraft Delete All Error: ${err.message}`, {meta: err});
       }
     }
-    logger.debug("All Aircrafts succesfully deleted!");
+    logger.info("All Aircrafts succesfully deleted!");
   } catch (err) {
-    logger.debug(`Delete All Aircrafts Catch Error: ${err.message}`);
+    logger.error(`Delete All Aircrafts Catch Error: ${err.message}`, {meta: err});
   }
 };
 
