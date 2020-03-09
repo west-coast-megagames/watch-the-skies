@@ -60,7 +60,15 @@ router.post('/', async (req, res) => {
       newArticle.publisher = team._id;
       newArticle.agency    = team.shortName;
     }
-  }      
+  } else {
+    let teamId = req.body.publisher;
+    let team = await Team.findById({ teamId });  
+    if (!team) {
+      articleDebugger(`Publisher Not Found: ${teamCode}`);
+    } else {
+      article.agency = team.shortName;
+    }
+  }     
 
   if (req.body.locationCode != ""){
     let siteCode = req.body.locationCode;
@@ -118,7 +126,15 @@ router.put('/:id', validateObjectId, async (req, res) => {
         article.publisher = team._id;
         article.agency = team.shortName;
       }
-    }      
+    } else {
+      let teamId = req.body.publisher;
+      let team = await Team.findById({ teamId });  
+      if (!team) {
+        articleDebugger(`Publisher Not Found: ${teamCode}`);
+      } else {
+        article.agency = team.shortName;
+      }
+    }     
   
     if (req.body.locationCode != ""){
       let siteCode = req.body.locationCode;
