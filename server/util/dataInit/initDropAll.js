@@ -12,6 +12,8 @@ const { Military } = require('../../models/ops/military/military');
 const { Squad } = require('../../models/ops/squad');
 const { User } = require('../../models/user');
 const { Article } = require('../../models/news/article');
+const { LogError } = require('../../models/loggers/logError');
+const { LogInfo } = require('../../models/loggers/logInfo');
 
 async function dropAll(doDrop) {
   
@@ -32,6 +34,8 @@ async function dropAll(doDrop) {
     await Squad.deleteMany();
     await User.deleteMany();
     await Article.deleteMany();
+    await LogError.deleteMany();
+    await LogInfo.deleteMany();
 
     return true;
 }
