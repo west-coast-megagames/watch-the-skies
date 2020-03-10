@@ -53,12 +53,29 @@ async function battle(countryId) {
 };
 
 async function invasion(countryId) {
-    let terror = 2 // Initial Terror caused by this event
-    country = Country.findById(countryId).populate('zone');
-    let zone = country.zone;
-    zone.terror += terror; // Assigns terror to zone
-    zone = await zone.save(); // Saves Terror to Database
-    return {zone, terror, reason:`An Invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+  let terror = 2 // Initial Terror caused by this event
+  let newTerror = 0;
+    
+  country = await Country.findById(countryId);
+  if (country) {
+    let zoneId = country.zone;
+    zone = await Zone.findById(zoneId);
+    if (zone) {
+      zone.terror += terror; // Assigns terror to zone
+      newTerror = zone.terror;
+      zone = await zone.save(); // Saves Terror to Database
+      await console.log(`An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}.`);
+      return {newTerror, terror, reason:`An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
+    } else {
+      logger.error(`Zone not available for terror invasion function: terror change ${terror}pts `);    
+      await console.log(`Zone not available for terror invasion function terror change ${terror}pts `);    
+      return {newTerror, terror, reason: `Zone not available for invasion terror change ${terror}pts `};          
+    }
+  } else {
+    logger.error(`Country not available for terror invasion function: terror change ${terror}pts `);    
+    await console.log(`Country not available for terror invasion function terror change ${terror}pts `);    
+    return {newTerror, terror, reason: `Country not available for invasion terror change ${terror}pts `};        
+  }
 };
 
 async function publicAnnouncement() {
@@ -151,6 +168,7 @@ async function orbitalStrike (site) {
     return {zone, terror, reason:`An orbital strike on ${site.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`};
 }
 
-let terror = { battle, coverage, crisis, cityDestruction, nuclearStrike, industryDestruction, alienActivity, alienRaid, alienGroundForces, orbitalStrike, invasion, publicAnnouncement }
+let terror = { battle, coverage, crisis, cityDestruction, nuclearStrike, industryDestruction, alienActivity, 
+               alienRaid, alienGroundForces, orbitalStrike, invasion, publicAnnouncement }
 
 module.exports = terror

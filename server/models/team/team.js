@@ -33,7 +33,6 @@ TeamSchema.methods.validateTeam = function (team) {
 
 let Team = mongoose.model('Team', TeamSchema);
 
-
 const National = Team.discriminator("National", new Schema({
   type: { type: String, default: 'National' },
   roles: [RoleSchema],
@@ -55,6 +54,14 @@ function validateNational(national) {
   
   return Joi.validate(national, schema, { "allowUnknown": true });
 };
+
+function validateRoles(roles) {
+  const schema = Joi.object().keys({
+      type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military'),
+  });
+
+  return Joi.validate(roles, schema, { "allowUnknown": true });
+}
 
 const Alien = Team.discriminator("Alien", new Schema({
   type: { type: String, default: 'Alien' },
@@ -171,4 +178,4 @@ async function getSciRate(team_id) {
 };
 
 module.exports = { Team, validateTeam, getTeam, getPR, getSciRate, National, validateNational, Alien, validateAlien,
-                   Control, validateControl, Media, validateMedia, Npc, validateNpc }
+                   Control, validateControl, Media, validateMedia, Npc, validateNpc, validateRoles }

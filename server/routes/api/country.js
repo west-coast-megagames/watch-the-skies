@@ -227,6 +227,8 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
   try {
+    await Country.deleteMany();
+    /*
       for await (const country of Country.find()) {    
         let id = country.id;  
         try {
@@ -239,6 +241,7 @@ router.patch('/deleteAll', async function (req, res) {
           res.status(400).send(`Error: ${err.message}`);
         }
       }        
+    */
       res.status(200).send("All Countrys succesfully deleted!");
   } catch (err) {
     console.log(`Error: ${err.message}`);

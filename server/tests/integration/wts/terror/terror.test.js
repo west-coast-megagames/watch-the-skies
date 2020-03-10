@@ -15,11 +15,13 @@ describe('wts terrror', () => {
     await Zone.deleteOne({ zoneCode: 'Z2'});
     await Zone.deleteOne({ zoneCode: 'Z3'});
     await Zone.deleteOne({ zoneCode: 'Z4'});
+    await Zone.deleteOne({ zoneCode: 'Z5'});
     await Country.deleteOne({ code: 'C1'});
     await Country.deleteOne({ code: 'C2'});
     await Country.deleteOne({ code: 'C3'});
     await Country.deleteOne({ code: 'C4'});
-    
+    await Country.deleteOne({ code: 'C5'});
+    await Country.deleteOne({ code: 'Q5'});
     server.close(); 
     });
 
@@ -68,7 +70,7 @@ describe('wts terrror', () => {
 
       expect(terror).toBeGreaterThanOrEqual(1);
       expect(terror).toBeLessThanOrEqual(6);
-      expect(reason).toMatch(/not available/);
+      expect(reason).toMatch(/Zone not available/);
 
     });
 
@@ -113,12 +115,98 @@ describe('wts terrror', () => {
       // starts out at 0  + 10
       expect(terror).toBe(10);
       expect(newTerror).toBe(0);
-      expect(reason).toMatch(/not available/);
+      expect(reason).toMatch(/Country not available/);
+
+    });
+
+    it('It should send message if country does not have valid zone ', async () => {
+      
+      // pass in invalid id ... don't need to create a record
+      testId = new mongoose.Types.ObjectId();
+      const country = new Country(
+        { code: 'Q5', 
+          name: 'Country Test Q5' ,
+          zone: testId
+        });
+     
+      await country.save();
+     
+      let {newTerror, terror, reason} = await battle(country._id);
+     
+      // starts out at 0  + 10
+      expect(terror).toBe(10);
+      expect(newTerror).toBe(0);
+      expect(reason).toMatch(/Zone not available/);
 
     });
 
   });
   // end of battle tests
 
+  describe('invasion', () => {
+
+    it('it should return updated terror', async () => {
+      const zone = new Zone(
+        { zoneCode: 'Z4', 
+          zoneName: 'Zone Test 4',
+          terror: 5 
+        });
+      await zone.save();
+      const country = new Country(
+        { code: 'C4', 
+          name: 'Country Test 4' ,
+          zone: zone._id
+        });
+      
+      await country.save();
+      
+      let saveId = zone._id;
+      let {newTerror, terror, reason} = await invasion(country._id);
+      
+      zoneUpd = await Zone.findById(saveId);
+
+      // starts out at 5  + 2
+      expect(terror).toBe(2);
+      expect(zoneUpd.terror).toBeGreaterThanOrEqual(7);
+      expect(reason).toMatch(/An invasion/);
+
+    });    
+
+    it('It should send message if invalid country passed in', async () => {
+      
+      // pass in invalid id ... don't need to create a record
+      testId = new mongoose.Types.ObjectId();
+      let {newTerror, terror, reason} = await invasion(testId);
+      
+      // starts out at 0  + 2
+      expect(terror).toBe(2);
+      expect(newTerror).toBe(0);
+      expect(reason).toMatch(/Country not available/);
+
+    });
+
+    it('It should send message if country does not have valid zone ', async () => {
+      
+       // pass in invalid id ... don't need to create a record
+       testId = new mongoose.Types.ObjectId();
+      const country = new Country(
+        { code: 'C5', 
+          name: 'Country Test 5' ,
+          zone: testId
+        });
+      
+      await country.save();
+      
+      let {newTerror, terror, reason} = await invasion(country._id);
+      
+      // starts out at 0  + 2
+      expect(terror).toBe(2);
+      expect(newTerror).toBe(0);
+      expect(reason).toMatch(/Zone not available/);
+
+    });
+
+  });
+  // end of invasion tests
 });  
 
