@@ -43,13 +43,11 @@ describe('wts terrror', () => {
       
       let saveId = zone._id;
       crisisObj = {name: "Bio-Scare"};
-      let {newTerror, terror, reason} = await crisis(zone._id, crisisObj);
+      let reason = await crisis(zone._id, crisisObj);
       
       zoneUpd = await Zone.findById(saveId);
 
       // starts out at 5  + d6
-      expect(terror).toBeGreaterThanOrEqual(1);
-      expect(terror).toBeLessThanOrEqual(6);
       expect(zoneUpd.terror).toBeGreaterThanOrEqual(6);
       expect(zoneUpd.terror).toBeLessThanOrEqual(11);
       expect(reason).toMatch(/Current Terror/);
@@ -66,10 +64,8 @@ describe('wts terrror', () => {
       testId = country._id
       
       crisisObj = {name: "Bio-Scare"};
-      let {newTerror, terror, reason} = await crisis(country._id, crisisObj);
+      let reason = await crisis(country._id, crisisObj);
 
-      expect(terror).toBeGreaterThanOrEqual(1);
-      expect(terror).toBeLessThanOrEqual(6);
       expect(reason).toMatch(/Zone not available/);
 
     });
@@ -95,12 +91,11 @@ describe('wts terrror', () => {
       await country.save();
       
       let saveId = zone._id;
-      let {newTerror, terror, reason} = await battle(country._id);
+      let reason = await battle(country._id);
       
       zoneUpd = await Zone.findById(saveId);
 
       // starts out at 5  + 10
-      expect(terror).toBe(10);
       expect(zoneUpd.terror).toBeGreaterThanOrEqual(15);
       expect(reason).toMatch(/A battle/);
 
@@ -110,11 +105,9 @@ describe('wts terrror', () => {
       
       // pass in invalid id ... don't need to create a record
       testId = new mongoose.Types.ObjectId();
-      let {newTerror, terror, reason} = await battle(testId);
+      let reason = await battle(testId);
       
       // starts out at 0  + 10
-      expect(terror).toBe(10);
-      expect(newTerror).toBe(0);
       expect(reason).toMatch(/Country not available/);
 
     });
@@ -131,11 +124,9 @@ describe('wts terrror', () => {
      
       await country.save();
      
-      let {newTerror, terror, reason} = await battle(country._id);
+      let reason = await battle(country._id);
      
       // starts out at 0  + 10
-      expect(terror).toBe(10);
-      expect(newTerror).toBe(0);
       expect(reason).toMatch(/Zone not available/);
 
     });
@@ -161,12 +152,11 @@ describe('wts terrror', () => {
       await country.save();
       
       let saveId = zone._id;
-      let {newTerror, terror, reason} = await invasion(country._id);
+      let reason = await invasion(country._id);
       
       zoneUpd = await Zone.findById(saveId);
 
       // starts out at 5  + 2
-      expect(terror).toBe(2);
       expect(zoneUpd.terror).toBeGreaterThanOrEqual(7);
       expect(reason).toMatch(/An invasion/);
 
@@ -176,11 +166,9 @@ describe('wts terrror', () => {
       
       // pass in invalid id ... don't need to create a record
       testId = new mongoose.Types.ObjectId();
-      let {newTerror, terror, reason} = await invasion(testId);
+      let reason = await invasion(testId);
       
       // starts out at 0  + 2
-      expect(terror).toBe(2);
-      expect(newTerror).toBe(0);
       expect(reason).toMatch(/Country not available/);
 
     });
@@ -197,11 +185,9 @@ describe('wts terrror', () => {
       
       await country.save();
       
-      let {newTerror, terror, reason} = await invasion(country._id);
+      let reason = await invasion(country._id);
       
       // starts out at 0  + 2
-      expect(terror).toBe(2);
-      expect(newTerror).toBe(0);
       expect(reason).toMatch(/Zone not available/);
 
     });

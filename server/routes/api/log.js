@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const Log = require('../../models/logs/log');
+const { Log } = require('../../models/logs/log');
 
 // @route   GET api/log
 // @Desc    Get all logs

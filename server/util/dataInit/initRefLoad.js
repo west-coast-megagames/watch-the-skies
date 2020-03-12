@@ -23,7 +23,7 @@ const { Zone, validateZone } = require('../../models/zone');
 const { Country, validateCountry } = require('../../models/country'); 
 const { Team, validateTeam, National, validateNational, Alien, validateAlien, Control, validateControl, Npc, validateNpc, Media, validateMedia } = require('../../models/team/team');
 const Research = require('../../models/sci/research');
-const Log = require('../../models/logs/log');
+const { Log } = require('../../models/logs/log');
 
 const app = express();
 

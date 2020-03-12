@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Log = require('./log');
+const { Log } = require('./log');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 
