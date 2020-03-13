@@ -16,11 +16,15 @@ describe('wts terrror', () => {
     await Zone.deleteOne({ zoneCode: 'Z3'});
     await Zone.deleteOne({ zoneCode: 'Z4'});
     await Zone.deleteOne({ zoneCode: 'Z5'});
+    await Zone.deleteOne({ zoneCode: 'Z6'});
+    await Zone.deleteOne({ zoneCode: 'Z7'});
     await Country.deleteOne({ code: 'C1'});
     await Country.deleteOne({ code: 'C2'});
     await Country.deleteOne({ code: 'C3'});
     await Country.deleteOne({ code: 'C4'});
     await Country.deleteOne({ code: 'C5'});
+    await Country.deleteOne({ code: 'C6'});
+    await Country.deleteOne({ code: 'C7'});
     await Country.deleteOne({ code: 'Q5'});
     server.close(); 
     });
@@ -194,5 +198,53 @@ describe('wts terrror', () => {
 
   });
   // end of invasion tests
+
+  describe('publicAnnouncement', () => {
+
+    it('it should return message and zone terror updated', async () => {
+      const zone = new Zone(
+        { zoneCode: 'Z6', 
+          zoneName: 'Zone Test 6',
+          terror: 5 
+        });
+      await zone.save();
+      
+      let saveId = zone._id;
+      let reason = await publicAnnouncement();
+      
+      zoneUpd = await Zone.findById(saveId);
+
+      // starts out at 5  + Math.trunc((250 - zone.terror) * 0.25) which is 5 + 61;
+      expect(zoneUpd.terror).toBeGreaterThanOrEqual(66);
+      expect(reason).toMatch(/public announcement of aliens/);
+
+    });    
+  });
+  // end of publicAnnouncement tests
+  
+  describe('coverage', () => {
+
+    it('it should return message and zone terror updated', async () => {
+      const zone = new Zone(
+        { zoneCode: 'Z7', 
+          zoneName: 'Zone Test 7',
+          terror: 5,
+          satellite: []
+        });
+      await zone.save();
+      
+      let saveId = zone._id;
+      let reason = await coverage();
+      
+      zoneUpd = await Zone.findById(saveId);
+
+      // starts out at 5  + 10;
+      expect(zoneUpd.terror).toBe(15);
+      expect(reason).toMatch(/satellite coverage/);
+
+    });    
+  });
+  // end of publicAnnouncement tests
+
 });  
 

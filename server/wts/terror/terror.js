@@ -23,7 +23,7 @@ async function crisis(zoneId, crisis) {
     oldTerror = zone.terror;
     zone.terror += terror;
     newTerror = zone.terror;
-    zone = await zone.save();
+    await zone.save();
 
     reason = `Crisis: ${crisis.name} has caused ${terror}pts in ${zone.zoneName}. Current Terror: ${zone.terror}`;
     logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
@@ -57,7 +57,7 @@ async function battle(countryId) {
       zone.terror += terror;
       newTerror = zone.terror;
       zoneId = zone._id;
-      zone = await zone.save();
+      await zone.save();
       reason = `A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
@@ -93,7 +93,7 @@ async function invasion(countryId) {
     if (zone) {
       zone.terror += terror; // Assigns terror to zone
       newTerror = zone.terror;
-      zone = await zone.save(); // Saves Terror to Database
+      await zone.save(); // Saves Terror to Database
       reason = `An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
@@ -123,18 +123,19 @@ async function publicAnnouncement() {
 
   let report = 'The public announcement of aliens has caused terror in all zones!'
   gonePublic = true;
-  for (let zone in await Zone.find()) {
-    let terror = Math. trunc((250 - zone.terror) * 0.25); // Initial Terror caused by this event
+  for await (let zone of await Zone.find()) {
+    let terror = Math.trunc((250 - zone.terror) * 0.25); // Initial Terror caused by this event
     oldTerror = zone.terror;
     zone.terror += terror;
     newTerror = zone.terror;
     zoneId = zone._id;
-    zone = await zone.save(); // Saves Terror to Database
+    await zone.save(); // Saves Terror to Database
     reason = `The public announcement of aliens has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
     logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
-    console.log(`${reason}`);
-    }
-    return reason;
+    logger.info(`${reason}`);
+    //console.log(`${reason}`);
+  }
+  return report;
 };
 
 async function coverage() {
@@ -144,18 +145,22 @@ async function coverage() {
   let teamId = null;
   let siteId = null;
   let reason = "";
+  let report = "";
 
-    let terror = 10 // Initial Terror caused by this event
-    for (let zone of await Zone.find()) {
-        if (zone.satillites.length = 0) {
-            zone.terror += terror
-            zone = await zone.save(); // Saves Terror to Database
-            logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
-            console.log(`Lack of satillite coverage over has cause ${terror}pts of terror in ${zone.zoneName}.`);
-            report = `${report} Lack of satillite coverage over has cause ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`
-        }
+  let terror = 10 // Initial Terror caused by this event
+  for await (let zone of await Zone.find()) {
+    if (zone.satellite.length === 0) {
+      oldTerror = zone.terror;
+      zone.terror += terror;
+      newTerror = zone.terror;
+      await zone.save(); // Saves Terror to Database
+      reason = `Lack of satellite coverage over has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+      logger.info(`${reason}`);
+      report = `${report} ${reason} | `
     }
-    return {terror, reason: report};
+  }
+  return report;
 };
 
 async function nuclearStrike(site) {
