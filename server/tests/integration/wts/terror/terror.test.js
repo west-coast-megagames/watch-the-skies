@@ -1,6 +1,8 @@
 const request = require('supertest');
 const { Zone }  = require('../../../../models/zone');
 const { Country }  = require('../../../../models/country');
+const { Site, CitySite }  = require('../../../../models/sites/site');
+const { Team, National }  = require('../../../../models/team/team');
 const mongoose = require('mongoose');
 
 const { battle, coverage, crisis, cityDestruction, nuclearStrike, industryDestruction, alienActivity, alienRaid, alienGroundForces, orbitalStrike, invasion, publicAnnouncement }
@@ -18,6 +20,8 @@ describe('wts terrror', () => {
     await Zone.deleteOne({ zoneCode: 'Z5'});
     await Zone.deleteOne({ zoneCode: 'Z6'});
     await Zone.deleteOne({ zoneCode: 'Z7'});
+    await Zone.deleteOne({ zoneCode: 'Z8'});
+    await Zone.deleteOne({ zoneCode: 'Z9'});
     await Country.deleteOne({ code: 'C1'});
     await Country.deleteOne({ code: 'C2'});
     await Country.deleteOne({ code: 'C3'});
@@ -25,7 +29,16 @@ describe('wts terrror', () => {
     await Country.deleteOne({ code: 'C5'});
     await Country.deleteOne({ code: 'C6'});
     await Country.deleteOne({ code: 'C7'});
+    await Country.deleteOne({ code: 'C8'});
+    await Country.deleteOne({ code: 'C9'});
     await Country.deleteOne({ code: 'Q5'});
+    await CitySite.deleteOne({ siteCode: 'test site 1'});
+    await CitySite.deleteOne({ siteCode: 'test site 2'});
+    await CitySite.deleteOne({ siteCode: 'test site 3'});
+    await CitySite.deleteOne({ siteCode: 'test site 4'});
+    await National.deleteOne({ teamCode: 'TT1'});
+    await National.deleteOne({ teamCode: 'TT2'});
+    await National.deleteOne({ teamCode: 'TT2'});
     server.close(); 
     });
 
@@ -244,7 +257,152 @@ describe('wts terrror', () => {
 
     });    
   });
-  // end of publicAnnouncement tests
+  // end of coverage tests
+
+  describe('nuclearStrike', () => {
+  
+    it('it should return message and zone terror updated', async () => {
+      const zone = new Zone(
+        { zoneCode: 'Z8', 
+          zoneName: 'Zone Test 8',
+          terror: 5 
+        });
+      await zone.save();
+      const country = new Country(
+        { code: 'C8', 
+          name: 'Country Test 8' ,
+          zone: zone._id
+        });
+      await country.save();
+      const team = new National(
+        { name: "Test Team 1",
+          shortName: "TT 1",
+          teamCode: "TT1",
+          teamType: "N",
+          homeCountry: country._id
+        }
+      )
+      await team.save();
+      const citySite = new CitySite(
+        { siteCode: 'test site 1',
+          name: "City of Screams",
+          country: country._id,
+          zone: zone._id
+        }
+      )
+      await citySite.save();
+
+      let saveId = zone._id;
+      let reason = await nuclearStrike(citySite._id);
+      
+      zoneUpd = await Zone.findById(saveId);
+
+      // starts out at 5  + 15;
+      expect(zoneUpd.terror).toBe(20);
+      expect(reason).toMatch(/A nuclear strike/);
+
+    });    
+
+    it('it should return error message if site id invalid', async () => {
+      
+      testId = new mongoose.Types.ObjectId();
+      let reason = await nuclearStrike(testId);
+
+      expect(reason).toMatch(/Site not available/);
+
+    });    
+
+    it('it should return error message if zone id invalid', async () => {
+      testId = new mongoose.Types.ObjectId();
+      const citySite = new CitySite(
+        { siteCode: 'test site 2',
+          name: "City of Ashes",
+          zone: testId
+        }
+      )
+      await citySite.save();
+
+      let reason = await nuclearStrike(citySite._id);
+
+      expect(reason).toMatch(/Zone not available/);
+
+    });    
+
+  });
+  // end of nuclearStrike tests
+
+  describe('cityDestruction', () => {
+  
+    it('it should return message and zone terror updated', async () => {
+      const zone = new Zone(
+        { zoneCode: 'Z9', 
+          zoneName: 'Zone Test 9',
+          terror: 5 
+        });
+      await zone.save();
+      const country = new Country(
+        { code: 'C9', 
+          name: 'Country Test 9' ,
+          zone: zone._id
+        });
+      await country.save();
+      const team = new National(
+        { name: "Test Team 2",
+          shortName: "TT 2",
+          teamCode: "TT2",
+          teamType: "N",
+          homeCountry: country._id
+        }
+      )
+      await team.save();
+      const citySite = new CitySite(
+        { siteCode: 'test site 3',
+          name: "City of Dust",
+          country: country._id,
+          zone: zone._id
+        }
+      )
+      await citySite.save();
+
+      let saveId = zone._id;
+      let reason = await cityDestruction(citySite._id);
+      
+      zoneUpd = await Zone.findById(saveId);
+
+      // starts out at 5  + 20;
+      expect(zoneUpd.terror).toBe(25);
+      expect(reason).toMatch(/The destruction of/);
+
+    });    
+
+    it('it should return error message if site id invalid', async () => {
+      
+      testId = new mongoose.Types.ObjectId();
+      let reason = await cityDestruction(testId);
+
+      expect(reason).toMatch(/Site not available/);
+
+    });    
+
+    it('it should return error message if zone id invalid', async () => {
+      testId = new mongoose.Types.ObjectId();
+      const citySite = new CitySite(
+        { siteCode: 'test site 4',
+          name: "City of Shadows",
+          zone: testId
+        }
+      )
+      await citySite.save();
+
+      let reason = await cityDestruction(citySite._id);
+
+      expect(reason).toMatch(/Zone not available/);
+
+    });    
+
+  });
+  // end of cityDestruction tests
+
 
 });  
 
