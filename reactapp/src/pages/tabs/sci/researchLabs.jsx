@@ -65,8 +65,7 @@ class ResearchLabs extends Component {
 			showModal: false,		// Boolean to tell whether to open the Repair Modal
 			repairLab: {}			// Obj that holds the lab to repair
 		}
-		this.handleLabUpdate = this.handleLabUpdate.bind(this);
-		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
+		this.handleUpdate = this.handleUpdate.bind(this);
 		this.confirmSubmit = this.confirmSubmit.bind(this);
 		this.repair = this.repair.bind(this);
 		this.open = this.open.bind(this);
@@ -75,25 +74,10 @@ class ResearchLabs extends Component {
 	}
 	
 
-	handleLabUpdate(updatedLab) {
+	handleUpdate(updatedLab, key2update) {
 		let labs = this.state.labs;
-		const result = newLabCheck(updatedLab._id, labs);
-		if (result === -1) {				// New Entry	
-			labs.push(updatedLab);  
-		} else {							// Existing Entry
-			labs[result] = updatedLab;
-		}	
-		this.setState({labs});
-	}
-  
-	handleFundingUpdate(updatedLab) {
-		let labs = this.state.labs;
-		const result = newLabCheck(updatedLab._id, labs);
-		if (result === -1) {				// New Entry	
-			labs.push(updatedLab);  
-		} else {							// Existing Entry
-			labs[result].funding = updatedLab.funding;
-		}
+		const result = labs.findIndex(lab => lab._id === updatedLab._id);
+		labs[result][key2update] = updatedLab[key2update];
 		this.setState({labs});
 	}
   
@@ -154,7 +138,7 @@ class ResearchLabs extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps !== this.props) {
-			this.teamFilter();
+//			this.teamFilter();
 		}
 	}
 	
@@ -162,9 +146,7 @@ class ResearchLabs extends Component {
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
-		let account = this.state.account;
-		let sendLabUpdate = this.handleLabUpdate;
-		let sendFundingUpdate = this.handleFundingUpdate;
+		let sendLabUpdate = this.handleUpdate;
 		let confirmSubmit = this.confirmSubmit;
 
 		return(
@@ -191,7 +173,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.research = findTechByID(value, props.allResearch);
-								sendLabUpdate(updatedLab);
+								sendLabUpdate(updatedLab, "research");
 							}
 							if ( rowData.status.destroyed) {
 								rowData.disableFunding = true;
@@ -237,7 +219,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.funding = value;
-								sendFundingUpdate(updatedLab);
+								sendLabUpdate(updatedLab, "funding");
 							}          
 							return (
 								<InputNumber 
@@ -281,19 +263,18 @@ class ResearchLabs extends Component {
 					</Column>
                 </Table>
 				<div>
-							<Modal show={this.state.showModal} onHide={this.close}>
-								<Modal.Header>
-									<Modal.Title>Repair {this.state.repairLab.name}</Modal.Title>
-								</Modal.Header>
-								<Modal.Body>
-									<p>Are you sure that you want to spend ${labRepairCost} MB to repair {this.state.repairLab.name}?</p>
-								</Modal.Body>
-								<Modal.Footer>
-									<Button onClick={this.submitRepair} appearance="primary">Ok</Button>
-									<Button onClick={this.close} appearance="subtle">Cancel</Button>
-								</Modal.Footer>
-							</Modal>
-
+					<Modal show={this.state.showModal} onHide={this.close}>
+						<Modal.Header>
+							<Modal.Title>Repair {this.state.repairLab.name}</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<p>Are you sure that you want to spend ${labRepairCost} MB to repair {this.state.repairLab.name}?</p>
+						</Modal.Body>
+						<Modal.Footer>
+							<Button onClick={this.submitRepair} appearance="primary">Ok</Button>
+							<Button onClick={this.close} appearance="subtle">Cancel</Button>
+						</Modal.Footer>
+					</Modal>
 				</div>
 			</div>
     	);
@@ -357,18 +338,68 @@ class ResearchLabs extends Component {
 
 	// Function run at start.  Initializes research, labs, and account states by this team
 	teamFilter = () => {
-		let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
-		if (research.length !== 0) {
+		let teamResearch = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
+		if (teamResearch.length !== 0) {
+			let research = [];			// Array of research Objects
+			let obj = {};               // Object to add to the research array
+
+			teamResearch.forEach(el => {
+				obj = {
+					_id: 			el._id,
+					breakthru: 		el.breakthru,
+					desc:			el.desc,
+					field:			el.field,
+					level:			el.level,
+					name:			el.name,
+					prereq:			el.prereq,		// NOTE: slim this down later to the fields we need
+					progress:		el.progress,
+					status:			el.status,
+					team:			el.team,
+					theoretical:	el.theoretical	// NOTE: slim this down later to the fields we need
+				}
+
+				research.push(obj);
+			});
+
 			this.setState({research});
 		}
-		let labs = this.props.facilities.filter(el => el.team !== null);
-		if (labs.length !== 0) {
-			labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
+
+
+		let teamLabs = this.props.facilities.filter(el => el.type === 'Lab' && !el.hidden && el.team !== null && el.team._id === this.props.team._id);
+		if (teamLabs.length !== 0) {
+			let labs = [];				// Array of research Objects
+			let obj = {};               // Object to add to the research array
+
+			teamLabs.forEach(el => {
+				obj = {
+					_id: 			el._id,
+					funding: 		el.funding,
+					name:			el.name,
+					research:		el.research,					
+					status:			el.status,
+					team:			{
+										_id:			el.team._id,
+										shortName:		el.team.shortName
+									}
+				}
+
+				labs.push(obj);
+			});
+
 			this.setState({labs});
 		}
-		let account = this.props.accounts.filter(el => el.code === 'SCI');
-		if (account.length !== 0) {
-			account = account[0];
+
+
+
+		let teamAccount = this.props.accounts.filter(el => el.code === 'SCI');
+		if (teamAccount.length !== 0) {
+			let el = teamAccount[0];
+			let account = {
+				_id: 			el._id,
+				balance: 		el.balance,
+				name:			el.name
+			};			
+
 			this.setState({account});
 		}
 	}
