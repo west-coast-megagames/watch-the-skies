@@ -80,11 +80,14 @@ async function knowledgeSeed() {
             if (index != -1) {
                 console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
-                // knowledgeDebugger(newKnowledge)
-                rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
-                knowledgeDebugger(rand);
-                newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
-                // knowledgeDebugger(newKnowledge);
+                //knowledgeDebugger(newKnowledge)
+                if (newKnowledge.teamProgress.length > 0) {
+                  rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
+                  rand = Math.max(rand, 0);   // don't go negative
+                  //knowledgeDebugger(`Rand: ${rand} teamProgress.length: ${newKnowledge.teamProgress.length}`);
+                  newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
+                  //knowledgeDebugger(newKnowledge);
+                }
                 knowledgeDebugger(`Completing knowledge`)
                 await completeKnowledge(newKnowledge);
                 knowledgeDebugger(`Publishing Science`)
