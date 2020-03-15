@@ -11,9 +11,8 @@ const science = require('../../wts/research/research');
 
 // Research Models - Using Mongoose Model
 const TechResearch = require('../../models/sci/techResearch');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
 const AnalysisResearch = require('../../models/sci/analysisResearch');
-const Research = require('../../models/sci/research')
+const { Research, KnowledgeResearch } = require('../../models/sci/research')
 
 // @route   GET api/research/
 // @Desc    Get all research

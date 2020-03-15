@@ -1,7 +1,7 @@
 // Facility Model - Using Mongoose Model
 const { Facility, validateFacility } = require('../../models/gov/facility/facility');
 const { Equipment } = require('../../models/gov/equipment/equipment');
-const Research = require('../../models/sci/research');
+const { Research } = require('../../models/sci/research');
 
 const facilityCheckDebugger = require('debug')('app:facilityCheck');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging

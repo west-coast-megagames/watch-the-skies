@@ -5,8 +5,7 @@ const knowledgeData = JSON.parse(file);
 knowledgeDebugger = require('debug')('app:knowledge');
 
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
+const { Research, KnowledgeResearch } = require('../../models/sci/research');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
 
 const techCost = [ 20, 30, 40, 50, 60, 70 ] // Arbitratily set at increments of 50 currently

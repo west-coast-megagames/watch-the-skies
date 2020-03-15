@@ -1,7 +1,6 @@
 const techDebugger = require('debug')('app:tech');
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
+const { Research, KnowledgeResearch } = require('../../models/sci/research');
 const TechResearch = require('../../models/sci/techResearch');
 
 const { TheoryReport } = require('../reports/reportClasses');

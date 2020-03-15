@@ -1,7 +1,7 @@
 const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country'); 
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
+const { Research } = require('../../models/sci/research');
 const { Log } = require('../../models/logs/log');
 const { Site } = require('../../models/sites/site');
 const { Aircraft } = require('../../models/ops/aircraft');

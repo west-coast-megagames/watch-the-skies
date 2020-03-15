@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Research = require('../sci/research');
+const { Research } = require('../sci/research');
 const Schema = mongoose.Schema;
 
 

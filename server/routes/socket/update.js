@@ -7,7 +7,7 @@ const { logger } = require('../../middleware/winston'); // middleware/error.js w
 const { getTeam } = require('../../models/team/team');
 const { getAircrafts } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
-const Research = require('../../models/sci/research');
+const { Research } = require('../../models/sci/research');
 const { Facility } = require('../../models/gov/facility/facility')
 const { Military } = require('../../models/ops/military/military')
 
