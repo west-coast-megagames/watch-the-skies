@@ -96,7 +96,7 @@ async function loadAircraft(iData, rCounts){
         if (!team) {
           //logger.debug(`Aircraft Load Team Error, New Aircraft: ${iData.name}  Team:  ${iData.team}`);
           loadError = true;
-          loadErrorMsg = "Team Not Found: " + iData.teamCode;
+          loadErrorMsg = `Team Not Found: ${iData.teamCode}`;
         } else {
           aircraft.team = team._id;
             //logger.debug(`Aircraft Load Team Found, Aircraft: ${iData.name} Team:  ${iData.team} Team ID: ${team._id}`);
@@ -346,7 +346,7 @@ async function loadAircraft(iData, rCounts){
             logger.error(`Aircraft Update Save Error: ${err}`, {meta: err})
             return;
           }
-          ++rCounts.loadCount;
+          ++rCounts.updCount;
           logger.info(`${aircraft.name} update saved to aircraft collection.`);
           updateStats(aircraft._id);
           return;

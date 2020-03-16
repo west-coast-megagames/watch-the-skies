@@ -83,7 +83,7 @@ async function loadTeam(tData){
           logger.error(`Invalid Team Type In : ${tData.teamType}`);
       } 
     } else {         
-      switch(team.teamType){
+      switch(tData.teamType){
         case "N":
           updNational(tData, team._id);
           break;
