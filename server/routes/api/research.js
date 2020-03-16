@@ -8,8 +8,7 @@ const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
 const science = require('../../wts/research/research');
 
 // Research Models - Using Mongoose Model
-const TechResearch = require('../../models/sci/techResearch');
-const { Research, KnowledgeResearch, AnalysisResearch } = require('../../models/sci/research')
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research')
 
 // @route   GET api/research/
 // @Desc    Get all research
