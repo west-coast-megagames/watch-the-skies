@@ -5,8 +5,7 @@ const knowledgeData = JSON.parse(file);
 knowledgeDebugger = require('debug')('app:knowledge');
 
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
+const { Research, KnowledgeResearch } = require('../../models/sci/research');
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
 
 const techCost = [ 20, 30, 40, 50, 60, 70 ] // Arbitratily set at increments of 50 currently
@@ -80,11 +79,14 @@ async function knowledgeSeed() {
             if (index != -1) {
                 console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
-                // knowledgeDebugger(newKnowledge)
-                rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
-                knowledgeDebugger(rand);
-                newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
-                // knowledgeDebugger(newKnowledge);
+                //knowledgeDebugger(newKnowledge)
+                if (newKnowledge.teamProgress.length > 0) {
+                  rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
+                  rand = Math.max(rand, 0);   // don't go negative
+                  //knowledgeDebugger(`Rand: ${rand} teamProgress.length: ${newKnowledge.teamProgress.length}`);
+                  newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
+                  //knowledgeDebugger(newKnowledge);
+                }
                 knowledgeDebugger(`Completing knowledge`)
                 await completeKnowledge(newKnowledge);
                 knowledgeDebugger(`Publishing Science`)

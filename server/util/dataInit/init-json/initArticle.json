@@ -1,0 +1,53 @@
+[  
+{
+"model" : "Article",
+"publisher" : "BNC",
+"headline" : "Congo Goverment Decries Afican Representation",
+"articleBody" : "The Congo goverment issued a statement that the level of African involment in the world disccussion of possible extra-terrestrial contacts was deplorably low. ",
+"location" : "CD LUB",
+"date" : "2024-03-08",
+"timestamp" : {
+  "turn": "Pre-Game",
+  "phase": "Briefing",
+  "turnNum": 0,
+  "clock": "10:00"
+},
+"likes" : 45,
+"tags" : ["Rumors", "Gossip", "Fake New", "Mis-Information"],
+"imageSrc" : "https://stock.adobe.com/contributor/200583650/jeffwqc?asset_id=89661708"
+},
+{
+"model" : "Article",
+"publisher" : "GNN",
+"headline" : "Project Nexus Implies USA World Dominance",
+"articleBody" : "Russian sources have said that the game was strongly biased towards a leading role of USA in the first contact of alien society ",
+"location" : "RU BKA",
+"date" : "2024-05-08",
+"timestamp" : {
+  "turn": "Apr-Jun 2024",
+  "phase": "Planning",
+  "turnNum": 5,
+  "clock": "10:40"
+},
+"likes" : 245,
+"tags" : ["USA", "Russia", "Strife"],
+"imageSrc" : "https://stock.adobe.com/contributor/200583650/jeffwqc?asset_id=276469001"
+},
+{
+"model" : "Article",
+"publisher" : "GNN",
+"headline" : "French President Says The French Language Should Be Used",
+"articleBody" : "The French President demanded that all contact with possible extra-terrestrials be translated into French, as the proper language of universal communication.",
+"location" : "FR ATY",
+"date" : "2024-02-08",
+"timestamp" : {
+"turn": "Jan-Mar 2024",
+"phase": "Free Time",
+"turnNum": 2,
+"clock": "10:10"
+},
+"likes" : 4,
+"tags" : ["Language", "French", "France"],
+"imageSrc" : "https://stock.adobe.com/be_en/images/orange-yellow-blue-abstract-lines-curves-particles-background/176659162"
+}
+]

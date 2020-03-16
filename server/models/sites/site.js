@@ -47,7 +47,7 @@ function validateSite(site) {
 
 const CitySite = Site.discriminator('CitySite', new Schema({
   type: { type: String, default: 'City' },
-  dateline: { type: String, default : 'Dateline'},
+  dateline: { type: String, default : 'Dateline'}
 }));
 
 function validateCity(citySite) {

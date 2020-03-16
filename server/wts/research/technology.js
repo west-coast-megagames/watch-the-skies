@@ -1,8 +1,6 @@
 const techDebugger = require('debug')('app:tech');
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
-const TechResearch = require('../../models/sci/techResearch');
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research');
 
 const { TheoryReport } = require('../reports/reportClasses');
 
@@ -64,6 +62,7 @@ function Technology(tech) {
                   techDebugger(msg);
                   let newTech = new TechResearch({
                       name: this.name,
+                      code: this.code,
                       level: this.level,
                       prereq: this.prereq,
                       desc: this.desc,
@@ -118,6 +117,7 @@ function Technology(tech) {
         techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
         let newTech = new TechResearch({
             name: this.name,
+            code: this.code,
             level: this.level,
             prereq: this.prereq,
             desc: this.desc,

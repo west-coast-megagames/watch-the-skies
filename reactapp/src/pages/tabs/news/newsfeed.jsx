@@ -53,7 +53,7 @@ const NewsFeed = props => {
               collapsible
               bordered
             >
-              <p>{article.body}</p>
+              <p>{article.articleBody}</p>
             </Panel>
           </div>
         ))}

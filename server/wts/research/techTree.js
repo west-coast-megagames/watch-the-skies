@@ -9,7 +9,7 @@ const analysisData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/an
 const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
 const { Technology } = require('./technology');
-const KnowledgeResearch = require('../../models/sci/research')
+const { Research, KnowledgeResearch } = require('../../models/sci/research')
 
 const techTree = [] // Server side array to track all availible technology.
 

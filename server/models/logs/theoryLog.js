@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Log = require('./log');
+const { Log } = require('./log');
 const Schema = mongoose.Schema;
 
 const TheoryLog = Log.discriminator('TheoryLog', new Schema({

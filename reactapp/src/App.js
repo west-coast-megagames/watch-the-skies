@@ -319,7 +319,7 @@ class App extends Component {
 
   handleArtHide = (article) => {
     let articles = this.state.articles;
-    Alert.warning(`Hiding ${article.body} article...`);
+    Alert.warning(`Hiding ${article.articleBody} article...`);
 
     /*if(article.agency === 'BNC') {
         console.log(article.agency);

@@ -124,7 +124,7 @@ describe('/teams/', () => {
       newPrLevel = 10;
       newShortName = 15;
       newRoles =  [ 
-        {"role": "President", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+        {"role": "President", "type" : "Head of State"},
       ];
       newPrTrack = [0, 5, 10, 15, 20, 25, 30, 35, 40];
     });
@@ -142,12 +142,17 @@ describe('/teams/', () => {
     });
 
     it('should return 500 if team code already exists', async () => {
+      newRoles = [ 
+        {"role": "President", "type" : "Head of State"},
+      ];
+
       const team = new Team(
         { teamCode: 'C5', 
           name: 'Team Test 5',
           shortName: "Test 5",
           teamType: "N"
       });
+      team.roles = newRoles;
       await team.save();
 
       const res = await request(server).post('/api/team').send({ teamCode: "C5", name: 'Team Test 6', teamType: "N" });
@@ -207,8 +212,8 @@ describe('/teams/', () => {
       const res = await request(server).post('/api/team')
          .send({ teamCode: "C8", name: 'Test Team Val 8', teamType: "N",
          "roles" : [ {"role": "President", "type" : "Head of Testing" } ] });
-      expect(res.status).toBe(500);
-      expect(res.text).toMatch(/not a valid enum value/)
+      expect(res.status).toBe(400);
+      expect(res.text).toMatch(/must be one of/)
     });
 
     it('should save the team if it is valid', async () => {

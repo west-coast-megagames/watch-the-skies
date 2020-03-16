@@ -5,7 +5,7 @@ import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 const { Column, HeaderCell, Cell } = Table;
-const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture'];
+const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis'];
 
 
 // Places the progress bar into the cell within the Table
