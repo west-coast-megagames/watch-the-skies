@@ -62,6 +62,7 @@ function Technology(tech) {
                   techDebugger(msg);
                   let newTech = new TechResearch({
                       name: this.name,
+                      code: this.code,
                       level: this.level,
                       prereq: this.prereq,
                       desc: this.desc,
@@ -116,6 +117,7 @@ function Technology(tech) {
         techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
         let newTech = new TechResearch({
             name: this.name,
+            code: this.code,
             level: this.level,
             prereq: this.prereq,
             desc: this.desc,
