@@ -83,7 +83,7 @@ class TechList extends Component {
                             {rowData => {
                                 return (
                                     <div>
-                                        <SciIcon size={50} level={rowData.level} />
+                                        <SciIcon size={40} level={rowData.level} />
                                     </div>
                                 )
                             }}
