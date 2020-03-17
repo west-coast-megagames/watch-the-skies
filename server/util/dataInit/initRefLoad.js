@@ -196,21 +196,21 @@ async function deleteZone(zName, zCode, zLoadFlg){
         let delId = zone._id;
         let zoneDel = await Zone.findByIdAndRemove(delId);
         if (zoneDel = null) {
-          zoneInitDebugger(`deleteZone: Zone with the ID ${delId} was not found!`);
-          let delErrorFlag = true;
+          logger.error(`deleteZone: Zone with the ID ${delId} was not found!`);
+          delErrorFlag = true;
         }
       } catch (err) {
-        zoneInitDebugger('deleteZone Error 1:', err.message);
-        let delErrorFlag = true;
+        logger.error(`Catch deleteZone Error 1: ${err.message}`, {meta: err});
+        delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       zoneInitDebugger("All Zones succesfully deleted for Code:", zCode);
+       logger.debug(`All Zones succesfully deleted for Code: ${zCode}`);
     } else {
-       zoneInitDebugger("Some Error In Zones delete for Code:", zCode);
+       logger.error(`Some Error In Zones delete for Code: ${zCode}`);
     }
   } catch (err) {
-    zoneInitDebugger(`deleteZone Error 2: ${err.message}`);
+    logger.error(`Catch deleteZone Error 2: ${err.message}`, {meta: err});
   }
 };
 
@@ -325,20 +325,20 @@ async function deleteTeam(tName, tCode, tLoadFlg){
         let teamDel = await Team.findByIdAndRemove(delId);
         if (teamDel = null) {
           logger.error(`deleteTeam: Team with the ID ${delId} was not found!`);
-          let delErrorFlag = true;
+          delErrorFlag = true;
         }
       } catch (err) {
         logger.error(`Catch deleteTeam Error1: ${err.message}`, {meta: err});
-        let delErrorFlag = true;
+        delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       //teamInitDebugger("All Teams succesfully deleted for Code:", tCode);
+       logger.debug(`All Teams succesfully deleted for Code: ${tCode}`);
     } else {
-      logger.error(`Catch deleteTeam Error 2: ${err.message}`, {meta: err});
+      logger.error(`Some Error(s) with team delete for code: ${tCode}`);
     }
   } catch (err) {
-    teamInitDebugger(`deleteTeam Error 2: ${err.message}`);
+    logger.error(`Catch deleteTeam Error 2: ${err.message}`, {meta: err});
   }
 };
 
@@ -477,21 +477,21 @@ async function deleteCountry(cName, cCode, cLoadFlg){
         let delId = country._id;
         let countryDel = await Country.findByIdAndRemove(delId);
         if (countryDel = null) {
-          countryInitDebugger(`deleteCountry: Country with the ID ${delId} was not found!`);
-          let delErrorFlag = true;
+          logger.error(`deleteCountry: Country with the ID ${delId} was not found!`);
+          delErrorFlag = true;
         }
       } catch (err) {
-        countryInitDebugger('deleteCountry Error 1:', err.message);
-        let delErrorFlag = true;
+        logger.error(`deleteCountry Error 1: err.message`, {meta: err});
+        delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       countryInitDebugger("All Country succesfully deleted for Code:", cCode);
+      logger.debug(`All Country succesfully deleted for Code: ${cCode}`);
     } else {
-       countryInitDebugger("Some Error In Country delete for Code:", cCode);
+      logger.error(`Some Error In Country delete for Code: ${cCode}`);
     }
   } catch (err) {
-    countryInitDebugger(`deleteCountry Error 2: ${err.message}`);
+    logger.error(`deleteCountry Error 2: ${err.message}`, {meta: err});
   }
 };
 

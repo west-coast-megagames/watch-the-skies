@@ -81,26 +81,55 @@ async function chkResearch(runFlag) {
         }        
       }
     }
-  /*
-    //has at least one system
-    if (research.systems.length < 1) {
-      logger.error(`No Systems Assigned to ${research.name} ${research._id}`);
-    } 
 
-    //researchCheckDebugger(`Research ${research.name} ${research._id} Check of Systems ${research.systems.length}`);
-    for (let i = 0; i < research.systems.length; ++i){
-      //researchCheckDebugger(`Research ${research.name} ${research._id} about to find systems for ID ${research.systems[i]}`);
-      let sFind = await System.findById(research.systems[i]);
-      if (!sFind) {
-        logger.error(`Research ${research.name} ${research._id} has an invalid systems reference ${i}: ${research.systems[i]}`);
+    if (!testPropertys.hasOwnProperty('prereq')) {
+      logger.error(`Research prereq is missing  ${research.name} ${research._id}`);  
+    } else {
+      //researchCheckDebugger(`Research ${research.name} ${research._id} Check of Prereq ${research.prereq.length}`);
+      for (let i = 0; i < research.prereq.length; ++i){
+        if (!research.prereq[i].code || research.prereq[i].code === "" || research.prereq[i].code === null) {
+          logger.error(`Research prereq code ${i} has length of zero ${research.name} ${research._id}`);
+        }
+        if (!research.prereq[i].type || research.prereq[i].type === "" || research.prereq[i].type === null) {
+          logger.error(`Research prereq type ${i} has length of zero ${research.name} ${research._id}`);
+        }
       }
     }
 
+    if (!testPropertys.hasOwnProperty('unlocks')) {
+      logger.error(`Research unlocks is missing  ${research.name} ${research._id}`);  
+    } else {
+      //researchCheckDebugger(`Research ${research.name} ${research._id} Check of Unlocks ${research.unlocks.length}`);
+      for (let i = 0; i < research.unlocks.length; ++i){
+        if (!research.unlocks[i].code || research.unlocks[i].code === "" || research.unlocks[i].code === null) {
+          logger.error(`Research unlocks code ${i} has length of zero ${research.name} ${research._id}`);
+        }
+        if (!research.unlocks[i].type || research.unlocks[i].type === "" || research.unlocks[i].type === null) {
+          logger.error(`Research unlocks type ${i} has length of zero ${research.name} ${research._id}`);
+        }
+      }
+    }
+
+    if (!testPropertys.hasOwnProperty('breakthrough')) {
+      logger.error(`Research breakthrough is missing  ${research.name} ${research._id}`);  
+    } else {
+      //researchCheckDebugger(`Research ${research.name} ${research._id} Check of Unlocks ${research.breakthrough.length}`);
+      for (let i = 0; i < research.breakthrough.length; ++i){
+        if (!research.breakthrough[i].code || research.breakthrough[i].code === "" || research.breakthrough[i].code === null) {
+          logger.error(`Research breakthrough code ${i} has length of zero ${research.name} ${research._id}`);
+        }
+        if (!research.breakthrough[i].type || research.breakthrough[i].type === "" || research.breakthrough[i].type === null) {
+          logger.error(`Research breakthrough type ${i} has length of zero ${research.name} ${research._id}`);
+        }
+      }
+    }
+
+    /*
     let { error } = validateResearch(research);
     if ( error)  {
       logger.error(`Research Validation Error For ${research.name} Error: ${error.details[0].message}`);
     }
-*/
+    */
 
   }
   return true;
