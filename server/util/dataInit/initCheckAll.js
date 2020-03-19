@@ -10,6 +10,7 @@ const runSquadCheck = require('../dataCheck/squadCheck');
 const runTeamCheck = require('../dataCheck/teamCheck');
 const runArticleCheck = require('../dataCheck/articleCheck');
 const runResearchCheck = require('../dataCheck/researchCheck');
+const runAccountsCheck = require('../dataCheck/accountsCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -113,6 +114,17 @@ async function fullInitCheck(selStr){
     case 'Research':
       let researchCheckDone = await runResearchCheck(true);   // check research records
       logger.info(`Research Check Done: ${researchCheckDone}`);
+                          
+      if (selStr != 'All') {
+        break;
+    }
+  
+    if (selStr = 'All') break;
+
+    case 'All':
+    case 'Accounts':
+      let accountsCheckDone = await runAccountsCheck(true);   // check accounts records
+      logger.info(`Accounts Check Done: ${accountsCheckDone}`);
                           
       if (selStr != 'All') {
         break;
