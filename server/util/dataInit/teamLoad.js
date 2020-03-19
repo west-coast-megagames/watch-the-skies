@@ -43,6 +43,11 @@ async function initLoad(doLoad) {
   
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < teamDataIn.length; ++i ) {
     
     if (teamDataIn[i].loadType == "team") {     
@@ -51,13 +56,16 @@ async function initLoad(doLoad) {
       //await deleteTeam(teamDataIn[i]);   will cause previously loaded team record id's to change
 
       if (teamDataIn[i].loadFlag == "true") {
-        await loadTeam(teamDataIn[i]);
+        ++recReadCount;
+        await loadTeam(teamDataIn[i], recCounts);
       }
     }
   }
+
+  logger.info(`Team Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
 };
 
-async function loadTeam(tData){
+async function loadTeam(tData, rCounts){
   try {   
     let team = await Team.findOne( { teamCode: tData.code } );
 
@@ -65,46 +73,49 @@ async function loadTeam(tData){
       
       switch(tData.teamType){
         case "N":
-          newNational(tData);
+          newNational(tData, rCounts);
           break;
         case "A":
-          newAlien(tData);
+          newAlien(tData, rCounts);
           break;
         case "C":
-          newControl(tData);
+          newControl(tData, rCounts);
           break;
         case "P":
-          newNPC(tData);
+          newNPC(tData, rCounts);
           break;
         case "M":
-          newMedia(tData);
+          newMedia(tData, rCounts);
           break;
         default:
           logger.error(`Invalid Team Type In : ${tData.teamType}`);
+          ++rCounts.loadErrCount;
       } 
     } else {         
       switch(tData.teamType){
         case "N":
-          updNational(tData, team._id);
+          updNational(tData, team._id, rCounts);
           break;
         case "A":
-          updAlien(tData, team._id);
+          updAlien(tData, team._id, rCounts);
           break;
         case "C":
-          updControl(tData, team._id);
+          updControl(tData, team._id, rCounts);
           break;
         case "P":
-          updNPC(tData, team._id);
+          updNPC(tData, team._id, rCounts);
           break;
         case "M":
-          updMedia(tData, team._id);
+          updMedia(tData, team._id, rCounts);
           break;
         default:
           logger.error(`Invalid Team Type In : ${tData.teamType}`);
+          ++rCounts.loadErrCount;
       } 
     }
   } catch (err) {
-    teamLoadDebugger('Catch Team Error:', err.message);
+    logger.error('Catch Team Error:', err.message);
+    ++rCounts.loadErrCount;
     return;
   }
 };
@@ -120,25 +131,30 @@ async function deleteTeam(tData){
         let delId = team._id;
         let teamDel = await Team.findByIdAndRemove(delId);
         if (teamDel = null) {
-          teamLoadDebugger(`deleteTeam: Team with the ID ${delId} was not found!`);
+          logger.error(`deleteTeam: Team with the ID ${delId} was not found!`);
           let delErrorFlag = true;
         }
       } catch (err) {
-        teamLoadDebugger('deleteTeam Error 1:', err.message);
+        logger.error('deleteTeam Error 1:', err.message);
         let delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       teamLoadDebugger("All Teams succesfully deleted for Code:", tData.code);
+       //teamLoadDebugger("All Teams succesfully deleted for Code:", tData.code);
     } else {
-       teamLoadDebugger("Some Error In Teams delete for Code:", tData.code);
+       logger.error("Some Error In Teams delete for Code:", tData.code);
     }
   } catch (err) {
-    teamLoadDebugger(`deleteTeam Error 2: ${err.message}`);
+    logger.error(`deleteTeam Error 2: ${err.message}`, {meta: err});
   }
 };
 
-async function newNational(tData){
+async function newNational(tData, rCounts){
+
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New National Team here
   let national = new National({ 
     teamCode: tData.code,
@@ -147,10 +163,11 @@ async function newNational(tData){
     teamType: tData.teamType
   }); 
 
+  loadName = tData.name;
   let { error } = validateNational(national); 
   if (error) {
-    teamLoadDebugger(`New National Team Validate Error, ${tData.teamCode}  ${error.message}`);
-    return;
+    loadError = true;
+    loadErrorMsg = `New National Team Validate Error, ${tData.code}  ${error.message}`;
   }
 
   national.prTrack  = tData.prTrack;
@@ -161,21 +178,40 @@ async function newNational(tData){
   if (tData.homeCountry != ""){
     let country = await Country.findOne({ code: tData.homeCountry });  
     if (!country) {
-      teamLoadDebugger("Team Load Country Error, New Team:", tData.name, " Country: ", tData.homeCountry);
+      loadError = true;
+      loadErrorMsg = `New National Team has invalid homeCountry, ${tData.code} tData.homeCountry`;
     } else {
       national.homeCountry = country._id;
-      teamLoadDebugger("Team Load Country Found, New Team:", tData.name, " Country: ", tData.homeCountry, "Country ID:", country._id);
+      //teamLoadDebugger("Team Load Country Found, New Team:", tData.name, " Country: ", tData.homeCountry, "Country ID:", country._id);
     }      
+  } else {
+    loadError = true;
+    loadErrorMsg = `New National Team has blank homeCountry, ${tData.code}`;
   }
-  //national.sciRate  = tData.sciRate;
 
-  await national.save((err, national) => {
-    if (err) return logger.error(`New Team Save Error: ${err}`);
-    teamLoadDebugger(`${national.name} add saved to teams collection. type: ${national.teamType}`);
-  });
+  if (!loadError) {
+    await national.save((err, national) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New National Team Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${national.name} add saved to teams collection. type: ${national.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`National Team skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;
+  }
 };
 
-async function newAlien(tData){
+async function newAlien(tData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New Alien Team here
   let alien = new Alien({ 
     teamCode: tData.code,
@@ -184,22 +220,39 @@ async function newAlien(tData){
     teamType: tData.teamType
   }); 
 
+  loadName = tData.name;
   let { error } = validateAlien(alien); 
   if (error) {
-    teamLoadDebugger(`New Alien Team Validate Error, ${tData.teamCode}  ${error.message}`);
-    return;
+    loadError = true;
+    loadErrorMsg = `New Alien Team Validate Error, ${tData.code}  ${error.message}`;
   }
 
   alien.roles    = tData.roles;
   alien.agents   = tData.agents;
 
-  await alien.save((err, alien) => {
-    if (err) return logger.error(`New Team Save Error: ${err}`);
-    teamLoadDebugger(`${alien.name} add saved to teams collection. type: ${alien.teamType}`);
-  });
+  if (!loadError) {
+    await alien.save((err, alien) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New Alien Team Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${alien.name} add saved to teams collection. type: ${alien.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Alien Team skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;    
+  }
 };
 
-async function newMedia(tData){
+async function newMedia(tData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New Media Team here
   let media = new Media({ 
     teamCode: tData.code,
@@ -208,19 +261,37 @@ async function newMedia(tData){
     teamType: tData.teamType
   }); 
 
+  loadName = tData.name;
+
   let { error } = validateMedia(media); 
   if (error) {
-    teamLoadDebugger(`New Media Team Validate Error, ${tData.teamCode}  ${error.message}`);
-    return;
+    loadError = true;
+    loadErrorMsg = `New Media Team Validate Error, ${tData.code}  ${error.message}`;
   }
 
-  await media.save((err, media) => {
-    if (err) return logger.error(`New Team Save Error: ${err}`);
-    teamLoadDebugger(`${media.name} add saved to teams collection. type: ${media.teamType}`);
-  });
+  if (!loadError) {
+    await media.save((err, media) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New Media Team Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${media.name} add saved to teams collection. type: ${media.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Media Team skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;    
+  }
 };
 
-async function newControl(tData){
+async function newControl(tData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New Control Team here
   let control = new Control({ 
     teamCode: tData.code,
@@ -229,21 +300,39 @@ async function newControl(tData){
     teamType: tData.teamType
   }); 
 
+  loadName = tData.name;
+
   let { error } = validateControl(control); 
   if (error) {
-    teamLoadDebugger(`New Control Team Validate Error, ${tData.teamCode}  ${error.message}`);
-    return;
+    loadError = true;
+    loadErrorMsg = `New Control Team Validate Error, ${tData.code}  ${error.message}`;
   }
 
   control.roles    = tData.roles;
 
-  await control.save((err, control) => {
-    if (err) return logger.error(`New Team Save Error: ${err}`);
-    teamLoadDebugger(`${control.name} add saved to teams collection. type: ${control.teamType}`);
-  });
+  if (!loadError) {
+    await control.save((err, control) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New Control Team Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${control.name} add saved to teams collection. type: ${control.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Control Team skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;    
+  }
 };
 
-async function newNPC(tData){
+async function newNPC(tData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New NPC Team here
   let npc = new Npc({ 
     teamCode: tData.code,
@@ -252,28 +341,49 @@ async function newNPC(tData){
     teamType: tData.teamType
   }); 
 
+  loadName = tData.name;
+
   let { error } = validateNpc(npc); 
   if (error) {
-    teamLoadDebugger(`New NPC Team Validate Error, ${tData.teamCode}  ${error.message}`);
-    return;
+    loadError = true;
+    loadErrorMsg = `New NPC Team Validate Error, ${tData.code}  ${error.message}`;
   }
   
-  //npc.sciRate  = tData.sciRate;
-  
-  await npc.save((err, npc) => {
-    if (err) return logger.error(`New Team Save Error: ${err}`);
-    teamLoadDebugger(`${npc.name} add saved to teams collection. type: ${npc.teamType}`);
-  });
+  if (!loadError) {
+    await npc.save((err, npc) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New NPC Team Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${npc.name} add saved to teams collection. type: ${npc.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`NPC Team skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;    
+  }
 };
 
-async function updNational(tData, tId){
+async function updNational(tData, tId, rCounts){
   // Existing National Team here ... update
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+  let oldHomeCountry = null;
   
   let national = await National.findById( tId );
   if (!national) {
-    teamLoadDebugger(`${tData.name} not available for National team collection update`);
+    ++rCounts.loadErrCount;
+    logger.error(`National Team ${tData.name} not available for team collection update`);
     return;
   }
+  
+  loadName = tData.name;
+  oldHomeCountry = national.homeCountry;
+
   national.name      = tData.name;
   national.shortName = tData.shortName;
   national.teamType  = tData.teamType;
@@ -284,26 +394,59 @@ async function updNational(tData, tId){
   national.agents    = tData.agents;
   //national.sciRate   = tData.sciRate;
 
+  if (tData.homeCountry != ""){
+    let country = await Country.findOne({ code: tData.homeCountry });  
+    if (!country) {
+      loadError = true;
+      loadErrorMsg = `Update National Team has invalid homeCountry, ${tData.code} tData.homeCountry`;
+    } else {
+      national.homeCountry = country._id;
+      //teamLoadDebugger("Team Load Country Found, New Team:", tData.name, " Country: ", tData.homeCountry, "Country ID:", country._id);
+    }      
+  } else {
+    national.homeCountry = oldHomeCountry;
+  }
+
   const { error } = validateNational(national); 
   if (error) {
-    teamLoadDebugger(`National Team Update Validate Error ${tData.code} ${tData.name} ${error.message}`);
-    return
+    loadError = true;
+    loadErrorMsg = `National Team Update Validate Error, ${tData.code}  ${error.message}`;
   }
    
-  await national.save((err, national) => {
-  if (err) return logger.error(`National Team Update Save Error: ${err}`);
-    teamLoadDebugger(`${national.name} update saved to National teams collection.`);
-  });
+  if (!loadError) {
+    await national.save((err, national) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`National Team Update Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.updCount;
+      logger.debug(`${national.name} update saved to teams collection. type: ${national.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`National Team Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;    
+  }
 }
 
-async function updAlien(tData, tId){
+async function updAlien(tData, tId, rCounts){
   // Existing Alien Team here ... update
       
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   let alien = await Team.findById( tId );
   if (!alien) {
-    teamLoadDebugger(`${tData.name} not available for Alien team collection update`);
+    ++rCounts.loadErrCount;
+    logger.error(`Alien Team ${tData.name} not available for team collection update`);
     return;
   }
+  
+  loadName = tData.name;
+
   alien.name      = tData.name;
   alien.shortName = tData.shortName;
   alien.teamType  = tData.teamType;
@@ -313,25 +456,44 @@ async function updAlien(tData, tId){
 
   const { error } = validateAlien(alien); 
   if (error) {
-    teamLoadDebugger(`Alien Team Update Validate Error ${tData.code} ${tData.name} ${error.message}`);
-    return
+    loadError = true;
+    loadErrorMsg = `Alien Team Update Validate Error, ${tData.code}  ${error.message}`;
   }
    
-  await alien.save((err, alien) => {
-  if (err) return logger.error(`Alien Team Update Save Error: ${err}`);
-    teamLoadDebugger(`${alien.name} update saved to Alien teams collection.`);
-  });
+  if (!loadError) {
+    await alien.save((err, alien) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`Alien Team Update Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.updCount;
+      logger.debug(`${alien.name} update saved to teams collection. type: ${alien.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Alien Team Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;  
+  }
 }
 
-
-async function updMedia(tData, tId){
+async function updMedia(tData, tId, rCounts){
   // Existing Media Team here ... update
-      
+  
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   let media = await Team.findById( tId );
   if (!media) {
-    teamLoadDebugger(`${tData.name} not available for Media team collection update`);
+    ++rCounts.loadErrCount;
+    logger.error(`Media Team ${tData.name} not available for team collection update`);
     return;
   }
+  
+  loadName = tData.name;
+
   media.name      = tData.name;
   media.shortName = tData.shortName;
   media.teamType  = tData.teamType;
@@ -339,24 +501,44 @@ async function updMedia(tData, tId){
   
   const { error } = validateMedia(media); 
   if (error) {
-    teamLoadDebugger(`Media Team Update Validate Error ${tData.code} ${tData.name} ${error.message}`);
-    return
+    loadError = true;
+    loadErrorMsg = `Media Team Update Validate Error, ${tData.code}  ${error.message}`;
   }
-   
-  await media.save((err, media) => {
-  if (err) return logger.error(`Media Team Update Save Error: ${err}`);
-    teamLoadDebugger(`${media.name} update saved to Media teams collection.`);
-  });
+
+  if (!loadError) {
+    await media.save((err, media) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`Media Team Update Save Error: ${err}`, {meta: err});
+        return;
+      }
+      //++rCounts.updCount;
+      logger.debug(`${media.name} update saved to teams collection. type: ${media.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Media Team Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;  
+  }
 }
 
-async function updControl(tData, tId){
+async function updControl(tData, tId, rCounts){
   // Existing Control Team here ... update
-      
+  
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   let control = await Team.findById( tId );
   if (!control) {
-    teamLoadDebugger(`${tData.name} not available for Control team collection update`);
+    ++rCounts.loadErrCount;
+    logger.error(`Control Team ${tData.name} not available for team collection update`);
     return;
   }
+  
+  loadName = tData.name;
+  
   control.name      = tData.name;
   control.shortName = tData.shortName;
   control.teamType  = tData.teamType;
@@ -365,24 +547,44 @@ async function updControl(tData, tId){
  
   const { error } = validateControl(control); 
   if (error) {
-    teamLoadDebugger(`Control Team Update Validate Error ${tData.code} ${tData.name} ${error.message}`);
-    return
+    loadError = true;
+    loadErrorMsg = `Control Team Update Validate Error, ${tData.code}  ${error.message}`;
   }
-   
-  await control.save((err, control) => {
-  if (err) return logger.error(`Control Team Update Save Error: ${err}`);
-    teamLoadDebugger(`${control.name} update saved to Control teams collection.`);
-  });
+  
+  if (!loadError) {
+    await control.save((err, control) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`Control Team Update Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.updCount;
+      logger.debug(`${control.name} update saved to teams collection. type: ${control.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`Control Team Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;  
+  }
 }
 
-async function updNPC(tData, tId){
+async function updNPC(tData, tId, rCounts){
   // Existing NPC Team here ... update
-      
+  
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   let npc = await Team.findById( tId );
   if (!npc) {
-    teamLoadDebugger(`${tData.name} not available for NPC team collection update`);
+    ++rCounts.loadErrCount;
+    logger.error(`NPC Team ${tData.name} not available for team collection update`);
     return;
   }
+  
+  loadName = tData.name;
+
   npc.name      = tData.name;
   npc.shortName = tData.shortName;
   npc.teamType  = tData.teamType;
@@ -391,18 +593,30 @@ async function updNPC(tData, tId){
   npc.roles     = tData.roles;
   npc.prLevel   = tData.prLevel;
   npc.agents    = tData.agents;
-  //npc.sciRate   = tData.sciRate;
 
   const { error } = validateNpc(npc); 
   if (error) {
-    teamLoadDebugger(`NPC Team Update Validate Error ${tData.code} ${tData.name} ${error.message}`);
-    return
+    loadError = true;
+    loadErrorMsg = `NPC Team Update Validate Error, ${tData.code}  ${error.message}`;
   }
    
-  await npc.save((err, npc) => {
-  if (err) return logger.error(`NPC Team Update Save Error: ${err}`);
-    teamLoadDebugger(`${npc.name} update saved to NPC teams collection.`);
-  });
+  if (!loadError) {
+    await npc.save((err, npc) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`NPC Team Update Save Error: ${err}`, {meta: err});
+        return;
+      }
+
+      ++rCounts.updCount;
+      logger.debug(`${npc.name} update saved to teams collection. type: ${npc.teamType}`);
+      return;
+    });
+  } else {
+    logger.error(`NPC Team Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;    
+    return;  
+  }
 }
 
 module.exports = runTeamLoad;
