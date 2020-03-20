@@ -129,7 +129,7 @@ function Knowledge(knowledge) {
             unlocks: this.unlocks,
             progress: techCost[this.level],
             status: {
-                availible: false,
+                available: false,
                 completed: true,
                 published: true
             },
@@ -153,7 +153,7 @@ function Knowledge(knowledge) {
             code: this.code,
             unlocks: this.unlocks,
             status: {
-                availible: true,
+                available: true,
                 completed: false,
                 published: false,
             },
@@ -170,7 +170,7 @@ function Knowledge(knowledge) {
  
 async function completeKnowledge (research) {
     knowledgeDebugger(`Enough progress has been made to complete ${research.name}...`);
-    research.status.availible = false;
+    research.status.available = false;
     research.status.completed = true;
   
     let high = 0;

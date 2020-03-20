@@ -20,7 +20,7 @@ async function loadMilGears () {
         count++;
     });
 
-    return `${count} military equipment availible in WTS...`
+    return `${count} military equipment available in WTS...`
 };
 
 // Knowledge Constructor Function

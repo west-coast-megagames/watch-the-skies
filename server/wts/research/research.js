@@ -163,7 +163,7 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
 
 async function completeTech (research, lab) {
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
-    research.status.availible = false;
+    research.status.available = false;
     research.status.completed = true;
     
     majorDebugger(research.unlocks)

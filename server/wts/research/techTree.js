@@ -11,7 +11,7 @@ const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agr
 const { Technology } = require('./technology');
 const { Research, KnowledgeResearch } = require('../../models/sci/research')
 
-const techTree = [] // Server side array to track all availible technology.
+const techTree = [] // Server side array to track all available technology.
 
 function getTechTree() {
     return techTree;

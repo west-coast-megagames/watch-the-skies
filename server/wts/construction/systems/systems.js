@@ -20,7 +20,7 @@ async function loadSystems () {
         count++;
     });
 
-    return `${count} systems availible in WTS...`
+    return `${count} systems available in WTS...`
 };
 
 // Knowledge Constructor Function

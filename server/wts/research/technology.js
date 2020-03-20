@@ -34,11 +34,11 @@ function Technology(tech) {
                 if (checkKnowledge !== null) {
                   if (checkKnowledge.status.completed) {              
                     if (checkKnowledge.credit.toHexString() === team._id.toHexString()) {
-                      techDebugger(`COMPLETED - ${this.name} is availible to research for ${team.name}...`);
+                      techDebugger(`COMPLETED - ${this.name} is available to research for ${team.name}...`);
                     } else if (checkKnowledge.status.published) {
                       techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
                     } else {
-                      techDebugger(`UNKNOWN - ${checkKnowledge.name} is not availible to ${team.name}...`);
+                      techDebugger(`UNKNOWN - ${checkKnowledge.name} is not available to ${team.name}...`);
                       checkKnowledge = null
                     };
                   }
@@ -103,7 +103,7 @@ function Technology(tech) {
                   techDebugger(msg);
               };
           } else {
-              msg = `${this.name}: This tech is already availible...`
+              msg = `${this.name}: This tech is already available...`
               techDebugger(msg);
           }
       };
@@ -159,14 +159,14 @@ function Technology(tech) {
         await newTech.save(); // Newly unlocked tech!
 
       } else {
-        techDebugger(`${this.name} is already availible for ${team.name}...`);
+        techDebugger(`${this.name} is already available for ${team.name}...`);
       }
   }
 }
 
 async function techCheck() {
   for await (let research of Research.find().populate('team')) {
-    if (research.status.visible && !research.status.availible) {
+    if (research.status.visible && !research.status.available) {
         let count = 0;
         for await (let req of research.prereq) {
           techDebugger(`${research.name}: Checking for prereq ${req.code}...`);
@@ -180,11 +180,11 @@ async function techCheck() {
               // console.log(`${checkKnowledge.credit.name}`)
 
               if (checkKnowledge.credit.name === research.team.name) {
-                techDebugger(`COMPLETED - ${research.name} is availible to research for ${research.team.name}...`);
+                techDebugger(`COMPLETED - ${research.name} is available to research for ${research.team.name}...`);
               } else if (checkKnowledge.status.published) {
                 techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
               } else {
-                techDebugger(`UNKNOWN - ${checkKnowledge.name} is not availible to ${research.team.name}...`);
+                techDebugger(`UNKNOWN - ${checkKnowledge.name} is not available to ${research.team.name}...`);
                 checkKnowledge = null
               };
             }
@@ -200,7 +200,7 @@ async function techCheck() {
         };
   
         if (count === research.prereq.length) {
-          research.status.availible = true;
+          research.status.available = true;
         }
 
       await research.save();

@@ -20,7 +20,7 @@ async function loadFacilitys () {
         count++;
     });
 
-    return `${count} Facility Templates availible in WTS...`
+    return `${count} Facility Templates available in WTS...`
 };
 
 // Facility Template Constructor Function

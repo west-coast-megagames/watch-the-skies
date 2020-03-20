@@ -28,7 +28,7 @@ router.patch('/alien/deploy', async function (req, res) {
         }
     }
     if (count === 0) {
-        res.status(200).send(`No alien crafts availible to deployed...`);
+        res.status(200).send(`No alien crafts available to deployed...`);
     } else {
         res.status(200).send(`${count} alien crafts have been deployed...`);
     }
@@ -52,7 +52,7 @@ router.patch('/alien/return', async function (req, res) {
         }
     }
     if (count === 0) {
-        res.status(200).send(`No alien crafts availible to return to base...`);
+        res.status(200).send(`No alien crafts available to return to base...`);
     } else {
         res.status(200).send(`${count} alien crafts have returned to base...`);
     }
