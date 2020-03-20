@@ -4,6 +4,8 @@ const file = fs.readFileSync(config.get('initPath') + 'init-json/initAccounts.js
 const accountDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const accountLoadDebugger = require('debug')('app:accountLoad');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
 
@@ -31,108 +33,121 @@ async function runAccountLoad(runFlag){
   return true;
 };
 
+const accounts = []
+
+// Account Constructor Function
+function Acc(acct) {
+  this.name = acct.name;
+  this.code = acct.code;
+  this.balance = acct.balance;
+  this.deposits = acct.deposits;
+  this.withdrawals = acct.withdrawals;
+  
+  this.build = async function() {
+    let newAccount = new Account(this)
+
+    await newAccount.save();
+
+    logger.info(`${newAccount.name} has been built...`)
+
+    return newAccount;
+  }
+}
+
+async function loadAccounts () {
+  let count = 0;
+
+  await accountDataIn.forEach(acct => {
+    accounts[count] = new Acc(acct);
+    count++;
+  });
+
+  logger.info(`${count} generic accounts available for loading`);
+
+};
+
 async function initLoad(doLoad) {
   
   if (!doLoad) return;
 
+  //load generic accounts json records into internal array 
+  await loadAccounts();
+  
   // delete ALL old data
-  //accountLoadDebugger("Jeff before delete ");
-  //await countAccount();   // how many records
   await deleteAccount();
-  //accountLoadDebugger("Jeff after delete ");
-  //await countAccount();   // how many records
 
-  for (let i = 0; i < accountDataIn.length; ++i ) {
-    
-    //accountLoadDebugger("Jeff in runAccountLoad loop", i, accountDataIn[i].teamCode, accountDataIn[i].name);    
-    
-    if (accountDataIn[i].loadType == "accounts") {     
-      
-      if (accountDataIn[i].teamCode != ""){
-        let team = await Team.findOne({ teamCode: accountDataIn[i].teamCode });  
-        if (!team) {
-          accountLoadDebugger("Account Load Team Error:", accountDataIn[i].name, " Team: ", accountDataIn[i].teamCode);
-          continue;
-        } else {
-          found_team_id = team._id;
-          found_owner   = team.shortName;
-        }  
-      } else {
-        accountLoadDebugger("Account Load Blank Team:", accountDataIn[i].name, " Team: ", accountDataIn[i].teamCode);
-        continue;
-      }
+  //create accounts for each team
+  for await (let team of Team.find()) {    
 
-      if (accountDataIn[i].loadFlag == "true") {
-        await loadAccount(found_team_id, found_owner, accountDataIn[i]);
-      }
-    }
+    found_team_id = team._id;
+    found_owner   = team.shortName;
+    
+    for (let i = 0; i < accounts.length; ++i ) {
+      await loadAccount(found_team_id, found_owner, accounts[i]);
+    }      
   }
 };
 
 async function loadAccount(t_id, tName, aData){
   try {   
     let bigCode = aData.code.toUpperCase();
-    let account = await Account.findOne({ team_id: t_id, code: bigCode });
+    let account = await Account.findOne({ team: t_id, code: bigCode });
 
     //accountLoadDebugger("Account Load function ... code", aData.code, bigCode, "t_id", t_id, (!account));
 
     if (!account) {
-       // New Account here
-       let account = new Account({ 
-           code: bigCode,
-           name: aData.name,
-           balance: aData.balance,
-           deposits: aData.deposits,
-           withdrawals: aData.withdrawals,
-           owner: tName,
-           team: t_id
-        }); 
+      // New Account here
+      let account = new Account({ 
+          code: bigCode,
+          name: aData.name,
+          balance: aData.balance,
+          deposits: aData.deposits,
+          withdrawals: aData.withdrawals,
+          owner: tName,
+          team: t_id
+      }); 
 
-        let { error } = validateAccount(account); 
-        if (error) {
-          accountLoadDebugger("New Account Validate Error", account.code, error.message);
+      let { error } = validateAccount(account); 
+      if (error) {
+        logger.error(`New Account Validate Error ${account.code} ${error.message}`);
+        return;
+      }
+        
+      await account.save((err, account) => {
+        if (err) {
+          logger.error(`New Account Save Error: ${err.message}`,{meta: err});
           return;
         }
-        
-        await account.save((err, account) => {
-          if (err) return console.error(`New Account Save Error: ${err}`);
-          accountLoadDebugger(account.owner + ", " + account.name + " New add saved to accounts collection.");
-        });
-        
-        //accountLoadDebugger("Account after new save ... code", account.code, "t_id", account.team_id);
-        //await countAccount();   // how many records
-
+        logger.info(`${account.owner} ${account.name} New add saved to accounts collection.`);
+      });    
     } else {       
-       // Existing Account here ... update
-       let id = account._id;
+      // Existing Account here ... update
+      let id = account._id;
       
-       account.name          = aData.name;
-       account.code          = bigCode;
-       account.balance       = aData.balance;
-       account.deposits      = aData.deposits;
-       account.withdrawals   = aData.withdrawals;
-       account.owner         = tName;
-       account.team          = t_id;
+      account.name          = aData.name;
+      account.code          = bigCode;
+      account.balance       = aData.balance;
+      account.deposits      = aData.deposits;
+      account.withdrawals   = aData.withdrawals;
+      account.owner         = tName;
+      account.team          = t_id;
 
-       const { error } = validateAccount(account); 
-       if (error) {
-         accountLoadDebugger("Account Update Validate Error", aData.code, aData.name, aData.loadFlg, error.message);
-         return
-       }
-       //account.markModified('code');
-       //accountLoadDebugger("Account before Update save ... code", account.code, "t_id", t_id);
-
-       await account.save((err, account) => {
-       if (err) return console.error(`Account Update Save Error: ${err}`);
-       accountLoadDebugger(account.owner + ", " + account.name + " update saved to accounts collection. ");
-       });
-
-       //accountLoadDebugger("Account After Update save ... code", account.code, "t_id", account.team_id);
-       //await countAccount();   // how many records
-
+      const { error } = validateAccount(account); 
+      if (error) {
+        logger.error(`Update Account Validate Error ${account.code} ${error.message}`);
+        return
+      }
+      
+      await account.save((err, account) => {
+        if (err) {
+          logger.error(`Update Account Save Error: ${err.message}`,{meta: err});  
+          return;
+        }
+        logger.info(`${account.owner} ${account.name} Update saved to accounts collection.`);
+      });
     }
   } catch (err) {
-    accountLoadDebugger('Catch Account Error:', err.message);
+    logger.error(`Catch Account Error: ${err.message}`,{meta: err});  
     return;
 }
 
@@ -161,19 +176,6 @@ async function deleteAccount(){
     }
   } catch (err) {
     accountLoadDebugger(`deleteAccount Error 2: ${err.message}`);
-  }
-};
-
-async function countAccount(){
-  try {
-    let account = await Account.find();
-    
-    let countRec = account.length;
-      
-    accountLoadDebugger("Accounts collection Record Count:", countRec);
-    
-  } catch (err) {
-    accountLoadDebugger(`countAccount Error 2: ${err.message}`);
   }
 };
 
