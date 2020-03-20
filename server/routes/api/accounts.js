@@ -11,7 +11,7 @@ const { Account } = require('../../models/gov/account');
 // @Desc    Get all Accounts
 // @access  Public
 router.get('/', async function (req, res) {
-    routeDebugger('Looking up accounts...');
+    //routeDebugger('Looking up accounts...');
     let accounts = await Account.find()
       .sort({code: 1})
       .populate('team', 'name shortName');
@@ -22,7 +22,7 @@ router.get('/', async function (req, res) {
 // @Desc    Get all single account
 // @access  Public
 router.get('/:id', async function (req, res) {
-    routeDebugger('Looking up a account...');
+    //routeDebugger('Looking up a account...');
     let account = await Account.findById({ _id: req.params.id })
       .populate('team', 'name shortName');
     res.json(account);
