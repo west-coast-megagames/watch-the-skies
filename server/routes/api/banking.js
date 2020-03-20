@@ -3,10 +3,11 @@ const nexusEvent = require('../../startup/events');
 const express = require('express');
 const router = express.Router();
 
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 // Interceptor Model - Using Mongoose Model
-const { Account } = require('../../models/gov/account');
+const { Account, validateAccount } = require('../../models/gov/account');
 const { Team } = require('../../models/team/team');
 const banking = require('../../wts/banking/banking');
 
@@ -15,7 +16,9 @@ const banking = require('../../wts/banking/banking');
 // @access  Public
 router.get('/accounts', async function (req, res) {
     routeDebugger('Looking up accounts...');
-    let accounts = await Account.find().sort({team_id: 1});
+    let accounts = await Account.find()
+                                .populate('team', 'name shortName')
+                                .sort({team: 1});
     res.json(accounts);
 });
 
@@ -23,18 +26,29 @@ router.get('/accounts', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/account', async function (req, res) {
-    let { team_id, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
+    let { teamId, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
+
+    let team = await Team.findById({ _id: teamId }); 
+    if (!team) {
+      return res.status(400).send(`Team not found for teamId ${teamId}`); 
+    }
+    owner = team.shortName;
+
     const newAccount = new Account(
-        { team_id, name, code, balance, deposits, withdrawals, autoTransfers }
+        { team: teamId, name, code, balance, deposits, withdrawals, autoTransfers, owner }
     );
-    let docs = await Account.find({ team_id, name })
+    const { error } = validateAccount(newAccount);
+    if (error) return res.status(400).send(error.details[0].message); 
+
+    let docs = await Account.find({ team: teamId, name })
+                            .populate('team', 'name shortName');
     if (!docs.length) {
         let account = await newAccount.save();
         res.json(account);
-        console.log(`${name} account created...`);
-    } else {                
-        console.log(`${name} account already exists for this team... `);
-        res.send(`${name} account already exists for this team... `);
+        logger.info(`${name} account created...`);
+    } else {       
+        logger.info(`${name} account already exists for this team...`);
+        res.send(`${name} account already exists for this team...`);
     }
 });
 
@@ -42,21 +56,38 @@ router.post('/account', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/accounts', async function (req, res) {
+    let recCount = 0;
     for (let account of req.body.accounts) {
-        console.log(account)
+        //routeDebugger(`${account}`);
         let newAccount = new Account(
             account
         );
-        let docs = await Account.find({ name: newAccount.name, team_id: newAccount.team_id })
-        console.log(docs);
+        const { error } = validateAccount(newAccount);
+        if (error) {
+          logger.info(`Skipping ${newAccount.name}: Validation Error Post Accounts: ${error.details[0].message}`); 
+          continue;
+        }
+        
+        teamId = account.teamId;
+        let team = await Team.findById({ _id: teamId }); 
+        if (!team) {
+          logger.info(`Team not found for teamId ${account.teamId}`); 
+          continue;
+        }
+        newAccount.owner = team.shortName;
+        newAccount.team  = team._id;
+
+        let docs = await Account.find({ name: newAccount.name, team: newAccount.team })
+        //routeDebugger(`${docs}`);
         if (!docs.length) {
             await newAccount.save();
-            console.log(`${newAccount.owner} created ${newAccount.name} account...`);
+            logger.info(`${newAccount.owner} created ${newAccount.name} account...`);
+            ++recCount;
         } else {                
-            console.log(`${newAccount.name} account already exists for this team... `);
+            logger.info(`${newAccount.name} account already exists for this team... `);
         }
     }
-    return res.status(200).send(`Accounts Created...`);
+    return res.status(200).send(`${recCount} Accounts Created...`);
 });
 
 // @route   GET api/banking/accounts/:id
@@ -64,7 +95,8 @@ router.post('/accounts', async function (req, res) {
 // @access  Public
 router.get('/accounts/:id', async function (req, res) {
     routeDebugger('Looking up an account...');
-    let account = await Account.findById({ _id: req.params.id });
+    let account = await Account.findById({ _id: req.params.id })
+                               .populate('team', 'name shortName');
     res.json(account);
 });
 
@@ -74,12 +106,12 @@ router.get('/accounts/:id', async function (req, res) {
 router.patch('/accounts', async function (req, res) {
     for await (let account of Account.find()) {{
             account.balance = 0;
-            account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         };
 
         await account.save();
-        console.log(`${account.owner}'s ${account.name} reset...`);  
+        logger.info(`${account.owner}'s ${account.name} reset...`);  
     };
     res.send("Accounts succesfully reset!");
 
@@ -94,15 +126,15 @@ router.put('/accounts', async function (req, res) {
 });
 
 router.patch('/delAutoTransfer', async function (req, res){
-    routeDebugger('Attempting to delete auto transaction...')
-    console.log(req.body)
+    routeDebugger('Attempting to delete auto transaction...');
+    routeDebugger(`${req.body}`);
     let { account_id, transfer_id } = req.body;
     let account = await Account.findOne({ _id: account_id });
-    console.log(account.autoTransfers)
+    routeDebugger(`${account.autoTransfers}`);
     let indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
-    console.log(indexOf)
+    routeDebugger(`${indexOf}`);
     account.autoTransfers.splice(indexOf, 1);
-    console.log(account.autoTransfers.length)
+    routeDebugger(`${account.autoTransfers.length}`);
 
     account.markModified('autoTransfers');
     await account.save();
