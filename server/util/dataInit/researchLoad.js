@@ -59,12 +59,25 @@ async function initLoad(doLoad) {
   //researchLoadDebugger("Jeff in initLoad", doLoad, researchDataIn.length);    
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < researchDataIn.length; ++i ) { 
-    await loadResearch(researchDataIn[i]);
+    
+    ++recReadCount;
+    await loadResearch(researchDataIn[i], recCounts);
   }
+
+  logger.info(`Research Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
 };
 
-async function loadResearch(iData){
+async function loadResearch(iData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   try {   
     let research = await Research.findOne( { name: iData.name } );
     if (!research) {    
@@ -73,28 +86,30 @@ async function loadResearch(iData){
 
           if (iData.teamCode === "All") {
             for (let j = 0; j < teamArray.length; ++j){
-              createTechnology(iData, teamArray[j]);
+              await createTechnology(iData, teamArray[j], rCounts);
             }
             
           } else {
             let team = Team.find({'teamCode': iData.teamCode});
             if (team) {
-              createTechnology(iData, team._id);    
+              await createTechnology(iData, team._id, rCounts);    
             }    
           }
           break;
 
         case "Knowledge":
-          createKnowledge(iData);
+          await createKnowledge(iData, rCounts);
           break;
 
         default:
+          ++rCounts.loadErrCount;
           logger.error("Invalid Research Load Type:", iData.type, "name: ", iData.name );
       }
     } else {       
       // no updates here
     }
   } catch (err) {
+    ++rCounts.loadErrCount;
     logger.error(`Research Catch Error ${err.message}`, {meta: err});
     return;
   }
@@ -126,7 +141,10 @@ async function deleteAllResearchs(doLoad) {
   }
 };  
 
-async function createTechnology(iData, teamId){
+async function createTechnology(iData, teamId, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
   // New Tech Research here
   let techResearch = new TechResearch({ 
     name: iData.name,
@@ -138,6 +156,7 @@ async function createTechnology(iData, teamId){
     team: teamId
   }); 
 
+  loadName = iData.name;
   techResearch.prereq  = iData.prereq;
   techResearch.unlocks = iData.unlocks;
   techResearch.breakthrough = iData.breakthrough;
@@ -146,21 +165,33 @@ async function createTechnology(iData, teamId){
   /*
   let { error } = validateResearch(techResearch); 
   if (error) {
-    logger.error("New Research Validate Error", techResearch.name, error.message);
-    return; 
+    loadError = true;
+    loadErrorMsg = "Validation Error: " + error.message;
   }
   */
 
-  await techResearch.save((err, techResearch) => {
-    if (err) {
-      logger.error(`New Tech Research Save Error ${err.message}`, {meta: err});
-      return;
-    }
-    logger.info(`${techResearch.name} add saved to research collection for team id ${teamId}`);
-  });
+  if (loadError) {
+    logger.error(`Technology Research skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await techResearch.save((err, techResearch) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New Tech Research Save Error ${err.message}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.info(`${techResearch.name} add saved to research collection for team id ${teamId}`);
+    });
+  }
 }
 
-async function createKnowledge(iData){
+async function createKnowledge(iData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   // New Knowledge Research here
   let knowledgeResearch = new KnowledgeResearch({ 
     name: iData.name,
@@ -171,6 +202,7 @@ async function createKnowledge(iData){
     desc: iData.desc
   }); 
 
+  loadName = iData.name;
   knowledgeResearch.prereq  = iData.prereq;
   knowledgeResearch.unlocks = iData.unlocks;
   knowledgeResearch.breakthrough = iData.breakthrough;
@@ -196,18 +228,26 @@ async function createKnowledge(iData){
   /*
   let { error } = validateResearch(corps); 
   if (error) {
-    logger.error("New Research Validate Error", corps.name, error.message);
-    return; 
+    loadError = true;
+    loadErrorMsg = "Validation Error: " + error.message;
   }
   */
 
-  await knowledgeResearch.save((err, knowledgeResearch) => {
-    if (err) {
-      logger.error(`New Knowledge Research Save Error ${err.message}`, {meta: err});
-      return;
-    }
-    logger.info(`${knowledgeResearch.name} add saved to research collection`);
-  });
+  if (loadError) {
+    logger.error(`Knowledge Research skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await knowledgeResearch.save((err, knowledgeResearch) => {
+      if (err) {
+        ++rCounts.loadErrCount;
+        logger.error(`New Knowledge Research Save Error ${err.message}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.info(`${knowledgeResearch.name} add saved to research collection`);
+    });
+  }
 }
 
 module.exports = runResearchLoad;
