@@ -2,6 +2,7 @@ const routeDebugger = require('debug')('app:routes');
 const nexusEvent = require('../../startup/events');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../../middleware/validateObjectId');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 require ('winston-mongodb');
@@ -93,7 +94,7 @@ router.post('/accounts', async function (req, res) {
 // @route   GET api/banking/accounts/:id
 // @Desc    Get a single account by id
 // @access  Public
-router.get('/accounts/:id', async function (req, res) {
+router.get('/accounts/:id', validateObjectId, async function (req, res) {
     routeDebugger('Looking up an account...');
     let account = await Account.findById({ _id: req.params.id })
                                .populate('team', 'name shortName');

@@ -1,0 +1,74 @@
+[
+{"type": "Technology",
+ "progress": 0,
+ "name": "Improved Processing",
+ "code": "Agr1A",
+ "level": 1,
+ "desc": "Improves national capacity for food processing.",
+ "field": "Agriculture",
+ "teamCode": "All",
+ "theoretical": [{
+    "name": "Advanced Processing",
+    "code": "Agr2A",
+    "level": 2,
+    "field": "Agriculture",
+    "desc": "Improves the national capacity to preserve foods.",
+    "type": "Technology",
+    "prereq": [
+    {"type": "Technology",
+     "code": "Agr1A"},
+    {"type": "Knowledge",
+     "code": "Engineering II"
+    },
+    {"type": "Knowledge",
+     "code": "Social Science II"
+    }]
+  }],
+ "prereq": [
+    {"type": "Technology",
+    "code": "Inf1F"},
+    {"type": "Knowledge",
+     "code": "Electronics I"
+    },
+    {"type": "Knowledge",
+     "code": "Genetics I"
+    },
+    {"type": "Knowledge",
+     "code": "Engineering I"
+    }],
+ "unlocks": [
+    {"type": "Technology",
+     "code": "Agr2A"
+    }],
+ "breakthrough": []
+},
+{"type": "Knowledge",
+ "progress": 30,
+ "name": "Physics I",
+ "code": "Physics I",
+ "level": 1,
+ "desc": "Fund cutting edge projects in physics to advance world knowledge and begin to apply that knowledge to new technologies.",
+ "field": "Physics",
+ "credit": "USA",
+ "prereq": [
+    {"type": "Knowledge",
+     "code": "Physics"}
+   ],
+ "teamProgress": [],
+ "unlocks": [
+    {"type": "Technology",
+     "code": "Mil2A"},
+    {"type": "Technology",
+     "code": "Mil1C"},
+    {"type": "Technology",
+     "code": "Mil1D"},
+    {"type": "Technology",
+     "code": "Inf1B"},
+    {"type": "Technology",
+     "code": "Inf1C"},
+    {"type": "Technology",
+     "code": "Inf2A"}
+    ],
+ "breakthrough": []
+}
+]

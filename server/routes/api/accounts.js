@@ -1,8 +1,10 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
+const validateObjectId = require('../../middleware/validateObjectId');
 
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/gov/account');
@@ -21,7 +23,7 @@ router.get('/', async function (req, res) {
 // @route   GET api/account/:id
 // @Desc    Get all single account
 // @access  Public
-router.get('/:id', async function (req, res) {
+router.get('/:id', validateObjectId, async function (req, res) {
     //routeDebugger('Looking up a account...');
     let account = await Account.findById({ _id: req.params.id })
       .populate('team', 'name shortName');
@@ -43,7 +45,7 @@ router.post('/', async function (req, res) {
     if (req.body.teamCode != ""){
       let team = await Team.findOne({ teamCode: req.body.teamCode });  
       if (!team) {
-        console.log("Account Post Team Error, New Account:", req.body.name, "Code:", req.body.code, " Team: ", req.body.teamCode);
+        logger.error(`Account Post Team Error, New Account: ${req.body.name} Code: ${req.body.code} Team: ${req.body.teamCode}`);
       } else {
         newAccount.team = team._id;
       }
@@ -55,7 +57,7 @@ router.post('/', async function (req, res) {
         res.json(account);
         routeDebugger(`The ${name} account created...`);
     } else {                
-        console.log(`${name} account already exists!`);
+        logger.error(`${name} account already exists!`);
         res.status(400).send(`${name} account already exists!`);
     }
 });
@@ -63,7 +65,7 @@ router.post('/', async function (req, res) {
 // @route   DELETE api/account/:id
 // @Desc    Delete a account
 // @access  Public
-router.delete('/:id', async function (req, res) {
+router.delete('/:id', validateObjectId,  async function (req, res) {
     let id = req.params.id;
     const account = await account.findByIdAndRemove(id);
     if (account != null) {
