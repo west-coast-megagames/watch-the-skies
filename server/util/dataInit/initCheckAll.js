@@ -13,6 +13,7 @@ const runResearchCheck = require('../dataCheck/researchCheck');
 const runAccountsCheck = require('../dataCheck/accountsCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 async function fullInitCheck(selStr){
   
