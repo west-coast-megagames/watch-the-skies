@@ -12,7 +12,7 @@ const supportsColor = require('supports-color');
 async function chkZone(runFlag) {
   // get countries once
   let cFinds = await Country.find();    
-  zoneCheckDebugger(`jeff here length of cFinds ${cFinds.length}`);
+  //zoneCheckDebugger(`jeff here length of cFinds ${cFinds.length}`);
   for (const zone of await Zone.find()
                                //.populate("satellite", "name")  does not work with .lean
                                .lean()) { 

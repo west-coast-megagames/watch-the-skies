@@ -18,6 +18,7 @@ const bodyParser = require('body-parser');
 
 // Country Model - Using Mongoose Model
 const { Country, validateCountry } = require('../../models/country');
+const { Team } = require('../../models/team/team');
 
 const app = express();
 
@@ -101,14 +102,27 @@ async function loadCountry(cData, rCounts){
       }
       country.borderedBy = borderedBy_Ids;
       country.stats      = cData.stats;
-      if (!cData.formalName) {
+      if (!cData.formalName || cData.formalName == "")  {
         country.formalName = country.name;
       } else {
         country.formalName = cData.formalName;
       }
       country.milAlliance = [];
-      country.sciAllience = [];
+      country.sciAlliance = [];
 
+
+      if (cData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: cData.teamCode });  
+        if (!team) {
+          loadError = true;
+          loadErrorMsg = "Team Not Found for Country: " + cData.code + " Team " + cData.teamCode;  
+        } else {
+          country.team = team._id;
+          country.loadTeamCode = team.teamCode;
+          //countryInitDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+        }
+      }      
+      
       const { error } = validateCountry(country); 
       if (error) {
         countryLoadDebugger("Country Update Validate Error", cData.code, cData.name, error.message);
