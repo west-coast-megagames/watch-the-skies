@@ -261,7 +261,8 @@ async function newMedia(tData, rCounts){
     teamType: tData.teamType
   }); 
 
-  loadName = tData.name;
+  media.agents = tData.agents;
+  loadName     = tData.name;
 
   let { error } = validateMedia(media); 
   if (error) {
@@ -498,7 +499,8 @@ async function updMedia(tData, tId, rCounts){
   media.shortName = tData.shortName;
   media.teamType  = tData.teamType;
   media.teamCode  = tData.code;
-  
+  media.agents    = tData.agents;
+
   const { error } = validateMedia(media); 
   if (error) {
     loadError = true;
@@ -512,7 +514,7 @@ async function updMedia(tData, tId, rCounts){
         logger.error(`Media Team Update Save Error: ${err}`, {meta: err});
         return;
       }
-      //++rCounts.updCount;
+      ++rCounts.updCount;
       logger.debug(`${media.name} update saved to teams collection. type: ${media.teamType}`);
       return;
     });

@@ -18,7 +18,7 @@ async function chkZone(runFlag) {
                                .lean()) { 
       
     //do not need toObject with .lean()
-    //let zone = zone.toObject();
+    //let testPropertys = zone.toObject();
 
     if (!zone.hasOwnProperty('zoneCode')) {
       logger.error(`zoneCode missing for zone ${zone.zoneName} ${zone._id}`);

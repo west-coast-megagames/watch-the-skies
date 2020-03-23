@@ -255,6 +255,7 @@
     {"role" : "Frontier Logistics Officer", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
 "prLevel" : 0,
+"agents" : 2,
 "loadFlag" : "true"
 },
 {
@@ -286,6 +287,7 @@
     {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
     {"role" : "Public Relations", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"}
 ],
+"agents" : 2,
 "loadFlag" : "true"
 },
 {
@@ -299,6 +301,7 @@
     {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
     {"role" : "Public Relations", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"}
 ],
+"agents" : 2,
 "loadFlag" : "true"
 },
 {
