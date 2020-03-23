@@ -1727,6 +1727,16 @@
   "formalName": "",
   "teamCode": "TCN"
 },
+{"loadType": "country",  
+  "code": "AS", 
+  "name": "American Samoa", 
+  "borderedBy" : [], 
+  "coastal" : true,
+  "type": "T",
+  "stats": {"sciRate": 25, "balance": 0},
+  "formalName": "",
+  "teamCode": "TCN"
+},
 {"loadType": "country", 
   "code": "SM", 
   "name": "San Marino", 
