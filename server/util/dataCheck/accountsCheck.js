@@ -36,20 +36,17 @@ async function chkAccount(runFlag) {
   }   
 
   for (const account of await Account.find()
-                                    .populate('team', 'name shortName')) { 
+                                    //.populate('team', 'name shortName')    does not work with .lean
+                                     .lean()) { 
 
-    let testPropertys = account.toObject();                                
+    //do not need toObject with .lean()
+    //let testPropertys = account.toObject();                                
     
-
-    if (!testPropertys.hasOwnProperty('team')) {
-      logger.error(`Team Field missing for Account ${account.name} ${account.owner} ${account._id}`);
-    } else {
-      if (!account.populated("team")) {  
-        logger.error(`Team link invalid for Account ${account.name} ${account.code} ${account.owner} ${account._id} teamId: ${account.team}`);
-      }
+    if (!account.hasOwnProperty('model')) {
+      logger.error(`model missing for Account ${account.name} ${account.owner} ${account._id}`);
     }
 
-    if (!testPropertys.hasOwnProperty('deposits')) {
+    if (!account.hasOwnProperty('deposits')) {
       logger.error(`deposits missing for Account ${account.name} ${account.owner} ${account._id}`);
     } else {
       if (account.deposits.length < 15) {
@@ -57,7 +54,7 @@ async function chkAccount(runFlag) {
       }    
     }
 
-    if (!testPropertys.hasOwnProperty('withdrawals')) {
+    if (!account.hasOwnProperty('withdrawals')) {
       logger.error(`withdrawals missing for Account ${account.name} ${account.owner} ${account._id}`);
     } else {
       if (account.withdrawals.length < 15) {
@@ -65,7 +62,7 @@ async function chkAccount(runFlag) {
       }    
     }
 
-    if (!testPropertys.hasOwnProperty('code')) {
+    if (!account.hasOwnProperty('code')) {
       logger.error(`code missing for Account ${account.name} ${account.owner} ${account._id}`);
     } else {
       if (account.code === "" || account.code == undefined || account.code == null) {
@@ -73,7 +70,7 @@ async function chkAccount(runFlag) {
       }    
     } 
 
-    if (!testPropertys.hasOwnProperty('name')) {
+    if (!account.hasOwnProperty('name')) {
       logger.error(`name missing for Account ${account.name} ${account.owner} ${account._id}`);
     } else {
       if (account.name === "" || account.name == undefined || account.name == null) {
@@ -84,7 +81,7 @@ async function chkAccount(runFlag) {
       }    
     } 
 
-    if (!testPropertys.hasOwnProperty('balance')) {
+    if (!account.hasOwnProperty('balance')) {
       logger.error(`Account balance is missing  ${account.name} ${account._id}`);    
     } else {
       if (isNaN(account.balance)) {
@@ -92,7 +89,7 @@ async function chkAccount(runFlag) {
       }
     }  
 
-    if (!testPropertys.hasOwnProperty('owner')) {
+    if (!account.hasOwnProperty('owner')) {
       logger.error(`owner missing for Account ${account.name} ${account.owner} ${account._id}`);
     } else {
       if (account.owner === "" || account.owner == undefined || account.owner == null) {
@@ -100,30 +97,40 @@ async function chkAccount(runFlag) {
       }    
     }
     
-    if (!testPropertys.hasOwnProperty('autoTransfers')) {
+    if (!account.hasOwnProperty('autoTransfers')) {
       logger.error(`autoTransfers missing for Account ${account.name} ${account.owner} ${account._id}`);
     }
 
-    let { error } = validateAccount(account);
-    if ( error)  {
-      logger.error(`Account Validation Error For ${account.name} ${account.owner} Error: ${error.details[0].message}`);
+    try {
+      let { error } = validateAccount(account);
+      if ( error)  {
+        logger.error(`Account Validation Error For ${account.name} ${account.owner} Error: ${error.details[0].message}`);
+      }
+    } catch (err) {
+        logger.error(`Account Validation Error For ${account.name} ${account.owner} Error: ${err.details[0].message}`);
     }
     
     countRef = -1;
     teamHex = undefined;
     teamOwner = undefined;
 
-    if (testPropertys.hasOwnProperty('owner')) {
+    if (account.hasOwnProperty('owner')) {
       teamOwner = account.owner;
     }
-      
-    if (account.populated("team")) {
-      teamHex = account.team._id.toHexString();
-      countRef = teamCounts.findIndex(tc => tc.hexId == teamHex);
-    } else { 
-      countRef = teamCounts.findIndex(tc => tc.owner == teamOwner);
-    }
     
+    if (!account.hasOwnProperty('team')) {
+      logger.error(`Team missing for Account ${account.name} ${account.owner} ${account._id}`);
+    } else {
+      let team = await Team.findById({'_id': account.team});
+      if (!team) {
+        logger.error(`team reference is invalid for Account ${account.name} ${account.owner} ${account._id}`);
+        countRef = teamCounts.findIndex(tc => tc.owner == teamOwner);
+      } else {
+        teamHex = account.team._id.toHexString();
+        countRef = teamCounts.findIndex(tc => tc.hexId == teamHex);
+      }
+    }
+  
     if (countRef >= 0) {
       ++teamCounts[countRef].acctsCount;
       switch(account.code){

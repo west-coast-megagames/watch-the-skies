@@ -76,22 +76,48 @@ async function initLoad(doLoad) {
   // delete ALL old data
   await deleteAccount();
 
+  let totRecReadCount = 0;
+  let totRecCounts = { loadCount: 0,
+                       loadErrCount: 0,
+                       updCount: 0};
+
   //create accounts for each team
   for await (let team of Team.find()) {    
 
     found_team_id = team._id;
     found_owner   = team.shortName;
     
+    let recReadCount = 0;
+    let recCounts = { loadCount: 0,
+                      loadErrCount: 0,
+                      updCount: 0};
+    
+
     for (let i = 0; i < accounts.length; ++i ) {
-      await loadAccount(found_team_id, found_owner, accounts[i]);
+      ++recReadCount;
+      await loadAccount(found_team_id, found_owner, accounts[i], recCounts);
     }      
+    totRecReadCount += recReadCount;
+    totRecCounts.loadCount += recCounts.loadCount;
+    totRecCounts.loadErrCount += recCounts.loadErrCount;
+    totRecCounts.updCount += recCounts.updCount;
+
+    logger.info(`Account Load Counts For Team ${found_owner} Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
   }
+  logger.info(`Total Account Load Counts Read: ${totRecReadCount} Errors: ${totRecCounts.loadErrCount} Saved: ${totRecCounts.loadCount} Updated: ${totRecCounts.updCount}`); 
 };
 
-async function loadAccount(t_id, tName, aData){
+async function loadAccount(t_id, tName, aData, rCounts) {
+  
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+  
   try {   
+    
     let bigCode = aData.code.toUpperCase();
     let account = await Account.findOne({ team: t_id, code: bigCode });
+    loadName = aData.name + " " + tName;
 
     //accountLoadDebugger("Account Load function ... code", aData.code, bigCode, "t_id", t_id, (!account));
 
@@ -109,17 +135,25 @@ async function loadAccount(t_id, tName, aData){
 
       let { error } = validateAccount(account); 
       if (error) {
-        logger.error(`New Account Validate Error ${account.code} ${error.message}`);
-        return;
+        loadError = true;
+        loadErrorMsg = `New Account Validate Error ${account.code} ${error.message}`;
       }
         
-      await account.save((err, account) => {
-        if (err) {
-          logger.error(`New Account Save Error: ${err.message}`,{meta: err});
-          return;
-        }
-        logger.info(`${account.owner} ${account.name} New add saved to accounts collection.`);
-      });    
+      if (loadError) {
+        logger.error(`Account skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      } else {
+        await account.save((err, account) => {
+          if (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`New Account Save Error: ${err.message}`,{meta: err});
+            return;
+          }
+          ++rCounts.loadCount;
+          logger.debug(`${account.owner} ${account.name} New add saved to accounts collection.`);
+        });    
+      }
     } else {       
       // Existing Account here ... update
       let id = account._id;
@@ -134,23 +168,31 @@ async function loadAccount(t_id, tName, aData){
 
       const { error } = validateAccount(account); 
       if (error) {
-        logger.error(`Update Account Validate Error ${account.code} ${error.message}`);
-        return
+        loadError = true;
+        loadErrorMsg = `Update Account Validate Error ${account.code} ${error.message}`;
       }
       
-      await account.save((err, account) => {
-        if (err) {
-          logger.error(`Update Account Save Error: ${err.message}`,{meta: err});  
-          return;
-        }
-        logger.info(`${account.owner} ${account.name} Update saved to accounts collection.`);
-      });
+      if (loadError) {
+        logger.error(`Account skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      } else {
+        await account.save((err, account) => {
+          if (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`Update Account Save Error: ${err.message}`,{meta: err});  
+            return;
+          }
+          ++rCounts.updCount;
+          logger.debug(`${account.owner} ${account.name} Update saved to accounts collection.`);
+        });
+      }
     }
   } catch (err) {
+    ++rCounts.loadErrCount;
     logger.error(`Catch Account Error: ${err.message}`,{meta: err});  
     return;
-}
-
+  }
 };
 
 async function deleteAccount(){
