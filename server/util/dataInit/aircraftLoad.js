@@ -90,6 +90,7 @@ async function loadAircraft(iData, rCounts){
 
       aircraft.stats  = iData.stats;
       aircraft.status = iData.status;
+      aircraft.serviceRecord = [];
 
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });
