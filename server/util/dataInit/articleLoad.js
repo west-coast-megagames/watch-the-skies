@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 //mongoose.set('useCreateIndex', true);
 
 // Article Model - Using Mongoose Model
-const { Article, validateArticle } = require('../../models/news/article');
+const { Article, validateArticle, validateTimestamp } = require('../../models/news/article');
 const { Team } = require('../../models/team/team');
 const { Site } = require('../../models/sites/site');
 const app = express();
@@ -104,13 +104,27 @@ async function loadArticle(iData, rCounts){
       }
     }
 
-    /*
-    let { error } = validateArticle(article); 
-    if (error) {
+    try {
+      let { error } = validateArticle(article); 
+      if (error) {
+        loadError = true;
+        loadErrorMsg = "Article Validation Error: " + error.message;
+      }
+    } catch ( err ) {
       loadError = true;
-      loadErrorMsg = "Article Validation Error: " + error.message;
+      loadErrorMsg = "Article Validation Error: " + err.message;
     }
-    */
+  
+    try {
+      let { error } = validateTimestamp(article.timestamp); 
+      if (error) {
+        loadError = true;
+        loadErrorMsg = "Article Timestamp Validation Error: " + error.message;
+      }
+    } catch ( err ) {
+      loadError = true;
+      loadErrorMsg = "Article Timestamp Validation Error: " + err.message;
+    }
 
     if (loadError) {
       logger.error(`Article skipped due to errors: ${loadName} ${loadErrorMsg}`);

@@ -30,7 +30,18 @@ function validateArticle(article) {
     articleBody: Joi.string().min(1).max(1000)
   };
 
-  return Joi.validate(article, schema);
+  return Joi.validate(article, schema, { "allowUnknown": true });
 }
 
-module.exports = { Article, validateArticle };
+function validateTimestamp(timestamp) {
+  const schema = {
+    turn: Joi.string().min(1),
+    phase: Joi.string().min(1),
+    clock: Joi.string().min(1),
+    turnNum: Joi.number().min(0)
+  };
+
+  return Joi.validate(timestamp, schema, { "allowUnknown": true });
+}
+
+module.exports = { Article, validateArticle, validateTimestamp };
