@@ -10,7 +10,7 @@ const EquipmentSchema = new Schema({
   unitType: { type: String },
   manufacturer: { type: Schema.Types.ObjectId, ref: 'Team'},
   cost: { type: Number },
-  buildTime: { type: Number },
+  buildTime: { type: Number, default: 1 },
   buildCount: { type: Number, default: 0 },
   desc: { type: String },
   prereq: [{
@@ -40,8 +40,21 @@ function validateEquipment(Equipment) {
   const schema = {
       name: Joi.string().min(2).max(50).required(),
     };
-  
+
   return Joi.validate(Equipment, schema, { "allowUnknown": true });
 };
 
-module.exports = { Equipment, validateEquipment }
+const Gear = Equipment.discriminator('Gear', new Schema({
+    type: { type: String, default: 'Gear' },
+    category: { type: String, enum: [ 'Weapons', 'Vehicles', 'Transport', "Training" ]},
+    stats: {
+        healthMax: { type: Number },
+        attack: { type: Number },
+        defense: { type: Number },
+        localDeploy: { type: Number },
+        globalDeploy: { type: Number },
+        invasion: { type: Number }
+    }
+}));
+
+module.exports = { Equipment, validateEquipment, Gear }

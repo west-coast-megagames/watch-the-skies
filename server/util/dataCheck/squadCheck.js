@@ -1,6 +1,6 @@
 // Squad Model - Using Mongoose Model
 const { Squad, validateSquad } = require('../../models/ops/squad');
-const { Gear } = require('../../models/gov/equipment/gear');
+const { Gear } = require('../../models/gov/equipment/equipment');
 const { Site } = require('../../models/sites/site');
 
 const squadCheckDebugger = require('debug')('app:squadCheck');

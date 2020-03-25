@@ -1,8 +1,7 @@
 // Research Model - Using Mongoose Model
 const { Research } = require('../../models/sci/research');
 const { Team } = require('../../models/team/team');
-const { Equipment } = require('../../models/gov/equipment/equipment');
-const { Gear } = require('../../models/gov/equipment/gear');
+const { Equipment, Gear } = require('../../models/gov/equipment/equipment');
 const { kit } = require('../../models/gov/equipment/kit');
 const { System } = require('../../models/gov/equipment/systems');
 const { Site } = require('../../models/sites/site');

@@ -11,7 +11,7 @@ const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
 const { Site } = require('../../models/sites/site');
-const { Gear } = require('../../models/gov/equipment/gear');
+const { Gear } = require('../../models/gov/equipment/equipment');
 const { loadGears, gears } = require('../../wts/construction/equipment/milGear');
 
 // @route   GET api/military

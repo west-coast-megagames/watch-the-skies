@@ -8,7 +8,7 @@ equipmentDebugger = require('debug')('app:equipment');
 
 const gears = []
 
-const { Gear } = require('../../../models/gov/equipment/gear');
+const { Gear } = require('../../../models/gov/equipment/equipment');
 
 // Load function to load all equipment.
 async function loadMilGears () {
