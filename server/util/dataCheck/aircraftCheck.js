@@ -109,6 +109,28 @@ async function chkAircraft(runFlag) {
 
     if (!aircraft.hasOwnProperty('status')) {
       logger.error(`status missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+    }  else {
+      if (!aircraft.status.hasOwnProperty('damaged')) {
+        logger.error(`status.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('deployed')) {
+        logger.error(`status.deployed missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('destroyed')) {
+        logger.error(`status.destroyed missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('ready')) {
+        logger.error(`status.ready missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('upgrade')) {
+        logger.error(`status.upgrade missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('repair')) {
+        logger.error(`status.repair missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.status.hasOwnProperty('secret')) {
+        logger.error(`status.secret missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
     }
 
    if (!aircraft.hasOwnProperty('systems')) {
@@ -131,6 +153,37 @@ async function chkAircraft(runFlag) {
   
     if (!aircraft.hasOwnProperty('stats')) {
       logger.error(`stats missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+    } else {
+      if (!aircraft.stats.hasOwnProperty('hull')) {
+        logger.error(`stats.hull missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('hullMax')) {
+        logger.error(`stats.hullMax missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('attack')) {
+        logger.error(`stats.attack missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('penetration')) {
+        logger.error(`stats.penetration missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('armor')) {
+        logger.error(`stats.armor missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('evade')) {
+        logger.error(`stats.evade missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('range')) {
+        logger.error(`stats.range missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('cargo')) {
+        logger.error(`stats.cargo missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('passiveRolls')) {
+        logger.error(`stats.passiveRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
+      if (!aircraft.stats.hasOwnProperty('activeRolls')) {
+        logger.error(`stats.activeRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`);
+      }  
     }
 
     try {
