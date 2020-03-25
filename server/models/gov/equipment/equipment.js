@@ -10,7 +10,7 @@ const EquipmentSchema = new Schema({
   unitType: { type: String },
   manufacturer: { type: Schema.Types.ObjectId, ref: 'Team'},
   cost: { type: Number },
-  buildTime: { type: Number, default: 1 },
+  buildTime: { type: Number, default: 0 },
   buildCount: { type: Number, default: 0 },
   desc: { type: String },
   prereq: [{
