@@ -11,7 +11,7 @@ const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
 const { BaseSite } = require('../../models/sites/site');
-const { System } = require('../../models/gov/equipment/systems');
+const { System } = require('../../models/gov/equipment/equipment');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { validUnitType } = require('../../wts/util/construction/validateUnitType');
 
