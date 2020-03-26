@@ -1,7 +1,7 @@
 const { logger } = require('../../../middleware/winston'); // Import of winston for error logging
 require ('winston-mongodb');
 
-const { System } = require('../../../models/gov/equipment/systems');
+const { System } = require('../../../models/gov/equipment/equipment');
 
 async function delSystems(arrayIds) {
   // remove associated systems records
