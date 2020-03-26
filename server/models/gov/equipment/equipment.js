@@ -57,4 +57,19 @@ const Gear = Equipment.discriminator('Gear', new Schema({
     }
 }));
 
-module.exports = { Equipment, validateEquipment, Gear }
+const Kit = Equipment.discriminator('Kit', new Schema({
+  type: { type: String, default: 'Kit' },
+  code: { type: String },
+  stats: {
+      sciRate: { type: Number },
+      sciBonus: { type: Number },
+      capacity: { type: Number }
+  },
+  effects: [{
+    type: { type: String },
+    effect: {type: Number },
+  }]
+
+}));
+
+module.exports = { Equipment, validateEquipment, Gear, Kit }

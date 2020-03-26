@@ -1,6 +1,5 @@
 // Equipment Model - Using Mongoose Model
-const { Equipment, validateEquipment, Gear } = require('../../models/gov/equipment/equipment');
-const { kit } = require('../../models/gov/equipment/kit');
+const { Equipment, validateEquipment, Gear, Kit } = require('../../models/gov/equipment/equipment');
 const { System } = require('../../models/gov/equipment/systems');
 const { Team } = require('../../models/team/team');
 
@@ -116,6 +115,24 @@ async function chkEquipment(runFlag) {
             //don't take it down to stats fields as they are only present if value assigned (no defaults)
           }
         }
+      }
+
+      if (equipment.type === "Kits") {
+        if (!equipment.hasOwnProperty('code')) {  
+          logger.error(`code missing for Gear Equipment ${equipment.name} ${equipment._id}`);
+        } 
+        
+        if (!equipment.hasOwnProperty('stats')) {  
+          logger.error(`stats missing for Gear Equipment ${equipment.name} ${equipment._id}`);
+        } else {
+          //don't take it down to stats fields as they are only present if value assigned (no defaults)
+        }
+
+        if (!equipment.hasOwnProperty('effects')) {  
+          logger.error(`effects missing for Gear Equipment ${equipment.name} ${equipment._id}`);
+        } else {
+          //don't take it down to effects fields as they are only present if value assigned (no defaults)
+        } 
       }
     }  
 
