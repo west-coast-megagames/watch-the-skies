@@ -18,7 +18,7 @@ const MilitarySchema = new Schema({
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false }
   },
-  hidden: { type: Boolean },
+  hidden: { type: Boolean, default: false },
   gear: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
@@ -35,7 +35,7 @@ const Fleet = Military.discriminator('Fleet', new Schema({
     localDeploy: { type: Number, default: 2 },
     globalDeploy: { type: Number, default: 5 },
     invasion: { type: Number, default: 2 }
-    }  
+    }
 }));
 
 const Corps = Military.discriminator('Corps', new Schema({
@@ -95,7 +95,7 @@ function validateMilitary(military) {
   const schema = {
       name: Joi.string().min(2).max(50).required()
     };
-  
+
   return Joi.validate(military, schema, { "allowUnknown": true });
 };
 
@@ -106,7 +106,7 @@ async function updateStats(id) {
     for (let [key, value] of Object.entries(gear.stats)) {
       if (typeof value === typeof 0) {
         console.log(`${key}: ${value}`);
-        stats[key] = value; 
+        stats[key] = value;
       }
     }
     console.log(`${gear.name} loaded into ${military.type}...`)
