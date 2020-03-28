@@ -1,7 +1,5 @@
 // Equipment Model - Using Mongoose Model
-const { Equipment, validateEquipment, Gear } = require('../../models/gov/equipment/equipment');
-const { kit } = require('../../models/gov/equipment/kit');
-const { System } = require('../../models/gov/equipment/systems');
+const { Equipment, validateEquipment, Gear, Kit, System } = require('../../models/gov/equipment/equipment');
 const { Team } = require('../../models/team/team');
 
 const equipmentCheckDebugger = require('debug')('app:equipmentCheck');
@@ -9,6 +7,15 @@ const { logger } = require('../../middleware/winston'); // Import of winston for
 require ('winston-mongodb');
 
 const supportsColor = require('supports-color');
+
+const systemCategories = [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util' ];
+
+function inArray(array, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] == value) return true;
+  }
+  return false;
+}
 
 async function chkEquipment(runFlag) {
   
@@ -115,6 +122,45 @@ async function chkEquipment(runFlag) {
           } else {
             //don't take it down to stats fields as they are only present if value assigned (no defaults)
           }
+        }
+      }
+
+      if (equipment.type === "Kits") {
+        if (!equipment.hasOwnProperty('code')) {  
+          logger.error(`code missing for Kits Equipment ${equipment.name} ${equipment._id}`);
+        } 
+        
+        if (!equipment.hasOwnProperty('stats')) {  
+          logger.error(`stats missing for Kits Equipment ${equipment.name} ${equipment._id}`);
+        } else {
+          //don't take it down to stats fields as they are only present if value assigned (no defaults)
+        }
+
+        if (!equipment.hasOwnProperty('effects')) {  
+          logger.error(`effects missing for Kits Equipment ${equipment.name} ${equipment._id}`);
+        } else {
+          //don't take it down to effects fields as they are only present if value assigned (no defaults)
+        } 
+      }  
+
+      if (equipment.type === "System") {
+        if (!equipment.hasOwnProperty('category')) {  
+          logger.error(`category missing for System Equipment ${equipment.name} ${equipment._id}`);
+        } else {
+          if (!inArray(systemCategories, equipment.category)) {
+            logger.error(`Invalid category ${equipment.category} for System ${equipment.name} ${equipment._id}`);
+          }
+        }
+      
+        if (!equipment.hasOwnProperty('stats')) {  
+          if (equipment.hasOwnProperty('name')) {
+            if (equipment.name != "Targeting CPU") {
+              //targeting CPU does not add any stats
+              logger.error(`stats missing for System Equipment ${equipment.name} ${equipment._id}`);
+            }
+          }
+        } else {
+          //don't take it down to stats fields as they are only present if value assigned (no defaults)
         }
       }
     }  

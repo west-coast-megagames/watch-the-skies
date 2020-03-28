@@ -9,7 +9,7 @@ const FacilitySchema = new Schema({
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
   site: { type: Schema.Types.ObjectId, ref: 'Site' },
   equipment: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
-  capacity: { type: Number },
+  capacity: { type: Number, default: 1 },
   status: {
     repair: { type: Boolean, default: true },
     damaged: { type: Boolean, default: false },
@@ -26,7 +26,7 @@ function validateFacility(facility) {
   const schema = {
     name: Joi.string().min(2).max(50).required()
   };
-  
+
   return Joi.validate(facility, schema, { "allowUnknown": true });
 }
 

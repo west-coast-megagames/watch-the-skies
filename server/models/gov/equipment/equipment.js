@@ -57,4 +57,33 @@ const Gear = Equipment.discriminator('Gear', new Schema({
     }
 }));
 
-module.exports = { Equipment, validateEquipment, Gear }
+const Kit = Equipment.discriminator('Kit', new Schema({
+  type: { type: String, default: 'Kit' },
+  code: { type: String },
+  stats: {
+      sciRate: { type: Number },
+      sciBonus: { type: Number },
+      capacity: { type: Number }
+  },
+  effects: [{
+    type: { type: String },
+    effect: {type: Number },
+  }]
+}));
+
+const System = Equipment.discriminator('System', new Schema({
+  type: { type: String, default: 'System' },
+  category: { type: String, enum: [ 'Weapon', 'Engine', 'Sensor', 'Compartment', 'Util' ] },
+  stats: {
+      hullMax: { type: Number },
+      attack: { type: Number },
+      penetration: { type: Number },
+      armor: { type: Number },
+      shield: { type: Number },
+      evade: { type: Number },
+      range: { type: Number },
+      cargo: { type: Number }
+  }
+}));
+
+module.exports = { Equipment, validateEquipment, Gear, Kit, System }

@@ -2,6 +2,7 @@ const fs = require('fs')
 const config = require('config');
 const file = fs.readFileSync(config.get('initPath') + 'init-json/initMilitary.json', 'utf8');
 const militaryDataIn = JSON.parse(file);
+const { delGear } = require('../../wts/util/construction/deleteGear');
 //const mongoose = require('mongoose');
 const militaryLoadDebugger = require('debug')('app:militaryLoad');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
@@ -54,30 +55,40 @@ async function initLoad(doLoad) {
   //militaryLoadDebugger("Jeff in initLoad", doLoad, militaryDataIn.length);    
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < militaryDataIn.length; ++i ) {
     
     //logger.info("Jeff in runMilitaryLoad loop %O", i, militaryDataIn[i].name );    
     //logger.info("Jeff in runMilitaryLoad loop %O", i, militaryDataIn[i] );
     
-    await loadMilitary(militaryDataIn[i]);
+    ++recReadCount;
+    await loadMilitary(militaryDataIn[i], recCounts);
   }
+
+  logger.info(`Military Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
+
 };
 
-async function loadMilitary(iData){
+async function loadMilitary(iData, rCounts){
   try {   
     let military = await Military.findOne( { name: iData.name } );
     if (!military) {
       //logger.info("Jeff 0a in loadMilitary %O", iData.name, iData.type);       
       switch(iData.type){
         case 'Fleet':
-          createFleet(iData);
+          createFleet(iData, rCounts);
           break;
 
         case 'Corps':
-          createCorps(iData);
+          createCorps(iData, rCounts);
           break;
 
         default:
+          ++rCounts.loadErrCount;
           logger.error("Invalid Military Load Type:", iData.type, "name: ", iData.name );
       }
     } else {       
@@ -85,18 +96,20 @@ async function loadMilitary(iData){
       //logger.info("Jeff 0b in loadMilitary %O", iData.name, iData.type); 
       switch(iData.type){
         case 'Fleet':
-          updateFleet(iData);
+          updateFleet(iData, rCounts);
           break;
 
         case 'Corps':
-          updateCorps(iData);
+          updateCorps(iData, rCounts);
           break;
 
         default:
+          ++rCounts.loadErrCount;
           logger.error("Invalid Military Load Type:", iData.type, "name: ", iData.name);
       }
     }
   } catch (err) {
+    ++rCounts.loadErrCount;
     logger.error('Catch Military Error:', err.message);
     return;
   }
@@ -138,8 +151,12 @@ async function deleteAllMilitarys(doLoad) {
   }
 };  
 
-async function createFleet(iData){
+async function createFleet(iData, rCounts){
   //logger.info("Jeff 1 in loadMilitary %O", iData.name, iData.type); 
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = iData.name;
+
   // New Fleet/Military here
   let fleet = new Fleet({ 
     name: iData.name,
@@ -149,93 +166,129 @@ async function createFleet(iData){
 
   fleet.stats  = iData.stats;
   fleet.status = iData.status;
+  fleet.serviceRecord = [];
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
    if (!team) {
-     militaryLoadDebugger("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
+     loadError = true;
+     loadErrorMsg = `Team Not Found: ${iData.team}`;
+     //militaryLoadDebugger("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
    } else {
      fleet.team = team._id;
-     militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+     //militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
    }
   }      
 
   if (iData.country != ""){
     let country = await Country.findOne({ code: iData.country });  
     if (!country) {
-      militaryLoadDebugger("Military Load Country Error, New Military:", iData.name, " Country: ", iData.country);
+      loadError = true;
+      loadErrorMsg = `Country Not Found: ${iData.country}`;
+      //militaryLoadDebugger("Military Load Country Error, New Military:", iData.name, " Country: ", iData.country);
     } else {
       fleet.country = country._id;
       fleet.zone    = country.zone;
-      militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+      //militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
     }
   }       
 
   if (iData.homeBase != ""){
     let site = await Site.findOne({ siteCode: iData.homeBase });  
     if (!site) {
-      militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadError = true;
+      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
+      //militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
       fleet.homeBase = site._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
 
-  // create gears records for military and store ID in military.system
-  //console.log("jeff military gears  iData.gear", iData.gear);
-  fleet.equipment = [];
-  for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-    //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
-    if (gerRef) {
-      if (validUnitType(gerRef.unitType, fleet.type)) {
-        newGear = await new Gear(gerRef);
-        newGear.team            = fleet.team;
-        newGear.manufacturer    = fleet.team; 
-        newGear.status.building = false; 
-        newGear.unitType        = fleet.type;
-        await newGear.save(((err, newGear) => {
-        if (err) {
-          logger.error(`New Military Gear Save Error: ${err}`);
-          return console.error(`New Military Gear Save Error: ${err}`);
-        }
-        militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
-        }));
-
-        fleet.gear.push(newGear._id)
-      } else {
-        logger.error('Error in creation of gear - invalid unitType ', ger, "for ", fleet.name);  
-      }
+  if (iData.site != "" && iData.site != "undefined" && iData.site != undefined ){
+    let site = await Site.findOne({ siteCode: iData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + iData.site;
     } else {
-      logger.error('Error in creation of gear', ger, "for ", fleet.name);
+      fleet.site = site._id;
+    }
+  } else {
+    fleet.site = fleet.homeBase;
+  }
+
+  fleet.equipment = [];
+  if (!loadError) {
+    // create gears records for military and store ID in military.system
+    //console.log("jeff military gears  iData.gear", iData.gear);
+    for (let ger of iData.gear) {
+      let gearError = true;
+
+      let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
+      //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
+      if (gerRef) {
+        if (validUnitType(gerRef.unitType, fleet.type)) {
+          gearError = false;
+          newGear = await new Gear(gerRef);
+          newGear.team            = fleet.team;
+          newGear.manufacturer    = fleet.team; 
+          newGear.status.building = false; 
+          newGear.unitType        = fleet.type;
+          await newGear.save(((err, newGear) => {
+            if (err) {
+              gearError = true;
+              logger.error(`New Military Gear Save Error: ${err}`);
+              //return console.error(`New Military Gear Save Error: ${err}`);
+            }
+            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+          }));
+
+          if (!gearError) {
+            fleet.gear.push(newGear._id)
+          }
+        } else {
+          logger.error('Error in creation of gear - invalid unitType ', ger, "for ", fleet.name);  
+        }
+      } else {
+        logger.error('Error in creation of gear', ger, "for ", fleet.name);
+      }
     }
   }
-
+  
   let { error } = validateMilitary(fleet); 
   if (error) {
-    logger.error("New Military Validate Error", fleet.name, error.message);
-    // remove associated gears records
-    for (let j = 0; j < fleet.gear.length; ++j ) {
-      gerId = military.equipment[j];
-      let gearDel = await Gear.findByIdAndRemove(gerId);
-      if (gearDel = null) {
-         logger.error(`The Military Gear with the ID ${gerId} was not found!`);
-      }
-      logger.info(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
-    }      
-    return; 
+    loadError = true;
+    loadErrorMsg = `Validation Error: ${error.message}`;
+    //logger.error("New Military Validate Error", fleet.name, error.message);
+    //return; 
   }
 
-  await fleet.save((err, fleet) => {
-    if (err) return console.error(`New Military Save Error: ${err}`);
-    militaryLoadDebugger(fleet.name + " add saved to military collection.");
-    logger.info(fleet.name + " add saved to military collection.");
-    updateStats(fleet._id);
-  });
+  if (loadError) {
+    logger.error(`Fleet skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    delGear(fleet.gear);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await fleet.save((err, fleet) => {
+      if (err) {
+        delGear(fleet.gear);
+        ++rCounts.loadErrCount;
+        logger.error(`New Fleet Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(fleet.name + " add saved to military collection.");
+      updateStats(fleet._id);
+    });
+  }
 }
 
-async function createCorps(iData){
+async function createCorps(iData, rCounts){
   // New Corps/Military here
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = iData.name;
+
   let corps = new Corps({ 
     name: iData.name,
     type: iData.type,
@@ -244,20 +297,25 @@ async function createCorps(iData){
 
   corps.stats  = iData.stats;
   corps.status = iData.status;
+  corps.serviceRecord = [];
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
-   if (!team) {
-     //logger.info("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
-   } else {
-     corps.team = team._id;
-     //logger.info("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
-   }
+    if (!team) {
+      loadError = true;
+      loadErrorMsg = `Team Not Found: ${iData.team}`;
+      //logger.info("Military Load Team Error, New Military:", iData.name, " Team: ", iData.team);
+    } else {
+      corps.team = team._id;
+      //logger.info("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+    }
   }      
 
   if (iData.country != ""){
     let country = await Country.findOne({ code: iData.country });  
     if (!country) {
+      loadError = true;
+      loadErrorMsg = `Country Not Found: ${iData.country}`;
       //logger.info("Military Load Country Error, New Military:", iData.name, " Country: ", iData.country);
     } else {
       corps.country = country._id;
@@ -269,6 +327,8 @@ async function createCorps(iData){
   if (iData.homeBase != ""){
     let site = await Site.findOne({ siteCode: iData.homeBase });  
     if (!site) {
+      loadError = true;
+      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
       //logger.info("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
       corps.homeBase = site._id;
@@ -276,64 +336,93 @@ async function createCorps(iData){
     }
   }       
 
-  // create gears records for military and store ID in military.system
-  //console.log("jeff military gears  iData.gear", iData.gear);
-  corps.equipment = [];
-  for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-    //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
-    if (gerRef) {
-      if (validUnitType(gerRef.unitType, corps.type)) {
-        newGear = await new Gear(gerRef);
-        newGear.team         = corps.team;
-        newGear.manufacturer = corps.team;  
-        newGear.status.building = false;
-        newGear.unitType        = corps.type;
-        await newGear.save(((err, newGear) => {
-        if (err) {
-          logger.error(`New Military Gear Save Error: ${err}`);
-          return console.error(`New Military Gear Save Error: ${err}`);
-        }
-        //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
-        }));
-
-        corps.gear.push(newGear._id)
-      } else {
-        logger.error('Error in creation of gear - invalid Unittype', ger, "for ", corps.name);  
-      }
+  if (iData.site != "" && iData.site != "undefined" && iData.site != undefined ){
+    let site = await Site.findOne({ siteCode: iData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + iData.site;
     } else {
-      logger.error('Error in creation of gear', ger, "for ", corps.name);
+      corps.site = site._id;
+    }
+  } else {
+    corps.site = corps.homeBase;
+  }
+
+  corps.equipment = [];
+  if (!loadError) {
+    // create gears records for military and store ID in military.system
+    //console.log("jeff military gears  iData.gear", iData.gear);
+  
+    for (let ger of iData.gear) {
+      let gearError = true;
+      let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
+      //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
+      if (gerRef) {
+        if (validUnitType(gerRef.unitType, corps.type)) {
+          gearError = false;
+          newGear = await new Gear(gerRef);
+          newGear.team         = corps.team;
+          newGear.manufacturer = corps.team;  
+          newGear.status.building = false;
+          newGear.unitType        = corps.type;
+          await newGear.save(((err, newGear) => {
+            if (err) {
+              logger.error(`New Military Gear Save Error: ${err}`);
+              gearError = true;
+              //return console.error(`New Military Gear Save Error: ${err}`);
+            }
+            //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
+          }));
+
+          if (!gearError) {
+            corps.gear.push(newGear._id)
+          }
+        } else {
+          logger.error('Error in creation of gear - invalid Unittype', ger, "for ", corps.name);  
+        }
+      } else {
+        logger.error('Error in creation of gear', ger, "for ", corps.name);
+      }
     }
   }
-
+  
   let { error } = validateMilitary(corps); 
   if (error) {
-    logger.error("New Military Validate Error", corps.name, error.message);
-    // remove associated gears records
-    for (let j = 0; j < corps.gear.length; ++j ) {
-      gerId = military.equipment[j];
-      let gearDel = await Gear.findByIdAndRemove(gerId);
-      if (gearDel = null) {
-         logger.error(`The Military Gear with the ID ${gerId} was not found!`);
-      }
-      logger.info(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
-    }      
-    return; 
+    loadError = true;
+    loadErrorMsg = "New Military Validate Error " + corps.name + " " + error.message;
   }
 
-  await corps.save((err, corps) => {
-    if (err) return console.error(`New Military Save Error: ${err}`);
-    militaryLoadDebugger(corps.name + " add saved to military collection.");
-    logger.info(corps.name + " add saved to military collection.");
-    updateStats(corps._id);
-  });
+  if (loadError) {
+    logger.error(`Corps skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    delGear(corps.gear);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await corps.save((err, corps) => {
+      if (err) {
+        delGear(corps.gear);
+        ++rCounts.loadErrCount;
+        logger.error(`New Military Save Error: ${err}`, {meta: err});
+        return;
+      }
+      ++rCounts.loadCount;
+      logger.debug(`${corps.name} add saved to military collection.`);
+      updateStats(corps._id);
+    });
+  }
 }
 
-async function updateFleet(iData){
+async function updateFleet(iData, rCounts){
   // Update Fleet/Military here
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = iData.name;
+
   let fleet = await Fleet.findOne( { name: iData.name } );
   if (!fleet) {
-    return
+    ++rCounts.loadErrCount;
+    logger.error(`${iData.name} skipped in updateFleet ... not found.`);
+    return;
   }
 
   let id = fleet._id;
@@ -344,179 +433,247 @@ async function updateFleet(iData){
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
    if (!team) {
-     militaryLoadDebugger("Military Load Team Error, Update Military:", iData.name, " Team: ", iData.team);
+     loadError = true;
+     loadErrorMsg = `Team Not Found: ${iData.team}`;
+     //militaryLoadDebugger("Military Load Team Error, Update Military:", iData.name, " Team: ", iData.team);
    } else {
      fleet.team = team._id;
-     militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+     //militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
    }
   }      
 
   if (iData.country != ""){
     let country = await Country.findOne({ code: iData.country });  
     if (!country) {
-      militaryLoadDebugger("Military Load Country Error, Update Military:", iData.name, " Country: ", iData.country);
+      loadError = true;
+      loadErrorMsg = `Country Not Found: ${iData.country}`;
+      //militaryLoadDebugger("Military Load Country Error, Update Military:", iData.name, " Country: ", iData.country);
     } else {
       fleet.country = country._id;
       fleet.zone    = country.zone;
-      militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+      //militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
     }
   }       
 
   if (iData.homeBase != ""){
     let site = await Site.findOne({ siteCode: iData.homeBase });  
     if (!site) {
-      militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadError = true;
+      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
+      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
       fleet.homeBase = site._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
+
+  if (iData.site != "" && iData.site != "undefined" && iData.site != undefined ){
+    let site = await Site.findOne({ siteCode: iData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + iData.site;
+    } else {
+      fleet.site = site._id;
+    }
+  } else {
+    fleet.site = fleet.homeBase;
+  }
 
   // create gears records for military and store ID in military.system
   //console.log("jeff military gears  iData.gear", iData.gear);
   fleet.equipment = [];
-  for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-    //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
-    if (gerRef) {
-      if (validUnitType(gerRef.unitType, fleet.type)) {
-        newGear = await new Gear(gerRef);
-        newGear.team         = fleet.team;
-        newGear.manufacturer = fleet.team;  
-        newGear.status.building = false;
-        newGear.unitType        = fleet.type;
-        await newGear.save(((err, newGear) => {
-        if (err) {
-          logger.error(`New Military Gear Save Error: ${err}`);
-          return console.error(`New Military Gear Save Error: ${err}`);
+  if (!loadErrorMsg) {
+    for (let ger of iData.gear) {
+      let gearError = true;
+      let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
+      //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
+      if (gerRef) {
+        if (validUnitType(gerRef.unitType, fleet.type)) {
+          gearError = false;
+          newGear = await new Gear(gerRef);
+          newGear.team         = fleet.team;
+          newGear.manufacturer = fleet.team;  
+          newGear.status.building = false;
+          newGear.unitType        = fleet.type;
+          await newGear.save(((err, newGear) => {
+            if (err) {
+              logger.error(`New Military Gear Save Error: ${err}`);
+              gearError = true;
+              //return console.error(`New Military Gear Save Error: ${err}`);
+            }
+            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+          }));
+  
+          if (!gearError) {
+            fleet.gear.push(newGear._id);
+          }
+        } else {
+          militaryLoadDebugger('Error in creation of gear - Invalid UnitType', ger, "for ", fleet.name);
         }
-        militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
-        }));
-
-        fleet.gear.push(newGear._id)
       } else {
-        militaryLoadDebugger('Error in creation of gear - Invalid UnitType', ger, "for ", fleet.name);
+        militaryLoadDebugger('Error in creation of gear', ger, "for ", fleet.name);
       }
-    } else {
-      militaryLoadDebugger('Error in creation of gear', ger, "for ", fleet.name);
     }
   }
 
   let { error } = validateMilitary(fleet); 
   if (error) {
-    militaryLoadDebugger("Update Military Validate Error", fleet.name, error.message);
-    // remove associated gears records
-    for (let j = 0; j < fleet.gear.length; ++j ) {
-      gerId = military.equipment[j];
-      let gearDel = await Gear.findByIdAndRemove(gerId);
-      if (gearDel = null) {
-         console.log(`The Military Gear with the ID ${gerId} was not found!`);
-      }
-      console.log(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
-    }      
-    return; 
+    loadError = true;
+    loadErrorMsg = "Validation Error: " + error.message;   
+    //return; 
   }
 
-  await fleet.save((err, fleet) => {
-    if (err) return console.error(`Update Military Save Error: ${err}`);
-    militaryLoadDebugger(fleet.name + " add saved to military collection.");
-    updateStats(fleet._id);
-  });
+  if (loadError) {
+    logger.error(`Fleet Update skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    delGear(fleet.gear);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await fleet.save((err, fleet) => {
+      if (err) {
+        delGear(fleet.gear);
+        ++rCounts.loadErrCount;
+        logger.error(`Update Military Save Error: ${err}`);
+        return;
+      } 
+      ++rCounts.updCount;
+      logger.debug(`${fleet.name} add saved to military collection.`);
+      updateStats(fleet._id);
+      return;
+    });
+  }
 }
 
-async function updateCorps(iData){
+async function updateCorps(iData, rCounts){
   // Update Corps/Military here
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = iData.name;
+
   let corps = await Corps.findOne( { name: iData.name } );
   if (!corps) {
-    return
+    logger.error(`${iData.name} skipped in updateCorps ... not found.`);
+    ++rCounts.loadErrCount;
+    logger.error();
+    return;
   }
 
   let id = corps._id;
-  corps.name  = iData.name;
+  corps.name   = iData.name;
   corps.stats  = iData.stats;
   corps.status = iData.status;
 
   if (iData.team != ""){
     let team = await Team.findOne({ teamCode: iData.team });  
-   if (!team) {
-     militaryLoadDebugger("Military Load Team Error, Update Military:", iData.name, " Team: ", iData.team);
-   } else {
-     corps.team = team._id;
-     militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
-   }
+    if (!team) {
+      loadError = true;
+      loadErrorMsg = `Team Not Found: ${iData.team}`;
+      //militaryLoadDebugger("Military Load Team Error, Update Military:", iData.name, " Team: ", iData.team);
+    } else {
+      corps.team = team._id;
+      //militaryLoadDebugger("Military Load Team Found, Military:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+    }
   }      
 
   if (iData.country != ""){
     let country = await Country.findOne({ code: iData.country });  
     if (!country) {
-      militaryLoadDebugger("Military Load Country Error, Update Military:", iData.name, " Country: ", iData.country);
+      loadError = true;
+      loadErrorMsg = `Country Not Found: ${iData.country}`;
+      //militaryLoadDebugger("Military Load Country Error, Update Military:", iData.name, " Country: ", iData.country);
     } else {
       corps.country = country._id;
       corps.zone    = country.zone;
-      militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+      //militaryLoadDebugger("Military Load Country Found, Military:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
     }
   }       
 
   if (iData.homeBase != ""){
     let site = await Site.findOne({ code: iData.homeBase });  
     if (!site) {
-      militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadError = true;
+      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
+      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
     } else {
       corps.homeBase = site._id;
-      militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
     }
   }       
+
+  if (iData.site != "" && iData.site != "undefined" && iData.site != undefined ){
+    let site = await Site.findOne({ siteCode: iData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + iData.site;
+    } else {
+      corps.site = site._id;
+    }
+  } else {
+    corps.site = corps.homeBase;
+  }
 
   // create gears records for military and store ID in military.system
   //console.log("jeff military gears  iData.gear", iData.gear);
   corps.equipment = [];
-  for (let ger of iData.gear) {
-    let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
-    //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
-    if (gerRef) {
-      if (validUnitType(gerRef.unitType, corps.type)) {
-        newGear = await new Gear(gerRef);
-        newGear.team         = corps.team;
-        newGear.manufacturer = corps.team; 
-        newGear.status.building = false; 
-        newGear.unitType        = corps.type;
-        await newGear.save(((err, newGear) => {
-        if (err) {
-          logger.error(`New Military Gear Save Error: ${err}`);
-          return console.error(`New Military Gear Save Error: ${err}`);
+  if (!loadErrorMsg) {
+    for (let ger of iData.gear) {
+      let gearError = true;
+      let gerRef = gears[gears.findIndex(gear => gear.code === ger )];
+      //console.log("jeff in military gears ", sys, "gerRef:", gerRef);
+      if (gerRef) {
+        if (validUnitType(gerRef.unitType, corps.type)) {
+          gearError = false;
+          newGear = await new Gear(gerRef);
+          newGear.team         = corps.team;
+          newGear.manufacturer = corps.team; 
+          newGear.status.building = false; 
+          newGear.unitType        = corps.type;
+          await newGear.save(((err, newGear) => {
+            if (err) {
+              logger.error(`New Military Gear Save Error: ${err}`);
+              gearError = true;
+              //return console.error(`New Military Gear Save Error: ${err}`);
+            }
+            //militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
+          }));
+  
+          if (!gearError) {
+            corps.gear.push(newGear._id);
+          }
+        } else {
+          logger.debug(`Error in creation of gear - Invalid UnitType ${ger} for ${corps.name}`);  
         }
-        militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
-        }));
-
-        corps.gear.push(newGear._id)
       } else {
-        militaryLoadDebugger('Error in creation of gear - Invalid UnitType', ger, "for ", corps.name);  
+        logger.debug(`Error in creation of gear ${ger} for  ${corps.name}`);
       }
-    } else {
-      militaryLoadDebugger('Error in creation of gear', ger, "for ", corps.name);
-    }
+    }  
   }
-
+  
   let { error } = validateMilitary(corps); 
   if (error) {
-    militaryLoadDebugger("Update Military Validate Error", corps.name, error.message);
-    // remove associated gears records
-    for (let j = 0; j < corps.gear.length; ++j ) {
-      gerId = military.equipment[j];
-      let gearDel = await Gear.findByIdAndRemove(gerId);
-      if (gearDel = null) {
-         console.log(`The Military Gear with the ID ${gerId} was not found!`);
-      }
-      console.log(`The Military Gear with the ID ${gerId} was DELETED ... Military validate error!`);
-    }      
-    return; 
+    loadError = true;
+    loadErrorMsg = "Validation Error: " + error.message;
+    //militaryLoadDebugger("Update Military Validate Error", corps.name, error.message);
   }
 
-  await corps.save((err, corps) => {
-    if (err) return console.error(`Update Military Save Error: ${err}`);
-    militaryLoadDebugger(corps.name + " add saved to military collection.");
-    updateStats(corps._id);
-  });
+  if (loadError) {
+    logger.error(`Corps skipped due to errors: ${loadName} ${loadErrorMsg}`);
+    delGear(corps.gear);
+    ++rCounts.loadErrCount;
+    return;
+  } else {
+    await corps.save((err, corps) => {
+      if (err) {
+        delGear(corps.gear);
+        ++rCounts.loadErrCount;
+        logger.error(`Update Military Save Error: ${err}`);
+        return;
+      }
+      ++rCounts.updCount;
+      logger.debug(`${corps.name} add saved to military collection.`);
+      updateStats(corps._id);
+    });
+  }
 }
 
 module.exports = runMilitaryLoad;
