@@ -210,8 +210,10 @@ async function loadSpacecraft(iData, rCounts){
       }
 
       if (loadError) {
+        ++rCounts.loadErrCount;
         logger.error(`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
         delFacilities(spacecraft.facilities);
+        return;
       } else {
         await spacecraft.save((err, spacecraft) => {
           if (err) {
@@ -358,7 +360,7 @@ async function loadSpacecraft(iData, rCounts){
             return;
           }
           spacecraftDebugger(`${spacecraft.name}  add saved to spacecraft collection.`);
-          ++rCounts.loadCount;
+          ++rCounts.updCount;
           //updateStats(spacecraft._id);
           return;
         });

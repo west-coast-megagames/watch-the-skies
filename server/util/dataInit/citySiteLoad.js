@@ -47,13 +47,22 @@ async function initLoad(doLoad) {
    
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < cityDataIn.length; ++i ) {
     
-    await loadCity(cityDataIn[i]);
+    ++recReadCount;
+    await loadCity(cityDataIn[i], recCounts);
   }
+
+  logger.info(`City Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
+
 };
 
-async function loadCity(iData){
+async function loadCity(iData, rCounts){
   let loadError = false;
   let loadErrorMsg = "";
   let loadName = "";
@@ -87,7 +96,6 @@ async function loadCity(iData){
           //citySiteLoadDebugger("New CitySite Validate Error", iData.name, error.message);
           loadError = true;
           loadErrorMsg = "Validation Error: " + error.message;
-          
           //return;
         }
         
@@ -116,10 +124,17 @@ async function loadCity(iData){
           }
         }  
         if (loadError) {
+          ++rCounts.loadErrCount;
           logger.error(`City Site skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`);
+          return;
         } else {
           await citySite.save((err, citySite) => {
-            if (err) return logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+            if (err) {
+              ++rCounts.loadErrCount;
+              logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+              return;
+            }
+            ++rCounts.loadCount;
             //citySiteLoadDebugger(citySite.name + " add saved to citySite collection.");
           });
         }
@@ -171,15 +186,23 @@ async function loadCity(iData){
       }
    
       if (loadError) {
+        ++rCounts.loadErrCount;
         logger.error(`City Site skipped due to errors: ${loadCode} ${loadName} ${cittySite.sitecode} ${citySite.name}`);
+        return;
       } else {
         await citySite.save((err, citySite) => {
-        if (err) return logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+        if (err) {
+          ++rCounts.loadErrCount;
+          logger.error(`New CitySite Save Error: ${loadCode} ${loadName} ${err}`);
+          return;
+        }
+        ++rCounts.updCount;
         //citySiteLoadDebugger(citySite.name + " update saved to city collection.");
         });
       }
     }
   } catch (err) {
+    ++rCounts.loadErrCount;
     logger.error(`Catch City Error: ${err.message}`);
     return;
   }
