@@ -131,7 +131,6 @@ async function chkResearch(runFlag) {
               logger.error(`Knowledge Research status.published is not set ${research.name} ${research._id}`);
             }     
           }
-
         }
 
         if (!research.hasOwnProperty('teamProgress')) {

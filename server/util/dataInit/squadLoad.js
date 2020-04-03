@@ -50,18 +50,34 @@ async function initLoad(doLoad) {
   //squadLoadDebugger("Jeff in initLoad", doLoad, squadDataIn.length);    
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < squadDataIn.length; ++i ) {
     
     //logger.info("Jeff in runSquadLoad loop %O", i, squadDataIn[i].name );    
     //logger.info("Jeff in runSquadLoad loop %O", i, squadDataIn[i] );
     
-    await loadSquad(squadDataIn[i]);
+    ++recReadCount;
+    await loadSquad(squadDataIn[i], recCounts);
   }
+
+  logger.info(`Squad Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
+
 };
 
-async function loadSquad(iData){
+async function loadSquad(iData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   try {   
     let squad = await Squad.findOne( { name: iData.name } );
+
+    loadName = iData.name;
+
     if (!squad) {
       // New Squad/Squad here
       let squad = new Squad({ 
@@ -72,92 +88,148 @@ async function loadSquad(iData){
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });  
         if (!team) {
-          squadLoadDebugger("Squad Load Team Error, New Squad:", iData.name, " Team: ", iData.team);
+          loadError = true;
+          loadErrorMsg = `Team Not Found: ${iData.team}`;
+          //squadLoadDebugger("Squad Load Team Error, New Squad:", iData.name, " Team: ", iData.team);
         } else {
           squad.team = team._id;
-          squadLoadDebugger("Squad Load Team Found, Squad:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+          //squadLoadDebugger("Squad Load Team Found, Squad:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
         }
       }      
 
       if (iData.country != ""){
         let country = await Country.findOne({ code: iData.country });  
         if (!country) {
-          squadLoadDebugger("Squad Load Country Error, New Squad:", iData.name, " Country: ", iData.country);
+          loadError = true;
+          loadErrorMsg = `Country Not Found: ${iData.country}`;
+          //squadLoadDebugger("Squad Load Country Error, New Squad:", iData.name, " Country: ", iData.country);
         } else {
           squad.country = country._id;
           squad.zone    = country.zone;
-          squadLoadDebugger("Squad Load Country Found, Squad:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+          //squadLoadDebugger("Squad Load Country Found, Squad:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
         }
       }       
+
+      if (iData.site != ""){
+        let site = await Site.findOne({ siteCode: iData.site });  
+        if (!site) {
+          // not an error ... just set to homeBase
+          //loadError = true;
+          //loadErrorMsg = `Site Not Found: ${iData.site}`;
+          //squadLoadDebugger("Squad Load Site Error, New Squad:", iData.name, " homeBase: ", iData.site);
+        } else {
+          squad.site = site._id;
+          //squadLoadDebugger("Squad Load Site Found, Squad:", iData.name, " Site: ", iData.site, "Site ID:", site._id);
+        }
+      }
 
       if (iData.homeBase != ""){
         let site = await Site.findOne({ siteCode: iData.homeBase });  
         if (!site) {
-          squadLoadDebugger("Squad Load Home Base Error, New Squad:", iData.name, " homeBase: ", iData.homeBase);
+          loadError = true;
+          loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
+          //squadLoadDebugger("Squad Load Home Base Error, New Squad:", iData.name, " homeBase: ", iData.homeBase);
         } else {
           squad.homeBase = site._id;
-          squadLoadDebugger("Squad Load Home Base Found, Squad:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+          if (!squad.site) {
+            squad.site = site._id;
+          }
+          //squadLoadDebugger("Squad Load Home Base Found, Squad:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
         }
       }
 
       let { error } = validateSquad(squad); 
       if (error) {
-        logger.error(`New Squad Validate Error ${squad.name} ${error.message}`);
-        return console.error(`New Squad validate Error: ${err}`);
+        loadError = true;
+        loadErrorMsg = "Validation Error: " + error.message;
+        //logger.error(`New Squad Validate Error ${squad.name} ${error.message}`);
+        //return console.error(`New Squad validate Error: ${err}`);
       }
 
-      await squad.save((err, squad) => {
-        if (err) return console.error(`New Squad Save Error: ${err}`);
-        squadLoadDebugger(squad.name + " add saved to squad collection.");
-        logger.info(squad.name + " add saved to squad collection.");
-      });
+      if (loadError) {
+        logger.error(`Squad skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      } else {
+        await squad.save((err, squad) => {
+          if (err) {
+            ++rCounts.loadErrCount; 
+            logger.error(`New Squad Save Error: ${err}`, {meta: err});
+            return;
+          }
+          ++rCounts.loadCount;
+          logger.debug(`${squad.name} add saved to squad collection.`);
+          return;
+        });
+      }
     } else {
       let id = squad._id;
   
       if (iData.team != ""){
         let team = await Team.findOne({ teamCode: iData.team });  
         if (!team) {
-          squadLoadDebugger("Squad Load Team Error, Update Squad:", iData.name, " Team: ", iData.team);
+          //squadLoadDebugger("Squad Load Team Error, Update Squad:", iData.name, " Team: ", iData.team);
+          loadError = true;
+          loadErrorMsg = "Team Not Found: " + iData.team;
         } else {
           squad.team = team._id;
-          squadLoadDebugger("Squad Load Team Found, Squad:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
+          //squadLoadDebugger("Squad Load Team Found, Squad:", iData.name, " Team: ", iData.team, "Team ID:", team._id);
         }
       }      
 
       if (iData.country != ""){
         let country = await Country.findOne({ code: iData.country });  
         if (!country) {
-          squadLoadDebugger("Squad Load Country Error, Update Squad:", iData.name, " Country: ", iData.country);
+          //squadLoadDebugger("Squad Load Country Error, Update Squad:", iData.name, " Country: ", iData.country);
+          loadError = true;
+          loadErrorMsg = "Country Not Found: " + iData.country;
         } else {
           squad.country = country._id;
           squad.zone    = country.zone;
-          squadLoadDebugger("Squad Load Country Found, Squad:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
+          //squadLoadDebugger("Squad Load Country Found, Squad:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
         }
       }       
 
       if (iData.homeBase != ""){
         let site = await Site.findOne({ siteCode: iData.homeBase });  
         if (!site) {
-          squadLoadDebugger("Squad Load Home Base Error, Update Squad:", iData.name, " homeBase: ", iData.homeBase);
+          loadError = true;
+          loadErrorMsg = "homeBase Not Found: " + iData.homeBase;
+          //squadLoadDebugger("Squad Load Home Base Error, Update Squad:", iData.name, " homeBase: ", iData.homeBase);
         } else {
           squad.homeBase = site._id;
-          squadLoadDebugger("Squad Load Home Base Found, Squad:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+          //squadLoadDebugger("Squad Load Home Base Found, Squad:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
         }
       }         
 
       let { error } = validateSquad(squad); 
       if (error) {
-        squadLoadDebugger("Update Squad Validate Error", squad.name, error.message);
-        return; 
+        //squadLoadDebugger("Update Squad Validate Error", squad.name, error.message);
+        //return; 
+        loadError = true;
+        loadErrorMsg = "Squad Update Validation Error: " + error.message;
       }
 
-      await squad.save((err, squad) => {
-        if (err) return console.error(`Update Squad Save Error: ${err}`);
-        squadLoadDebugger(squad.name + " add saved to squad collection.");
-      });
+      if (loadError) {
+        logger.error(`Squad skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      } else {
+        await squad.save((err, squad) => {
+          if (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`Update Squad Save Error: ${err}`, {meta: err});
+            return;
+          }
+          ++rCounts.updCount;
+          logger.debug(`${squad.name} add saved to squad collection.`);
+          return;
+        });
+      }
     }
   } catch (err) {
-    logger.error(`Catch Squad Error: ${err.message}`);
+    ++rCounts.loadErrCount;
+    logger.error(`Catch Squad Error: ${err.message}`, {meta: err});
     return;
   }
 };
@@ -184,7 +256,7 @@ async function deleteAllSquads(doLoad) {
     }        
     logger.info("All Squads succesfully deleted!");
   } catch (err) {
-    logger.error(`Delete All Squads Catch Error: ${err.message}`);
+    logger.error(`Delete All Squads Catch Error: ${err.message}`, {meta: err});
   }
 };
 

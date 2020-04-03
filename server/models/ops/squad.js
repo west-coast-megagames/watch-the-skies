@@ -18,7 +18,7 @@ const SquadSchema = new Schema({
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
-    secret: { type: Boolean }
+    secret: { type: Boolean, default: false }
   }
 });
 
@@ -68,7 +68,7 @@ function validateSquad(squad) {
   const schema = {
       name: Joi.string().min(2).max(50).required()
     };
-  
+
   return Joi.validate(squad, schema, { "allowUnknown": true });
 };
 
