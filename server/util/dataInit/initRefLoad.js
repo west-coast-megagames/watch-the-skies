@@ -61,38 +61,39 @@ async function initLoad(doLoad) {
                         loadErrCount: 0,
                         updCount: 0};                          
 
-  for (let i = 0; i < refDataIn.length; ++i ) {
+  for await (let data of refDataIn) {
+  //for (let i = 0; i < refDataIn.length; ++i ) {
     
-    if (refDataIn[i].loadType == "zone") {     
+    if (data.loadType == "zone") {     
       
       //Delete now regardless of loadFlag
-      await deleteZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      await deleteZone(data.name, data.code, data.loadFlag);
          
-      if (refDataIn[i].loadFlag === "true") {
+      if (data.loadFlag === "true") {
         ++zoneRecReadCount;
-        await loadZone(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].refNumber1, zoneRecCounts);
+        await loadZone(data.name, data.code, data.loadFlag, data.refNumber1, zoneRecCounts);
       }
     }
 
-    if (refDataIn[i].loadType == "team") {     
+    if (data.loadType == "team") {     
       // Delete now regardless of loadFlag
-      await deleteTeam(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      await deleteTeam(data.name, data.code, data.loadFlag);
       
-      if (refDataIn[i].loadFlag == "true") {
+      if (data.loadFlag == "true") {
         ++teamRecReadCount;
-        await loadTeam(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, teamRecCounts);
+        await loadTeam(data.name, data.code, data.loadFlag, data.parentCode1, teamRecCounts);
       } 
     }
 
-    if (refDataIn[i].loadType == "country") {
+    if (data.loadType == "country") {
       
       //Delete now regardless of loadFlag
-      await deleteCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag);
+      await deleteCountry(data.name, data.code, data.loadFlag);
       
-      if (refDataIn[i].loadFlag === "true") {
+      if (data.loadFlag === "true") {
         ++countryRecReadCount;
-        await loadCountry(refDataIn[i].name, refDataIn[i].code, refDataIn[i].loadFlag, refDataIn[i].parentCode1, 
-                  refDataIn[i].parentCode2, refDataIn[i].refNumber1, refDataIn[i].refBoolean1, countryRecCounts);
+        await loadCountry(data.name, data.code, data.loadFlag, data.parentCode1, 
+                  data.parentCode2, data.refNumber1, data.refBoolean1, countryRecCounts);
       }
     }
   };
@@ -394,19 +395,22 @@ async function loadCountry(cName, cCode, cLoadFlg, zCode, tCode, cUnrest, cCoast
       }
         
       if (!loadError) {
-        await country.save((err, country) => {
-          if (err) {
-            ++rCounts.loadErrCount;
-            logger.error(`Country Save Error: ${err}`, {meta: err})
-            return;
-          }
+        try{
+          let countrySave = await country.save();
           ++rCounts.loadCount;
-          logger.info(`${country.name} saved to country collection.`);
+          logger.info(`${countrySave.name} saved to country collection.`);
           //countryInitDebugger(country.name + " add saved to country collection.");
-        });
+          return;
+        } catch (err) {
+          ++rCounts.loadErrCount;
+          logger.error(`Country Save Error: ${err}`, {meta: err})
+          return;
+        }
+        
       } else {
         logger.error(`Country skipped due to errors: ${loadName} ${loadErrorMsg}`);
-        ++rCounts.loadErrCount;        
+        ++rCounts.loadErrCount;    
+        return;    
       }
     } else {       
       // Existing Country here ... update
