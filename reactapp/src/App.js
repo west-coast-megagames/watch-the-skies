@@ -58,7 +58,6 @@ class App extends Component {
     megabucks: 0,
     alerts: [],
     articles: [],
-    research: [],
     expand: true,
     active: '1'
   }
@@ -97,11 +96,6 @@ class App extends Component {
       accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
       this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
       this.setState({ accounts, megabucks });
-    });
-
-    updateEvents.updateResearch((err, research) => {
-      this.addAlert({type: 'success', title: 'Research Update', body: `The current state of research has been updated...`});
-      this.setState({ research });
     });
 
     updateEvents.updateMilitary((err, military) => {
@@ -260,12 +254,11 @@ class App extends Component {
     let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
     let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`); //Axios call to server for all teams
     let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
-    let { data: research } = await axios.get(`${gameServer}api/research`);  // Axios call to server for all research
     let { data: zones } = await axios.get(`${gameServer}api/zones`) // Axios call to server for all zones
     let { data: facilities } = await axios.get(`${gameServer}api/facilities`) // Axios call to server for all facilities
     let { data: military } = await axios.get(`${gameServer}api/military`) // Axios call to server for all military
     let { data: countries } = await axios.get(`${gameServer}api/country`) // Axios call to server for all countries
-    this.setState({ teams, sites, aircrafts, articles, research, zones, facilities, military, countries })
+    this.setState({ teams, sites, aircrafts, articles, zones, facilities, military, countries })
   }
 
   async getNews () {
@@ -326,7 +319,7 @@ class App extends Component {
 
   handleArtHide = (article) => {
     let articles = this.state.articles;
-    Alert.warning(`Hiding ${article.body} article...`);
+    Alert.warning(`Hiding ${article.articleBody} article...`);
 
     /*if(article.agency === 'BNC') {
         console.log(article.agency);

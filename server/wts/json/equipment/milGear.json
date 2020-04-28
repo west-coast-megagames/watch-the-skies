@@ -2,7 +2,7 @@
   {
     "name": "Old Tech Vehicles",
     "code": "V-OT1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -13,7 +13,7 @@
 {
     "name": "Modern Tech Vehicles",
     "code": "V-MT1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -24,7 +24,7 @@
 {
     "name": "Marine Vehicles",
     "code": "V-MV1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -35,7 +35,7 @@
 {
     "name": "Futuristic Vehicles",
     "code": "V-FV1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -79,7 +79,7 @@
 {
     "name": "Militia",
     "code": "MIL-1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -90,7 +90,7 @@
 {
     "name": "Insurgents",
     "code": "INS-1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,
@@ -101,7 +101,7 @@
 {
     "name": "Corps",
     "code": "COR-1",
-    "unitType": ["Corps", "Raid", "Assault", "Infiltration", "Envoy", "Science"],
+    "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
     "cost": 0,

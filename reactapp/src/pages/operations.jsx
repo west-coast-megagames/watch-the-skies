@@ -7,6 +7,7 @@ import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/fr
 import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
+import ExcomOps from './tabs/ops/excom';
 
 class Operations extends Component {
     constructor() {
@@ -43,7 +44,7 @@ class Operations extends Component {
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
                     <Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
-                    <Nav.Item eventKey="intercept" to={`${url}/intercept`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Interceptions</Nav.Item>
+                    <Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item>
                     <Nav.Item eventKey="globe" to={`${url}/globe`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
                     <Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
                 </Nav>
@@ -53,12 +54,13 @@ class Operations extends Component {
                     <Route path={`${url}/dashboard`} render={() => (
                         <h5>No dashboard has been coded for the Operations Module!</h5>
                     )}/>
-                    <Route path={`${url}/intercept`} render={() => (
-                        <Interception
+                    <Route path={`${url}/excom`} render={() => (
+                        <ExcomOps
                             sites={ this.props.sites }
                             team={ this.props.team }
                             aircrafts={ this.props.aircrafts }
                             alert={ this.props.alert }
+                            zones={this.props.zones}
                             account={ this.state.account }
                         /> 
                     )}/>
@@ -69,7 +71,6 @@ class Operations extends Component {
                             accounts={ this.props.accounts }
                             zones={ this.props.zones }
                             countries={ this.props.countries }
-                            facilities={ this.props.facilities }
                             sites={ this.props.sites }
                             aircrafts={ this.props.sites }
                             military={ this.props.military }

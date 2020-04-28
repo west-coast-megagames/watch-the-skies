@@ -34,7 +34,7 @@ AccountSchema.methods.validateAccount = function (account) {
 let Account = mongoose.model('account', AccountSchema);
 
 function validateAccount(account) {
-  modelDebugger(`Validating ${account.name}...`);
+  //modelDebugger(`Validating ${account.name}...`);
 
   const schema = {
       code: Joi.string().min(3).max(3).required().uppercase(),

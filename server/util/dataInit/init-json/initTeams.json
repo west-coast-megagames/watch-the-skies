@@ -56,7 +56,7 @@
     {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
     {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
-"prTrack" : [3, 5, 7, 10, 12, 14, 16, 17],
+"prTrack" : [0, 3, 5, 7, 10, 12, 14, 16, 17],
 "prLevel" : 5,
 "agents" : 2,
 "loadFlag" : "true",
@@ -96,7 +96,7 @@
     {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
     {"role" : "Commander of Self Defense Forces", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
-"prTrack" : [3, 7, 10, 14, 18, 21, 25, 28],
+"prTrack" : [0, 3, 7, 10, 14, 18, 21, 25, 28],
 "prLevel" : 5,
 "agents" : 4,
 "loadFlag" : "true",
@@ -116,7 +116,7 @@
     {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
     {"role" : "Armed Forces Commander", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
-"prTrack" : [2, 4, 6, 8, 10, 12, 14, 16],
+"prTrack" : [0, 2, 4, 6, 8, 10, 12, 14, 16],
 "prLevel" : 5,
 "agents" : 1,
 "loadFlag" : "true",
@@ -176,7 +176,7 @@
     {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
     {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
-"prTrack" : [2, 4, 6, 8, 10, 11, 12, 13],
+"prTrack" : [0, 2, 4, 6, 8, 10, 11, 12, 13],
 "prLevel" : 5,
 "agents" : 1,
 "loadFlag" : "true",
@@ -237,7 +237,7 @@
     {"role" : "Scientific Advisor", "type" : "Scientist", "userID" : "undefined", "loadFlag" : "false"},
     {"role" : "Chief of the Defense Staff", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
-"prTrack" : [2, 5, 8, 9, 12, 16, 19, 22, 25],
+"prTrack" : [0, 2, 5, 8, 9, 12, 16, 19, 22 ],
 "prLevel" : 5,
 "agents" : 2,
 "loadFlag" : "true",
@@ -255,6 +255,7 @@
     {"role" : "Frontier Logistics Officer", "type" : "Military", "userID" : "undefined", "loadFlag" : "true"}
 ],
 "prLevel" : 0,
+"agents" : 2,
 "loadFlag" : "true"
 },
 {
@@ -277,15 +278,30 @@
 },
 {
 "loadType" : "team", 
-"name": "Daily News", 
-"shortName" : "D-News",
+"name": "BNC News", 
+"shortName" : "BNC",
 "teamType" : "M",
-"code" : "MED", 
+"code" : "BNC", 
 "roles" : [
     {"role": "Editor", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
     {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
     {"role" : "Public Relations", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"}
 ],
+"agents" : 2,
+"loadFlag" : "true"
+},
+{
+"loadType" : "team", 
+"name": "GNN News", 
+"shortName" : "GNN",
+"teamType" : "M",
+"code" : "GNN", 
+"roles" : [
+    {"role": "Editor", "type" : "Head of State", "userID": "undefined", "loadFlag": "true"},
+    {"role" : "Reporter", "type" : "Diplomat", "userID" : "undefined", "loadFlag" : "true"},
+    {"role" : "Public Relations", "type" : "Ambassador", "userID" : "undefined", "loadFlag" : "true"}
+],
+"agents" : 2,
 "loadFlag" : "true"
 },
 {
@@ -294,6 +310,7 @@
 "shortName" : "NPC",
 "teamType" : "P",
 "code" : "NPC", 
+"roles" : [],
 "loadFlag" : "true"
 }
 ]

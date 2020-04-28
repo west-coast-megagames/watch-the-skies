@@ -83,7 +83,7 @@ class ChartsPage extends React.Component {
     if (this.props.account === undefined || this.props.accounts.length <= 0) {
       return(
         <div>
-          <p>No Chart Availible</p>
+          <p>No Chart Available</p>
         </div>
       )
     };

@@ -18,6 +18,7 @@ const bodyParser = require('body-parser');
 
 // Country Model - Using Mongoose Model
 const { Country, validateCountry } = require('../../models/country');
+const { Team } = require('../../models/team/team');
 
 const app = express();
 
@@ -42,6 +43,11 @@ async function initLoad(doLoad) {
   
   if (!doLoad) return;
 
+  let recReadCount = 0;
+  let recCounts = { loadCount: 0,
+                    loadErrCount: 0,
+                    updCount: 0};
+
   for (let i = 0; i < countryDataIn.length; ++i ) {
     
     if (countryDataIn[i].loadType == "country") {     
@@ -49,21 +55,30 @@ async function initLoad(doLoad) {
       // delete old data
       //await deleteCountry(countryDataIn[i]);   will cause previously loaded country record id's to change
 
-      await loadCountry(countryDataIn[i]);
+      ++recReadCount;
+      await loadCountry(countryDataIn[i], recCounts);
     }
   }
+  logger.info(`Country Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
 };
 
-async function loadCountry(cData){
+async function loadCountry(cData, rCounts){
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
   try {   
     //logger.debug("Jeff here in loadCountry ... Code", cData.code, "name ", cData.name);
     //console.log("Jeff here in loadCountry ... Code", cData.code, "name ", cData.name);
     
     let country = await Country.findOne( { code: cData.code } );
 
+    loadName = cData.name;
+
     if (!country) {
        // No New Country here ... should have been loaded by refData
-      logger.info(`${cData.code} ${cData.name} does Not Exist for countryLoad.`)
+      logger.error(`${cData.code} ${cData.name} does Not Exist for countryLoad.`);
+      ++rCounts.loadErrCount;
       return;
     } else {       
       // Existing Country here ... update
@@ -87,31 +102,56 @@ async function loadCountry(cData){
       }
       country.borderedBy = borderedBy_Ids;
       country.stats      = cData.stats;
-      if (!cData.formalName) {
+      if (!cData.formalName || cData.formalName == "")  {
         country.formalName = country.name;
       } else {
         country.formalName = cData.formalName;
       }
       country.milAlliance = [];
-      country.sciAllience = [];
+      country.sciAlliance = [];
 
+
+      if (cData.teamCode != ""){
+        let team = await Team.findOne({ teamCode: cData.teamCode });  
+        if (!team) {
+          loadError = true;
+          loadErrorMsg = "Team Not Found for Country: " + cData.code + " Team " + cData.teamCode;  
+        } else {
+          country.team = team._id;
+          country.loadTeamCode = team.teamCode;
+          //countryInitDebugger("Country Load Team Found, Country:", cCode, " Team: ", tCode, "Team ID:", team._id);
+        }
+      }      
+      
       const { error } = validateCountry(country); 
       if (error) {
         countryLoadDebugger("Country Update Validate Error", cData.code, cData.name, error.message);
-        return
+        loadError = true;
+        loadErrorMsg = `Country ${cData.code} ${cData.name} Update Validation Error:  ${error.message}`;
       }
    
-      await country.save((err, country) => {
-      if (err) return logger.error(`Country Update Save Error: ${err}`);
-      countryLoadDebugger(country.name, " update saved to countrys collection.", "Code: ", country.code, "Name: ", country.name);
-
-    });
-  }
+      if (!loadError) {
+        await country.save((err, country) => {
+          if (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`Country Update Save Error: ${err}`, {meta: err});
+            return;
+          }
+          ++rCounts.updCount;
+          logger.debug(`${loadName} update saved to country collection.`);
+          return;
+        });
+      } else {
+        logger.error(`Country ${loadName} Update skipped due to errors: ${loadErrorMsg}`);
+        ++rCounts.loadErrCount;
+        return;
+      }
+    }
   } catch (err) {
-    countryLoadDebugger('Catch Country Error:', err.message);
+    ++rCounts.loadErrCount;
+    logger.error(`Catch Country Error: ${err.message}`, {meta: err});
     return;
-}
-
+  }
 };
 
 async function deleteCountry(cData){
@@ -125,21 +165,21 @@ async function deleteCountry(cData){
         let delId = country._id;
         let countryDel = await Country.findByIdAndRemove(delId);
         if (countryDel = null) {
-          countryLoadDebugger(`deleteCountry: Country with the ID ${delId} was not found!`);
+          logger.error(`deleteCountry: Country with the ID ${delId} was not found!`);
           let delErrorFlag = true;
         }
       } catch (err) {
-        countryLoadDebugger('deleteCountry Error 1:', err.message);
+        logger.error(`Catch deleteCountry Error 1: ${err.message}`, {meta: err});
         let delErrorFlag = true;
       }
     }        
     if (!delErrorFlag) {
-       countryLoadDebugger("All Countrys succesfully deleted for Code:", cData.code);
+       //countryLoadDebugger("All Countrys succesfully deleted for Code:", cData.code);
     } else {
-       countryLoadDebugger("Some Error In Countrys delete for Code:", cData.code);
+       logger.error("Some Error In Countrys delete for Code:", cData.code);
     }
   } catch (err) {
-    countryLoadDebugger(`deleteCountry Error 2: ${err.message}`);
+    logger.error(`Catch deleteCountry Error 2: ${err.message}`, {meta: err});
   }
 };
 

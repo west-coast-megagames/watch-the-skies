@@ -8,7 +8,7 @@ const ServiceRecord = (props) => {
 
     return(
     <Panel header={`Service Record - ${logs.length} Report${s}`} collapsible bordered>
-      {logs.length === 0 && <p>No service record availible...</p>}
+      {logs.length === 0 && <p>No service record available...</p>}
       {logs.length >= 1 &&
       <Timeline style={{marginLeft: '16px'}}>
         {logs.map(log => {

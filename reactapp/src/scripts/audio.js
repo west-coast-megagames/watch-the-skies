@@ -1,6 +1,9 @@
 import audioChime from '../audio/breaking-news-5.ogg';
 import nuclearLaunch from '../audio/Nuclear_Launch.ogg'
 import goodNews from '../audio/good-news.ogg'
+
+// TODO, add more audio cues
+
 // Audio trigger code...
 function playTrack(type) {
     let audio = null

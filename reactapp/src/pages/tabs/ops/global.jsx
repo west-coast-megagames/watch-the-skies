@@ -44,35 +44,13 @@ class GlobalOps extends Component {
 
                     <Column flexGrow={4}>
                         <HeaderCell>Information</HeaderCell>
-                        <Cell dataKey="info" />
+                        <Cell dataKey="globeinfo" />
                     </Column>
 
                     <Column flexGrow={2}>
                         <HeaderCell>Unit Location</HeaderCell>
                         <Cell dataKey="country.name" />
                     </Column>
-                    {/* <Column width={150} fixed="right">
-                        <HeaderCell>Action</HeaderCell>
-                        <Cell>
-                        {rowData => {
-                            function handleAction() {
-                                rowData.deploy('deploy', rowData.target, null)
-                            }
-                            if (rowData.type !== 'zone') {
-                            return (
-                                <div style={{ verticalAlign: 'top'}}>
-                                    <Button 
-                                        color='yellow'
-                                        size='sm'
-                                        disabled
-                                        onClick={handleAction}> Engage </Button>
-                                    <span> | </span> 
-                                    <Button color='blue' size='sm' onClick={handleAction}> Info </Button>
-                                </div>)
-                            } 
-                        }}
-                        </Cell>
-                    </Column> */}
                 </Table>
                 <hr />
                 <h5>Air Operations</h5>
@@ -86,7 +64,7 @@ class GlobalOps extends Component {
 
     loadTable() {
         let data = []
-        let military = this.props.military;
+        let military = this.props.military.filter(el => el.__t === 'Military');
         let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
         for (let zone of zones) {
             zone.children = []

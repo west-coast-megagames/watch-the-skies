@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const AircraftSchema = new Schema({
   model: { type: String, default: 'Aircraft'},
-  type: { type: String, min: 2, maxlength: 50, 
+  type: { type: String, min: 2, maxlength: 50,
           enum:['Interceptor', 'Transport', 'Decoy', 'Fighter' ], default: 'Interceptor'},
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: 'Team'},
@@ -21,7 +21,7 @@ const AircraftSchema = new Schema({
     ready: { type: Boolean, default: true },
     upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
-    secret: { type: Boolean }
+    secret: { type: Boolean, default: false }
   },
   systems: [{ type: Schema.Types.ObjectId, ref: 'Equipment' }],
   stats: {
@@ -51,7 +51,7 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
     modelDebugger(aircraft.status);
 
     let account = await Account.findOne({ name: 'Operations', 'team.team_id': aircraft.team.team_id });
-    
+
 
     account = await banking.withdrawal(account, 1, `Deployment of ${aircraft.name} for ${mission.toLowerCase()}`)
 
@@ -100,7 +100,7 @@ function validateAircraft(aircraft) {
       name: Joi.string().min(2).max(50).required(),
       type: Joi.string().min(2).max(50)
     };
-  
+
   return Joi.validate(aircraft, schema, { "allowUnknown": true });
 };
 
@@ -123,7 +123,7 @@ async function updateStats(id) {
     for (let [key, value] of Object.entries(system.stats)) {
       if (typeof value === typeof 0) {
         console.log(`${key}: ${value}`);
-        stats[key] = value; 
+        stats[key] = value;
       }
     }
     console.log(`${system.name} loaded into ${aircraft.type}...`)

@@ -4,8 +4,7 @@
 "code": "FFGMA",
 "baseDefenses": true,
 "facilities":  [
-    { "type": "Lab", "name": "Alien Lab A-1", "capacity": 1},
-    { "type": "Hanger" , "name": "Alien Hangar A-1", "capacity": 5}
+    { "code": "SL-1", "name" : "FFG Lab A-1"}
 ],
 "loadout": [],
 "latDMS": "90 00 00.0 S",
@@ -14,12 +13,6 @@
 "longDecimal": -139.2667,
 "countryCode": "F1",
 "teamCode": "FFG",
-"stats":
-    {"hull": 5,
-     "hullMax": 5,
-     "damage": 3,
-     "passiveRolls": [2,4,7,9,11,12],
-     "activeRolls": [3,5,8,10,12] },
 "status": { 
     "damaged": false,
     "deployed": false,
@@ -43,12 +36,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "TCN",
-"stats":
-  {"hull": 5,
-  "hullMax": 5,
-  "damage": 3,
-  "passiveRolls": [2,4,7,9,11,12],
-  "activeRolls": [3,5,8,10,12] },
 "status": { 
   "damaged": false,
   "deployed": false,
@@ -72,12 +59,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "TCN",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
   "damaged": false,
   "deployed": false,
@@ -101,12 +82,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "USA",
-"stats":
-{"hull": 5,
- "hullMax": 5,
- "damage": 3,
- "passiveRolls": [2,4,7,9,11,12],
- "activeRolls": [3,5,8,10,12] },
  "status": { 
  "damaged": false,
  "deployed": false,
@@ -130,13 +105,7 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "FFG",
-"stats":
-  {"hull": 5,
-  "hullMax": 5,
-  "damage": 3,
-  "passiveRolls": [2,4,7,9,11,12],
-  "activeRolls": [3,5,8,10,12] },
-  "status": { 
+"status": { 
   "damaged": false,
   "deployed": false,
   "destroyed": false,
@@ -159,12 +128,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "TUK",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -188,12 +151,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "RSA",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -217,12 +174,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "RFD",
-"stats":
-   {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -246,12 +197,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "JPN",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -275,12 +220,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "TUK",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -304,12 +243,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "IND",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -333,12 +266,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "TFR",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -361,13 +288,7 @@
 "latDecimal": -90.0,
 "longDecimal": -139.2667,
 "countryCode": "O1",
- "teamCode": "EPT",
- "stats":
-   {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
+"teamCode": "EPT",
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -391,12 +312,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "PRC",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -412,9 +327,7 @@
 "name": "Brazil Satellite 1",
 "code": "BRZ S1",
 "baseDefenses": false,
-"facilities":  [
-  { "type": "Lab", "name": "BRZ-S1 Lab A-1", "capacity": 1}
-  ],
+"facilities":  [],
 "loadout": [],
 "latDMS": "90 00 00.0 S",
 "longDMS": "139 15 60.0 W",
@@ -422,12 +335,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "BRZ",
-"stats":
-  {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -451,12 +358,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "AUS",
-"stats":
-   {"hull": 5,
-   "hullMax": 5,
-   "damage": 3,
-   "passiveRolls": [2,4,7,9,11,12],
-   "activeRolls": [3,5,8,10,12] },
 "status": { 
    "damaged": false,
    "deployed": false,
@@ -480,12 +381,6 @@
 "longDecimal": -139.2667,
 "countryCode": "O1",
 "teamCode": "NPC",
-"stats":
-  {"hull": 5,
-  "hullMax": 5,
-  "damage": 3,
-  "passiveRolls": [2,4,7,9,11,12],
-  "activeRolls": [3,5,8,10,12] },
 "status": { 
   "damaged": false,
   "deployed": false,

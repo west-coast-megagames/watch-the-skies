@@ -3,6 +3,9 @@ const ResearchLog = require('../../models/logs/researchLog');
 const ReconLog = require('../../models/logs/reconLog');
 const DeployLog = require('../../models/logs/deployLog');
 const CrashLog = require('../../models/logs/crashLog');
+const TheoryLog = require('../../models/logs/theoryLog');
+const { TerrorLog } = require('../../models/logs/log');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 // Function that makes a timestamp for log files
 function makeTimestamp() {
@@ -212,6 +215,61 @@ class DeploymentReport {
     }
 }
 
+class TheoryReport {
+    constructor() {
+        this.team = {}
+        this.lab = {}
+        this.project = {},
+        this.saveReport = this.saveReport.bind(this);
+    }
 
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Theory report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new TheoryLog({...timestamp,...this});
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport };
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Theory Log Error: ${err}`);
+            return
+        }
+    }
+}
+
+class TerrorReport {
+  constructor() {
+    this.date = ''
+    this.team = {}
+    this.country = {}
+    this.zone = {}
+    this.startTerror = 0
+    this.addTerror = 0
+    this.endTerror = 0
+    this.terrorMessage = {}
+    this.saveReport = this.saveReport.bind(this);
+  }
+   
+  async saveReport() {
+    try {
+      reportDebugger(`Saving report!`);
+      let timestamp = makeTimestamp();
+      this.date = Date.now();
+      let submission = new TerrorLog({...timestamp,...this})
+      submission = await submission.save();
+      reportDebugger(submission);
+  
+      return;
+    } catch (err) {
+      reportDebugger(`Terror Report Error: ${err}`);
+      logger.error(`Terror Report Error${err}`, {meta: err});  
+      return
+    }
+  }
+}
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport };

@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // Interceptor Model - Using Mongoose Model
-const Log = require('../../models/logs/log');
+const { Log } = require('../../models/logs/log');
 
 // @route   GET api/log
 // @Desc    Get all logs
@@ -16,6 +16,7 @@ router.get('/', async function (req, res) {
         .populate('zone')
         .populate('project')
         .populate('lab')
+        .populate('theory')
         .populate('units')
         .sort({date: 1});
     res.json(logs);

@@ -63,7 +63,7 @@ function updateFacilities (cb) {
 }
 
 function updateMilitary (cb) {
-    updateSocket.on('updateFacilities', data => cb(null, data));
+    updateSocket.on('updateMilitary', data => cb(null, data));
 }
 
 let updateEvents = { updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities };

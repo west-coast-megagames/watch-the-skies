@@ -40,10 +40,10 @@ const CountrySchema = new Schema({
   },
   borderedBy: [{type: Schema.Types.ObjectId, ref: 'Country'}],
   milAlliance: [{type: Schema.Types.ObjectId, ref: 'Team'}],
-  sciAllience: [{type: Schema.Types.ObjectId, ref: 'Team'}],
+  sciAlliance: [{type: Schema.Types.ObjectId, ref: 'Team'}],
   stats: {
-    sciRate: { type: Number },
-    balance: { type: Number }
+    sciRate: { type: Number, default: 25 },
+    balance: { type: Number, default: 0 }
   },
   formalName: { type: String }
 

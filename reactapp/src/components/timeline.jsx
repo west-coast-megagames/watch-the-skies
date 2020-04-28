@@ -4,7 +4,7 @@ import { Timeline, Alert, CheckPicker } from 'rsuite';
 import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from '../components/common/logs'
 import { gameServer } from '../config';
 
-const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deployment' }, { value: 'Crash' }]
+const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }]
 
 class GameTimeline extends Component {
     state = {

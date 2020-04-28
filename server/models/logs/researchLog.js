@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Log = require('./log');
+const { Log } = require('./log');
 const Schema = mongoose.Schema;
 
 const ResearchLog = Log.discriminator('ResearchLog', new Schema({
@@ -10,11 +10,14 @@ const ResearchLog = Log.discriminator('ResearchLog', new Schema({
     stats: {
         sciRate: { type: Number },
         sciBonus: { type: Number },
-        compleated: { type: Boolean }
+        completed: { type: Boolean },
+        breakthroughCount: { type: Number },
+        finalMultiplyer: { type: Number }
     },
     progress: {
         startingProgress: { type: Number },
-        endingProgress: { type: Number }
+        endingProgress: { type: Number },
+        
     },
     rolls: [Number],
     outcomes: [String]

@@ -8,7 +8,7 @@ systemsDebugger = require('debug')('app:systems');
 
 const systems = []
 
-const { System } = require('../../../models/gov/equipment/systems');
+const { System } = require('../../../models/gov/equipment/equipment');
 
 // Load function to load all systems.
 async function loadSystems () {
@@ -20,7 +20,7 @@ async function loadSystems () {
         count++;
     });
 
-    return `${count} systems availible in WTS...`
+    return `${count} systems available in WTS...`
 };
 
 // Knowledge Constructor Function
@@ -46,20 +46,4 @@ function Sys(system) {
     }
 }
 
-// determines if system is valid for passed unitType (i.e., is it in the unitType array)
-function validUnitType(unitTypeArray, testUT) {
-  let utFound = false;
-  chkLoop:
-  for (var i = 0; i < unitTypeArray.length; i++) {
-    if (unitTypeArray[i] === "Any") {
-      utFound = true;    
-      break chkLoop; 
-    } else if (unitTypeArray[i] === testUT) {
-      utFound = true;  
-      break chkLoop;
-    }
-  }
-  return utFound;
-}
-
-module.exports = { loadSystems, systems, validUnitType };
+module.exports = { loadSystems, systems };

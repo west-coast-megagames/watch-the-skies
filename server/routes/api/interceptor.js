@@ -11,8 +11,9 @@ const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone'); 
 const { Team } = require('../../models/team/team'); 
 const { BaseSite } = require('../../models/sites/site');
-const { System } = require('../../models/gov/equipment/systems');
-const { loadSystems, systems, validUnitType } = require('../../wts/construction/systems/systems');
+const { System } = require('../../models/gov/equipment/equipment');
+const { loadSystems, systems } = require('../../wts/construction/systems/systems');
+const { validUnitType } = require('../../wts/util/construction/validateUnitType');
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts

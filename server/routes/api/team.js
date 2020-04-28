@@ -7,7 +7,7 @@ const supportsColor = require('supports-color');
 const { logger } = require('../../middleware/winston');
 
 // Interceptor Model - Using Mongoose Model
-const { Team, validateTeam, getPR, getTeam, getSciRate } = require('../../models/team/team');
+const { Team, validateTeam, getPR, getTeam, getSciRate, validateRoles } = require('../../models/team/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams
@@ -53,6 +53,19 @@ router.post('/', async (req, res) => {
   const { error } = validateTeam(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  if (roles){
+    if (roles.length > 0) {
+      try {
+        for (let currRole of roles ) {
+          let test2 = validateRoles(currRole);
+            if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
+        }
+      } catch ( err ) {
+        return res.status(400).send(`Team Val Roles Error: ${err.message}`);
+      }
+    }
+  }
+  
   const newTeam = new Team(
     { name, roles, prTrack, prLevel, sciRate, shortName, teamCode, teamType }
     );
@@ -76,6 +89,13 @@ router.put('/roles/:id', validateObjectId, async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     let { role } = req.body;
+    try {
+      let test2 = validateRoles(role);
+      if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
+    } catch ( err ) {
+      return res.status(400).send(`Team Val Roles Error: ${err.message}`);
+    }
+
     let team = await Team.findById({ _id: req.params.id });
     team.roles.push(role);
 
@@ -93,6 +113,18 @@ router.put('/:id', validateObjectId, async (req, res) => {
 
     const { error } = validateTeam(req.body); 
     if (error) return res.status(400).send(error.details[0].message);
+
+    let roles = req.body.roles;
+    if (roles) {
+      try {
+        for (let currRole of roles ) {
+          let test2 = validateRoles(currRole);
+            if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
+        }
+      } catch ( err ) {
+        return res.status(400).send(`Team Val Roles Error: ${err.message}`);
+      }
+    }
 
     const team = await Team.findByIdAndUpdate( req.params.id,
       { name: req.body.name,

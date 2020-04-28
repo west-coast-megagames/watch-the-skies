@@ -27,10 +27,11 @@
   padding-left: 15px;
   padding-right: 15px;
   overflow-y: auto;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 160px);
 }
 
 .game-timeline {
+  margin-top: 10px;
   margin-left: 16px;
 }
 
@@ -44,7 +45,7 @@
   height: 40px;
   border-radius: 50%;
   font-size: 18px;
-  padding-top: 9px;
+  padding-top: 10px;
   color: #999;
   margin-left: -13px;
 }
@@ -54,11 +55,11 @@
 }
 
 .game-timeline .rs-panel-heading {
-  padding: 12px;
+  padding: 14px;
 }
 
 .game-timeline .rs-panel-collapsible .rs-panel-heading::before {
-  top: 12px;
+  top: 5px;
 }
 
 /* News Feed & Articles */

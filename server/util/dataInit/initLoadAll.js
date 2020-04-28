@@ -9,6 +9,8 @@ const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
 const runSquadLoad = require('../dataInit/squadLoad');
+const runArticleLoad = require('../dataInit/articleLoad');
+const runResearchLoad = require('../dataInit/researchLoad');
 const runDropAll = require('../dataInit/initDropAll');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -109,6 +111,22 @@ async function fullInit(selStr){
     case 'Squad':  
       let squadDone = await runSquadLoad(true);   // load expanded Squad fields initSquad.json with gear
       logger.debug(`Squad Load Done: ${squadDone}`);
+      if (selStr != 'All') {
+        break;
+      }      
+
+    case 'All':
+    case 'Article':  
+      let articleDone = await runArticleLoad(true);   // load expanded Article fields initArticle.json
+      logger.debug(`Artilce Load Done: ${articleDone}`);
+      if (selStr != 'All') {
+        break;
+      }      
+
+    case 'All':
+    case 'Research':  
+      let researchDone = await runResearchLoad(true);   // load expanded Research fields initResearch.json
+      logger.debug(`Research Load Done: ${researchDone}`);
       if (selStr != 'All') {
         break;
       }      

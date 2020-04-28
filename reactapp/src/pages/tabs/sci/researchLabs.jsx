@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Affix, IconButton, Icon } from 'rsuite';
+import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { newLabCheck, getLabPct } from './../../../scripts/labs';
+import BalanceHeader from '../../../components/common/BalanceHeader';
 
 const { Column, HeaderCell, Cell } = Table;
+const labRepairCost = 5;
 
 
 function findTechByID(_id, allResearch) {
@@ -20,7 +22,6 @@ function findTechByID(_id, allResearch) {
 }
 
 const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
-
 	if ( rowData.status.destroyed) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
@@ -31,7 +32,7 @@ const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
-					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick()} disabled={!rowData.status.damaged} icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick(rowData)} disabled={!rowData.status.damaged} icon={<Icon icon="wrench" />}>${labRepairCost} MB</IconButton></span>}
 				</div> 
 			</Cell>
 		);
@@ -58,126 +59,150 @@ class ResearchLabs extends Component {
 	constructor() {
 		super();
 		this.state = {
-			research: [],
-			labs : [],
-			account: {}
+			research: [],			// Array of research that this team has visible
+			labs : [],				// Array of all the labs this team owns
+			account: {},			// Account of SCI for the current team
+			showModal: false,		// Boolean to tell whether to open the Repair Modal
+			repairLab: {}			// Obj that holds the lab to repair
 		}
-		this.handleLabUpdate = this.handleLabUpdate.bind(this);
-		this.handleFundingUpdate = this.handleFundingUpdate.bind(this);
-		this.confirmSubmit = this.confirmSubmit.bind(this);
+		this.handleUpdate = this.handleUpdate.bind(this);
+		this.submitTxn = this.submitTxn.bind(this);
+		this.openModal = this.openModal.bind(this);
+		this.closeModal = this.closeModal.bind(this);
 	}
 	
-
-	handleLabUpdate(updatedLab) {
+	// Function that updates the state value of a single key within a lab.  The new value will match the 
+	// same key within a passed lab (updatedLab).  Used in "rowData" lines of a table to update the state
+	// when an rsuite element changes its value in the row.
+	handleUpdate(updatedLab, key2update) {
 		let labs = this.state.labs;
-		const result = newLabCheck(updatedLab._id, labs);
-		if (result === -1) {				// New Entry	
-			labs.push(updatedLab);  
-		} else {							// Existing Entry
-			labs[result] = updatedLab;
-		}	
+		const labIndex = labs.findIndex(lab => lab._id === updatedLab._id);
+		labs[labIndex][key2update] = updatedLab[key2update];
 		this.setState({labs});
 	}
   
-	handleFundingUpdate(updatedLab) {
-		let labs = this.state.labs;
-		const result = newLabCheck(updatedLab._id, labs);
-		if (result === -1) {				// New Entry	
-			labs.push(updatedLab);  
-		} else {							// Existing Entry
-			labs[result].funding = updatedLab.funding;
-		}
-		this.setState({labs});
-	}
-  
-	async confirmSubmit(lab) {
-		try {
-			let labs = this.state.labs;
-			const result = newLabCheck(lab._id, labs);
-			if (result === -1) {				// New Entry	
-				Alert.warning(`Lab ${lab._id} does not exist!!`, 6000)
-			} else {							// Existing Entry
-//				console.log("fundingcost=",this.props.fundingCost);
-//				console.log("balance=",this.state.account.balance);
-//				console.log("funding=",labs[result].funding);
-				let cost = this.props.fundingCost[(labs[result].funding)];
-//				console.log("COST=",cost);
-			
-				let account = this.state.account;
-				if (account.balance < cost) {
-					Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
-				} else {
+	// Function to submit a transaction thru Axios calls if enough funding exists
+	submitTxn = async (updatedLab, txnType) => {
+		const account     = this.state.account;	
+		const labs        = this.state.labs;	
+		const labIndex    = labs.findIndex(lab => lab._id === updatedLab._id);	// Index of updated lab in the labs array
 
-					// For withdrawal, need to provide an object with
-					// account_id, note, amount
-					const txn = {
-						account_id : account._id,
-						note : `Level ${lab.funding} funding for science lab ${lab.name}`,
-						amount : this.props.fundingCost[lab.funding]
-					}
-					const mytxn = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
-					Alert.success(mytxn.data, 4000)
-				}
+		let   statusOK    = true;	// Boolean to continue with submit.  If something is wrong, this will change to false, and submit will abort
+		let   cost        = 0;		// Current cost of the transaction
+		let   warning     = "";		// Warning to display if an error is perceived
+		let   txnNote     = "";		// Note for the backend when transaction completes
+		let   myAxiosCall = "";		// The Axios call issued when the transaction is completes
+
+		// Set the cost, warning, and note variables based on the transaction type
+		if (txnType === "Lab Research") {
+			cost = this.props.fundingCost[updatedLab.funding];
+			txnNote = `Level ${updatedLab.funding} funding for science lab ${updatedLab.name}`;
+			if (updatedLab.research.length === 0) {
+				warning = `Select a Tech to research for Lab ${updatedLab.name} before submitting.`;
+				statusOK = false;
 			}
-		} catch (err) { 
-			console.log(err)
-			// Alert.error(err.data, 4000)
-		};
+		} else if (txnType === "Lab Repair") {
+			cost = labRepairCost;
+			console.log("UPDATEDLAB=",updatedLab);
+			txnNote = `Repair of science lab ${updatedLab.name} for team ${updatedLab.team.shortName}`;
+			this.closeModal();
+		} else {
+			Alert.error(`ERROR: No TXNTYPE Found.`, 6000);
+		}
 
-		try {
-			// for lab update, need to provide lab object
-			const research_id = lab.research[0]._id
-			const newLab = { funding: parseInt(lab.funding), name: lab.name, _id: lab._id, research: [research_id] }
-			
-			const myupdate = await axios.put(`${gameServer}api/facilities/research`, newLab);
-			Alert.success(myupdate.data, 4000)
+		// Check to see if the account has enough funding
+		if (account.balance < cost) {
+			warning = `The ${account.name} account currently doesn't have the funds to cover this level of funding.`;
+			statusOK = false;
+		}
 
-			let labs = this.state.labs;
-			labs.forEach(el => {
-				if (el._id === lab._id) { 
-					el.disableFunding = true
-					el.funding = lab.funding;
+		// Continue with Axios calls if everything was entered correctly (statusOK)
+		if (statusOK) {
+			// Submit the withdrawal
+			try {
+				// For withdrawal, need to provide an object with account_id, note, amount
+				const txn = {
+					account_id : account._id,
+					note : txnNote,
+					amount : cost
 				}
-			});
-			this.setState({ labs })
-		} catch (err) {
-			console.log(err)
-			// Alert.error(err.data, 4000) 
-		};
+				myAxiosCall = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+				Alert.success(myAxiosCall.data, 6000)
+
+				// Update the state of the account
+				account.balance -= cost;
+				this.setState({ account })
+
+				// Submit the lab update
+				try {
+					if (txnType === "Lab Research") {
+						// for lab update, need to provide lab object
+						const research_id = updatedLab.research[0]._id
+						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, _id: updatedLab._id, research: [research_id] }
+				
+						myAxiosCall = await axios.put(`${gameServer}api/facilities/research`, newLab);
+						Alert.success(myAxiosCall.data, 6000);
+
+						// Disable funding for the lab once it is submitted
+						labs[labIndex].disableFunding = true;
+					}	
+					if (txnType === "Lab Repair") {
+						// For lab repair, provide the lab status of "undamaged"
+						// TODO: Add axios call here
+						// Alert.success(myAxiosCall.data, 4000)
+
+						Alert.success(`Successfully repaired ${updatedLab.name}`, 6000);
+						
+						// Update repair status for the lab once it is submitted, and close the modal
+						labs[labIndex].status.damaged = false;
+					}				
+					this.setState({ labs });
+
+				// Error condition for lab update
+				} catch (err) {
+					console.log(err)
+					Alert.error(err.data, 4000) 
+				};
+
+			// Error condition for withdrawal 
+			} catch (err) { 
+				console.log(err)
+				Alert.error(err.data, 4000)
+			};
+
+
+		// If status is not OK, display the warning that was generated	
+		} else {
+			Alert.warning(warning, 6000);
+		}
 	}
 
 	componentDidMount(){
-		this.teamFilter();
+		this.initResearch();
+		this.initLabs();
+		this.initAccount();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps !== this.props) {
-			this.teamFilter();
+//			this.teamFilter();
 		}
-
-	
 	}
 	
 
-	  
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
-		let account = this.state.account;
-		let sendLabUpdate = this.handleLabUpdate;
-		let sendFundingUpdate = this.handleFundingUpdate;
-		let confirmSubmit = this.confirmSubmit;
-
-
+		let sendLabUpdate = this.handleUpdate;
+		let submitTxn = this.submitTxn;
 
 		return(
 			<div>
-				<Affix>
-      				<h5 style={{display: 'inline'}}>Research Lab Assignment</h5>
-					<Tag style={{display: 'inline', float: 'right'}} color="green">$ { account.balance } MB</Tag>
-					<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} >Current Science Account Balance:</h6>
-					<hr />
-    			</Affix>
+				<BalanceHeader 
+					accounts={this.props.accounts}
+					code={"SCI"}
+					title={"Research Lab Assignment"}
+				/>
 				<Table
 					autoHeight
 					rowHeight={50}
@@ -195,7 +220,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.research = findTechByID(value, props.allResearch);
-								sendLabUpdate(updatedLab);
+								sendLabUpdate(updatedLab, "research");
 							}
 							if ( rowData.status.destroyed) {
 								rowData.disableFunding = true;
@@ -230,7 +255,7 @@ class ResearchLabs extends Component {
 							labs={this.state.labs}
 							allresearch={ props.allResearch }
 							techcost={ props.techCost }
-							onClick={this.repair}
+							onClick={this.openModal}
 						/>
 					</Column>
 			
@@ -241,7 +266,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.funding = value;
-								sendFundingUpdate(updatedLab);
+								sendLabUpdate(updatedLab, "funding");
 							}          
 							return (
 								<InputNumber 
@@ -253,7 +278,7 @@ class ResearchLabs extends Component {
 									step={1} 
 									style={{ width: 140 } }
 									onChange={ handleChange }
-									/>
+								/>
 							)}}
 						</Cell>
 					</Column>
@@ -267,8 +292,10 @@ class ResearchLabs extends Component {
 								const result = labs.find(el => el._id === rowData._id)
 								let myFundLevel = result.funding;
 								let myCost = props.fundingCost[myFundLevel];
-								if (account.balance < myCost) {
-									return (<Tag color="red">   $ { myCost - account.balance } MB More </Tag>	);
+								if (rowData.disableFunding) {
+									return (<Tag> $ { myCost } MB </Tag>);
+								} else if (account.balance < myCost) {
+									return (<Tag color="red">   $ { myCost - account.balance } MB More </Tag>);
 								} else {
 									return (<Tag color="green">	$ { myCost } MB	</Tag>)
 							}}}
@@ -279,59 +306,110 @@ class ResearchLabs extends Component {
 						<HeaderCell/>
 						<Cell style={{ padding: 0 }} >
 							{rowData => {
-								return(	<Button	disabled={rowData.disableFunding} appearance="primary" onClick={() => confirmSubmit(rowData) } >Submit Research</Button>)
+								return(	<Button	disabled={rowData.disableFunding} appearance="primary" onClick={() => submitTxn(rowData, "Lab Research") } >Submit Research</Button>)
 							}}	
 						</Cell>
 					</Column>
                 </Table>
-
+				<div>
+					<Modal show={this.state.showModal} onHide={this.closeModal}>
+						<Modal.Header>
+							<Modal.Title>Repair {this.state.repairLab.name}</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<p>Are you sure that you want to spend ${labRepairCost} MB to repair {this.state.repairLab.name}?</p>
+						</Modal.Body>
+						<Modal.Footer>
+							<Button onClick={() => submitTxn(this.state.repairLab, "Lab Repair") } appearance="primary">Ok</Button>
+							<Button onClick={this.closeModal} appearance="subtle">Cancel</Button>
+						</Modal.Footer>
+					</Modal>
+				</div>
 			</div>
     	);
 	}
-	  
-	repair = async () => {
-//		if (this.props.account.balance < 2) Alert.warning(`Lack of Funds: You need to transfer funds to your operations account to repair ${this.props.aircraft.name}`)
-		try {
-//			  let response = await axios.put(`${gameServer}game/repairAircraft/`, {_id: this.props.aircraft._id});
-//			  console.log(response.data)
-//			  Alert.success(response.data);
-			Alert.success("REPAIRING...");
-		} catch (err) {
-			  console.error(err.message)
-		}
-	}
 	
-	teamFilter = () => {
-		// Fake research entry for repairing a lab
-		const repairEntry = {
-			_id: "repair",
-			type: "Repair",
-			team: this.props.team._id,
-			name: "Repair Lab $5MB",
-			field: "Repair"
-		}
+	// Function to close the MODAL when repair is canceled or submitted
+	closeModal = () => {
+		this.setState({ showModal: false });
+	}
+		
+	// Function to open the MODAL when repair of lab is requested
+	openModal = async (updatedLab) => {
+		this.setState({ 
+			showModal: true,
+			repairLab: updatedLab
+		});
+	}
+		
+	
 
-		let research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
-		if (research.length !== 0) {
+	// Function run at start.  Initializes research state by this team
+	initResearch = () => {
+		let teamResearch = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
+		if (teamResearch.length !== 0) {
+			let research = [];			// Array of research Objects
+			let obj = {};               // Object to add to the research array
+
+			teamResearch.forEach(el => {
+				obj = {
+					_id: 			el._id,
+					field:			el.field,
+					level:			el.level,
+					name:			el.name,
+					progress:		el.progress,
+					status:			el.status,
+					team:			el.team
+				}
+				research.push(obj);
+			});
 			this.setState({research});
 		}
-		let labs = this.props.facilities.filter(el => el.team !== null);
-		if (labs.length !== 0) {
-			labs = labs.filter(el => el.type === 'Lab' && !el.hidden && el.team._id === this.props.team._id);
+	}
 
-			// check for damaged labs.  If any exist, add a research called "Repair"
-			const damagedLabs = labs.findIndex(el => el.status.damaged && !el.status.destroyed);
-			if (damagedLabs >= 0) {
-				research.push(repairEntry);
-			}
+	// Function run at start.  Initializes labs state by this team
+	initLabs = () => {
+		let teamLabs = this.props.facilities.filter(el => el.type === 'Lab' && !el.hidden && el.team !== null && el.team._id === this.props.team._id);
+		if (teamLabs.length !== 0) {
+			let labs = [];				// Array of research Objects
+			let obj = {};               // Object to add to the research array
+
+			teamLabs.forEach(el => {
+				obj = {
+					_id: 			el._id,
+					funding: 		el.funding,
+					name:			el.name,
+					research:		el.research,					
+					status:			el.status,
+					team:			{
+										_id:			el.team._id,
+										shortName:		el.team.shortName
+									}
+				}
+
+				// Temporary fix for backend not clearing out the labs' research array upon completion
+				// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
+				console.log(obj.name);
+				if (getLabPct(obj._id, this.props.facilities, this.props.allResearch, this.props.techCost) >= 100) {	obj.research = []; } 
+
+				labs.push(obj);
+			});
 			this.setState({labs});
 		}
-		let account = this.props.accounts.filter(el => el.code === 'SCI');
-		if (account.length !== 0) {
-			account = account[0];
+	}
+
+	// Function run at start.  Initializes SCI account state by this team
+	initAccount = () => {
+		let teamAccount = this.props.accounts.filter(el => el.code === 'SCI');
+		if (teamAccount.length !== 0) {
+			let el = teamAccount[0];
+			let account = {
+				_id: 			el._id,
+				balance: 		el.balance,
+				name:			el.name
+			};			
 			this.setState({account});
 		}
-		
 	}
 }
 

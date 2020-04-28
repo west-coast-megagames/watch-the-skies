@@ -1,12 +1,13 @@
 const techDebugger = require('debug')('app:tech');
 const { Team } = require('../../models/team/team');
-const Research = require('../../models/sci/research');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
-const TechResearch = require('../../models/sci/techResearch');
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research');
+
+const { TheoryReport } = require('../reports/reportClasses');
 
 // Technology Constructor Function
 function Technology(tech) {
   this.name = tech.name;
+  this.type = tech.type;
   this.level = tech.level;
   this.code = tech.code;
   this.prereq = tech.prereq;
@@ -33,11 +34,11 @@ function Technology(tech) {
                 if (checkKnowledge !== null) {
                   if (checkKnowledge.status.completed) {              
                     if (checkKnowledge.credit.toHexString() === team._id.toHexString()) {
-                      techDebugger(`COMPLETED - ${this.name} is availible to research for ${team.name}...`);
+                      techDebugger(`COMPLETED - ${this.name} is available to research for ${team.name}...`);
                     } else if (checkKnowledge.status.published) {
                       techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
                     } else {
-                      techDebugger(`UNKNOWN - ${checkKnowledge.name} is not availible to ${team.name}...`);
+                      techDebugger(`UNKNOWN - ${checkKnowledge.name} is not available to ${team.name}...`);
                       checkKnowledge = null
                     };
                   }
@@ -61,12 +62,16 @@ function Technology(tech) {
                   techDebugger(msg);
                   let newTech = new TechResearch({
                       name: this.name,
+                      code: this.code,
                       level: this.level,
                       prereq: this.prereq,
                       desc: this.desc,
                       field: this.field,
                       team: team._id,
-                      unlocks: this.unlocks
+                      unlocks: this.unlocks,
+                      status: {
+                        available: true
+                      }
                   });
 
                   let theories = [];
@@ -98,14 +103,110 @@ function Technology(tech) {
                   techDebugger(msg);
               };
           } else {
-              msg = `${this.name}: This tech is already availible...`
+              msg = `${this.name}: This tech is already available...`
               techDebugger(msg);
           }
       };
     return `Done updating eligibility to research ${this.name}`
   }
 
-  this.unlock
+  this.unlock = async function(lab) {
+    let currentTech = await Research.findOne({ name: this.name, team: lab.team }); // Checks if team has the research already!!
+    let team = await Team.findById({_id: lab.team});
+      if (currentTech === null) {
+        techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
+        let newTech = new TechResearch({
+            name: this.name,
+            code: this.code,
+            level: this.level,
+            prereq: this.prereq,
+            desc: this.desc,
+            field: this.field,
+            team: team._id,
+            unlocks: this.unlocks
+        });
+
+        let report = new TheoryReport
+
+        report.team = lab.team,
+        report.lab = lab._id,
+        report.project = newTech._id
+
+        report.saveReport()
+
+        let theories = [];
+        for await (let unlock of newTech.unlocks) {
+          if (unlock.type === 'Technology') {
+            const { techTree } = require('./techTree');
+            let theory = techTree.find(el => el.code === unlock.code);
+            techDebugger(`It's gunna be the future soon: ${theory.type} - ${theory.name}`);
+            console.log(theory)
+            
+            let newTheory = {
+              name: theory.name,
+              level: theory.level,
+              prereq: theory.prereq,
+              field: theory.field,
+              type: theory.type,
+              code: theory.code,
+              desc: theory.desc
+            } 
+
+            theories.push(newTheory);
+          }
+        }
+        newTech.theoretical = theories
+        await newTech.save(); // Newly unlocked tech!
+
+      } else {
+        techDebugger(`${this.name} is already available for ${team.name}...`);
+      }
+  }
 }
 
-module.exports = { Technology };
+async function techCheck() {
+  for await (let research of Research.find().populate('team')) {
+    if (research.status.visible && !research.status.available) {
+        let count = 0;
+        for await (let req of research.prereq) {
+          techDebugger(`${research.name}: Checking for prereq ${req.code}...`);
+          let checkTech = await Research.findOne({ code: req.code, team: research.team._id, 'status.completed': true });
+          let checkKnowledge = await Research.findOne({ code: req.code }).populate('credit');
+          if (checkKnowledge !== null) {
+            if (checkKnowledge.status.completed) { 
+              console.log(`${research.name} vs. ${checkKnowledge.name}`)
+              // console.log(`${research.team.name}`)
+              // console.log(checkKnowledge);
+              // console.log(`${checkKnowledge.credit.name}`)
+
+              if (checkKnowledge.credit.name === research.team.name) {
+                techDebugger(`COMPLETED - ${research.name} is available to research for ${research.team.name}...`);
+              } else if (checkKnowledge.status.published) {
+                techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
+              } else {
+                techDebugger(`UNKNOWN - ${checkKnowledge.name} is not available to ${research.team.name}...`);
+                checkKnowledge = null
+              };
+            }
+          }
+            
+          if (checkTech !== null || checkKnowledge !== null) {
+                count++;
+                techDebugger(`${research.name}: Prereq ${req.code} found...`);
+          } else {
+                techDebugger(`${research.name}: Prereq ${req.code} not found...`);
+                break;
+          }
+        };
+  
+        if (count === research.prereq.length) {
+          research.status.available = true;
+        }
+
+      await research.save();
+    }
+  }
+  return;
+}
+
+module.exports = { Technology, techCheck };

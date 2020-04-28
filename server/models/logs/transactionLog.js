@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Log = require('./log');
+const { Log } = require('./log');
 const Schema = mongoose.Schema;
 
 const TransactionLog = Log.discriminator('TransactionLog', new Schema({

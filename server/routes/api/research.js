@@ -4,16 +4,15 @@ const express = require('express');
 const router = express.Router();
 
 const { loadTech, techSeed } = require('../../wts/research/techTree');
-const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge')
+const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
 const science = require('../../wts/research/research');
 
-
-
 // Research Models - Using Mongoose Model
-const TechResearch = require('../../models/sci/techResearch');
-const KnowledgeResearch = require('../../models/sci/knowledgeResearch');
-const AnalysisResearch = require('../../models/sci/analysisResearch');
-const Research = require('../../models/sci/research')
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research');
+const validateObjectId = require('../../middleware/validateObjectId');
+
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 // @route   GET api/research/
 // @Desc    Get all research
@@ -22,6 +21,25 @@ router.get('/', async function (req, res) {
     routeDebugger('Showing all completed research...');
     let research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
     res.json(research);
+});
+
+// @route   GET api/research/id
+// @Desc    Get countries by id
+// @access  Public
+router.get('/id/:id', validateObjectId, async (req, res) => {
+
+    let id = req.params.id;
+    try {
+        const research = await Research.findById(id);
+        if (research != null) {
+          res.json(research);
+        } else {
+          res.status(404).send(`The Research with the ID ${id} was not found!`);
+        }
+    } catch (err) {
+        logger.error(`Get Research by ID Catch Error ${err.message}`, {meta: err});
+        res.status(400).send(err.message);
+    }
 });
 
 // @route   GET api/research/sciStats

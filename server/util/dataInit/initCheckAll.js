@@ -8,8 +8,12 @@ const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runMilitaryCheck = require('../dataCheck/militaryCheck');
 const runSquadCheck = require('../dataCheck/squadCheck');
 const runTeamCheck = require('../dataCheck/teamCheck');
+const runArticleCheck = require('../dataCheck/articleCheck');
+const runResearchCheck = require('../dataCheck/researchCheck');
+const runAccountsCheck = require('../dataCheck/accountsCheck');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 async function fullInitCheck(selStr){
   
@@ -98,6 +102,35 @@ async function fullInitCheck(selStr){
         break;
       }
 
+    case 'All':
+    case 'Article':
+      let articleCheckDone = await runArticleCheck(true);   // check article records
+      logger.info(`Article Check Done: ${articleCheckDone}`);
+                        
+      if (selStr != 'All') {
+        break;
+    }
+
+    case 'All':
+    case 'Research':
+      let researchCheckDone = await runResearchCheck(true);   // check research records
+      logger.info(`Research Check Done: ${researchCheckDone}`);
+                          
+      if (selStr != 'All') {
+        break;
+    }
+  
+    if (selStr = 'All') break;
+
+    case 'All':
+    case 'Accounts':
+      let accountsCheckDone = await runAccountsCheck(true);   // check accounts records
+      logger.info(`Accounts Check Done: ${accountsCheckDone}`);
+                          
+      if (selStr != 'All') {
+        break;
+    }
+  
     if (selStr = 'All') break;
 
     default:

@@ -7,6 +7,8 @@ const {Country, validateCountry} = require('../../models/country');
 const {Zone} = require('../../models/zone'); 
 const {Team} = require('../../models/team/team'); 
 
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+require ('winston-mongodb');
 
 // @route   GET api/country
 // @Desc    Get all ACTIVE countries
@@ -20,7 +22,7 @@ router.get('/', async (req, res) => {
       .populate('borderedBy', 'name');
     res.json(countrys);
   } catch (err) {
-    console.log('Error:', err.message);
+    logger.error(`Get Country Catch Error ${err.message}`, {meta: err});
     res.status(400).send(err.message);
   } 
 });
@@ -50,7 +52,7 @@ router.get('/byZones', async (req, res) => {
       
     res.json(countrys);
   } catch (err) {
-    console.log('Error:', err.message);
+    logger.error(`Get Country byZones Catch Error ${err.message}`, {meta: err});
     res.status(400).send(err.message);
   } 
 });
@@ -72,7 +74,7 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
           res.status(404).send(`The Country with the ID ${id} was not found!`);
         }
     } catch (err) {
-        console.log('Error:', err.message);
+        logger.error(`Get Country by ID Catch Error ${err.message}`, {meta: err});
         res.status(400).send(err.message);
     }
 });
@@ -93,7 +95,7 @@ router.get('/code/:code', async (req, res) => {
       res.status(404).send(`The Country with the code ${code} was not found!`);
     }
   } catch (err) {
-    console.log(`Error: ${err.message}`);
+    logger.error(`Get Country by Code Catch Error ${err.message}`, {meta: err});
     res.status(400).send(`Error: ${err.message}`);
   }
 });
@@ -133,9 +135,9 @@ router.post('/', async (req, res) => {
 
     let country = await newCountry.save();
     res.json(country);
-    console.log(`New Country ${req.body.code} created...`);
+    logger.info(`New Country ${req.body.code} created...`);
   } else {                
-      console.log(`Country Code already exists: ${code}`);
+      logger.error(`Country Code already exists: ${code}`);
       res.status(400).send(`Country Code ${code} already exists!`);
   }
 });
@@ -158,7 +160,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
     if (zoneCode != "") {
       let zone = await Zone.findOne({ zoneCode: zoneCode });  
       if (!zone) {
-        console.log("Country Put Zone Error, Update Country:", req.body.name, " Zone: ", zoneCode);
+        logger.error("Country Put Zone Error, Update Country:", req.body.name, " Zone: ", zoneCode);
       } else {
         newZone_id  = zone._id;
       }
@@ -168,7 +170,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
     if (teamCode != "") {
       let team = await Team.findOne({ teamCode: teamCode });  
       if (!team) {
-        console.log("Country Put Team Error, Update Country:", req.body.name, " Team: ", teamCode);
+        logger.error("Country Put Team Error, Update Country:", req.body.name, " Team: ", teamCode);
       } else {
         newTeam_id  = team._id;
       }
@@ -191,13 +193,16 @@ router.put('/:id', validateObjectId, async (req, res) => {
 
     if (country != null) {
       const { error } = country.validateCountry(req.body); 
-      if (error) return res.status(400).send(error.details[0].message);
+      if (error) {
+        logger.error(`Country Update Validate Error ${err.message}`, {meta: err});
+        return res.status(400).send(error.details[0].message);
+      }
       res.json(country);
     } else {
       res.status(404).send(`The Country with the ID ${id} was not found!`);
     }
   } catch (err) {
-    console.log(`Country Put Error: ${err.message}`);
+    logger.error(`Country Put Catch Error ${err.message}`, {meta: err});
     res.status(400).send(`Country Put Error: ${err.message}`);
   }
 });
@@ -227,6 +232,8 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
   try {
+    await Country.deleteMany();
+    /*
       for await (const country of Country.find()) {    
         let id = country.id;  
         try {
@@ -239,6 +246,7 @@ router.patch('/deleteAll', async function (req, res) {
           res.status(400).send(`Error: ${err.message}`);
         }
       }        
+    */
       res.status(200).send("All Countrys succesfully deleted!");
   } catch (err) {
     console.log(`Error: ${err.message}`);
