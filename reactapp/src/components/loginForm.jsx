@@ -99,6 +99,7 @@ class LiginForm extends Component {
                     label="Password"
                     onChange={this.handleChange}
                     error={errors.password}
+                    type='password'
                 />
                 <button className="btn btn-primary">Login</button>
             </form>
