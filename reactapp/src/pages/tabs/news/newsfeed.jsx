@@ -13,19 +13,10 @@ const NewsFeed = props => {
   return (
     <Container>
       <h5 className="newsFeedHeader">{props.agency} News Feed</h5>
-      <PanelGroup>
+      <PanelGroup accordion bordered>
         {props.articles.map(article => (
           <div className="artCont" key={article._id}>
-            <button
-              onClick={() => props.del(article)}
-              className="btn btn-danger btn-sm m-1"
-            >
-              Trash
-            </button>
-
             {/* Individual Agency Logo/Flag here for easy ID by user */}
-            <TeamAvatar size={"sm"} teamCode={article.agency} />
-
             {/* OLD WAY - DELETE AFTER NEW WAY WORKS
             {article.agency === "GNN" && (
               <img src={GNN} style={{ maxWidth: "30px" }} />
@@ -49,11 +40,17 @@ const NewsFeed = props => {
 
             <Panel
               key={article._id}
-              header={article.headline}
+              header={<span><TeamAvatar size={"sm"} teamCode={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5></span>}
               collapsible
               bordered
             >
               <p>{article.articleBody}</p>
+              <button style={{display: 'inline'}}
+              onClick={() => props.del(article)}
+              className="btn btn-danger btn-sm m-1"
+            >
+              Trash
+            </button>
             </Panel>
           </div>
         ))}

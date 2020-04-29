@@ -6,7 +6,8 @@ import { Alert, Form, FormGroup, FormControl, Button, ButtonToolbar, SelectPicke
 class SubNews extends React.Component {
   state = {
     article: {
-      publisher: "",
+      publisher: this.props.team._id,
+      agency: this.props.team.code,
       location: "",
       headline: "",
       body: "",
@@ -27,9 +28,6 @@ class SubNews extends React.Component {
   };
 
   componentDidMount () {
-    if (this.props.team.teamType !== 'C') {
-      this.setState({ publisher: this.props.team._id});
-    }
     this.formatPickerData();
   }
 

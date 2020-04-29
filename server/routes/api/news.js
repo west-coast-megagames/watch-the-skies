@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Article Model - Using Mongoose Model
 const { Article, validateArticle } = require('../../models/news/article');
+const { Team } = require('../../models/team/team');
 
 // @route   GET api/news/gnn
 // @Desc    Get all Articles from GNN
@@ -39,10 +40,13 @@ router.get('/articles', async function (req, res) {
 // @Desc    Post a new article
 // @access  Public
 router.post('/', async function (req, res) {
-    console.log('Someone is submitting...')
-    let { agency, turn, date, location, headline, body } = req.body;
+    let { publisher, location, headline, body } = req.body;
     // const { error } = validateArticle(req.body);
     // if (error) return res.status(400).send(error.details[0].message);
+
+    let team = await Team.findOne({_id: publisher})
+    console.log(team)
+    console.log(`${team.name} is submitting...`)
 
     let gameTime = getTimeRemaining();
 
@@ -54,11 +58,12 @@ router.post('/', async function (req, res) {
     }
     
     let article = new Article(
-        { agency, timestamp, location, headline, body }
+        { publisher, agency: team.code, timestamp, location, headline, body }
     );
 
     article = await article.save();
-        console.log(`Article posted by ${agency}...`);
+        console.log(`Article posted by ${team.name}...`);
+        console.log(article)
         return res.json(article);            
 });
 

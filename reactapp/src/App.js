@@ -243,7 +243,7 @@ class App extends Component {
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>
-        </Container>}
+        </Container>
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
     );
