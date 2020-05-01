@@ -66,6 +66,10 @@ function updateMilitary (cb) {
     updateSocket.on('updateMilitary', data => cb(null, data));
 }
 
-let updateEvents = { updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities };
+function addNews (cb) {
+    updateSocket.on('newsAlert', data => cb(null, data));
+}
+
+let updateEvents = { updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities, addNews };
 
 export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };

@@ -35,6 +35,7 @@ class SubNews extends React.Component {
     e.preventDefault();
     try {
       let resArticle = await axios.post(`${gameServer}api/news`, this.state.article);
+      
       Alert.success(`News article submitted: ${resArticle.data.headline}`);
     } catch (err) {
       Alert.error(`Failed to create news item - Error: ${err.message}`);
