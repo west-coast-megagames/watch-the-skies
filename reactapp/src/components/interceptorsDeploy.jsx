@@ -56,7 +56,7 @@ class InterceptorDeployForm extends Component {
       <Drawer
         size='md'
         show={this.props.show}
-        onHide={() => this.props.deployInterceptors( 'cancel' )}
+        onHide={() => this.props.onClick('cancel', null)}
       >
         <Drawer.Header>
           <Drawer.Title>{type} - {name}</Drawer.Title>
@@ -111,7 +111,7 @@ class InterceptorDeployForm extends Component {
         </Drawer.Body>
         <Drawer.Footer>
           <Button onClick={ this.handleSubmit } appearance="primary">Confirm</Button>
-          <Button onClick={ () => this.props.deployInterceptors( 'cancel' ) } appearance="subtle">Cancel</Button>
+          <Button onClick={ () => this.props.onlick('cancel', null) } appearance="subtle">Cancel</Button>
         </Drawer.Footer>
       </Drawer>
     )
@@ -124,7 +124,6 @@ class InterceptorDeployForm extends Component {
       target: this.state.target._id,
       mission: this.state.mission
     };
-    this.props.deployInterceptors( 'deployed', this.state.target, this.state.interceptor );
 
     try {
       console.log(stats)
@@ -133,6 +132,8 @@ class InterceptorDeployForm extends Component {
     } catch (err) {
       Alert.error(`${err.data} - ${err.message}`)
     };
+
+    this.props.onClick('cancel', null)
 
   }
 
