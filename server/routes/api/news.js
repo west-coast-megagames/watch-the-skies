@@ -5,9 +5,12 @@ const express = require('express');
 
 const router = express.Router();
 
+const nexusEvent = require('../../startup/events')
+
 // Article Model - Using Mongoose Model
 const { Article, validateArticle } = require('../../models/news/article');
 const { Team } = require('../../models/team/team');
+const { Site } = require('../../models/sites/site');
 
 // @route   GET api/news/gnn
 // @Desc    Get all Articles from GNN
@@ -40,31 +43,41 @@ router.get('/articles', async function (req, res) {
 // @Desc    Post a new article
 // @access  Public
 router.post('/', async function (req, res) {
-    let { publisher, location, headline, body } = req.body;
+    let { publisher, location, headline, body, tags, imageSrc } = req.body; // REQ Destructure
     // const { error } = validateArticle(req.body);
     // if (error) return res.status(400).send(error.details[0].message);
 
-    let team = await Team.findOne({_id: publisher})
+    let team = await Team.findOne({_id: publisher}) // MONGOOSE - Finds team DOC for publisher
     console.log(team)
     console.log(`${team.name} is submitting...`)
 
-    let gameTime = getTimeRemaining();
+    let gameTime = getTimeRemaining(); // Gets current game clock time
 
+    // Create timestamp for article
     let timestamp = {
         turn: gameTime.turn,
         phase: gameTime.phase,
-        date: Date.now(),
+        turnNum: gameTime.turnNum,
         clock: `${gameTime.minutes}:${gameTime.seconds}`
     }
     
-    let article = new Article(
-        { publisher, agency: team.code, timestamp, location, headline, body }
-    );
+    let article = new Article({
+        publisher,
+        agency: team.teamCode,
+        timestamp,
+        location,
+        headline,
+        articleBody: body,
+        date: Date.now(),
+        tags,
+        imageSrc
+    });
 
     article = await article.save();
         console.log(`Article posted by ${team.name}...`);
         console.log(article)
-        return res.json(article);            
+        nexusEvent.emit('newsAlert', article);
+        return res.json(article);     
 });
 
 // @route   PUT api/news/:id

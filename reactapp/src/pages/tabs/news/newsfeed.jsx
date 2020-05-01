@@ -15,29 +15,6 @@ const NewsFeed = props => {
       <h5 className="newsFeedHeader">{props.agency} News Feed</h5>
       <PanelGroup accordion bordered>
         {props.articles.map(article => (
-          <div className="artCont" key={article._id}>
-            {/* Individual Agency Logo/Flag here for easy ID by user */}
-            {/* OLD WAY - DELETE AFTER NEW WAY WORKS
-            {article.agency === "GNN" && (
-              <img src={GNN} style={{ maxWidth: "30px" }} />
-            )}
-            {article.agency === "BNC" && (
-              <img src={BNC} style={{ maxWidth: "30px" }} />
-            )}
-            {article.agency === "US" && (
-              <img
-                src="https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png"
-                style={{ maxWidth: "30px" }}
-              />
-            )}
-
-            USA: "https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png",
-                RFD: "https://cdn.countryflags.com/thumbs/russia/flag-square-250.png",
-                PRC: "https://cdn.countryflags.com/thumbs/china/flag-square-250.png",
-                TUK: "https://cdn.countryflags.com/thumbs/united-kingdom/flag-square-250.png",
-                TFR: "https://cdn.countryflags.com/thumbs/france/flag-square-250.png",
-                FFG: "" */}
-
             <Panel
               key={article._id}
               header={<span><TeamAvatar size={"sm"} teamCode={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5></span>}
@@ -52,7 +29,6 @@ const NewsFeed = props => {
               Trash
             </button>
             </Panel>
-          </div>
         ))}
       </PanelGroup>
     </Container>

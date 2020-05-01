@@ -78,4 +78,9 @@ module.exports = function(io) {
       ;
         updateSocket.emit('updateMilitary', military);
     })
+
+    nexusEvent.on('newsAlert', (article) => {
+        updateSocket.emit('newsAlert', article);
+        console.log(`News alert sent: ${article.headline}`)
+    } )
 }
