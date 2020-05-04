@@ -83,9 +83,6 @@ class LoginForm extends Component {
     this.setState({ account, errors });
   };
 
-  /* eventually change password type from text to password
-  type="password"
-  */
   render() {
     const { account, errors } = this.state;
     return (
@@ -105,6 +102,7 @@ class LoginForm extends Component {
             label="Password"
             onChange={this.handleChange}
             error={errors.password}
+            type="password"
           />
           <button className="btn btn-primary">Login</button>
         </form>

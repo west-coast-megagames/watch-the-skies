@@ -108,6 +108,13 @@ class App extends Component {
       this.setState({facilities})
     });
 
+    updateEvents.addNews((err, article) => {
+      this.addAlert({type: 'success', title: `News Published`, body: `${article.publisher.name} published ${article.headline}`});
+      let articles = this.state.articles;
+      articles.push(article);
+      this.setState(articles);
+    })
+
     gameClock.subscribeToClock((err, clock) => {
       if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.state.team !== null) {
           updateEvents.updateTeam(this.state.team._id);
@@ -243,7 +250,7 @@ class App extends Component {
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>
-        </Container>}
+        </Container>
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
     );
@@ -319,7 +326,7 @@ class App extends Component {
 
   handleArtHide = (article) => {
     let articles = this.state.articles;
-    Alert.warning(`Hiding ${article.articleBody} article...`);
+    Alert.warning(`Hiding ${article.headline} article...`);
 
     /*if(article.agency === 'BNC') {
         console.log(article.agency);
@@ -334,7 +341,9 @@ class App extends Component {
     }*/
 
     //let news = {}
-    articles.splice(articles.indexOf(article._id),1);
+    let index = articles.indexOf(article);
+    console.log(articles[index]);
+    articles.splice(index,1);
 
     this.setState({articles});
   }
