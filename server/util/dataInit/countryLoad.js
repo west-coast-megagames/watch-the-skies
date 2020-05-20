@@ -153,7 +153,9 @@ async function loadCountry(cData, rCounts) {
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`Country Update Save Error: ${err}`, { meta: err });
+          logger.error(`Country Update Save Error: ${err.message}`, {
+            meta: err,
+          });
           return;
         }
       } else {

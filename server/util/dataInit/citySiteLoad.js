@@ -41,8 +41,9 @@ async function runcitySiteLoad(runFlag) {
     }
     return true;
   } catch (err) {
-    logger.error(`Catch runcitySiteLoad Error: ${err.message}`);
-    return;
+    logger.error(`Catch runcitySiteLoad Error: ${err.message}`, { meta: err });
+
+    return false;
   }
 }
 
@@ -137,7 +138,8 @@ async function loadCity(iData, rCounts) {
         } catch (err) {
           ++rCounts.loadErrCount;
           logger.error(
-            `New CitySite Save Error: ${loadCode} ${loadName} ${err}`
+            `New CitySite Save Error: ${loadCode} ${loadName} ${err.message}`,
+            { meta: err }
           );
           return;
         }
@@ -203,15 +205,18 @@ async function loadCity(iData, rCounts) {
         } catch (err) {
           ++rCounts.loadErrCount;
           logger.error(
-            `New CitySite Save Error: ${loadCode} ${loadName} ${err}`
+            `New CitySite Save Error: ${loadCode} ${loadName} ${err.message}`,
+            { meta: err }
           );
+
           return;
         }
       }
     }
   } catch (err) {
     ++rCounts.loadErrCount;
-    logger.error(`Catch City Error: ${err.message}`);
+    logger.error(`Catch City Error: ${err.message}`, { meta: err });
+
     return;
   }
 }
@@ -234,6 +239,9 @@ async function deleteAllCitys(doLoad) {
     citySiteLoadDebugger("All CitySites succesfully deleted!");
   } catch (err) {
     citySiteLoadDebugger(`Delete All CitySites Catch Error: ${err.message}`);
+    logger.error(`Delete All CitySites Catch Error: ${err.message}`, {
+      meta: err,
+    });
   }
 }
 

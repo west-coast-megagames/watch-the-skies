@@ -58,8 +58,9 @@ async function runbaseSiteLoad(runFlag) {
     }
     return true;
   } catch (err) {
-    logger.error(`Catch runbaseSiteLoad Error: ${err.message}`);
-    return;
+    logger.error(`Catch runbaseSiteLoad Error: ${err.message}`, { meta: err });
+
+    return false;
   }
 }
 
@@ -204,7 +205,10 @@ async function loadBase(iData, rCounts) {
               await newFacility.save();
               //baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
             } catch (err) {
-              logger.error(`New BaseSite Facility Save Error: ${err}`);
+              logger.error(`New BaseSite Facility Save Error: ${err}`, {
+                meta: err,
+              });
+
               //return;
               facError = true;
             }
@@ -233,7 +237,10 @@ async function loadBase(iData, rCounts) {
           return;
         } catch (err) {
           delFacilities(spacecraft.facilities);
-          logger.error(`New BaseSite Save Error: ${err}`);
+          logger.error(`New BaseSite Save Error: ${err.message}`, {
+            meta: err,
+          });
+
           ++rCounts.loadErrCount;
           return;
         }
@@ -349,7 +356,10 @@ async function loadBase(iData, rCounts) {
               //baseSiteLoadDebugger(baseSite.name, "Facility", fac.name, " add saved to facility collection.");
             } catch (err) {
               delFacilities(baseSite.facilities);
-              logger.error(`New BaseSite Facility Save Error: ${err}`);
+              logger.error(`New BaseSite Facility Save Error: ${err.message}`, {
+                meta: err,
+              });
+
               facError = true;
               //return;
             }
@@ -378,14 +388,17 @@ async function loadBase(iData, rCounts) {
           return;
         } catch (err) {
           delFacilities(baseSite.facilities);
-          logger.error(`Update BaseSite Save Error: ${err}`);
+          logger.error(`Update BaseSite Save Error: ${err.message}`, {
+            meta: err,
+          });
           ++rCounts.loadErrCount;
           return;
         }
       }
     }
   } catch (err) {
-    logger.error(`Catch Base Error: ${err.message}`);
+    logger.error(`Catch Base Error: ${err.message}`, { meta: err });
+
     ++rCounts.loadErrCount;
     return;
   }
@@ -415,11 +428,15 @@ async function deleteAllBases(doLoad) {
         }
       } catch (err) {
         baseSiteLoadDebugger("BaseSite Delete All Error:", err.message);
+        logger.error(`BaseSite Delete All Catch Error: ${err.message}`, {
+          meta: err,
+        });
       }
     }
     baseSiteLoadDebugger("All BaseSites succesfully deleted!");
   } catch (err) {
     baseSiteLoadDebugger(`Delete All BaseSites Catch Error: ${err.message}`);
+    logger.error(`Catch Delete All Error: ${err.message}`, { meta: err });
   }
 }
 

@@ -175,7 +175,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`New Zone Save Error: ${err}`, { meta: err });
+          logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
@@ -200,14 +200,14 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
       if (!loadError) {
         try {
           let zoneSave = await zone.save();
-          ++rCounts.loadCount;
+          ++rCounts.updCount;
           logger.debug(
             `${zoneSave.zoneName} update saved to zones collection.`
           );
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`Zone Update Save Error: ${err}`, { meta: err });
+          logger.error(`Zone Update Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
@@ -304,7 +304,9 @@ async function loadTeam(tName, tCode, tLoadFlg, tType, rCounts) {
               return;
             } catch (err) {
               ++rCounts.loadErrCount;
-              logger.error(`New Team Save Error: ${err}`, { meta: err });
+              logger.error(`New Team Save Error: ${err.message}`, {
+                meta: err,
+              });
               return;
             }
           } else {
@@ -332,12 +334,12 @@ async function loadTeam(tName, tCode, tLoadFlg, tType, rCounts) {
       if (!loadError) {
         try {
           let teamSave = await team.save();
-          ++rCounts.loadCount;
+          ++rCounts.updCount;
           logger.debug(`${teamSave.name} update saved to teams collection.`);
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`Team Update Save Error: ${err}`, { meta: err });
+          logger.error(`Team Update Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
@@ -444,12 +446,12 @@ async function loadCountry(
         try {
           let countrySave = await country.save();
           ++rCounts.loadCount;
-          logger.info(`${countrySave.name} saved to country collection.`);
+          logger.debug(`${countrySave.name} saved to country collection.`);
 
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`Country Save Error: ${err}`, { meta: err });
+          logger.error(`Country Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
@@ -501,12 +503,12 @@ async function loadCountry(
       if (!loadError) {
         try {
           let countrySave = await country.save();
-          ++rCounts.loadCount;
-          logger.info(`${countrySave.name} saved to country collection.`);
+          ++rCounts.updCount;
+          logger.debug(`${countrySave.name} saved to country collection.`);
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
-          logger.error(`Country Save Error: ${err}`, { meta: err });
+          logger.error(`Country Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
@@ -573,13 +575,13 @@ async function newNational(tName, tCode, rCounts) {
     try {
       let nationalSave = await national.save();
       ++rCounts.loadCount;
-      logger.info(
+      logger.debug(
         `National Team ${nationalSave.name} saved to teams collection.`
       );
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`National Team Save Error: ${err}`, { meta: err });
+      logger.error(`National Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -613,11 +615,11 @@ async function newAlien(tName, tCode, rCounts) {
     try {
       let alienSave = await alien.save();
       ++rCounts.loadCount;
-      logger.info(`Alien Team ${alienSave.name} saved to teams collection.`);
+      logger.debug(`Alien Team ${alienSave.name} saved to teams collection.`);
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Alien Team Save Error: ${err}`, { meta: err });
+      logger.error(`Alien Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -650,13 +652,13 @@ async function newControl(tName, tCode, rCounts) {
     try {
       let controlSave = await control.save();
       ++rCounts.loadCount;
-      logger.info(
+      logger.debug(
         `Control Team ${controlSave.name} saved to teams collection.`
       );
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Control Team Save Error: ${err}`, { meta: err });
+      logger.error(`Control Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -690,11 +692,11 @@ async function newMedia(tName, tCode, rCounts) {
     try {
       let mediaSave = await media.save();
       ++rCounts.loadCount;
-      logger.info(`Media Team ${mediaSave.name} saved to teams collection.`);
+      logger.debug(`Media Team ${mediaSave.name} saved to teams collection.`);
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Media Team Save Error: ${err}`, { meta: err });
+      logger.error(`Media Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -728,11 +730,11 @@ async function newNpc(tName, tCode, rCounts) {
     try {
       let npcSave = await npc.save();
       ++rCounts.loadCount;
-      logger.info(`NPC Team ${npcSave.name} saved to teams collection.`);
+      logger.debug(`NPC Team ${npcSave.name} saved to teams collection.`);
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`NPC Team Save Error: ${err}`, { meta: err });
+      logger.error(`NPC Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {

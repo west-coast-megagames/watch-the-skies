@@ -1,98 +1,107 @@
-const fs = require('fs')
-const config = require('config');
-const file = fs.readFileSync(config.get('initPath') + 'init-json/initAircraft.json', 'utf8');
+const fs = require("fs");
+const config = require("config");
+const file = fs.readFileSync(
+  config.get("initPath") + "init-json/initAircraft.json",
+  "utf8"
+);
 const aircraftDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
-const aircrafLoadDebugger = require('debug')('app:aircraftLoad');
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-require ('winston-mongodb');
+const aircrafLoadDebugger = require("debug")("app:aircraftLoad");
+const { logger } = require("../../middleware/winston"); // Import of winston for error logging
+require("winston-mongodb");
 
-const supportsColor = require('supports-color');
+const supportsColor = require("supports-color");
 
-const express = require('express');
-const bodyParser = require('body-parser');
+const express = require("express");
+const bodyParser = require("body-parser");
 
 //mongoose.set('useNewUrlParser', true);
 //mongoose.set('useFindAndModify', false);
 //mongoose.set('useCreateIndex', true);
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/aircraft');
-const { Zone } = require('../../models/zone');
-const { Country } = require('../../models/country');
-const { Team } = require('../../models/team/team');
-const { System } = require('../../models/gov/equipment/equipment');
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
-const { validUnitType } = require('../../wts/util/construction/validateUnitType');
-const { Site } = require('../../models/sites/site');
-const { delSystems } = require('../../wts/util/construction/deleteSystems');
+const {
+  Aircraft,
+  validateAircraft,
+  updateStats,
+} = require("../../models/ops/aircraft");
+const { Zone } = require("../../models/zone");
+const { Country } = require("../../models/country");
+const { Team } = require("../../models/team/team");
+const { System } = require("../../models/gov/equipment/equipment");
+const {
+  loadSystems,
+  systems,
+} = require("../../wts/construction/systems/systems");
+const {
+  validUnitType,
+} = require("../../wts/util/construction/validateUnitType");
+const { Site } = require("../../models/sites/site");
+const { delSystems } = require("../../wts/util/construction/deleteSystems");
 const app = express();
 
 // Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-async function runaircraftLoad(runFlag){
+async function runaircraftLoad(runFlag) {
   try {
     //logger.debug("Jeff in runaircraftLoad", runFlag);
     if (!runFlag) return false;
     if (runFlag) {
-      await loadSystems();                         // load wts/json/equipment/systems.json data into array
+      await loadSystems(); // load wts/json/equipment/systems.json data into array
 
       await deleteAllAircrafts(runFlag);
       await initLoad(runFlag);
     }
     return true;
   } catch (err) {
-    logger.error(`Catch runaircraftLoad Error: ${err.message}`, {meta: err});
+    logger.error(`Catch runaircraftLoad Error: ${err.message}`, { meta: err });
     return false;
   }
-};
+}
 
 async function initLoad(doLoad) {
-
   if (!doLoad) return;
 
   let recReadCount = 0;
-  let recCounts = { loadCount: 0,
-                    loadErrCount: 0,
-                    updCount: 0};
+  let recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
-  for (let i = 0; i < aircraftDataIn.length; ++i ) {
-
+  for (let data of aircraftDataIn) {
     ++recReadCount;
-    await loadAircraft(aircraftDataIn[i], recCounts);
-
+    await loadAircraft(data, recCounts);
   }
 
-  logger.info(`Aircraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`);
-};
+  logger.info(
+    `Aircraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`
+  );
+}
 
-async function loadAircraft(iData, rCounts){
+async function loadAircraft(iData, rCounts) {
   let loadError = false;
   let loadErrorMsg = "";
   let loadName = "";
 
   try {
     //logger.debug(`Jeff in loadAircraft  ${iData.name} ${iData.type}`);
-    let aircraft = await Aircraft.findOne( { name: iData.name } );
+    let aircraft = await Aircraft.findOne({ name: iData.name });
 
     loadName = iData.name;
 
     if (!aircraft) {
       // New Aircraft here
       let aircraft = new Aircraft({
-          name: iData.name,
-          type: iData.type,
-          mission: iData.mission
+        name: iData.name,
+        type: iData.type,
+        mission: iData.mission,
       });
 
-      aircraft.stats  = iData.stats;
+      aircraft.stats = iData.stats;
       aircraft.status = iData.status;
       aircraft.serviceRecord = [];
 
-      if (iData.team != ""){
+      if (iData.team != "") {
         let team = await Team.findOne({ teamCode: iData.team });
         if (!team) {
           //logger.debug(`Aircraft Load Team Error, New Aircraft: ${iData.name}  Team:  ${iData.team}`);
@@ -100,7 +109,7 @@ async function loadAircraft(iData, rCounts){
           loadErrorMsg = `Team Not Found: ${iData.teamCode}`;
         } else {
           aircraft.team = team._id;
-            //logger.debug(`Aircraft Load Team Found, Aircraft: ${iData.name} Team:  ${iData.team} Team ID: ${team._id}`);
+          //logger.debug(`Aircraft Load Team Found, Aircraft: ${iData.name} Team:  ${iData.team} Team ID: ${team._id}`);
         }
       }
 
@@ -111,41 +120,46 @@ async function loadAircraft(iData, rCounts){
         for (let sys of iData.loadout) {
           let systemsError = true;
 
-          let sysRef = systems[systems.findIndex(system => system.code === sys )];
+          let sysRef =
+            systems[systems.findIndex((system) => system.code === sys)];
           //console.log("jeff in aircraft systems ", sys, "sysRef:", sysRef);
           if (sysRef) {
             if (validUnitType(sysRef.unitType, aircraft.type)) {
-
               systemsError = false;
               newSystem = await new System(sysRef);
-              newSystem.team         = aircraft.team;
+              newSystem.team = aircraft.team;
               newSystem.manufacturer = aircraft.team;
               newSystem.status.building = false;
-              newSystem.unitType     = aircraft.type;
+              newSystem.unitType = aircraft.type;
 
-              await newSystem.save(((err, newSystem) => {
-                if (err) {
-                  logger.error(`New Aircraft System Save Error: ${err}`);
-                  systemsError = true;
-                  //return console.error(`New Aircraft System Save Error: ${err}`);
-                }
-                  //logger.debug(`aircraft.name, system ${sys} add saved to system collection.`);
-              }));
-
-              if (!systemsError) {
-                aircraft.systems.push(newSystem._id)
+              try {
+                await newSystem.save();
+                //logger.debug(`aircraft.name, system ${sys} add saved to system collection.`);
+              } catch (err) {
+                logger.error(`New Aircraft System Save Error: ${err.message}`, {
+                  meta: err,
+                });
+                systemsError = true;
+                //return console.error(`New Aircraft System Save Error: ${err}`);
               }
 
+              if (!systemsError) {
+                aircraft.systems.push(newSystem._id);
+              }
             } else {
-              logger.debug(`Error in creation of system ${sys} for  ${aircraft.name} - wrong unitType`);
+              logger.debug(
+                `Error in creation of system ${sys} for  ${aircraft.name} - wrong unitType`
+              );
             }
           } else {
-            logger.debug(`Error in creation of system ${sys} for  ${aircraft.name}`);
+            logger.debug(
+              `Error in creation of system ${sys} for  ${aircraft.name}`
+            );
           }
         }
       }
 
-      if (iData.base != "" && iData.base != "undefined" ){
+      if (iData.base != "" && iData.base != "undefined") {
         // changed to use site to handle both base and spacecraft if Alien
         let site = await Site.findOne({ siteCode: iData.base });
         if (!site) {
@@ -158,7 +172,7 @@ async function loadAircraft(iData, rCounts){
         }
       }
 
-      if (iData.site != "" && iData.site != "undefined" ){
+      if (iData.site != "" && iData.site != "undefined") {
         let site = await Site.findOne({ siteCode: iData.site });
         if (!site) {
           //logger.debug(`Aircraft Load Site Error, New Aircraft:  ${iData.name}  Site:  ${iData.site}`);
@@ -172,7 +186,7 @@ async function loadAircraft(iData, rCounts){
         aircraft.site = aircraft.baseOrig;
       }
 
-      if (iData.zone != ""){
+      if (iData.zone != "") {
         let zone = await Zone.findOne({ zoneCode: iData.zone });
         if (!zone) {
           //logger.debug(`Aircraft Load Zone Error, New Aircraft: ${iData.name}  Zone:  ${iData.zone}`);
@@ -184,7 +198,7 @@ async function loadAircraft(iData, rCounts){
         }
       }
 
-      if (iData.country != ""){
+      if (iData.country != "") {
         let country = await Country.findOne({ code: iData.country });
         if (!country) {
           //logger.debug(`Aircraft Load Country Error, New Aircraft: ${iData.name} Country:  ${iData.country}`);
@@ -192,8 +206,10 @@ async function loadAircraft(iData, rCounts){
           loadErrorMsg = "Country Not Found: " + iData.country;
         } else {
           aircraft.country = country._id;
-          aircraft.zone    = country.zone;
-          logger.debug(`Aircraft Load Country Found, New Aircraft: ${iData.name}  Country:  ${iData.country} Country ID: ${country._id}`);
+          aircraft.zone = country.zone;
+          logger.debug(
+            `Aircraft Load Country Found, New Aircraft: ${iData.name}  Country:  ${iData.country} Country ID: ${country._id}`
+          );
         }
       }
 
@@ -205,35 +221,41 @@ async function loadAircraft(iData, rCounts){
       }
 
       if (loadError) {
-        logger.error(`Aircraft skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        logger.error(
+          `Aircraft skipped due to errors: ${loadName} ${loadErrorMsg}`
+        );
         delSystems(aircraft.systems);
         ++rCounts.loadErrCount;
         return;
       } else {
-        await aircraft.save((err, aircraft) => {
-          if (err) {
-            delSystems(aircraft.systems);
-            ++rCounts.loadErrCount;
-            logger.error(`New Aircraft Save Error: ${err}`, {meta: err});
-            return;
-          }
+        try {
+          let aircraftSave = await aircraft.save();
           ++rCounts.loadCount;
-          logger.debug(`${aircraft.name} add saved to aircraft collection.`);
-          updateStats(aircraft._id);
+          logger.debug(
+            `${aircraftSave.name} add saved to aircraft collection.`
+          );
+          updateStats(aircraftSave._id);
           return;
-        });
+        } catch (err) {
+          delSystems(aircraft.systems);
+          ++rCounts.loadErrCount;
+          logger.error(`New Aircraft Save Error: ${err.message}`, {
+            meta: err,
+          });
+          return;
+        }
       }
     } else {
       // Existing Aircraft here ... update
       let id = aircraft._id;
 
-      aircraft.name        = iData.name;
-      aircraft.type        = iData.type;
-      aircraft.status      = iData.status;
-      aircraft.stats       = iData.stats;
-      aircraft.mission     = iData.mission;
+      aircraft.name = iData.name;
+      aircraft.type = iData.type;
+      aircraft.status = iData.status;
+      aircraft.stats = iData.stats;
+      aircraft.mission = iData.mission;
 
-      if (iData.team != ""){
+      if (iData.team != "") {
         let team = await Team.findOne({ teamCode: iData.team });
         if (!team) {
           //logger.debug("Aircraft Load Team Error, Update Aircraft:", iData.name, " Team: ", iData.team);
@@ -247,36 +269,39 @@ async function loadAircraft(iData, rCounts){
 
       if (!loadError) {
         // create systems records for aircraft and store ID in aircraft.system
-        if (iData.loadout.length != 0){
+        if (iData.loadout.length != 0) {
           // create systems records for aircraft and store ID in aircraft.system
           aircraft.systems = [];
           for (let sys of iData.loadout) {
             systemsError = true;
-            let sysRef = systems[systems.findIndex(system => system.code === sys )];
+            let sysRef =
+              systems[systems.findIndex((system) => system.code === sys)];
             if (validUnitType(sysRef.unitType, aircraft.type)) {
               newSystem = await new System(sysRef);
-              newSystem.team            = aircraft.team;
-              newSystem.manufacturer    = aircraft.team;
+              newSystem.team = aircraft.team;
+              newSystem.manufacturer = aircraft.team;
               newSystem.status.building = false;
-              newSystem.unitType        = aircraft.type;
+              newSystem.unitType = aircraft.type;
               let systemsError = false;
-              await newSystem.save(((err, newSystem) => {
-                if (err) {
-                  logger.error(`New Aircraft System Save Error: ${err}`);
-                  systemsError = true;
-                }
-              //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
-              }));
+              try {
+                await newSystem.save();
+                //logger.debug(aircraft.name, "system", sys, " add saved to system collection.");
+              } catch (err) {
+                logger.error(`New Aircraft System Save Error: ${err.message}`, {
+                  meta: err,
+                });
+                systemsError = true;
+              }
 
               if (!systemsError) {
-                aircraft.systems.push(newSystem._id)
+                aircraft.systems.push(newSystem._id);
               }
             }
           }
         }
       }
 
-      if (iData.base != "" && iData.base != "undefined" ){
+      if (iData.base != "" && iData.base != "undefined") {
         //changed to site to handle both Base and Spacecraft (for Alien)
         let site = await Site.findOne({ siteCode: iData.base });
         if (!site) {
@@ -289,7 +314,7 @@ async function loadAircraft(iData, rCounts){
         }
       }
 
-      if (iData.site != "" && iData.site != "undefined" ){
+      if (iData.site != "" && iData.site != "undefined") {
         let site = await Site.findOne({ siteCode: iData.site });
         if (!site) {
           //logger.debug("Aircraft Load Site Error, Update Aircraft:", iData.name, " Site: ", iData.site);
@@ -301,7 +326,7 @@ async function loadAircraft(iData, rCounts){
         }
       }
 
-      if (iData.zone != ""){
+      if (iData.zone != "") {
         let zone = await Zone.findOne({ zoneCode: iData.zone });
         if (!zone) {
           //logger.debug("Aircraft Load Zone Error, Update Aircraft:", iData.name, " Zone: ", iData.zone);
@@ -313,7 +338,7 @@ async function loadAircraft(iData, rCounts){
         }
       }
 
-      if (iData.country != ""){
+      if (iData.country != "") {
         let country = await Country.findOne({ code: iData.country });
         if (!country) {
           //logger.debug("Aircraft Load Country Error, Update Aircraft:", iData.name, " Country: ", iData.country);
@@ -321,7 +346,7 @@ async function loadAircraft(iData, rCounts){
           loadErrorMsg = "Country Not Found: " + iData.country;
         } else {
           aircraft.country = country._id;
-          aircraft.zone    = country.zone;
+          aircraft.zone = country.zone;
           //logger.debug("Aircraft Load Country Found, Update Aircraft:", iData.name, " Country: ", iData.country, "Country ID:", country._id);
         }
       }
@@ -335,35 +360,40 @@ async function loadAircraft(iData, rCounts){
       }
 
       if (loadError) {
-        logger.error(`Aircraft skipped due to errors: ${loadName} ${loadErrorMsg}`);
+        logger.error(
+          `Aircraft skipped due to errors: ${loadName} ${loadErrorMsg}`
+        );
         delSystems(aircraft.systems);
         ++rCounts.loadErrCount;
         return;
       } else {
-        await aircraft.save((err, aircraft) => {
-          if (err) {
-            delSystems(aircraft.systems);
-            ++rCounts.loadErrCount;
-            logger.error(`Aircraft Update Save Error: ${err}`, {meta: err})
-            return;
-          }
+        try {
+          let aircraftSave = await aircraft.save();
           ++rCounts.updCount;
-          logger.info(`${aircraft.name} update saved to aircraft collection.`);
-          updateStats(aircraft._id);
+          logger.info(
+            `${aircraftSave.name} update saved to aircraft collection.`
+          );
+          updateStats(aircraftSave._id);
           return;
-        });
+        } catch (err) {
+          delSystems(aircraft.systems);
+          ++rCounts.loadErrCount;
+          logger.error(`Aircraft Update Save Error: ${err.message}`, {
+            meta: err,
+          });
+          return;
+        }
       }
     }
   } catch (err) {
     ++rCounts.loadErrCount;
-    logger.error(`Catch Aircraft Error: ${err.message}`, {meta: err});
+    logger.error(`Catch Aircraft Error: ${err.message}`, { meta: err });
     delSystems(aircraft.systems);
     return;
   }
-};
+}
 
 async function deleteAllAircrafts(doLoad) {
-
   //logger.debug("Jeff in deleteAllAircrafts", doLoad);
   if (!doLoad) return;
 
@@ -373,24 +403,26 @@ async function deleteAllAircrafts(doLoad) {
 
       //logger.debug("Jeff in deleteAllAircrafts loop", aircraft.name);
       try {
-
         // remove associated systems records
         delSystems(aircraft.systems);
 
         let aircraftDel = await Aircraft.findByIdAndRemove(id);
-        if (aircraftDel = null) {
+        if ((aircraftDel = null)) {
           logger.error(`The Aircraft with the ID ${id} was not found!`);
         }
         //logger.debug("Jeff in deleteAllAircrafts loop after remove", aircraft.name);
       } catch (err) {
-        logger.error(`Aircraft Delete All Error: ${err.message}`, {meta: err});
+        logger.error(`Aircraft Delete All Error: ${err.message}`, {
+          meta: err,
+        });
       }
     }
     logger.info("All Aircrafts succesfully deleted!");
   } catch (err) {
-    logger.error(`Delete All Aircrafts Catch Error: ${err.message}`, {meta: err});
+    logger.error(`Delete All Aircrafts Catch Error: ${err.message}`, {
+      meta: err,
+    });
   }
-};
-
+}
 
 module.exports = runaircraftLoad;

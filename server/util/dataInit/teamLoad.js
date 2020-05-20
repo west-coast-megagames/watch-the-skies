@@ -50,9 +50,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 async function runTeamLoad(runFlag) {
-  if (!runFlag) return false;
-  if (runFlag) await initLoad(runFlag);
-  return true;
+  try {
+    if (!runFlag) return false;
+    if (runFlag) await initLoad(runFlag);
+    return true;
+  } catch (err) {
+    logger.error(`Catch runTeamLoad Error: ${err.message}`, { meta: err });
+    return false;
+  }
 }
 
 async function initLoad(doLoad) {
@@ -128,7 +133,7 @@ async function loadTeam(tData, rCounts) {
       }
     }
   } catch (err) {
-    logger.error("Catch Team Error:", err.message);
+    logger.error(`Catch Team Error: ${err.message}`, { meta: err });
     ++rCounts.loadErrCount;
     return;
   }
@@ -148,7 +153,7 @@ async function deleteTeam(tData) {
           let delErrorFlag = true;
         }
       } catch (err) {
-        logger.error("deleteTeam Error 1:", err.message);
+        logger.error(`deleteTeam Error 1: ${err.message}`, { meta: err });
         let delErrorFlag = true;
       }
     }
@@ -211,7 +216,9 @@ async function newNational(tData, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`New National Team Save Error: ${err}`, { meta: err });
+      logger.error(`New National Team Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -256,7 +263,7 @@ async function newAlien(tData, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`New Alien Team Save Error: ${err}`, { meta: err });
+      logger.error(`New Alien Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -300,7 +307,7 @@ async function newMedia(tData, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`New Media Team Save Error: ${err}`, { meta: err });
+      logger.error(`New Media Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -345,7 +352,9 @@ async function newControl(tData, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`New Control Team Save Error: ${err}`, { meta: err });
+      logger.error(`New Control Team Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -388,7 +397,7 @@ async function newNPC(tData, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`New NPC Team Save Error: ${err}`, { meta: err });
+      logger.error(`New NPC Team Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
@@ -456,7 +465,9 @@ async function updNational(tData, tId, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`National Team Update Save Error: ${err}`, { meta: err });
+      logger.error(`National Team Update Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -509,7 +520,9 @@ async function updAlien(tData, tId, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Alien Team Update Save Error: ${err}`, { meta: err });
+      logger.error(`Alien Team Update Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -561,7 +574,9 @@ async function updMedia(tData, tId, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Media Team Update Save Error: ${err}`, { meta: err });
+      logger.error(`Media Team Update Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -613,7 +628,9 @@ async function updControl(tData, tId, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`Control Team Update Save Error: ${err}`, { meta: err });
+      logger.error(`Control Team Update Save Error: ${err.message}`, {
+        meta: err,
+      });
       return;
     }
   } else {
@@ -668,7 +685,7 @@ async function updNPC(tData, tId, rCounts) {
       return;
     } catch (err) {
       ++rCounts.loadErrCount;
-      logger.error(`NPC Team Update Save Error: ${err}`, { meta: err });
+      logger.error(`NPC Team Update Save Error: ${err.message}`, { meta: err });
       return;
     }
   } else {
