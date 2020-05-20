@@ -90,6 +90,7 @@ async function loadCity(iData, rCounts) {
           longDecimal: iData.longDecimal,
         },
         dateline: iData.dateline,
+        coastal: iData.coastal,
       });
 
       let { error } = validateCity(citySite);
@@ -157,6 +158,7 @@ async function loadCity(iData, rCounts) {
       citySite.geoDecimal.latDecimal = iData.latDecimal;
       citySite.geoDecimal.longDecimal = iData.longDecimal;
       citySite.dateline = iData.dateline;
+      citySite.coastal = iData.coastal;
 
       if (iData.teamCode != "") {
         let team = await Team.findOne({ teamCode: iData.teamCode });
