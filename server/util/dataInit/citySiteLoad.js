@@ -69,7 +69,7 @@ async function loadCity(iData, rCounts) {
   let loadName = "";
   let loadCode = "";
   try {
-    let citySite = await CitySite.findOne({ name: iData.name });
+    let citySite = await CitySite.findOne({ siteCode: iData.code });
 
     loadName = iData.name;
     loadCode = iData.code;
@@ -110,7 +110,9 @@ async function loadCity(iData, rCounts) {
         } else {
           citySite.country = country._id;
           citySite.zone = country.zone;
-          //citySiteLoadDebugger("CitySite Load Country Found, New City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+          logger.debug(
+            `CitySite Load Country Found, New City: ${iData.name} Country: ${iData.countryCode} Country ID: ${country._id}`
+          );
         }
       }
 
@@ -181,7 +183,9 @@ async function loadCity(iData, rCounts) {
         } else {
           citySite.country = country._id;
           citySite.zone = country.zone;
-          //citySiteLoadDebugger("CitySite Load Country Found, Update City:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
+          logger.debug(
+            `CitySite Load Country Found, Update City: ${iData.name} Country: ${iData.countryCode} Country ID: ${country._id}`
+          );
         }
       }
 
