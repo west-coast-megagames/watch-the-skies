@@ -1515,9 +1515,10 @@
     "latDMS": "12 37 50.93 N",
     "longDMS": "7 59 55.5 W",
     "latDecimal": 12.6308,
-    "longDecimal": -7.9987,
+    "longDecimal": -7.9988,
     "countryCode": "ML",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1529,7 +1530,8 @@
     "latDecimal": 18.0921,
     "longDecimal": -15.9795,
     "countryCode": "MR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1538,10 +1540,11 @@
     "code": "MX MEX",
     "latDMS": "19 25 55.08 N",
     "longDMS": "99 8 0.30 W",
-    "latDecimal": 19.4319,
+    "latDecimal": 19.432,
     "longDecimal": -99.1334,
     "countryCode": "MX",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1553,7 +1556,8 @@
     "latDecimal": 25.6843,
     "longDecimal": -100.3171,
     "countryCode": "MX",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1565,7 +1569,8 @@
     "latDecimal": 47.0167,
     "longDecimal": 28.8497,
     "countryCode": "MD",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1577,7 +1582,8 @@
     "latDecimal": 43.7383,
     "longDecimal": 7.4241,
     "countryCode": "MC",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1589,7 +1595,8 @@
     "latDecimal": 47.9188,
     "longDecimal": 106.9176,
     "countryCode": "MN",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1601,7 +1608,8 @@
     "latDecimal": 42.4411,
     "longDecimal": 19.2636,
     "countryCode": "ME",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1610,10 +1618,11 @@
     "code": "MZ MPM",
     "latDMS": "25 57 55.00 S",
     "longDMS": "32 35 21.00 E",
-    "latDecimal": -25.9652,
-    "longDecimal": 32.5891,
+    "latDecimal": -25.9653,
+    "longDecimal": 32.5892,
     "countryCode": "MZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1622,10 +1631,11 @@
     "code": "MM MDL",
     "latDMS": "19 44 51.32 N",
     "longDMS": "96 6 56.34 E",
-    "latDecimal": 19.7475,
-    "longDecimal": 96.1156,
+    "latDecimal": 19.7476,
+    "longDecimal": 96.1157,
     "countryCode": "MM",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1637,7 +1647,8 @@
     "latDecimal": -22.57,
     "longDecimal": 17.0836,
     "countryCode": "NA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1649,7 +1660,8 @@
     "latDecimal": 27.7078,
     "longDecimal": 85.3143,
     "countryCode": "NP",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1658,10 +1670,11 @@
     "code": "NC NOU",
     "latDMS": "22 16 0.00 S",
     "longDMS": "166 26 59.99 E",
-    "latDecimal": -22.2666,
+    "latDecimal": -22.2667,
     "longDecimal": 166.45,
     "countryCode": "NC",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1671,9 +1684,10 @@
     "latDMS": "41 17 33.17 S",
     "longDMS": "174 46 24.11 E",
     "latDecimal": -41.2925,
-    "longDecimal": 174.7733,
+    "longDecimal": 174.7734,
     "countryCode": "NZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1685,7 +1699,8 @@
     "latDecimal": 12.1183,
     "longDecimal": -86.26,
     "countryCode": "NI",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1694,10 +1709,11 @@
     "code": "NE NIM",
     "latDMS": "13 31 0.00 N",
     "longDMS": "2 7 0.00 E",
-    "latDecimal": 13.5166,
-    "longDecimal": 2.1166,
+    "latDecimal": 13.5167,
+    "longDecimal": 2.1167,
     "countryCode": "NE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1706,10 +1722,11 @@
     "code": "NG KAN",
     "latDMS": "11 59 47.00 N",
     "longDMS": "8 31 0.00 E",
-    "latDecimal": 11.9963,
-    "longDecimal": 8.5166,
+    "latDecimal": 11.9964,
+    "longDecimal": 8.5167,
     "countryCode": "NG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1718,10 +1735,11 @@
     "code": "NG ABV",
     "latDMS": "9 3 17.17 N",
     "longDMS": "7 29 2.02 E",
-    "latDecimal": 9.0547,
-    "longDecimal": 7.4838,
+    "latDecimal": 9.0548,
+    "longDecimal": 7.4839,
     "countryCode": "NG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1730,10 +1748,11 @@
     "code": "KP FNJ",
     "latDMS": "39 0 56.86 N",
     "longDMS": "125 45 8.48 E",
-    "latDecimal": 39.0157,
-    "longDecimal": 125.7523,
+    "latDecimal": 39.0158,
+    "longDecimal": 125.7524,
     "countryCode": "KP",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1742,10 +1761,11 @@
     "code": "NO OSL",
     "latDMS": "59 54 41.60 N",
     "longDMS": "10 43 59.91 E",
-    "latDecimal": 59.9115,
+    "latDecimal": 59.9116,
     "longDecimal": 10.7333,
     "countryCode": "NO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1754,10 +1774,11 @@
     "code": "PK KHI",
     "latDMS": "24 52 0.00 N",
     "longDMS": "67 2 59.99 E",
-    "latDecimal": 24.8666,
+    "latDecimal": 24.8667,
     "longDecimal": 67.05,
     "countryCode": "PK",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1769,7 +1790,8 @@
     "latDecimal": 8.9823,
     "longDecimal": -79.527,
     "countryCode": "PA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1778,22 +1800,24 @@
     "code": "PG POM",
     "latDMS": "9 27 32.37 S",
     "longDMS": "147 11 33.81 E",
-    "latDecimal": -9.4589,
+    "latDecimal": -9.459,
     "longDecimal": 147.1927,
     "countryCode": "PG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Asuncion",
-    "dateline": "PARAGUAY, Paraguay",
+    "dateline": "ASUNCION, Paraguay",
     "code": "PY ASU",
-    "latDMS": "31 6 10.28 S",
-    "longDMS": "58 46 12.57 W",
-    "latDecimal": -21.1028,
-    "longDecimal": -58.7701,
+    "latDMS": "25 18 0.0 S",
+    "longDMS": "57 38 0.0 W",
+    "latDecimal": -25.3,
+    "longDecimal": -57.6333,
     "countryCode": "PY",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1805,7 +1829,8 @@
     "latDecimal": 14.5893,
     "longDecimal": 120.9811,
     "countryCode": "PH",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1817,31 +1842,34 @@
     "latDecimal": 52.25,
     "longDecimal": 21.0,
     "countryCode": "PL",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Lisbon",
     "dateline": "LISBON, Portugal",
     "code": "PT LIS",
-    "latDMS": "38 59 39.04 N",
-    "longDMS": "9 10 22.49 W",
-    "latDecimal": 38.9941,
-    "longDecimal": -9.1729,
+    "latDMS": "38 43 31.0 N",
+    "longDMS": "9 9 0.0 W",
+    "latDecimal": 38.7753,
+    "longDecimal": -9.15,
     "countryCode": "PT",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
-    "loadType": "",
+    "loadType": "citySite",
     "name": "San Juan",
     "dateline": "SAN JUAN, Puerto Rico",
     "code": "PR SJU",
-    "latDMS": "",
-    "longDMS": "",
-    "latDecimal": 0,
-    "longDecimal": 0,
+    "latDMS": "18 24 23.0 N",
+    "longDMS": "66 3 50.0 W",
+    "latDecimal": 18.4064,
+    "longDecimal": -66.0639,
     "countryCode": "PR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1850,10 +1878,11 @@
     "code": "QA DOH",
     "latDMS": "25 19 34.14 N",
     "longDMS": "51 31 46.62 E",
-    "latDecimal": 25.3261,
+    "latDecimal": 25.3262,
     "longDecimal": 51.5296,
     "countryCode": "QA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1865,7 +1894,8 @@
     "latDecimal": 44.4267,
     "longDecimal": 26.104,
     "countryCode": "RO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1874,10 +1904,11 @@
     "code": "RU VOL",
     "latDMS": "48 42 41.03 N",
     "longDMS": "44 30 50.41 E",
-    "latDecimal": 48.7113,
+    "latDecimal": 48.7114,
     "longDecimal": 44.514,
     "countryCode": "RU",
-    "teamCode": "RFD"
+    "teamCode": "RFD",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1887,9 +1918,10 @@
     "latDMS": "24 38 47.89 N",
     "longDMS": "46 42 54.33 E",
     "latDecimal": 24.6466,
-    "longDecimal": 46.715,
+    "longDecimal": 46.7151,
     "countryCode": "SA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1897,11 +1929,12 @@
     "dateline": "MECCA, Saudi Arabia",
     "code": "SA MEC",
     "latDMS": "21 24 33.18 N",
-    "longDMS": "39 47 55.67 E ",
+    "longDMS": "39 47 55.67 E",
     "latDecimal": 21.4092,
     "longDecimal": 39.7988,
     "countryCode": "SA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1911,9 +1944,10 @@
     "latDMS": "14 40 26.18 N",
     "longDMS": "17 26 26.86 W",
     "latDecimal": 14.6739,
-    "longDecimal": -17.4407,
+    "longDecimal": -17.4408,
     "countryCode": "SN",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1923,9 +1957,10 @@
     "latDMS": "8 29 24.00 N",
     "longDMS": "13 14 3.00 W",
     "latDecimal": 8.49,
-    "longDecimal": -13.2341,
+    "longDecimal": -13.2342,
     "countryCode": "SL",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1937,7 +1972,8 @@
     "latDecimal": 1.3562,
     "longDecimal": 103.8281,
     "countryCode": "SG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -1947,9 +1983,10 @@
     "latDMS": "48 8 59.99 N",
     "longDMS": "17 7 0.00 E",
     "latDecimal": 48.15,
-    "longDecimal": 17.1166,
+    "longDecimal": 17.1167,
     "countryCode": "SK",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1958,22 +1995,24 @@
     "code": "SO MGQ",
     "latDMS": "2 2 12.82 N",
     "longDMS": "45 20 34.07 E",
-    "latDecimal": 2.0368,
-    "longDecimal": 45.3427,
+    "latDecimal": 2.0369,
+    "longDecimal": 45.3428,
     "countryCode": "SO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Johannesburg",
     "dateline": "JOHANNESBURG",
     "code": "ZA JNB",
-    "latDMS": "26 11 23.81 N",
+    "latDMS": "26 11 23.81 S",
     "longDMS": "28 1 53.87 E",
     "latDecimal": -26.1899,
     "longDecimal": 28.0316,
     "countryCode": "ZA",
-    "teamCode": "RSA"
+    "teamCode": "RSA",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1983,9 +2022,10 @@
     "latDMS": "4 50 59.44 N",
     "longDMS": "31 37 0.00 E",
     "latDecimal": 4.85,
-    "longDecimal": 31.6166,
+    "longDecimal": 31.6167,
     "countryCode": "SS",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -1993,11 +2033,12 @@
     "dateline": "MADRID",
     "code": "ES MAD",
     "latDMS": "40 25 10.63 N",
-    "longDMS": "3 41 30.54 E",
+    "longDMS": "3 41 30.54 W",
     "latDecimal": 40.4196,
     "longDecimal": -3.6918,
     "countryCode": "ES",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2006,10 +2047,11 @@
     "code": "ES BCN",
     "latDMS": "41 23 31.89 N",
     "longDMS": "2 9 53.52 E",
-    "latDecimal": 41.3921,
-    "longDecimal": 2.1648,
+    "latDecimal": 41.3922,
+    "longDecimal": 2.1649,
     "countryCode": "ES",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2018,10 +2060,11 @@
     "code": "LK CMB",
     "latDMS": "6 54 54.66 N",
     "longDMS": "79 51 47.72 E",
-    "latDecimal": 6.9151,
-    "longDecimal": 79.8632,
+    "latDecimal": 6.9152,
+    "longDecimal": 79.8633,
     "countryCode": "LK",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2031,9 +2074,10 @@
     "latDMS": "5 49 59.99 N",
     "longDMS": "55 10 0.00 W",
     "latDecimal": 5.8333,
-    "longDecimal": -55.1666,
+    "longDecimal": -55.1667,
     "countryCode": "SR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2042,10 +2086,11 @@
     "code": "SE STO",
     "latDMS": "59 19 40.68 N",
     "longDMS": "18 3 13.11 E",
-    "latDecimal": 59.3279,
+    "latDecimal": 59.328,
     "longDecimal": 18.0536,
     "countryCode": "SE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2054,10 +2099,11 @@
     "code": "SY DAM",
     "latDMS": "33 31 6.59 N",
     "longDMS": "36 17 36.00 E",
-    "latDecimal": 33.5184,
+    "latDecimal": 33.5185,
     "longDecimal": 36.2933,
     "countryCode": "SY",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2069,7 +2115,8 @@
     "latDecimal": 38.56,
     "longDecimal": 68.7738,
     "countryCode": "TJ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2081,7 +2128,8 @@
     "latDecimal": -6.181,
     "longDecimal": 35.7467,
     "countryCode": "TZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2093,7 +2141,8 @@
     "latDecimal": -6.8,
     "longDecimal": 39.2833,
     "countryCode": "TZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2103,21 +2152,23 @@
     "latDMS": "36 47 47.89 N",
     "longDMS": "10 9 51.11 E",
     "latDecimal": 36.7966,
-    "longDecimal": 10.1641,
+    "longDecimal": 10.1642,
     "countryCode": "TN",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Ankara",
-    "dateline": "ANKARA, Turkmenistan",
+    "dateline": "ANKARA, Turkey",
     "code": "TR ANK",
     "latDMS": "39 56 20.05 N",
-    "longDMS": "32 5026.20 E",
+    "longDMS": "32 50 26.20 E",
     "latDecimal": 39.9389,
     "longDecimal": 32.8406,
     "countryCode": "TR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2129,7 +2180,8 @@
     "latDecimal": 37.9474,
     "longDecimal": 58.3855,
     "countryCode": "TM",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2138,10 +2190,11 @@
     "code": "UG EBB",
     "latDMS": "0 18 56.00 N",
     "longDMS": "32 33 56.00 E",
-    "latDecimal": 0.3155,
-    "longDecimal": 32.5655,
+    "latDecimal": 0.3156,
+    "longDecimal": 32.5656,
     "countryCode": "UG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2153,7 +2206,8 @@
     "latDecimal": 50.4501,
     "longDecimal": 30.5234,
     "countryCode": "UA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2162,10 +2216,11 @@
     "code": "AE AUH",
     "latDMS": "24 29 18.47 N",
     "longDMS": "54 22 46.64 E",
-    "latDecimal": 24.4884,
+    "latDecimal": 24.4885,
     "longDecimal": 54.3796,
     "countryCode": "AE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2174,10 +2229,11 @@
     "code": "UY MVD",
     "latDMS": "34 54 23.25 S",
     "longDMS": "56 11 53.98 W",
-    "latDecimal": -34.9064,
+    "latDecimal": -34.9065,
     "longDecimal": -56.1983,
     "countryCode": "UY",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2186,10 +2242,11 @@
     "code": "US CHI",
     "latDMS": "41 56 1.38 N",
     "longDMS": "87 37 56.57 W",
-    "latDecimal": 41.8837,
-    "longDecimal": -87.6323,
+    "latDecimal": 41.9337,
+    "longDecimal": -87.6324,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2199,9 +2256,10 @@
     "latDMS": "38 53 43.91 N",
     "longDMS": "77 1 55.04 W",
     "latDecimal": 38.8955,
-    "longDecimal": -77.0319,
+    "longDecimal": -77.032,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2213,7 +2271,8 @@
     "latDecimal": 40.713,
     "longDecimal": -74.0071,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2225,7 +2284,8 @@
     "latDecimal": 34.0533,
     "longDecimal": -118.2423,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2235,9 +2295,10 @@
     "latDMS": "29 57 9.12 N",
     "longDMS": "90 4 36.07 W",
     "latDecimal": 29.9525,
-    "longDecimal": -90.0766,
+    "longDecimal": -90.0767,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2246,10 +2307,11 @@
     "code": "US BNA",
     "latDMS": "36 10 9.70 N",
     "longDMS": "86 47 4.97 W",
-    "latDecimal": 36.1693,
+    "latDecimal": 36.1694,
     "longDecimal": -86.7847,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2261,7 +2323,8 @@
     "latDecimal": 39.7392,
     "longDecimal": -104.9903,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2270,10 +2333,11 @@
     "code": "US MIA",
     "latDMS": "25 43 40.63 N",
     "longDMS": "80 14 2.57 W",
-    "latDecimal": 25.7279,
+    "latDecimal": 25.728,
     "longDecimal": -80.234,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2282,10 +2346,11 @@
     "code": "UZ TAS",
     "latDMS": "41 18 38.08 N",
     "longDMS": "69 16 54.42 E",
-    "latDecimal": 41.3105,
-    "longDecimal": 69.2817,
+    "latDecimal": 41.3106,
+    "longDecimal": 69.2818,
     "countryCode": "UZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2294,10 +2359,11 @@
     "code": "VE CCS",
     "latDMS": "10 30 20.41 N",
     "longDMS": "66 54 54.49 W",
-    "latDecimal": 10.5056,
+    "latDecimal": 10.5057,
     "longDecimal": -66.9151,
     "countryCode": "VE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2306,10 +2372,11 @@
     "code": "VN HAN",
     "latDMS": "21 1 42.17 N",
     "longDMS": "105 51 13.44 E",
-    "latDecimal": 21.0283,
+    "latDecimal": 21.0284,
     "longDecimal": 105.8537,
     "countryCode": "VN",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2321,7 +2388,8 @@
     "latDecimal": 10.7765,
     "longDecimal": 106.7012,
     "countryCode": "VN",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2333,7 +2401,8 @@
     "latDecimal": 15.3533,
     "longDecimal": 44.2062,
     "countryCode": "YE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
