@@ -2610,18 +2610,6 @@
   },
   {
     "loadType": "citySite",
-    "name": "Mumbai",
-    "dateline": "MUMBAI, India",
-    "code": "IN BOM",
-    "latDMS": "19 04 33.92 N",
-    "longDMS": "072 52 38.73 E",
-    "latDecimal": 19.076,
-    "longDecimal": 72.8777,
-    "countryCode": "IN",
-    "teamCode": "IND"
-  },
-  {
-    "loadType": "citySite",
     "name": "Cairo",
     "dateline": "CAIRO, Egypt",
     "code": "EG CAI",
