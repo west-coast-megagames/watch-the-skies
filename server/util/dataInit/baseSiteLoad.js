@@ -107,6 +107,7 @@ async function loadBase(iData, rCounts) {
           latDecimal: iData.latDecimal,
           longDecimal: iData.longDecimal,
         },
+        coastal: iData.coastal,
       });
       let { error } = validateBase(baseSite);
       if (error) {
@@ -259,6 +260,7 @@ async function loadBase(iData, rCounts) {
       baseSite.longDMS = newLongDMS;
       baseSite.latDecimal = iData.latDecimal;
       baseSite.longDecimal = iData.longDecimal;
+      baseSite.coastal = iData.coastal;
 
       if (iData.teamCode != "") {
         let team = await Team.findOne({ teamCode: iData.teamCode });

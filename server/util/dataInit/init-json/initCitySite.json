@@ -1899,19 +1899,6 @@
   },
   {
     "loadType": "citySite",
-    "name": "Volgogard",
-    "dateline": "VOLGOGARD, Russia",
-    "code": "RU VOL",
-    "latDMS": "48 42 41.03 N",
-    "longDMS": "44 30 50.41 E",
-    "latDecimal": 48.7114,
-    "longDecimal": 44.514,
-    "countryCode": "RU",
-    "teamCode": "RFD",
-    "coastal": false
-  },
-  {
-    "loadType": "citySite",
     "name": "Riyadh",
     "dateline": "RIYADH, Saudi Arabia",
     "code": "SA RUH",
@@ -2409,12 +2396,13 @@
     "name": "Lusaka",
     "dateline": "LUSAKA, Zambia",
     "code": "ZM LUN",
-    "latDMS": "15 25 0.00 N",
+    "latDMS": "15 25 0.00 S",
     "longDMS": "28 16 59.99 E",
-    "latDecimal": -15.4166,
+    "latDecimal": -15.4167,
     "longDecimal": 28.2833,
     "countryCode": "ZM",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2426,31 +2414,73 @@
     "latDecimal": -17.8292,
     "longDecimal": 31.0522,
     "countryCode": "ZW",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "San Francisco",
-    "dateline": "SAN FRANCISCO, United States",
+    "dateline": "SAN FRANCISCO",
     "code": "US SFO",
     "latDMS": "37 46 26.3 N",
     "longDMS": "122 25 52.7 W",
-    "latDecimal": 37.615223,
-    "longDecimal": -122.389977,
+    "latDecimal": 37.774,
+    "longDecimal": -122.4313,
     "countryCode": "US",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Moscow",
     "dateline": "MOSCOW",
     "code": "RU BKA",
-    "latDMS": "55 37 01.0 N",
-    "longDMS": "038 03 36.0 E",
-    "latDecimal": 55.6172,
-    "longDecimal": 38.06,
+    "latDMS": "55 45 21.0 N",
+    "longDMS": "037 37 2.0 E",
+    "latDecimal": 55.7558,
+    "longDecimal": 37.6172,
     "countryCode": "RU",
-    "teamCode": "RFD"
+    "teamCode": "RFD",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Volgogard",
+    "dateline": "VOLGOGARD, Russia",
+    "code": "RU VOL",
+    "latDMS": "48 42 41.03 N",
+    "longDMS": "44 30 50.41 E",
+    "latDecimal": 48.7114,
+    "longDecimal": 44.514,
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Novorossiysk",
+    "dateline": "NOVOROSSIYSK, Russia",
+    "code": "RU NOI",
+    "latDMS": "48 42 41.03 N",
+    "longDMS": "44 30 50.41 E",
+    "latDecimal": 44.7333,
+    "longDecimal": 37.7833,
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": true
+  },
+  {
+    "loadType": "citySite",
+    "name": "Vladivostok",
+    "dateline": "VLADIVOSTOK, Russia",
+    "code": "RU VVO",
+    "latDMS": "43 08 0.0 N",
+    "longDMS": "131 54 0.0 E",
+    "latDecimal": 43.1333,
+    "longDecimal": 131.9,
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2459,10 +2489,11 @@
     "code": "CN BJS",
     "latDMS": "39 55 00.0 N",
     "longDMS": "116 22 60.0 E",
-    "latDecimal": 39.91667,
-    "longDecimal": 116.38331,
+    "latDecimal": 39.9167,
+    "longDecimal": 116.3833,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2471,10 +2502,11 @@
     "code": "CN URC",
     "latDMS": "43 47 55.87 N",
     "longDMS": "87 35 18.60 E",
-    "latDecimal": 43.7988,
+    "latDecimal": 43.7989,
     "longDecimal": 87.5885,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2483,10 +2515,11 @@
     "code": "CN KAS",
     "latDMS": "39 27 36.63 N",
     "longDMS": "75 58 54.30 E",
-    "latDecimal": 39.4601,
-    "longDecimal": 75.9817,
+    "latDecimal": 39.4602,
+    "longDecimal": 75.9818,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2498,7 +2531,8 @@
     "latDecimal": 45.75,
     "longDecimal": 126.65,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2507,10 +2541,11 @@
     "code": "CN CQI",
     "latDMS": "29 32 53.76 N",
     "longDMS": "106 31 44.56 E",
-    "latDecimal": 29.5482,
+    "latDecimal": 29.5483,
     "longDecimal": 106.529,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2519,10 +2554,11 @@
     "code": "CN SHA",
     "latDMS": "31 13 53.65 N",
     "longDMS": "121 28 10.75 E",
-    "latDecimal": 31.2315,
-    "longDecimal": 121.4696,
+    "latDecimal": 31.2316,
+    "longDecimal": 121.4697,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2531,22 +2567,24 @@
     "code": "CN CKG",
     "latDMS": "22 16 55.15 N",
     "longDMS": "114 9 28.06 E",
-    "latDecimal": 22.2819,
-    "longDecimal": 114.1577,
+    "latDecimal": 22.282,
+    "longDecimal": 114.1578,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Taipei",
     "dateline": "TAIPEI, China",
     "code": "CN TPE",
-    "latDMS": "46 23 7.91 N",
-    "longDMS": "123 24 43.56 E",
-    "latDecimal": 46.3855,
-    "longDecimal": 123.4121,
+    "latDMS": "25 2 0.0 N",
+    "longDMS": "121 38 0.0 E",
+    "latDecimal": 25.0333,
+    "longDecimal": 121.6333,
     "countryCode": "CN",
-    "teamCode": "PRC"
+    "teamCode": "PRC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2558,43 +2596,99 @@
     "latDecimal": 48.8566,
     "longDecimal": 2.3522,
     "countryCode": "FR",
-    "teamCode": "TFR"
+    "teamCode": "TFR",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Marseille",
+    "dateline": "MARSEILLE, France",
+    "code": "FR MRS",
+    "latDMS": "43 17 47.0 N",
+    "longDMS": "005 22 12.0 E",
+    "latDecimal": 43.2964,
+    "longDecimal": 5.37,
+    "countryCode": "FR",
+    "teamCode": "TFR",
+    "coastal": true
+  },
+  {
+    "loadType": "citySite",
+    "name": "Calais",
+    "dateline": "CALAIS, France",
+    "code": "FR CQF",
+    "latDMS": "50 56 53.0 N",
+    "longDMS": "001 51 23.0 E",
+    "latDecimal": 50.9481,
+    "longDecimal": 1.8564,
+    "countryCode": "FR",
+    "teamCode": "TFR",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "London",
     "dateline": "LONDON",
     "code": "GB LHR",
-    "latDMS": "51 28 12.1 N",
-    "longDMS": "000 27 15.5 E",
-    "latDecimal": 51.47,
-    "longDecimal": 0.4543,
+    "latDMS": "51 30 26.0 N",
+    "longDMS": "000 7 39.0 W",
+    "latDecimal": 51.5072,
+    "longDecimal": -0.1275,
     "countryCode": "GB",
-    "teamCode": "TUK"
+    "teamCode": "TUK",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Liverpool",
+    "dateline": "LIVERPOOL, England",
+    "code": "GB LIV",
+    "latDMS": "53 24 0.0 N",
+    "longDMS": "002 59 0.0 W",
+    "latDecimal": 53.4,
+    "longDecimal": -2.9833,
+    "countryCode": "GB",
+    "teamCode": "TUK",
+    "coastal": true
+  },
+  {
+    "loadType": "citySite",
+    "name": "Plymouth",
+    "dateline": "PLYMOUTH, England",
+    "code": "GB PLY",
+    "latDMS": "50 22 17.0 N",
+    "longDMS": "004 8 32.0 W",
+    "latDecimal": 50.3714,
+    "longDecimal": -4.1422,
+    "countryCode": "GB",
+    "teamCode": "TUK",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Amundsen-Scott South Pole",
     "dateline": "SOUTH POLE",
     "code": "AQ AMS",
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
+    "latDMS": "89 59 51.19 S",
+    "longDMS": "139 16 22.41 E",
+    "latDecimal": -89.9976,
+    "longDecimal": 139.2729,
     "countryCode": "AQ",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Cape Town",
     "dateline": "CAPE TOWN, South Africa",
     "code": "ZA CPT",
-    "latDMS": "33 55 07.89 N",
+    "latDMS": "33 55 07.89 S",
     "longDMS": "018 25 23.88 E",
-    "latDecimal": 33.9249,
-    "longDecimal": 18.4241,
+    "latDecimal": -33.9189,
+    "longDecimal": 18.4233,
     "countryCode": "ZA",
-    "teamCode": "RSA"
+    "teamCode": "RSA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2603,10 +2697,24 @@
     "code": "IR IKA",
     "latDMS": "35 24 58.00 N",
     "longDMS": "051 09 08.0 E",
-    "latDecimal": 35.4095,
-    "longDecimal": 51.1552,
+    "latDecimal": 35.4161,
+    "longDecimal": 51.1522,
     "countryCode": "IR",
-    "teamCode": "IRN"
+    "teamCode": "IRN",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Bandar Abbas",
+    "dateline": "BANDAR ABBAS, Iran",
+    "code": "IR BND",
+    "latDMS": "27 11 0.00 N",
+    "longDMS": "056 16 0.0 E",
+    "latDecimal": 27.1833,
+    "longDecimal": 56.2667,
+    "countryCode": "IR",
+    "teamCode": "IRN",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2615,10 +2723,24 @@
     "code": "EG CAI",
     "latDMS": "30 07 19.00 N",
     "longDMS": "031 24 20.00 E",
-    "latDecimal": 30.0444,
-    "longDecimal": 31.2357,
+    "latDecimal": 30.1219,
+    "longDecimal": 31.4056,
     "countryCode": "EG",
-    "teamCode": "EPT"
+    "teamCode": "EPT",
+    "coastal": false
+  },
+  {
+    "loadType": "citySite",
+    "name": "Alexandria",
+    "dateline": "ALEXANDRIA, Egypt",
+    "code": "EG ALY",
+    "latDMS": "31 12 0.00 N",
+    "longDMS": "029 55 0.00 E",
+    "latDecimal": 31.2,
+    "longDecimal": 29.9167,
+    "countryCode": "EG",
+    "teamCode": "EPT",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2627,58 +2749,63 @@
     "code": "BR GIG",
     "latDMS": "22 48 36.00 S",
     "longDMS": "043 15 02.00 W",
-    "latDecimal": -22.8053,
-    "longDecimal": -43.2566,
+    "latDecimal": -22.81,
+    "longDecimal": -43.2506,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Sydney",
     "dateline": "SYDNEY",
     "code": "AU SYD",
-    "latDMS": "33 56 50.45 S",
-    "longDMS": "151 10 45.94 E",
-    "latDecimal": -33.9473,
-    "longDecimal": 151.1794,
+    "latDMS": "33 51 54.0 S",
+    "longDMS": "151 12 34.0 E",
+    "latDecimal": -33.865,
+    "longDecimal": 151.2094,
     "countryCode": "AU",
-    "teamCode": "AUS"
+    "teamCode": "AUS",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Perth",
     "dateline": "PERTH, Australia",
     "code": "AU PER",
-    "latDMS": "31 45 45.84 S",
-    "longDMS": "115 55 25.01 E",
-    "latDecimal": -31.7627,
-    "longDecimal": 115.9236,
+    "latDMS": "31 57 8.0 S",
+    "longDMS": "115 51 32.0 E",
+    "latDecimal": -31.9522,
+    "longDecimal": 115.8589,
     "countryCode": "AU",
-    "teamCode": "AUS"
+    "teamCode": "AUS",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Brisbane",
     "dateline": "BRISBANE, Australia",
     "code": "AU BNE",
-    "latDMS": "27 28 25.22 S",
-    "longDMS": "152 56 36.31 E",
-    "latDecimal": -27.4736,
-    "longDecimal": 152.9434,
+    "latDMS": "27 28 4.0 S",
+    "longDMS": "153 1 41.0 E",
+    "latDecimal": -27.4678,
+    "longDecimal": 152.0281,
     "countryCode": "AU",
-    "teamCode": "AUS"
+    "teamCode": "AUS",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Melbourne",
     "dateline": "MELBOURNE, Australia",
     "code": "AU MEL",
-    "latDMS": "37 27 4.72 S",
-    "longDMS": "144 49 38.17 E",
-    "latDecimal": -37.4513,
-    "longDecimal": 144.8272,
+    "latDMS": "37 48 49.0 S",
+    "longDMS": "144 57 47.0 E",
+    "latDecimal": -37.8136,
+    "longDecimal": 144.9631,
     "countryCode": "AU",
-    "teamCode": "AUS"
+    "teamCode": "AUS",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2687,58 +2814,63 @@
     "code": "AF KBL",
     "latDMS": "34 33 40.51 N",
     "longDMS": "69 13 12.17 E",
-    "latDecimal": 34.5612,
+    "latDecimal": 34.5613,
     "longDecimal": 69.22,
     "countryCode": "AF",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Tirana",
     "dateline": "TIRANA, Albania",
     "code": "AL TIA",
-    "latDMS": "41 21 25.45 N",
-    "longDMS": "19 53 29.16 E",
-    "latDecimal": 41.357,
-    "longDecimal": 19.8914,
+    "latDMS": "41 19 44.0 N",
+    "longDMS": "19 49 4.0 E",
+    "latDecimal": 41.3289,
+    "longDecimal": 19.8178,
     "countryCode": "AL",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Algiers",
     "dateline": "ALGIERS, Algeria",
     "code": "DZ ALG",
-    "latDMS": "36 33 11.20 N",
-    "longDMS": "3 11 39.39 E",
-    "latDecimal": 36.5531,
-    "longDecimal": 3.1942,
+    "latDMS": "36 45 14.0 N",
+    "longDMS": "3 3 32.0 E",
+    "latDecimal": 36.7539,
+    "longDecimal": 3.0589,
     "countryCode": "DZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Luanda",
     "dateline": "LUANDA, Angola",
     "code": "AO LAD",
-    "latDMS": "8 50 1.36 N",
-    "longDMS": "13 20 59.14 E",
-    "latDecimal": -8.8337,
-    "longDecimal": 13.3497,
+    "latDMS": "8 50 18.0 S",
+    "longDMS": "13 14 04.0 E",
+    "latDecimal": -8.8383,
+    "longDecimal": 13.2344,
     "countryCode": "AO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Cordoba",
     "dateline": "CORDOBA, Argentina",
     "code": "AR COR",
-    "latDMS": "37 54 58.11 S",
-    "longDMS": "4 46 35.93 W",
-    "latDecimal": 37.9161,
-    "longDecimal": -4.7766,
+    "latDMS": "31 25 0.0 S",
+    "longDMS": "64 11 0.0 W",
+    "latDecimal": -31.9161,
+    "longDecimal": -64.7766,
     "countryCode": "AR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2748,9 +2880,10 @@
     "latDMS": "34 35 15.16 S",
     "longDMS": "58 46 16.90 W",
     "latDecimal": -34.5875,
-    "longDecimal": -58.7713,
+    "longDecimal": -58.7714,
     "countryCode": "AR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2760,21 +2893,23 @@
     "latDMS": "40 9 30.65 N",
     "longDMS": "44 33 50.32 E",
     "latDecimal": 40.1585,
-    "longDecimal": 44.5639,
+    "longDecimal": 44.564,
     "countryCode": "AM",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Vienna",
     "dateline": "VIENNA",
     "code": "AT VIE",
-    "latDMS": "48 4 35.79 N",
-    "longDMS": "16 25 3.69 E",
-    "latDecimal": 48.0766,
-    "longDecimal": 16.4177,
+    "latDMS": "48 12 0.0 N",
+    "longDMS": "16 22 0.0 E",
+    "latDecimal": 48.2,
+    "longDecimal": 16.3667,
     "countryCode": "AT",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2782,23 +2917,25 @@
     "dateline": "BAKU, Azerbaijan",
     "code": "AZ DAC",
     "latDMS": "40 22 27.01 N",
-    "longDMS": "49 45 50.20 E",
-    "latDecimal": 40.3741,
-    "longDecimal": 49.7639,
+    "longDMS": "49 50 50.20 E",
+    "latDecimal": 40.3742,
+    "longDecimal": 49.8473,
     "countryCode": "AZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Dhaka",
     "dateline": "DHAKA, Bangladesh",
     "code": "BD DAC",
-    "latDMS": "23 48 30.24 N",
-    "longDMS": "90 26 56.63 E",
+    "latDMS": "23 48 30.2 N",
+    "longDMS": "90 22 56.6 E",
     "latDecimal": 23.8084,
-    "longDecimal": 90.449,
+    "longDecimal": 90.3824,
     "countryCode": "BD",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2810,7 +2947,8 @@
     "latDecimal": 53.8496,
     "longDecimal": 27.5482,
     "countryCode": "BY",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2819,22 +2957,24 @@
     "code": "BE BRU",
     "latDMS": "50 51 30.58 N",
     "longDMS": "4 24 8.74 E",
-    "latDecimal": 50.8584,
+    "latDecimal": 50.8585,
     "longDecimal": 4.4024,
     "countryCode": "BE",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
-    "name": "Belize",
-    "dateline": "BELIZE, Belize",
+    "name": "Belize City",
+    "dateline": "BELIZE CITY, Belize",
     "code": "BZ BZE",
-    "latDMS": "17 35 27.17 N",
-    "longDMS": "88 22 51.20 W",
-    "latDecimal": 17.5908,
-    "longDecimal": -88.3808,
+    "latDMS": "17 29 55.0 N",
+    "longDMS": "88 11 19.00 W",
+    "latDecimal": 17.4986,
+    "longDecimal": -88.1886,
     "countryCode": "BZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2843,34 +2983,37 @@
     "code": "BJ COO",
     "latDMS": "6 22 25.62 N",
     "longDMS": "2 25 11.06 E",
-    "latDecimal": 6.3737,
+    "latDecimal": 6.3738,
     "longDecimal": 2.4197,
     "countryCode": "BJ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Cochabamba",
     "dateline": "Cochabamba, Bolivia",
     "code": "BO CBB",
-    "latDMS": "17 25 16.00 N",
+    "latDMS": "17 25 16.00 S",
     "longDMS": "66 10 38.0 W",
     "latDecimal": -17.4211,
-    "longDecimal": -66.1771,
+    "longDecimal": -66.1772,
     "countryCode": "BO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Sarajevo",
     "dateline": "SARAJEVO, Bosnia and Herzegovina",
     "code": "BA SJJ",
-    "latDMS": "43 50 29.61 N",
+    "latDMS": "43 51 29.61 N",
     "longDMS": "18 25 11.82 E",
-    "latDecimal": 43.8415,
-    "longDecimal": 18.4199,
+    "latDecimal": 43.8582,
+    "longDecimal": 18.42,
     "countryCode": "BA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2882,7 +3025,8 @@
     "latDecimal": -24.6016,
     "longDecimal": 25.9524,
     "countryCode": "BW",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2891,10 +3035,11 @@
     "code": "BR FOR",
     "latDMS": "3 43 28.89 S",
     "longDMS": "38 28 15.71 W",
-    "latDecimal": -3.7246,
+    "latDecimal": -3.7247,
     "longDecimal": -38.471,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2903,22 +3048,24 @@
     "code": "BR REC",
     "latDMS": "8 1 57.28 S",
     "longDMS": "34 55 56.65 W",
-    "latDecimal": -8.0325,
+    "latDecimal": -8.0326,
     "longDecimal": -34.9324,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Salvador",
     "dateline": "SALVADOR, Brazil",
     "code": "BR SSA",
-    "latDMS": "812 57 5.09 S",
-    "longDMS": "38 29 28.32 W",
-    "latDecimal": -12.9514,
-    "longDecimal": -38.4912,
+    "latDMS": "12 59 5.1 S",
+    "longDMS": "38 31 0.0 W",
+    "latDecimal": -12.9847,
+    "longDecimal": -38.5167,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2930,7 +3077,8 @@
     "latDecimal": -15.9265,
     "longDecimal": -47.9522,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2939,10 +3087,11 @@
     "code": "BR GRU",
     "latDMS": "23 33 51.03 S",
     "longDMS": "46 38 10.59 W",
-    "latDecimal": -23.5641,
-    "longDecimal": -46.6362,
+    "latDecimal": -23.5642,
+    "longDecimal": -46.6363,
     "countryCode": "BR",
-    "teamCode": "BRZ"
+    "teamCode": "BRZ",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2951,10 +3100,11 @@
     "code": "BG SOF",
     "latDMS": "42 41 42.0 N",
     "longDMS": "23 24 30.0 E",
-    "latDecimal": 42.6967,
-    "longDecimal": 23.4114,
+    "latDecimal": 42.695,
+    "longDecimal": 23.4083,
     "countryCode": "BG",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2966,7 +3116,8 @@
     "latDecimal": 12.4065,
     "longDecimal": -1.5003,
     "countryCode": "BF",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2975,10 +3126,11 @@
     "code": "BI BLM",
     "latDMS": "3 22 30.63 S",
     "longDMS": "29 22 53.61 E",
-    "latDecimal": -3.3751,
-    "longDecimal": 29.3815,
+    "latDecimal": -3.3752,
+    "longDecimal": 29.3816,
     "countryCode": "BI",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -2987,22 +3139,24 @@
     "code": "KH PNH",
     "latDMS": "11 33 49.64 N",
     "longDMS": "104 53 49.62 E",
-    "latDecimal": 11.5637,
+    "latDecimal": 11.5638,
     "longDecimal": 104.8971,
     "countryCode": "KH",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Vancouver",
     "dateline": "VANCOUVER, Canada",
     "code": "CA YVR",
-    "latDMS": "49 15 48.74 N",
-    "longDMS": "-123 8 18.85 W",
-    "latDecimal": 49.2635,
-    "longDecimal": -123.1385,
+    "latDMS": "49 15 0.0 N",
+    "longDMS": "123 6 0.0 W",
+    "latDecimal": 49.25,
+    "longDecimal": -123.1,
     "countryCode": "CA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -3010,11 +3164,12 @@
     "dateline": "MONTREAL",
     "code": "CA YMQ",
     "latDMS": "45 30 32.62 N",
-    "longDMS": "-73 33 12.10 W",
+    "longDMS": "73 33 12.10 W",
     "latDecimal": 45.509,
-    "longDecimal": -73.5533,
+    "longDecimal": -73.5534,
     "countryCode": "CA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3022,23 +3177,25 @@
     "dateline": "TORONTO",
     "code": "CA YTO",
     "latDMS": "43 39 6.81 N",
-    "longDMS": "-79 22 54.16 W",
-    "latDecimal": 43.6518,
+    "longDMS": "79 22 54.16 W",
+    "latDecimal": 43.6519,
     "longDecimal": -79.3817,
     "countryCode": "CA",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
     "name": "Bangui",
     "dateline": "BANGUI, Central African Republic",
     "code": "CF BGF",
-    "latDMS": "6 37 9.87 N",
-    "longDMS": "20 56 12.13 E",
+    "latDMS": "4 22 24.0 N",
+    "longDMS": "18 33 46.0 E",
     "latDecimal": 4.36122,
     "longDecimal": 18.5549,
     "countryCode": "CF",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3047,10 +3204,11 @@
     "code": "TD NDJ",
     "latDMS": "12 6 23.30 N",
     "longDMS": "15 2 27.96 E",
-    "latDecimal": 12.1064,
+    "latDecimal": 12.1065,
     "longDecimal": 15.0411,
     "countryCode": "TD",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3058,11 +3216,12 @@
     "dateline": "MEDELLIAN, Colombia",
     "code": "CO MLN",
     "latDMS": "6 14 35.71 N",
-    "longDMS": "-75 34 23.63 W",
-    "latDecimal": 6.2432,
+    "longDMS": "75 34 23.63 W",
+    "latDecimal": 6.2433,
     "longDecimal": -75.5732,
     "countryCode": "CO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3070,11 +3229,12 @@
     "dateline": "BOGOTA, Colombia",
     "code": "CO BOG",
     "latDMS": "4 39 30.79 N",
-    "longDMS": "-74 3 12.04 W",
+    "longDMS": "74 3 12.04 W",
     "latDecimal": 4.6585,
     "longDecimal": -74.0533,
     "countryCode": "CO",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3082,11 +3242,12 @@
     "dateline": "SAN JUAN, Costa Rica",
     "code": "CR UPL",
     "latDMS": "9 57 40.07 N",
-    "longDMS": "-84 4 55.84 W",
+    "longDMS": "84 4 55.84 W",
     "latDecimal": 9.9611,
-    "longDecimal": -84.0821,
+    "longDecimal": -84.0822,
     "countryCode": "CR",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   },
   {
     "loadType": "citySite",
@@ -3094,11 +3255,12 @@
     "dateline": "ABADJAN, Cote d’Ivoire",
     "code": "CI ABJ",
     "latDMS": "5 19 15.22 N",
-    "longDMS": "-4 1 10.83 W",
-    "latDecimal": 5.3208,
-    "longDecimal": -4.0196,
+    "longDMS": "4 1 10.83 W",
+    "latDecimal": 5.3209,
+    "longDecimal": -4.0197,
     "countryCode": "CI",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -3106,22 +3268,24 @@
     "dateline": "HAVANA",
     "code": "CU HAV",
     "latDMS": "23 7 54.99 N",
-    "longDMS": "-82 21 51.00 W",
+    "longDMS": "82 21 51.00 W",
     "latDecimal": 23.1319,
-    "longDecimal": -82.3641,
+    "longDecimal": -82.3642,
     "countryCode": "CU",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": true
   },
   {
     "loadType": "citySite",
     "name": "Prague",
     "dateline": "PRAGUE",
     "code": "CZ PRG",
-    "latDMS": "23 7 54.99 N",
-    "longDMS": "-82 21 51.00 W",
+    "latDMS": "50 5 0.0 N",
+    "longDMS": "14 25 0.00 E",
     "latDecimal": 50.087,
     "longDecimal": 14.4176,
     "countryCode": "CZ",
-    "teamCode": "NPC"
+    "teamCode": "NPC",
+    "coastal": false
   }
 ]
