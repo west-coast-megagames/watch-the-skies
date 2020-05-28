@@ -1,7 +1,0 @@
-{
-    "initPath": "./",
-    "initPathWTS": "../../../wts/",
-    "dbName": "dev",
-    "loadSel": "All",
-    "jwtPrivateKey": "rawr"
-}

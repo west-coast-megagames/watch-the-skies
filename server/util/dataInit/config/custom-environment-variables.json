@@ -1,6 +1,0 @@
-{
-    "initPath": "initDataDir",
-    "dbName": "dbName",
-    "loadSel": "loadSel",
-    "jwtPrivateKey": "jwtPrivateKey"
-}
