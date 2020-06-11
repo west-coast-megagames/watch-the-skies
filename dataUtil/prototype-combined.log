@@ -1,0 +1,101 @@
+{"message":"Loading Logger Module...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:00:35"}
+{"message":"WTS INIT Server started on port 5000...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:00:35"}
+{"message":"MongoDB Connected auto-test ...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:00:35"}
+{"message":"Zone Load Counts Read: 8 Errors: 0 Saved: 8 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:15"}
+{"message":"Team Load Counts Read: 17 Errors: 0 Saved: 17 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:15"}
+{"message":"Country Load Counts Read: 204 Errors: 0 Saved: 204 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:15"}
+{"message":"Team Load Counts Read: 17 Errors: 0 Saved: 0 Updated: 17","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:17"}
+{"message":"HM Heard Island and Mcdonald Islands does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:31"}
+{"message":"HK Hong Kong does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:32"}
+{"message":"IM Isle of Man does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:33"}
+{"message":"JE Jersey does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:34"}
+{"message":"MO Macau does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:37"}
+{"message":"MQ Martinique does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:39"}
+{"message":"YT Mayotte does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:39"}
+{"message":"MS Montserrat does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:40"}
+{"message":"NR Nauru does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:41"}
+{"message":"AN Netherlands Antilles does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:41"}
+{"message":"NU Niue does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:42"}
+{"message":"NF Norfolk Island does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:42"}
+{"message":"MP Northern Mariana Islands does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:42"}
+{"message":"PN Pitcairn does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:44"}
+{"message":"RE Reunion does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:44"}
+{"message":"SH Saint Helena does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:45"}
+{"message":"PM Saint Pierre and Miquelon does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:46"}
+{"message":"GS South Georgia and the South Sandwich Islands does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:48"}
+{"message":"SJ Svalbard and Jan Mayen does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:49"}
+{"message":"TW Taiwan, Province of China does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:50"}
+{"message":"TK Tokelau does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:51"}
+{"message":"TC Turks and Caicos Islands does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:52"}
+{"message":"UM United States Minor Outlying Islands does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:53"}
+{"message":"VG Virgin Islands, British does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:54"}
+{"message":"VI Virgin Islands, U.S. does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:54"}
+{"message":"WF Wallis and Futuna does Not Exist for countryLoad.","level":"error","service":"Default Log:","timestamp":"2020-05-28 14:02:54"}
+{"message":"Country Load Counts Read: 230 Errors: 26 Saved: 0 Updated: 204","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:55"}
+{"message":"baseSite Load Counts Read: 15 Errors: 0 Saved: 15 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:02:58"}
+{"message":"City Load Counts Read: 253 Errors: 0 Saved: 253 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:29"}
+{"message":"Spacecraft Load Counts Read: 17 Errors: 0 Saved: 17 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:31"}
+{"message":"All Aircrafts succesfully deleted!","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:31"}
+{"message":"Aircraft Load Counts Read: 58 Errors: 0 Saved: 58 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:53"}
+{"message":"User Load Counts Read: 21 Errors: 0 Saved: 21 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:58"}
+{"message":"6 generic accounts available for loading","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:58"}
+{"message":"Account Load Counts For Team United States Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:58"}
+{"message":"Account Load Counts For Team Russia Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:58"}
+{"message":"Account Load Counts For Team China Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:59"}
+{"message":"Account Load Counts For Team UK Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:03:59"}
+{"message":"Account Load Counts For Team France Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:00"}
+{"message":"Account Load Counts For Team Aliens Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:00"}
+{"message":"Account Load Counts For Team Control Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:00"}
+{"message":"Account Load Counts For Team BNC Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:01"}
+{"message":"Account Load Counts For Team GNN Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:01"}
+{"message":"Account Load Counts For Team NPC Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:02"}
+{"message":"Account Load Counts For Team South Africa Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:02"}
+{"message":"Account Load Counts For Team Japan Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:02"}
+{"message":"Account Load Counts For Team Iran Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:03"}
+{"message":"Account Load Counts For Team Egypt Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:03"}
+{"message":"Account Load Counts For Team Brazil Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:04"}
+{"message":"Account Load Counts For Team Australia Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:04"}
+{"message":"Account Load Counts For Team India Read: 6 Errors: 0 Saved: 6 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:04"}
+{"message":"Total Account Load Counts Read: 102 Errors: 0 Saved: 102 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:04"}
+{"message":"All Militarys succesfully deleted!","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:04"}
+{"message":"Military Load Counts Read: 118 Errors: 0 Saved: 118 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:29"}
+{"message":"All Squads succesfully deleted!","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:29"}
+{"message":"Squad Load Counts Read: 15 Errors: 0 Saved: 15 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"All Articles succesfully deleted!","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Congo Goverment Decries Afican Representation add saved to article collection","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Project Nexus Implies USA World Dominance add saved to article collection","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"French President Says The French Language Should Be Used add saved to article collection","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Article Load Counts Read: 3 Errors: 0 Saved: 3 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"All Researchs succesfully deleted!","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bc0f9cd97ed06b006c","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bc0f9cd97ed06b006d","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bc0f9cd97ed06b006e","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bc0f9cd97ed06b006f","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bc0f9cd97ed06b0070","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b0076","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b0077","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b0078","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:32"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b0079","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b007a","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b007b","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Improved Processing add saved to research collection for team id 5ed026bd0f9cd97ed06b007c","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Knowledge Research Load Credit Team Found, New Research: Physics I, Credit Team: USA","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Physics I add saved to research collection","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Research Load Counts Read: 2 Errors: 0 Saved: 13 Updated: 0","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"initLoadAll Done","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:33"}
+{"message":"Zone Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:04:42"}
+{"message":"Country Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:06:08"}
+{"message":"Team Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:06:09"}
+{"message":"Facility Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:06:11"}
+{"message":"Site Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:06:36"}
+{"message":"User Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:06:36"}
+{"message":"Equipment Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:01"}
+{"message":"Aircraft Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:17"}
+{"message":"Military Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:37"}
+{"message":"Squad Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:39"}
+{"message":"Article Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:40"}
+{"message":"Research Check Done: true","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:40"}
+{"message":"initCheckAll Done","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:07:40"}
+{"message":"Loading Logger Module...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:08:28"}
+{"message":"WTS INIT Server started on port 5000...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:08:28"}
+{"message":"MongoDB Connected auto-test ...","level":"info","service":"Default Log:","timestamp":"2020-05-28 14:08:29"}
