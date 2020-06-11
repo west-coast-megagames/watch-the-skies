@@ -5,6 +5,7 @@ import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
+import Globe from './tabs/ops/globe_example';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import ExcomOps from './tabs/ops/excom';
@@ -14,14 +15,35 @@ class Operations extends Component {
         super();
         this.state = {
           tab: 'dashboard',
-          account: {}
+          account: {},
+          markers: []
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.setAccount = this.setAccount.bind(this);
+        this.setMarkers = this.setMarkers.bind(this);
     }
 
     componentDidMount() {
-        this.setAccount()
+        this.setAccount();
+        this.setMarkers();
+    }
+
+    setMarkers() {
+        let markers = [];
+        let i = 0;
+        for (let site of this.props.sites) {
+            let marker = {
+                id: i,
+                type: site.type,
+                coordinates: [ site.geoDecimal.latDecimal, site.geoDecimal.longDecimal],
+                name: site.name,
+                color: site.type === 'City' ? 'red' : 'blue',
+                value: site.type === 'City' ? 5 : 2
+            }
+            markers.push(marker);
+            i++
+        }
+        this.setState({markers});
     }
 
     setAccount() {
@@ -52,7 +74,10 @@ class Operations extends Component {
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        <h5>No dashboard has been coded for the Operations Module!</h5>
+                        <Globe 
+                            sites={ this.props.sites }
+                            markers={ this.state.markers }
+                        />
                     )}/>
                     <Route path={`${url}/excom`} render={() => (
                         <ExcomOps
@@ -89,7 +114,5 @@ class Operations extends Component {
          );
     }
  }
-
-
 
 export default Operations;
