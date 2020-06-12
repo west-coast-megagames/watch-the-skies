@@ -7,23 +7,30 @@
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
     "axios": "^0.18.1",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
     "mdbreact": "^4.26.0",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
-    "react-router-dom": "^5.1.2",
+    "react-globe": "^4.0.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
     "rsuite": "^4.4.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "three": "^0.117.1"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "npm run server --prefix ../server",
+    "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "eslintConfig": {
     "extends": "react-app"

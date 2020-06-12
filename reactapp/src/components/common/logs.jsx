@@ -64,12 +64,10 @@ const ResearchLog = props => {
         ).toTimeString()}`}
         collapsible
       >
-        <p>
-          <b>Team:</b> {log.team.name} | <b>Lab:</b> {log.lab.name}
-        </p>
-        <p>
-          <b>Funding Level:</b> {log.funding}
-        </p>
+        <p><b>Team:</b> {log.team.name} | <b>Lab:</b> {log.lab.name}</p>
+        <p><b>Funding Level:</b> {log.funding}</p>
+        <p><b>Progress:</b> {log.progress.endingProgress}</p>
+        <p><b>Active Project:</b> SECRET PROJECT</p>
         <ul>
           {results.map(el => (
             <li>{el}</li>
