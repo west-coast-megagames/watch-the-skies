@@ -77,6 +77,14 @@
 .artCont button {
   float: right;
 }
+.svg-map {
+	width: 100%;
+	height: 100%;
+	stroke: #666;
+	stroke-width: 1;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
 
 @keyframes App-logo-spin {
   from {
