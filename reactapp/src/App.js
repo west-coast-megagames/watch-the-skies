@@ -58,7 +58,7 @@ class App extends Component {
     megabucks: 0,
     alerts: [],
     articles: [],
-    expand: true,
+    expand: false,
     active: '1'
   }
 
@@ -153,7 +153,7 @@ class App extends Component {
                   <Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
                   <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
                   <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
-                  {/*<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>*/}
+                  <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
                   {team !== null ? team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
@@ -246,7 +246,7 @@ class App extends Component {
                     )}/>
                     <Route path="/mosh" component={ MoshTest } />
                     <Route path="/not-found" component={ NotFound } />
-                    <Redirect from="/" exact to="login" />
+                    <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
                 </Switch>
             </Content>

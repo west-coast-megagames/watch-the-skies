@@ -38,10 +38,11 @@ class NavBar extends Component {
         const clock = `${minutes}:${seconds}`;
         const pr = this.props.team === null ? 'PR Level: Unknown |' : `PR Level: ${this.props.team.prLevel} | `;
         const megabuckDisplay = ` $M${this.props.megabucks} | `
+        const brandLink = this.props.team === null ? '/' : '/home';
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <Link className="navbar-brand" to="/">WCM</Link>
+                <Link className="navbar-brand" to={brandLink}>WCM</Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
@@ -61,11 +62,10 @@ class NavBar extends Component {
                 <span className="navbar-text mr-md-5">{phase} {clock} <FontAwesomeIcon icon={faClock} /> | {turn}</span>
                 <span className="navbar-text mr-1">{pr}</span>
                 <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span>
-                <span className="navbar-text mr-1"> {this.props.team === null ? 'Sign In' : this.props.team.name} </span>
-                <TeamAvatar size={'sm'} teamCode={this.props.team === null ? null : this.props.team.teamCode} />
+                <span className="navbar-text mr-1"> {this.props.team === null ? <Link to="/">Sign In</Link> : this.props.team.name} </span>
+                <TeamAvatar size={'xs'} teamCode={this.props.team === null ? null : this.props.team.teamCode} />
                 <div><audio ref={React.createRef()} src="./fifteen-minutes.ogg" autoPlay/></div>
             </nav>
-            
         );
     }
 }

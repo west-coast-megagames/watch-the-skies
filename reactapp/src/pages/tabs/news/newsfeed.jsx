@@ -1,6 +1,6 @@
 import React from "react"; // React import
 import { Container } from "rsuite";
-import { Panel, PanelGroup } from "rsuite";
+import { Panel, PanelGroup, IconButton, ButtonGroup, ButtonToolbar, Icon } from "rsuite";
 import TeamAvatar from "../../../components/common/teamAvatar";
 
 const NewsFeed = props => {
@@ -13,21 +13,25 @@ const NewsFeed = props => {
   return (
     <Container>
       <h5 className="newsFeedHeader">{props.agency} News Feed</h5>
-      <PanelGroup accordion bordered>
+      <PanelGroup>
         {props.articles.map(article => (
             <Panel
               key={article._id}
-              header={<span><TeamAvatar size={"sm"} teamCode={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5></span>}
-              collapsible
+              header={
+                <span>
+                  <TeamAvatar size={"sm"} teamCode={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5>
+                  <ButtonToolbar style={{float: 'right'}}>
+                    <ButtonGroup>
+                      <IconButton icon={<Icon icon="edit" />} />
+                      <IconButton icon={<Icon icon="eye-slash" />} onClick={() => props.del(article)} />
+                      <IconButton icon={<Icon icon="trash" />} color="red"/>
+                    </ButtonGroup>
+                    <IconButton icon={<Icon icon="file-text" />} color="green"/>
+                  </ButtonToolbar>
+                </span>}
               bordered
             >
               <p>{article.articleBody}</p>
-              <button style={{display: 'inline'}}
-              onClick={() => props.del(article)}
-              className="btn btn-danger btn-sm m-1"
-            >
-              Trash
-            </button>
             </Panel>
         ))}
       </PanelGroup>
