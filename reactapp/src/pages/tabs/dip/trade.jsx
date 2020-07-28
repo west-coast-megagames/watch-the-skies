@@ -1,6 +1,6 @@
 import React, {Component, useState } from 'react'; // React import
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Sidebar, FlexboxGrid, Button, ButtonGroup, IconButton, Icon, Tag, TagGroup } from 'rsuite';
+import { Container, Content, Sidebar, FlexboxGrid, Button, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
 import { Form, ControlLabel, RadioGroup, Radio, FormGroup, FormControl, HelpBlock, CheckPicker, DateRangePicker, Checkbox, CheckboxGroup, SelectPicker, TagPicker, InputPicker, Slider, DatePicker } from 'rsuite';
 import axios from 'axios';
 
@@ -82,51 +82,42 @@ const TradeOffer = (props) => {
 
     const [formValue, setFormValue] = useState({
         input:
-          "React Suite is a set of react component libraries for enterprise system products. Built by HYPERS front-end team and UX team, mainly serving company's big data products. After three major revisions, a large number of components and rich functionality have been accumulated.",
-        checkbox: ['Node.js', 'CSS3', 'HTML5'],
-        radio: 'HTML5',
-        slider: 10,
-        datePicker: new Date(),
-        dateRangePicker: [new Date(), new Date()],
-        checkPicker: [
+          "I want all your things!!.",
+        slider: 0,
+        aircraft: [
           'Eugenia',
-          'Kariane',
-          'Louisa',
           'Marty',
           'Kenya',
           'Hal',
           'Julius',
-          'Travon',
-          'Vincenza',
-          'Dominic',
-          'Pearlie',
           'Tyrel',
           'Jaylen',
           'Rogelio'
         ],
-        selectPicker: 'Louisa',
-        tagPicker: [
-          'Eugenia',
-          'Kariane',
-          'Louisa',
-          'Marty',
-          'Kenya',
-          'Hal',
-          'Julius',
-          'Travon',
-          'Vincenza',
-          'Dominic',
-          'Pearlie',
-          'Tyrel',
-          'Jaylen',
-          'Rogelio'
+        intel: [
+            'Kariane',
+            'Rogelio'
         ],
-        inputPicker: 'Rogelio',
-        cascader: '1-1-5',
-        multiCascader: ['1-1-4', '1-1-5']
+        research: [
+            'Julius',
+            'Hal',
+            'Julius',
+            'Tyrel',
+            'Rogelio'
+        ],
+        sites: [
+            'Eugenia',
+            'Hal',
+            'Julius',
+            'Rogelio'
+        ],
+        equipment: [
+            'Julius',
+            'Rogelio'
+        ],
       });
 
-      const [mode, setMode] = useState('readonly');
+      const [mode, setMode] = useState('disabled');
       const disabled = mode === 'disabled';
       const readOnly = mode === 'readonly';
 
@@ -135,7 +126,7 @@ const TradeOffer = (props) => {
 
             <ButtonGroup>
                 <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => setMode("normal")}></IconButton>
-                <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("readonly")}></IconButton>
+                <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}></IconButton>
                 <IconButton size='sm' icon={<Icon icon="trash" />}></IconButton>
             </ButtonGroup>
             <TagGroup style={{display: 'inline', paddingLeft: '20px'}}>
@@ -146,145 +137,130 @@ const TradeOffer = (props) => {
             </TagGroup>
             <h2><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h2>
             <Form formValue={formValue} onChange={formValue => setFormValue(formValue)}>
-                <FormGroup>
-                    <ControlLabel>Input</ControlLabel><HelpBlock tooltip>This is a tooltip description.</HelpBlock>
-                    <FormControl
-                    name="input"
-                    rows={5} 
-                    componentClass="textarea"
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                    <HelpBlock tooltip>This is a tooltip description.</HelpBlock>
-                </FormGroup>
 
-                <FormGroup>
-                    <ControlLabel>Checkbox</ControlLabel>
-                    <FormControl
-                    name="checkbox"
-                    accepter={CheckboxGroup}
-                    inline
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    >
-                    <Checkbox disabled={disabled} value="Node.js">
-                        Node.js
-                    </Checkbox>
-                    <Checkbox disabled={disabled} value="Webpack">
-                        Webpack
-                    </Checkbox>
-                    <Checkbox disabled={disabled} value="CSS3">
-                        CSS3
-                    </Checkbox>
-                    <Checkbox disabled={disabled} value="Javascript">
-                        Javascript
-                    </Checkbox>
-                    <Checkbox disabled={disabled} value="HTML5">
-                        HTML5
-                    </Checkbox>
-                    </FormControl>
-                    <HelpBlock>This default description.</HelpBlock>
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>Radio</ControlLabel>
-                    <FormControl
-                    name="radio"
-                    accepter={RadioGroup}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    >
-                    <Radio disabled={disabled} value="Node.js">
-                        Node.js
-                    </Radio>
-                    <Radio disabled={disabled} value="Webpack">
-                        Webpack
-                    </Radio>
-                    <Radio disabled={disabled} value="CSS3">
-                        CSS3
-                    </Radio>
-                    <Radio disabled={disabled} value="Javascript">
-                        Javascript
-                    </Radio>
-                    <Radio disabled={disabled} value="HTML5">
-                        HTML5
-                    </Radio>
-                    </FormControl>
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>Slider</ControlLabel>
+                {!disabled ? <FormGroup>
+                    <ControlLabel><Icon icon="money" /> Megabucks</ControlLabel>
                     <FormControl
                     accepter={Slider}
                     min={0}
-                    max={20}
+                    max={props.account === undefined ? 100 : props.account.balance}
                     name="slider"
                     label="Level"
                     style={{ width: 200, margin: '10px 0' }}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
-                </FormGroup>
+                </FormGroup> : null }
+                {disabled ? <PanelGroup>
+                    <Panel>
+                        <h5><Icon icon="money" /> M$: {formValue.slider}</h5>
+                    </Panel>
+                </PanelGroup> : null }
 
-                <FormGroup>
-                    <ControlLabel>DatePicker</ControlLabel>
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Aircraft</ControlLabel>
                     <FormControl
-                    name="datePicker"
-                    accepter={DatePicker}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>DateRangePicker</ControlLabel>
-                    <FormControl
-                    name="dateRangePicker"
-                    accepter={DateRangePicker}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>CheckPicker</ControlLabel>
-                    <FormControl
-                    name="checkPicker"
-                    accepter={CheckPicker}
-                    data={pickerData}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>SelectPicker</ControlLabel>
-                    <FormControl
-                    name="selectPicker"
-                    accepter={SelectPicker}
-                    data={pickerData}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup>
-
-                <FormGroup>
-                    <ControlLabel>TagPicker</ControlLabel>
-                    <FormControl
-                    name="tagPicker"
+                    name="aircraft"
                     accepter={TagPicker}
                     data={pickerData}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
-                </FormGroup>
+                </FormGroup> : null }
 
-                <FormGroup>
-                    <ControlLabel>InputPicker</ControlLabel>
+                {disabled && formValue.aircraft.length > 0 ? <Panel header={<span><b>Aircraft</b> - {formValue.aircraft.length} Aircraft</span>} collapsible>
+                    <PanelGroup>{formValue.aircraft.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                </Panel> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Intel</ControlLabel>
                     <FormControl
-                    name="inputPicker"
-                    accepter={InputPicker}
+                    name="intel"
+                    accepter={TagPicker}
                     data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                {disabled && formValue.intel.length > 0 ? <Panel header={<span><b>Intel</b> - {formValue.intel.length} Intelegence Reports</span>} collapsible>
+                    <PanelGroup>{formValue.intel.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                </Panel> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Research</ControlLabel>
+                    <FormControl
+                    name="research"
+                    accepter={TagPicker}
+                    data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                {disabled && formValue.research.length > 0 ? <Panel header={<span><b>Research</b> - {formValue.research.length} Research reports</span>} collapsible>
+                    <PanelGroup>{formValue.research.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                </Panel> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Sites</ControlLabel>
+                    <FormControl
+                    name="sites"
+                    accepter={TagPicker}
+                    data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                {disabled && formValue.sites.length > 0 ? <Panel header={<span><b>Sites</b> - {formValue.sites.length} Sites</span>} collapsible>
+                    <PanelGroup>{formValue.sites.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                </Panel> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Sites</ControlLabel>
+                    <FormControl
+                    name="sites"
+                    accepter={TagPicker}
+                    data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Equipment</ControlLabel>
+                    <FormControl
+                    name="equipment"
+                    accepter={TagPicker}
+                    data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                {disabled && formValue.equipment.length > 0 ? <Panel header={<span><b>Equipment</b> - {formValue.equipment.length} Equipment</span>} collapsible>
+                    <PanelGroup>{formValue.equipment.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                </Panel> : null }
+
+                {!disabled ? <FormGroup>
+                    <ControlLabel>Equipment</ControlLabel>
+                    <FormControl
+                    name="equipment"
+                    accepter={TagPicker}
+                    data={pickerData}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    />
+                </FormGroup> : null }
+
+                <FormGroup >
+                    <ControlLabel>Comment Input</ControlLabel>
+                    <FormControl
+                    name="input"
+                    rows={5}
+                    width='100%'
+                    componentClass="textarea"
                     disabled={disabled}
                     readOnly={readOnly}
                     />
@@ -325,7 +301,7 @@ class Trade extends Component {
                 <Content>
                     <FlexboxGrid>
                         <FlexboxGrid.Item colspan={12}>
-                            <TradeOffer team={myTrade.team} />
+                            <TradeOffer account={this.props.account} team={myTrade.team} />
                         </FlexboxGrid.Item>
                         <FlexboxGrid.Item colspan={12}>
                             <TradeOffer team={theirTrade.team} />

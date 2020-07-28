@@ -68,6 +68,11 @@
   right: 10px;
 }
 
+.tradelist {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 /* News Feed & Articles */
 .newsFeedHeader {
   padding-bottom: 10px;
