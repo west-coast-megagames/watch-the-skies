@@ -5,6 +5,8 @@ import { faFileContract, faHandsHelping, faUniversity, faUserTie } from '@fortaw
 import { Switch, Route, NavLink, Redirect } from 'react-router-dom';
 import LoginLink from '../components/common/loginLink';
 
+import Trade from './tabs/dip/trade'
+
 class Diplomacy extends Component {
     constructor() {
         super();
@@ -43,7 +45,7 @@ class Diplomacy extends Component {
                         <h5>The envoy system for the Diplomacy Module has not been created!</h5>
                     )}/>
                     <Route path={`${url}/trades`} render={() => (
-                        <h5>The trade system for the Diplomacy Module has not been created!</h5>
+                        <Trade team={this.props.team} teams={this.props.teams} />
                     )}/>
                     <Route path={`${url}/treaties`} render={() => (
                         <h5>The treaty system for the Diplomacy Module has not been created!</h5>

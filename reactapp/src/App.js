@@ -216,6 +216,7 @@ class App extends Component {
                     <Route path="/dip" render={(props) => (
                       <Diplomacy {...props}
                           team = { this.state.team }
+                          teams = { this.state.teams }
                           alert={ this.addAlert }
                           login={ this.state.login }
                       />
