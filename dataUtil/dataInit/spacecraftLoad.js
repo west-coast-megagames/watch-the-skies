@@ -121,6 +121,8 @@ async function loadSpacecraft(iData, rCounts) {
           longDecimal: newLongDecimal,
         },
       });
+      spacecraft.gameState = [];
+      spacecraft.serviceRecord = [];
 
       if (iData.teamCode != "") {
         let team = await Team.findOne({ teamCode: iData.teamCode });

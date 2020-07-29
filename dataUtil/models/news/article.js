@@ -20,6 +20,7 @@ const ArticleSchema = new Schema({
   tags: [{ type: String }],
   imageSrc: { type: String },
   agency: { type: String },
+  gameState: [],
 });
 
 let Article = mongoose.model("article", ArticleSchema);
@@ -28,7 +29,6 @@ function validateArticle(article) {
   const schema = {
     headline: Joi.string().min(1).max(100).required(),
     articleBody: Joi.string().min(1).max(1000),
-    gameState: [],
   };
 
   return Joi.validate(article, schema, { allowUnknown: true });

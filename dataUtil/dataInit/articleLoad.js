@@ -84,6 +84,7 @@ async function loadArticle(iData, rCounts) {
       imageSrc: iData.imageSrc,
       date: convDate,
     });
+    article.gameState = [];
 
     if (iData.publisher != "") {
       let team = await Team.findOne({ teamCode: iData.publisher });

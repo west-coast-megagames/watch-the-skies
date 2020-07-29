@@ -1,6 +1,7 @@
 {
-    "jwtPrivateKey": "jwtPrivateKey",
-    "initPath": "initDataDir",
-    "dbName": "dbName",
-    "loadSel": "All"
+  "jwtPrivateKey": "jwtPrivateKey",
+  "initPath": "./dataInit/",
+  "initPathWTS": "../../",
+  "dbName": "dbName",
+  "loadSel": "All"
 }

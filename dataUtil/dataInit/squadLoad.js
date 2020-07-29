@@ -80,6 +80,8 @@ async function loadSquad(iData, rCounts) {
         name: iData.name,
         type: iData.type,
       });
+      squad.gameState = [];
+      squad.serviceRecord = [];
 
       if (iData.team != "") {
         let team = await Team.findOne({ teamCode: iData.team });

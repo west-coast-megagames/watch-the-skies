@@ -105,6 +105,10 @@ async function loadBase(iData, rCounts) {
         },
         coastal: iData.coastal,
       });
+
+      baseSite.serviceRecord = [];
+      baseSite.gameState = [];
+
       let { error } = validateBase(baseSite);
       if (error) {
         //baseSiteLoadDebugger("New BaseSite Validate Error", iData.name, error.message);
