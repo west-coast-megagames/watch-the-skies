@@ -1,4 +1,5 @@
 const IntercptLog = require('../../models/logs/intereptLog');
+const { Aircraft } = require('../../models/ops/aircraft');
 const Alert = require('../../models/logs/alert')
 const interceptDebugger = require('debug')('app:intercept_report');
 
@@ -67,6 +68,12 @@ async function interceptLog (log) {
     let newLog = new IntercptLog({date,...timestamp,...log});
 
     newLog = await newLog.save();
+    
+    // Saves the log in the aircrafts survice record...
+    let aircraft = await Aircraft.findById(newLog.unit)
+    aircraft.serviceRecord.push(newLog._id);
+
+    await aircraft.save();
 
     interceptDebugger(newLog);
  };
