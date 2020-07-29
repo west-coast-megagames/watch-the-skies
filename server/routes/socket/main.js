@@ -15,7 +15,7 @@ module.exports = function(io) {
     io.on('connection', (client) => {
         logger.info(`New client subscribing to main socket... ${client.id}`);
         MainClients.connections.push(client);
-        logger.info(`${MainClients.connections.length} ${MainClients.connections.length === 1 ? 'client' : 'clients'} subscribed to update service...`);
+        logger.info(`${MainClients.connections.length} ${MainClients.connections.length === 1 ? 'client' : 'clients'} subscribed to main socket server...`);
 
         client.on('new user', (data) => {
             MainClients.saveTeam(data.team, client);

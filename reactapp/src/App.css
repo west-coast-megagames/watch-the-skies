@@ -27,7 +27,7 @@
   padding-left: 15px;
   padding-right: 15px;
   overflow-y: auto;
-  height: calc(100vh - 160px);
+  height: calc(100vh - 100px);
 }
 
 .game-timeline {
@@ -60,6 +60,17 @@
 
 .game-timeline .rs-panel-collapsible .rs-panel-heading::before {
   top: 5px;
+}
+
+.trade .rs-avatar {
+  position: relative;
+  top: 6px;
+  right: 10px;
+}
+
+.tradelist {
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 /* News Feed & Articles */
