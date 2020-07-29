@@ -53,6 +53,7 @@ const CountrySchema = new Schema({
   },
   formalName: { type: String },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 CountrySchema.methods.validateCountry = function (country) {

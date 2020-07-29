@@ -26,6 +26,7 @@ const EquipmentSchema = new Schema({
     destroyed: { type: Boolean, default: false },
   },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 let Equipment = mongoose.model("Equipment", EquipmentSchema);

@@ -24,6 +24,7 @@ const ZoneSchema = new Schema({
   },
   satellite: [{ type: Schema.Types.ObjectId, ref: "Site" }],
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 ZoneSchema.methods.validateZone = function (zone) {

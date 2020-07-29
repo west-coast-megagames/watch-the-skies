@@ -40,6 +40,7 @@ const TeamSchema = new Schema({
     enum: ["N", "A", "M", "C", "P"],
   },
   homeCountry: { type: Schema.Types.ObjectId, ref: "Country" },
+  gameState: [],
 });
 
 TeamSchema.methods.validateTeam = function (team) {

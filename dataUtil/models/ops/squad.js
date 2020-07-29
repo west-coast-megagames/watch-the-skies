@@ -24,6 +24,7 @@ const SquadSchema = new Schema({
     secret: { type: Boolean, default: false },
   },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 SquadSchema.methods.deploy = async (unit, country) => {

@@ -33,6 +33,7 @@ const UserSchema = new Schema({
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   roles: [{ type: String, enum: ["Player", "Control", "Admin"] }],
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 UserSchema.methods.generateAuthToken = function () {

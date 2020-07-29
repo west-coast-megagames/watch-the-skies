@@ -18,6 +18,7 @@ const FacilitySchema = new Schema({
   },
   hidden: { type: Boolean, default: false },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 let Facility = mongoose.model("Facility", FacilitySchema);
