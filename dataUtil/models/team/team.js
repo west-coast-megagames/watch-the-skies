@@ -40,6 +40,7 @@ const TeamSchema = new Schema({
     enum: ["N", "A", "M", "C", "P"],
   },
   homeCountry: { type: Schema.Types.ObjectId, ref: "Country" },
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
 });
 
