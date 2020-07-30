@@ -9,6 +9,16 @@ require("winston-mongodb");
 
 const supportsColor = require("supports-color");
 
+// type are Terrestrial(earth) and Alien (T or A)
+const typeVals = ["T", "A"];
+
+function inArray(array, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] == value) return true;
+  }
+  return false;
+}
+
 async function chkCountry(runFlag) {
   // get sites once
   let sFinds = await Site.find();
@@ -23,6 +33,37 @@ async function chkCountry(runFlag) {
     */
     if (!country.hasOwnProperty("model")) {
       logger.error(`model missing for Country ${country.code} ${country._id}`);
+    }
+
+    if (!country.hasOwnProperty("type")) {
+      logger.error(`type missing for Country ${country.code} ${country._id}`);
+    } else {
+      if (!inArray(typeVals, country.type)) {
+        logger.error(
+          `Invalid type ${country.type} for Country ${country.code} ${country._id}`
+        );
+      }
+    }
+
+    if (!country.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Country ${country.code} ${country._id}`
+      );
+    }
+
+    if (!country.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for Country ${country.code} ${country._id}`
+      );
+    } else {
+      for (let i = 0; i < country.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(country.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Country ${country.code} ${country._id} has an invalid serviceRecord reference ${i}: ${country.serviceRecord[i]}`
+          );
+        }
+      }
     }
 
     if (!country.hasOwnProperty("loadZoneCode")) {
@@ -59,20 +100,40 @@ async function chkCountry(runFlag) {
       );
     }
 
-    if (!country.hasOwnProperty("type")) {
-      logger.error(`type missing for Country ${country.code} ${country._id}`);
-    }
-
     if (!country.hasOwnProperty("code")) {
       logger.error(`code missing for Country ${country.code} ${country._id}`);
+    } else {
+      if (
+        country.code === "" ||
+        country.code == undefined ||
+        country.code == null
+      ) {
+        logger.error(`code is blank for Country ${country._id}`);
+      }
     }
 
     if (!country.hasOwnProperty("name")) {
       logger.error(`name missing for Country ${country.code} ${country._id}`);
+    } else {
+      if (
+        country.name === "" ||
+        country.name == undefined ||
+        country.name == null
+      ) {
+        logger.error(
+          `name is blank for Country ${country.code} ${country._id}`
+        );
+      }
     }
 
     if (!country.hasOwnProperty("unrest")) {
       logger.error(`unrest missing for Country ${country.code} ${country._id}`);
+    } else {
+      if (isNaN(country.unrest)) {
+        logger.error(
+          `Country ${country.code} ${country._id} unrest is not a number ${country.unrest}`
+        );
+      }
     }
 
     if (!country.hasOwnProperty("coastal")) {
@@ -133,12 +194,33 @@ async function chkCountry(runFlag) {
 
     if (!country.hasOwnProperty("stats")) {
       logger.error(`stats missing for Country ${country.code} ${country._id}`);
+    } else {
+      if (!country.stats.hasOwnProperty("sciRate")) {
+        logger.error(
+          `stats.sciRate missing for Country ${country.code} ${country._id}`
+        );
+      }
+      if (!country.stats.hasOwnProperty("balance")) {
+        logger.error(
+          `stats.balance missing for Country ${country.code} ${country._id}`
+        );
+      }
     }
 
     if (!country.hasOwnProperty("formalName")) {
       logger.error(
         `formalName missing for Country ${country.code} ${country._id}`
       );
+    } else {
+      if (
+        country.formalName === "" ||
+        country.formalName == undefined ||
+        country.formalName == null
+      ) {
+        logger.error(
+          `formalName is blank for Country ${country.code} ${country._id}`
+        );
+      }
     }
 
     try {

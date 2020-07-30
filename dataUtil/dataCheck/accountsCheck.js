@@ -55,6 +55,12 @@ async function chkAccount(runFlag) {
       );
     }
 
+    if (!account.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Account ${account.name} ${account.owner} ${account._id}`
+      );
+    }
+
     if (!account.hasOwnProperty("deposits")) {
       logger.error(
         `deposits missing for Account ${account.name} ${account.owner} ${account._id}`

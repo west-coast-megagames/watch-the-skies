@@ -132,6 +132,12 @@ async function chkAircraft(runFlag) {
       );
     }
 
+    if (!aircraft.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Aircraft ${aircraft.name} ${aircraft._id}`
+      );
+    }
+
     if (!aircraft.hasOwnProperty("type")) {
       logger.error(
         `type missing for Aircraft ${aircraft.name} ${aircraft._id}`
@@ -146,6 +152,14 @@ async function chkAircraft(runFlag) {
 
     if (!aircraft.hasOwnProperty("name")) {
       logger.error(`name missing for Aircraft ${aircraft._id}`);
+    } else {
+      if (
+        aircraft.name === "" ||
+        aircraft.name == undefined ||
+        aircraft.name == null
+      ) {
+        logger.error(`name is blank for Aircraft ${aircraft._id}`);
+      }
     }
 
     if (!aircraft.hasOwnProperty("mission")) {

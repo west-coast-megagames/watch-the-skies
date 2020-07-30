@@ -27,6 +27,12 @@ async function chkArticle(runFlag) {
       );
     }
 
+    if (!article.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Article ${article.headline} ${article._id}`
+      );
+    }
+
     if (!article.hasOwnProperty("date")) {
       logger.error(
         `date missing for Article ${article.headline} ${article._id}`
@@ -66,18 +72,48 @@ async function chkArticle(runFlag) {
       logger.error(
         `dateline missing for Article ${article.headline} ${article._id}`
       );
+    } else {
+      if (
+        article.dateline === "" ||
+        article.dateline == undefined ||
+        article.dateline == null
+      ) {
+        logger.error(
+          `dateline is blank for Article ${article.headline} ${article._id}`
+        );
+      }
     }
 
     if (!article.hasOwnProperty("headline")) {
       logger.error(
         `headline missing for Article ${article.headline} ${article._id}`
       );
+    } else {
+      if (
+        article.headline === "" ||
+        article.headline == undefined ||
+        article.headline == null
+      ) {
+        logger.error(
+          `headline is blank for Article ${article.headline} ${article._id}`
+        );
+      }
     }
 
     if (!article.hasOwnProperty("articleBody")) {
       logger.error(
         `articleBody missing for Article ${article.headline} ${article._id}`
       );
+    } else {
+      if (
+        article.articleBody === "" ||
+        article.articleBody == undefined ||
+        article.articleBody == null
+      ) {
+        logger.error(
+          `articleBody is blank for Article ${article.headline} ${article._id}`
+        );
+      }
     }
 
     if (!article.hasOwnProperty("likes")) {
