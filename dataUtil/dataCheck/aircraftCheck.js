@@ -145,7 +145,7 @@ async function chkAircraft(runFlag) {
     } else {
       if (!inArray(typeVals, aircraft.type)) {
         logger.error(
-          `Invalid type ${aircraft.type} for User ${aircraft.name} ${aircraft._id}`
+          `Invalid type ${aircraft.type} for Aircraft ${aircraft.name} ${aircraft._id}`
         );
       }
     }

@@ -18,6 +18,16 @@ require("winston-mongodb");
 
 const supportsColor = require("supports-color");
 
+// type are Terrestrial(earth) and Alien (T or A)
+const typeVals = ["Fleet", "Corps"];
+
+function inArray(array, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] == value) return true;
+  }
+  return false;
+}
+
 async function chkMilitary(runFlag) {
   for (const military of await Military.find()
     //.populate("team", "name teamType")       does not work with .lean()
@@ -49,10 +59,26 @@ async function chkMilitary(runFlag) {
       );
     }
 
+    if (!military.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Military ${military.name} ${military._id}`
+      );
+    }
+
     if (!military.hasOwnProperty("name")) {
       logger.error(
         `name missing for Military ${military.name} ${military._id}`
       );
+    } else {
+      if (
+        military.name === "" ||
+        military.name == undefined ||
+        military.name == null
+      ) {
+        logger.error(
+          `name is blank for Military ${military.name} ${military._id}`
+        );
+      }
     }
 
     if (!military.hasOwnProperty("team")) {
@@ -203,6 +229,11 @@ async function chkMilitary(runFlag) {
         `type missing for Military ${military.name} ${military._id}`
       );
     } else {
+      if (!inArray(typeVals, military.type)) {
+        logger.error(
+          `Invalid type ${military.type} for Military ${military.name} ${military._id}`
+        );
+      }
       if (military.type === "Fleet" || military.type === "Corps") {
         if (!military.hasOwnProperty("stats")) {
           logger.error(

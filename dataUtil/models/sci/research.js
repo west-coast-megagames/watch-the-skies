@@ -73,7 +73,7 @@ const AnalysisResearch = Research.discriminator(
         site: { type: Schema.Types.ObjectId, ref: "Site" },
         outcome: {
           type: String,
-          enum: ["Destroy", "Damage", "Kill", "Perserve"],
+          enum: ["Destroy", "Damage", "Kill", "Preserve"],
         },
       },
     ],

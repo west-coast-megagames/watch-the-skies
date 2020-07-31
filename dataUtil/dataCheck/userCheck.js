@@ -45,8 +45,35 @@ async function chkUser(runFlag) {
       logger.error(`model missing for User ${user.username} ${user._id}`);
     }
 
+    if (!user.hasOwnProperty("gameState")) {
+      logger.error(`gameState missing for User ${user.username} ${user._id}`);
+    }
+
+    if (!user.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for User ${user.username} ${user._id}`
+      );
+    } else {
+      for (let i = 0; i < user.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(user.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `User ${user.username} ${user._id} has an invalid serviceRecord reference ${i}: ${user.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!user.hasOwnProperty("username")) {
       logger.error(`username missing for User ${user.name} ${user._id}`);
+    } else {
+      if (
+        user.username === "" ||
+        user.username == undefined ||
+        user.username == null
+      ) {
+        logger.error(`username is blank for User ${user.name} ${user._id}`);
+      }
     }
 
     if (!user.hasOwnProperty("name")) {
@@ -56,18 +83,51 @@ async function chkUser(runFlag) {
         logger.error(
           `first name missing for User ${user.username} ${user._id}`
         );
+      } else {
+        if (
+          user.name.first === "" ||
+          user.name.first == undefined ||
+          user.name.first == null
+        ) {
+          logger.error(
+            `first name is blank for User ${user.username} ${user._id}`
+          );
+        }
       }
+
       if (!user.name.hasOwnProperty("last")) {
         logger.error(`last name missing for User ${user.username} ${user._id}`);
+      } else {
+        if (
+          user.name.last === "" ||
+          user.name.last == undefined ||
+          user.name.last == null
+        ) {
+          logger.error(
+            `last name is blank for User ${user.username} ${user._id}`
+          );
+        }
       }
     }
 
     if (!user.hasOwnProperty("email")) {
       logger.error(`email missing for User ${user.username} ${user._id}`);
+    } else {
+      if (user.email === "" || user.email == undefined || user.email == null) {
+        logger.error(`email is blank for User ${user.username} ${user._id}`);
+      }
     }
 
     if (!user.hasOwnProperty("password")) {
       logger.error(`password missing for User ${user.username} ${user._id}`);
+    } else {
+      if (
+        user.password === "" ||
+        user.password == undefined ||
+        user.password == null
+      ) {
+        logger.error(`password is blank for User ${user.username} ${user._id}`);
+      }
     }
 
     if (!user.hasOwnProperty("address")) {
@@ -118,7 +178,7 @@ async function chkUser(runFlag) {
       logger.error(`discord missing for User ${user.username} ${user._id}`);
     }
 
-    //has at least on role
+    //has at least one role
     if (user.roles.length < 1) {
       logger.error(`No Roles Assigned to ${user.username} ${user._id}`);
     } else {

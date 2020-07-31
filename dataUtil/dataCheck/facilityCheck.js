@@ -43,8 +43,39 @@ async function chkFacility(runFlag) {
       );
     }
 
+    if (!facility.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Facility ${facility.name} ${facility._id}`
+      );
+    }
+
+    if (!facility.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for Facility ${facility.name} ${facility._id}`
+      );
+    } else {
+      for (let i = 0; i < facility.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(facility.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Facility ${facility.name} ${facility._id} has an invalid serviceRecord reference ${i}: ${facility.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!facility.hasOwnProperty("name")) {
       logger.error(`name missing for Facility ${facility._id}`);
+    } else {
+      if (
+        facility.name === "" ||
+        facility.name == undefined ||
+        facility.name == null
+      ) {
+        logger.error(
+          `name is blank for Facility ${facility.name} ${facility._id}`
+        );
+      }
     }
 
     if (!facility.hasOwnProperty("team")) {
@@ -94,6 +125,12 @@ async function chkFacility(runFlag) {
       logger.error(
         `capacity missing for Facility ${facility.name} ${facility._id}`
       );
+    } else {
+      if (isNaN(facility.capacity)) {
+        logger.error(
+          `Facility ${facility.name} ${facility._id} capacity is not a number ${facility.capacity}`
+        );
+      }
     }
 
     if (!facility.hasOwnProperty("status")) {
