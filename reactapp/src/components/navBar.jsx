@@ -62,7 +62,7 @@ class NavBar extends Component {
                 <span className="navbar-text mr-md-5">{phase} {clock} <FontAwesomeIcon icon={faClock} /> | {turn}</span>
                 <span className="navbar-text mr-1">{pr}</span>
                 <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span>
-                <span className="navbar-text mr-1"> {this.props.team === null ? <Link to="/">Sign In</Link> : this.props.team.name} </span>
+                <span className="navbar-text mr-1"> {this.props.team === null ? <Link to="/login">Sign In</Link> : this.props.team.name} </span>
                 <TeamAvatar size={'xs'} teamCode={this.props.team === null ? null : this.props.team.teamCode} />
                 <div><audio ref={React.createRef()} src="./fifteen-minutes.ogg" autoPlay/></div>
             </nav>
