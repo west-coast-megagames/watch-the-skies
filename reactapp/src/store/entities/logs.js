@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { createSlice, createSelector } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 
 // Create entity slice of the store
@@ -64,10 +64,14 @@ export const loadlogs = () => (dispatch, getState) => {
 };
 
 // Add a log to the list of logs
-export const addlog = log =>
-  apiCallBegan({
-    url,
-    method: "post",
-    data: log,
-    onSuccess: logAdded.type
-  });
+export const addlog = log => apiCallBegan({
+  url,
+  method: "post",
+  data: log,
+  onSuccess: logAdded.type
+});
+
+export const getTransactionLogs = createSelector(
+  state => state.entities.logs.list,
+  logs => logs.filter(log => log.logType === 'Transaction')
+);
