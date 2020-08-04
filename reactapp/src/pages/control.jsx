@@ -6,7 +6,7 @@ import ClockControls from './../components/clockControls';
 import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 
 import { gameServer } from '../config';
-import LogList from '../components/common/logList';
+import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
 import LoginLink from '../components/common/loginLink';
 
@@ -107,7 +107,7 @@ class Control extends Component {
                     )}/>
                     
                     <Route path={`${url}/national`}  render={() => (
-                        <LogList />
+                        <TransactionList />
                     )}/>
                     <Route path={`${url}/military`}  render={() => (
                         <MilitaryControl {...this.props}/>

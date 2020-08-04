@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Timeline, Alert, CheckPicker } from 'rsuite';
+import { Timeline, CheckPicker } from 'rsuite';
 import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from '../components/common/logs'
 import { loadlogs } from '../store/entities/logs';
 
@@ -111,4 +111,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameTimeline)
-
