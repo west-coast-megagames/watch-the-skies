@@ -11,7 +11,7 @@ const TradeSchema = new Schema({
         untis: [{type: Schema.Types.ObjectId, ref: 'Aircraft'}],
         //intel here
         research: [{type: Schema.Types.ObjectId, ref: 'Research'}],
-        //countries here
+        //sites here
         equiptment: [{type: Schema.Types.ObjectId, ref: 'Equiptment'}],
         ratified: {type: Boolean, default: false}    
     }],//offer
