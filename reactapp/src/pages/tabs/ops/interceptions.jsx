@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Interceptors from "../../../components/interceptorsTable";
+import AircraftTable from "../../../components/aircraftTable";
 import Contacts from "../../../components/contactsTable";
 import InterceptorDeployForm from "../../../components/interceptorsDeploy";
 import InfoAircraft from "../../../components/infoAircraft";
@@ -40,7 +40,7 @@ class Interception extends Component {
           zone={this.props.zones}
         />
         <hr />
-        <Interceptors
+        <AircraftTable
           account={this.props.account}
           aircrafts={this.state.aircrafts}
           onClick={this.showInfo}

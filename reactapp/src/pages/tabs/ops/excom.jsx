@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table, Icon, Button, Alert } from "rsuite";
-import Interceptors from "../../../components/interceptorsTable";
+import AircraftTable from "../../../components/aircraftTable";
 import InterceptorDeployForm from "../../../components/interceptorsDeploy";
 import InfoAircraft from "../../../components/infoAircraft";
 const { HeaderCell, Cell, Column } = Table;
@@ -77,24 +77,12 @@ class ExcomOps extends Component {
         </Table>
         <hr />
         <h5>Air Operations</h5>
-        <Interceptors
-          aircrafts={this.props.aircrafts.filter(
-            (el) => el.team._id === this.props.team._id
-          )}
+        <AircraftTable
           account={this.props.account}
-          onClick={this.show}
         />
         <hr />
         <h5>Space Operations</h5>
         <p>Table of all space operations...</p>
-        {this.state.showInfo ? (
-          <InfoAircraft
-            show={this.state.showInfo}
-            account={this.props.account}
-            aircraft={this.state.unit}
-            onClick={this.show}
-          />
-        ) : null}
         {this.state.isDeploying ? (
           <InterceptorDeployForm
             aircrafts={this.props.aircrafts.filter(
