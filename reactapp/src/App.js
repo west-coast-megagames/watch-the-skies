@@ -2,6 +2,8 @@ import React, { Component } from 'react'; // React
 import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import { updateEvents, clockSocket, updateSocket, gameClock } from './api'
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
 import playTrack from './scripts/audio';
 import jwtDecode from 'jwt-decode'
 import { gameServer } from './config';
@@ -31,7 +33,9 @@ import 'rsuite/dist/styles/rsuite-default.css';
 // import 'rsuite/dist/styles/rsuite-dark.css';
 import './App.css';
 
-
+import { loadlogs } from './store/entities/logs'
+const store = configureStore();
+store.dispatch(loadlogs());
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
@@ -127,6 +131,7 @@ class App extends Component {
     const { expand, active, team } = this.state;
 
     return(
+      <Provider store ={store}>
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
             <NavBar
@@ -255,6 +260,7 @@ class App extends Component {
         </Container>
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
+      </Provider>
     );
   }
 
