@@ -1,8 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { createSelector } from "reselect";
-import { apiCallBegan } from "../api";
-// import moment from "moment";
+import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { apiCallBegan } from "../api"; // Import Redux API call
 
+// Create entity slice of the store
 const slice = createSlice({
   name: "logs",
   initialState: {
@@ -38,23 +37,21 @@ const slice = createSlice({
   }
 });
 
+// Action Export
 export const {
   logAdded,
   logsReceived,
   logsRequested,
   logsRequestFailed
 } = slice.actions;
-export default slice.reducer;
+
+export default slice.reducer; // Reducer Export
 
 // Action Creators
 const url = "api/logs";
 
+// Log Loader into state
 export const loadlogs = () => (dispatch, getState) => {
-  // const { lastFetch } = getState().entities.logs;
-
-  // const diffInMinutes = moment().diff(moment(lastFetch), "minutes");
-  // if (diffInMinutes < 10) return;
-
   return dispatch(
     apiCallBegan({
       url,
@@ -66,6 +63,7 @@ export const loadlogs = () => (dispatch, getState) => {
   );
 };
 
+// Add a log to the list of logs
 export const addlog = log =>
   apiCallBegan({
     url,
@@ -73,17 +71,3 @@ export const addlog = log =>
     data: log,
     onSuccess: logAdded.type
   });
-
-
-// Selectors
-export const getlogsByUser = userId =>
-  createSelector(
-    state => state.entities.logs,
-   logs =>logs.filter(log => log.userId === userId)
-  );
-
-export const getUnresolvedlogs = createSelector(
-  state => state.entities.logs,
-  state => state.entities.projects,
-  (logs, projects) =>logs.list.filter(log => !log.resolved)
-);
