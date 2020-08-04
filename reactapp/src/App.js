@@ -24,6 +24,7 @@ import Operations from "./pages/operations";
 import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
 import News from './pages/news';
+import InfoDrawer from './components/infoDrawer';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
@@ -33,6 +34,7 @@ import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite compon
 import './App.css';
 
 import loadState from './scripts/initState';
+
 const store = configureStore();
 loadState(store);
 
@@ -251,6 +253,7 @@ class App extends Component {
                 </Switch>
             </Content>
         </Container>
+        <InfoDrawer />
         <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
       </div>
       </Provider>
