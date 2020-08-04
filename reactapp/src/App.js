@@ -35,7 +35,6 @@ import './App.css';
 
 import { loadlogs } from './store/entities/logs'
 const store = configureStore();
-store.dispatch(loadlogs());
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
@@ -265,6 +264,7 @@ class App extends Component {
   }
 
   async loadState () {
+    store.dispatch(loadlogs());
     let { data: sites } = await axios.get(`${gameServer}api/sites`); // Axios call to server for all sites
     let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
     let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`); //Axios call to server for all teams
