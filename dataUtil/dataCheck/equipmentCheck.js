@@ -15,6 +15,9 @@ require("winston-mongodb");
 const supportsColor = require("supports-color");
 
 const systemCategories = ["Weapon", "Engine", "Sensor", "Compartment", "Util"];
+const gearCategories = ["Weapons", "Vehicles", "Transport", "Training"];
+//do not have kit Category yet
+//const kitCategories = [];
 
 function inArray(array, value) {
   for (var i = 0; i < array.length; i++) {
@@ -65,10 +68,41 @@ async function chkEquipment(runFlag) {
       );
     }
 
+    if (!equipment.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Equipment ${equipment.name} ${equipment._id}`
+      );
+    }
+
+    if (!equipment.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for Equipment ${equipment.name} ${equipment._id}`
+      );
+    } else {
+      for (let i = 0; i < equipment.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(equipment.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Equipment ${equipment.name} ${equipment._id} has an invalid serviceRecord reference ${i}: ${equipment.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!equipment.hasOwnProperty("name")) {
       logger.error(
         `name missing for Equipment ${equipment.name} ${equipment._id}`
       );
+    } else {
+      if (
+        equipment.name === "" ||
+        equipment.name == undefined ||
+        equipment.name == null
+      ) {
+        logger.error(
+          `name is blank for Equipment ${equipment.name} ${equipment._id}`
+        );
+      }
     }
 
     if (!equipment.hasOwnProperty("unitType")) {
@@ -81,18 +115,36 @@ async function chkEquipment(runFlag) {
       logger.error(
         `cost missing for Equipment ${equipment.name} ${equipment._id}`
       );
+    } else {
+      if (isNaN(equipment.cost)) {
+        logger.error(
+          `Equipment ${equipment.name} ${equipment._id} cost is not a number ${equipment.cost}`
+        );
+      }
     }
 
     if (!equipment.hasOwnProperty("buildTime")) {
       logger.error(
         `buildTime missing for Equipment ${equipment.name} ${equipment._id}`
       );
+    } else {
+      if (isNaN(equipment.buildTime)) {
+        logger.error(
+          `Equipment ${equipment.name} ${equipment._id} buildTime is not a number ${equipment.buildTime}`
+        );
+      }
     }
 
     if (!equipment.hasOwnProperty("buildCount")) {
       logger.error(
         `buildCount missing for Equipment ${equipment.name} ${equipment._id}`
       );
+    } else {
+      if (isNaN(equipment.buildCount)) {
+        logger.error(
+          `Equipment ${equipment.name} ${equipment._id} buildCount is not a number ${equipment.buildCount}`
+        );
+      }
     }
 
     if (!equipment.hasOwnProperty("desc")) {
@@ -163,7 +215,15 @@ async function chkEquipment(runFlag) {
           logger.error(
             `category missing for Gear Equipment ${equipment.name} ${equipment._id}`
           );
-        } else if (equipment.category != "Training") {
+        } else {
+          if (!inArray(gearCategories, equipment.category)) {
+            logger.error(
+              `Invalid category ${equipment.category} for Gear ${equipment.name} ${equipment._id}`
+            );
+          }
+        }
+
+        if (equipment.category != "Training") {
           if (!equipment.hasOwnProperty("stats")) {
             logger.error(
               `stats missing for Gear Equipment ${equipment.name} ${equipment._id}`

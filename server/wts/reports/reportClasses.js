@@ -15,6 +15,10 @@ function makeTimestamp() {
     return timestamp;
 }
 
+function createServiceRecord() {
+    return
+}
+
 // After Action Report for Lab activity
 class ResearchReport {
     constructor() {
@@ -51,7 +55,7 @@ class ResearchReport {
 
             return;
         } catch (err) {
-            reportDebugger(`CalcProgress Error: ${err}`);
+            reportDebugger(`Reserch Report Error: ${err}`);
             return
         }
     }
@@ -83,7 +87,7 @@ class ReconReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Recon Log Error: ${err}`);
+            reportDebugger(`Recon Report Error: ${err}`);
             return
         }
     }
@@ -114,7 +118,7 @@ class TransportReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Transport Log Error: ${err}`);
+            reportDebugger(`Transport Report Error: ${err}`);
             return
         }
     }
@@ -152,7 +156,7 @@ class BattleReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Transport Log Error: ${err}`);
+            reportDebugger(`Transport Report Error: ${err}`);
             return
         }
     }
@@ -180,7 +184,7 @@ class CrashReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Crash Log Error: ${err}`);
+            reportDebugger(`Crash Report Error: ${err}`);
             return
         }
     }
@@ -209,7 +213,7 @@ class DeploymentReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Deployment Log Error: ${err}`);
+            reportDebugger(`Deployment Report Error: ${err}`);
             return
         }
     }
@@ -235,7 +239,7 @@ class TheoryReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Theory Log Error: ${err}`);
+            reportDebugger(`Theory Report Error: ${err}`);
             return
         }
     }

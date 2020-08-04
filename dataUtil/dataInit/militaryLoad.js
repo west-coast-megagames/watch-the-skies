@@ -188,6 +188,7 @@ async function createFleet(iData, rCounts) {
   fleet.stats = iData.stats;
   fleet.status = iData.status;
   fleet.serviceRecord = [];
+  fleet.gameState = [];
 
   if (iData.team != "") {
     let team = await Team.findOne({ teamCode: iData.team });
@@ -326,6 +327,7 @@ async function createCorps(iData, rCounts) {
   corps.stats = iData.stats;
   corps.status = iData.status;
   corps.serviceRecord = [];
+  corps.gameState = [];
 
   if (iData.team != "") {
     let team = await Team.findOne({ teamCode: iData.team });

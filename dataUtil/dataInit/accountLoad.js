@@ -128,6 +128,7 @@ async function loadAccount(t_id, tName, aData, rCounts) {
         withdrawals: aData.withdrawals,
         owner: tName,
         team: t_id,
+        gameState: [],
       });
 
       let { error } = validateAccount(account);

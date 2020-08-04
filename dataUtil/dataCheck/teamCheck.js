@@ -24,6 +24,16 @@ require("winston-mongodb");
 
 const supportsColor = require("supports-color");
 
+// National, Alien, Media, Control, ncP
+const teamTypeVals = ["N", "A", "M", "C", "P"];
+
+function inArray(array, value) {
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] == value) return true;
+  }
+  return false;
+}
+
 async function chkTeam(runFlag) {
   // get accounts once
   let aFinds = await Account.find();
@@ -38,8 +48,29 @@ async function chkTeam(runFlag) {
       logger.error(`model missing for team ${team.name} ${team._id}`);
     }
 
+    if (!team.hasOwnProperty("gameState")) {
+      logger.error(`gameState missing for team ${team.name} ${team._id}`);
+    }
+
+    if (!team.hasOwnProperty("serviceRecord")) {
+      logger.error(`serviceRecord missing for Team ${team.name} ${team._id}`);
+    } else {
+      for (let i = 0; i < team.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(team.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Team ${team.name} ${team._id} has an invalid serviceRecord reference ${i}: ${team.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!team.hasOwnProperty("name")) {
       logger.error(`name missing for team ${team._id}`);
+    } else {
+      if (team.name === "" || team.name == undefined || team.name == null) {
+        logger.error(`name is blank for Team ${team.name} ${team._id}`);
+      }
     }
 
     if (!team.hasOwnProperty("shortName")) {
@@ -48,10 +79,24 @@ async function chkTeam(runFlag) {
 
     if (!team.hasOwnProperty("teamCode")) {
       logger.error(`teamCode missing for team ${team.name} ${team._id}`);
+    } else {
+      if (
+        team.teamCode === "" ||
+        team.teamCode == undefined ||
+        team.teamCode == null
+      ) {
+        logger.error(`teamCode is blank for Team ${team.name} ${team._id}`);
+      }
     }
 
     if (!team.hasOwnProperty("teamType")) {
       logger.error(`teamType missing for team ${team.name} ${team._id}`);
+    } else {
+      if (!inArray(teamTypeVals, team.teamType)) {
+        logger.error(
+          `Invalid type ${team.teamType} for Team ${team.name} ${team._id}`
+        );
+      }
     }
 
     //should be 6 accounts for each team

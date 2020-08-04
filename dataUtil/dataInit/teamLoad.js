@@ -179,6 +179,8 @@ async function newNational(tData, rCounts) {
     shortName: tData.shortName,
     teamType: tData.teamType,
   });
+  national.gameState = [];
+  national.serviceRecord = [];
 
   loadName = tData.name;
   let { error } = validateNational(national);
@@ -242,6 +244,8 @@ async function newAlien(tData, rCounts) {
     shortName: tData.shortName,
     teamType: tData.teamType,
   });
+  alien.gameState = [];
+  alien.serviceRecord = [];
 
   loadName = tData.name;
   let { error } = validateAlien(alien);
@@ -287,7 +291,8 @@ async function newMedia(tData, rCounts) {
     shortName: tData.shortName,
     teamType: tData.teamType,
   });
-
+  media.gameState = [];
+  media.serviceRecord = [];
   media.agents = tData.agents;
   loadName = tData.name;
 
@@ -331,6 +336,8 @@ async function newControl(tData, rCounts) {
     shortName: tData.shortName,
     teamType: tData.teamType,
   });
+  control.gameState = [];
+  control.serviceRecord = [];
 
   loadName = tData.name;
 
@@ -378,6 +385,8 @@ async function newNPC(tData, rCounts) {
     shortName: tData.shortName,
     teamType: tData.teamType,
   });
+  npc.gameState = [];
+  npc.serviceRecord = [];
 
   loadName = tData.name;
 

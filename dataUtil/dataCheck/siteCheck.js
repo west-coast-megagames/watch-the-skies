@@ -43,7 +43,7 @@ async function chkSite(runFlag) {
   for (const site of await Site.find(/* { siteCode: "USBB"} */)
     /* does not work with .lean()
                                      .populate("team", "name")
-                                     .populate("country", "name")
+                                     .populate("site", "name")
                                      .populate("zone", "zoneName")
                                      */
     .lean()) {
@@ -51,7 +51,7 @@ async function chkSite(runFlag) {
     if (!site.populated("team")) {  
       logger.error(`Team link missing for Site ${site.name} ${site._id} ${site.type}`);
     }
-    if (!site.populated("country")) {  
+    if (!site.populated("site")) {  
         logger.error(`Country link missing for Site ${site.name} ${site._id} ${site.type}`);
     }    
     if (!site.populated("zone")) {  
@@ -109,6 +109,23 @@ async function chkSite(runFlag) {
       logger.error(`model missing for Site ${site.name} ${site._id}`);
     }
 
+    if (!site.hasOwnProperty("gameState")) {
+      logger.error(`gameState missing for Site ${site.name} ${site._id}`);
+    }
+
+    if (!site.hasOwnProperty("serviceRecord")) {
+      logger.error(`serviceRecord missing for Sie ${site.name} ${site._id}`);
+    } else {
+      for (let i = 0; i < site.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(site.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Site ${site.name} ${site._id} has an invalid serviceRecord reference ${i}: ${site.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!site.hasOwnProperty("coastal")) {
       logger.error(`coastal missing for Site ${site.name} ${site._id}`);
     }
@@ -119,6 +136,14 @@ async function chkSite(runFlag) {
 
     if (!site.hasOwnProperty("siteCode")) {
       logger.error(`siteCode missing for Site ${site.name} ${site._id}`);
+    } else {
+      if (
+        site.siteCode === "" ||
+        site.siteCode == undefined ||
+        site.siteCode == null
+      ) {
+        logger.error(`siteCode is blank for Site ${site.name} ${site._id}`);
+      }
     }
 
     if (!site.hasOwnProperty("geoDMS")) {

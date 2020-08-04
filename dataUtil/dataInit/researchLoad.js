@@ -167,6 +167,7 @@ async function createTechnology(iData, teamId, rCounts) {
   techResearch.unlocks = iData.unlocks;
   techResearch.breakthrough = iData.breakthrough;
   techResearch.theoretical = iData.theoretical;
+  techResearch.gameState = [];
 
   /*
   let { error } = validateResearch(techResearch); 
@@ -219,6 +220,7 @@ async function createKnowledge(iData, rCounts) {
   knowledgeResearch.prereq = iData.prereq;
   knowledgeResearch.unlocks = iData.unlocks;
   knowledgeResearch.breakthrough = iData.breakthrough;
+  knowledgeResearch.gameState = [];
 
   if (iData.credit != "") {
     let team = await Team.findOne({ teamCode: iData.credit });

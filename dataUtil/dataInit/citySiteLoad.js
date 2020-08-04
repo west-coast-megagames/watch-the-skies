@@ -92,6 +92,8 @@ async function loadCity(iData, rCounts) {
         dateline: iData.dateline,
         coastal: iData.coastal,
       });
+      citySite.serviceRecord = [];
+      citySite.gameState = [];
 
       let { error } = validateCity(citySite);
       if (error) {

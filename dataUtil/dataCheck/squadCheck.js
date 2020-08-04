@@ -34,6 +34,25 @@ async function chkSquad(runFlag) {
       logger.error(`model missing for Squad ${squad.name} ${squad._id}`);
     }
 
+    if (!squad.hasOwnProperty("gameState")) {
+      logger.error(`gameState missing for Squad ${squad.name} ${squad._id}`);
+    }
+
+    if (!squad.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for Squad ${squad.name} ${squad._id}`
+      );
+    } else {
+      for (let i = 0; i < squad.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(squad.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Squad ${squad.name} ${squad._id} has an invalid serviceRecord reference ${i}: ${squad.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
     if (!squad.hasOwnProperty("zone")) {
       logger.error(`zone missing for Squad ${squad.name} ${squad._id}`);
     } else {
@@ -91,6 +110,10 @@ async function chkSquad(runFlag) {
 
     if (!squad.hasOwnProperty("name")) {
       logger.error(`name missing for Squad ${squad.name} ${squad._id}`);
+    } else {
+      if (squad.name === "" || squad.name == undefined || squad.name == null) {
+        logger.error(`name is blank for Squad ${squad._id}`);
+      }
     }
 
     if (!squad.hasOwnProperty("status")) {

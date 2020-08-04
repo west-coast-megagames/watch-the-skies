@@ -159,6 +159,8 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
         zoneName: zName,
         terror: randomTerror, //zTerror
       });
+      zone.serviceRecord = [];
+      zone.gameState = [];
 
       zone.satellite = [];
       let { error } = validateZone(zone);
@@ -290,6 +292,8 @@ async function loadTeam(tName, tCode, tLoadFlg, tType, rCounts) {
             name: tName,
             countryID: tName,
           });
+          team.gameState = [];
+          team.serviceRecord = [];
           let { error } = validateTeam(team);
           if (error) {
             loadError = true;
@@ -414,6 +418,8 @@ async function loadCountry(
         loadZoneCode: zCode,
         coastal: cCoastal,
       });
+      country.gameState = [];
+      country.serviceRecord = [];
 
       let zone = await Zone.findOne({ zoneCode: zCode });
       if (!zone) {
@@ -564,6 +570,8 @@ async function newNational(tName, tCode, rCounts) {
     countryID: tName,
     teamType: "N",
   });
+  national.gameState = [];
+  national.serviceRecord = [];
 
   let { error } = validateNational(national);
   if (error) {
@@ -604,6 +612,8 @@ async function newAlien(tName, tCode, rCounts) {
     countryID: tName,
     teamType: "A",
   });
+  alien.gameState = [];
+  alien.serviceRecord = [];
 
   let { error } = validateAlien(alien);
   if (error) {
@@ -641,6 +651,8 @@ async function newControl(tName, tCode, rCounts) {
     countryID: tName,
     teamType: "C",
   });
+  control.gameState = [];
+  control.serviceRecord = [];
 
   let { error } = validateControl(control);
   if (error) {
@@ -681,6 +693,8 @@ async function newMedia(tName, tCode, rCounts) {
     countryID: tName,
     teamType: "M",
   });
+  media.gameState = [];
+  media.serviceRecord = [];
 
   let { error } = validateMedia(media);
   if (error) {
@@ -719,6 +733,8 @@ async function newNpc(tName, tCode, rCounts) {
     countryID: tName,
     teamType: "P",
   });
+  npc.gameState = [];
+  npc.serviceRecord = [];
 
   let { error } = validateNpc(npc);
   if (error) {

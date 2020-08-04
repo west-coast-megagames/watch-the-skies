@@ -99,6 +99,8 @@ async function loadUser(iData, rCounts) {
       user.name.first = iData.name.first;
       user.name.last = iData.name.last;
       user.roles = iData.roles;
+      user.gameState = [];
+      user.serviceRecord = [];
 
       //userLoadDebugger("Before Save Validate ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 
