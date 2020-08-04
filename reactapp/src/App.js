@@ -1,13 +1,13 @@
-import React, { Component } from 'react'; // React
-import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite';
-import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
-import { updateEvents, clockSocket, updateSocket, gameClock } from './api'
-import { Provider } from 'react-redux';
-import configureStore from './store/configureStore';
-import playTrack from './scripts/audio';
-import jwtDecode from 'jwt-decode'
-import { gameServer } from './config';
-import axios from 'axios';
+import React, { Component } from 'react'; // React imports
+import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite'; // rsuite components
+import { Route, Switch, Redirect, NavLink, StaticRouter } from 'react-router-dom'; // React navigation components
+import { updateEvents, clockSocket, updateSocket, gameClock } from './api' // Socket.io event triggers and actions
+import { Provider } from 'react-redux'; // Redux store provider
+import configureStore from './store/configureStore'; // Initial Redux Store
+import playTrack from './scripts/audio'; // Audio playing script
+import jwtDecode from 'jwt-decode' // JASON web-token decoder
+import { gameServer } from './config'; // Local config file
+import axios from 'axios'; // Import of Axios
 
 // Components
 import NavBar from './components/navBar';
@@ -24,17 +24,17 @@ import Operations from "./pages/operations";
 import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
 import News from './pages/news';
-import Models from './pages/models';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
 import 'font-awesome/css/font-awesome.css';
-import 'rsuite/dist/styles/rsuite-default.css';
-// import 'rsuite/dist/styles/rsuite-dark.css';
+import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite components
+// import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
 
-import { loadlogs } from './store/entities/logs'
+import loadState from './scripts/initState';
 const store = configureStore();
+loadState(store);
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 let idCount = 0;
@@ -80,7 +80,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadState(); //Get all teams, aircraft, sites, articles in DB and store to state
     updateEvents.updateTeam((err, team) => {
       if(this.state.team.name !== "Select Team") {
         this.setState({ team });
@@ -245,11 +244,6 @@ class App extends Component {
                           login={ this.state.login }
                       />
                     )}/>
-                    <Route path="/editor" render={(props) => (
-                      <Models {...props}
-                          alert = { this.addAlert } 
-                      />
-                    )}/>
                     <Route path="/mosh" component={ MoshTest } />
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
@@ -261,26 +255,6 @@ class App extends Component {
       </div>
       </Provider>
     );
-  }
-
-  async loadState () {
-    store.dispatch(loadlogs());
-    let { data: sites } = await axios.get(`${gameServer}api/sites`); // Axios call to server for all sites
-    let { data: teams } = await axios.get(`${gameServer}api/team`); // Axios call to server for all teams
-    let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`); //Axios call to server for all teams
-    let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
-    let { data: zones } = await axios.get(`${gameServer}api/zones`) // Axios call to server for all zones
-    let { data: facilities } = await axios.get(`${gameServer}api/facilities`) // Axios call to server for all facilities
-    let { data: military } = await axios.get(`${gameServer}api/military`) // Axios call to server for all military
-    let { data: countries } = await axios.get(`${gameServer}api/country`) // Axios call to server for all countries
-    this.setState({ teams, sites, aircrafts, articles, zones, facilities, military, countries })
-  }
-
-  async getNews () {
-    //let { data: bnc } = await axios.get(`${gameServer}api/news/bnc`);
-    //let { data: gnn } = await axios.get(`${gameServer}api/news/gnn`);
-    let { data: articles } = await axios.get(`${gameServer}api/news/articles`); //Axios call to server for all articles
-    this.setState({ articles });
   }
 
   updateAccounts = async (team) => {
@@ -335,20 +309,6 @@ class App extends Component {
   handleArtHide = (article) => {
     let articles = this.state.articles;
     Alert.warning(`Hiding ${article.headline} article...`);
-
-    /*if(article.agency === 'BNC') {
-        console.log(article.agency);
-        index = artBnc.indexOf(article._id);
-        artBnc.splice(index,1);
-    }
-    else if(article.agency === 'GNN') {
-        artGnn.splice(artGnn.indexOf(article._id),1);
-    }
-    else {
-        artPr.splice(artPr.indexOf(article._id),1);
-    }*/
-
-    //let news = {}
     let index = articles.indexOf(article);
     console.log(articles[index]);
     articles.splice(index,1);
