@@ -10,6 +10,7 @@ import militaryReducer from './entities/military';
 import facilityReducer from './entities/facilities';
 import countryReducer from './entities/countries';
 
+// Combined Store reducers for the 'Entities' slice
 export default combineReducers({
   bugs: bugsReducer,
   logs: logsReducer,
