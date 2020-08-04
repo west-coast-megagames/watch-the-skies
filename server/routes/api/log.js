@@ -19,7 +19,7 @@ router.get('/', async function (req, res) {
         .populate('theory')
         .populate('units')
         .sort({date: 1});
-    res.json(logs);
+    res.status(200).json(logs);
 });
 
 module.exports = router;

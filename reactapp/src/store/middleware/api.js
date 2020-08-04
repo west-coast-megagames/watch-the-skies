@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actions from "../api";
+import { gameServer } from "../../config";
 
 const api = ({ dispatch }) => next => async action => {
   if (action.type !== actions.apiCallBegan.type) return next(action);
@@ -12,7 +13,7 @@ const api = ({ dispatch }) => next => async action => {
 
   try {
     const response = await axios.request({
-      baseURL: "http://localhost:9001/api",
+      baseURL: gameServer,
       url,
       method,
       data

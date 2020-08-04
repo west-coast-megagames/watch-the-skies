@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { Timeline, Alert, CheckPicker } from 'rsuite';
 import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from '../components/common/logs'
-import { gameServer } from '../config';
+import { loadlogs } from '../store/entities/logs';
 
-const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }]
+const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
 
 class GameTimeline extends Component {
     state = {
-        logs: [],
         filteredLogs: [],
         teamFilter: [],
         typeFilter: []
@@ -23,12 +22,13 @@ class GameTimeline extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
+        if (prevProps !== this.props) this.filterLogs();
         if (prevState.teamFilter !== this.state.teamFilter) this.filterLogs();
         if (prevState.typeFilter !== this.state.typeFilter) this.filterLogs();
     }
 
     render() {
-        const { length: count } = this.state.logs;
+        const { length: count } = this.props.logs;
 
         return (
              <React.Fragment>
@@ -75,19 +75,13 @@ class GameTimeline extends Component {
     }
 
     async getLogs() {
-        try {
-          let res = await axios.get(`${gameServer}api/logs`);
-          let logs = res.data;
-          this.setState({ logs })
-          this.filterLogs()
-        } catch (err) {
-          Alert.error(`Error: ${err.message}`, 5000)
-        }
+        this.props.loadLogs();
+        this.filterLogs()
     }
 
     filterLogs() {
         let { teamFilter, typeFilter } = this.state
-        let logs = this.state.logs;
+        let logs = this.props.logs;
         let postTeams = [];
         for (let team of teamFilter) {
             let teamLogs = logs.filter(el => el.team.teamCode === team);
@@ -108,4 +102,13 @@ class GameTimeline extends Component {
     }
 }
 
-export default GameTimeline;
+const mapStateToProps = state => ({
+    logs: state.entities.logs.list
+})
+
+const mapDispatchToProps = dispatch => ({
+    loadLogs: () => dispatch(loadlogs())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GameTimeline)
+
