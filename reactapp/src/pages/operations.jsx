@@ -146,13 +146,13 @@ class Operations extends Component {
 
 const mapStateToProps = state => ({
 login: state.auth.login,
-team: state.entities.team,
-teams: state.entities.teams,
-zones: state.entities.zones,
-countries: state.entities.countries,
-sites: state.entities.sites,
-aircrafts: state.entities.aircrafts,
-military: state.entities.military
+team: state.auth.team,
+teams: state.entities.teams.list,
+zones: state.entities.zones.list,
+countries: state.entities.countries.list,
+sites: state.entities.sites.list,
+aircrafts: state.entities.aircrafts.list,
+military: state.entities.military.list
 });
 
 const mapDispatchToProps = dispatch => ({});

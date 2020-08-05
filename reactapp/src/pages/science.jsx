@@ -134,9 +134,9 @@ class Science extends Component {
 const mapStateToProps = state => ({
     login: state.auth.login,
     team: state.auth.team,
-    sites: state.entities.sites,
-    facilities: state.entities.facilities,
-    research: state.entities.research
+    sites: state.entities.sites.list,
+    facilities: state.entities.facilities.list,
+    research: state.entities.research.list
 });
   
   const mapDispatchToProps = dispatch => ({});

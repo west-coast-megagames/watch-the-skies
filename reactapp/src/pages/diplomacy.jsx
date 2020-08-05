@@ -74,7 +74,7 @@ class Diplomacy extends Component {
 
 const mapStateToProps = state => ({
     login: state.auth.login,
-    teams: state.entities.teams,
+    teams: state.entities.teams.list,
     team: state.auth.team
 });
   

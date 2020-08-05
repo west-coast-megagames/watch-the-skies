@@ -63,12 +63,12 @@ class News extends Component {
 
 const mapStateToProps = state => ({
     login: state.auth.login,
-    articles: state.entities.articles,
-    teams: state.entities.teams,
+    articles: state.entities.articles.list,
+    teams: state.entities.teams.list,
     team: state.auth.team,
-    sites: state.entities.sites,
-    zones: state.entities.zones,
-    countries: state.entities.countries
+    sites: state.entities.sites.list,
+    zones: state.entities.zones.list,
+    countries: state.entities.countries.list
 });
   
 const mapDispatchToProps = dispatch => ({
