@@ -9,6 +9,7 @@ import zoneReducer from './entities/zones';
 import militaryReducer from './entities/military';
 import facilityReducer from './entities/facilities';
 import countryReducer from './entities/countries';
+import researchReducer from './entities/research';
 
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
@@ -22,4 +23,5 @@ export default combineReducers({
   military: militaryReducer,
   facilities: facilityReducer,
   countries: countryReducer,
+  research: researchReducer,
 });
