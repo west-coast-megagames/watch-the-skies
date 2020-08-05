@@ -101,7 +101,7 @@ class App extends Component {
     // })
 
     gameClock.subscribeToClock((err, clock) => {
-      if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.state.team !== null) {
+      if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
           updateEvents.updateTeam(this.props.team._id);
       }
       this.setState({clock})
