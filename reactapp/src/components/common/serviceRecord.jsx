@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from './logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog } from './logs'
 import { Timeline, Panel } from 'rsuite'
 
 const ServiceRecord = (props) => {

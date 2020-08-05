@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Button, Progress, Affix } from 'rsuite';
+import { Table, Icon, Button, Progress } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';

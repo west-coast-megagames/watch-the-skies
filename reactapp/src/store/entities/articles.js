@@ -7,6 +7,7 @@ const slice = createSlice({
   name: "articles",
   initialState: {
     list: [],
+    hidden: [],
     loading: false,
     lastFetch: null,
     newarticles: 0

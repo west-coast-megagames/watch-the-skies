@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
-import { apiCallBegan } from "../api"; // Import Redux API call
 import { Alert } from "rsuite";
 
 // Create entity slice of the store
@@ -47,6 +46,3 @@ export const {
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
-
-// Action Creators (Commands)
-const url = "api/interceptor";

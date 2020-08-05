@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Timeline, CheckPicker } from 'rsuite';
-import { TransactionLog, ResearchLog, InterceptLog, TradeLog, TreatyLog, TerrorLog, CrisisLog, DeployLog, ConstructionLog } from '../components/common/logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog } from '../components/common/logs'
 import { loadlogs } from '../store/entities/logs';
 
 const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
@@ -59,7 +59,6 @@ class GameTimeline extends Component {
                         if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
                         if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />)
                         if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />)
-
                     })}
                 </Timeline>}
             </React.Fragment>

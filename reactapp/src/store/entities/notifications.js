@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 
-const lastId = 0;
-
 // Create entity slice of the store
 const slice = createSlice({
   name: "notifications",

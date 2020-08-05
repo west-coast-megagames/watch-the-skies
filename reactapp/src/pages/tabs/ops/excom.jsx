@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { Table, Icon, Button, Alert } from "rsuite";
+import { Table, Icon, Alert } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import InterceptorDeployForm from "../../../components/interceptorsDeploy";
-import InfoAircraft from "../../../components/infoAircraft";
 const { HeaderCell, Cell, Column } = Table;
 
 class ExcomOps extends Component {

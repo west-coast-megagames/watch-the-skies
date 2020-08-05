@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Icon, Button } from 'rsuite';
+import { Table, Icon } from 'rsuite';
 const { HeaderCell, Cell, Column } = Table;
 
 class GlobalOps extends Component {

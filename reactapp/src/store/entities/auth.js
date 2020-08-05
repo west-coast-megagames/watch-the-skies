@@ -1,7 +1,5 @@
-import store from "../store";
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
-import notify from "../../scripts/notify";
 import playTrack from "../../scripts/audio";
 import { clockSocket, updateSocket } from '../../api' // Socket.io event triggers and actions
 import jwtDecode from 'jwt-decode' // JSON web-token decoder

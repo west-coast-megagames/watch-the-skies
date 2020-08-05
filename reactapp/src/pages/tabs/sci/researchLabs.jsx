@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
-import { newLabCheck, getLabPct } from './../../../scripts/labs';
+import { getLabPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 
 const { Column, HeaderCell, Cell } = Table;
