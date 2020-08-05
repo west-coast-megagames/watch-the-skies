@@ -8,6 +8,7 @@ import { loadfacilities } from '../store/entities/facilities';
 import { loadmilitary } from '../store/entities/military';
 import { loadcountries } from '../store/entities/countries';
 import { loadresearch } from '../store/entities/research';
+import { loadaccounts } from '../store/entities/accounts';
 
 //Get all objects from DB collections and store to redux state
 export default function loadState(store) {
@@ -20,5 +21,6 @@ export default function loadState(store) {
     store.dispatch(loadfacilities()); // Initial Axios call for all facility objects
     store.dispatch(loadmilitary()); // Initial Axios call for all military objects
     store.dispatch(loadcountries()); // Initial Axios call for all country objects
-    store.dispatch(loadresearch()); // Initial Axios call for all country objects\
+    store.dispatch(loadresearch()); // Initial Axios call for all research objects
+    store.dispatch(loadaccounts()); // Initial Axios call for all accounts objects
 }
