@@ -22,8 +22,8 @@ class Registration extends Component {
     };
 
     close() {
-        this.props.history.push('/home');
         this.setState({ show: false });
+        this.props.history.push('/home');
     };
 
     open() {

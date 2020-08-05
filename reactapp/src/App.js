@@ -1,12 +1,10 @@
 import React, { Component } from 'react'; // React imports
 import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite'; // rsuite components
-import { Route, Switch, Redirect, NavLink, StaticRouter } from 'react-router-dom'; // React navigation components
-import { updateEvents, clockSocket, updateSocket, gameClock } from './api' // Socket.io event triggers and actions
+import { Route, Switch, Redirect, NavLink } from 'react-router-dom'; // React navigation components
+import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
 
 import { connect } from 'react-redux'; // Redux store provider
 import notify from './scripts/notify';
-import playTrack from './scripts/audio'; // Audio playing script
-import jwtDecode from 'jwt-decode' // JASON web-token decoder
 
 // Components
 import NavBar from './components/navBar';
@@ -248,24 +246,6 @@ class App extends Component {
         <AlertPage alerts={ this.props.notifications } />
       </div>
     );
-  }
-
-  handleLogin = async () => {
-    const jwt = localStorage.getItem('token');
-    const user = jwtDecode(jwt);
-    this.setState({ user, login: true })
-    Alert.success(`${user.username} logged in...`);
-    if (user.team) {
-      notify({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
-      this.setState({ team: user.team });
-    }
-    playTrack('login');
-    clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
-    updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
-  }
-
-  handleSignout = () => {
-    this.setState({ team: null })
   }
 }
 
