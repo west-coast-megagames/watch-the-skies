@@ -2,12 +2,11 @@ import React, { Component } from 'react'; // React imports
 import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content, Alert } from 'rsuite'; // rsuite components
 import { Route, Switch, Redirect, NavLink, StaticRouter } from 'react-router-dom'; // React navigation components
 import { updateEvents, clockSocket, updateSocket, gameClock } from './api' // Socket.io event triggers and actions
-import { Provider } from 'react-redux'; // Redux store provider
-import configureStore from './store/configureStore'; // Initial Redux Store
+
+import { connect } from 'react-redux'; // Redux store provider
+import notify from './scripts/notify';
 import playTrack from './scripts/audio'; // Audio playing script
 import jwtDecode from 'jwt-decode' // JASON web-token decoder
-import { gameServer } from './config'; // Local config file
-import axios from 'axios'; // Import of Axios
 
 // Components
 import NavBar from './components/navBar';
@@ -33,13 +32,9 @@ import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite compon
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
 
-import loadState from './scripts/initState';
 
-const store = configureStore();
-loadState(store);
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
-let idCount = 0;
 
 // React App Component
 class App extends Component {
@@ -89,7 +84,7 @@ class App extends Component {
     });
 
     updateEvents.updateAircrafts((err, aircrafts) => {
-      this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`});
+      notify({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`});
       this.setState({ aircrafts });
     });
 
@@ -98,22 +93,22 @@ class App extends Component {
       let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
       let megabucks = 0;
       accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-      this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
+      notify({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
       this.setState({ accounts, megabucks });
     });
 
     updateEvents.updateMilitary((err, military) => {
-      this.addAlert({type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
+      notify({type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
       this.setState({ military });
     });
 
     updateEvents.updateFacilities((err, facilities) => {
-      this.addAlert({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
+      notify({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
       this.setState({facilities})
     });
 
     updateEvents.addNews((err, article) => {
-      this.addAlert({type: 'success', title: `News Published`, body: `${article.publisher.name} published ${article.headline}`});
+      notify({type: 'success', title: `News Published`, body: `${article.publisher.name} published ${article.headline}`});
       let articles = this.state.articles;
       articles.push(article);
       this.setState(articles);
@@ -131,7 +126,6 @@ class App extends Component {
     const { expand, active, team } = this.state;
 
     return(
-      <Provider store ={store}>
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
             <NavBar
@@ -171,9 +165,6 @@ class App extends Component {
                 <Switch>
                     <Route path="/login" render={(props) => (
                       <Registration {...props}
-                        addAlert={ this.addAlert }
-                        handleLogin={ this.handleLogin }
-                        login={ this.state.login }
                       />
                     )}/>
                     <Route path="/home" render={(props) => (
@@ -194,7 +185,7 @@ class App extends Component {
                         sites={ this.state.sites }
                         aircrafts={ this.state.aircrafts }
                         military={ this.state.military }
-                        alert={ this.addAlert }
+                        alert={ notify }
                         login={ this.state.login }
                       />
                     )} />
@@ -203,7 +194,7 @@ class App extends Component {
                           team = { this.state.team }
                           teams = { this.state.teams }
                           accounts = { this.state.accounts }
-                          alert={ this.addAlert }
+                          alert={ notify }
                           login={ this.state.login }
                       />
                     )}/>
@@ -213,7 +204,7 @@ class App extends Component {
                           accounts={ this.state.accounts }
                           facilities={ this.state.facilities }
                           team={ this.state.team }
-                          alert={ this.addAlert }
+                          alert={ notify }
                           research={ this.state.research }
                           login={ this.state.login }
                       />
@@ -223,14 +214,14 @@ class App extends Component {
                           team={ this.state.team }
                           teams={ this.state.teams }
                           accounts={ this.state.accounts }
-                          alert={ this.addAlert }
+                          alert={ notify }
                           login={ this.state.login }
                       />
                     )}/>
                     <Route path="/news" render={(props) => (
                       <News {...props} {...this.state}
                         articles={ this.state.articles }
-                        alert={ this.addAlert }
+                        alert={ notify }
                         teams={ this.state.teams }
                         team={ this.state.team }
                         sites={ this.state.sites }
@@ -242,7 +233,7 @@ class App extends Component {
                     )}/>
                     <Route path="/control" render={(props) => (
                       <Control {...props} {...this.state}
-                          alert = { this.addAlert }
+                          alert = { notify }
                           login={ this.state.login }
                       />
                     )}/>
@@ -254,26 +245,9 @@ class App extends Component {
             </Content>
         </Container>
         <InfoDrawer />
-        <AlertPage alerts={ this.state.alerts } handleDelete={ this.deleteAlert }/>
+        <AlertPage alerts={ this.props.notifications } />
       </div>
-      </Provider>
     );
-  }
-
-  updateAccounts = async (team) => {
-    console.log(`${team.name} Accounts update...`);
-    let { data: accounts } = await axios.put(`${gameServer}api/banking/accounts`, { "team": team._id });
-    this.addAlert({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`})
-    let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-    let megabucks = 0;
-    accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-    this.setState({ accounts, megabucks })
-  }
-
-  updateAircrafts = async () => {
-    let { data: aircrafts } = await axios.get(`${gameServer}api/interceptor`);
-    this.addAlert({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`})
-    this.setState({ aircrafts })
   }
 
   handleLogin = async () => {
@@ -282,9 +256,8 @@ class App extends Component {
     this.setState({ user, login: true })
     Alert.success(`${user.username} logged in...`);
     if (user.team) {
-      this.addAlert({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
+      notify({type: 'success', title: 'Team Login', body: `Logged in as ${user.team.name}...`})
       this.setState({ team: user.team });
-      this.updateAccounts(this.state.team);
     }
     playTrack('login');
     clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
@@ -293,30 +266,6 @@ class App extends Component {
 
   handleSignout = () => {
     this.setState({ team: null })
-  }
-
-  deleteAlert = alertId => {
-    const alerts = this.state.alerts.filter(a => a.id !== alertId);
-    this.setState({ alerts });
-  };
-
-  addAlert = async (alert) => {
-    let alerts = this.state.alerts
-    console.log(`ID: ${idCount}`)
-    alert.id = idCount++;;
-    alerts.push(alert);
-    setTimeout(() => this.deleteAlert(alert.id), 5000)
-    this.setState({ alerts });
-  };
-
-  handleArtHide = (article) => {
-    let articles = this.state.articles;
-    Alert.warning(`Hiding ${article.headline} article...`);
-    let index = articles.indexOf(article);
-    console.log(articles[index]);
-    articles.splice(index,1);
-
-    this.setState({articles});
   }
 }
 
@@ -351,4 +300,11 @@ const NavToggle = ({ login, expand, onChange, signOut }) => {
   );
 };
 
-export default App
+const mapStateToProps = state => ({
+  showAircraft: state.info.showAircraft,
+  notifications: state.notifications.list.filter(el => el.hidden == false)
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
