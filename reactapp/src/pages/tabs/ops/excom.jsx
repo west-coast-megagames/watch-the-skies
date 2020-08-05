@@ -111,7 +111,8 @@ class ExcomOps extends Component {
       zone.name = zone.zoneName;
       zone.type = "Zone";
       zone.children = [];
-      for (let unit of contacts) {
+      for (let newUnit of contacts) {
+        let unit = {...newUnit}
         let checkZone = zone;
         console.log(unit);
         console.log(checkZone);
