@@ -104,7 +104,8 @@ class ExcomOps extends Component {
     );
     let zones = this.props.zones.filter((el) => el.zoneName !== "Space");
 
-    for (let zone of zones) {
+    for (let newZone of zones) {
+      let zone = {...newZone}
       console.log(zone);
       zone.children = [];
       zone.name = zone.zoneName;

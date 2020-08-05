@@ -66,7 +66,8 @@ class GlobalOps extends Component {
         let data = []
         let military = this.props.military.filter(el => el.__t === 'Military');
         let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
-        for (let zone of zones) {
+        for (let newZone of zones) {
+            let zone = {...newZone};
             zone.children = []
             zone.name = zone.zoneName
             zone.type = 'zone'
