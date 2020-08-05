@@ -1,6 +1,7 @@
 import React, { Component } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content } from 'rsuite';
-import { Route, Switch, NavLink, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
@@ -56,8 +57,21 @@ class News extends Component {
                 </Switch>
             </Content>
         </Container>
-         );
-     }
- }
+        );
+    }
+}
 
-export default News;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    articles: state.entities.articles,
+    teams: state.entities.teams,
+    team: state.auth.team,
+    sites: state.entities.sites,
+    zones: state.entities.zones,
+    countries: state.entities.countries
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(News);

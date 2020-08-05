@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Icon } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -70,4 +71,12 @@ class Governance extends Component {
     }
 }
 
-export default Governance;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    teams: state.entities.teams,
+    team: state.auth.team
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Governance);

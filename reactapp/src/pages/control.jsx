@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Container, Nav, Content, Icon, Header } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import ClockControls from './../components/clockControls';
@@ -247,4 +248,13 @@ class Control extends Component {
     }
 }
 
-export default Control;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    teams: state.entities.teams,
+    team: state.auth.team
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Control);

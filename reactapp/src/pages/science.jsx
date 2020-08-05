@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; // React import - used for react rendering
+import { connect } from 'react-redux'; // Redux store provider
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom'; // React router for URL links
 import { gameServer } from '../config'; // Used for the current server URL.
 import axios from 'axios'; // Axios import - used for HTTP calls
@@ -126,8 +127,18 @@ class Science extends Component {
                 </Switch>
             </Content>
         </Container>
-         );
-     }
- }
+        );
+    }
+}
 
-export default Science;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    sites: state.entities.sites,
+    facilities: state.entities.facilities,
+    research: state.entities.research
+});
+  
+  const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Science);

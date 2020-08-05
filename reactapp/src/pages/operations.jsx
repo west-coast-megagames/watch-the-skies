@@ -1,7 +1,7 @@
 import React, { Component } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import Interception from './tabs/ops/interceptions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
@@ -144,4 +144,17 @@ class Operations extends Component {
     }
  }
 
-export default Operations;
+const mapStateToProps = state => ({
+login: state.auth.login,
+team: state.entities.team,
+teams: state.entities.teams,
+zones: state.entities.zones,
+countries: state.entities.countries,
+sites: state.entities.sites,
+aircrafts: state.entities.aircrafts,
+military: state.entities.military
+});
+
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Operations);

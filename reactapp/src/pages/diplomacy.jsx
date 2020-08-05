@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Icon, Tag } from 'rsuite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileContract, faHandsHelping, faUniversity, faUserTie } from '@fortawesome/free-solid-svg-icons'
@@ -67,8 +68,17 @@ class Diplomacy extends Component {
                 </Switch>
             </Content>
         </Container>
-         );
-     }
- }
+        );
+    }
+}
 
-export default Diplomacy;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    teams: state.entities.teams,
+    team: state.auth.team
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Diplomacy);
