@@ -8,7 +8,7 @@ const TradeSchema = new Schema({
     offer: [{
         team: {type: Schema.Types.ObjectId, ref: 'Team'}, 
         megabucks: {type: Number, default: 0},
-        untis: [{type: Schema.Types.ObjectId, ref: 'Aircraft'}],
+        aircraft: [{type: Schema.Types.ObjectId, ref: 'Aircraft'}],
         //intel here
         research: [{type: Schema.Types.ObjectId, ref: 'Research'}],
         //sites here

@@ -4,6 +4,7 @@ const ReconLog = require('../../models/logs/reconLog');
 const DeployLog = require('../../models/logs/deployLog');
 const CrashLog = require('../../models/logs/crashLog');
 const TheoryLog = require('../../models/logs/theoryLog');
+const TradeLog = require('../../models/logs/tradeLog');
 const { TerrorLog } = require('../../models/logs/log');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -260,7 +261,7 @@ class TerrorReport {
    
   async saveReport() {
     try {
-      reportDebugger(`Saving report!`);
+      reportDebugger(`Saving Terror report!`);
       let timestamp = makeTimestamp();
       this.date = Date.now();
       let submission = new TerrorLog({...timestamp,...this})
@@ -276,4 +277,39 @@ class TerrorReport {
   }
 }
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport };
+class TradeReport {
+    constructor() {
+        this.team = ''
+        this.date = ''
+        this.team1 = {}
+        this.team2 = {}
+        this.offer1 = []
+        this.offer2 = []
+        this.comment1 = ''
+        this.comment2 = ''
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport(team) {
+        try {
+            reportDebugger(`Saving Trade Report!`);
+
+            this.team = team;
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new TradeLog({...timestamp,...this})
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Trade Report Error: ${err}`);
+            logger.error(`Trade Report Error: ${err}`, {meta: err});
+            return;
+        }
+    }
+}
+
+
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport, TradeReport };
