@@ -1,5 +1,6 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { createSelector } from 'reselect'
 
 // Create entity slice of the store
 const slice = createSlice({

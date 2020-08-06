@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 import { Alert } from "rsuite";
+import { createSelector } from 'reselect'
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -61,3 +62,10 @@ export const loadaccounts = () => (dispatch, getState) => {
     })
   );
 };
+
+// Selector
+export const getAccountsForTeam = createSelector(
+    state => state.entities.accounts.list,
+    state => state.auth.team,
+    (accounts, team) => accounts.filter(account => account.team.name === team.name)
+  );
