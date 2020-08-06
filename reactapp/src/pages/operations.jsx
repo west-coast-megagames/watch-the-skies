@@ -70,8 +70,6 @@ class Operations extends Component {
                     <Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item>
                     <Nav.Item eventKey="globe" to={`${url}/globe`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
                     <Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
-                    <Nav.Item eventKey='globe_map' to={`${url}/globe_map`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Globe Map</Nav.Item>
-                    <Nav.Item eventKey='flat_map' to={`${url}/flat_map`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Flat Map</Nav.Item>
                 </Nav>
             </Header>
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
@@ -126,15 +124,6 @@ class Operations extends Component {
                         <div style={{verticalAlign:'middle', position: 'relative'}}>
                             <Button block size='lg' color='red' onClick={() => playTrack('nuclear')} >DO NOT PRESS!</Button>
                         </div>
-                    )}/>
-                    <Route path={`${url}/globe_map`} render={() => (
-                        <Globe 
-                            sites={ this.props.sites }
-                            markers={ this.state.markers }
-                        />
-                    )}/>
-                    <Route path={`${url}/flat_map`} render={() => (
-                        <Flat />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
