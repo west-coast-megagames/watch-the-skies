@@ -6,7 +6,7 @@ const Home = (props) => {
     return (    
         <div className='tabContent' style={{paddingTop: '10px', height: 'calc(100vh - 50px)'}}>
             <h4>Current Build v0.1.3 - Science System and Research</h4>
-            <Link to='/login'>Sign into Demo</Link> | <a href='https://discord.gg/m88Q6KH' target='blank'>West Coast Megagames Discord Server Invite</a> | <a href='https://github.com/west-coast-megagames/watch-the-skies/wiki'>WTS Prototype Roadmap</a>
+            {props.login === false ? <span><Link to='/login'>Sign into Demo</Link> | </span>: null}<a href='https://discord.gg/m88Q6KH' target='blank'>West Coast Megagames Discord Server Invite</a> | <a href='https://github.com/west-coast-megagames/watch-the-skies/wiki'>WTS Prototype Roadmap</a>
             <hr />
             <p><b>Type:</b> Front-End Proto-type / Demo | <b>Game:</b> Watch the Skies</p>
             <p><b>Purpose:</b> This application is to demo a possible way of playing <i>Watch the Skies</i> connected to the <b>Project Nexus</b> server in development by <b>West Coast Megagames!</b></p>
