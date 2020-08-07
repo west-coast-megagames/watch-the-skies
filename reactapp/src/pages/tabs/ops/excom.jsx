@@ -4,7 +4,6 @@ import { Table, Icon, Alert } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import InterceptorDeployForm from "../../../components/interceptorsDeploy";
 import { getOpsAccount } from "../../../store/entities/accounts";
-import notify from "../../../scripts/notify";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
 const { HeaderCell, Cell, Column } = Table;
 
