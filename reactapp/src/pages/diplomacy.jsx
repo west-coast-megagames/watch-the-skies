@@ -7,13 +7,14 @@ import { Switch, Route, NavLink, Redirect } from 'react-router-dom';
 import LoginLink from '../components/common/loginLink';
 
 import Trade from './tabs/dip/trade'
+import { getPolAccount } from '../store/entities/accounts';
 
 class Diplomacy extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           tab: 'dashboard',
-          account: {amount: 0}
+          account: this.props.account
         };
         this.handleSelect = this.handleSelect.bind(this);
     }
@@ -22,20 +23,12 @@ class Diplomacy extends Component {
         this.setState({ tab: activeKey })
     }
 
-    componentWillMount() {
-        console.log('Mounting...')
-        let accountIndex = this.props.accounts.findIndex(account => account.name === 'Political');
-        let account = this.props.accounts[accountIndex]
-        this.setState({account})
-        console.log(this.state)
-    }
-
     render() {
         if (!this.props.login) return <LoginLink history={this.props.history} />
         const url = this.props.match.path;
         const { tab } = this.state; 
 
-         return (
+        return (
         <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
@@ -75,7 +68,8 @@ class Diplomacy extends Component {
 const mapStateToProps = state => ({
     login: state.auth.login,
     teams: state.entities.teams.list,
-    team: state.auth.team
+    team: state.auth.team,
+    account: getPolAccount(state)
 });
   
 const mapDispatchToProps = dispatch => ({

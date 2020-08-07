@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React imports
-import { Header, Sidenav, Navbar, Sidebar, Container, Dropdown, Icon, Nav, Content } from 'rsuite'; // rsuite components
-import { Route, Switch, Redirect, NavLink } from 'react-router-dom'; // React navigation components
+import { Header, Container, Content } from 'rsuite'; // rsuite components
+import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
 import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
 
 import { connect } from 'react-redux'; // Redux store provider
@@ -8,6 +8,7 @@ import notify from './scripts/notify';
 
 // Components
 import NavBar from './components/navBar';
+import SideNav from './components/navigation/sidenav';
 import Registration from './components/registration';
 import AlertPage from './components/common/alert';
 
@@ -30,10 +31,6 @@ import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite compon
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
 
-
-
-const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
-
 // React App Component
 class App extends Component {
   state = {
@@ -43,23 +40,7 @@ class App extends Component {
       turn: null
     },
     accounts: [],
-    megabucks: 0,
-    expand: false,
-    active: '1'
-  }
-
-  handleToggle = () => {
-    this.setState({
-      expand: !this.state.expand
-    });
-  }
-
-  handleSelect = (activeKey) => {
-    this.setState({ active: activeKey });
-  }
-
-  setKey = (key) => {
-    this.setState({ active: key })
+    megabucks: 0
   }
 
   componentDidMount() {
@@ -109,8 +90,6 @@ class App extends Component {
   }
 
   render() {
-    const { expand, active } = this.state;
-
     return(
         <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
           <Header>
@@ -121,32 +100,7 @@ class App extends Component {
             />
           </Header>
           <Container>
-          <Sidebar
-            style={{ display: 'flex', flexDirection: 'column' }}
-            width={expand ? 200 : 56}
-            collapsible
-          >
-            <Sidenav
-              expanded={expand}
-              defaultOpenKeys={['9']}
-              appearance="subtle"
-              activeKey={active}
-              onSelect={this.handleSelect}
-            >
-              <Sidenav.Body>
-                <Nav>
-                  <Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
-                  <Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
-                  <Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
-                  <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
-                  <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
-                  <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
-                  {this.props.team !== null ? this.props.team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
-                </Nav>
-              </Sidenav.Body>
-            </Sidenav>
-            <NavToggle login={this.state.login} expand={expand} onChange={this.handleToggle} signOut={this.handleSignout} />
-            </Sidebar>
+            {this.props.login ? <SideNav team={ this.props.team} /> : null}
             <Content>
                 <Switch>
                     <Route path="/login" render={(props) => (
@@ -154,7 +108,9 @@ class App extends Component {
                       />
                     )}/>
                     <Route path="/home" render={(props) => (
-                      <Home {...props}/>
+                      <Home {...props}
+                        login={this.props.login}
+                      />
                     )}/>
                     <Route path="/ops" render={(props) => (
                       <Operations {...props}
@@ -170,7 +126,6 @@ class App extends Component {
                     )}/>
                     <Route path="/sci" render={(props) => (
                       <Science {...props}
-                          accounts={ this.state.accounts }
                           alert={ notify }
                       />
                     )}/>
@@ -205,40 +160,10 @@ class App extends Component {
   }
 }
 
-// Defines the side/panel taggle navigation
-const NavToggle = ({ login, expand, onChange, signOut }) => {
-  return (
-    <Navbar appearance="subtle" className="nav-toggle">
-      <Navbar.Body>
-        <Nav>
-          <Dropdown
-            placement="topStart"
-            trigger="click"
-            renderTitle={children => {
-              return <Icon style={iconStyles} icon="cog" />;
-            }}
-          >
-            <Dropdown.Item to="/404" componentClass={NavLink}>Profile</Dropdown.Item>
-            <Dropdown.Item to="/404" componentClass={NavLink}>Settings</Dropdown.Item>
-            <Dropdown.Item to="/control" componentClass={NavLink}>Control</Dropdown.Item>
-            { login && (<React.Fragment>
-              <Dropdown.Item to="/" onClick={signOut} componentClass={NavLink}>Sign out</Dropdown.Item>
-            </React.Fragment>)}
-          </Dropdown>
-        </Nav>
-        <Nav pullRight>
-          <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
-            <Icon icon={expand ? 'angle-left' : 'angle-right'} />
-          </Nav.Item>
-        </Nav>
-      </Navbar.Body>
-    </Navbar>
-  );
-};
-
 const mapStateToProps = state => ({
   notifications: state.notifications.list.filter(el => el.hidden === false),
-  team: state.auth.team
+  team: state.auth.team,
+  login: state.auth.login
 });
 
 const mapDispatchToProps = dispatch => ({});
