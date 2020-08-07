@@ -1,7 +1,11 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'; // Redux store provider
 import { Table, Icon, Alert } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import InterceptorDeployForm from "../../../components/interceptorsDeploy";
+import { getOpsAccount } from "../../../store/entities/accounts";
+import notify from "../../../scripts/notify";
+import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
 const { HeaderCell, Cell, Column } = Table;
 
 class ExcomOps extends Component {
@@ -98,11 +102,10 @@ class ExcomOps extends Component {
 
   loadTable() {
     let data = [];
-    let contacts = this.props.aircrafts.filter(
-      (el) =>
-        el.team.name !== this.props.team.name && el.status.deployed === true
-    );
+    let contacts = this.props.contacts;
     let zones = this.props.zones.filter((el) => el.zoneName !== "Space");
+    zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
+    contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
       let zone = {...newZone}
@@ -138,4 +141,17 @@ class ExcomOps extends Component {
   };
 }
 
-export default ExcomOps;
+const mapStateToProps = state => ({
+  login: state.auth.login,
+  team: state.auth.team,
+  zones: state.entities.zones.list,
+  sites: state.entities.sites.list,
+  aircrafts: getAircrafts(state),
+  contacts: getContacts(state),
+  military: state.entities.military.list,
+  account: getOpsAccount(state)
+});
+
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(ExcomOps);

@@ -3,10 +3,8 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
+import { faShieldAlt, faRadiation, faGlobe, faFighterJet } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
-import Globe from './tabs/ops/globe_example';
-import Flat from './tabs/ops/flat_map';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import ExcomOps from './tabs/ops/excom';
@@ -98,27 +96,10 @@ class Operations extends Component {
                         </div>
                     )}/>
                     <Route path={`${url}/excom`} render={() => (
-                        <ExcomOps
-                            sites={ this.props.sites }
-                            team={ this.props.team }
-                            aircrafts={ this.props.aircrafts }
-                            alert={ this.props.alert }
-                            zones={this.props.zones}
-                            account={ this.state.account }
-                        /> 
+                        <ExcomOps /> 
                     )}/>
                     <Route path={`${url}/globe`} render={() => (
-                        <GlobalOps
-                            team={ this.props.team }
-                            teams={ this.props.teams }
-                            accounts={ this.props.accounts }
-                            zones={ this.props.zones }
-                            countries={ this.props.countries }
-                            sites={ this.props.sites }
-                            aircrafts={ this.props.sites }
-                            military={ this.props.military }
-                            notify={ this.props.alert }
-                        />
+                        <GlobalOps />
                     )}/>
                     <Route path={`${url}/nuclear`} render={() => (
                         <div style={{verticalAlign:'middle', position: 'relative'}}>
@@ -136,12 +117,7 @@ class Operations extends Component {
 const mapStateToProps = state => ({
 login: state.auth.login,
 team: state.auth.team,
-teams: state.entities.teams.list,
-zones: state.entities.zones.list,
-countries: state.entities.countries.list,
-sites: state.entities.sites.list,
-aircrafts: state.entities.aircrafts.list,
-military: state.entities.military.list
+sites: state.entities.sites.list
 });
 
 const mapDispatchToProps = dispatch => ({});
