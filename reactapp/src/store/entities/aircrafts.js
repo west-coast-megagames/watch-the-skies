@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { createSelector } from 'reselect'
 import { Alert } from "rsuite";
+
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -70,3 +72,18 @@ export const addaircraft = aircraft =>
     data: aircraft,
     onSuccess: aircraftAdded.type
   });
+
+  // Selector
+export const getContacts = createSelector(
+  state => state.entities.aircrafts.list,
+  state => state.auth.team,
+  (aircrafts, team) => aircrafts.filter(
+    aircraft => aircraft.status.deployed === true && aircraft.team.name !== team.name && aircraft.status.destroyed === false
+  )
+);
+
+export const getAircrafts = createSelector(
+  state => state.entities.aircrafts.list,
+  state => state.auth.team,
+  (aircrafts, team) => aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false)
+);
