@@ -41,18 +41,10 @@ class Governance extends Component {
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
-                        <Timeline 
-                            teams={ this.props.teams }
-                            team={ this.props.team }
-                        />
-
+                        <Timeline />
                     )}/>
                     <Route path={`${url}/budget`}  render={() => (
-                        <Budget
-                        team={ this.props.team }
-                        accounts={ this.props.accounts }
-                        alert={ this.props.alert }
-                    />
+                        <Budget />
                     )}/>
                     <Route path={`${url}/espionage`}  render={() => (
                         <h5>The espionage system for the Governance Module has not been created!</h5>

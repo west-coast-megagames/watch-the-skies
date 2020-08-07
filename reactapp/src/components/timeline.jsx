@@ -102,7 +102,10 @@ class GameTimeline extends Component {
 }
 
 const mapStateToProps = state => ({
-    logs: state.entities.logs.list
+    logs: state.entities.logs.list,
+    teams: state.entities.teams.list,
+    team: state.auth.team
+    
 })
 
 const mapDispatchToProps = dispatch => ({
