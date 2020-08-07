@@ -10,20 +10,14 @@ import { Tag, Affix } from 'rsuite';
 // title:		A string title to place in the header on the left of page
 
 const BalanceHeader = (props) => {
-	// Look up the code within the accounts array
-	let account = props.accounts.filter(el => el.code === props.code);
-
-	// Do nothing yet if accounts has not been setup.  Else, save the account
-	if (account.length !== 0) {
-		account = account[0];
-	}
-
+	let account = props.account;
+	console.log(account)
 	return(
 		<div>
 			<Affix>
 				<h5 style={{display: 'inline'}}>{props.title}</h5>
 				<Tag style={{display: 'inline', float: 'right'}} color="green">$ { account.balance } MB</Tag>
-				<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} >Current { props.code } Account Balance:</h6>
+				<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} >Current { account.code } Account Balance:</h6>
 				<hr />
 			</Affix>
 		</div>

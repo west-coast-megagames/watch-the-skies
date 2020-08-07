@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { getLabPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
+import { getSciAccount } from '../../../store/entities/accounts';
 
 const { Column, HeaderCell, Cell } = Table;
 const labRepairCost = 5;
@@ -54,16 +56,15 @@ const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 	}
 };
 
-
 class ResearchLabs extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			research: [],			// Array of research that this team has visible
-			labs : [],				// Array of all the labs this team owns
-			account: {},			// Account of SCI for the current team
-			showModal: false,		// Boolean to tell whether to open the Repair Modal
-			repairLab: {}			// Obj that holds the lab to repair
+			research: [],					// Array of research that this team has visible
+			labs : [],						// Array of all the labs this team owns
+			account: this.props.account, 	// Account of SCI for the current team
+			showModal: false,				// Boolean to tell whether to open the Repair Modal
+			repairLab: {}					// Obj that holds the lab to repair
 		}
 		this.handleUpdate = this.handleUpdate.bind(this);
 		this.submitTxn = this.submitTxn.bind(this);
@@ -180,7 +181,6 @@ class ResearchLabs extends Component {
 	componentDidMount(){
 		this.initResearch();
 		this.initLabs();
-		this.initAccount();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -199,8 +199,7 @@ class ResearchLabs extends Component {
 		return(
 			<div>
 				<BalanceHeader 
-					accounts={this.props.accounts}
-					code={"SCI"}
+					account={this.props.account}
 					title={"Research Lab Assignment"}
 				/>
 				<Table
@@ -397,21 +396,17 @@ class ResearchLabs extends Component {
 			this.setState({labs});
 		}
 	}
-
-	// Function run at start.  Initializes SCI account state by this team
-	initAccount = () => {
-		let teamAccount = this.props.accounts.filter(el => el.code === 'SCI');
-		if (teamAccount.length !== 0) {
-			let el = teamAccount[0];
-			let account = {
-				_id: 			el._id,
-				balance: 		el.balance,
-				name:			el.name
-			};			
-			this.setState({account});
-		}
-	}
 }
 
-export default ResearchLabs;
+
+const mapStateToProps = state => ({
+    team: state.auth.team,
+    facilities: state.entities.facilities.list,
+    allResearch: state.entities.research.list,
+    account: getSciAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(ResearchLabs);
 
