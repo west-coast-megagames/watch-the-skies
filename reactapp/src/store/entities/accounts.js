@@ -68,4 +68,40 @@ export const getAccountsForTeam = createSelector(
     state => state.entities.accounts.list,
     state => state.auth.team,
     (accounts, team) => accounts.filter(account => account.team.name === team.name)
-  );
+);
+
+export const getTreasuryAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Treasury' && account.team.name === team.name)
+);
+
+export const getOpsAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Operations' && account.team.name === team.name)
+);
+
+export const getGovAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Governance' && account.team.name === team.name)
+);
+
+export const getDipAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Diplomacy' && account.team.name === team.name)
+);
+
+export const getSciAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Science' && account.team.name === team.name)
+);
+
+export const getPolAccount = createSelector(
+  state => state.entities.accounts.list,
+  state => state.auth.team,
+  (accounts, team) => accounts.find(account => account.name === 'Political' && account.team.name === team.name)
+);
