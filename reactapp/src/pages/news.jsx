@@ -7,6 +7,7 @@ import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
 import SubNews from './tabs/news/subNews';
 import LoginLink from '../components/common/loginLink';
+import { articleHidden } from '../store/entities/articles';
 
 class News extends Component {
     state = {
@@ -37,17 +38,36 @@ class News extends Component {
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
-                        <NewsFeed agency='All' articles={ this.props.articles } teams={this.props.teams}  del={this.props.handleArtHide} />
+                        <NewsFeed 
+                            agency='All' 
+                            articles={ this.props.articles } 
+                            teams={this.props.teams}  
+                            hideArticle={this.props.hideArticle} 
+                        />
                     )}/>
                     
                     <Route path={`${url}/gnn`}  render={() => (
-                        <NewsFeed agency='GNN' articles={ this.props.articles.filter(el => el.agency==='GNN') } teams={this.props.teams}  del={this.props.handleArtHide} />
+                        <NewsFeed 
+                            agency='GNN'
+                            articles={ this.props.articles.filter(el => el.agency==='GNN') }
+                            teams={this.props.teams} 
+                            hideArticle={this.props.hideArticle}
+                        />
                     )}/>
                     <Route path={`${url}/bnc`}  render={() => (
-                        <NewsFeed agency='BNC' articles={ this.props.articles.filter(el => el.agency==='BNC') } teams={this.props.teams}  del={this.props.handleArtHide}/>
+                        <NewsFeed 
+                            agency='BNC' 
+                            articles={ this.props.articles.filter(el => el.agency==='BNC') }
+                            teams={this.props.teams}  
+                            hideArticle={this.props.hideArticle}
+                        />
                     )}/>
                     <Route path={`${url}/releases`}  render={() => (
-                        <NewsFeed agency='Press Releases' articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') } teams={this.props.teams} del={this.props.handleArtHide}  />
+                        <NewsFeed 
+                            agency='Press Releases' 
+                            articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') }
+                            teams={this.props.teams} hideArticle={this.props.hideArticle}
+                        />
                     )}/>
 
                     <Route path={`${url}/add`} render={(props) => (
@@ -72,6 +92,6 @@ const mapStateToProps = state => ({
 });
   
 const mapDispatchToProps = dispatch => ({
+    hideArticle: article => dispatch(articleHidden(article))
 });
-  
 export default connect(mapStateToProps, mapDispatchToProps)(News);

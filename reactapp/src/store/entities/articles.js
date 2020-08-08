@@ -33,6 +33,13 @@ const slice = createSlice({
     articleAdded: (articles, action) => {
       console.log(`${action.type} Dispatched`)
       articles.list.push(action.payload);
+    },
+    articleHidden:(articles, action) => {
+      console.log(`${action.type} Dispatched`)
+      let index = articles.list.findIndex(el => el._id === action.payload._id);
+      articles.list[index].hidden = true;
+      articles.list = articles.list.filter(item => item.hidden === false);
+      articles.hidden = articles.list.filter(item => item.hidden === true);
     }
   }
 });
@@ -40,6 +47,7 @@ const slice = createSlice({
 // Action Export
 export const {
   articleAdded,
+  articleHidden,
   articlesReceived,
   articlesRequested,
   articlesRequestFailed
