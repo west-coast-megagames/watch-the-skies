@@ -1,4 +1,5 @@
 import React, { Component } from 'react'; // React import - used for react rendering
+import { connect } from 'react-redux'; // Redux store provider
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom'; // React router for URL links
 import { gameServer } from '../config'; // Used for the current server URL.
 import axios from 'axios'; // Axios import - used for HTTP calls
@@ -16,13 +17,13 @@ import { Nav, Container, Header, Content, Icon, Alert } from 'rsuite'; // rsuite
 import LoginLink from '../components/common/loginLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome Icon
 import { faFlask, faAtom, faMicrochip } from '@fortawesome/free-solid-svg-icons' // Font awesome symbols
+import { getSciAccount } from '../store/entities/accounts';
 
 class Science extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
           tab: 'dashboard',
-          research : [],
           fundingCost: [],
           techCost: []
         };
@@ -32,18 +33,13 @@ class Science extends Component {
 
     componentDidMount() {
         this.loadScience();
-        updateEvents.updateResearch((err, research) => {
-            Alert.success('Research Update - The current state of research has been updated...')
-            this.setState({ research });
-          });
     }
 
     async loadScience() {
         const { data } = await axios.get(`${gameServer}api/research/sciState`);
-        let { data: research } = await axios.get(`${gameServer}api/research`);  // Axios call to server for all research
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
-        this.setState({ techCost, fundingCost, research });
+        this.setState({ techCost, fundingCost, research: this.props.research });
     }
 
     getActive(element) {
@@ -63,7 +59,7 @@ class Science extends Component {
     render() {
         if (!this.props.login) return <LoginLink history={this.props.history}/>
         const url = this.props.match.path;
-        const { tab } = this.state; 
+        const { tab } = this.state;
         
 
         return (
@@ -90,44 +86,41 @@ class Science extends Component {
                     )}/>
                     <Route path={`${url}/salvage`} render={() => (
                         <Salvage    
-                        team={ this.props.team }
-                        allResearch={this.state.research}
+                            team={ this.props.team }
+                            allResearch={this.state.research}
                         />
                     )}/>
                     <Route path={`${url}/Research Labs`} render={() => (
                         <ResearchLabs 
-                            allResearch={this.state.research}
-                            facilities={this.props.facilities}
-                            team={this.props.team}
                             techCost={this.state.techCost}
                             fundingCost={this.state.fundingCost}
-                            accounts={this.props.accounts}
                         />
                     )}/>
                     <Route path={`${url}/Knowledge`} render={() => (
                         <Knowledge    
-                            team={ this.props.team }
-                            allResearch={this.state.research}
-                            facilities={this.props.facilities}
-                            accounts={this.props.accounts}
                             techCost={this.state.techCost}
                             
                         />
                     )}/>
                     <Route path={`${url}/Tech List`}  render={() => (
                         <TechList    
-                        team={ this.props.team }
-                        allResearch={this.state.research}
-                        techCost={this.state.techCost}
-                        accounts={this.props.accounts}
+                            techCost={this.state.techCost}
                         />
                     )}/>
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
             </Content>
         </Container>
-         );
-     }
- }
+        );
+    }
+}
 
-export default Science;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    account: getSciAccount(state)
+});
+  
+  const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Science);

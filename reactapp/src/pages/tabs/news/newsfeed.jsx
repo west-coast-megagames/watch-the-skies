@@ -23,7 +23,7 @@ const NewsFeed = props => {
                   <ButtonToolbar style={{float: 'right'}}>
                     <ButtonGroup>
                       <IconButton icon={<Icon icon="edit" />} />
-                      <IconButton icon={<Icon icon="eye-slash" />} onClick={() => props.del(article)} />
+                      <IconButton icon={<Icon icon="eye-slash" />} onClick={() => props.hideArticle(article)} />
                       <IconButton icon={<Icon icon="trash" />} color="red"/>
                     </ButtonGroup>
                     <IconButton icon={<Icon icon="file-text" />} color="green"/>

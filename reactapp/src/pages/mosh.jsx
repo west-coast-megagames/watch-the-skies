@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Counters from './../components/mosh/counters';
 import NavBar from '../components/mosh/moshNav';
+import { getOpsAccount, getSciAccount } from '../store/entities/accounts';
+import { connect } from 'react-redux'; // Redux store provider
 
 
 class MoshTest extends Component {
@@ -11,6 +13,10 @@ class MoshTest extends Component {
             { id: 3, value: 5, img: 'https://picsum.photos/40'},
             { id: 4, value: 0, img: 'https://picsum.photos/40'},
         ],
+     }
+
+     componentDidMount() {
+        console.log(this.props.opsAccount);
      }
 
      handleIncrement = counter => {
@@ -63,4 +69,11 @@ class MoshTest extends Component {
     }
 }
 
-export default MoshTest;
+const mapStateToProps = state => ({
+    opsAccount: getOpsAccount(state),
+    sciAccount: getSciAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(MoshTest);

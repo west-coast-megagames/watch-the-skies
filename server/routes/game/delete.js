@@ -3,7 +3,7 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 const routeDebugger = require('debug')('app:routes:admin');
 
-const Log = require('../../models/logs/log');
+const {Log} = require('../../models/logs/log');
 
 // @route   DELETE game/delete/logs
 // @desc    DELETE all LOG files

@@ -4,6 +4,7 @@ const ReconLog = require('../../models/logs/reconLog');
 const DeployLog = require('../../models/logs/deployLog');
 const CrashLog = require('../../models/logs/crashLog');
 const TheoryLog = require('../../models/logs/theoryLog');
+const TradeLog = require('../../models/logs/tradeLog');
 const { TerrorLog } = require('../../models/logs/log');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -13,6 +14,10 @@ function makeTimestamp() {
     let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
     let timestamp = { timestamp: { turn, phase, turnNum, clock: `${minutes}:${seconds}` }}
     return timestamp;
+}
+
+function createServiceRecord() {
+    return
 }
 
 // After Action Report for Lab activity
@@ -51,7 +56,7 @@ class ResearchReport {
 
             return;
         } catch (err) {
-            reportDebugger(`CalcProgress Error: ${err}`);
+            reportDebugger(`Reserch Report Error: ${err}`);
             return
         }
     }
@@ -83,7 +88,7 @@ class ReconReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Recon Log Error: ${err}`);
+            reportDebugger(`Recon Report Error: ${err}`);
             return
         }
     }
@@ -114,7 +119,7 @@ class TransportReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Transport Log Error: ${err}`);
+            reportDebugger(`Transport Report Error: ${err}`);
             return
         }
     }
@@ -152,7 +157,7 @@ class BattleReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Transport Log Error: ${err}`);
+            reportDebugger(`Transport Report Error: ${err}`);
             return
         }
     }
@@ -180,7 +185,7 @@ class CrashReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Crash Log Error: ${err}`);
+            reportDebugger(`Crash Report Error: ${err}`);
             return
         }
     }
@@ -209,7 +214,7 @@ class DeploymentReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Deployment Log Error: ${err}`);
+            reportDebugger(`Deployment Report Error: ${err}`);
             return
         }
     }
@@ -235,7 +240,7 @@ class TheoryReport {
 
             return;
         } catch (err) {
-            reportDebugger(`Theory Log Error: ${err}`);
+            reportDebugger(`Theory Report Error: ${err}`);
             return
         }
     }
@@ -256,7 +261,7 @@ class TerrorReport {
    
   async saveReport() {
     try {
-      reportDebugger(`Saving report!`);
+      reportDebugger(`Saving Terror report!`);
       let timestamp = makeTimestamp();
       this.date = Date.now();
       let submission = new TerrorLog({...timestamp,...this})
@@ -272,4 +277,39 @@ class TerrorReport {
   }
 }
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport };
+class TradeReport {
+    constructor() {
+        this.team = ''
+        this.date = ''
+        this.team1 = {}
+        this.team2 = {}
+        this.offer1 = []
+        this.offer2 = []
+        this.comment1 = ''
+        this.comment2 = ''
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport(team) {
+        try {
+            reportDebugger(`Saving Trade Report!`);
+
+            this.team = team;
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new TradeLog({...timestamp,...this})
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Trade Report Error: ${err}`);
+            logger.error(`Trade Report Error: ${err}`, {meta: err});
+            return;
+        }
+    }
+}
+
+
+
+module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport, TradeReport };
