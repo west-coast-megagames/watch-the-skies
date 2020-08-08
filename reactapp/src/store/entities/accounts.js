@@ -33,6 +33,10 @@ const slice = createSlice({
     accountAdded: (accounts, action) => {
       console.log(`${action.type} Dispatched`)
       accounts.list.push(action.payload);
+    },
+    accountsUpdated: (accounts, action) => {
+      console.log(`${action.type} Dispatched`)
+      accounts.list = action.payload;
     }
   }
 });
@@ -40,6 +44,7 @@ const slice = createSlice({
 // Action Export
 export const {
   accountsAdded,
+  accountsUpdated,
   accountsReceived,
   accountsRequested,
   accountsRequestFailed
