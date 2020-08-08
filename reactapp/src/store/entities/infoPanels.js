@@ -10,7 +10,9 @@ const slice = createSlice({
     Military: null,
     showMilitary: false,
     Site: null,
-    showSite: false
+    showSite: false,
+    Target: null,
+    showDeploy: false,
   },
   // Reducers - Events
   reducers: {
@@ -24,7 +26,6 @@ const slice = createSlice({
         default:
           Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload.model}`, 3000)
       }
-  
     },
     infoClosed: (info, action) => {
       console.log(`${action.type} Dispatched...`);
@@ -35,6 +36,16 @@ const slice = createSlice({
         default:
           Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload} model`, 3000)
       }
+    },
+    targetAssigned: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.Target = action.payload;
+      info.showDeploy = true;
+    },
+    deployClosed: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.showDeploy = false;
+      info.Target = null;
     }
   }
 });
@@ -42,7 +53,9 @@ const slice = createSlice({
 // Action Export
 export const {
   infoRequested,
-  infoClosed
+  infoClosed,
+  targetAssigned,
+  deployClosed
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

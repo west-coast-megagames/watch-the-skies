@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InfoAircraft from './infoAircraft';
+import InfoDeploy from './infoDeploy';
 
 
 class InfoDrawer extends Component {
@@ -8,6 +9,7 @@ class InfoDrawer extends Component {
         return (
             <React.Fragment>
                 <InfoAircraft />
+                <InfoDeploy />
             </React.Fragment>
         );
     }
