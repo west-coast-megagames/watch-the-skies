@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { createSelector } from 'reselect'
 import { apiCallBegan } from "../api"; // Import Redux API call
 
 // Create entity slice of the store
@@ -67,3 +68,13 @@ export const addsite = site =>
     data: site,
     onSuccess: siteAdded.type
   });
+
+  export const getCities = createSelector(
+    state => state.entities.sites.list,
+    sites => sites.filter(site => site.type === 'City')
+  );
+
+  export const getBases = createSelector(
+    state => state.entities.sites.list,
+    sites => sites.filter(site => site.type === 'Base')
+  );
