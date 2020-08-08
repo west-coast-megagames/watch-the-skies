@@ -2,24 +2,20 @@ import React, { Component } from "react";
 import { connect } from 'react-redux'; // Redux store provider
 import { Table, Icon, Alert } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
-import InterceptorDeployForm from "../../../components/interceptorsDeploy";
 import { getOpsAccount } from "../../../store/entities/accounts";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
+import { targetAssigned } from "../../../store/entities/infoPanels";
+import { getCities, getBases } from "../../../store/entities/sites";
 const { HeaderCell, Cell, Column } = Table;
 
 class ExcomOps extends Component {
   state = {
     data: [],
-    count: 0,
-    isDeploying: false,
-    showInfo: false,
-    unit: {},
+    count: 0
   };
 
   componentDidMount() {
-    let count = this.props.aircrafts.filter(
-      (el) => el.status.deployed === true
-    );
+    let count = this.props.contacts.length
     this.loadTable();
     this.setState({ count });
   }
@@ -53,7 +49,7 @@ class ExcomOps extends Component {
           onRowClick={(rowData) => {
             if (rowData.type !== "Zone") {
               Alert.success(`${rowData.name}`);
-              this.setState({ isDeploying: true, unit: rowData });
+              this.props.assignTarget(this.props.contacts.find(el => el._id === rowData._id));
             }
           }}
         >
@@ -74,7 +70,7 @@ class ExcomOps extends Component {
 
           <Column flexGrow={2}>
             <HeaderCell>Projected LZ</HeaderCell>
-            <Cell dataKey="country.name" />
+            <Cell dataKey="location" />
           </Column>
         </Table>
         <hr />
@@ -85,16 +81,6 @@ class ExcomOps extends Component {
         <hr />
         <h5>Space Operations</h5>
         <p>Table of all space operations...</p>
-        {this.state.isDeploying ? (
-          <InterceptorDeployForm
-            aircrafts={this.props.aircrafts.filter(
-              (el) => el.team._id === this.props.team._id
-            )}
-            show={this.state.isDeploying}
-            target={this.state.unit}
-            onClick={this.show}
-          />
-        ) : null}
       </React.Fragment>
     );
   }
@@ -116,10 +102,11 @@ class ExcomOps extends Component {
       for (let newUnit of contacts) {
         let unit = {...newUnit}
         let checkZone = zone;
-        console.log(unit);
-        console.log(checkZone);
+        // console.log(unit);
+        // console.log(checkZone);
         if (unit.zone.zoneName === checkZone.zoneName) {
           unit.info = `Unknown`;
+          unit.location = unit.country.name;
           zone.children.push(unit);
         }
       }
@@ -145,12 +132,16 @@ const mapStateToProps = state => ({
   team: state.auth.team,
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
+  cities: getCities(state),
+  bases: getBases(state),
   aircrafts: getAircrafts(state),
   contacts: getContacts(state),
   military: state.entities.military.list,
   account: getOpsAccount(state)
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  assignTarget: (payload) => dispatch(targetAssigned(payload))
+});
   
 export default connect(mapStateToProps, mapDispatchToProps)(ExcomOps);

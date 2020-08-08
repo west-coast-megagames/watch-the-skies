@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { infoRequested } from '../store/entities/infoPanels';
+import { getAircrafts } from '../store/entities/aircrafts';
 
 class AircraftTable extends Component {
-    state = {
-        aircrafts: this.props.aircrafts.filter(aircraft => aircraft.team._id === "5f21cc829c73e13db09ad034")
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            aircrafts: this.props.aircrafts
+        };
+        this.retreiveStatus = this.retreiveStatus.bind(this);
+        this.getLocation = this.getLocation.bind(this);
+    };
 
-    retreiveStatus = (aircraft) => {
-      if (!aircraft.status.deployed) {
-        return 'Idle';
-      } else if (aircraft.status.deployed && aircraft.mission !== "Standby" ){
-        return 'Intercepting Target...';
-      } else if (aircraft.status.deployed) {
-        return 'On mission...';
-      }
-    }
 
     getLocation = (aircraft) => {
         let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
@@ -23,11 +20,9 @@ class AircraftTable extends Component {
     }
 
     render() {
-        
         console.log(this.state.aircrafts)
         const { length: count } = this.state.aircrafts;
         
-
         if (count === 0)
             return <h4>No interceptors currently available.</h4>
         return (
@@ -51,7 +46,7 @@ class AircraftTable extends Component {
                         <td>Someone</td>
                         <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
                         <td>{ this.getLocation(aircraft) }</td>
-                        <td>{ this.retreiveStatus(aircraft) }</td>
+                        <td>{ aircraft.mission }</td>
                         <td><button type="info" value="Info" onClick={ () => this.props.infoRequest(aircraft) } className="btn btn-info">Info</button></td>
                     </tr>
                     ))}
@@ -63,7 +58,7 @@ class AircraftTable extends Component {
 }
 
 const mapStateToProps = state => ({
-    aircrafts: state.entities.aircrafts.list
+    aircrafts: getAircrafts(state)
 })
 
 const mapDispatchToProps = dispatch => ({
