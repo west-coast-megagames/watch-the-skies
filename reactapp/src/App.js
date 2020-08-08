@@ -30,6 +30,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite components
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
+import initUpdates from './scripts/initUpdates';
 
 // React App Component
 class App extends Component {
@@ -44,43 +45,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    // updateEvents.updateTeam((err, team) => {
-    //   if(this.state.team.name !== "Select Team") {
-    //     this.setState({ team });
-    //   }
-    // });
-
-    // updateEvents.updateAircrafts((err, aircrafts) => {
-    //   notify({type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${this.state.team.name} have been updated...`});
-    //   this.setState({ aircrafts });
-    // });
-
-    // updateEvents.updateAccounts((err, accounts) => {
-    //   accounts = accounts.filter(a => a.team === this.state.team._id);
-    //   let accountIndex = accounts.findIndex(account => account.name === 'Treasury');
-    //   let megabucks = 0;
-    //   accountIndex < 0 ? megabucks = 0 : megabucks = accounts[accountIndex].balance;
-    //   notify({type: 'success', title: 'Accounts Update', body: `The accounts for ${this.state.team.name} have been updated...`});
-    //   this.setState({ accounts, megabucks });
-    // });
-
-    // updateEvents.updateMilitary((err, military) => {
-    //   notify({type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
-    //   this.setState({ military });
-    // });
-
-    // updateEvents.updateFacilities((err, facilities) => {
-    //   notify({type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
-    //   this.setState({facilities})
-    // });
-
-    // updateEvents.addNews((err, article) => {
-    //   notify({type: 'success', title: `News Published`, body: `${article.publisher.name} published ${article.headline}`});
-    //   let articles = this.state.articles;
-    //   articles.push(article);
-    //   this.setState(articles);
-    // })
-
+    initUpdates();
     gameClock.subscribeToClock((err, clock) => {
       if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
           updateEvents.updateTeam(this.props.team._id);
