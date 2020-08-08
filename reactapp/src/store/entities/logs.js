@@ -72,6 +72,12 @@ export const addlog = log => apiCallBegan({
   onSuccess: logAdded.type
 });
 
+export const getLogsByTeam = createSelector(
+  state => state.entities.logs.list,
+  state => state.auth.team,
+  (logs, team) => logs.filter(log => log.team === team)
+);
+
 export const getTransactionLogs = createSelector(
   state => state.entities.logs.list,
   logs => logs.filter(log => log.logType === 'Transaction')
