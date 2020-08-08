@@ -47,7 +47,6 @@ class SideNav extends Component {
                   <Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
                   <Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
                   <Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
-                  <Nav.Item eventKey="8" to="/mosh" componentClass={NavLink} icon={<Icon icon="info" />}>Mosh</Nav.Item>
                   {this.props.team !== null ? this.props.team.name === 'Control Team' && <Nav.Item eventKey="8" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
                 </Nav>
               </Sidenav.Body>
