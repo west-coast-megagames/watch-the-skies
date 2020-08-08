@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Timeline, CheckPicker } from 'rsuite';
 import { TransactionLog, ResearchLog, InterceptLog, DeployLog } from '../components/common/logs'
-import { loadlogs } from '../store/entities/logs';
 
 const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
 
@@ -74,7 +73,6 @@ class GameTimeline extends Component {
     }
 
     async getLogs() {
-        this.props.loadLogs();
         this.filterLogs()
     }
 
@@ -108,8 +106,6 @@ const mapStateToProps = state => ({
     
 })
 
-const mapDispatchToProps = dispatch => ({
-    loadLogs: () => dispatch(loadlogs())
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameTimeline)
