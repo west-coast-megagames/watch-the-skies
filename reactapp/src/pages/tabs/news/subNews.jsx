@@ -120,20 +120,18 @@ class SubNews extends React.Component {
 
   formatPickerData = () => {
     console.log('Formatting Picker...')
-    let { zones, countries, sites } = this.props;
+    let zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
+    let countries = this.props.countries.map((item) => Object.assign({}, item, {selected:false}));
+    let sites = this.props.sites.map((item) => Object.assign({}, item, {selected:false}));
+    
     for (let country of countries) {
-      console.log(country)
       country.children = sites.filter(el => el.country.name === country.name);
     };
 
-    console.log(countries)
-
     for (let zone of zones) {
-      console.log(zone)
       zone.children = countries.filter(el => el.zone.zoneName === zone.zoneName);
       zone.name = zone.zoneName;
     };
-    console.log(zones)
     this.setState({ data: zones })
   }
 }

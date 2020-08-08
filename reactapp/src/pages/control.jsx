@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Container, Nav, Content, Icon, Header } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import ClockControls from './../components/clockControls';
 import { MDBBtnGroup, MDBBtn } from 'mdbreact';
 
 import { gameServer } from '../config';
-import LogList from '../components/common/logList';
+import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
 import LoginLink from '../components/common/loginLink';
 
@@ -107,7 +108,7 @@ class Control extends Component {
                     )}/>
                     
                     <Route path={`${url}/national`}  render={() => (
-                        <LogList />
+                        <TransactionList />
                     )}/>
                     <Route path={`${url}/military`}  render={() => (
                         <MilitaryControl {...this.props}/>
@@ -247,4 +248,13 @@ class Control extends Component {
     }
 }
 
-export default Control;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    teams: state.entities.teams.list,
+    team: state.auth.team
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Control);

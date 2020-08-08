@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Container, Header, Content, Sidebar, ButtonToolbar, Icon, IconButton, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag } from 'rsuite';
+import { Container, Header, Content, Sidebar, ButtonToolbar, Icon, IconButton } from 'rsuite';
 import DeployModal from '../../../components/deployForm';
 import InvasionModal from '../../../components/InvasionForm';
 
@@ -15,8 +15,6 @@ class MilitaryControl extends Component {
     closeInvade = () => { this.setState({showInvade: false}) };
     
     render() {
-        let {showInvade, showDeploy} = this.state;
-        
         return (
             <Container>
                 <Container>
