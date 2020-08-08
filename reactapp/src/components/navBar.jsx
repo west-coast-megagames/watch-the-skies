@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
 import TeamAvatar from './common/teamAvatar';
 import playTrack from './../scripts/audio';
+import { getTreasuryAccount } from '../store/entities/accounts';
 
 
 class NavBar extends Component {
@@ -31,21 +33,17 @@ class NavBar extends Component {
         }
     }
 
-
-
     render() {
         const { minutes, seconds, phase, turn } = this.props.clock;
+        const megabucks = this.props.account !== undefined ? this.props.account.balance : 0
         const clock = `${minutes}:${seconds}`;
         const pr = this.props.team === null ? 'PR Level: Unknown |' : `PR Level: ${this.props.team.prLevel} | `;
-        const megabuckDisplay = ` $M${this.props.megabucks} | `
+        const megabuckDisplay = ` $M${megabucks} | `
         const brandLink = this.props.team === null ? '/' : '/home';
 
         return (
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <Link className="navbar-brand" to={brandLink}>WCM</Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
                 <div className="collapse navbar-collapse" id="navbarNav">
                     {/* <ul className="navbar-nav">
                         <li className="nav-item">
@@ -69,5 +67,13 @@ class NavBar extends Component {
         );
     }
 }
- 
-export default NavBar;
+
+const mapStateToProps = state => ({
+    team: state.auth.team,
+    login: state.auth.login,
+    account: state.auth.login === true ? getTreasuryAccount(state) : undefined
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
