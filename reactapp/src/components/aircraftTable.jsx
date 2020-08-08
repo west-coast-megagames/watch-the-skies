@@ -9,7 +9,6 @@ class AircraftTable extends Component {
         this.state = {
             aircrafts: this.props.aircrafts
         };
-        this.retreiveStatus = this.retreiveStatus.bind(this);
         this.getLocation = this.getLocation.bind(this);
     };
 
