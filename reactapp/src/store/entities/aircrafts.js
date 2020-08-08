@@ -34,13 +34,20 @@ const slice = createSlice({
     aircraftAdded: (aircrafts, action) => {
       console.log(`${action.type} Dispatched`)
       aircrafts.list.push(action.payload);
-    }
+    },
+    aircraftsUpdated: (aircrafts, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('Aircrafts updated!', 2000);
+      aircrafts.list = action.payload;
+      aircrafts.lastFetch = Date.now();
+    },
   }
 });
 
 // Action Export
 export const {
   aircraftAdded,
+  aircraftsUpdated,
   aircraftsReceived,
   aircraftsRequested,
   aircraftsRequestFailed
@@ -85,5 +92,6 @@ export const getContacts = createSelector(
 export const getAircrafts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
-  (aircrafts, team) => aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false)
+  state => state.auth.login,
+  (aircrafts, team, login) => login === true ? aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false) : []
 );
