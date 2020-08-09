@@ -396,5 +396,23 @@
     "discord" : "BardCicero#2241",
     "teamCode" : "RFD",
     "roles": ["Control", "Player"]
-}
+},
+{
+    "username" : "Goldfox64",
+     "name" : {"first" : "Cody", "last" : "S" },
+     "email" : "Goldfox64@gmail.com",
+     "phone" : "1111111111",
+     "password" : "WCMPassword#1",
+     "address" : 
+         {"street1" : "The",
+          "street2" : "Moon",
+          "city" : "Earth",
+          "state" : "OH",
+          "zipcode" : "11111"},
+     "dob" : "1991-01-01",
+     "gender" : "Male",
+     "discord" : "Goldfox64#9723",
+     "teamCode" : "Japan",
+     "roles": ["Player"]
+ }
 ]
