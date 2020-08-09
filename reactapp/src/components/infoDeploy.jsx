@@ -45,12 +45,16 @@ class InfoDeploy extends Component {
     let airMissions = missions.filter(mission => mission.aircraft === true);
     let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true);
     let aircrafts = [];
-    for (let ship of ships) {
-      let data = { 
-        label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
-        value: ship._id,
+    console.log(ships);
+    if (ships.length > 0) {
+      for (let ship of ships) {
+        console.log(ship)
+        let data = { 
+          label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
+          value: ship._id,
+        }
+        aircrafts.push(data);
       }
-      aircrafts.push(data);
     }
     this.setState({ siteMissions, airMissions, aircrafts });
   }
