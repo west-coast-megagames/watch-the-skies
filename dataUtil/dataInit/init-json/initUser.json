@@ -412,7 +412,61 @@
      "dob" : "1991-01-01",
      "gender" : "Male",
      "discord" : "Goldfox64#9723",
-     "teamCode" : "Japan",
+     "teamCode" : "JPN",
+     "roles": ["Player"]
+ },
+ {
+    "username" : "TheWindowtree",
+     "name" : {"first" : "Ben", "last" : "Davies" },
+     "email" : "",
+     "phone" : "",
+     "password" : "Bristol100",
+     "address" : 
+         {"street1" : "",
+          "street2" : "",
+          "city" : "Bristol",
+          "state" : "UK",
+          "zipcode" : ""},
+     "dob" : "",
+     "gender" : "Male",
+     "discord" : "BenD#5491",
+     "teamCode" : "JPN",
+     "roles": ["Player"]
+ },
+ {
+    "username" : "Naughtkris",
+    "name" : {"first" : "Chris", "last" : "Chesher" },
+    "email" : "naughtkris@yahoo.ca",
+    "phone" : "902-293-2903",
+    "password" : "topsecret123",
+    "address" : 
+        {"street1" : "79 brian drive",
+         "street2" : "[]",
+         "city" : "Dartmouth",
+         "state" : "Nova Scotia",
+         "zipcode" : "b2w 3n2"},
+    "dob" : "1976-09-22",
+    "gender" : "Male",
+    "discord" : "Naughtkris",
+    "teamCode" : "EPT",
+    "roles": ["Player"]
+ },
+ {
+    "username" : "Exodus",
+     "name" : {"first" : "Christian", "last" : "" },
+     "email" : "",
+     "phone" : "",
+     "password" : "Aester",
+     "address" : 
+         {"street1" : "",
+          "street2" : "",
+          "city" : "",
+          "state" : "Kentucky",
+          "zipcode" : ""},
+     "dob" : "",
+     "gender" : "Male",
+     "discord" : "Exodus#4041",
+     "teamCode" : "AUS",
      "roles": ["Player"]
  }
 ]
