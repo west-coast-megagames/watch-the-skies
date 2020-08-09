@@ -12,6 +12,9 @@ class AircraftTable extends Component {
         this.getLocation = this.getLocation.bind(this);
     };
 
+    componentDidUpdate(prevProps) {
+        if (this.props.lastFetch !== prevProps.lastFetch) { this.setState({aircrafts: this.props.aircrafts}) }
+    }
 
     getLocation = (aircraft) => {
         let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
@@ -57,7 +60,8 @@ class AircraftTable extends Component {
 }
 
 const mapStateToProps = state => ({
-    aircrafts: getAircrafts(state)
+    aircrafts: getAircrafts(state),
+    lastFetch: state.entities.aircrafts.lastFetch
 })
 
 const mapDispatchToProps = dispatch => ({
