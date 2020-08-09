@@ -21,7 +21,7 @@ class GameTimeline extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevProps !== this.props) this.filterLogs();
+        if (prevProps.lastFetch !== this.props.lastFetch) this.filterLogs();
         if (prevState.teamFilter !== this.state.teamFilter) this.filterLogs();
         if (prevState.typeFilter !== this.state.typeFilter) this.filterLogs();
     }
@@ -100,10 +100,10 @@ class GameTimeline extends Component {
 }
 
 const mapStateToProps = state => ({
+    lastFetch: state.entities.logs.lastFetch,
     logs: state.entities.logs.list,
     teams: state.entities.teams.list,
     team: state.auth.team
-    
 })
 
 const mapDispatchToProps = dispatch => ({});
