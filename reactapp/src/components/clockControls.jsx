@@ -3,7 +3,6 @@ import { gameClock } from '../api';
 import { faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 class clockControls extends Component {
     state = {  }
 

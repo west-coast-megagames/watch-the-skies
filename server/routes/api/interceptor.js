@@ -362,14 +362,14 @@ router.patch('/resethull', auth, async function (req, res) {
 // @access  Public
 router.patch('/return', async function (req, res) {
     let count = 0;
-    for await (const aircraft of Aircraft.find()) {  
-      if (aircraft.site.toHexString() !== aircraft.baseOrig.toHexString() || aircraft.status.deployed) {
+    for await (const aircraft of Aircraft.find().populate('baseOrig')) {  
+      if (aircraft.site.toHexString() !== aircraft.baseOrig._id.toHexString() || aircraft.status.deployed) {
         aircraft.mission = "Docked"
         aircraft.status.ready = true;
         aircraft.status.deployed = false;
         aircraft.country = aircraft.baseOrig.country;
-        aircraft.site = aircraft.baseOrig._id
-        aircraft.zone = aircraft.baseOrig.zone
+        aircraft.site = aircraft.baseOrig._id;
+        aircraft.zone = aircraft.baseOrig.zone;
         await aircraft.save();
         count++
       }

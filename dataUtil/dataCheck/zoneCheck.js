@@ -21,18 +21,59 @@ async function chkZone(runFlag) {
 
     if (!zone.hasOwnProperty("zoneCode")) {
       logger.error(`zoneCode missing for zone ${zone.zoneName} ${zone._id}`);
+    } else {
+      if (
+        zone.zoneCode === "" ||
+        zone.zoneCode == undefined ||
+        zone.zoneCode == null
+      ) {
+        logger.error(`zoneCode is blank for Zone ${zone.zoneName} ${zone._id}`);
+      }
     }
 
     if (!zone.hasOwnProperty("zoneName")) {
       logger.error(`zoneName missing for zone ${zone._id}`);
+    } else {
+      if (
+        zone.zoneName === "" ||
+        zone.zoneName == undefined ||
+        zone.zoneName == null
+      ) {
+        logger.error(`zoneName is blank for Zone ${zone.zoneCode} ${zone._id}`);
+      }
     }
 
     if (!zone.hasOwnProperty("terror")) {
       logger.error(`Terror missing for zone ${zone.zoneName} ${zone._id}`);
+    } else {
+      if (isNaN(zone.terror)) {
+        logger.error(
+          `Zone ${zone.zoneName} ${zone._id} terror is not a number ${zone.terror}`
+        );
+      }
     }
 
     if (!zone.hasOwnProperty("model")) {
       logger.error(`model missing for zone ${zone.zoneName} ${zone._id}`);
+    }
+
+    if (!zone.hasOwnProperty("gameState")) {
+      logger.error(`gameState missing for zone ${zone.zoneName} ${zone._id}`);
+    }
+
+    if (!zone.hasOwnProperty("serviceRecord")) {
+      logger.error(
+        `serviceRecord missing for Zone ${zone.zoneName} ${zone._id}`
+      );
+    } else {
+      for (let i = 0; i < zone.serviceRecord.length; ++i) {
+        let lFind = await Log.findById(zone.serviceRecord[i]);
+        if (!lFind) {
+          logger.error(
+            `Zone ${zone.zoneName} ${zone._id} has an invalid serviceRecord reference ${i}: ${zone.serviceRecord[i]}`
+          );
+        }
+      }
     }
 
     if (!zone.hasOwnProperty("satellite")) {

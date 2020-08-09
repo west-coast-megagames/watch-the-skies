@@ -28,7 +28,7 @@ const fields = [
   "Social Science",
   "Quantum Mechanics",
 ];
-const outcomes = ["Destroy", "Damage", "Kill", "Perserve"];
+const outcomes = ["Destroy", "Damage", "Kill", "Preserve"];
 const techFields = [
   "Military",
   "Infrastructure",
@@ -59,6 +59,12 @@ async function chkResearch(runFlag) {
       );
     }
 
+    if (!research.hasOwnProperty("gameState")) {
+      logger.error(
+        `gameState missing for Research ${research.name} ${research.code} ${research._id}`
+      );
+    }
+
     if (!research.hasOwnProperty("name")) {
       logger.error(`Research name is missing ${research._id}`);
     } else {
@@ -68,7 +74,7 @@ async function chkResearch(runFlag) {
         research.name === null
       ) {
         logger.error(
-          `Research name has length of zero ${research.name} ${research._id}`
+          `Research name is blank for ${research.name} ${research._id}`
         );
       }
     }
@@ -84,7 +90,7 @@ async function chkResearch(runFlag) {
         research.code === null
       ) {
         logger.error(
-          `Research code has length of zero ${research.name} ${research._id}`
+          `Research code is blank for ${research.name} ${research._id}`
         );
       }
     }
@@ -100,7 +106,7 @@ async function chkResearch(runFlag) {
         research.desc === null
       ) {
         logger.error(
-          `Research description has length of zero ${research.name} ${research._id}`
+          `Research description is blank ${research.name} ${research._id}`
         );
       }
     }

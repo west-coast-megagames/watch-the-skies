@@ -1,5 +1,20 @@
 # watch-the-Skies
-This is the project file for the Watch the Skies Prototype, made for project nexus. Current Build: v0.1.2
+This is the project file for the Watch the Skies Prototype, made for project nexus. Current Build: v0.1.3 - Basic Game-Loop Build.
+
+## Scripts
+In the server directory, you can run:
+
+#### npm run dev
+Runs the react development server and the node server concurrently with nodemon online.
+
+#### $env:DEBUG = "app:*"
+Adds Enviornment Variable for DEBUG to run all namespaces
+
+#### $env:DEBUG_COLORS='true'
+Adds Enviornment Variable for DEBUG to display each namespace with a seperate color
+
+#### $env:RUN_INIT_REF='true'
+Enviroment Variable to control running of initRefLoad
 
 ## File Structure
 * reactapp - Front end React Applications
@@ -35,18 +50,3 @@ This is the project file for the Watch the Skies Prototype, made for project nex
             * intercept - The Interception system for WTS
             * notifications - Temp notifications system for WTS
             * pr - The PR system for WTS
-
-## Scripts
-In the server directory, you can run:
-
-#### npm run dev
-Runs the react development server and the node server concurrently with nodemon online.
-
-#### $env:DEBUG = "app:*"
-Adds Enviornment Variable for DEBUG to run all namespaces
-
-#### $env:DEBUG_COLORS='true'
-Adds Enviornment Variable for DEBUG to display each namespace with a seperate color
-
-#### $env:RUN_INIT_REF='true'
-Enviroment Variable to control running of initRefLoad

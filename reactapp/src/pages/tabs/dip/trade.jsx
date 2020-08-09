@@ -1,8 +1,7 @@
 import React, {Component, useState } from 'react'; // React import
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Sidebar, FlexboxGrid, Button, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
-import { Form, ControlLabel, RadioGroup, Radio, FormGroup, FormControl, HelpBlock, CheckPicker, DateRangePicker, Checkbox, CheckboxGroup, SelectPicker, TagPicker, InputPicker, Slider, DatePicker } from 'rsuite';
-import axios from 'axios';
+import { Container, Content, Sidebar, FlexboxGrid, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
+import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 
 const TradeOffer = (props) => {
 

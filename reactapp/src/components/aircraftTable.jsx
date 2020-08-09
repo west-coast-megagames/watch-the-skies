@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { infoRequested } from '../store/entities/infoPanels';
+import { getAircrafts } from '../store/entities/aircrafts';
 
-class Interceptors extends Component {
+class AircraftTable extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            aircrafts: this.props.aircrafts
+        };
+        this.getLocation = this.getLocation.bind(this);
+    };
 
-    retreiveStatus = (aircraft) => {
-      if (!aircraft.status.deployed) {
-        return 'Idle';
-      } else if (aircraft.status.deployed && aircraft.mission !== "Standby" ){
-        return 'Intercepting Target...';
-      } else if (aircraft.status.deployed) {
-        return 'On mission...';
-      }
-    }
 
     getLocation = (aircraft) => {
         let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
@@ -18,8 +19,9 @@ class Interceptors extends Component {
     }
 
     render() {
-        const { length: count } = this.props.aircrafts;
-
+        console.log(this.state.aircrafts)
+        const { length: count } = this.state.aircrafts;
+        
         if (count === 0)
             return <h4>No interceptors currently available.</h4>
         return (
@@ -37,14 +39,14 @@ class Interceptors extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                { this.props.aircrafts.map(aircraft => (
+                { this.state.aircrafts.map(aircraft => (
                     <tr key={ aircraft._id }>
                         <td>{ aircraft.name }</td>
                         <td>Someone</td>
                         <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
                         <td>{ this.getLocation(aircraft) }</td>
-                        <td>{ this.retreiveStatus(aircraft) }</td>
-                        <td><button type="info" value="Info" onClick={ () => this.props.onClick('info', aircraft) } className="btn btn-info">Info</button></td>
+                        <td>{ aircraft.mission }</td>
+                        <td><button type="info" value="Info" onClick={ () => this.props.infoRequest(aircraft) } className="btn btn-info">Info</button></td>
                     </tr>
                     ))}
                 </tbody>
@@ -54,4 +56,13 @@ class Interceptors extends Component {
     }
 }
 
-export default Interceptors;
+const mapStateToProps = state => ({
+    aircrafts: getAircrafts(state)
+})
+
+const mapDispatchToProps = dispatch => ({
+    infoRequest: aircraft => dispatch(infoRequested(aircraft))
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AircraftTable);

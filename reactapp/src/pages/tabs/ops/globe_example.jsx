@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactGlobe, { defaultBarMarkerOptions, defaultDotMarkerOptions } from 'react-globe';
+import ReactGlobe from 'react-globe';
 
 class globe extends Component {
     state = {

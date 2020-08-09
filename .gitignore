@@ -2773,3 +2773,10 @@ dataUtil/node_modules/express-async-errors/package.json
 dataUtil/node_modules/express-async-errors/README.md
 dataUtil/node_modules/express-async-errors/test.js
 dataUtil/node_modules/express-async-errors/yarn.lock
+dataUtil/prototype-combined.log
+dataUtil/prototype-debug-combined.log
+dataUtil/prototype-error.log
+dataUtil/prototype-combined.log
+dataUtil/prototype-debug-combined.log
+*.log
+

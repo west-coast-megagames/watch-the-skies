@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Table, Icon, Button } from 'rsuite';
+import { getContacts } from '../store/entities/aircrafts';
+import { targetAssigned } from '../store/entities/infoPanels';
+import { getCities } from '../store/entities/sites';
 const { Column, HeaderCell, Cell } = Table;
 
 class Contacts extends Component {
-
     state = {
         data: []
-    };
-
-    componentDidMount() {
     };
 
     componentDidUpdate(prevProps, prevState) {
@@ -113,7 +113,7 @@ class Contacts extends Component {
                     type:el.type,
                     location:el.country.name,
                     target: el,
-                    deploy: this.props.deployInterceptors
+                    deploy: this.props.assignTarget
                 };
             })
         },
@@ -140,7 +140,7 @@ class Contacts extends Component {
                     info: `Base owned and operated by ${el.team.name}`,
                     location:el.country.name,
                     target: el,
-                    deploy: this.props.deployInterceptors };
+                    deploy: this.props.assignTarget };
             })
         },
         {
@@ -158,13 +158,25 @@ class Contacts extends Component {
                     info: `...information about city?`,
                     location: el.country.name,
                     target: el,
-                    deploy: this.props.deployInterceptors };
+                    deploy: this.props.assignTarget };
             })
         }]
-        
-
         this.setState({ data })
     }
 }
 
+
+const mapStateToProps = state => ({
+    contacts: getContacts(state),
+    cities: getCities(state),
+    bases: getBases(state),
+    show: state.info.showDeploy
+  });
+  
+  const mapDispatchToProps = dispatch => ({
+    assignTarget: (payload) => dispatch(targetAssigned(payload))
+    
+  });
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(InfoDeploy);
 export default Contacts;

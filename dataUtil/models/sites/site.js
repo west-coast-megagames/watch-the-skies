@@ -31,6 +31,8 @@ const SiteSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  gameState: [],
 });
 
 let Site = mongoose.model("Site", SiteSchema);

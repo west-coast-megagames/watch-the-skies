@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'rsuite';
 const { Column, HeaderCell, Cell } = Table;
-
 class AccountsTable extends Component {
     constructor(props) {
         super(props);
@@ -45,36 +44,3 @@ class AccountsTable extends Component {
 }
  
 export default AccountsTable;
-
-// import { MDBTable, MDBTableBody, MDBTableHead } from 'mdbreact';
-
-// const accountsTable = (props) => {
-//     if (!props.accounts) {
-//         return(
-//             <div>
-//                 <p>No accounts</p>
-//             </div>
-//         );
-//     };
-
-//     return (
-//         <MDBTable>
-//             <MDBTableHead>
-//                 <tr>
-//                     <th></th>
-//                     <th>Total</th>
-//                 </tr>
-//             </MDBTableHead>
-//             <MDBTableBody>
-//                 { props.accounts.map(account => (
-//                     <tr key={ account._id }>
-//                         <td>{ account.name }</td>
-//                         <td>$M { account.balance }</td>
-//                     </tr>
-//                 ))}
-//             </MDBTableBody>
-//         </MDBTable>
-//     );
-// }
-
-// export default accountsTable;
