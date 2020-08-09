@@ -167,8 +167,9 @@ class InfoDeploy extends Component {
     try {
       console.log(stats)
       let response = await axios.put(`${gameServer}api/intercept`, stats);    
-      Alert.success(response.data)
-      this.props.hideDeploy()
+      Alert.success(response.data);
+      this.setState({mission: undefined});
+      this.props.hideDeploy();
     } catch (err) {
       Alert.error(`${err.data} - ${err.message}`)
     };
