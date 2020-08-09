@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 import { createSelector } from 'reselect'
+import { Alert } from "rsuite";
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -23,14 +24,16 @@ const slice = createSlice({
       logs.loading = false;
       logs.lastFetch = Date.now();
     },
-
     logsRequestFailed: (logs, action) => {
       console.log(`${action.type} Dispatched`)
       logs.loading = false;
     },
-
-    // command - event
-    // addlog - logAdded
+    logsUpdated: (Logs, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('Logs updated!', 2000);
+      Logs.list = action.payload;
+      Logs.lastFetch = Date.now();
+    },
     logAdded: (logs, action) => {
       console.log(`${action.type} Dispatched`)
       logs.list.push(action.payload);
@@ -43,7 +46,8 @@ export const {
   logAdded,
   logsReceived,
   logsRequested,
-  logsRequestFailed
+  logsRequestFailed,
+  logsUpdated
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
