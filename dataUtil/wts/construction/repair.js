@@ -14,9 +14,9 @@ async function repairSequence () {
             aircraft.mission = 'Ready'
 
             await aircraft.save();
-            nexusEvent.emit('updateAircraft');
         }
     }
+    nexusEvent.emit('updateAircraft');
     for (let structure of await Facility.find({'status.repair': true})) {
         if (structure.status.repair) {
             structure.status.repair = false;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'; // Redux store provider
-import { Table, Icon, Alert } from "rsuite";
+import { Table, Icon, Alert, ButtonGroup, IconButton, ButtonToolbar } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import { getOpsAccount } from "../../../store/entities/accounts";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
@@ -21,9 +21,13 @@ class ExcomOps extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.count !== prevState.count) {
+    if (this.state.count !== prevState.count || this.props.lastFetch !== prevProps.lastFetch) {
       this.loadTable();
     }
+  }
+
+  intercept (target) {
+    this.props.assignTarget(this.props.contacts.find(el => el._id === target));
   }
 
   render() {
@@ -31,6 +35,7 @@ class ExcomOps extends Component {
       <React.Fragment>
         <h5>Global Ex-Com Information</h5>
         <Table
+          style={{width: '98%'}}
           isTree
           defaultExpandAllRows
           rowKey="_id"
@@ -46,19 +51,18 @@ class ExcomOps extends Component {
             }
             return icon;
           }}
-          onRowClick={(rowData) => {
-            if (rowData.type !== "Zone") {
-              Alert.success(`${rowData.name}`);
-              this.props.assignTarget(this.props.contacts.find(el => el._id === rowData._id));
-            }
-          }}
+          // onRowClick={(rowData) => {
+          //   if (rowData.type !== "Zone") {
+          //     Alert.success(`${rowData.name}`);             
+          //   }
+          // }}
         >
-          <Column width={400}>
+          <Column width={200}>
             <HeaderCell>Name</HeaderCell>
             <Cell dataKey="name" />
           </Column>
 
-          <Column flexGrow={1}>
+          <Column flexGrow={2}>
             <HeaderCell>Type</HeaderCell>
             <Cell dataKey="type" />
           </Column>
@@ -70,7 +74,19 @@ class ExcomOps extends Component {
 
           <Column flexGrow={2}>
             <HeaderCell>Projected LZ</HeaderCell>
-            <Cell dataKey="location" />
+            <Cell dataKey="country.name" />
+          </Column>
+          <Column flexGrow={1}>
+            <HeaderCell>Actions</HeaderCell>
+            <Cell style={{padding: '8px'}}>
+              {rowData => {
+                if (rowData.type !== 'Zone') {
+                  return (<ButtonGroup size='sm'>
+                  <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Contact intel not implemented...', 4000)} color="blue"/>
+                  <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => this.intercept(rowData._id)} color="red" />
+                </ButtonGroup>)}
+              }}    
+            </Cell>
           </Column>
         </Table>
         <hr />
@@ -107,6 +123,7 @@ class ExcomOps extends Component {
         if (unit.zone.zoneName === checkZone.zoneName) {
           unit.info = `Unknown`;
           unit.location = unit.country.name;
+          unit.intercept = this.intercept
           zone.children.push(unit);
         }
       }
@@ -129,6 +146,7 @@ class ExcomOps extends Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
+  lastFetch: state.entities.aircrafts.lastFetch,
   team: state.auth.team,
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
