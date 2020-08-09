@@ -7,7 +7,7 @@ import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
 import SubNews from './tabs/news/subNews';
 import LoginLink from '../components/common/loginLink';
-import { articleHidden } from '../store/entities/articles';
+
 
 class News extends Component {
     state = {
@@ -42,7 +42,7 @@ class News extends Component {
                             agency='All' 
                             articles={ this.props.articles } 
                             teams={this.props.teams}  
-                            hideArticle={this.props.hideArticle} 
+                             
                         />
                     )}/>
                     
@@ -51,22 +51,22 @@ class News extends Component {
                             agency='GNN'
                             articles={ this.props.articles.filter(el => el.agency==='GNN') }
                             teams={this.props.teams} 
-                            hideArticle={this.props.hideArticle}
+                            
                         />
                     )}/>
                     <Route path={`${url}/bnc`}  render={() => (
                         <NewsFeed 
                             agency='BNC' 
                             articles={ this.props.articles.filter(el => el.agency==='BNC') }
-                            teams={this.props.teams}  
-                            hideArticle={this.props.hideArticle}
+                            teams={this.props.teams}
+                            
                         />
                     )}/>
                     <Route path={`${url}/releases`}  render={() => (
                         <NewsFeed 
                             agency='Press Releases' 
                             articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') }
-                            teams={this.props.teams} hideArticle={this.props.hideArticle}
+                            teams={this.props.teams}
                         />
                     )}/>
 
@@ -91,7 +91,5 @@ const mapStateToProps = state => ({
     countries: state.entities.countries.list
 });
   
-const mapDispatchToProps = dispatch => ({
-    hideArticle: article => dispatch(articleHidden(article))
-});
+const mapDispatchToProps = dispatch => ({});
 export default connect(mapStateToProps, mapDispatchToProps)(News);

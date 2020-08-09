@@ -7,6 +7,7 @@ const { logger } = require('../../middleware/winston'); // middleware/error.js w
 const { getTeam } = require('../../models/team/team');
 const { Aircraft } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
+const { Article } = require('../../models/news/article');
 const { Research } = require('../../models/sci/research');
 const { Facility } = require('../../models/gov/facility/facility')
 const { Military } = require('../../models/ops/military/military')
@@ -88,8 +89,14 @@ module.exports = function(io) {
         updateSocket.emit('updateMilitary', military);
     })
 
-    nexusEvent.on('newsAlert', (article) => {
-        updateSocket.emit('newsAlert', article);
-        console.log(`News alert sent: ${article.headline}`)
+    nexusEvent.on('newsAlert', async (article) => {
+        try { 
+            let newArticle = await Article.findById(article._id).populate('publisher');
+            updateSocket.emit('newsAlert', newArticle);
+            socketDebugger(`News alert sent: ${article.headline}`);
+        } catch (error) { 
+            socketDebugger(`Error: ${error.message}`);
+        }
+
     } )
 }

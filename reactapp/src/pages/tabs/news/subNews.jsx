@@ -18,10 +18,9 @@ class SubNews extends React.Component {
   };
 
   handleInput = (value, id) => {
-    console.log(this);
-    console.log(value);
-    console.log(id);
-
+    // console.log(this);
+    // console.log(value);
+    // console.log(id);
     let article = this.state.article;
     article[id] = value;
     this.setState({ article });
@@ -43,9 +42,7 @@ class SubNews extends React.Component {
   };
 
   handleCheckNews() {
-    this.form.checkForField("news", checkResult => {
-      console.log(checkResult);
-    });
+    this.form.checkForField("news");
   }
   render() {
     const { body, headline, imageSrc, location } = this.state.article;

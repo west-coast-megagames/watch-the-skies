@@ -3,6 +3,7 @@ import notify from './notify';
 import { updateEvents } from '../api';
 import { accountsUpdated } from '../store/entities/accounts';
 import { aircraftsUpdated } from '../store/entities/aircrafts';
+import { articleAdded } from '../store/entities/articles';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -39,6 +40,7 @@ const initUpdates = () => {
     updateEvents.addNews((err, article) => {
         console.log(article)
         notify({catagory: 'update', type: 'success', title: `News Published`, body: `${article.publisher.name} published ${article.headline}`});
+        store.dispatch(articleAdded(article))
     })
 }
 
