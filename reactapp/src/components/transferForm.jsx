@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button } from 'rsuite';
+import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert } from 'rsuite';
 import { banking } from '../api';
 import Select from './common/selectPicker';
 import notify from '../scripts/notify';
 
 class TransferForm extends Component {
     state = {
-        transfer: {},
+        transfer: {
+            to: null,
+            from: null
+        },
         account: {},
         schedule: false
+    }
+
+    componentDidMount() {
+        this.setState({accounts: this.props.accounts});
     }
 
     handleSubmit = e => {
@@ -16,6 +23,8 @@ class TransferForm extends Component {
         // Validate
         if (this.state.transfer.to === undefined || this.state.transfer.from === undefined){
             notify({catagory: 'error', type: 'error', title: 'Transfer failed', body: `Accounts not selected`})
+        } else if (this.state.transfer.amount < 1) {
+            Alert.warning(`You tried to send a transfer for 0, shame on you...`, 4000);
         } else {
             if (this.state.transfer.schedule === true) {
                 banking.autoTransfer(this.state.transfer);
@@ -30,15 +39,15 @@ class TransferForm extends Component {
     };
 
     handleChange = (value, id) => {
+        let transfer = {...this.state.transfer};
         if (id === 'from') {
             let accountIndex = this.props.accounts.findIndex((account => account._id === value));
             let account = this.props.accounts[accountIndex];
-            let amount = 0;
-            this.setState({ account, amount });
+            transfer.amount = 0
+            this.setState({ account });
         }
-        
+
         console.log(`Input Value: ${value}`);
-        const transfer = {...this.state.transfer};
         transfer[id] = value;
         console.log(transfer);
         this.setState({ transfer })
