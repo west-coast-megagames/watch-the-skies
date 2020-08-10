@@ -1,9 +1,13 @@
 import React from 'react';
 import { TransactionLog, ResearchLog, InterceptLog, DeployLog } from './logs'
 import { Timeline, Panel } from 'rsuite'
+import { useSelector } from 'react-redux'
 
 const ServiceRecord = (props) => {
-    let { logs } = props
+    let logs = useSelector(state => state.entities.logs.list)
+    logs = logs.filter(log => props.owner._id === log.unit);
+    console.log(logs)
+
     let s = logs.length !== 1 ? 's' : '';
 
     return(
