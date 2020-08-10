@@ -51,6 +51,7 @@ module.exports = function(io) {
             await banking.transfer(to, from, amount, note);
 
             nexusEvent.emit('updateAccounts');
+            nexusEvent.emit('updateLogs');
         });
 
         client.on('autoTransfer', async (transfer) => {
