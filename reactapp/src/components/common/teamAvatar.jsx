@@ -16,7 +16,7 @@ const team = {
   IND: 'https://cdn.countryflags.com/thumbs/india/flag-square-250.png',
   EPT: 'https://cdn.countryflags.com/thumbs/egypt/flag-square-250.png',
   BRZ: 'https://cdn.countryflags.com/thumbs/brazil/flag-square-250.png',
-  AUS: 'https://cdn.countryflags.com/thumbs/austrailia/flag-square-250.png',
+  AUS: 'https://cdn.countryflags.com/thumbs/australia/flag-square-250.png',
   RSA: 'https://cdn.countryflags.com/thumbs/south-africa/flag-square-250.png',
   BNC: BNC_logo,
   GNN: GNN_logo
