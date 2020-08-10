@@ -3,9 +3,7 @@ import { gameClock } from '../api';
 import { faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-class clockControls extends Component {
-    state = {  }
-
+class ClockControls extends Component {
     startClock = () => {
         console.log('Game Clock started');
         gameClock.startGame();
@@ -39,4 +37,4 @@ class clockControls extends Component {
     }
 }
  
-export default clockControls;
+export default ClockControls;
