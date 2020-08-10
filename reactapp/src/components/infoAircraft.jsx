@@ -47,7 +47,7 @@ class InfoAircraft extends Component {
           <br />
           {aircraftSystems(this.props.aircraft)}
           <br />
-          <ServiceRecord logs={this.props.aircraft.serviceRecord} />
+          <ServiceRecord owner={this.props.aircraft} />
         </Drawer.Body>
         : <Drawer.Body><p>Loading</p></Drawer.Body> }
         <Drawer.Footer>

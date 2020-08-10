@@ -28,11 +28,11 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       logs.loading = false;
     },
-    logsUpdated: (Logs, action) => {
+    logsUpdated: (logs, action) => {
       console.log(`${action.type} Dispatched...`);
       Alert.info('Logs updated!', 2000);
-      Logs.list = action.payload;
-      Logs.lastFetch = Date.now();
+      logs.list = action.payload;
+      logs.lastFetch = Date.now();
     },
     logAdded: (logs, action) => {
       console.log(`${action.type} Dispatched`)

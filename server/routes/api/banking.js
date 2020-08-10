@@ -18,8 +18,8 @@ const banking = require('../../wts/banking/banking');
 router.get('/accounts', async function (req, res) {
     routeDebugger('Looking up accounts...');
     let accounts = await Account.find()
-                                .populate('team', 'name shortName')
-                                .sort({team: 1});
+        .populate('team', 'name shortName')
+        .sort({team: 1});
     res.json(accounts);
 });
 
@@ -97,7 +97,7 @@ router.post('/accounts', async function (req, res) {
 router.get('/accounts/:id', validateObjectId, async function (req, res) {
     routeDebugger('Looking up an account...');
     let account = await Account.findById({ _id: req.params.id })
-                               .populate('team', 'name shortName');
+        .populate('team', 'name shortName');
     res.json(account);
 });
 
@@ -106,9 +106,9 @@ router.get('/accounts/:id', validateObjectId, async function (req, res) {
 // @access  Public
 router.patch('/accounts', async function (req, res) {
     for await (let account of Account.find()) {{
-            account.balance = 0;
-            account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-            account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        account.balance = 0;
+        account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         };
 
         await account.save();

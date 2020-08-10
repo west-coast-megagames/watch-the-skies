@@ -49,7 +49,7 @@ module.exports = function(io) {
         .populate('country', 'name')
         .populate('systems', 'name category')
         .populate('site', 'name')
-        .populate('baseOrig', 'name');
+        .populate('baseOrig', 'name')
         socketDebugger('Updating aircrafts...');
         updateSocket.emit('currentAircrafts', aircrafts);
         socketDebugger(`Updating aircraft socket event sent!`)

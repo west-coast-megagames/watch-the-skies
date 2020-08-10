@@ -11,7 +11,13 @@ const team = {
   PRC: "https://cdn.countryflags.com/thumbs/china/flag-square-250.png",
   TUK: "https://cdn.countryflags.com/thumbs/united-kingdom/flag-square-250.png",
   TFR: "https://cdn.countryflags.com/thumbs/france/flag-square-250.png",
-  FFG: "",
+  JPN: 'https://cdn.countryflags.com/thumbs/japan/flag-square-250.png',
+  IRN: 'https://cdn.countryflags.com/thumbs/iran/flag-square-250.png',
+  IND: 'https://cdn.countryflags.com/thumbs/india/flag-square-250.png',
+  EPT: 'https://cdn.countryflags.com/thumbs/egypt/flag-square-250.png',
+  BRZ: 'https://cdn.countryflags.com/thumbs/brazil/flag-square-250.png',
+  AUS: 'https://cdn.countryflags.com/thumbs/australia/flag-square-250.png',
+  RSA: 'https://cdn.countryflags.com/thumbs/south-africa/flag-square-250.png',
   BNC: BNC_logo,
   GNN: GNN_logo
 };

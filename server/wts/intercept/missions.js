@@ -80,6 +80,7 @@ async function resolveMissions () {
     totalCount += count;
     count = 0;
     nexusEvent.emit('updateAircrafts');
+    nexusEvent.emit('updateLogs');
 
     return 0;
 }
