@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransactionLog, ResearchLog, InterceptLog, DeployLog } from './logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog } from './logs'
 import { Timeline, Panel } from 'rsuite'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +20,7 @@ const ServiceRecord = (props) => {
             if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
             if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />)
             if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />)
+            if (log.logType === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />)
         })}
     </Timeline>}
     </Panel>
