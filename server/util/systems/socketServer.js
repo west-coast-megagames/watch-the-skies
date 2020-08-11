@@ -4,6 +4,7 @@ class SocketServer {
         this.saveClient = this.saveTeam.bind(this);
         this.saveUser = this.saveUser.bind(this);
         this.delClient = this.delClient.bind(this);
+        this.getUsers = this.getUsers.bind(this);
     }
     saveTeam (team, client) {
         client.team = team;
@@ -18,6 +19,16 @@ class SocketServer {
 
     delClient (client) {
         this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1);
+    }
+    getUsers() {
+        let users = []
+        for (let client of this.connections) {
+            let user = {};
+            user.name = client.user
+            user.team = client.team
+            users.push(user);
+        }
+        return users
     }
   }
 

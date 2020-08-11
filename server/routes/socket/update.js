@@ -20,17 +20,22 @@ module.exports = function(io) {
         logger.info(`New client subscribing to update socket... ${client.id}`);
         UpdateClients.connections.push(client);
         logger.info(`${UpdateClients.connections.length} ${UpdateClients.connections.length === 1 ? 'client' : 'clients'} subscribed to update service...`);
+        client.emit('updateUsers', UpdateClients.getUsers());
 
         client.on('new user', (data) => {
             UpdateClients.saveTeam(data.team, client);
             UpdateClients.saveUser(data.user, client);
             logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`)
+            socketDebugger(`Sending socket new users`);
+            client.broadcast.emit('updateUsers', UpdateClients.getUsers());
+            socketDebugger(`New users sent!`);
         });
 
         client.on('disconnect', () => {
             logger.info(`Client disconnecting from update service... ${client.id}`);
             UpdateClients.delClient(client);
             console.log( `${UpdateClients.connections.length} clients connected`);
+            client.emit('updateUsers', UpdateClients.getUsers());
           });
     })
 

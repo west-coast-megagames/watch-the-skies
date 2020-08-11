@@ -15,6 +15,7 @@ const slice = createSlice({
     login: false,
     loading: false,
     lastLogin: null,
+    users: [],
     errors: {}
   },
   // Reducers - Events
@@ -43,6 +44,10 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       auth.loading = false;
       auth.errors= { login: action.payload };
+    },
+    usersRecieved: (auth, action) => {
+      console.log(`${action.type} Dispatched`)
+      auth.users = action.payload
     }
   }
 });
@@ -51,7 +56,8 @@ const slice = createSlice({
 export const {
   authReceived,
   loginRequested,
-  authRequestFailed
+  authRequestFailed,
+  usersRecieved
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

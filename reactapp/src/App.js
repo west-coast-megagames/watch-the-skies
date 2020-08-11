@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React imports
-import { Header, Container, Content } from 'rsuite'; // rsuite components
+import { Header, Container, Content, IconButton, Icon, Badge, Whisper, Popover } from 'rsuite'; // rsuite components
 import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
 import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
 
@@ -11,6 +11,7 @@ import NavBar from './components/navBar';
 import SideNav from './components/navigation/sidenav';
 import Registration from './components/registration';
 import AlertPage from './components/common/alert';
+import UserList from './components/common/userList';
 
 // Pages
 import Governance from './pages/governance';
@@ -120,6 +121,7 @@ class App extends Component {
         </Container>
         <InfoDrawer />
         <AlertPage alerts={ this.props.notifications } />
+        <UserList />
       </div>
     );
   }
