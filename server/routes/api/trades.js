@@ -59,16 +59,18 @@ router.post('/process', async function (req, res){
 
         for (let element of offer){
             let team = element.team
+            let opposingTeam = (team === team1) ? team2 : team1;            
+
             routeDebugger(`Working on offer of ${element} of ${team}`);        
 
             for (let [key, value] of Object.entries(element)){
                 console.log(`${key}, ${value}`);
                 routeDebugger(`Working on element ${key} of value ${value}`);
+               
                 switch (key){
                     case "megabucks":
                         routeDebugger(`Working on Megabucks`); 
                         let accountFrom = await Account.findOne({"team" : team, "name" : "Treasury"});
-                        let opposingTeam = (team === team1) ? team2 : team1;
                         let accountTo = await Account.findOne({"team" : opposingTeam, "name" : "Treasury"});
 
                         await withdrawal(accountFrom, value, `Trade with so and so`);
@@ -78,14 +80,21 @@ router.post('/process', async function (req, res){
                         for (let plane of value){
                             routeDebugger(`Working on Aircraft Transfer`); 
                             let aircraft = await Aircraft.findById(plane); 
+                            aircraft.team = opposingTeam; //change the aircraft's team
+                            exchangeEquiptment(aircraft.systems, opposingTeam); //change the aircraft's equiptment
 
-                            let opposingTeam = (team === team1) ? team2 : team1;
-                            aircraft.team = opposingTeam;
                             await aircraft.save();
                         }//for plane
                         break;
-                }//
-            }            
+                    case "research" : 
+                        for (let plane of value){
+                        }//for plane
+                        break;
+                    case "equiptment" :                   
+                        exchangeEquiptment(target, opposingTeam);   
+                        break;
+                }//switch (key)
+            }//for Object.entries            
         }//for (let element)
 
     }//else if
@@ -93,5 +102,19 @@ router.post('/process', async function (req, res){
     report.saveReport(offer[1].team);
     res.status(200).send('ok done now');
 });//router
+
+async function exchangeEquiptment(transferred, newOwner){
+    for (let thing of transferred){
+        //check what currently has the equiptment
+        try{
+            let target = await Equiptment.findById(thing);  
+            target.team = newOwner;    
+            await target.save();            
+        }
+        catch(err){
+            routeDebugger(`ERROR WITH exchangeEquiptment CALL: ${err}`)
+        }   
+    }//for thing
+}//exchangeEquiptment
 
 module.exports = router;
