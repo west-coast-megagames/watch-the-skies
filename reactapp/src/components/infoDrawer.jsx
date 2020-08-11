@@ -8,15 +8,16 @@ class InfoDrawer extends Component {
     render() { 
         return (
             <React.Fragment>
-                <InfoAircraft />
-                <InfoDeploy />
+                {this.props.login && <InfoAircraft />}
+                {this.props.login && <InfoDeploy />}
             </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    showAircraft: state.info.showAircraft
+    login: state.auth.login
+    
   });
   
   const mapDispatchToProps = dispatch => ({});
