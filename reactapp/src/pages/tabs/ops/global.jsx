@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Icon, Button } from 'rsuite';
+import { connect } from 'react-redux'; // Redux store provider
+import { Table, Icon } from 'rsuite';
 const { HeaderCell, Cell, Column } = Table;
 
 class GlobalOps extends Component {
@@ -64,9 +65,13 @@ class GlobalOps extends Component {
 
     loadTable() {
         let data = []
-        let military = this.props.military.filter(el => el.__t === 'Military');
+        let military = this.props.military.filter(el => el.__t === 'Corps');
         let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
-        for (let zone of zones) {
+        zones = zones.map((item) => Object.assign({}, item, {selected:false}));
+        military = military.map((item) => Object.assign({}, item, {selected:false}));
+
+        for (let newZone of zones) {
+            let zone = {...newZone};
             zone.children = []
             zone.name = zone.zoneName
             zone.type = 'zone'
@@ -85,5 +90,14 @@ class GlobalOps extends Component {
         this.setState({ data })
     };
 }
- 
-export default GlobalOps;
+
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    zones: state.entities.zones.list,
+    military: state.entities.military.list
+});
+    
+const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(GlobalOps);

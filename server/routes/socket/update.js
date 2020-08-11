@@ -5,11 +5,13 @@ const { logger } = require('../../middleware/winston'); // middleware/error.js w
 
 // Mongoose Object Models & Methods
 const { getTeam } = require('../../models/team/team');
-const { getAircrafts } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
+const { Article } = require('../../models/news/article');
 const { Research } = require('../../models/sci/research');
 const { Facility } = require('../../models/gov/facility/facility')
 const { Military } = require('../../models/ops/military/military')
+const { Log } = require('../../models/logs/log');
 
 module.exports = function(io) {
     let UpdateClients = new SocketServer
@@ -33,15 +35,24 @@ module.exports = function(io) {
     })
 
     nexusEvent.on('updateAccounts', async () => {
-        let accounts = await Account.find();
+        let accounts = await Account.find().sort({team: 1}).populate('team', 'name shortName');;
         socketDebugger(`Updating financial accounts...`);
         updateSocket.emit('updateAccounts', accounts);
       });
 
     nexusEvent.on('updateAircrafts', async () => {
-        let aircrafts = await getAircrafts();
+        socketDebugger(`Updating aircraft socket event!`)
+        let aircrafts = await Aircraft.find()
+        .sort({team: 1})
+        .populate('team', 'name shortName')
+        .populate('zone', 'zoneName')
+        .populate('country', 'name')
+        .populate('systems', 'name category')
+        .populate('site', 'name')
+        .populate('baseOrig', 'name')
         socketDebugger('Updating aircrafts...');
         updateSocket.emit('currentAircrafts', aircrafts);
+        socketDebugger(`Updating aircraft socket event sent!`)
     });
   
     nexusEvent.on('updateTeam', async (team_id) => {
@@ -79,8 +90,28 @@ module.exports = function(io) {
         updateSocket.emit('updateMilitary', military);
     })
 
-    nexusEvent.on('newsAlert', (article) => {
-        updateSocket.emit('newsAlert', article);
-        console.log(`News alert sent: ${article.headline}`)
+    nexusEvent.on('updateLogs', async () => {
+        socketDebugger(`Event: Updating logs...`);
+        let logs = await Log.find()
+            .populate('team')
+            .populate('country', 'name')
+            .populate('zone')
+            .populate('project')
+            .populate('lab')
+            .populate('theory')
+            .populate('units')
+            .sort({date: 1});
+        updateSocket.emit('updateLogs', logs);
+    });
+
+    nexusEvent.on('newsAlert', async (article) => {
+        try { 
+            let newArticle = await Article.findById(article._id).populate('publisher');
+            updateSocket.emit('newsAlert', newArticle);
+            socketDebugger(`News alert sent: ${article.headline}`);
+        } catch (error) { 
+            socketDebugger(`Error: ${error.message}`);
+        }
+
     } )
 }

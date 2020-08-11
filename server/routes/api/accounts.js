@@ -15,7 +15,7 @@ const { Account } = require('../../models/gov/account');
 router.get('/', async function (req, res) {
     //routeDebugger('Looking up accounts...');
     let accounts = await Account.find()
-      .sort({code: 1})
+      .sort({team: 1})
       .populate('team', 'name shortName');
     res.json(accounts);
 });

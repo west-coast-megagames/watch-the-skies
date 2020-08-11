@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import TxtInput from "./common/txtInput";
 import Joi from "joi-browser";
-import axios from "axios";
-import { gameServer } from "../config";
+import { loginuser } from "../store/entities/auth";
+import { connect } from "react-redux";
+import notify from "../scripts/notify";
 
 class LoginForm extends Component {
   state = {
@@ -14,6 +15,18 @@ class LoginForm extends Component {
     login: Joi.string().required(),
     password: Joi.string().required(),
   };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.errors !== prevProps.errors) {
+      notify({catagory: 'app', type: 'error', title: 'Login Failed', body:`Error: ${this.props.errors.login}`});
+    }
+    if (this.props.login !== prevProps.login) {
+      notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user}...`})
+      notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
+      this.props.close();
+    }
+
+  }
 
   validate = () => {
     const result = Joi.validate(this.state.account, this.schema, {
@@ -45,31 +58,9 @@ class LoginForm extends Component {
 
   handleSubmit = async (e) => {
     e.preventDefault();
-
-    // const errors = this.validate();
-    // this.setState({ errors: errors || {} });
-    // if (errors) return;
-
     // Call the server
     console.log("Submitted");
-    try {
-      let res = await axios.post(`${gameServer}api/auth`, this.state.account);
-      let jwt = res.data;
-      console.log(`Token: ${jwt}`);
-      this.props.addAlert({
-        type: "success",
-        title: "Login Successful",
-        body: `Logged in... welcome ${this.state.account.login}!`,
-      });
-      localStorage.setItem("token", jwt);
-      this.props.login();
-      this.props.close();
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      const account = { ...this.state.account };
-      const errors = { login: "Username or password is incorrect" };
-      this.setState({ account, errors });
-    }
+    this.props.handleLogin(this.state.account); // Redux login action
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -111,4 +102,16 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  user: state.auth.user,
+  team: state.auth.team,
+  errors: state.auth.errors,
+  login: state.auth.login
+});
+
+const mapDispatchToProps = dispatch => ({
+  handleLogin: (payload) => dispatch(loginuser(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+

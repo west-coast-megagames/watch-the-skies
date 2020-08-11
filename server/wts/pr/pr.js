@@ -30,6 +30,7 @@ async function updatePR() {
             }
         };
         nexusEvent.emit('updateAccounts');
+        nexusEvent.emit('updateLogs');
     } catch (err) {
         prDebugging('Error:', err.message);
     };

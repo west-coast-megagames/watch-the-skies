@@ -5,6 +5,7 @@ const DeployLog = require('../../models/logs/deployLog');
 const CrashLog = require('../../models/logs/crashLog');
 const TheoryLog = require('../../models/logs/theoryLog');
 const TradeLog = require('../../models/logs/tradeLog');
+const RepairLog = require('../../models/logs/repairLog');
 const { TerrorLog } = require('../../models/logs/log');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
@@ -310,6 +311,34 @@ class TradeReport {
     }
 }
 
+class RepairReport {
+    constructor() {
+        this.team = ''
+        this.date = ''
+        this.logType = ''
+        this.dmgRepaired = 0
+        this.cost = 0
+        this.saveReport = this.saveReport.bind(this);
+    }
+
+    async saveReport() {
+        try {
+            reportDebugger(`Saving Repair Report!`);
+            let timestamp = makeTimestamp();
+            this.date = Date.now();
+            let submission = new RepairLog({...timestamp,...this})
+            submission = await submission.save();
+            reportDebugger(submission);
+
+            return;
+        } catch (err) {
+            reportDebugger(`Repair Report Error: ${err}`);
+            logger.error(`Repair Report Error: ${err}`, {meta: err});
+            return;
+        }
+    }
+}
 
 
-module.exports = { ResearchReport, ReconReport, TransportReport, BattleReport, CrashReport, DeploymentReport, TheoryReport, TerrorReport, TradeReport };
+
+module.exports = { BattleReport, CrashReport, ResearchReport, ReconReport, RepairReport, TransportReport, DeploymentReport, TheoryReport, TerrorReport, TradeReport };

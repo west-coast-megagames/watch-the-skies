@@ -18,10 +18,9 @@ class SubNews extends React.Component {
   };
 
   handleInput = (value, id) => {
-    console.log(this);
-    console.log(value);
-    console.log(id);
-
+    // console.log(this);
+    // console.log(value);
+    // console.log(id);
     let article = this.state.article;
     article[id] = value;
     this.setState({ article });
@@ -43,9 +42,7 @@ class SubNews extends React.Component {
   };
 
   handleCheckNews() {
-    this.form.checkForField("news", checkResult => {
-      console.log(checkResult);
-    });
+    this.form.checkForField("news");
   }
   render() {
     const { body, headline, imageSrc, location } = this.state.article;
@@ -120,20 +117,18 @@ class SubNews extends React.Component {
 
   formatPickerData = () => {
     console.log('Formatting Picker...')
-    let { zones, countries, sites } = this.props;
+    let zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
+    let countries = this.props.countries.map((item) => Object.assign({}, item, {selected:false}));
+    let sites = this.props.sites.map((item) => Object.assign({}, item, {selected:false}));
+    
     for (let country of countries) {
-      console.log(country)
       country.children = sites.filter(el => el.country.name === country.name);
     };
 
-    console.log(countries)
-
     for (let zone of zones) {
-      console.log(zone)
       zone.children = countries.filter(el => el.zone.zoneName === zone.zoneName);
       zone.name = zone.zoneName;
     };
-    console.log(zones)
     this.setState({ data: zones })
   }
 }

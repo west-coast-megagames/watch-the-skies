@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { gameServer } from '../../config';
-
-import axios from 'axios';
-
+import { getTransactionLogs } from '../../store/entities/logs';
 import { Table } from 'rsuite';
+import { connect } from 'react-redux';
 
 const { Column, HeaderCell, Cell, Pagination } = Table;
 
-class LogList extends Component {
+class TransactionList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,12 +31,12 @@ class LogList extends Component {
       }
 
     componentDidMount() {
-        this.getLogs();
+      console.log(this.props.logs)
+        this.setState({ logs: this.props.logs })
     }
 
     getData() {
         const { displayLength, page } = this.state;
-    
         return this.state.logs.filter((v, i) => {
           const start = displayLength * (page - 1);
           const end = start + displayLength;
@@ -102,15 +100,12 @@ class LogList extends Component {
           </div>
         );
     }
-
-    async getLogs() {
-        console.log('Getting Logs...')
-        let { data: logs } = await axios.get((`${gameServer}api/logs`))
-        logs = logs.filter(el => el.logType === 'Transaction');
-        this.setState({logs});
-    }
 }
 
+const mapStateToProps = state => ({
+  logs: getTransactionLogs(state)
+})
 
+const mapDispatchToProps = dispatch => ({});
 
-export default LogList;
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionList)

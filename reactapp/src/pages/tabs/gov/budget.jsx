@@ -1,24 +1,25 @@
 import React, {Component} from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
 import ChartsPage from '../../../components/graph';
 import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
 import { Container, Header, Content, Footer, Sidebar, SelectPicker, ButtonGroup, Button } from 'rsuite';
+import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
 
 let count = 0;
 
 class Budget extends Component {
-    state = {
-        account: undefined,
-        account_id: null,
-        transactions: []
-    }
-
-    componentDidMount() {
-        let accountIndex = this.props.accounts.findIndex(account => account.name === 'Treasury');
-        let account = this.props.accounts[accountIndex];
-        let account_id = account._id;
-        this.setState({ account, account_id })
+    constructor(props) {
+        super(props);
+        this.state = {
+            account: this.props.account,
+            account_id: this.props.account._id,
+            transactions: []
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.addTransfer = this.addTransfer.bind(this);
+        this.delTransfer = this.delTransfer.bind(this);
     }
 
     handleChange = (value) => {
@@ -49,7 +50,7 @@ class Budget extends Component {
         this.setState({ transactions })
     }
 
-    render() { 
+    render() {
         return (
             <Container className="budget-tab">
                 <Header className="transfers">
@@ -73,8 +74,8 @@ class Budget extends Component {
                         />
                     </Sidebar>
                     <Content>
-                        <ChartsPage { ...this.props }
-                            account={ this.state.account }    
+                        <ChartsPage
+                            account={ {...this.state.account} }  
                         />
                     </Content>
                 </Container>
@@ -89,5 +90,13 @@ class Budget extends Component {
         );
     }
 }
- 
-export default Budget;
+
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    accounts: getAccountsForTeam(state),
+    account: getTreasuryAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Budget);

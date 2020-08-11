@@ -1,20 +1,30 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button } from 'rsuite';
+import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert } from 'rsuite';
 import { banking } from '../api';
 import Select from './common/selectPicker';
+import notify from '../scripts/notify';
 
 class TransferForm extends Component {
     state = {
-        transfer: {},
+        transfer: {
+            to: null,
+            from: null
+        },
         account: {},
         schedule: false
+    }
+
+    componentDidMount() {
+        this.setState({accounts: this.props.accounts});
     }
 
     handleSubmit = e => {
         e.preventDefault();
         // Validate
         if (this.state.transfer.to === undefined || this.state.transfer.from === undefined){
-            this.props.alert({type: 'error', title: 'Transfer failed', body: `Accounts not selected`})
+            notify({catagory: 'error', type: 'error', title: 'Transfer failed', body: `Accounts not selected`})
+        } else if (this.state.transfer.amount < 1) {
+            Alert.warning(`You tried to send a transfer for 0, shame on you...`, 4000);
         } else {
             if (this.state.transfer.schedule === true) {
                 banking.autoTransfer(this.state.transfer);
@@ -23,21 +33,21 @@ class TransferForm extends Component {
                 banking.bankingTransfer(this.state.transfer);
                 console.log('Submitted transfer');
             }
-            this.props.alert({type: 'success', title: 'Submitted Transfer', body: `Placeholder notification for your transfer of ${this.state.transfer.amount}`})
+            notify({catagory: 'action',type: 'success', title: 'Submitted Transfer', body: `Placeholder notification for your transfer of ${this.state.transfer.amount}`})
             this.props.delTransfer(this.state.transfer.id);
         }
     };
 
     handleChange = (value, id) => {
+        let transfer = {...this.state.transfer};
         if (id === 'from') {
             let accountIndex = this.props.accounts.findIndex((account => account._id === value));
             let account = this.props.accounts[accountIndex];
-            let amount = 0;
-            this.setState({ account, amount });
+            transfer.amount = 0
+            this.setState({ account });
         }
-        
+
         console.log(`Input Value: ${value}`);
-        const transfer = {...this.state.transfer};
         transfer[id] = value;
         console.log(transfer);
         this.setState({ transfer })
@@ -109,51 +119,6 @@ class TransferForm extends Component {
 
                 <ButtonGroup><Button onClick={this.handleSubmit}>{schedule === true ? "Submit Scheduled Transfer" : "Submit Transfer"}</Button><Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
             </Form>
-
-            // <form className="form-inline" onSubmit={this.handleSubmit}>
-            //     <label className="my-1 mr-2" htmlFor="from">From:</label>
-            //     <select className="custom-select my-1 mr-sm-2" id="from" name='from' value={this.state.transfer.from} onChange={this.handleChange}>
-            //         <option>Choose Witdrawl Account...</option>
-            //         { accounts.map(account => (
-            //             <option 
-            //                 key={account._id}
-            //                 value={account._id}
-            //             >{ account.name } | $M{ account.balance }</option>
-            //         ))}
-            //     </select>
-
-            //     <label className="my-1 mr-2" htmlFor="to" value={this.state.transfer.to}>To:</label>
-            //     <select className="custom-select my-1 mr-sm-2" id="to" name="to" value={this.state.transfer.to} onChange={this.handleChange}>
-            //         <option>Choose Deposit Account...</option>
-            //         { accounts.map(account => (
-            //             <option
-            //                 key={account._id}
-            //                 value={account._id}
-            //             >{ account.name } | $M{ account.balance }</option>
-            //         ))}
-            //     </select>
-
-            //     <div style={{ width: 120 }}>
-                    
-            //         {/* <input type="number" className="form-control" id="amount" name="amount" placeholder="Amount" value={this.state.transfer.amount} onChange={this.handleChange}/> */}
-            //     </div>
-
-            //     <div className="input-group my-1 mr-sm-2">
-            //         <div className="input-group-prepend">
-            //         <div className="input-group-text">Transfer Note:</div>
-            //         </div>
-            //         <input type="text" className="form-control" id="note" name="note" placeholder="Reason for transfer" value={this.state.transfer.note} onChange={this.handleChange}/>
-            //     </div>
-
-            //     <div className="form-check mb-2 mr-sm-2">
-            //         <input className="form-check-input" type="checkbox" id="schedule" name="schedule" value={!this.state.schedule} onClick={this.handleClick}/>
-            //         <label className="form-check-label" htmlFor="inlineFormCheck" >
-            //         Schedule
-            //         </label>
-            //     </div>
-
-            //     <button type="submit" className="btn btn-primary my-1">Submit</button>
-            // </form>
         );
     }
 }

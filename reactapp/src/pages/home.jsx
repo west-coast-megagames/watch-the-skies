@@ -5,13 +5,14 @@ import { Link } from 'react-router-dom'
 const Home = (props) => {
     return (    
         <div className='tabContent' style={{paddingTop: '10px', height: 'calc(100vh - 50px)'}}>
-            <h4>Current Build v0.1.3 - Science System and Research</h4>
-            <Link to='/login'>Sign into Demo</Link> | <a href='https://discord.gg/m88Q6KH' target='blank'>West Coast Megagames Discord Server Invite</a> | <a href='https://github.com/west-coast-megagames/watch-the-skies/wiki'>WTS Prototype Roadmap</a>
+            <h4>Current Build v0.1.3 - Game Loop Development</h4>
+            {props.login === false ? <span><Link to='/login'>Sign into Demo</Link> | </span>: null}<a href='https://discord.gg/m88Q6KH' target='blank'>West Coast Megagames Discord Server Invite</a> | <a href='https://github.com/west-coast-megagames/watch-the-skies/wiki'>WTS Prototype Roadmap</a>
             <hr />
-            <p><b>Type:</b> Front-End Proto-type / Demo | <b>Game:</b> Watch the Skies</p>
-            <p><b>Purpose:</b> This application is to demo a possible way of playing <i>Watch the Skies</i> connected to the <b>Project Nexus</b> server in development by <b>West Coast Megagames!</b></p>
+            <p><b>Type:</b> Front-End Prototype / Demo | <b>Game:</b> Watch the Skies</p>
+            <p><b>Purpose:</b> This application is to demo a possible way of playing <i>Watch the Skies</i> connected to the <b>Project Nexus</b> servers in development by <b>West Coast Megagames!</b></p>
             <p><b>Phase:</b> We are currently transitioning from designing <b>Project Nexus</b> as a digital backbone for live megagame events to the possibility of using it to run distributed and online games.</p>
-            <p><b>Testing Cycle:</b> We are on our first round of testing for v0.1.0 - v0.1.3 we are expecting a lot of instability. That being said, please play around with the interfaces and note your experence. If you experence a crash please let us know in discord ASAP and attempt to duplicate the crash. The more information you give me the better.</p> 
+            <p><b>Testing Cycle:</b> We are on our first round of testing for v0.1.0 - v0.1.3 we are expecting a lot of instability as we just fully refactored the front-end deployment. That being said, please play around with the interfaces and note your experence.</p>
+            <p>If you experence a crash, please attempt to duplicate the crash and <a href='https://github.com/west-coast-megagames/watch-the-skies/issues' target='blank'>report it!</a> The more information you give me the better and of course work with me on discord. Thank you for your interest!</p> 
             <hr />
             <FlexboxGrid>
                 <FlexboxGrid.Item colspan={12}>
@@ -65,5 +66,5 @@ const Home = (props) => {
         </div>
     );
 }
- 
+
 export default Home;

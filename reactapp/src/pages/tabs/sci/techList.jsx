@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Icon, Button, Progress, Affix } from 'rsuite';
+import { connect } from 'react-redux'; // Redux store provider
+import { Table, Icon, Button, Progress } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';
 import BalanceHeader from '../../../components/common/BalanceHeader';
+import { getSciAccount } from '../../../store/entities/accounts';
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis'];
 
@@ -51,8 +53,7 @@ class TechList extends Component {
         return (            
             <div>
 				<BalanceHeader 
-					accounts={this.props.accounts}
-					code={"SCI"}
+					account={props.account}
 					title={"Currently Known Applied Technologies"}
 				/>
                 <React.Fragment>
@@ -183,4 +184,13 @@ class TechList extends Component {
     }
 }
 
-export default TechList;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    allResearch: state.entities.research.list,
+    account: getSciAccount(state)
+});
+
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(TechList);

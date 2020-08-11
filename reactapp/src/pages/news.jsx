@@ -1,11 +1,13 @@
 import React, { Component } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content } from 'rsuite';
-import { Route, Switch, NavLink, Redirect, Link } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import NewsFeed from './tabs/news/newsfeed';
 import SubNews from './tabs/news/subNews';
 import LoginLink from '../components/common/loginLink';
+
 
 class News extends Component {
     state = {
@@ -36,17 +38,36 @@ class News extends Component {
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/feed`} render={() => (
-                        <NewsFeed agency='All' articles={ this.props.articles } teams={this.props.teams}  del={this.props.handleArtHide} />
+                        <NewsFeed 
+                            agency='All' 
+                            articles={ this.props.articles } 
+                            teams={this.props.teams}  
+                             
+                        />
                     )}/>
                     
                     <Route path={`${url}/gnn`}  render={() => (
-                        <NewsFeed agency='GNN' articles={ this.props.articles.filter(el => el.agency==='GNN') } teams={this.props.teams}  del={this.props.handleArtHide} />
+                        <NewsFeed 
+                            agency='GNN'
+                            articles={ this.props.articles.filter(el => el.agency==='GNN') }
+                            teams={this.props.teams} 
+                            
+                        />
                     )}/>
                     <Route path={`${url}/bnc`}  render={() => (
-                        <NewsFeed agency='BNC' articles={ this.props.articles.filter(el => el.agency==='BNC') } teams={this.props.teams}  del={this.props.handleArtHide}/>
+                        <NewsFeed 
+                            agency='BNC' 
+                            articles={ this.props.articles.filter(el => el.agency==='BNC') }
+                            teams={this.props.teams}
+                            
+                        />
                     )}/>
                     <Route path={`${url}/releases`}  render={() => (
-                        <NewsFeed agency='Press Releases' articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') } teams={this.props.teams} del={this.props.handleArtHide}  />
+                        <NewsFeed 
+                            agency='Press Releases' 
+                            articles={ this.props.articles.filter(el => el.agency!=='GNN' && el.agency!=='BNC') }
+                            teams={this.props.teams}
+                        />
                     )}/>
 
                     <Route path={`${url}/add`} render={(props) => (
@@ -56,8 +77,19 @@ class News extends Component {
                 </Switch>
             </Content>
         </Container>
-         );
-     }
- }
+        );
+    }
+}
 
-export default News;
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    articles: state.entities.articles.list,
+    teams: state.entities.teams.list,
+    team: state.auth.team,
+    sites: state.entities.sites.list,
+    zones: state.entities.zones.list,
+    countries: state.entities.countries.list
+});
+  
+const mapDispatchToProps = dispatch => ({});
+export default connect(mapStateToProps, mapDispatchToProps)(News);

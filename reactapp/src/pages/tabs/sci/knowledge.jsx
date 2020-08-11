@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { Table, Tag, Progress, Checkbox, Button, Alert } from 'rsuite';
 import BalanceHeader from '../../../components/common/BalanceHeader';
+import { getSciAccount } from '../../../store/entities/accounts';
 
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 
 class Knowledge extends Component {
-    state = { 
-        myHiddenLab: {},    // The hidden lab used for scientific knowledge for this team (SRC)
-        data: [],
-        checkedKeys: [],
-        cost: 0,
-        account: {}
+    constructor(props) {
+		super(props);
+		this.state = {
+            myHiddenLab: {},    // The hidden lab used for scientific knowledge for this team (SRC)
+            data: [],
+            checkedKeys: [],
+            cost: 0,
+            account: this.props.account
+        }
+        this.createTable = this.createTable.bind(this);
+        this.handleCheckAll = this.handleCheckAll.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -21,8 +30,7 @@ class Knowledge extends Component {
         if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
             let myHiddenLab = this.props.facilities.filter(el => el.type === 'Lab' && el.hidden && el.team._id === this.props.team._id);
             let tableKnowlege = this.createTable(knowledge);
-            let account = this.props.accounts[this.props.accounts.findIndex(el => el.code === 'SCI')];
-            this.setState({ data: tableKnowlege, account, myHiddenLab });
+            this.setState({ data: tableKnowlege, myHiddenLab });
         } 
     }
 
@@ -75,8 +83,7 @@ class Knowledge extends Component {
         return ( 
             <div>
                 <BalanceHeader 
-					accounts={this.props.accounts}
-					code={"SCI"}
+					account={this.state.account}
 					title={"Scientific Knowledge Field Funding"}
 				/>
                 <Table
@@ -203,4 +210,15 @@ const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
     </Cell>
   );
 
-export default Knowledge;
+
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    facilities: state.entities.facilities.list,
+    allResearch: state.entities.research.list,
+    account: getSciAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Knowledge);
