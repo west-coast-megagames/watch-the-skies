@@ -498,5 +498,41 @@
     "discord": "Exodus#4041",
     "teamCode": "AUS",
     "roles": ["Player"]
-  }
+  },
+  {
+    "username" : "Hella",
+     "name" : {"first" : "Pete", "last" : "LAST NAME HERE" },
+     "email" : "definitelynothella@gmail.com",
+     "phone" : "PHONE NUMBER HERE",
+     "password" : "Carbon14",
+     "address" : 
+         {"street1" : "STREET ADDRESS 1 HERE",
+          "street2" : "STREET ADDRESS 2 HERE",
+          "city" : "CITY HERE",
+          "state" : "STATE HERE",
+          "zipcode" : "ZIPCODE HERE"},
+     "dob" : "YYYY-MM-DD",
+     "gender" : "Male",
+     "discord" : "Hella#6072",
+     "teamCode" : "TUK",
+     "roles": ["Player"]
+ },
+ {
+  "username" : "RossM",
+   "name" : {"first" : "FIRST NAME HERE", "last" : "LAST NAME HERE" },
+   "email" : "EMAIL HERE",
+   "phone" : "PHONE NUMBER HERE",
+   "password" : "Space1999",
+   "address" : 
+       {"street1" : "STREET ADDRESS 1 HERE",
+        "street2" : "STREET ADDRESS 2 HERE",
+        "city" : "CITY HERE",
+        "state" : "STATE HERE",
+        "zipcode" : "ZIPCODE HERE"},
+   "dob" : "YYYY-MM-DD",
+   "gender" : "",
+   "discord" : "SCREENAME#----",
+   "teamCode" : "TUK",
+   "roles": ["Player"]
+}
 ]
