@@ -5,7 +5,8 @@ import { useSelector } from 'react-redux'
 
 const ServiceRecord = (props) => {
     let logs = useSelector(state => state.entities.logs.list)
-    logs = logs.filter(log => props.owner._id === log.unit);
+    logs = logs.filter(log => props.owner._id === log.unit || props.owner._id === log.aircraft);
+    logs.sort((a, b) => new Date(b.date) - new Date(a.date))
     console.log(logs)
 
     let s = logs.length !== 1 ? 's' : '';

@@ -316,9 +316,6 @@ class RepairReport {
         this.team = ''
         this.date = ''
         this.logType = ''
-        this.aircraft = ''
-        this.military = ''
-        this.facility = ''
         this.dmgRepaired = 0
         this.cost = 0
         this.saveReport = this.saveReport.bind(this);
@@ -327,8 +324,6 @@ class RepairReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Repair Report!`);
-
-            this.team = team;
             let timestamp = makeTimestamp();
             this.date = Date.now();
             let submission = new RepairLog({...timestamp,...this})

@@ -168,6 +168,7 @@ const evadeSpeaker = (
 
 const mapStateToProps = state => ({
   aircraft: state.info.Aircraft,
+  lastFetch: state.entities.aircrafts.lastFetch,
   show: state.info.showAircraft,
   account: getOpsAccount(state)
 });

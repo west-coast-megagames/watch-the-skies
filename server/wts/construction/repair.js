@@ -19,7 +19,7 @@ async function repairSequence () {
 
             await aircraft.save();
             
-            report.team = aircraft.team;
+            report.team = aircraft.team._id;
             report.aircraft = aircraft._id;
             report.cost = 2;
             await report.saveReport();
