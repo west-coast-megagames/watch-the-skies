@@ -1,5 +1,5 @@
 import React, { Component } from 'react'; // React imports
-import { Header, Container, Content, IconButton, Icon, Badge, Whisper, Popover } from 'rsuite'; // rsuite components
+import { Header, Container, Content } from 'rsuite'; // rsuite components
 import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
 import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
 
@@ -31,7 +31,6 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite components
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
-import initUpdates from './scripts/initUpdates';
 
 // React App Component
 class App extends Component {
@@ -46,7 +45,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-    initUpdates();
     gameClock.subscribeToClock((err, clock) => {
       if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
           updateEvents.updateTeam(this.props.team._id);
@@ -57,15 +55,15 @@ class App extends Component {
 
   render() {
     return(
-        <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
-          <Header>
-            <NavBar
-              clock={ this.state.clock }
-              team={ this.props.team }
-              megabucks={ this.state.megabucks }
-            />
-          </Header>
-          <Container>
+      <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
+        <Header>
+          <NavBar
+            clock={ this.state.clock }
+            team={ this.props.team }
+            megabucks={ this.state.megabucks }
+          />
+        </Header>
+        <Container>
             {this.props.login ? <SideNav team={ this.props.team} /> : null}
             <Content>
                 <Switch>

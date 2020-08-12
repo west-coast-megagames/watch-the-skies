@@ -35,7 +35,7 @@ module.exports = function(io) {
             logger.info(`Client disconnecting from update service... ${client.id}`);
             UpdateClients.delClient(client);
             console.log( `${UpdateClients.connections.length} clients connected`);
-            client.emit('updateUsers', UpdateClients.getUsers());
+            client.broadcast.emit('updateUsers', UpdateClients.getUsers());
           });
     })
 

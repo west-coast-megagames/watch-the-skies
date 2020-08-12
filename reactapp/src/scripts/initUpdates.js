@@ -32,24 +32,20 @@ const initUpdates = () => {
 
     updateEvents.updateMilitary((err, military) => {
         console.log(military)
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
     });
 
     updateEvents.updateFacilities((err, facilities) => {
         console.log(facilities)
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
     });
 
     updateEvents.updateLogs((err, logs) => {
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Logs Update', body: `The current state of game logs has been updated...`});
         store.dispatch(logsUpdated(logs));
     });
 
     updateEvents.updateResearch((err, research) => {
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Research Update', body: `The current state of game research has been updated...`});
         store.dispatch(researchReceived(research));
     });

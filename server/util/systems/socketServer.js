@@ -23,9 +23,11 @@ class SocketServer {
     getUsers() {
         let users = []
         for (let client of this.connections) {
-            let user = {};
-            user.name = client.user
-            user.team = client.team
+            let user = {
+                name: client.user,
+                team: client.team,
+                id: client.id
+            };
             users.push(user);
         }
         return users
