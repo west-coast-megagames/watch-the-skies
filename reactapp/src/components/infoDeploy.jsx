@@ -74,7 +74,7 @@ class InfoDeploy extends Component {
         long = `${long[0]}° ${long[1]}' ${long[2]}" ${long[3]}`
       };
 
-      if (this.state.aircrafts.length < 1 || this.state.unit ) disable = true;
+      if (this.state.aircrafts.length < 1 ) disable = true;
     
       return(
         <Drawer
@@ -172,7 +172,7 @@ class InfoDeploy extends Component {
       console.log(stats)
       let response = await axios.put(`${gameServer}api/intercept`, stats);    
       Alert.success(response.data);
-      this.setState({mission: undefined});
+      this.setState({mission: null, unit: null});
       this.props.hideDeploy();
     } catch (err) {
       Alert.error(`${err.data} - ${err.message}`)
