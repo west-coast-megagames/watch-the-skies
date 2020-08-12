@@ -170,8 +170,8 @@ async function techCheck() {
         let count = 0;
         for await (let req of research.prereq) {
           techDebugger(`${research.name}: Checking for prereq ${req.code}...`);
-          let checkTech = await Research.findOne({ code: req.code, team: research.team._id, 'status.completed': true });
-          let checkKnowledge = await Research.findOne({ code: req.code }).populate('credit');
+          let checkTech = await Research.findOne({ code: req.code, team: research.team._id, 'status.completed': true, type: 'Technology' });
+          let checkKnowledge = await Research.findOne({ code: req.code, type: 'Knowledge'}).populate('credit');
           if (checkKnowledge !== null) {
             if (checkKnowledge.status.completed) { 
               console.log(`${research.name} vs. ${checkKnowledge.name}`)
