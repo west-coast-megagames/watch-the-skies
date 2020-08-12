@@ -15,7 +15,7 @@ async function updatePR() {
             if (team.teamType === 'N') {
                 let { _id, prTrack, prLevel } = team;
                 prDebugging(`${team.name.toUpperCase()}`)
-                prDebugging(team)
+                // prDebugging(team)
                 prDebugging(`Assigning income for ${team.shortName}...`);
                 let account = await Account.findOne({ name: 'Treasury', 'team': _id });
 
@@ -25,7 +25,7 @@ async function updatePR() {
                 account = await account.save();
                 team = await team.save();
                 prDebugging(`${team.shortName} has PR Level of ${team.prLevel}`);
-                prDebugging(account);
+                // prDebugging(account);
                 
             }
         };
