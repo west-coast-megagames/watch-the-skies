@@ -2779,4 +2779,4 @@ dataUtil/prototype-error.log
 dataUtil/prototype-combined.log
 dataUtil/prototype-debug-combined.log
 *.log
-
+dataUtil/*.log

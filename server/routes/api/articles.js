@@ -17,9 +17,9 @@ mongoose.set('useCreateIndex', true);
 // @access  Public
 router.get('/', async (req, res) => {
   let articles = await Article.find()
-                            .populate('publisher', 'name shortName')
-                            .populate('location', 'name dateline')
-                            .sort('date: 1');
+    .populate('publisher', 'name shortName')
+    .populate('location', 'name dateline')
+    .sort('date: 1');
   res.json(articles);
 });
 

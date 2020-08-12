@@ -1,11 +1,21 @@
 import React, {Component, useState } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
+import { useSelector } from 'react-redux'
 import TeamAvatar from '../../../components/common/teamAvatar';
 import { Container, Content, Sidebar, FlexboxGrid, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
+import { getTreasuryAccount } from '../../../store/entities/accounts';
+import { getCompletedResearch } from '../../../store/entities/research';
 
-const TradeOffer = (props) => {
+const formatData = (array) => {
+    let data = []
+    for (let el of array) {
+        data.push({ label: el.name, value: el._id, })
+    }
+    return data;
+}
 
-    const pickerData =   
+const pickerData =   
     [
       {
         "label": "Eugenia",
@@ -21,99 +31,27 @@ const TradeOffer = (props) => {
         "label": "Louisa",
         "value": "Louisa",
         "role": "Master"
-      },
-      {
-        "label": "Marty",
-        "value": "Marty",
-        "role": "Master"
-      },
-      {
-        "label": "Kenya",
-        "value": "Kenya",
-        "role": "Master"
-      },
-      {
-        "label": "Hal",
-        "value": "Hal",
-        "role": "Developer"
-      },
-      {
-        "label": "Julius",
-        "value": "Julius",
-        "role": "Developer"
-      },
-      {
-        "label": "Travon",
-        "value": "Travon",
-        "role": "Developer"
-      },
-      {
-        "label": "Vincenza",
-        "value": "Vincenza",
-        "role": "Developer"
-      },
-      {
-        "label": "Dominic",
-        "value": "Dominic",
-        "role": "Developer"
-      },
-      {
-        "label": "Pearlie",
-        "value": "Pearlie",
-        "role": "Guest"
-      },
-      {
-        "label": "Tyrel",
-        "value": "Tyrel",
-        "role": "Guest"
-      },
-      {
-        "label": "Jaylen",
-        "value": "Jaylen",
-        "role": "Guest"
-      },
-      {
-        "label": "Rogelio",
-        "value": "Rogelio",
-        "role": "Guest"
       }
     ]
+
+const TradeOffer = (props) => {
+    let research = useSelector(getCompletedResearch)
+    console.log(research)
+    props.team._id !== useSelector(state => state.auth.team)._id ? research = [] : research = research = formatData(research);
+        
+    console.log(research)
+
+
 
     const [formValue, setFormValue] = useState({
         input:
           "I want all your things!!.",
         slider: 0,
-        aircraft: [
-          'Eugenia',
-          'Marty',
-          'Kenya',
-          'Hal',
-          'Julius',
-          'Tyrel',
-          'Jaylen',
-          'Rogelio'
-        ],
-        intel: [
-            'Kariane',
-            'Rogelio'
-        ],
-        research: [
-            'Julius',
-            'Hal',
-            'Julius',
-            'Tyrel',
-            'Rogelio'
-        ],
-        sites: [
-            'Eugenia',
-            'Hal',
-            'Julius',
-            'Rogelio'
-        ],
-        equipment: [
-            'Julius',
-            'Rogelio'
-        ],
+        aircraft: [],
+        intel: [],
+        research: [],
+        sites: [],
+        equipment: [],
       });
 
       const [mode, setMode] = useState('disabled');
@@ -191,7 +129,7 @@ const TradeOffer = (props) => {
                     <FormControl
                     name="research"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={research}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
@@ -320,5 +258,15 @@ class Trade extends Component {
         );
     }
 }
- 
-export default Trade;
+
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    teams: state.entities.teams.list,
+    account: getTreasuryAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);

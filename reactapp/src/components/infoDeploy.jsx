@@ -60,6 +60,7 @@ class InfoDeploy extends Component {
   }
 
   render() {
+    let disable = false;
     if (this.props.target !== null) {
       let { country, zone, model, name, type } = this.props.target;
       let lat = ''
@@ -72,6 +73,8 @@ class InfoDeploy extends Component {
         long = longDMS.split(" ");
         long = `${long[0]}° ${long[1]}' ${long[2]}" ${long[3]}`
       };
+
+      if (this.state.aircrafts.length < 1 ) disable = true;
     
       return(
         <Drawer
@@ -102,6 +105,7 @@ class InfoDeploy extends Component {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               <InputPicker
+                disabled={disable}
                 placeholder={`Scramble a aircraft over ${country.name}`}
                 data={this.state.aircrafts} 
                 labelKey='label'
@@ -110,9 +114,9 @@ class InfoDeploy extends Component {
                 onChange={value => (this.setState({ unit: value }))} block />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <InputPicker 
+              <InputPicker
+                disabled = {disable || this.state.unit === null} 
                 placeholder="Mission Type Selection"
-                disabled={this.state.unit === undefined} 
                 data={this.props.target !== null && model === 'Site' ? this.state.siteMissions : this.state.airMissions}
                 value={this.state.mission}
                 onChange={value => (this.setState({ mission: value }))}
@@ -137,7 +141,7 @@ class InfoDeploy extends Component {
             }
           </Drawer.Body>
           <Drawer.Footer>
-            <Button onClick={ this.handleSubmit } appearance="primary">Confirm</Button>
+            <Button disabled={disable || this.state.unit === null} onClick={ this.handleSubmit } appearance="primary">Confirm</Button>
             <Button onClick={ () => this.props.hideDeploy() } appearance="subtle">Cancel</Button>
           </Drawer.Footer>
         </Drawer> 
@@ -168,7 +172,7 @@ class InfoDeploy extends Component {
       console.log(stats)
       let response = await axios.put(`${gameServer}api/intercept`, stats);    
       Alert.success(response.data);
-      this.setState({mission: undefined});
+      this.setState({mission: null, unit: null});
       this.props.hideDeploy();
     } catch (err) {
       Alert.error(`${err.data} - ${err.message}`)

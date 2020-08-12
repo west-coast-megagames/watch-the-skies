@@ -14,10 +14,6 @@ class TransferForm extends Component {
         schedule: false
     }
 
-    componentDidMount() {
-        this.setState({accounts: this.props.accounts});
-    }
-
     handleSubmit = e => {
         e.preventDefault();
         // Validate
@@ -75,7 +71,7 @@ class TransferForm extends Component {
 
     componentDidMount() {
         let transfer = this.props.transfer;
-        this.setState({ transfer });
+        this.setState({ transfer, accounts: this.props.accounts });
     }
 
     render() {
