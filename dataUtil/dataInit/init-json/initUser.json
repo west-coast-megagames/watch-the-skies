@@ -500,39 +500,63 @@
     "roles": ["Player"]
   },
   {
-    "username" : "Hella",
-     "name" : {"first" : "Pete", "last" : "LAST NAME HERE" },
-     "email" : "definitelynothella@gmail.com",
-     "phone" : "PHONE NUMBER HERE",
-     "password" : "Carbon14",
-     "address" : 
-         {"street1" : "STREET ADDRESS 1 HERE",
-          "street2" : "STREET ADDRESS 2 HERE",
-          "city" : "CITY HERE",
-          "state" : "STATE HERE",
-          "zipcode" : "ZIPCODE HERE"},
-     "dob" : "YYYY-MM-DD",
-     "gender" : "Male",
-     "discord" : "Hella#6072",
-     "teamCode" : "TUK",
-     "roles": ["Player"]
- },
- {
-  "username" : "RossM",
-   "name" : {"first" : "FIRST NAME HERE", "last" : "LAST NAME HERE" },
-   "email" : "EMAIL HERE",
-   "phone" : "PHONE NUMBER HERE",
-   "password" : "Space1999",
-   "address" : 
-       {"street1" : "STREET ADDRESS 1 HERE",
-        "street2" : "STREET ADDRESS 2 HERE",
-        "city" : "CITY HERE",
-        "state" : "STATE HERE",
-        "zipcode" : "ZIPCODE HERE"},
-   "dob" : "YYYY-MM-DD",
-   "gender" : "",
-   "discord" : "SCREENAME#----",
-   "teamCode" : "TUK",
-   "roles": ["Player"]
-}
+    "loadType": "user",
+    "username": "Hella",
+    "name": { "first": "Pete", "last": "LAST NAME HERE" },
+    "email": "definitelynothella@gmail.com",
+    "phone": "1112223456",
+    "password": "Carbon14",
+    "address": {
+      "street1": "STREET ADDRESS 1 HERE",
+      "street2": "STREET ADDRESS 2 HERE",
+      "city": "CITY HERE",
+      "state": "CA",
+      "zipcode": "99999"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "Hella#6072",
+    "teamCode": "TUK",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "RossM",
+    "name": { "first": "FIRST NAME HERE", "last": "LAST NAME HERE" },
+    "email": "EMu@gmail.com",
+    "phone": "1112223443",
+    "password": "Space1999",
+    "address": {
+      "street1": "STREET ADDRESS 1 HERE",
+      "street2": "STREET ADDRESS 2 HERE",
+      "city": "CITY HERE",
+      "state": "CA",
+      "zipcode": "11111"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "SCREENAME#----",
+    "teamCode": "TUK",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "kfarnwor",
+    "name": { "first": "Kevin", "last": "Farnworth" },
+    "email": "farnworthkevin@gmail.com",
+    "phone": "6138090623",
+    "password": "OMGrulez",
+    "address": {
+      "street1": "1242 Grande Allee",
+      "street2": "",
+      "city": "Gatineau",
+      "state": "QC",
+      "zipcode": "J9J 3B5"
+    },
+    "dob": "1988-04-03",
+    "gender": "Male",
+    "discord": "farnworthkevin#7861",
+    "teamCode": "RSA",
+    "roles": ["Player"]
+  }
 ]
