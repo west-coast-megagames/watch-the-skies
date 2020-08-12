@@ -111,7 +111,10 @@ module.exports = function(io) {
 
     nexusEvent.on('newsAlert', async (article) => {
         try { 
-            let newArticle = await Article.findById(article._id).populate('publisher');
+            let newArticle = await Article.findById(article._id)
+                .populate('publisher', 'name shortName')
+                .populate('location', 'name dateline')
+                .sort('date: 1');
             updateSocket.emit('newsAlert', newArticle);
             socketDebugger(`News alert sent: ${article.headline}`);
         } catch (error) { 
