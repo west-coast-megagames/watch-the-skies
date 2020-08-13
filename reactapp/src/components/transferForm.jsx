@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert } from 'rsuite';
+import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert, Modal, ControlLabel, SelectPicker } from 'rsuite';
 import { banking } from '../api';
 import Select from './common/selectPicker';
 import notify from '../scripts/notify';
@@ -83,37 +83,46 @@ class TransferForm extends Component {
         return <h4>No accounts available for transfer, select a team to use the application!</h4>
 
         return (
-            <Form layout="inline">
-                <Select
-                    id='from'
-                    data={accounts}
-                    width={180}
-                    value={this.state.transfer.from}
-                    labelKey='name'
-                    valueKey='_id'
-                    placeholder='withdrawal Account...'
-                    handleChange={this.handleChange}
-                />
-                <Select
-                    id='to'
-                    data={accounts}
-                    width={180}
-                    value={this.state.transfer.to}
-                    labelKey='name'
-                    valueKey='_id'
-                    placeholder='Deposit Account...'
-                    handleChange={this.handleChange}
-                />
-                
-                <FormGroup>
-                    <InputNumber prefix="$M" id="amount" max={ max } min={0} value={this.state.transfer.amount} onChange={this.handleAmount} step={1} style={{ width: 120 }}/>
-                </FormGroup>
-
-                <FormGroup>
-                    <Input style={{ width: 150 }} placeholder="Note" type="text" id='note' value={this.state.transfer.note} onChange={(value) => this.handleChange(value, 'note')}/>
-                </FormGroup>
-
-                <ButtonGroup><Button onClick={this.handleSubmit}>{schedule === true ? "Submit Scheduled Transfer" : "Submit Transfer"}</Button><Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button></ButtonGroup>
+            <Form fluid>
+                 <Modal.Header>
+                    <Modal.Title>{schedule === true ? "Scheduled Transfer Form" : "Immediate Transfer Form"}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <SelectPicker
+                        block
+                        id='from'
+                        data={accounts}
+                        value={this.state.transfer.from}
+                        labelKey='name'
+                        valueKey='_id'
+                        placeholder='withdrawal Account...'
+                        handleChange={this.handleChange}
+                    />
+                    <SelectPicker
+                        block
+                        id='to'
+                        data={accounts}
+                        value={this.state.transfer.to}
+                        labelKey='name'
+                        valueKey='_id'
+                        placeholder='Deposit Account...'
+                        handleChange={this.handleChange}
+                    />
+                    <FormGroup>
+                        <ControlLabel>Amount to tranfer</ControlLabel>
+                        <InputNumber prefix="$M" id="amount" max={ max } min={0} value={this.state.transfer.amount} onChange={this.handleAmount} step={1} />
+                    </FormGroup>
+                    <FormGroup>
+                        <ControlLabel>Transfer note</ControlLabel>
+                        <Input placeholder="Note" type="text" id='note' value={this.state.transfer.note} onChange={(value) => this.handleChange(value, 'note')}/>
+                    </FormGroup>
+                </Modal.Body>
+                <Modal.Footer>
+                    <ButtonGroup style={{float: 'right'}}>
+                        <Button onClick={this.handleSubmit}>{schedule === true ? "Submit Scheduled Transfer" : "Submit Transfer"}</Button>
+                        <Button onClick={() => this.props.delTransfer(this.props.transfer.id)} color="red">X</Button>
+                    </ButtonGroup>
+                </Modal.Footer>  
             </Form>
         );
     }
