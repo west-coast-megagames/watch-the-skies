@@ -3,16 +3,29 @@ import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
 import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
-import { Container, Content, Footer, Sidebar, SelectPicker, ButtonGroup, Button } from 'rsuite';
+import { Container, Content, Footer, Sidebar, SelectPicker, ButtonGroup, Button, Modal } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
 import AccountGraph from '../../../components/common/GraphAccounts';
 
 let count = 0;
 
+const formatPickerData = (accounts) => {
+    let data = [];
+    for (let account of accounts) {
+        let option = {
+            _id: account._id,
+            label: `${account.name} | Balance: $M${account.balance}`
+        }
+        data.push(option);
+    }
+    return data;
+}
+
 class Budget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            data: formatPickerData(this.props.accounts),
             account: this.props.account,
             account_id: this.props.account._id,
             transactions: []
@@ -67,32 +80,34 @@ class Budget extends Component {
                         <AccountGraph
                             account={this.state.account}
                         />
+                        <h4>Automatic Transfers</h4>
+                        <AutoTransfers
+                            accounts={ this.props.accounts }
+                            alert={ this.props.alert }
+                        />
                     </Content>
                     <Sidebar>
-                        <ButtonGroup><Button onClick={() => this.addTransfer(false)}>New Transfer</Button><Button onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button></ButtonGroup>
-                        <AccountsTable accounts={ this.props.accounts } />
                         <SelectPicker
                             block
+                            style={{paddingBottom: '5px'}}
                             searchable={false}
                             cleanable={false}
-                            data={ this.props.accounts } 
+                            data={ this.state.data } 
                             value={ this.state.account_id }
                             placeholder='Select account for graph'
                             onChange={this.handleChange}
                             valueKey='_id'
-                            labelKey='name'
                         />
+                        <Button block onClick={() => this.addTransfer(false)}>New Transfer</Button>
+                        <Button block onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button>
+                        <AccountsTable accounts={ this.props.accounts } />
                     </Sidebar>
                 </Container>
-                <Footer>
-                    <h4>Automatic Transfers</h4>
-                    <AutoTransfers
-                        accounts={ this.props.accounts }
-                        alert={ this.props.alert }
-                    />
-                </Footer>
-                {this.state.transactions.map(el => (<TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props}
-                        />))}
+                {this.state.transactions.map(el => (
+                    <Modal show={this.state.transactions.length > 0} size='xs' onHide={() => this.delTransfer(el.id)}>
+                    <TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props} />
+                    </Modal>
+                ))}
             </Container>
         );
     }
