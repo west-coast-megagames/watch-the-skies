@@ -37,6 +37,7 @@ const slice = createSlice({
     accountsUpdated: (accounts, action) => {
       console.log(`${action.type} Dispatched`)
       accounts.list = action.payload;
+      accounts.lastFetch = Date.now();
     }
   }
 });

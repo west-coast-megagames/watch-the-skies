@@ -41,7 +41,6 @@ class NewsFeed extends Component {
     return (
       <Container>
         <Content>
-          <h5 className="newsFeedHeader">News Feed</h5>
           {this.props.articles.length === 0 ? <h5>No articles published by {this.state.agency}</h5> : null }
           {this.props.articles.length > 0 ? <PanelGroup>
           {this.props.articles.map(article => (
