@@ -18,7 +18,6 @@ import Governance from './pages/governance';
 import Home from './pages/home';
 import Control from './pages/control';
 import NotFound from './pages/404';
-import MoshTest from './pages/mosh'; // Mosh test
 import Operations from "./pages/operations";
 import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
@@ -110,7 +109,6 @@ class App extends Component {
                           alert = { notify }
                       />
                     )}/>
-                    <Route path="/mosh" component={ MoshTest } />
                     <Route path="/not-found" component={ NotFound } />
                     <Redirect from="/" exact to="home" />
                     <Redirect to="/not-found" />
