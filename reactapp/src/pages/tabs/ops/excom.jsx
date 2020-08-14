@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'; // Redux store provider
-import { Table, Icon, Alert, ButtonGroup, IconButton, ButtonToolbar } from "rsuite";
+import { Table, Icon, Alert, ButtonGroup, IconButton, Divider, Container, Content, Sidebar, Button } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import { getOpsAccount } from "../../../store/entities/accounts";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
 import { targetAssigned } from "../../../store/entities/infoPanels";
 import { getCities, getBases } from "../../../store/entities/sites";
+import Contacts from '../../../components/contactsTable';
+
 const { HeaderCell, Cell, Column } = Table;
 
 class ExcomOps extends Component {
@@ -32,72 +34,72 @@ class ExcomOps extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        <h5>Global Ex-Com Information</h5>
-        <Table
-          style={{width: '98%'}}
-          isTree
-          defaultExpandAllRows
-          rowKey="_id"
-          autoHeight
-          data={this.state.data}
-          onExpandChange={(isOpen, rowData) => {
-            console.log(isOpen, rowData);
-            return;
-          }}
-          renderTreeToggle={(icon, rowData) => {
-            if (rowData.children && rowData.children.length === 0) {
-              return <Icon icon="spinner" spin />;
-            }
-            return icon;
-          }}
-          // onRowClick={(rowData) => {
-          //   if (rowData.type !== "Zone") {
-          //     Alert.success(`${rowData.name}`);             
-          //   }
-          // }}
-        >
-          <Column width={200}>
-            <HeaderCell>Name</HeaderCell>
-            <Cell dataKey="name" />
-          </Column>
+      <Container>
+        <Content>
+          <h5>Global Ex-Com Information</h5>
+          <Table
+            style={{width: '98%'}}
+            isTree
+            defaultExpandAllRows
+            rowKey="_id"
+            autoHeight
+            data={this.state.data}
+            onExpandChange={(isOpen, rowData) => {
+              console.log(isOpen, rowData);
+              return;
+            }}
+            renderTreeToggle={(icon, rowData) => {
+              if (rowData.children && rowData.children.length === 0) {
+                return <Icon icon="spinner" spin />;
+              }
+              return icon;
+            }}
+          >
+            <Column width={200}>
+              <HeaderCell>Name</HeaderCell>
+              <Cell dataKey="name" />
+            </Column>
 
-          <Column flexGrow={2}>
-            <HeaderCell>Type</HeaderCell>
-            <Cell dataKey="type" />
-          </Column>
+            <Column flexGrow={2}>
+              <HeaderCell>Type</HeaderCell>
+              <Cell dataKey="type" />
+            </Column>
 
-          <Column flexGrow={4}>
-            <HeaderCell>Information</HeaderCell>
-            <Cell dataKey="info" />
-          </Column>
+            <Column flexGrow={4}>
+              <HeaderCell>Information</HeaderCell>
+              <Cell dataKey="info" />
+            </Column>
 
-          <Column flexGrow={2}>
-            <HeaderCell>Projected LZ</HeaderCell>
-            <Cell dataKey="country.name" />
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>Actions</HeaderCell>
-            <Cell style={{padding: '8px'}}>
-              {rowData => {
-                if (rowData.type !== 'Zone') {
-                  return (<ButtonGroup size='sm'>
-                  <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Contact intel not implemented...', 4000)} color="blue"/>
-                  <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => this.intercept(rowData._id)} color="red" />
-                </ButtonGroup>)}
-              }}    
-            </Cell>
-          </Column>
-        </Table>
-        <hr />
-        <h5>Air Operations</h5>
-        <AircraftTable
-          account={this.props.account}
-        />
-        <hr />
-        <h5>Space Operations</h5>
-        <p>Table of all space operations...</p>
-      </React.Fragment>
+            <Column flexGrow={2}>
+              <HeaderCell>Projected LZ</HeaderCell>
+              <Cell dataKey="country.name" />
+            </Column>
+            <Column flexGrow={1}>
+              <HeaderCell>Actions</HeaderCell>
+              <Cell style={{padding: '8px'}}>
+                {rowData => {
+                  if (rowData.type !== 'Zone') {
+                    return (<ButtonGroup size='sm'>
+                    <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Contact intel not implemented...', 4000)} color="blue"/>
+                    <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => this.intercept(rowData._id)} color="red" />
+                  </ButtonGroup>)}
+                }}    
+              </Cell>
+            </Column>
+          </Table>
+          <Divider />
+          <h5>Ground Targets</h5>
+            <Contacts />
+          <Divider />
+          <h5>Air Operations</h5>
+          <AircraftTable
+            account={this.props.account}
+          />
+        </Content>
+        <Sidebar>
+          <Button block onClick={() => Alert.warning('Surpise! The rawr button is a placeholder...', 4000)}>Rawr</Button>
+        </Sidebar>
+      </Container>
     );
   }
 
@@ -109,6 +111,7 @@ class ExcomOps extends Component {
     contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
+      console.log(newZone.zoneName)
       let zone = {...newZone}
       console.log(zone);
       zone.children = [];
@@ -118,8 +121,6 @@ class ExcomOps extends Component {
       for (let newUnit of contacts) {
         let unit = {...newUnit}
         let checkZone = zone;
-        // console.log(unit);
-        // console.log(checkZone);
         if (unit.zone.zoneName === checkZone.zoneName) {
           unit.info = `Unknown`;
           unit.location = unit.country.name;
@@ -128,7 +129,7 @@ class ExcomOps extends Component {
         }
       }
       zone.info = `${zone.children.length} contacts tracked above ${zone.zoneName}`;
-      if (zone.children.length > 1) {
+      if (zone.children.length > 0) {
         data.push(zone);
       }
     }
