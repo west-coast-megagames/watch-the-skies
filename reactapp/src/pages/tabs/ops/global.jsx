@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Table, Icon } from 'rsuite';
+import { Table, Icon, ButtonGroup, IconButton } from 'rsuite';
+import { showMilitary } from '../../../store/entities/infoPanels';
 const { HeaderCell, Cell, Column } = Table;
 
 class GlobalOps extends Component {
@@ -52,6 +53,21 @@ class GlobalOps extends Component {
                         <HeaderCell>Unit Location</HeaderCell>
                         <Cell dataKey="country.name" />
                     </Column>
+
+                    <Column width={150} fixed="right">
+                        <HeaderCell>Actions</HeaderCell>
+                        <Cell style={{padding: '8px'}}>
+                        {rowData => {
+                            if (rowData.type !== 'zone') {
+                                return (
+                                    <ButtonGroup size='sm'>
+                                        <IconButton icon={<Icon icon="info-circle" />} onClick={() => this.props.showMilitary(this.props.military.find(el => el._id === rowData._id))} color="blue"/>
+                                    </ButtonGroup>
+                                )
+                            } 
+                        }}
+                        </Cell>
+                    </Column>
                 </Table>
                 <hr />
                 <h5>Air Operations</h5>
@@ -98,6 +114,8 @@ const mapStateToProps = state => ({
     military: state.entities.military.list
 });
     
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+    showMilitary: unit => dispatch(showMilitary(unit))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(GlobalOps);
