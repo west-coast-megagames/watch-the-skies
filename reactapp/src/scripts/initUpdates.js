@@ -6,7 +6,7 @@ import { aircraftsUpdated } from '../store/entities/aircrafts';
 import { articleAdded } from '../store/entities/articles';
 import { logsUpdated } from '../store/entities/logs';
 import { researchReceived } from '../store/entities/research';
-import { usersRecieved } from '../store/entities/auth';
+import { usersRecieved, loginSocket } from '../store/entities/auth';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -59,6 +59,11 @@ const initUpdates = () => {
     updateEvents.updateUsers((err, users) => {
         console.log(users)
         store.dispatch(usersRecieved(users))
+    });
+
+    updateEvents.login((err, data) => {
+        console.log(data)
+        store.dispatch(loginSocket(data));
     });
 }
 

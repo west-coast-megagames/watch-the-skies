@@ -1,24 +1,24 @@
 class SocketServer {
     constructor() {
         this.connections = [];
-        this.saveClient = this.saveTeam.bind(this);
         this.saveUser = this.saveUser.bind(this);
         this.delClient = this.delClient.bind(this);
         this.getUsers = this.getUsers.bind(this);
     }
-    saveTeam (team, client) {
-        client.team = team;
-        this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1, client);
+    saveUser (data, client) {
+        client.user = data.user;
+        client.team = data.team;
+        let index = this.connections.findIndex(el => el.id === client.id)
+        this.connections[index] = client;
         //console.log(this.connections);
-    }
-    saveUser (user, client) {
-        client.user = user;
-        this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1, client);
-        //console.log(this.connections);
+        return
     }
 
     delClient (client) {
-        this.connections.splice(this.connections.indexOf(el => el.id === client.id), 1);
+        let index = this.connections.findIndex(el => el.id === client.id);
+        console.log(this.connections[index].name)
+        this.connections.splice(index, 1);
+        return
     }
     getUsers() {
         let users = []
