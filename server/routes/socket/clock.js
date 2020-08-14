@@ -14,7 +14,7 @@ module.exports = function(io) {
         logger.info(`${ClockClients.connections.length} ${ClockClients.connections.length === 1 ? 'client' : 'clients'} subscribed to game clock...`);
 
         client.on('new user', (data) => {
-            UpdateClients.saveUser(data, client);
+            ClockClients.saveUser(data, client);
             logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`)
         });
 
