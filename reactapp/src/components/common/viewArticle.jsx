@@ -13,7 +13,7 @@ const ViewArticle = (props) => {
           </Modal.Header>
           <Modal.Body>
             <p><b>Author:</b> Some Bloke | <b>Publisher:</b> {article.publisher.name}</p>
-            <p>{article.dateline} - {article.timestamp.turn}</p>
+            <p>{article.location.dateline} - {article.timestamp.turn}</p>
             <Divider />
             <p>{article.articleBody}</p>
           </Modal.Body>

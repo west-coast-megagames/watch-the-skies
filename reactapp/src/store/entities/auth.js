@@ -16,13 +16,13 @@ const slice = createSlice({
     login: false,
     loading: false,
     lastLogin: null,
+    socket: null,
     users: [],
     errors: {}
   },
   // Reducers - Events
   reducers: {
     loginRequested: (auth, action) => {
-      initUpdates();
       console.log(`${action.type} Dispatched...`)
       auth.loading = true;
     },
@@ -50,6 +50,11 @@ const slice = createSlice({
     usersRecieved: (auth, action) => {
       console.log(`${action.type} Dispatched`)
       auth.users = action.payload
+    },
+    loginSocket: (auth, action) => {
+      console.log(`${action.type} Dispatched`);
+      auth.users = action.payload.userList;
+      auth.socket = action.payload.me;
     }
   }
 });
@@ -59,7 +64,8 @@ export const {
   authReceived,
   loginRequested,
   authRequestFailed,
-  usersRecieved
+  usersRecieved,
+  loginSocket
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

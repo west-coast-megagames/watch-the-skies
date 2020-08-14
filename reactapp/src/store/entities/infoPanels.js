@@ -16,22 +16,24 @@ const slice = createSlice({
   },
   // Reducers - Events
   reducers: {
+    showMilitary: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.Military = action.payload
+      info.showMilitary = true
+    },
     infoRequested: (info, action) => {
       console.log(`${action.type} Dispatched...`)
-      info[action.payload.model] = action.payload;
-      switch (action.payload.model) {
-        case 'Aircraft':
-          info.showAircraft = true;
-          break;
-        default:
-          Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload.model}`, 3000)
-      }
+      info[action.payload.model] = action.payload
+      info.showAircraft = true
     },
     infoClosed: (info, action) => {
       console.log(`${action.type} Dispatched...`);
       switch (action.payload) {
         case 'Aircraft':
           info.showAircraft = false;
+          break;
+        case 'Military':
+          info.showMilitary = false;
           break;
         default:
           Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload} model`, 3000)
@@ -52,6 +54,7 @@ const slice = createSlice({
 
 // Action Export
 export const {
+  showMilitary,
   infoRequested,
   infoClosed,
   targetAssigned,

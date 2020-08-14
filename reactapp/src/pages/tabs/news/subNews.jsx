@@ -148,7 +148,7 @@ class SubNews extends React.Component {
           {preview && <span>
           <p><b>Author:</b> {this.props.user} | <b>Publisher:</b> {this.props.team.name}</p>
           {typeof(location) === 'object' && <p>{this.props.sites.find(el => el._id === location._id).dateline} - Turn</p> }
-          {typeof(location) === 'string' && <p>{this.props.sites.find(el => el._id === location).dateline} - Turn</p> }
+          {typeof(location) === 'string' && <p>{this.props.sites.find(el => el === location)}.dateline - Turn</p> }
           <Divider />
           <p>{articleBody}</p>
           </span> }

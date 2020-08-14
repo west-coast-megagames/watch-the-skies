@@ -29,8 +29,8 @@ router.get('/', async (req, res) => {
 router.get('/id/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
   const article = await Article.findById(id)
-                               .populate('publisher', 'name shortName')
-                               .populate('location', 'name dateline')
+    .populate('publisher', 'name shortName')
+    .populate('location', 'name dateline')
   if (article != null) {
     res.json(article);
   } else {

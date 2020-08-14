@@ -1,9 +1,10 @@
 import React, { Component } from 'react'; // React imports
-import { Header, Container, Content } from 'rsuite'; // rsuite components
-import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
-import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
-
 import { connect } from 'react-redux'; // Redux store provider
+import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
+import initUpdates from './scripts/initUpdates';
+
+import { Header, Container, Content } from 'rsuite'; // rsuite components
+import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
 import notify from './scripts/notify';
 
 // Components
@@ -30,6 +31,8 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite components
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
+
+initUpdates()
 
 // React App Component
 class App extends Component {

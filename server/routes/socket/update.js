@@ -23,11 +23,11 @@ module.exports = function(io) {
         client.emit('updateUsers', UpdateClients.getUsers());
 
         client.on('new user', (data) => {
-            UpdateClients.saveTeam(data.team, client);
-            UpdateClients.saveUser(data.user, client);
+            UpdateClients.saveUser(data, client);
             logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`)
             socketDebugger(`Sending socket new users`);
             client.broadcast.emit('updateUsers', UpdateClients.getUsers());
+            updateSocket.to(client.id).emit('login', { me: {...data, id: client.id}, userList: UpdateClients.getUsers() });
             socketDebugger(`New users sent!`);
         });
 

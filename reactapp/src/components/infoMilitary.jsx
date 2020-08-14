@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker } from 'rsuite'
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from 'rsuite'
 import axios from 'axios'
 import { infoClosed } from '../store/entities/infoPanels';
 import { gameServer } from '../config'
@@ -16,7 +16,7 @@ class InfoMilitary extends Component {
       hideTransfer: true
     };
     this.toggleTransfer = this.toggleTransfer(this);
-    this.aircraftStats = this.aircraftStats.bind(this);
+    this.unitStats = this.unitStats.bind(this);
   }
 
   render() {
@@ -24,30 +24,30 @@ class InfoMilitary extends Component {
       <Drawer
         size='md'
         show={this.props.show}
-        onHide={() => this.props.hideAircraft()}
+        onHide={() => this.props.hideMilitary()}
       >
         <Drawer.Header>
-          <Drawer.Title>Aircraft Information</Drawer.Title>
+          <Drawer.Title>Unit Information</Drawer.Title>
         </Drawer.Header>
-        {this.props.aircraft != null ?
+        {this.props.unit != null ?
         <Drawer.Body>
           <FlexboxGrid>
             <FlexboxGrid.Item colspan={12}>
-              <p><b>Name:</b> { this.props.aircraft.name }</p>
-              <p><b>Location:</b> { this.props.aircraft.country.name } | { this.props.aircraft.zone.zoneName } zone</p> 
+              <p><b>Name:</b> { this.props.unit.name }</p>
+              <p><b>Location:</b> { this.props.unit.country.name } | { this.props.unit.zone.zoneName } zone</p> 
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <p><b>Class:</b> { this.props.aircraft.type }</p>
-              <p><b>Base:</b> { this.props.aircraft.baseOrig.name } <IconButton size="xs" onClick={() => Alert.warning(`Base transfers have not been implemented`)} icon={<Icon icon="send" />}>Transfer Aircraft</IconButton></p>
+              <p><b>Type:</b> { this.props.unit.type }</p>
+              <p><b>Base:</b> { this.props.unit.homeBase.name } <IconButton size="xs" onClick={() => Alert.warning(`Base transfers have not been implemented`)} icon={<Icon icon="send" />}>Transfer Unit</IconButton></p>
               {this.hideTransfer === false && <SelectPicker block disabled />}
             </FlexboxGrid.Item>
           </FlexboxGrid>
           <br />
-          {this.aircraftStats(this.props.aircraft)}
+          {this.unitStats(this.props.unit)}
           <br />
-          {aircraftSystems(this.props.aircraft)}
+          {unitGear(this.props.unit)}
           <br />
-          <ServiceRecord owner={this.props.aircraft} />
+          <ServiceRecord owner={this.props.unit} />
         </Drawer.Body>
         : <Drawer.Body><p>Loading</p></Drawer.Body> }
         <Drawer.Footer>
@@ -64,25 +64,25 @@ class InfoMilitary extends Component {
     this.setState({ hideTransfer: !this.state.hideTransfer });
   };
 
-  aircraftStats(aircraft) {
-    let { stats, status } = aircraft
+  unitStats(unit) {
+    let { stats, status } = unit
     return(
-      <Panel header="Aircraft Statistics" bordered>
+      <Panel header="Unit Statistics">
         <FlexboxGrid>
           <FlexboxGrid.Item colspan={12}>
             <div>
-              <Whisper placement="top" speaker={hullSpeaker} trigger="click">
+              <Whisper placement="top" speaker={healthSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper>
-              <b> Hull Integrity:</b> { stats.hull }/{ stats.hullMax } {stats.hull < stats.hullMax && <span> <Badge content="Damaged" /> <IconButton size="xs" onClick={() => this.repair()} disabled={stats.hull === stats.hullMax || status.repair } icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
+              <b> Health:</b> { stats.health }/{ stats.healthMax } {stats.health < stats.healthMax && <span> <Badge content="Damaged" /> <IconButton size="xs" onClick={() => Alert.warning(`Repairs for military units has not been implemented yet...`)} disabled={stats.hull === stats.hullMax || status.repair } icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
             </div> 
-            <div><Whisper placement="top" speaker={weaponSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Weapons Rating:</b> { stats.attack }</div>
-            <div><Whisper placement="top" speaker={evadeSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Evade Rating:</b> { stats.evade }</div>
+            <div><Whisper placement="top" speaker={attackSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Attack Rating:</b> { stats.attack }</div>
+            <div><Whisper placement="top" speaker={localSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Local Deployment Cost:</b> $M{ stats.localDeploy }</div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={12}>
-            <div><Whisper placement="top" speaker={armorSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Armor Rating:</b> { stats.armor }</div>
-            <div><Whisper placement="top" speaker={penetrationSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Weapon Pentration:</b> { stats.penetration }</div>
-            <div><Whisper placement="top" speaker={rangeSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Mission Range:</b> { stats.range }km</div>
+            <div></div>
+            <div><Whisper placement="top" speaker={defenseSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Defense Rating:</b> { stats.defense }</div>
+            <div><Whisper placement="top" speaker={globalSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Global Deployment Cost:</b> { stats.globalDeploy }km</div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={24}>
             <br />
@@ -98,6 +98,7 @@ class InfoMilitary extends Component {
     </Panel>
     )
   }
+
   repair = async () => {
     if (this.props.account.balance < 2) {
       Alert.error(`Lack of Funds: You need to transfer funds to your operations account to repair ${this.props.aircraft.name}`)
@@ -114,64 +115,58 @@ class InfoMilitary extends Component {
   }
 };
 
-function aircraftSystems(aircraft) {
-  let { systems } = aircraft
+function unitGear(unit) {
+  let { gear } = unit
   return (
-    <Panel header={`Aircraft Systems - ${systems.length} Components`} collapsible bordered>
+    <Panel header={`Unit gear - ${gear.length} Components`} collapsible>
       <ul>
-        {systems.map(system => (
-          <li key={system._id}>{system.name} | {system.category}</li>
+        {gear.map(gear => (
+          <li key={gear._id}>{gear.name} | {gear.category}</li>
         ))}
       </ul>
     </Panel>
   )
 }
 
-const hullSpeaker = (
-  <Popover title="Hull Information">
-    <p>Hull is the strangth of your aircrafts chassis, if it goes to 0 your aircraft will crash!</p>
+const healthSpeaker = (
+  <Popover title="Health Information">
+    <p>Health is the amount of damage your military unit can absorge before being destroyed, if it goes to 0 your unit will cease to exist!</p>
   </Popover>
 )
 
-const armorSpeaker = (
-  <Popover title="Armor Information">
-    <p>Armor protects your crafts systems from damage or destruction. If a system looses its cockpit or engines it can crash.</p>
-  </Popover>
-)
-
-const penetrationSpeaker = (
+const attackSpeaker = (
   <Popover title="Penetration Information">
-    <p>Penetration is your Weapons systems ability to do internal damage to an opponent. Destroying opponent systems can cause them to crash.</p>
+    <p>Attack is the power rating for the unit when it attacks.</p>
   </Popover>
 )
 
-const rangeSpeaker = (
+const defenseSpeaker = (
+  <Popover title="Penetration Information">
+    <p>Defense is the power rating for the unit when it is defending from an attack.</p>
+  </Popover>
+)
+
+const globalSpeaker = (
   <Popover title="Range Information">
-    <p>Range is the distance your aircraft can travel for a mission in km. The distance is calculated from your base.</p>
+    <p>Global deployment cost is the price you will pay to deploy the unit in the zone the unit is NOT currently in.</p>
   </Popover>
 )
 
-const weaponSpeaker = (
+const localSpeaker = (
   <Popover title="Penetration Information">
-    <p>Weapon rating is how much hull damage your weapons can do on a succesful hit.</p>
-  </Popover>
-)
-
-const evadeSpeaker = (
-  <Popover title="Penetration Information">
-    <p>Evade is your crafts ability to avoid damage even when succefully hit, it also effects ability to disengage.</p>
+    <p>Local deployment costs is the price you will pay to deploy the unit in the zone the unit is currently in.</p>
   </Popover>
 )
 
 const mapStateToProps = state => ({
-  aircraft: state.info.Aircraft,
-  lastFetch: state.entities.aircrafts.lastFetch,
-  show: state.info.showAircraft,
+  unit: state.info.Military,
+  lastFetch: state.entities.military.lastFetch,
+  show: state.info.showMilitary,
   account: getOpsAccount(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  hideAircraft: () => dispatch(infoClosed('Aircraft'))
+  hideMilitary: () => dispatch(infoClosed('Military'))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoMilitary);

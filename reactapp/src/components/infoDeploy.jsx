@@ -63,16 +63,7 @@ class InfoDeploy extends Component {
     let disable = false;
     if (this.props.target !== null) {
       let { country, zone, model, name, type } = this.props.target;
-      let lat = ''
-      let long = ''
-      
-      if (model === 'Site') {
-        let { latDMS, longDMS } = this.props.target.geoDMS
-        lat = latDMS.split(" ");
-        lat = `${lat[0]}° ${lat[1]}' ${lat[2]}" ${lat[3]}`
-        long = longDMS.split(" ");
-        long = `${long[0]}° ${long[1]}' ${long[2]}" ${long[3]}`
-      };
+      let { latDMS, longDMS } = this.props.target.geoDMS;
 
       if (this.state.aircrafts.length < 1 ) disable = true;
     
@@ -96,7 +87,7 @@ class InfoDeploy extends Component {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}
-              {model === "Site" && <p>{lat}, {long}</p>}
+              {model === "Site" && <p>{latDMS}, {longDMS}</p>}
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24}>
             <br /><br /><br />
