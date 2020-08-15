@@ -19,70 +19,60 @@ async function chkZone(runFlag) {
     //do not need toObject with .lean()
     //let testPropertys = zone.toObject();
 
-    if (!zone.hasOwnProperty("zoneCode")) {
-      logger.error(`zoneCode missing for zone ${zone.zoneName} ${zone._id}`);
+    if (!zone.hasOwnProperty("code")) {
+      logger.error(`code missing for zone ${zone.name} ${zone._id}`);
     } else {
-      if (
-        zone.zoneCode === "" ||
-        zone.zoneCode == undefined ||
-        zone.zoneCode == null
-      ) {
-        logger.error(`zoneCode is blank for Zone ${zone.zoneName} ${zone._id}`);
+      if (zone.code === "" || zone.code == undefined || zone.code == null) {
+        logger.error(`code is blank for Zone ${zone.name} ${zone._id}`);
       }
     }
 
-    if (!zone.hasOwnProperty("zoneName")) {
-      logger.error(`zoneName missing for zone ${zone._id}`);
+    if (!zone.hasOwnProperty("name")) {
+      logger.error(`name missing for zone ${zone._id}`);
     } else {
-      if (
-        zone.zoneName === "" ||
-        zone.zoneName == undefined ||
-        zone.zoneName == null
-      ) {
-        logger.error(`zoneName is blank for Zone ${zone.zoneCode} ${zone._id}`);
+      if (zone.name === "" || zone.name == undefined || zone.name == null) {
+        logger.error(`name is blank for Zone ${zone.code} ${zone._id}`);
       }
     }
 
     if (!zone.hasOwnProperty("terror")) {
-      logger.error(`Terror missing for zone ${zone.zoneName} ${zone._id}`);
+      logger.error(`Terror missing for zone ${zone.name} ${zone._id}`);
     } else {
       if (isNaN(zone.terror)) {
         logger.error(
-          `Zone ${zone.zoneName} ${zone._id} terror is not a number ${zone.terror}`
+          `Zone ${zone.name} ${zone._id} terror is not a number ${zone.terror}`
         );
       }
     }
 
     if (!zone.hasOwnProperty("model")) {
-      logger.error(`model missing for zone ${zone.zoneName} ${zone._id}`);
+      logger.error(`model missing for zone ${zone.name} ${zone._id}`);
     }
 
     if (!zone.hasOwnProperty("gameState")) {
-      logger.error(`gameState missing for zone ${zone.zoneName} ${zone._id}`);
+      logger.error(`gameState missing for zone ${zone.name} ${zone._id}`);
     }
 
     if (!zone.hasOwnProperty("serviceRecord")) {
-      logger.error(
-        `serviceRecord missing for Zone ${zone.zoneName} ${zone._id}`
-      );
+      logger.error(`serviceRecord missing for Zone ${zone.name} ${zone._id}`);
     } else {
       for (let i = 0; i < zone.serviceRecord.length; ++i) {
         let lFind = await Log.findById(zone.serviceRecord[i]);
         if (!lFind) {
           logger.error(
-            `Zone ${zone.zoneName} ${zone._id} has an invalid serviceRecord reference ${i}: ${zone.serviceRecord[i]}`
+            `Zone ${zone.name} ${zone._id} has an invalid serviceRecord reference ${i}: ${zone.serviceRecord[i]}`
           );
         }
       }
     }
 
     if (!zone.hasOwnProperty("satellite")) {
-      logger.error(`satellite missing for zone ${zone.zoneName} ${zone._id}`);
+      logger.error(`satellite missing for zone ${zone.name} ${zone._id}`);
     }
 
     /* populate does not work with .lean
     if (!zone.populated("satellite")) {  
-      logger.error(`satellite link missing for zone ${zone.zoneName} ${zone._id}`);
+      logger.error(`satellite link missing for zone ${zone.name} ${zone._id}`);
     }
     */
 
@@ -100,33 +90,31 @@ async function chkZone(runFlag) {
       }
     }
 
-    //zoneCheckDebugger(`Zone ${zone.zoneCode} has ${countryCount} countries`);
+    //zoneCheckDebugger(`Zone ${zone.code} has ${countryCount} countries`);
     if (countryCount < 1) {
-      logger.error(
-        `No Countries Found In Zone ${zone.zoneCode} ${zone.zoneName}`
-      );
+      logger.error(`No Countries Found In Zone ${zone.code} ${zone.name}`);
     }
 
     if (zone.hasOwnProperty("satellite")) {
-      //zoneCheckDebugger(`Zone ${zone.zoneName} ${zone._id} Check of Satellite ${zone.satellite.length}`);
+      //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} Check of Satellite ${zone.satellite.length}`);
       for (let i = 0; i < zone.satellite.length; ++i) {
-        //zoneCheckDebugger(`Zone ${zone.zoneName} ${zone._id} about to find satellite for ID ${i}: ${zone.satellite[i]}`);
+        //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} about to find satellite for ID ${i}: ${zone.satellite[i]}`);
         let sFind = await Site.findById(zone.satellite[i]);
         if (!sFind) {
           logger.error(
-            `Zone ${zone.zoneName} ${zone._id} has an invalid satellite reference ${i}: ${zone.satellite[i]}`
+            `Zone ${zone.name} ${zone._id} has an invalid satellite reference ${i}: ${zone.satellite[i]}`
           );
         } else {
           if (!(sFind.type === "Spacecraft")) {
             logger.error(
-              `Zone ${zone.zoneName} ${zone._id} has non-Spacecraft satellite reference ${i}: ${zone.satellite[i]} ${sFind.type}`
+              `Zone ${zone.name} ${zone._id} has non-Spacecraft satellite reference ${i}: ${zone.satellite[i]} ${sFind.type}`
             );
           } else if (!(sFind.shipType === "Satellite")) {
             logger.error(
-              `Zone ${zone.zoneName} ${zone._id} has non-satellite reference ${i}: ${zone.satellite[i]} ${sFind.shipType}`
+              `Zone ${zone.name} ${zone._id} has non-satellite reference ${i}: ${zone.satellite[i]} ${sFind.shipType}`
             );
           }
-          //zoneCheckDebugger(`Zone ${zone.zoneName} ${zone._id} Found satellite for ID ${i}: ${zone.satellite[i]} ${sFind.name}`);
+          //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} Found satellite for ID ${i}: ${zone.satellite[i]} ${sFind.name}`);
         }
       }
     }
@@ -135,12 +123,12 @@ async function chkZone(runFlag) {
       let { error } = await validateZone(zone);
       if (error) {
         logger.error(
-          `Zone Validation Error For ${zone.zoneCode} ${zone.zoneName} Error: ${error.details[0].message}`
+          `Zone Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
         );
       }
     } catch (err) {
       logger.error(
-        `Zone Validation Error For ${zone.zoneCode} ${zone.zoneName} Error: ${err.details[0].message}`
+        `Zone Validation Error For ${zone.code} ${zone.name} Error: ${err.details[0].message}`
       );
     }
   }

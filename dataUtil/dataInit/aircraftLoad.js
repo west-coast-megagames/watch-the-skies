@@ -183,7 +183,7 @@ async function loadAircraft(iData, rCounts) {
       }
 
       if (iData.zone != "") {
-        let zone = await Zone.findOne({ zoneCode: iData.zone });
+        let zone = await Zone.findOne({ code: iData.zone });
         if (!zone) {
           //logger.debug(`Aircraft Load Zone Error, New Aircraft: ${iData.name}  Zone:  ${iData.zone}`);
           loadError = true;
@@ -323,7 +323,7 @@ async function loadAircraft(iData, rCounts) {
       }
 
       if (iData.zone != "") {
-        let zone = await Zone.findOne({ zoneCode: iData.zone });
+        let zone = await Zone.findOne({ code: iData.zone });
         if (!zone) {
           //logger.debug("Aircraft Load Zone Error, Update Aircraft:", iData.name, " Zone: ", iData.zone);
           loadError = true;

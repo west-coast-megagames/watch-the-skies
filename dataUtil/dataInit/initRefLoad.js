@@ -147,7 +147,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
 
   try {
     randomTerror = Math.floor(Math.random() * 251);
-    let zone = await Zone.findOne({ zoneCode: zCode });
+    let zone = await Zone.findOne({ code: zCode });
 
     loadName = zName;
 
@@ -155,8 +155,8 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
       // New Zone here
       if (zLoadFlg === "false") return; // don't load if not true
       let zone = new Zone({
-        zoneCode: zCode,
-        zoneName: zName,
+        code: zCode,
+        name: zName,
         terror: randomTerror, //zTerror
       });
       zone.serviceRecord = [];
@@ -166,14 +166,14 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
       let { error } = validateZone(zone);
       if (error) {
         loadError = true;
-        loadErrorMsg = `New Zone Validate Error: ${zone.zoneCode} ${error.message}`;
+        loadErrorMsg = `New Zone Validate Error: ${zone.code} ${error.message}`;
       }
 
       if (!loadError) {
         try {
           let zoneSave = await zone.save();
           ++rCounts.loadCount;
-          logger.debug(`${zoneSave.zoneName} add saved to zones collection.`);
+          logger.debug(`${zoneSave.name} add saved to zones collection.`);
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
@@ -189,8 +189,8 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
       // Existing Zone here ... update
       let id = zone._id;
 
-      zone.zoneName = zName;
-      zone.zoneCode = zCode;
+      zone.name = zName;
+      zone.code = zCode;
       zone.terror = randomTerror; //zTerror;
 
       const { error } = validateZone(zone);
@@ -203,9 +203,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
         try {
           let zoneSave = await zone.save();
           ++rCounts.updCount;
-          logger.debug(
-            `${zoneSave.zoneName} update saved to zones collection.`
-          );
+          logger.debug(`${zoneSave.name} update saved to zones collection.`);
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
@@ -230,7 +228,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
 async function deleteZone(zName, zCode, zLoadFlg) {
   try {
     let delErrorFlag = false;
-    for await (let zone of Zone.find({ zoneCode: zCode })) {
+    for await (let zone of Zone.find({ code: zCode })) {
       try {
         let delId = zone._id;
         let zoneDel = await Zone.findByIdAndRemove(delId);
@@ -421,7 +419,7 @@ async function loadCountry(
       country.gameState = [];
       country.serviceRecord = [];
 
-      let zone = await Zone.findOne({ zoneCode: zCode });
+      let zone = await Zone.findOne({ code: zCode });
       if (!zone) {
         loadError = true;
         loadErrorMsg =
@@ -478,7 +476,7 @@ async function loadCountry(
       country.loadZoneCode = zCode;
       country.coastal = cCoastal;
 
-      let zone = await Zone.findOne({ zoneCode: zCode });
+      let zone = await Zone.findOne({ code: zCode });
       if (!zone) {
         loadError = true;
         loadErrorMsg =
