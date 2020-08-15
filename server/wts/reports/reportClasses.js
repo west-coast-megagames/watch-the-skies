@@ -224,7 +224,6 @@ class DeploymentReport {
 class TheoryReport {
     constructor() {
         this.team = {}
-        this.lab = {}
         this.project = {},
         this.saveReport = this.saveReport.bind(this);
     }

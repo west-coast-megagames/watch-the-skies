@@ -110,9 +110,9 @@ function Technology(tech) {
     return `Done updating eligibility to research ${this.name}`
   }
 
-  this.unlock = async function(lab) {
-    let currentTech = await Research.findOne({ name: this.name, team: lab.team }); // Checks if team has the research already!!
-    let team = await Team.findById({_id: lab.team});
+  this.unlock = async function(team) {
+    let currentTech = await Research.findOne({ name: this.name, team: team }); // Checks if team has the research already!!
+    //let team = await Team.findById({_id: lab.team});//old way when labs were passed
       if (currentTech === null) {
         techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
         let newTech = new TechResearch({
@@ -128,8 +128,8 @@ function Technology(tech) {
 
         let report = new TheoryReport
 
-        report.team = lab.team,
-        report.lab = lab._id,
+        report.team = team,
+        //report.lab = lab._id,//no longer need labs
         report.project = newTech._id
 
         report.saveReport()
@@ -156,12 +156,19 @@ function Technology(tech) {
           }
         }
         newTech.theoretical = theories
-        await newTech.save(); // Newly unlocked tech!
-
+        
+        try{
+          newTech = await newTech.save(); // Newly unlocked tech!   
+          return newTech; 
+        }
+        catch(err){
+          techDebugger(`${this.name} broke on Unlock. FIX IT`);
+        }
       } else {
         techDebugger(`${this.name} is already available for ${team.name}...`);
       }
-  }
+       
+  }//this.unlock
 }
 
 async function techCheck() {

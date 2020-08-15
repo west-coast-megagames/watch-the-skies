@@ -9,6 +9,8 @@ const { TradeReport } = require ('../../wts/reports/reportClasses')
 
 // Trade Models - Using Mongoose Model
 const { Trade } = require('../../models/dip/trades');
+const { Research } = require('../../models/sci/research');
+const { techTree } = require('../../wts/research/techTree');
 
 // @route   GET api/trades
 // @Desc    Get all trades
@@ -24,13 +26,17 @@ router.get('/', async function (req, res){
 // @access  Public
 router.post('/', async function (req, res){
     console.log(req.body); 
-    let { offer, status } = req.body;
+    let { offer } = req.body;
    
     if (offer.length < 1){
         res.status(400).send(`You dummy sent me the bad info for this trade`);
     }
     let trade = new Trade(req.body);
     trade = await trade.save();
+    for await (let offer of trade.offer) {
+        offer.team = await Team.findById(offer.team)
+    }
+    routeDebugger(trade);
     res.status(200).json(trade);
 });
 
@@ -58,10 +64,10 @@ router.post('/process', async function (req, res){
         report.offer2 = offer[1];
 
         for (let element of offer){
-            let team = element.team
+            let team = element.team;
             let opposingTeam = (team === team1) ? team2 : team1;            
 
-            routeDebugger(`Working on offer of ${element} of ${team}`);        
+            routeDebugger(`Working on offer of ${element.team} of ${team}`);        
 
             for (let [key, value] of Object.entries(element)){
                 console.log(`${key}, ${value}`);
@@ -87,11 +93,22 @@ router.post('/process', async function (req, res){
                         }//for plane
                         break;
                     case "research" : 
-                        for (let plane of value){
+                        for (let item of value){
+                            //1) get the tech that needs to be copied 
+                            let tech = await Research.findById(item)
+                            let newTech = techTree.find(el => el.code === tech.code);
+                            //2) copy the tech to the new team 
+                            let createdTech = await newTech.unlock({ _id: opposingTeam});
+                            //3)with a certain amount researched
+                            createdTech.progress = 80; //or whatever you want them to get...
+                            createdTech.save();
+                            console.log(`Created a new of ${createdTech.name} tech for team: ${createdTech._id}`);
                         }//for plane
                         break;
-                    case "equiptment" :                   
+                    case "equiptment" :            
                         exchangeEquiptment(target, opposingTeam);   
+                        break;
+                    case "facility":
                         break;
                 }//switch (key)
             }//for Object.entries            
@@ -112,7 +129,8 @@ async function exchangeEquiptment(transferred, newOwner){
             await target.save();            
         }
         catch(err){
-            routeDebugger(`ERROR WITH exchangeEquiptment CALL: ${err}`)
+            routeDebugger(`ERROR WITH exchangeEquiptment CALL: ${err}`);
+            //ADD A RETURN TO LET THE CODE KNOW THE EQUIPTMENT WAS NOT TRADED SUCCESSFULLY
         }   
     }//for thing
 }//exchangeEquiptment

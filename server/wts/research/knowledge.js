@@ -61,7 +61,7 @@ async function knowledgeSeed() {
     }
 
     for await (let knowledge of seeded) {
-        let newKnowledge = await knowledge.unlock();
+        let newKnowledge = await knowledge.unlock(); //????????????
         // knowledgeDebugger(seeded);
         // knowledgeDebugger(newKnowledge);
         

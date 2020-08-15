@@ -1,12 +1,15 @@
 import React, {Component, useState } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { gameServer } from "../../../config";
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Sidebar, FlexboxGrid, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
+import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, Header, Divider } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 import { getTreasuryAccount } from '../../../store/entities/accounts';
 import { getCompletedResearch } from '../../../store/entities/research';
 import { getAircrafts } from '../../../store/entities/aircrafts';
+import { rand } from '../../../scripts/dice';
 
 const formatData = (array) => {
     let data = []
@@ -54,20 +57,8 @@ const TradeOffer = (props) => {
       const readOnly = mode === 'readonly';
 
     return(
-        <div className='trade'>
-
-            <ButtonGroup>
-                <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => setMode("normal")}></IconButton>
-                <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}></IconButton>
-                <IconButton size='sm' icon={<Icon icon="trash" />}></IconButton>
-            </ButtonGroup>
-            <TagGroup style={{display: 'inline', paddingLeft: '20px'}}>
-                <Tag color="yellow">Pending</Tag>
-                <Tag color="red">Rejected</Tag>
-                <Tag color="green">Accepted</Tag>
-                <Tag color="blue">Completed</Tag>
-            </TagGroup>
-            <h2><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h2>
+        <div className='trade' style={{padding: '8px'}}>
+            <h3><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h3>
             <Form fluid formValue={formValue} onChange={formValue => setFormValue(formValue)}>
 
                 {!disabled ? <FormGroup>
@@ -180,6 +171,8 @@ const TradeOffer = (props) => {
                     readOnly={readOnly}
                     />
                 </FormGroup>
+                {disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => setMode("normal")}>Edit Trade</IconButton>}
+                {!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}>Save Offer</IconButton> }
             </Form>
         </div>
     )
@@ -188,50 +181,120 @@ const TradeOffer = (props) => {
 class Trade extends Component {
     state = {
         trade: {
-            offers: [
+            offer: [
                 { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false},
                 { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false}
             ],
-            status: {draft: true, proposal: false, complete: false}   
-        }
+            status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, },
+            lastUpdated: Date.now()
+        },
+        partner: null,
+        newTrade: false,
+        viewTrade: false
     }
 
     componentWillMount() {
         let trade = this.state.trade;
-        trade.offers[0].team = this.props.team;
-        trade.offers[1].team = this.props.teams[4];
+        trade.offer[0].team = this.props.team;
+        trade.offer[1].team = this.props.teams[rand(this.props.teams.length - 1)];
     }
+
+    toggleNew () {
+        let { newTrade } = this.state
+        this.setState({ newTrade: !newTrade })
+    }
+
+    createTrade = async () => {
+        console.log('Creating a new Trade...');
+        let trade = {
+            offer: [{
+                team: this.props.team._id
+            },
+            {
+                team: this.state.partner
+            }],
+        };
+        try {
+          console.log(trade)
+          let response = await axios.post(`${gameServer}api/trades`, trade);    
+        //   Alert.success(response.data.comment[0].body);
+          this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
+        } catch (err) {
+          Alert.error(`${err.data} - ${err.message}`)
+        };
+      }
 
     render() {
         let myTrade = {}
         let theirTrade = {}
-        for (let offer of this.state.trade.offers) {
+        for (let offer of this.state.trade.offer) {
             if (Object.keys(offer.team).length > 0) {
                 offer.team.name === this.props.team.name ? myTrade = offer : theirTrade = offer;
             }
         }
+        let { status, lastUpdated } = this.state.trade;
 
         return (
             <Container>
                 <Content>
-                    <FlexboxGrid>
+                    { !this.state.viewTrade && <h4>I didn't create a trade feed... so sorry...</h4>}
+                    { this.state.viewTrade && <FlexboxGrid>
                         <FlexboxGrid.Item colspan={12}>
                             <TradeOffer account={this.props.account} team={myTrade.team} />
                         </FlexboxGrid.Item>
                         <FlexboxGrid.Item colspan={12}>
                             <TradeOffer team={theirTrade.team} />
                         </FlexboxGrid.Item>
-                    </FlexboxGrid>
+                    </FlexboxGrid>}
                 </Content>
                 <Sidebar>
-                    <IconButton block icon={<Icon icon="exchange" />}>Start New Trade</IconButton>
-                    <hr />
-                    <h5>Draft Trades</h5>
-                    <hr />
-                    <h5>Pending Trades</h5>
-                    <hr />
-                    <h5>Completed Trades</h5>
+                    {!this.state.newTrade && !this.state.viewTrade && <IconButton block size='sm' onClick={() => this.toggleNew()} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
+                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() => Alert.warning('Submission has not been implemented...', 4000)}>Submit Proposal</IconButton>}
+                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => Alert.warning('Rejection has not been implemented...', 4000)}>Reject Proposal</IconButton>}
+                    { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => Alert.warning('Trashing a trade deal has not been implemented...', 4000)}>Trash Trade</IconButton>}
+                    { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => this.setState({ viewTrade: false })}>Close Trade</IconButton>}
+                    <br />
+                    { this.state.viewTrade && <PanelGroup>
+                        <Panel header="Trade Details">
+                            <TagGroup>
+                                { status.draft && <Tag color="red">Draft</Tag> }
+                                { status.pending && <Tag color="yellow">Pending Execution</Tag> }
+                                { status.rejected && <Tag color="red">Rejected</Tag> }
+                                { status.proposal && <Tag color="yellow">Awaiting Ratification</Tag> }
+                                { status.proposal && <Tag color="green">Completed</Tag> }
+                            </TagGroup>
+                            <p><b>Last Updated:</b> {`${new Date(lastUpdated).toLocaleTimeString()} - ${new Date(lastUpdated).toDateString()}`}</p>
+                        </Panel>
+                        <Panel header="Activity Feed">
+                        </Panel>
+                    </PanelGroup> }
+                    { !this.state.viewTrade && <PanelGroup>
+                        <Panel header="Draft Trades">
+                        </Panel>
+                        <Panel header="Pending Trades">
+                        </Panel>
+                        <Panel header="Completed Trades">
+                        </Panel>
+                    </PanelGroup> }
                 </Sidebar>
+                <Modal size="xs" show={this.state.newTrade} onHide={() => this.setState({newTrade: false})}>
+                    <Modal.Header>
+                        <Modal.Title>New Trade Submission</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <SelectPicker
+                            block
+                            data={this.props.teams.filter(el => el._id !== this.props.team._id)}
+                            labelKey='name'
+                            valueKey='_id'
+                            onChange={(value) => this.setState({partner: value})} 
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={() => this.createTrade()}>Create Trade</Button>
+                        <Button onClick={() => this.setState({newTrade: false})}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal>
             </Container>
         );
     }
