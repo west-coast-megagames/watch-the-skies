@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InfoAircraft from './infoAircraft';
 import InfoDeploy from './infoDeploy';
+import InfoMilitary from './infoMilitary';
 
 
 class InfoDrawer extends Component {
@@ -10,6 +11,7 @@ class InfoDrawer extends Component {
             <React.Fragment>
                 {this.props.login && <InfoAircraft />}
                 {this.props.login && <InfoDeploy />}
+                {this.props.login && <InfoMilitary />}
             </React.Fragment>
         );
     }

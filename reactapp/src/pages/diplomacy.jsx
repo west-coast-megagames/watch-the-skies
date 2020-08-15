@@ -49,7 +49,7 @@ class Diplomacy extends Component {
                         <h5>The envoy system for the Diplomacy Module has not been created!</h5>
                     )}/>
                     <Route path={`${url}/trades`} render={() => (
-                        <Trade team={this.props.team} teams={this.props.teams} account={this.state.account} />
+                        <Trade />
                     )}/>
                     <Route path={`${url}/treaties`} render={() => (
                         <h5>The treaty system for the Diplomacy Module has not been created!</h5>

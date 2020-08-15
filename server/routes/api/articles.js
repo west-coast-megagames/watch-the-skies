@@ -17,9 +17,9 @@ mongoose.set('useCreateIndex', true);
 // @access  Public
 router.get('/', async (req, res) => {
   let articles = await Article.find()
-                            .populate('publisher', 'name shortName')
-                            .populate('location', 'name dateline')
-                            .sort('date: 1');
+    .populate('publisher', 'name shortName')
+    .populate('location', 'name dateline')
+    .sort('date: 1');
   res.json(articles);
 });
 
@@ -29,8 +29,8 @@ router.get('/', async (req, res) => {
 router.get('/id/:id', validateObjectId, async (req, res) => {
   let id = req.params.id;
   const article = await Article.findById(id)
-                               .populate('publisher', 'name shortName')
-                               .populate('location', 'name dateline')
+    .populate('publisher', 'name shortName')
+    .populate('location', 'name dateline')
   if (article != null) {
     res.json(article);
   } else {

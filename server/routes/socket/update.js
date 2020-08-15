@@ -23,11 +23,11 @@ module.exports = function(io) {
         client.emit('updateUsers', UpdateClients.getUsers());
 
         client.on('new user', (data) => {
-            UpdateClients.saveTeam(data.team, client);
-            UpdateClients.saveUser(data.user, client);
+            UpdateClients.saveUser(data, client);
             logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`)
             socketDebugger(`Sending socket new users`);
             client.broadcast.emit('updateUsers', UpdateClients.getUsers());
+            updateSocket.to(client.id).emit('login', { me: {...data, id: client.id}, userList: UpdateClients.getUsers() });
             socketDebugger(`New users sent!`);
         });
 
@@ -35,7 +35,7 @@ module.exports = function(io) {
             logger.info(`Client disconnecting from update service... ${client.id}`);
             UpdateClients.delClient(client);
             console.log( `${UpdateClients.connections.length} clients connected`);
-            client.emit('updateUsers', UpdateClients.getUsers());
+            client.broadcast.emit('updateUsers', UpdateClients.getUsers());
           });
     })
 
@@ -111,7 +111,10 @@ module.exports = function(io) {
 
     nexusEvent.on('newsAlert', async (article) => {
         try { 
-            let newArticle = await Article.findById(article._id).populate('publisher');
+            let newArticle = await Article.findById(article._id)
+                .populate('publisher', 'name shortName')
+                .populate('location', 'name dateline')
+                .sort('date: 1');
             updateSocket.emit('newsAlert', newArticle);
             socketDebugger(`News alert sent: ${article.headline}`);
         } catch (error) { 

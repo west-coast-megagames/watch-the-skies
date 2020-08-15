@@ -16,46 +16,44 @@ const slice = createSlice({
   },
   // Reducers - Events
   reducers: {
+    showMilitary: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.Military = action.payload
+      info.showMilitary = true
+    },
+    militaryClosed: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.showMilitary = false
+    },
     infoRequested: (info, action) => {
       console.log(`${action.type} Dispatched...`)
-      info[action.payload.model] = action.payload;
-      switch (action.payload.model) {
-        case 'Aircraft':
-          info.showAircraft = true;
-          break;
-        default:
-          Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload.model}`, 3000)
-      }
+      info[action.payload.model] = action.payload
+      info.showAircraft = true
     },
     infoClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`);
-      switch (action.payload) {
-        case 'Aircraft':
-          info.showAircraft = false;
-          break;
-        default:
-          Alert.error(`Issue with redux reducer ${action.type} for the ${action.payload} model`, 3000)
-      }
+      console.log(`${action.type} Dispatched...`)
+      info.showAircraft = false
     },
     targetAssigned: (info, action) => {
       console.log(`${action.type} Dispatched...`)
-      info.Target = action.payload;
-      info.showDeploy = true;
+      info.Target = action.payload
+      info.showDeploy = true
     },
     deployClosed: (info, action) => {
       console.log(`${action.type} Dispatched...`)
-      info.showDeploy = false;
-      info.Target = null;
+      info.showDeploy = false
     }
   }
 });
 
 // Action Export
 export const {
+  showMilitary,
   infoRequested,
   infoClosed,
   targetAssigned,
-  deployClosed
+  deployClosed,
+  militaryClosed
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

@@ -18,8 +18,7 @@ module.exports = function(io) {
         logger.info(`${MainClients.connections.length} ${MainClients.connections.length === 1 ? 'client' : 'clients'} subscribed to main socket server...`);
 
         client.on('new user', (data) => {
-            MainClients.saveTeam(data.team, client);
-            MainClients.saveUser(data.user, client);
+            MainClients.saveUser(data, client);
             logger.info(`${data.user} for the ${data.team} have been registered on the main socket...`)
         });
 

@@ -14,13 +14,13 @@ class Select extends Component {
     render() {
         return (
           <SelectPicker
+            block
             value={this.props.value}
             onChange={this.handleChange}
             data={this.props.data}
             labelKey={this.props.labelKey}
             valueKey={this.props.valueKey}
             placeholder={this.props.placeholder}
-            style={{ width: this.props.width }}
           />
         );
     }

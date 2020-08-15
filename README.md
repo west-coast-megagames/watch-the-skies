@@ -13,9 +13,6 @@ Adds Enviornment Variable for DEBUG to run all namespaces
 #### $env:DEBUG_COLORS='true'
 Adds Enviornment Variable for DEBUG to display each namespace with a seperate color
 
-#### $env:RUN_INIT_REF='true'
-Enviroment Variable to control running of initRefLoad
-
 ## File Structure
 * reactapp - Front end React Applications
     * src - Main source code

@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 import playTrack from "../../scripts/audio";
+import initUpdates from '../../scripts/initUpdates';
 import { clockSocket, updateSocket } from '../../api' // Socket.io event triggers and actions
 import jwtDecode from 'jwt-decode' // JSON web-token decoder
 
@@ -15,6 +16,7 @@ const slice = createSlice({
     login: false,
     loading: false,
     lastLogin: null,
+    socket: null,
     users: [],
     errors: {}
   },
@@ -48,6 +50,11 @@ const slice = createSlice({
     usersRecieved: (auth, action) => {
       console.log(`${action.type} Dispatched`)
       auth.users = action.payload
+    },
+    loginSocket: (auth, action) => {
+      console.log(`${action.type} Dispatched`);
+      auth.users = action.payload.userList;
+      auth.socket = action.payload.me;
     }
   }
 });
@@ -57,7 +64,8 @@ export const {
   authReceived,
   loginRequested,
   authRequestFailed,
-  usersRecieved
+  usersRecieved,
+  loginSocket
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

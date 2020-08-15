@@ -1,18 +1,31 @@
 import React, {Component} from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
-import ChartsPage from '../../../components/graph';
 import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
-import { Container, Header, Content, Footer, Sidebar, SelectPicker, ButtonGroup, Button } from 'rsuite';
+import { Container, Content, Footer, Sidebar, SelectPicker, ButtonGroup, Button, Modal } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
+import AccountGraph from '../../../components/common/GraphAccounts';
 
 let count = 0;
+
+const formatPickerData = (accounts) => {
+    let data = [];
+    for (let account of accounts) {
+        let option = {
+            _id: account._id,
+            label: `${account.name} | Balance: $M${account.balance}`
+        }
+        data.push(option);
+    }
+    return data;
+}
 
 class Budget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            data: formatPickerData(this.props.accounts),
             account: this.props.account,
             account_id: this.props.account._id,
             transactions: []
@@ -22,10 +35,18 @@ class Budget extends Component {
         this.delTransfer = this.delTransfer.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.lastFetch !== this.props.lastFetch) {
+            let newAccount = this.props.accounts.find(account => account._id === this.state.account_id);
+            this.setState({account: newAccount});
+        }
+    }
+
     handleChange = (value) => {
         let accountIndex = this.props.accounts.findIndex(account => account._id === value);
         let account = this.props.accounts[accountIndex];
         let account_id = value;
+        console.log(account)
         this.setState({ account, account_id })
     };
 
@@ -53,39 +74,40 @@ class Budget extends Component {
     render() {
         return (
             <Container className="budget-tab">
-                <Header className="transfers">
-                    <ButtonGroup><Button onClick={() => this.addTransfer(false)}>New Transfer</Button><Button onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button></ButtonGroup>
-                    {this.state.transactions.map(el => (<TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props}
-                    />))}
-                </Header>
                 <Container className="transfers">
+                    <Content>
+                        <h4>{this.state.account.name} Account</h4>
+                        <AccountGraph
+                            account={this.state.account}
+                        />
+                        <h4>Automatic Transfers</h4>
+                        <AutoTransfers
+                            accounts={ this.props.accounts }
+                            alert={ this.props.alert }
+                        />
+                    </Content>
                     <Sidebar>
-                        <AccountsTable accounts={ this.props.accounts } />
                         <SelectPicker
-                            width={180}
+                            block
+                            style={{paddingBottom: '5px'}}
                             searchable={false}
                             cleanable={false}
-                            data={ this.props.accounts } 
+                            data={ this.state.data } 
                             value={ this.state.account_id }
                             placeholder='Select account for graph'
                             onChange={this.handleChange}
                             valueKey='_id'
-                            labelKey='name'
                         />
+                        <Button block onClick={() => this.addTransfer(false)}>New Transfer</Button>
+                        <Button block onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button>
+                        <AccountsTable accounts={ this.props.accounts } />
                     </Sidebar>
-                    <Content>
-                        <ChartsPage
-                            account={ {...this.state.account} }  
-                        />
-                    </Content>
                 </Container>
-                <Footer>
-                    <h4>Automatic Transfers</h4>
-                    <AutoTransfers
-                        accounts={ this.props.accounts }
-                        alert={ this.props.alert }
-                    />
-                </Footer>
+                {this.state.transactions.map(el => (
+                    <Modal show={this.state.transactions.length > 0} size='xs' onHide={() => this.delTransfer(el.id)}>
+                    <TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props} />
+                    </Modal>
+                ))}
             </Container>
         );
     }
@@ -94,7 +116,8 @@ class Budget extends Component {
 const mapStateToProps = state => ({
     login: state.auth.login,
     accounts: getAccountsForTeam(state),
-    account: getTreasuryAccount(state)
+    account: getTreasuryAccount(state),
+    lastFetch: state.entities.accounts.lastFetch
 });
   
 const mapDispatchToProps = dispatch => ({});

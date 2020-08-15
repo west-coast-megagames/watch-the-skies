@@ -6,7 +6,7 @@ import { aircraftsUpdated } from '../store/entities/aircrafts';
 import { articleAdded } from '../store/entities/articles';
 import { logsUpdated } from '../store/entities/logs';
 import { researchReceived } from '../store/entities/research';
-import { usersRecieved } from '../store/entities/auth';
+import { usersRecieved, loginSocket } from '../store/entities/auth';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -32,24 +32,20 @@ const initUpdates = () => {
 
     updateEvents.updateMilitary((err, military) => {
         console.log(military)
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
     });
 
     updateEvents.updateFacilities((err, facilities) => {
         console.log(facilities)
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
     });
 
     updateEvents.updateLogs((err, logs) => {
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Logs Update', body: `The current state of game logs has been updated...`});
         store.dispatch(logsUpdated(logs));
     });
 
     updateEvents.updateResearch((err, research) => {
-        let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Research Update', body: `The current state of game research has been updated...`});
         store.dispatch(researchReceived(research));
     });
@@ -63,6 +59,11 @@ const initUpdates = () => {
     updateEvents.updateUsers((err, users) => {
         console.log(users)
         store.dispatch(usersRecieved(users))
+    });
+
+    updateEvents.login((err, data) => {
+        console.log(data)
+        store.dispatch(loginSocket(data));
     });
 }
 

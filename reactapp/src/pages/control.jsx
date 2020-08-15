@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Container, Nav, Content, Icon, Header } from 'rsuite';
+import { Container, Nav, Content, Icon, Header, ButtonGroup, Button } from 'rsuite';
 import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import ClockControls from './../components/clockControls';
-import { MDBBtnGroup, MDBBtn } from 'mdbreact';
-
 import { gameServer } from '../config';
 import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
@@ -45,64 +43,64 @@ class Control extends Component {
                         <hr />
                         <div>
                             <h5>Interception Controls</h5>
-                            <MDBBtnGroup>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.deployAliens() }>
+                            <ButtonGroup>
+                                <Button color="info" size="sm" onClick={ () => this.deployAliens() }>
                                     Deploy Aliens
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.repairAll() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.repairAll() }>
                                     Repair all 
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.returnAliens() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.returnAliens() }>
                                     Return Aliens
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.returnAll() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.returnAll() }>
                                     Return Aircraft
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.updateAircraft() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.updateAircraft() }>
                                     Update Aircraft
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.restoreAircraft() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.restoreAircraft() }>
                                     Restore Location
-                                </MDBBtn>
-                            </MDBBtnGroup>
+                                </Button>
+                            </ButtonGroup>
                         </div>
                         <hr />
                         <div>
                             <h5>Financial Controls</h5>
-                            <MDBBtnGroup>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.resetAccounts() }>
+                            <ButtonGroup>
+                                <Button color="info" size="sm" onClick={ () => this.resetAccounts() }>
                                     Reset Accounts
-                                </MDBBtn>
-                            </MDBBtnGroup>
+                                </Button>
+                            </ButtonGroup>
                         </div>
                         <hr />
                         <div>
                             <h5>Research Controls</h5>
-                            <MDBBtnGroup>
-                                <MDBBtn color="danger" size="sm" onClick={ () => this.delResearch() }>
+                            <ButtonGroup>
+                                <Button color="danger" size="sm" onClick={ () => this.delResearch() }>
                                     Delete All Research
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.loadKnowledge() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.loadKnowledge() }>
                                     Load Knowledge
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.loadTech() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.loadTech() }>
                                     Load Tech
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.seedKnowledge() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.seedKnowledge() }>
                                     Seed Knowledge
-                                </MDBBtn>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.seedTechnology() }>
+                                </Button>
+                                <Button color="info" size="sm" onClick={ () => this.seedTechnology() }>
                                     Seed Technology
-                                </MDBBtn>
-                            </MDBBtnGroup>
+                                </Button>
+                            </ButtonGroup>
                         </div>
                         <div>
                             <h5>Construction Controls</h5>
-                            <MDBBtnGroup>
-                                <MDBBtn color="info" size="sm" onClick={ () => this.loadSystems() }>
+                            <ButtonGroup>
+                                <Button color="info" size="sm" onClick={ () => this.loadSystems() }>
                                     Load Systems
-                                </MDBBtn>
-                            </MDBBtnGroup>
+                                </Button>
+                            </ButtonGroup>
                         </div>
                     </div>
                     )}/>

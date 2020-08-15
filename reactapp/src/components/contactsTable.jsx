@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Table, Icon, Button } from 'rsuite';
+import { Table, Icon, IconButton, Alert, ButtonGroup } from 'rsuite';
 import { getContacts } from '../store/entities/aircrafts';
 import { targetAssigned } from '../store/entities/infoPanels';
-import { getCities } from '../store/entities/sites';
+import { getCities, getBases } from '../store/entities/sites';
+import { getOpsAccount } from '../store/entities/accounts';
 const { Column, HeaderCell, Cell } = Table;
 
 class Contacts extends Component {
@@ -11,6 +12,9 @@ class Contacts extends Component {
         data: []
     };
 
+    componentDidMount() {
+        this.loadTable();
+    }
     componentDidUpdate(prevProps, prevState) {
         if (prevProps !== this.props) {
             this.loadTable();
@@ -24,17 +28,11 @@ class Contacts extends Component {
     }
 
     render() {
-        console.log(`Render: Count ${this.props.contacts.length}`);
-        const { length: count } = this.props.contacts;
         const { account } = this.props
         const disabled = account.balance < 1;
 
-        //if (count === 0)
-        //    return <h4>No radar contacts decending from or flying in high orbit</h4>
         return (
-            
             <React.Fragment>
-                <p>Currently {count} high orbit radar contacts.</p>
                 <Table
                     isTree
                     defaultExpandAllRows
@@ -72,22 +70,14 @@ class Contacts extends Component {
                     </Column>
                     <Column width={150} fixed="right">
                         <HeaderCell>Action</HeaderCell>
-                        <Cell>
+                        <Cell style={{padding: '8px'}}>
                         {rowData => {
-                            function handleAction() {
-                                rowData.deploy('deploy', rowData.target, null)
-                            }
                             if (rowData.type !== 'category') {
                             return (
-                                <div style={{ verticalAlign: 'top'}}>
-                                    <Button 
-                                        color='yellow'
-                                        size='sm'
-                                        disabled={disabled}
-                                        onClick={handleAction}> Engage </Button>
-                                    <span> | </span> 
-                                    <Button color='blue' size='sm' onClick={handleAction}> Info </Button>
-                                </div>)
+                                <ButtonGroup size='sm'>
+                                    <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Another not implemented info panel...', 4000)} color="blue"/>
+                                    <IconButton disabled={disabled} icon={<Icon icon="fighter-jet" />} onClick={() => rowData.deploy(rowData.target)} color="red" />
+                                </ButtonGroup>)
                             } 
                         }}
                         </Cell>
@@ -98,27 +88,9 @@ class Contacts extends Component {
     }
 
     loadTable() {
-        console.log(`Load: Count ${this.props.contacts.length}`);
-        let data = [{
-            id: '1',
-            type: `category`,
-            labelName: `High Orbit Contacts`,
-            status: this.props.contacts.length !== 0 ? `${this.props.contacts.length} contacts` : 'No contacts',
-            info: `Advanced high orbit contacts...`,
-            children: this.props.contacts.map(el => {
-                return {
-                    id:el._id,
-                    labelName:el.name,
-                    status:'Unknown',
-                    type:el.type,
-                    location:el.country.name,
-                    target: el,
-                    deploy: this.props.assignTarget
-                };
-            })
-        },
+        let data = [
         {
-            id: '2',
+            id: '1',
             type: `category`,
             labelName: `Activity Sites`,
             status: `No Sites`,
@@ -126,7 +98,7 @@ class Contacts extends Component {
             children: []
         },
         {
-            id: '3',
+            id: '2',
             type: `category`,
             labelName: `EX-COM Bases`,
             status: this.props.bases.length !== 0 ? `${this.props.bases.length} bases` : 'No bases',
@@ -144,7 +116,7 @@ class Contacts extends Component {
             })
         },
         {
-            id: '4',
+            id: '3',
             type: `category`,
             labelName: `Cities`,
             status: this.props.cities.length !== 0 ? `${this.props.cities.length} cities` : 'No cities',
@@ -167,6 +139,7 @@ class Contacts extends Component {
 
 
 const mapStateToProps = state => ({
+    account: getOpsAccount(state),
     contacts: getContacts(state),
     cities: getCities(state),
     bases: getBases(state),
@@ -178,5 +151,5 @@ const mapStateToProps = state => ({
     
   });
   
-  export default connect(mapStateToProps, mapDispatchToProps)(InfoDeploy);
-export default Contacts;
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
+

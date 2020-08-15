@@ -1,119 +1,52 @@
 import React, {Component, useState } from 'react'; // React import
+import { connect } from 'react-redux'; // Redux store provider
+import { useSelector } from 'react-redux'
 import TeamAvatar from '../../../components/common/teamAvatar';
 import { Container, Content, Sidebar, FlexboxGrid, ButtonGroup, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
+import { getTreasuryAccount } from '../../../store/entities/accounts';
+import { getCompletedResearch } from '../../../store/entities/research';
+import { getAircrafts } from '../../../store/entities/aircrafts';
+
+const formatData = (array) => {
+    let data = []
+    for (let el of array) {
+        data.push({ label: el.name, value: el, })
+    }
+    return data;
+}
 
 const TradeOffer = (props) => {
-
-    const pickerData =   
-    [
-      {
-        "label": "Eugenia",
-        "value": "Eugenia",
-        "role": "Master"
-      },
-      {
-        "label": "Kariane",
-        "value": "Kariane",
-        "role": "Master"
-      },
-      {
-        "label": "Louisa",
-        "value": "Louisa",
-        "role": "Master"
-      },
-      {
-        "label": "Marty",
-        "value": "Marty",
-        "role": "Master"
-      },
-      {
-        "label": "Kenya",
-        "value": "Kenya",
-        "role": "Master"
-      },
-      {
-        "label": "Hal",
-        "value": "Hal",
-        "role": "Developer"
-      },
-      {
-        "label": "Julius",
-        "value": "Julius",
-        "role": "Developer"
-      },
-      {
-        "label": "Travon",
-        "value": "Travon",
-        "role": "Developer"
-      },
-      {
-        "label": "Vincenza",
-        "value": "Vincenza",
-        "role": "Developer"
-      },
-      {
-        "label": "Dominic",
-        "value": "Dominic",
-        "role": "Developer"
-      },
-      {
-        "label": "Pearlie",
-        "value": "Pearlie",
-        "role": "Guest"
-      },
-      {
-        "label": "Tyrel",
-        "value": "Tyrel",
-        "role": "Guest"
-      },
-      {
-        "label": "Jaylen",
-        "value": "Jaylen",
-        "role": "Guest"
-      },
-      {
-        "label": "Rogelio",
-        "value": "Rogelio",
-        "role": "Guest"
-      }
-    ]
+    let aircraft = useSelector(getAircrafts);
+    let research = useSelector(getCompletedResearch);
+    let intel = []
+    let sites = []
+    let equipment = []
+    let facilities = []
+    if (props.team._id !== useSelector(state => state.auth.team)._id) {
+        aircraft = []
+        research = []
+        intel = []
+        sites = []
+        equipment = []
+        facilities = []
+    } else {
+        research = formatData(research);
+        aircraft = formatData(aircraft)
+    } 
+        
+    console.log(research)
 
     const [formValue, setFormValue] = useState({
         input:
           "I want all your things!!.",
         slider: 0,
-        aircraft: [
-          'Eugenia',
-          'Marty',
-          'Kenya',
-          'Hal',
-          'Julius',
-          'Tyrel',
-          'Jaylen',
-          'Rogelio'
-        ],
-        intel: [
-            'Kariane',
-            'Rogelio'
-        ],
-        research: [
-            'Julius',
-            'Hal',
-            'Julius',
-            'Tyrel',
-            'Rogelio'
-        ],
-        sites: [
-            'Eugenia',
-            'Hal',
-            'Julius',
-            'Rogelio'
-        ],
-        equipment: [
-            'Julius',
-            'Rogelio'
-        ],
+        aircraft: [],
+        intel: [],
+        research: [],
+        sites: [],
+        equipment: [],
+        facilities: []
       });
 
       const [mode, setMode] = useState('disabled');
@@ -135,7 +68,7 @@ const TradeOffer = (props) => {
                 <Tag color="blue">Completed</Tag>
             </TagGroup>
             <h2><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h2>
-            <Form formValue={formValue} onChange={formValue => setFormValue(formValue)}>
+            <Form fluid formValue={formValue} onChange={formValue => setFormValue(formValue)}>
 
                 {!disabled ? <FormGroup>
                     <ControlLabel><Icon icon="money" /> Megabucks</ControlLabel>
@@ -156,27 +89,29 @@ const TradeOffer = (props) => {
                     </Panel>
                 </PanelGroup> : null }
 
-                {!disabled ? <FormGroup>
+                {!disabled && aircraft.length > 0 ? <FormGroup>
                     <ControlLabel>Aircraft</ControlLabel>
                     <FormControl
+                    block
                     name="aircraft"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={aircraft}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
                 </FormGroup> : null }
 
                 {disabled && formValue.aircraft.length > 0 ? <Panel header={<span><b>Aircraft</b> - {formValue.aircraft.length} Aircraft</span>} collapsible>
-                    <PanelGroup>{formValue.aircraft.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                    <PanelGroup>{formValue.aircraft.map((unit) => <Panel className='trade-list' hover key={unit._id}>{unit.name}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
-                {!disabled ? <FormGroup>
+                {!disabled && intel.length > 0 ? <FormGroup>
                     <ControlLabel>Intel</ControlLabel>
                     <FormControl
+                    block
                     name="intel"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={intel}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
@@ -186,27 +121,29 @@ const TradeOffer = (props) => {
                     <PanelGroup>{formValue.intel.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
-                {!disabled ? <FormGroup>
+                {!disabled && research.length > 0 ? <FormGroup>
                     <ControlLabel>Research</ControlLabel>
                     <FormControl
+                    block
                     name="research"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={research}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
                 </FormGroup> : null }
 
                 {disabled && formValue.research.length > 0 ? <Panel header={<span><b>Research</b> - {formValue.research.length} Research reports</span>} collapsible>
-                    <PanelGroup>{formValue.research.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                    <PanelGroup>{formValue.research.map((tech) => <Panel className='trade-list' hover key={tech._id}>{tech.name}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
-                {!disabled ? <FormGroup>
+                {!disabled && sites.length ? <FormGroup>
                     <ControlLabel>Sites</ControlLabel>
                     <FormControl
+                    block
                     name="sites"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={sites}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
@@ -216,23 +153,13 @@ const TradeOffer = (props) => {
                     <PanelGroup>{formValue.sites.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
-                {!disabled ? <FormGroup>
-                    <ControlLabel>Sites</ControlLabel>
-                    <FormControl
-                    name="sites"
-                    accepter={TagPicker}
-                    data={pickerData}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup> : null }
-
-                {!disabled ? <FormGroup>
+                {!disabled && equipment.length > 0 ? <FormGroup>
                     <ControlLabel>Equipment</ControlLabel>
                     <FormControl
+                    block
                     name="equipment"
                     accepter={TagPicker}
-                    data={pickerData}
+                    data={equipment}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
@@ -241,17 +168,6 @@ const TradeOffer = (props) => {
                 {disabled && formValue.equipment.length > 0 ? <Panel header={<span><b>Equipment</b> - {formValue.equipment.length} Equipment</span>} collapsible>
                     <PanelGroup>{formValue.equipment.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
                 </Panel> : null }
-
-                {!disabled ? <FormGroup>
-                    <ControlLabel>Equipment</ControlLabel>
-                    <FormControl
-                    name="equipment"
-                    accepter={TagPicker}
-                    data={pickerData}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    />
-                </FormGroup> : null }
 
                 <FormGroup >
                     <ControlLabel>Comment Input</ControlLabel>
@@ -320,5 +236,15 @@ class Trade extends Component {
         );
     }
 }
- 
-export default Trade;
+
+const mapStateToProps = state => ({
+    login: state.auth.login,
+    team: state.auth.team,
+    teams: state.entities.teams.list,
+    account: getTreasuryAccount(state)
+});
+  
+const mapDispatchToProps = dispatch => ({
+});
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);

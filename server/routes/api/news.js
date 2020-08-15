@@ -35,7 +35,10 @@ router.get('/bnc', async function (req, res) {
 // @access  Public
 router.get('/articles', async function (req, res) {
     routeDebugger('Gathering all articles!');
-    let articles = await Article.find();
+    let articles = await Article.find()
+        .populate('publisher', 'name shortName')
+        .populate('location', 'name dateline')
+        .sort('date: 1');
     res.json(articles);
 });
 
@@ -43,7 +46,7 @@ router.get('/articles', async function (req, res) {
 // @Desc    Post a new article
 // @access  Public
 router.post('/', async function (req, res) {
-    let { publisher, location, headline, body, tags, imageSrc } = req.body; // REQ Destructure
+    let { publisher, location, headline, articleBody, tags, imageSrc } = req.body; // REQ Destructure
     // const { error } = validateArticle(req.body);
     // if (error) return res.status(400).send(error.details[0].message);
 
@@ -67,7 +70,7 @@ router.post('/', async function (req, res) {
         timestamp,
         location,
         headline,
-        articleBody: body,
+        articleBody,
         date: Date.now(),
         tags,
         imageSrc
@@ -84,10 +87,11 @@ router.post('/', async function (req, res) {
 // @Desc    Update an article
 // @access  Public
 router.put('/:id', async function (req, res) {
-    let { agency, turn, date, location, headline, body, imageSrc } = req.body;
-    const article = await Article.findOneAndUpdate({ _id: req.params.id }, { agency, turn, date, location, headline, body, imageSrc }, { new: true });
+    let { agency, turn, date, location, headline, articleBody, imageSrc } = req.body;
+    const article = await Article.findOneAndUpdate({ _id: req.params.id }, { agency, turn, date, location, headline, articleBody, imageSrc }, { new: true });
     res.json(article);
     routeDebugger(`Article: ${headline} updated...`);
+    nexusEvent.emit('updateArticles');
 });
 
 // @route   DELETE api/news/:id
