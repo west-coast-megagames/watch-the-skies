@@ -22,7 +22,8 @@ const TradeSchema = new Schema({
         rejected: {type: Boolean, default: false},
         complete: {type: Boolean, default: false},
     },
-    comments: []
+    comments: [],
+    lastUpdated: {type: Date, default: Date.now()}
 });//const TradeSchema
 
 let Trade = mongoose.model('Trade', TradeSchema);
