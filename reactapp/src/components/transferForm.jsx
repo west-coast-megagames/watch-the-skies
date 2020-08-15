@@ -4,6 +4,18 @@ import { banking } from '../api';
 import Select from './common/selectPicker';
 import notify from '../scripts/notify';
 
+const formatPickerData = (accounts) => {
+    let data = [];
+    for (let account of accounts) {
+        let option = {
+            _id: account._id,
+            name: `${account.name} | Balance: $M${account.balance}`
+        }
+        data.push(option);
+    }
+    return data;
+}
+
 class TransferForm extends Component {
     state = {
         transfer: {
@@ -75,7 +87,7 @@ class TransferForm extends Component {
     }
 
     render() {
-        let accounts = this.props.accounts;
+        let accounts = formatPickerData(this.props.accounts);
         let max = this.state.account !== undefined ? this.state.account.balance : 0;
         let { schedule } = this.state.transfer
         
@@ -88,8 +100,7 @@ class TransferForm extends Component {
                     <Modal.Title>{schedule === true ? "Scheduled Transfer Form" : "Immediate Transfer Form"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SelectPicker
-                        block
+                    <Select
                         id='from'
                         data={accounts}
                         value={this.state.transfer.from}
@@ -98,8 +109,7 @@ class TransferForm extends Component {
                         placeholder='withdrawal Account...'
                         handleChange={this.handleChange}
                     />
-                    <SelectPicker
-                        block
+                    <Select
                         id='to'
                         data={accounts}
                         value={this.state.transfer.to}
@@ -108,9 +118,10 @@ class TransferForm extends Component {
                         placeholder='Deposit Account...'
                         handleChange={this.handleChange}
                     />
+                    <br />
                     <FormGroup>
                         <ControlLabel>Amount to tranfer</ControlLabel>
-                        <InputNumber prefix="$M" id="amount" max={ max } min={0} value={this.state.transfer.amount} onChange={this.handleAmount} step={1} />
+                        <InputNumber  prefix="$M" id="amount" max={ max } min={0} value={this.state.transfer.amount} onChange={this.handleAmount} step={1} />
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Transfer note</ControlLabel>

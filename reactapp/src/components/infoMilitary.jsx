@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from 'rsuite'
 import axios from 'axios'
-import { infoClosed } from '../store/entities/infoPanels';
+import { militaryClosed } from '../store/entities/infoPanels';
 import { gameServer } from '../config'
 import ServiceRecord from './common/serviceRecord';
 import { getOpsAccount } from '../store/entities/accounts';
@@ -43,6 +43,16 @@ class InfoMilitary extends Component {
             </FlexboxGrid.Item>
           </FlexboxGrid>
           <br />
+          <FlexboxGrid>
+            <FlexboxGrid.Item colspan={12}>
+              <p>Health Bar</p>
+              <Progress.Line percent={100} strokeColor="#32a844" showInfo={false} />
+            </FlexboxGrid.Item>
+            <FlexboxGrid.Item colspan={12}>
+              <p>Placeholder Bar</p>
+              <Progress.Line percent={100} strokeColor="#32a844" showInfo={false} />
+            </FlexboxGrid.Item>
+          </FlexboxGrid>
           {this.unitStats(this.props.unit)}
           <br />
           {unitGear(this.props.unit)}
@@ -51,8 +61,8 @@ class InfoMilitary extends Component {
         </Drawer.Body>
         : <Drawer.Body><p>Loading</p></Drawer.Body> }
         <Drawer.Footer>
-          <Button onClick={() => this.props.hideAircraft()} appearance="primary">Confirm</Button>
-          <Button onClick={() => this.props.hideAircraft()} appearance="subtle">Cancel</Button>
+          <Button onClick={() => this.props.hideMilitary()} appearance="primary">Confirm</Button>
+          <Button onClick={() => this.props.hideMilitary()} appearance="subtle">Cancel</Button>
         </Drawer.Footer>
             <SelectPicker />
       </Drawer>
@@ -75,14 +85,16 @@ class InfoMilitary extends Component {
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper>
               <b> Health:</b> { stats.health }/{ stats.healthMax } {stats.health < stats.healthMax && <span> <Badge content="Damaged" /> <IconButton size="xs" onClick={() => Alert.warning(`Repairs for military units has not been implemented yet...`)} disabled={stats.hull === stats.hullMax || status.repair } icon={<Icon icon="wrench" />}>Repair</IconButton></span>}
-            </div> 
+            </div>
+            <div><Whisper placement="top" speaker={localSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Local Deployment Cost:</b> $M{stats.localDeploy}</div>
             <div><Whisper placement="top" speaker={attackSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Attack Rating:</b> { stats.attack }</div>
-            <div><Whisper placement="top" speaker={localSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Local Deployment Cost:</b> $M{ stats.localDeploy }</div>
+            
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={12}>
-            <div></div>
-            <div><Whisper placement="top" speaker={defenseSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Defense Rating:</b> { stats.defense }</div>
-            <div><Whisper placement="top" speaker={globalSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Global Deployment Cost:</b> { stats.globalDeploy }km</div>
+            <div><Whisper placement="top" speaker={invadeSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Invasion Cost:</b> $M{stats.invasion}</div> 
+            <div><Whisper placement="top" speaker={globalSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper> <b> Global Deployment Cost:</b> $M{stats.globalDeploy}</div>
+            <div><Whisper placement="top" speaker={defenseSpeaker} trigger="click"><IconButton size="xs" icon={<Icon icon="info-circle" />} /></Whisper><b> Defense Rating:</b> {stats.defense}</div>
+
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={24}>
             <br />
@@ -135,26 +147,32 @@ const healthSpeaker = (
 )
 
 const attackSpeaker = (
-  <Popover title="Penetration Information">
+  <Popover title="Attack Rating Information">
     <p>Attack is the power rating for the unit when it attacks.</p>
   </Popover>
 )
 
 const defenseSpeaker = (
-  <Popover title="Penetration Information">
+  <Popover title="Defense Rating Information">
     <p>Defense is the power rating for the unit when it is defending from an attack.</p>
   </Popover>
 )
 
 const globalSpeaker = (
-  <Popover title="Range Information">
+  <Popover title="Global Deployment Cost Information">
     <p>Global deployment cost is the price you will pay to deploy the unit in the zone the unit is NOT currently in.</p>
   </Popover>
 )
 
 const localSpeaker = (
-  <Popover title="Penetration Information">
+  <Popover title="Local Deployment Cost Information">
     <p>Local deployment costs is the price you will pay to deploy the unit in the zone the unit is currently in.</p>
+  </Popover>
+)
+
+const invadeSpeaker = (
+  <Popover title="Invasion Cost Information">
+    <p>Invasion costs is the price you will pay use this unit to attack an adjacent site.</p>
   </Popover>
 )
 
@@ -166,7 +184,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hideMilitary: () => dispatch(infoClosed('Military'))
+  hideMilitary: () => dispatch(militaryClosed())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoMilitary);
