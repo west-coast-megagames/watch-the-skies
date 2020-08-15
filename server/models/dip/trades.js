@@ -16,10 +16,13 @@ const TradeSchema = new Schema({
         ratified: {type: Boolean, default: false}    
     }],//offer
     status: {
-        draft: {type: Boolean, default: false},
+        draft: {type: Boolean, default: true},
         proposal: {type: Boolean, default: false},
-        complete: {type: Boolean, default: false}
-    }
+        pending: {type: Boolean, default: false},
+        rejected: {type: Boolean, default: false},
+        complete: {type: Boolean, default: false},
+    },
+    comments: []
 });//const TradeSchema
 
 let Trade = mongoose.model('Trade', TradeSchema);
