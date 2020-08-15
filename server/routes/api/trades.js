@@ -23,13 +23,17 @@ router.get('/', async function (req, res){
 // @access  Public
 router.post('/', async function (req, res){
     console.log(req.body); 
-    let { offer, status } = req.body;
+    let { offer } = req.body;
    
     if (offer.length < 1){
         res.status(400).send(`This trade is empty!`);
     }
     let trade = new Trade(req.body);
     trade = await trade.save();
+    for await (let offer of trade.offer) {
+        offer.team = await Team.findById(offer.team)
+    }
+    routeDebugger(trade);
     res.status(200).json(trade);
 });
 
