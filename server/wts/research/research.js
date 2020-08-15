@@ -161,10 +161,11 @@ function researchMultiplyer(sciRate, funding, sciBonus) {
     return { progress, multiplyer, rolls, outcomes, breakthroughs } // Returns progress to the Calculate Progress function.
 };
 
-async function completeTech (research, lab) {
+async function completeTech (research, lab) {//possibly change how this gets items passed to it since we're switching from labs to team
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.available = false;
     research.status.completed = true;
+    let team = await Team.findById({_id: lab.team});//old way when labs were passed
     
     majorDebugger(research.unlocks)
 
@@ -174,7 +175,7 @@ async function completeTech (research, lab) {
             let newTech = techTree.find(el => el.code === item.code);
             researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
             // console.log(newTech)
-            await newTech.unlock(lab);
+            await newTech.unlock(team); //changed 'lab' to 'team'
         }
         
         if (research.type === 'Knowledge') {

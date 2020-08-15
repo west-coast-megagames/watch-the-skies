@@ -9,6 +9,8 @@ const { TradeReport } = require ('../../wts/reports/reportClasses')
 
 // Trade Models - Using Mongoose Model
 const { Trade } = require('../../models/dip/trades');
+const { Research } = require('../../models/sci/research');
+const { techTree } = require('../../wts/research/techTree');
 
 // @route   GET api/trades
 // @Desc    Get all trades
@@ -87,7 +89,14 @@ router.post('/process', async function (req, res){
                         }//for plane
                         break;
                     case "research" : 
-                        for (let plane of value){
+                        for (let item of value){
+                            //1) get the tech that needs to be copied 
+                            let tech = await Research.findById(item)
+                            let newTech = techTree.find(el => el.code === tech.code);
+                            //2) copy the tech to the new team 
+                            let createdTech = await newTech.unlock({ _id: opposingTeam});
+                            //3)with a certain amount researched
+                            console.log(createdTech.team, opposingTeam);
                         }//for plane
                         break;
                     case "equiptment" :                   
