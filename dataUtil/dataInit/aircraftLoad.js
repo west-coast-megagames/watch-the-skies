@@ -163,7 +163,7 @@ async function loadAircraft(iData, rCounts) {
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.baseOrig = site._id;
+          aircraft.origin = site._id;
           //logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${site._id}`);
         }
       }
@@ -179,7 +179,7 @@ async function loadAircraft(iData, rCounts) {
           //logger.debug(`Aircraft Load Site Found, Aircraft: ${iData.name}  Site:  ${iData.site} Site ID: ${site._id}`);
         }
       } else {
-        aircraft.site = aircraft.baseOrig;
+        aircraft.site = aircraft.origin;
       }
 
       if (iData.zone != "") {
@@ -305,7 +305,7 @@ async function loadAircraft(iData, rCounts) {
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.baseOrig = site._id;
+          aircraft.origin = site._id;
           //logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", site._id);
         }
       }

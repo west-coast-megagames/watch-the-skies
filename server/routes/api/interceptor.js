@@ -32,11 +32,11 @@ router.get("/", async function (req, res) {
   let aircrafts = await Aircraft.find()
     .sort({ team: 1 })
     .populate("team", "name shortName")
-    .populate("zone", "zoneName")
+    .populate("zone", "name")
     .populate("country", "name")
     .populate("systems", "name category")
     .populate("site", "name")
-    .populate("baseOrig", "name");
+    .populate("origin", "name");
   res.json(aircrafts);
 });
 
@@ -106,7 +106,7 @@ router.post("/", async function (req, res) {
     team,
     country,
     zone,
-    baseOrig,
+    origin,
     stats,
     status,
     zoneCode,
@@ -119,7 +119,7 @@ router.post("/", async function (req, res) {
     team,
     country,
     zone,
-    baseOrig,
+    origin,
     stats,
     status,
   });
@@ -179,7 +179,7 @@ router.post("/", async function (req, res) {
           baseCode
         );
       } else {
-        newAircraft.baseOrig = baseSite._id;
+        newAircraft.origin = baseSite._id;
         routeDebugger(
           "Aircraft Post Base Found, Aircraft:",
           req.body.name,
@@ -255,7 +255,7 @@ router.post("/", async function (req, res) {
       .populate("zone", "zoneName")
       .populate("country", "name")
       .populate("site", "name")
-      .populate("baseOrig", "name");
+      .populate("origin", "name");
 
     updateStats(aircraft._id);
     res.status(200).json(aircraft);
@@ -294,7 +294,7 @@ router.put("/:id", async function (req, res) {
     newTeam_Id = oldAircraft.team;
     newCountry_Id = oldAircraft.country;
     newAircraftSystems = oldAircraft.systems;
-    newBase_Id = oldAircraft.baseOrig;
+    newBase_Id = oldAircraft.origin;
     newType = oldAircraft.type;
   }
 
@@ -405,7 +405,7 @@ router.put("/:id", async function (req, res) {
       zone: newZone_Id,
       country: newCountry_Id,
       team: newTeam_Id,
-      baseOrig: newBase_Id,
+      origin: newBase_Id,
       systems: newAircraftSystems,
       type: newType,
     },
@@ -419,7 +419,7 @@ router.put("/:id", async function (req, res) {
     .populate("zone", "zoneName")
     .populate("country", "name")
     .populate("site", "name")
-    .populate("baseOrig", "name");
+    .populate("origin", "name");
 
   res.status(200).json(aircraft);
   console.log(`Aircraft ${req.params.id} updated...`);
@@ -468,17 +468,17 @@ router.patch("/resethull", auth, async function (req, res) {
 // @access  Public
 router.patch("/return", async function (req, res) {
   let count = 0;
-  for await (const aircraft of Aircraft.find().populate("baseOrig")) {
+  for await (const aircraft of Aircraft.find().populate("origin")) {
     if (
-      aircraft.site.toHexString() !== aircraft.baseOrig._id.toHexString() ||
+      aircraft.site.toHexString() !== aircraft.origin._id.toHexString() ||
       aircraft.status.deployed
     ) {
       aircraft.mission = "Docked";
       aircraft.status.ready = true;
       aircraft.status.deployed = false;
-      aircraft.country = aircraft.baseOrig.country;
-      aircraft.site = aircraft.baseOrig._id;
-      aircraft.zone = aircraft.baseOrig.zone;
+      aircraft.country = aircraft.origin.country;
+      aircraft.site = aircraft.origin._id;
+      aircraft.zone = aircraft.origin.zone;
       await aircraft.save();
       count++;
     }
@@ -492,10 +492,10 @@ router.patch("/return", async function (req, res) {
 // @access  Public
 router.patch("/restore", async function (req, res) {
   let count = 0;
-  for await (let aircraft of Aircraft.find().populate("baseOrig")) {
-    aircraft.country = aircraft.baseOrig.country;
-    aircraft.site = aircraft.baseOrig._id;
-    aircraft.zone = aircraft.baseOrig.zone;
+  for await (let aircraft of Aircraft.find().populate("origin")) {
+    aircraft.country = aircraft.origin.country;
+    aircraft.site = aircraft.origin._id;
+    aircraft.zone = aircraft.origin.zone;
     await aircraft.save();
     count++;
   }

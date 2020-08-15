@@ -17,7 +17,7 @@ const AircraftSchema = new Schema({
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
   country: { type: Schema.Types.ObjectId, ref: "Country" },
   site: { type: Schema.Types.ObjectId, ref: "Site" },
-  baseOrig: { type: Schema.Types.ObjectId, ref: "Site" },
+  origin: { type: Schema.Types.ObjectId, ref: "Site" },
   mission: { type: String },
   status: {
     damaged: { type: Boolean, default: false },
@@ -79,13 +79,13 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 };
 
 AircraftSchema.methods.returnToBase = async (aircraft) => {
-  modelDebugger(`Returning ${aircraft.name} to ${baseOrig.name}...`);
+  modelDebugger(`Returning ${aircraft.name} to ${origin.name}...`);
   aircraft.mission = "Docked";
   aircraft.status.ready = true;
   aircraft.status.deployed = false;
-  aircraft.country = update.baseOrig.country;
-  aircraft.site = update.baseOrig._id;
-  aircraft.zone = update.baseOrig.zone;
+  aircraft.country = update.origin.country;
+  aircraft.site = update.origin._id;
+  aircraft.zone = update.origin.zone;
 
   aircraft = await aircraft.save();
 
@@ -122,7 +122,7 @@ async function getAircrafts() {
     .populate("zone", "zoneName")
     .populate("country", "name")
     .populate("systems", "name category")
-    .populate("baseOrig", "name");
+    .populate("origin", "name");
   return aircrafts;
 }
 

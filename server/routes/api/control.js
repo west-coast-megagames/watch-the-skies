@@ -178,7 +178,7 @@ router.post("/build", async function (req, res) {
           req.body.baseCode
         );
       } else {
-        aircraft.baseOrig = baseSite._id;
+        aircraft.origin = baseSite._id;
       }
     }
 

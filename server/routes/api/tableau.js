@@ -31,7 +31,7 @@ router.get("/aircraft", async function (req, res) {
     .populate("zone", "name")
     .populate("country", "name")
     .populate("site")
-    .populate("baseOrig");
+    .populate("origin");
   res.json(aircrafts);
 });
 
@@ -47,7 +47,7 @@ router.get("/datadump", async function (req, res) {
     .populate("zone", "name")
     .populate("country", "name")
     .populate("site")
-    .populate("baseOrig");
+    .populate("origin");
 
   let accounts = await Account.find()
     .sort({ code: 1 })

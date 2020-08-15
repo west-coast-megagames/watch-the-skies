@@ -205,18 +205,6 @@
   },
   {
     "loadType": "country",
-    "code": "O1",
-    "name": "Neutral Space",
-    "borderedBy": [],
-    "coastal": false,
-    "loadFlag": "true",
-    "parentCode1": "SP",
-    "parentCode2": "TCN",
-    "refNumber1": 0,
-    "refBoolean1": false
-  },
-  {
-    "loadType": "country",
     "code": "AF",
     "name": "Afghanistan",
     "borderedBy": [
