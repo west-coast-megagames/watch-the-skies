@@ -1,5 +1,5 @@
 import React from "react";
-import { Timeline, Icon, Panel } from "rsuite";
+import { Timeline, Icon, Panel, FlexboxGrid, IconButton, Whisper, Popover } from "rsuite";
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = props => {
@@ -21,18 +21,34 @@ const TransactionLog = props => {
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
-        <p>
-          <b>Team:</b> {log.team.name}
-        </p>
-        <p>
-          <b>Account:</b> {log.account}
-        </p>
-        <p>
-          <b>Amount:</b> {log.amount}
-        </p>
-        <p>
-          <b>Note:</b> {log.note}
-        </p>
+        <FlexboxGrid>
+          <FlexboxGrid.Item colspan={12}>
+            <div>
+              {/* <Whisper placement="top" speaker={teamSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Team:</b> {log.team.name}
+            </div> 
+            <div>
+              {/* <Whisper placement="top" speaker={accountSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Account:</b> {log.account}</div>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={12}>
+          <div>
+              {/* <Whisper placement="top" speaker={amountSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Amount:</b> {log.amount}
+            </div> 
+            <div>
+              {/* <Whisper placement="top" speaker={noteSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Note:</b> {log.note}</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
       </Panel>
     </Timeline.Item>
   );
@@ -45,9 +61,7 @@ const ResearchLog = props => {
 
   let results = [];
   for (let i = 0; i < log.rolls.length; i++) {
-    let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${
-      log.rolls[i]
-    }`;
+    let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${log.rolls[i]}`;
     results.push(outcome);
   }
   return (
@@ -62,15 +76,52 @@ const ResearchLog = props => {
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
-        <p><b>Team:</b> {log.team.name} | <b>Lab:</b> {log.lab.name}</p>
-        <p><b>Funding Level:</b> {log.funding}</p>
-        <p><b>Progress:</b> {log.progress.endingProgress}</p>
-        <p><b>Active Project:</b> SECRET PROJECT</p>
-        <ul>
-          {results.map(el => (
-            <li>{el}</li>
-          ))}
-        </ul>
+       <FlexboxGrid>
+          <FlexboxGrid.Item colspan={12}>
+            <div>
+              {/* <Whisper placement="top" speaker={teamSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Team:</b> {log.team.name} | <b>Science Rate:</b> {log.team.sciRate}
+            </div>
+            <div>
+              {/* <Whisper placement="top" speaker={labSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Lab:</b> {log.lab.name} | <b>Science Rate:</b> {log.lab.sciRate}
+            </div>
+            <div>
+              {/* <Whisper placement="top" speaker={fundingSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b>Funding Level:</b> {log.funding}
+            </div>
+          </FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={12}>
+          <div>
+              {/* <Whisper placement="top" speaker={amountSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Multiplyer:</b> {log.stats.finalMultiplyer}
+            </div> 
+            <div>
+              {/* <Whisper placement="top" speaker={noteSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Breakthroughs:</b> {log.stats.breakthroughCount}</div>
+              <div>
+              {/* <Whisper placement="top" speaker={noteSpeaker} trigger="click">
+                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+              </Whisper> */}
+              <b> Progress:</b> {log.progress.endingProgress}</div>
+          </FlexboxGrid.Item>
+        </FlexboxGrid>
+        <p><b>Active Project:</b> {log.project.name}</p>
+          <ul>
+            {results.map(el => (
+              <li key={el}>{el}</li>
+            ))}
+          </ul>
       </Panel>
     </Timeline.Item>
   );
