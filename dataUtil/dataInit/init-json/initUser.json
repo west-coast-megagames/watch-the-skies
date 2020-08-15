@@ -558,5 +558,44 @@
     "discord": "farnworthkevin#7861",
     "teamCode": "RSA",
     "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "noahallington",
+    "name": { "first": "Noah", "last": "Allington" },
+    "email": "noahallington@gmail.com",
+    "phone": "9893975152",
+    "password": "AwJ5oB7B#o8p",
+    "address": {
+      "street1": "207 Kansas",
+      "street2": "",
+      "city": "Ypsilanti",
+      "state": "MI",
+      "zipcode": "48198"
+    },
+    "dob": "1991-10-01",
+    "gender": "Male",
+    "discord": "Xelath#4417",
+    "teamCode": "USA",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "Ruanek",
+    "name": { "first": "Nathan", "last": "Chaney" },
+    "email": "nathanrchaney@gmail.com",
+    "phone": "2406203295",
+    "password": "NFiupeLFDshNF79:k",
+    "address": {
+      "street1": "208 Kaden Prince Dr",
+      "city": "Pflugerville",
+      "state": "TX",
+      "zipcode": "78660"
+    },
+    "dob": "1993-09-11",
+    "gender": "Male",
+    "discord": "Ruanek#1136",
+    "teamCode": "RFD",
+    "roles": ["Player"]
   }
 ]
