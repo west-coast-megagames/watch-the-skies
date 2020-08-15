@@ -67,6 +67,6 @@ export const getCompletedResearch = createSelector(
   state => state.entities.research.list,
   state => state.auth.team,
   (research, team) => research.filter(
-    tech => tech.status.compleated === true && tech.team === team._id
+    tech => tech.status.completed === true && tech.team === team._id
   )
 );

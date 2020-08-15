@@ -6,7 +6,6 @@ import { IconButton, Icon, Badge, Whisper, Popover, Tag } from 'rsuite'; // rsui
 
 const UserList = () => {
     let users = useSelector(state => state.auth.users);
-    let login = useSelector(state => state.auth.login);
     let socket = useSelector(state => state.auth.socket);
     let userList = []
     let online = users.length;
@@ -19,8 +18,6 @@ const UserList = () => {
             userList.push(el)
         }
     };
-
-    let i = 0;
 
     return (
         <div style={{position: 'fixed', bottom: 5, left: 5}}>
