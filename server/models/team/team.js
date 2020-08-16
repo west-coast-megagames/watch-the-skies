@@ -42,6 +42,7 @@ const TeamSchema = new Schema({
   homeCountry: { type: Schema.Types.ObjectId, ref: "Country" },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
+  trades: [],
 });
 
 TeamSchema.methods.validateTeam = function (team) {
