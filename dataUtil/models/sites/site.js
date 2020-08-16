@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
-const ObjectId = mongoose.ObjectId;
+const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 const modelDebugger = require("debug")("app:spacecraftModel");
 
