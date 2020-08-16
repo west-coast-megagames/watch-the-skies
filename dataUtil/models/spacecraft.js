@@ -21,7 +21,7 @@ const SpaceSchema = new Schema({
   facilities: [{ type: ObjectId, ref: "Facility" }],
   serviceRecord: [{ type: ObjectId, ref: "Log" }],
   gameState: [],
-  site: [{ type: ObjectId, ref: "Spacecraft" }],
+  site: [{ type: ObjectId, ref: "Site" }],
   type: {
     type: String,
     required: true,
