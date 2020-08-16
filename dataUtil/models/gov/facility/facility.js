@@ -62,23 +62,7 @@ function validateFacility(facility) {
   return Joi.validate(facility, schema, { allowUnknown: true });
 }
 
-const Lab = Facility.discriminator(
-  "Lab",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Lab" },
-    sciRate: { type: Number, default: 0 },
-    bonus: { type: Number, default: 0 },
-    funding: { type: Number, default: 0 },
-    research: [{ type: ObjectId, ref: "Research" }],
-  })
-);
-
 module.exports = {
   Facility,
   validateFacility,
-  Lab,
-  Hanger,
-  Factory,
-  Crisis,
-  Civilian,
 };

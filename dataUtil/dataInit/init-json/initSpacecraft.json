@@ -6,10 +6,6 @@
     "baseDefenses": true,
     "facilities": [{ "code": "SL-1", "name": "FFG Lab A-1" }],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "F1",
     "teamCode": "FFG",
     "status": {
@@ -22,7 +18,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Cruiser"
+    "shipType": "Cruiser",
+    "siteCode": "BM BDA"
   },
   {
     "loadType": "spacecraft",
@@ -31,10 +28,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "US",
     "teamCode": "TCN",
     "status": {
@@ -47,7 +40,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Station"
+    "shipType": "Station",
+    "siteCode": "US NYC"
   },
   {
     "loadType": "spacecraft",
@@ -56,10 +50,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "CL",
     "teamCode": "TCN",
     "status": {
@@ -72,7 +62,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "DZ ALG"
   },
   {
     "loadType": "spacecraft",
@@ -81,10 +72,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "US",
     "teamCode": "USA",
     "status": {
@@ -97,7 +84,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "US LAX"
   },
   {
     "loadType": "spacecraft",
@@ -106,10 +94,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "F1",
     "teamCode": "FFG",
     "status": {
@@ -122,7 +106,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "ZW HRE"
   },
   {
     "loadType": "spacecraft",
@@ -131,10 +116,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "GB",
     "teamCode": "TUK",
     "status": {
@@ -147,7 +128,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "GB PLY"
   },
   {
     "loadType": "spacecraft",
@@ -156,10 +138,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "RU",
     "teamCode": "RSA",
     "status": {
@@ -172,7 +150,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "ZA CPT"
   },
   {
     "loadType": "spacecraft",
@@ -181,10 +160,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "RU",
     "teamCode": "RFD",
     "status": {
@@ -197,7 +172,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "RU BKA"
   },
   {
     "loadType": "spacecraft",
@@ -206,10 +182,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "JP",
     "teamCode": "JPN",
     "status": {
@@ -222,7 +194,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "JP NRT"
   },
   {
     "loadType": "spacecraft",
@@ -231,10 +204,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "GB",
     "teamCode": "TUK",
     "status": {
@@ -247,7 +216,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "IR IKA"
   },
   {
     "loadType": "spacecraft",
@@ -256,10 +226,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "IN",
     "teamCode": "IND",
     "status": {
@@ -272,7 +238,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "IN BOM"
   },
   {
     "loadType": "spacecraft",
@@ -281,10 +248,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "FR",
     "teamCode": "TFR",
     "status": {
@@ -297,7 +260,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "FR MRS"
   },
   {
     "loadType": "spacecraft",
@@ -306,10 +270,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "EG",
     "teamCode": "EPT",
     "status": {
@@ -322,7 +282,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "EG CAI"
   },
   {
     "loadType": "spacecraft",
@@ -331,10 +292,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "CN",
     "teamCode": "PRC",
     "status": {
@@ -347,7 +304,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "CN URC"
   },
   {
     "loadType": "spacecraft",
@@ -356,10 +314,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "BR",
     "teamCode": "BRZ",
     "status": {
@@ -372,7 +326,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "BR FOR"
   },
   {
     "loadType": "spacecraft",
@@ -381,10 +336,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "AU",
     "teamCode": "AUS",
     "status": {
@@ -397,7 +348,8 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "AU PER"
   },
   {
     "loadType": "spacecraft",
@@ -406,10 +358,6 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "latDMS": "90 00 00.0 S",
-    "longDMS": "139 15 60.0 W",
-    "latDecimal": -90.0,
-    "longDecimal": -139.2667,
     "countryCode": "BZ",
     "teamCode": "NPC",
     "status": {
@@ -422,6 +370,7 @@
       "secret": false
     },
     "hidden": false,
-    "shipType": "Satellite"
+    "shipType": "Satellite",
+    "siteCode": "AF KBL"
   }
 ]

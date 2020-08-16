@@ -1,8 +1,29 @@
 [
   {
     "loadType": "zone",
-    "name": "Space",
-    "code": "SP",
+    "name": "Low Earth Orbit",
+    "code": "LE",
+    "loadFlag": "true",
+    "refNumber1": 0
+  },
+  {
+    "loadType": "zone",
+    "name": "Mid Earth Orbit",
+    "code": "ME",
+    "loadFlag": "true",
+    "refNumber1": 0
+  },
+  {
+    "loadType": "zone",
+    "name": "High Earth Orbit",
+    "code": "HE",
+    "loadFlag": "true",
+    "refNumber1": 0
+  },
+  {
+    "loadType": "zone",
+    "name": "Lunar Orbit",
+    "code": "LO",
     "loadFlag": "true",
     "refNumber1": 0
   },
@@ -198,7 +219,7 @@
     "borderedBy": [],
     "coastal": false,
     "loadFlag": "true",
-    "parentCode1": "SP",
+    "parentCode1": "HE",
     "parentCode2": "FFG",
     "refNumber1": 0,
     "refBoolean1": false

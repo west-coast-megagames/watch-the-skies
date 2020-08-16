@@ -21,7 +21,7 @@ const SpaceSchema = new Schema({
   facilities: [{ type: ObjectId, ref: "Facility" }],
   serviceRecord: [{ type: ObjectId, ref: "Log" }],
   gameState: [],
-  site: [{ type: ObjectId, ref: "Site" }],
+  site: { type: ObjectId, ref: "Site" },
   type: {
     type: String,
     required: true,
@@ -50,14 +50,14 @@ SpaceSchema.methods.validateSpacecraft = function (spacecraft) {
 };
 
 function validateSpacecraft(spacecraft) {
-  //modelDebugger(`Validating ${site.spacecraftCode}...`);
+  //modelDebugger(`Validating ${spacecraft.spacecraftCode}...`);
 
   const schema = {
     name: Joi.string().min(2).max(50).required(),
     spacecraftCode: Joi.string().min(2).max(20).required(),
   };
 
-  return Joi.validate(site, schema, { allowUnknown: true });
+  return Joi.validate(spacecraft, schema, { allowUnknown: true });
 }
 
 module.exports = {

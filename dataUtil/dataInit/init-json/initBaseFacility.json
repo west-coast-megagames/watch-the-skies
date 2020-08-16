@@ -1,0 +1,456 @@
+[
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA Base Alpha",
+    "code": "USBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": false,
+    "siteCode": "US CHI"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA Base Beta",
+    "code": "USBB",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": false,
+    "siteCode": "US BNA"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "TUK Base Alpha",
+    "code": "GBBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "GB",
+    "teamCode": "TUK",
+    "coastal": false,
+    "siteCode": "GB LHR"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RSA Base Alpha",
+    "code": "ZABA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "ZA",
+    "teamCode": "RSA",
+    "coastal": false,
+    "siteCode": "ZA JNB"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RFD Base Alpha",
+    "code": "RUBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false,
+    "siteCode": "RU BKA"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Alpha",
+    "code": "JPBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "naval": {
+        "capacity": 5,
+        "fleet": []
+      }
+    },
+    "countryCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP OSA"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "IRN Base Alpha",
+    "code": "IRBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "IR",
+    "teamCode": "IRN",
+    "coastal": false,
+    "siteCode": "IR IKA"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "IND Base Alpha",
+    "code": "INBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "IN",
+    "teamCode": "IND",
+    "coastal": false,
+    "siteCode": "IN DEL"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "TFR Base Alpha",
+    "code": "FRBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "FR",
+    "teamCode": "TFR",
+    "coastal": false,
+    "siteCode": "FR LYS"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "EPT Base Alpha",
+    "code": "EGBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "naval": {
+        "capacity": 2,
+        "fleet": []
+      }
+    },
+    "countryCode": "EG",
+    "teamCode": "EPT",
+    "coastal": true,
+    "siteCode": "EG ALY"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "PRC Base Alpha",
+    "code": "CNBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "CN",
+    "teamCode": "PRC",
+    "coastal": false,
+    "siteCode": "CN BJS"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "BRZ Base Alpha",
+    "code": "BRBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "BZ",
+    "teamCode": "BRZ",
+    "coastal": false,
+    "siteCode": "BR BSB"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "AUS Base Alpha",
+    "code": "AUBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "naval": {
+        "capacity": 4,
+        "fleet": []
+      }
+    },
+    "countryCode": "AU",
+    "teamCode": "AUS",
+    "coastal": true,
+    "siteCode": "AU SYD"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "FFG Base Alpha",
+    "code": "FFGBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "AQ",
+    "teamCode": "FFG",
+    "coastal": false,
+    "siteCode": "AQ AMS"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "TCN Base Alpha",
+    "code": "TCNBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "research": []
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": []
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": []
+      }
+    },
+    "countryCode": "MX",
+    "teamCode": "TCN",
+    "coastal": false,
+    "siteCode": "MX MEX"
+  }
+]
