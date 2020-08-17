@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const nexusEvent = require('../../startup/events');
 
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+
 // Trade Models - Using Mongoose Model
 const { Trade } = require('../../models/dip/trades');
 const { Team } = require('../../models/team/team');
@@ -46,6 +48,29 @@ router.post('/', async function (req, res){
 router.delete('/', async function (req, res){
     let data = await Trade.deleteMany();
     res.status(200).send(`We killed ${data.deletedCount}`)    
+});
+
+router.delete('/id', async function (req, res){
+    
+    try{
+        let removalTeam = await Team.findById({_id: req.body.teamID});
+        for (i=0; i< removalTeam.trades.length; i++){
+            if (removalTeam.trades[i] == req.body.tradeID){
+                removalTeam.trades.splice(i, 1);
+                removalTeam.save();
+            }
+        }
+
+        res.status(200).send(`We killed trade: ${req.body.tradeID}`);            
+    }
+    catch (err) {
+    logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
+      meta: err,
+    });
+    return false;
+  }//catch
+
+
 });
 
 router.post('/process', async function (req, res){
