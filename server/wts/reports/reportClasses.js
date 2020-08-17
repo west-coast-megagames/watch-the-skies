@@ -55,7 +55,7 @@ class ResearchReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission;
         } catch (err) {
             reportDebugger(`Reserch Report Error: ${err}`);
             return
@@ -87,7 +87,7 @@ class ReconReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Recon Report Error: ${err}`);
             return
@@ -118,7 +118,7 @@ class TransportReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Transport Report Error: ${err}`);
             return
@@ -156,7 +156,7 @@ class BattleReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Transport Report Error: ${err}`);
             return
@@ -184,7 +184,7 @@ class CrashReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Crash Report Error: ${err}`);
             return
@@ -213,7 +213,7 @@ class DeploymentReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Deployment Report Error: ${err}`);
             return
@@ -238,7 +238,7 @@ class TheoryReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Theory Report Error: ${err}`);
             return
@@ -268,7 +268,7 @@ class TerrorReport {
       submission = await submission.save();
       reportDebugger(submission);
   
-      return;
+      return submission
     } catch (err) {
       reportDebugger(`Terror Report Error: ${err}`);
       logger.error(`Terror Report Error${err}`, {meta: err});  
@@ -301,7 +301,7 @@ class TradeReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Trade Report Error: ${err}`);
             logger.error(`Trade Report Error: ${err}`, {meta: err});
@@ -329,7 +329,7 @@ class RepairReport {
             submission = await submission.save();
             reportDebugger(submission);
 
-            return;
+            return submission
         } catch (err) {
             reportDebugger(`Repair Report Error: ${err}`);
             logger.error(`Repair Report Error: ${err}`, {meta: err});

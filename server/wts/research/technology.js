@@ -114,63 +114,61 @@ function Technology(tech) {
 
   this.unlock = async function(team) {
     let currentTech = await Research.findOne({ name: this.name, team: team }); // Checks if team has the research already!!
-    //let team = await Team.findById({_id: lab.team});//old way when labs were passed
-      if (currentTech === null) {
-        techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
-        let newTech = new TechResearch({
-            name: this.name,
-            code: this.code,
-            level: this.level,
-            prereq: this.prereq,
-            desc: this.desc,
-            field: this.field,
-            team: team._id,
-            unlocks: this.unlocks,
-            knowledge: this.knowledge,
-        });
+    if (currentTech === null) {
+      techDebugger(`UNLOCKING ${this.name} Theory for ${team.name}...`);
+      let newTech = new TechResearch({
+          name: this.name,
+          code: this.code,
+          level: this.level,
+          prereq: this.prereq,
+          desc: this.desc,
+          field: this.field,
+          team: team._id,
+          unlocks: this.unlocks,
+          knowledge: this.knowledge,
+      });
 
-        let report = new TheoryReport
+      let report = new TheoryReport
 
-        report.team = team,
-        //report.lab = lab._id,//no longer need labs
-        report.project = newTech._id
+      report.team = team,
+      report.project = newTech._id
 
-        report.saveReport()
+      report.saveReport()
 
-        let theories = [];
-        for await (let unlock of newTech.unlocks) {
-          if (unlock.type === 'Technology') {
-            const { techTree } = require('./techTree');
-            let theory = techTree.find(el => el.code === unlock.code);
-            techDebugger(`It's gunna be the future soon: ${theory.type} - ${theory.name}`);
-            console.log(theory)
-            
-            let newTheory = {
-              name: theory.name,
-              level: theory.level,
-              prereq: theory.prereq,
-              field: theory.field,
-              type: theory.type,
-              code: theory.code,
-              desc: theory.desc
-            } 
+      let theories = [];
+      for await (let unlock of newTech.unlocks) {
+        if (unlock.type === 'Technology') {
+          const { techTree } = require('./techTree');
+          let theory = techTree.find(el => el.code === unlock.code);
+          techDebugger(`It's gunna be the future soon: ${theory.type} - ${theory.name}`);
+          console.log(theory)
+          
+          let newTheory = {
+            name: theory.name,
+            level: theory.level,
+            prereq: theory.prereq,
+            field: theory.field,
+            type: theory.type,
+            code: theory.code,
+            desc: theory.desc
+          } 
 
-            theories.push(newTheory);
-          }
+          theories.push(newTheory);
         }
-        newTech.theoretical = theories
-        
-        try{
-          newTech = await newTech.save(); // Newly unlocked tech!   
-          return newTech; 
-        }
-        catch(err){
-          techDebugger(`${this.name} broke on Unlock. FIX IT`);
-        }
-      } else {
-        techDebugger(`${this.name} is already available for ${team.name}...`);
       }
-       
+      newTech.theoretical = theories
+      
+      try{
+        newTech = await newTech.save(); // Newly unlocked tech!   
+        return newTech; 
+      }
+      catch(err){
+        techDebugger(`${this.name} broke on Unlock. FIX IT`);
+      }
+    } else {
+      techDebugger(`${this.name} is already available for ${team.name}...`);
+      return false
+    }
   }//this.unlock
 }
 

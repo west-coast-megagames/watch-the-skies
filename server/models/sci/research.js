@@ -25,7 +25,10 @@ const fields = [
 ];
 
 const ProgressSchema = new Schema({
-  team: { type: Schema.Types.ObjectId, ref: "Team", required: true},
+  team: {
+    _id: { type: Schema.Types.ObjectId, ref: "Team", required: true},
+    name: { type: String, required: true}
+  },
   progress: { type: Number, default: 0, required: true},
   funding: { type: Number, default: 0, required: true},
   totalFunding: { type: Number, default: 0, required: true},
@@ -42,7 +45,7 @@ const ResearchSchema = new Schema({
   unlocks: [UnlockSchema],
   breakthrough: [BreakthroughSchema],
   gameState: [],
-  researchHistory: { type: Schema.Types.ObjectId, ref: "Log" },
+  researchHistory: [{ type: Schema.Types.ObjectId, ref: "Log" }],
 });
 
 let Research = mongoose.model("Research", ResearchSchema, "research");
@@ -96,7 +99,7 @@ const TheorySchema = new Schema({
 });
 
 const FieldSchema = new Schema({
-  type: { type: String },
+  field: { type: String },
   rolls: { type: Number }
 });
 
@@ -117,7 +120,7 @@ const TechResearch = Research.discriminator(
 
     },
     theoretical: [TheorySchema],
-    Knowledge: [FieldSchema]
+    knowledge: [FieldSchema]
   })
 );
 
