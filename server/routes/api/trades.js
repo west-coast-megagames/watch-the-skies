@@ -64,6 +64,10 @@ router.delete('/id', async function (req, res){
                 removalTeam.save();
             }
         }
+        let trade = await Trade.findById({_id: req.body._id});
+        trade.status.deleted = true;
+        trade = await trade.save();
+
         res.status(200).send(`We killed trade: ${req.body.tradeID}`);            
     }//try
     catch (err) {
@@ -75,20 +79,44 @@ router.delete('/id', async function (req, res){
 });
 
 router.put('/modify', async function (req, res){
-    let { initiator, modifyingTeam, tradePartner, status } = req.body;
-    let trade = await Team.findById({_id: req.body._id});
+    let { initiator, tradePartner } = req.body;
+    let trade = await Trade.findById({_id: req.body._id});
+    let mName = "";
 
-    if (modifyingTeam === initiator.team){
+    if (initiator.modified === true){//if the initiator modified the trade
         trade.initiator.ratified = true;
         trade.tradePartner.ratified = false;
+        trade.initiator.modified = false;
+        mName = trade.initiator.team;
     }
-    else{
+    else if (tradePartner.modified === true){ //if the partner modified the deal
+        trade.tradePartner.modified = false;
         trade.tradePartner.ratified = true;
         trade.initiator.ratified = false;
+        mName = trade.tradePartner.team;
     }
 
-    status.proposal = true;
-    //TO DO figure this shit out
+    //save new trade deal over old one
+    trade.initiator.offer.megabucks = initiator.offer.megabucks;
+    trade.initiator.offer.aircraft = initiator.offer.aircraft;
+    trade.initiator.offer.research = initiator.offer.research;
+    trade.initiator.offer.equipment = initiator.offer.equipment;
+    trade.initiator.offer.comments = initiator.offer.comments;
+
+    trade.tradePartner.offer.megabucks = tradePartner.offer.megabucks;
+    trade.tradePartner.offer.aircraft = tradePartner.offer.aircraft;
+    trade.tradePartner.offer.research = tradePartner.offer.research;
+    trade.tradePartner.offer.equipment = tradePartner.offer.equipment;
+    trade.tradePartner.offer.comments = tradePartner.offer.comments;
+
+    //set status flags
+    trade.status.draft = false;
+    trade.status.rejected = false;
+    trade.status.deleted = false;
+    trade.status.proposal = true;
+    
+    trade = await trade.save();
+    res.status(200).send(`Trade deal modified successfully by ${mName}`); 
 }); 
 
 
