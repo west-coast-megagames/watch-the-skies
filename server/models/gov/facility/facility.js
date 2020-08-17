@@ -24,30 +24,36 @@ const FacilitySchema = new Schema({
   gameState: [],
   capability: {
     research: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       research: [{ type: ObjectId, ref: "Research" }],
-      sciRate: { type: Number, default: 0 },
-      sciBonus: { type: Number, default: 0 },
+      sciRate: { type: Number },
+      sciBonus: { type: Number },
+      active: { type: Boolean } 
     },
     airMission: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       aircraft: [{ type: ObjectId, ref: "Aircraft" }],
+      active: { type: Boolean } 
     },
     storage: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       equipment: [{ type: ObjectId, ref: "Equipment" }],
+      active: { type: Boolean } 
     },
     manufacturing: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       equipment: [{ type: ObjectId, ref: "Equipment" }],
+      active: { type: Boolean } 
     },
     naval: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       fleet: [{ type: ObjectId, ref: "Military" }],
+      active: { type: Boolean } 
     },
     ground: {
-      capacity: { type: Number, default: 0 },
+      capacity: { type: Number },
       corps: [{ type: ObjectId, ref: "Military" }],
+      active: { type: Boolean } 
     },
   },
 });
