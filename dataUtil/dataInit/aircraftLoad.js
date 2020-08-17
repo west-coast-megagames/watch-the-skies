@@ -33,6 +33,7 @@ const { loadSystems, systems } = require("../wts/construction/systems/systems");
 const { validUnitType } = require("../wts/util/construction/validateUnitType");
 const { Site } = require("../models/sites/site");
 const { delSystems } = require("../wts/util/construction/deleteSystems");
+const { Facility } = require("../models/gov/facility/facility");
 const app = express();
 
 // Bodyparser Middleware
@@ -156,15 +157,15 @@ async function loadAircraft(iData, rCounts) {
       }
 
       if (iData.base != "" && iData.base != "undefined") {
-        // changed to use site to handle both base and spacecraft if Alien
-        let site = await Site.findOne({ siteCode: iData.base });
-        if (!site) {
+        // 2020-08-16 base moved to facility
+        let facility = await Facility.findOne({ code: iData.base });
+        if (!facility) {
           //logger.debug(`Aircraft Load Base Error, New Aircraft:  ${iData.name}  Base:  ${iData.base}`);
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.origin = site._id;
-          //logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${site._id}`);
+          aircraft.origin = facility._id;
+          //logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${facility._id}`);
         }
       }
 
@@ -299,14 +300,14 @@ async function loadAircraft(iData, rCounts) {
 
       if (iData.base != "" && iData.base != "undefined") {
         //changed to site to handle both Base and Spacecraft (for Alien)
-        let site = await Site.findOne({ siteCode: iData.base });
-        if (!site) {
+        let facility = await Facility.findOne({ code: iData.base });
+        if (!facility) {
           //logger.debug("Aircraft Load Base Site Error, Update Aircraft:", iData.name, " Base: ", iData.base);
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.origin = site._id;
-          //logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", site._id);
+          aircraft.origin = facility._id;
+          //logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", facility._id);
         }
       }
 

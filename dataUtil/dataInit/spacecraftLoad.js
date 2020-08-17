@@ -146,12 +146,19 @@ async function loadSpacecraft(iData, rCounts) {
         } else {
           spacecraft.site = site._id;
 
-          //set zone based on shipType
-          spacecraft.type === "Spacecraft"
-            ? (useZone = "LO")
-            : spacecraft.type === "Station"
-            ? (useZone = "LE")
-            : (useZone = "ME");
+          //set zone based on Type
+          switch (spacecraft.type) {
+            case "Spacecraft":
+              useZone = "LO";
+              break;
+
+            case "Station":
+              useZone = "LE";
+              break;
+
+            default:
+              useZone = "ME";
+          }
 
           let zone = await Zone.findOne({ code: useZone });
           if (!zone) {
@@ -250,11 +257,19 @@ async function loadSpacecraft(iData, rCounts) {
           spacecraft.site = site._id;
           console.log(`jeff 5b `);
 
-          spacecraft.type === "Spacecraft"
-            ? (useZone = "LO")
-            : spacecraft.type === "Station"
-            ? (useZone = "LE")
-            : (useZone = "ME");
+          //set zone based on Type
+          switch (spacecraft.type) {
+            case "Spacecraft":
+              useZone = "LO";
+              break;
+
+            case "Station":
+              useZone = "LE";
+              break;
+
+            default:
+              useZone = "ME";
+          }
 
           let zone = await Zone.findOne({ code: useZone });
           if (!zone) {
