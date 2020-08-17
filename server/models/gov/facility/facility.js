@@ -33,6 +33,7 @@ const FacilitySchema = new Schema({
     research: {
       capacity: { type: Number },
       research: [{ type: ObjectId, ref: "Research" }],
+      funding: [Number],
       sciRate: { type: Number },
       sciBonus: { type: Number },
       active: { type: Boolean } 
