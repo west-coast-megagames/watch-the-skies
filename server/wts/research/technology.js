@@ -15,6 +15,7 @@ function Technology(tech) {
   this.field = tech.field;
   this.effects = tech.effects;
   this.unlocks = tech.unlocks;
+  this.knowledge = tech.knowledge;
 
   // Async Method to check if this technology is available for each team
   this.checkAvailable = async function() {
@@ -69,6 +70,7 @@ function Technology(tech) {
                       field: this.field,
                       team: team._id,
                       unlocks: this.unlocks,
+                      knowledge: this.knowledge,
                       status: {
                         available: true
                       }
@@ -123,7 +125,8 @@ function Technology(tech) {
             desc: this.desc,
             field: this.field,
             team: team._id,
-            unlocks: this.unlocks
+            unlocks: this.unlocks,
+            knowledge: this.knowledge,
         });
 
         let report = new TheoryReport

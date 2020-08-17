@@ -10,7 +10,8 @@
     "desc": "Develops new trauma center methodology.",
     "effects": [{ "type": "terror", "effect": -5 }],
     "unlocks": [ {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio3C"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio3C"}, { "type": "Technology", "code": "Bio3A"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3C"}, { "type": "Technology", "code": "Bio3A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Vaccines",
@@ -22,7 +23,8 @@
     "desc": "Develops new methods for deploying vaccinations.",
     "effects": [{ "type": "terror", "effect": -6 }],
     "unlocks": [],
-    "breakthrough": [{"type": "Technology", "code": "Bio3A"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Antibiotics",
@@ -34,7 +36,8 @@
     "desc": "Develops new forms of antibiotics.",
     "effects": [{"type": "terror", "effect": -6 }],
     "unlocks": [{"type": "Technology", "code": "Mil3B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio2D"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Mil3B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Mil3B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Sensory enhancers",
@@ -46,7 +49,8 @@
     "desc": "Augments an individuals natural sense to increase their performance and sensitivity.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Mil2C"} ],
-    "breakthrough": [{"type": "Technology", "code": "Bio3B"}, {"type": "Technology", "code": "Mil2C"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3B"}, {"type": "Technology", "code": "Mil2C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Alternative Splicing",
@@ -58,7 +62,8 @@
     "desc": "Process of generating multiple transcriptions from a single pre-mRNA using enhanced lasers.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Bio3A"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Mil3H"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio2C"}, {"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Mil3H"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Gene Modification",
@@ -70,7 +75,8 @@
     "desc": "Develops new more controlled methods of Gene Modification. Both terrifying and amazing.",
     "effects": [{"type": "terror", "effect": -10 }],
     "unlocks": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio2B"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio2B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio2B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Organ Fabrication",
@@ -82,7 +88,8 @@
     "desc": "Develops new methods for growing and printing of organs at a national scale.",
     "effects": [{"type": "terror", "effect": -15 }],
     "unlocks": [],
-    "breakthrough": [{"type": "Technology", "code": "Bio3D"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Protein Synthesis",
@@ -94,7 +101,8 @@
     "desc": "Proteins synthesized stepwise by the polymerization of amino acids in a unidirectional manner.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2D"} ],
-    "breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Agr4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Agr4C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Resilient Bacteria",
@@ -106,7 +114,8 @@
     "desc": "Bacteria resistant to infection.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Bio4B"},{"type": "Technology", "code": "Bio3D"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr4B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr4B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Anti-Radiation Treatment",
@@ -118,7 +127,8 @@
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KB-1"}, {"type": "Technology", "code": "Mil4J"}, {"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Bio5C"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4J"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4J"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Biological Computing",
@@ -130,7 +140,8 @@
     "desc": "Allows brain and software integration for diagnosis and minor programmability.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Bio4B"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Inf3E"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Inf3D"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Inf3D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Alpha Rhythm Generation",
@@ -142,7 +153,8 @@
     "desc": "Stimulates alpha brain waves to ease thoughts and reduce pain levels.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio4A"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio4A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Physical Augmentations",
@@ -154,7 +166,8 @@
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil4D"}, {"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Mil3D"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Mil4D"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio2D"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Mil4D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Biological Nanites",
@@ -166,7 +179,8 @@
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KB-2"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}],
-    "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Mil4F"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Mil4F"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Neurological Augmentation",
@@ -178,7 +192,8 @@
     "desc": "Neurological and sensory cybernetic replacements and enhancements.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5B"}, {"type": "Technology", "code": "Bio5A"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil5B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil5B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Brain Chemical Correction",
@@ -190,7 +205,8 @@
     "desc": "Develops methods that can correct and permanently alter brain chemistry.",
     "effects": [{"type": "terror", "effect": -20 }, {"type": "pr", "effect": 2}],
     "unlocks": [{"type": "Technology", "code": "Bio5D"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio5C"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio5C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Robotic Nursing",
@@ -202,7 +218,8 @@
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
     "effects": [{"type": "terror", "effect": -15 }, {"type": "pr", "effect": 1}],
     "unlocks": [{"type": "Equipment", "code": "KB-3"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5C"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Mil5G"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Mil5G"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Auto Doctor System",
@@ -214,7 +231,8 @@
     "desc": "Develops methods for an automated medical system using a large suite of technology.",
     "effects": [{"type": "terror", "effect": -10 }],
     "unlocks": [{"type": "Equipment", "code": "KB-4"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Terminal Illness Treatment",
@@ -226,6 +244,7 @@
     "desc": "Treatment and recovery for previously terminal illnesses.",
     "effects": [{"type": "terror", "effect": -15 }, {"type": "pr", "effect": 1}],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 }
 ]

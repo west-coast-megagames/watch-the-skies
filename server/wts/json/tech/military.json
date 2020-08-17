@@ -9,7 +9,8 @@
     "desc": "Focused laser beams.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil1C"}, {"type": "Technology", "code": "Mil2A"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil3A"}, {"type": "Technology", "code": "Mil2B"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil3A"}, {"type": "Technology", "code": "Mil2B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Alloys",
@@ -21,7 +22,8 @@
     "desc": "Improved metal combining to give greater strength or resistance to corrosion.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil3G"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil3G"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Mil3G"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Damage Lasers",
@@ -33,7 +35,8 @@
     "desc": "Focused laser technology that can be weaponized to create burst-fire beam weapons",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil3A"}, {"type": "Technology", "code": "Mil1D"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "_original": "Hunter-Killer Satellites",
@@ -46,7 +49,8 @@
     "desc": "Attack system designed to be deployed to satellites and high-orbit gunships to shoot down enemy satellites.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Ship-Based Laser Weaponry",
@@ -58,7 +62,8 @@
     "desc": "Precision mounted laser weapon systems designed to burn through the hull of a ship and damage its internal systems.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4H"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4I"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4I"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Radar Capability",
@@ -70,7 +75,8 @@
     "desc": "Improves your understanding of alien protocols and gives you an improved ability to track them.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil3C"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Mil3D"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Mil3D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Robotic Enhancements",
@@ -82,7 +88,8 @@
     "desc": "Enhancements to existing robotics to improve sensory input and mechanical limitations.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4D"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Bio5A"}, {"type": "Technology", "code": "Bio3B"}],
-    "breakthrough": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3E"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil3E"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Military Compounds",
@@ -94,7 +101,8 @@
     "desc": "Allows military compounds (bases and satellites) to be hardened.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil3D"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil3D"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil3D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Autonomous Vehicle Networking",
@@ -107,7 +115,8 @@
     "desc": "Framework for autonomous vehicles.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KM-1"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3G"} ],
-    "breakthrough": [{"type": "Technology", "code": "Inf3C"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf3C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Laser Munitions",
@@ -119,7 +128,8 @@
     "desc": "Miniaturizing laser beams for personal weapons.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil3B"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4D"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Anti-Bio Munitions",
@@ -131,7 +141,8 @@
     "desc": "Develops and preps a bio-weapon that selectively targets aliens or humans.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4J"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4J"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4J"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Energy Sensory Tracking",
@@ -143,7 +154,8 @@
     "desc": "A series of highly sensitive detection, identification, navigation and tracking systems used to determine the range, altitude, direction, or speed of objects based on energy signatures.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4A"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4A"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Mechanized Infantry",
@@ -155,7 +167,8 @@
     "desc": "Mechanized exoskeleton and battle armor for infantry.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5D"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5D"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5D"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Intelligent Droid Labor",
@@ -167,7 +180,8 @@
     "desc": "Develops flexible and intelligent robotic workforce.",
     "effects": [{"type": "terror", "effect": 10 }],
     "unlocks": [{"type": "Equipment", "code": "KM-2"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Bio5B"}],
-    "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Agr3A"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Agr3A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "High Density Resonance Overlays",
@@ -179,7 +193,8 @@
     "desc": "An energy absorbent coating applied to hardened composites to reduce friction.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Agr3A"}, {"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Mil3G"} ],
-    "breakthrough": [{"type": "Technology", "code": "Mil3G"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4L"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil3G"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4L"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Vehicular Propulsion Enhancement",
@@ -191,7 +206,8 @@
     "desc": "Applying energy absorbent material to modern rocketry and affixing to vehicles.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4B"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil4K"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil4K"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Magnetic Projection",
@@ -203,7 +219,8 @@
     "desc": "Projection of magnetic fields to counter other forces for defense shielding.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4L"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4L"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4L"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Laser Defense Grid",
@@ -215,7 +232,8 @@
     "desc": "Improves existing Laser Tech. and deploys ground based missile/satellite defense platform.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Long Range Rocketry",
@@ -227,7 +245,8 @@
     "desc": "Develops rockets to transport to the moon and beyond.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4C"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Orbital Weaponry",
@@ -239,7 +258,8 @@
     "desc": "Develops viable orbital nuclear deployment platform.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Robotics",
@@ -251,7 +271,8 @@
     "desc": "Allows nearly every possible 3 dimensional task in robotics, with increased strength and dexterity.",
     "effects": [{"type": "terror", "effect": -10 }],
     "unlocks": [{"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Bio5B"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio5B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio5B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Super Hardened Alloys",
@@ -263,7 +284,8 @@
     "desc": "Alloys combined with Red Mercury to strengthen and stabilize.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Inf4E"}],
-    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Mil4M"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Mil4M"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Bio-Networked Systems",
@@ -275,7 +297,8 @@
     "desc": "Develops helmets that allows transmission of thought.",
     "effects": [{"type": "terror", "effect": -15 }],
     "unlocks": [{"type": "Technology", "code": "Mil5B"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5B"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Pseudo Projection",
@@ -287,7 +310,8 @@
     "desc": "Allows lifelike projection of holograms from enhanced vehicles or structures.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4K"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "TrueStealth Technology",
@@ -299,7 +323,8 @@
     "desc": "Advanced coating for vehicles and facilities that makes them nearly invisible to the naked eye.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5C"}, {"type": "Technology", "code": "Mil4J"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5C"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Plasmatic Applications",
@@ -311,7 +336,8 @@
     "desc": "Applications of plasma for weaponry and other real world applications.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil5D"}, {"type": "Technology", "code": "Mil4L"}, {"type": "Technology", "code": "Mil4K"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5D"}, {"type": "Technology", "code": "Mil4K"}, {"type": "Technology", "code": "Mil4N"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5D"}, {"type": "Technology", "code": "Mil4K"}, {"type": "Technology", "code": "Mil4N"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Antimatter Containment",
@@ -323,7 +349,8 @@
     "desc": "Ability to contain and control anti-matter.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Pacifier Project",
@@ -335,7 +362,8 @@
     "desc": "Creates Pacifier Class systems.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Magnetic Shielding",
@@ -347,7 +375,8 @@
     "desc": "Creation of portable shielding for deflecting incoming objects.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil4O"}, {"type": "Technology", "code": "Mil4N"}, {"type": "Technology", "code": "Mil4M"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Mil4N"}, {"type": "Technology", "code": "Mil4O"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil4M"}, {"type": "Technology", "code": "Mil4N"}, {"type": "Technology", "code": "Mil4O"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Magnetic Fusion",
@@ -359,7 +388,8 @@
     "desc": "Fusion drives with a magnetic coil exhaust acceleration to increase drive efficiency",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5H"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Mil5F"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Mil5H"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Mil5H"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Electroconductive Rails",
@@ -371,7 +401,8 @@
     "desc": "A rail cannon system for advanced combat.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5F"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5F"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5F"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Anti-Grav",
@@ -383,7 +414,8 @@
     "desc": "Anti gravity and gravity manipulation systems.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5A"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Red Mercury Fission",
@@ -395,7 +427,8 @@
     "desc": "Converts nuclear system into Red Mercury dirty delivery system.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5H"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5H"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5H"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Personal Aerial Transport Systems",
@@ -407,7 +440,8 @@
     "desc": "Framework for anti-gravity personal vehicles.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5E=G"}, {"type": "Technology", "code": "Mil5F"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5F"}, {"type": "Technology", "code": "Mil5G"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Mind Control",
@@ -419,7 +453,8 @@
     "desc": "Allows hijacking of another thoughts for a short while.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Enhanced Covert Operations",
@@ -431,7 +466,8 @@
     "desc": "Application of TrueStealth technology to covert operations agents.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5H"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Plasmatic Mechanization",
@@ -443,7 +479,8 @@
     "desc": "Ability to add plasma weaponry to mechs.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Space Force - Interstellar Corps Training",
@@ -455,7 +492,8 @@
     "desc": "Develops Marine unit to operate from Interplanetary Warships.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Mil5F"}],
-    "breakthrough": [{"type": "Technology", "code": "Mil5F"}]
+    "breakthrough": [{"type": "Technology", "code": "Mil5F"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Space Force - Armed Vehicles",
@@ -467,7 +505,8 @@
     "desc": "Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Space Force - Support Vehicles",
@@ -479,7 +518,8 @@
     "desc": "Designs and constructs an armed interplanetary ship capable of 1.0 G acceleration. Fully equipped with hangers for space fighters, and offensive weapons systems, barracks to host a Starship Marine units for ship to ship or ship to ground strikes, and quarters and stasis pods for a full time crew.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Quantum Temporal Warp Synthesis",
@@ -491,6 +531,7 @@
     "desc": "Develops a Faster Than Light Drive, which uses a dimensional transport effect. Ships instantaneously teleport from one point in space to another after spooling energy.",
     "effects": [],
     "unlocks": [],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 }
 ]
