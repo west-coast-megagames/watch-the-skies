@@ -27,6 +27,7 @@ const tableau = require('../routes/api/tableau');
 const trades = require('../routes/api/trades')
 const zones = require('../routes/api/zones');
 
+const debug = require('../routes/debugRoute');
 const game = require('../routes/game/game');
 const admin = require('../routes/game/admin');
 const del = require('../routes/game/delete');
@@ -45,6 +46,7 @@ module.exports = function(app) {
 
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
     app.use('/', home);
+    app.use('/debug', debug); // Route for debug triggering
     app.use('/game', game);
     app.use('/game/admin', admin);
     app.use('/game/delete', del);
