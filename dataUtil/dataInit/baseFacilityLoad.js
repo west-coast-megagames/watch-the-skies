@@ -72,7 +72,7 @@ async function loadBase(iData, rCounts) {
   let loadCode = "";
 
   try {
-    let facility = await Facility.findOne({ name: iData.name });
+    let facility = await Facility.findOne({ code: iData.code });
 
     loadName = iData.name;
     loadCode = iData.code;
@@ -81,6 +81,7 @@ async function loadBase(iData, rCounts) {
       // New Base here
       let facility = new Facility({
         name: iData.name,
+        code: iData.code,
         siteCode: iData.siteCode,
         coastal: iData.coastal,
         type: iData.type,
@@ -167,6 +168,7 @@ async function loadBase(iData, rCounts) {
       let id = facility._id;
 
       facility.name = iData.name;
+      facility.code = iData.code;
       facility.siteCode = iData.siteCode;
       facility.baseDefenses = iData.baseDefenses;
       facility.public = iData.public;

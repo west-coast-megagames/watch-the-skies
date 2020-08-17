@@ -12,6 +12,13 @@ const FacilitySchema = new Schema({
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: ObjectId, ref: "Team" },
   site: { type: ObjectId, ref: "Site" },
+  code: {
+    type: String,
+    minlength: 2,
+    maxlength: 20,
+    required: true,
+    unique: true,
+  },
   status: {
     repair: { type: Boolean, default: true },
     damaged: { type: Boolean, default: false },
