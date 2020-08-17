@@ -156,6 +156,7 @@ async function loadAircraft(iData, rCounts) {
         }
       }
 
+      baseSite = undefined;
       if (iData.base != "" && iData.base != "undefined") {
         // 2020-08-16 base moved to facility
         let facility = await Facility.findOne({ code: iData.base });
@@ -164,8 +165,17 @@ async function loadAircraft(iData, rCounts) {
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.origin = facility._id;
-          //logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${facility._id}`);
+          if (facility.capability.airMission.capacity > 0) {
+            aircraft.origin = facility._id;
+            baseSite = facility.site;
+            //logger.debug(`Aircraft Load Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${facility._id}`);
+          } else {
+            loadError = true;
+            loadErrorMsg =
+              "Base " +
+              iData.base +
+              " does not have positive airMission capacity.";
+          }
         }
       }
 
@@ -180,7 +190,7 @@ async function loadAircraft(iData, rCounts) {
           //logger.debug(`Aircraft Load Site Found, Aircraft: ${iData.name}  Site:  ${iData.site} Site ID: ${site._id}`);
         }
       } else {
-        aircraft.site = aircraft.origin;
+        aircraft.site = baseSite;
       }
 
       if (iData.zone != "") {
@@ -298,6 +308,7 @@ async function loadAircraft(iData, rCounts) {
         }
       }
 
+      baseSite = undefined;
       if (iData.base != "" && iData.base != "undefined") {
         //changed to site to handle both Base and Spacecraft (for Alien)
         let facility = await Facility.findOne({ code: iData.base });
@@ -306,8 +317,17 @@ async function loadAircraft(iData, rCounts) {
           loadError = true;
           loadErrorMsg = "Base Not Found: " + iData.base;
         } else {
-          aircraft.origin = facility._id;
-          //logger.debug("Aircraft Load Update Base Found, Aircraft:", iData.name, " Base: ", iData.base, "Base ID:", facility._id);
+          if (facility.capability.airMission.capacity > 0) {
+            aircraft.origin = facility._id;
+            baseSite = facility.site;
+            //logger.debug(`Aircraft Load Update Base Site Found, Aircraft: ${iData.name}  Base:  ${iData.base} Base ID: ${facility._id}`);
+          } else {
+            loadError = true;
+            loadErrorMsg =
+              "Base " +
+              iData.base +
+              " does not have positive airMission capacity.";
+          }
         }
       }
 
@@ -321,6 +341,8 @@ async function loadAircraft(iData, rCounts) {
           aircraft.site = site._id;
           //logger.debug("Aircraft Load Update Site Found, Aircraft:", iData.name, " Site: ", iData.base, "Site ID:", site._id);
         }
+      } else {
+        aircraft.site = baseSite;
       }
 
       if (iData.zone != "") {

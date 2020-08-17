@@ -43,6 +43,52 @@
   {
     "loadType": "baseFacility",
     "type": "Base",
+    "name": "USA SFO Base Alpha",
+    "code": "USSFO",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": [],
+        "active": true
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "equipment": [],
+        "active": true
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": [],
+        "active": true
+      },
+      "naval": {
+        "capacity": 10,
+        "fleet": [],
+        "active": true
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true,
+    "siteCode": "US SFO"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
     "name": "USA Base Beta",
     "code": "USBB",
     "baseDefenses": false,
@@ -104,6 +150,11 @@
       "ground": {
         "capacity": 4,
         "corps": [],
+        "active": true
+      },
+      "naval": {
+        "capacity": 2,
+        "fleet": [],
         "active": true
       }
     },
@@ -187,6 +238,47 @@
   {
     "loadType": "baseFacility",
     "type": "Base",
+    "name": "RFD Naval Base Alpha",
+    "code": "RUNBA",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 2,
+        "sciBonus": 0
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true
+      },
+      "storage": {
+        "capacity": 3,
+        "equipment": [],
+        "active": true
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": [],
+        "active": true
+      },
+      "naval": {
+        "capacity": 5,
+        "fleet": [],
+        "active": true
+      }
+    },
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false,
+    "siteCode": "RU NOI"
+  },
+  {
+    "loadType": "baseFacility",
+    "type": "Base",
     "name": "JPN Base Alpha",
     "code": "JPBA",
     "baseDefenses": false,
@@ -249,12 +341,17 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 5,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "IR",
     "teamCode": "IRN",
     "coastal": false,
-    "siteCode": "IR IKA"
+    "siteCode": "IR BND"
   },
   {
     "loadType": "baseFacility",
@@ -285,12 +382,17 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 5,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "IN",
     "teamCode": "IND",
-    "coastal": false,
-    "siteCode": "IN DEL"
+    "coastal": true,
+    "siteCode": "IN BOM"
   },
   {
     "loadType": "baseFacility",
@@ -321,12 +423,17 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 5,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "FR",
     "teamCode": "TFR",
-    "coastal": false,
-    "siteCode": "FR LYS"
+    "coastal": true,
+    "siteCode": "FR MRS"
   },
   {
     "loadType": "baseFacility",
@@ -393,12 +500,17 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 2,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false,
-    "siteCode": "CN BJS"
+    "coastal": true,
+    "siteCode": "CN SHA"
   },
   {
     "loadType": "baseFacility",
@@ -429,12 +541,17 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 2,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "BZ",
     "teamCode": "BRZ",
-    "coastal": false,
-    "siteCode": "BR BSB"
+    "coastal": true,
+    "siteCode": "BR FOR"
   },
   {
     "loadType": "baseFacility",
@@ -470,7 +587,7 @@
     "countryCode": "AU",
     "teamCode": "AUS",
     "coastal": true,
-    "siteCode": "AU SYD"
+    "siteCode": "AU MEL"
   },
   {
     "loadType": "baseFacility",

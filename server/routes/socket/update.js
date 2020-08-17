@@ -33,12 +33,10 @@ module.exports = function (io) {
       );
       socketDebugger(`Sending socket new users`);
       client.broadcast.emit("updateUsers", UpdateClients.getUsers());
-      updateSocket
-        .to(client.id)
-        .emit("login", {
-          me: { ...data, id: client.id },
-          userList: UpdateClients.getUsers(),
-        });
+      updateSocket.to(client.id).emit("login", {
+        me: { ...data, id: client.id },
+        userList: UpdateClients.getUsers(),
+      });
       socketDebugger(`New users sent!`);
     });
 
@@ -104,7 +102,7 @@ module.exports = function (io) {
       .populate("country", "name")
       .populate("gear", "name category")
       .populate("site", "name")
-      .populate("homeBase");
+      .populate("origin");
     updateSocket.emit("updateMilitary", military);
   });
 

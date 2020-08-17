@@ -81,7 +81,7 @@ router.get("/datadump", async function (req, res) {
     .populate("country", "name")
     .populate("gear", "name category")
     .populate("site", "name")
-    .populate("homeBase");
+    .populate("origin");
 
   let logs = await Log.find()
     .populate("team")

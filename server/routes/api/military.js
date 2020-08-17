@@ -33,7 +33,7 @@ router.get("/", async function (req, res) {
     .populate("country", "name")
     .populate("gear", "name category")
     .populate("site", "name")
-    .populate("homeBase");
+    .populate("origin");
   res.json(militarys);
 });
 
@@ -49,7 +49,7 @@ router.get("/id/:id", validateObjectId, async (req, res) => {
     .populate("country", "name")
     .populate("gear", "name category")
     .populate("site", "name")
-    .populate("homeBase", "name");
+    .populate("origin", "name");
   if (military != null) {
     res.json(military);
   } else {
@@ -74,7 +74,7 @@ router.post("/", async function (req, res) {
     zoneCode,
     teamCode,
     countryCode,
-    homeBase,
+    origin,
   } = req.body;
   const newMilitary = new Military({ name, team, country, zone, site, stats });
   let docs = await Military.find({ name });
@@ -122,17 +122,17 @@ router.post("/", async function (req, res) {
       }
     }
 
-    if (homeBase && homeBase != "") {
-      let site = await Site.findOne({ siteCode: homeBase });
+    if (origin && origin != "") {
+      let site = await Site.findOne({ siteCode: origin });
       if (!site) {
         console.log(
           "Military Post Home Base Error, New Military:",
           req.body.name,
           " Home Base: ",
-          req.body.homeBase
+          req.body.origin
         );
       } else {
-        newMilitary.homeBase = site._id;
+        newMilitary.origin = site._id;
       }
     }
 
@@ -209,7 +209,7 @@ router.post("/", async function (req, res) {
       .populate("country", "name")
       .populate("gear", "name category")
       .populate("site", "name")
-      .populate("homeBase", "name");
+      .populate("origin", "name");
 
     updateStats(military._id);
     res.status(200).json(military);
@@ -234,13 +234,13 @@ router.put("/:id", async function (req, res) {
   if (gear.length == 0) {
     await loadGears(); // load wts/json/gear.json data into array
   }
-  let { name, zoneCode, teamCode, countryCode, homeBase } = req.body;
+  let { name, zoneCode, teamCode, countryCode, origin } = req.body;
   let newZone_Id;
   let newTeam_Id;
   let newCountry_Id;
   let newMilitaryGear;
   let newSite_Id;
-  let newHomeBase_Id;
+  let newOrigin_Id;
 
   const oldMilitary = await Military.findById({ _id: req.params.id });
   if (oldMilitary != null) {
@@ -249,7 +249,7 @@ router.put("/:id", async function (req, res) {
     newCountry_Id = oldMilitary.country;
     newMilitaryGear = oldMilitary.gear;
     newSite_Id = oldMilitary.site;
-    newHomeBase_Id = oldMilitary.homeBase;
+    newOrigin_Id = oldMilitary.origin;
   }
 
   if (zoneCode && zoneCode != "") {
@@ -301,20 +301,20 @@ router.put("/:id", async function (req, res) {
     newCountry_Id = undefined;
   }
 
-  if (homeBase && homeBase != "") {
-    let site = await Site.findOne({ siteCode: homeBase });
+  if (origin && origin != "") {
+    let site = await Site.findOne({ siteCode: origin });
     if (!site) {
       console.log(
         "Military Put Home Base Error, Update Military:",
         req.body.name,
         " Home Base: ",
-        homeBase
+        origin
       );
     } else {
-      newHomeBase_Id = site._id;
+      newOrigin_Id = site._id;
     }
   } else {
-    newHomeBase_Id = undefined;
+    newOrigin_Id = undefined;
   }
 
   if (siteCode && siteCode != "" && siteCode != "undefined") {
@@ -365,7 +365,7 @@ router.put("/:id", async function (req, res) {
       team: newTeam_Id,
       site: newSite_Id,
       gear: newMilitaryGear,
-      homeBase: newHomeBase_Id,
+      origin: newOrigin_Id,
     },
     { new: true, omitUndefined: true }
   );
@@ -377,7 +377,7 @@ router.put("/:id", async function (req, res) {
     .populate("zone", "zoneName")
     .populate("country", "name")
     .populate("site", "name")
-    .populate("homeBase");
+    .populate("origin");
 
   res.status(200).json(military);
   console.log(`Military ${req.params.id} updated...`);
