@@ -3,6 +3,8 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 const routeDebugger = require('debug')('app:routes:admin');
 
+const { rand } = require('../../util/systems/dice');
+
 // Mongoose Models - Database models
 const { Aircraft, validateAircraft, updateStats } = require('../../models/ops/aircraft');
 const { Account } = require('../../models/gov/account');
@@ -68,7 +70,11 @@ router.patch('/fixFacilities', async function (req, res) {
     let count = 0;
     for await (let facility of Facility.find()) {
         let { research, airMission, storage, manufacturing, naval, ground } = facility.capability;
-        if (research.capacity > 0) research.active = true;
+        if (research.capacity > 0) {
+            research.active = true;
+            research.sciRate = rand(25)
+            research.sciBonus = 0
+        }
         if (airMission.capacity > 0) airMission.active = true;
         if (storage.capacity > 0) storage.active = true;
         if (manufacturing.capacity > 0) manufacturing.active = true;
