@@ -16,7 +16,8 @@ const { BaseSite } = require('../../models/sites/site');
 const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { validUnitType } = require('../../wts/util/construction/validateUnitType');
 
-const banking = require('../../wts/banking/banking')
+const banking = require('../../wts/banking/banking');
+const { logger } = require('../../middleware/winston');
 
 // MUST BUILD - Initiation
 router.get('/initialteGame', async (req, res) => {
@@ -62,6 +63,32 @@ router.patch('/resetLabs', async function (req, res) {
     res.status(200).send("Labs succesfully reset!");
     nexusEvent.emit('updateFacilities');
 });
+
+router.patch('/fixFacilities', async function (req, res) {
+    let count = 0;
+    for await (let facility of Facility.find()) {
+        let { research, airMission, storage, manufacturing, naval, ground } = facility.capability;
+        if (research.capacity > 0) research.active = true;
+        if (airMission.capacity > 0) airMission.active = true;
+        if (storage.capacity > 0) storage.active = true;
+        if (manufacturing.capacity > 0) manufacturing.active = true;
+        if (naval.capacity > 0) naval.active = true;
+        if (ground.capacity > 0) ground.active = true;
+
+        console.log(facility.capability);
+
+        logger.info(`${facility.name} - research: ${research.active}`);
+        logger.info(`${facility.name} - airMission: ${airMission.active}`);
+        logger.info(`${facility.name} - storage: ${storage.active}`);
+        logger.info(`${facility.name} - storage: ${manufacturing.active}`);
+        logger.info(`${facility.name} - storage: ${naval.active}`);
+        logger.info(`${facility.name} - storage: ${ground.active}`);
+
+        await facility.save();
+        count++
+    }
+    return res.status(200).send(`We handled ${count} facilities...`)
+})
 
 module.exports = router
 
