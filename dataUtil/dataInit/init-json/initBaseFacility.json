@@ -9,23 +9,30 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "manufacturing": {
         "capacity": 1,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "US",
@@ -43,19 +50,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 5,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "US",
@@ -73,19 +86,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 3,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "GB",
@@ -103,19 +122,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 20,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "ZA",
@@ -133,19 +158,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 2,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "RU",
@@ -163,19 +194,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "naval": {
         "capacity": 5,
-        "fleet": []
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "JP",
@@ -193,19 +230,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "IR",
@@ -223,19 +266,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 14,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "IN",
@@ -253,19 +302,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 8,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "FR",
@@ -283,19 +338,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 5,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "naval": {
         "capacity": 2,
-        "fleet": []
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "EG",
@@ -313,19 +374,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 9,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "CN",
@@ -343,19 +410,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 16,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "BZ",
@@ -373,19 +446,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 22,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "naval": {
         "capacity": 4,
-        "fleet": []
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "AU",
@@ -403,19 +482,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 10,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "AQ",
@@ -433,19 +518,25 @@
     "capability": {
       "research": {
         "capacity": 1,
-        "research": []
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0
       },
       "airMission": {
         "capacity": 4,
-        "aircraft": []
+        "aircraft": [],
+        "active": true
       },
       "storage": {
         "capacity": 3,
-        "equipment": []
+        "equipment": [],
+        "active": true
       },
       "ground": {
         "capacity": 4,
-        "corps": []
+        "corps": [],
+        "active": true
       }
     },
     "countryCode": "MX",
