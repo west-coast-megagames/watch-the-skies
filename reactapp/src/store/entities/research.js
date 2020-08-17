@@ -70,3 +70,12 @@ export const getCompletedResearch = createSelector(
     tech => tech.status.completed === true && tech.team === team._id
   )
 );
+
+// Selector
+export const getAvailibleResearch = createSelector(
+  state => state.entities.research.list,
+  state => state.auth.team,
+  (research, team) => research.filter(
+    tech => tech.status.available === true && tech.team === team._id
+  )
+);

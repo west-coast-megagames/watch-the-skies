@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { createSelector } from 'reselect'
 import { Alert } from "rsuite";
 
 // Create entity slice of the store
@@ -70,3 +71,12 @@ export const addfacility = facility =>
     data: facility,
     onSuccess: facilityAdded.type
   });
+
+// Selector
+export const getLabs = createSelector(
+  state => state.entities.research.list,
+  state => state.auth.team,
+  (research, team) => research.filter(
+    tech => tech.status.available === true && tech.team === team._id
+  )
+);
