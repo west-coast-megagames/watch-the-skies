@@ -281,20 +281,16 @@ class TradeReport {
     constructor() {
         this.team = ''
         this.date = ''
-        this.team1 = {}
-        this.team2 = {}
-        this.offer1 = []
-        this.offer2 = []
-        this.comment1 = ''
-        this.comment2 = ''
+        this.trade = {}
         this.saveReport = this.saveReport.bind(this);
     }
 
-    async saveReport(team) {
+    async saveReport(team, trade) {
         try {
             reportDebugger(`Saving Trade Report!`);
 
             this.team = team;
+            this.trade = trade;
             let timestamp = makeTimestamp();
             this.date = Date.now();
             let submission = new TradeLog({...timestamp,...this})

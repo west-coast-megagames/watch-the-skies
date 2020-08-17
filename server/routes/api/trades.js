@@ -26,32 +26,36 @@ router.get('/', async function (req, res){
 // @access  Public
 router.post('/', async function (req, res){
     console.log(req.body); 
-    let { offer, initiator } = req.body;
+    let { tradePartner, initiator } = req.body;
    
-    if (offer.length < 1){
+    if ( tradePartner.offer.length < 1 && initiator.offer.length < 1 ){
         res.status(400).send(`This trade is empty!`);
     }
     let trade = new Trade(req.body);
     trade = await trade.save();
-    let initiatorTeam = await Team.findById({_id: initiator});
+    let initiatorTeam = await Team.findById({_id: initiator.team});
     initiatorTeam.trades.push(trade._id);
     initiatorTeam = await initiatorTeam.save();
+    initiator.team = initiatorTeam;
+    tradePartner.team = await Team.findById({_id: tradePartner.team});
 
-    for await (let offer of trade.offer) {
-        offer.team = await Team.findById(offer.team);
-    }
     nexusEvent.emit('updateTeam');
     routeDebugger(trade);
     res.status(200).json(trade);
 });
 
 router.delete('/', async function (req, res){
+
     let data = await Trade.deleteMany();
+    let teams = await Team.find();
+    for (let team of teams){
+        team.trades = [];
+        team.save();
+    }
     res.status(200).send(`We killed ${data.deletedCount}`)    
 });
 
 router.delete('/id', async function (req, res){
-    
     try{
         let removalTeam = await Team.findById({_id: req.body.teamID});
         for (i=0; i< removalTeam.trades.length; i++){
@@ -60,22 +64,36 @@ router.delete('/id', async function (req, res){
                 removalTeam.save();
             }
         }
-
         res.status(200).send(`We killed trade: ${req.body.tradeID}`);            
-    }
+    }//try
     catch (err) {
     logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
       meta: err,
     });
-    return false;
+    res.status(400).send(`Error deleting trade: ${err}`);
   }//catch
-
-
 });
+
+router.put('/modify', async function (req, res){
+    let { initiator, modifyingTeam, tradePartner, status } = req.body;
+    let trade = await Team.findById({_id: req.body._id});
+
+    if (modifyingTeam === initiator.team){
+        trade.initiator.ratified = true;
+        trade.tradePartner.ratified = false;
+    }
+    else{
+        trade.tradePartner.ratified = true;
+        trade.initiator.ratified = false;
+    }
+
+    status.proposal = true;
+    //TO DO figure this shit out
+}); 
+
 
 router.post('/process', async function (req, res){
     resolveTrade(req, res);
-
 });//router
 
 
