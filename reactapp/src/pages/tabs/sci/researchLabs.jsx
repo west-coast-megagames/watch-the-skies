@@ -6,17 +6,18 @@ import { gameServer } from '../../../config';
 import { getLabPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
+import { getAvailibleResearch } from '../../../store/entities/research';
 
 const { Column, HeaderCell, Cell } = Table;
 const labRepairCost = 5;
 
 
-function findTechByID(_id, allResearch) {
+function findTechByID(_id, research) {
 	let myResearchArray = [];
 	let i;
-	for (i = 0; i < allResearch.length; i++) {
-		if (allResearch[i]._id === _id) {
-			myResearchArray[0] = allResearch[i];
+	for (i = 0; i < research.length; i++) {
+		if (research[i]._id === _id) {
+			myResearchArray[0] = research[i];
 			return myResearchArray;
 		}
 	}
@@ -39,7 +40,7 @@ const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 			</Cell>
 		);
 	} else {
-		let getPctResult = getLabPct(rowData._id, props.labs, props.allresearch, props.techcost);
+		let getPctResult = getLabPct(rowData._id, props.labs, props.research, props.techcost);
 		if (getPctResult < 0) {
 			return (
 				<Cell {...props} style={{ padding: 0 }}>
@@ -218,7 +219,7 @@ class ResearchLabs extends Component {
 						{rowData => {   
 							function handleChange(value) {
 								let updatedLab = rowData;
-								updatedLab.research = findTechByID(value, props.allResearch);
+								updatedLab.research = findTechByID(value, props.Research);
 								sendLabUpdate(updatedLab, "research");
 							}
 							if ( rowData.status.destroyed) {
@@ -252,7 +253,7 @@ class ResearchLabs extends Component {
 						<HeaderCell>Current Progress</HeaderCell>
 						<ProgressCell 
 							labs={this.state.labs}
-							allresearch={ props.allResearch }
+							research={ props.research }
 							techcost={ props.techCost }
 							onClick={this.openModal}
 						/>
@@ -345,7 +346,7 @@ class ResearchLabs extends Component {
 
 	// Function run at start.  Initializes research state by this team
 	initResearch = () => {
-		let teamResearch = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.status.available && el.status.visible && !el.status.completed && el.team === this.props.team._id);
+		let teamResearch = this.props.research.filter(el => el.type !== "Knowledge" && el.status.available && !el.status.completed);
 		if (teamResearch.length !== 0) {
 			let research = [];			// Array of research Objects
 			let obj = {};               // Object to add to the research array
@@ -389,7 +390,7 @@ class ResearchLabs extends Component {
 				// Temporary fix for backend not clearing out the labs' research array upon completion
 				// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
 				console.log(obj.name);
-				if (getLabPct(obj._id, this.props.facilities, this.props.allResearch, this.props.techCost) >= 100) {	obj.research = []; } 
+				if (getLabPct(obj._id, this.props.facilities, this.props.research, this.props.techCost) >= 100) {	obj.research = []; } 
 
 				labs.push(obj);
 			});
@@ -402,7 +403,7 @@ class ResearchLabs extends Component {
 const mapStateToProps = state => ({
     team: state.auth.team,
     facilities: state.entities.facilities.list,
-    allResearch: state.entities.research.list,
+    research: getAvailibleResearch(state),
     account: getSciAccount(state)
 });
   
