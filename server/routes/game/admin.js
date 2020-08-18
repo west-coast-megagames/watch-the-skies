@@ -86,9 +86,9 @@ router.patch('/fixFacilities', async function (req, res) {
         logger.info(`${facility.name} - research: ${research.active}`);
         logger.info(`${facility.name} - airMission: ${airMission.active}`);
         logger.info(`${facility.name} - storage: ${storage.active}`);
-        logger.info(`${facility.name} - storage: ${manufacturing.active}`);
-        logger.info(`${facility.name} - storage: ${naval.active}`);
-        logger.info(`${facility.name} - storage: ${ground.active}`);
+        logger.info(`${facility.name} - manufacturing: ${manufacturing.active}`);
+        logger.info(`${facility.name} - naval: ${naval.active}`);
+        logger.info(`${facility.name} - ground: ${ground.active}`);
 
         await facility.save();
         count++
