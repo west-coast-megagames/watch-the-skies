@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
-const modelDebugger = require("debug")("app:spacecraftModel");
+const modelDebugger = require("debug")("app:siteModel");
 
 const SiteSchema = new Schema({
   model: { type: String, default: "Site" },
@@ -17,20 +17,8 @@ const SiteSchema = new Schema({
     required: true,
     unique: true,
   },
-  geoDMS: {
-    latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
-    longDMS: { type: String, minlength: 7, maxlength: 14 }, // format DDD MM SS.S E or W example 073 59 11.02 W
-  },
-  geoDecimal: {
-    latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
-    longDecimal: { type: Number, min: -180, max: 180 }, // Postive is East, Negative is West
-  },
   hidden: { type: Boolean, default: false }, // just in case and to be consistent
   facilities: [{ type: ObjectId, ref: "Facility" }],
-  coastal: {
-    type: Boolean,
-    default: false,
-  },
   serviceRecord: [{ type: ObjectId, ref: "Log" }],
   gameState: [],
 });
@@ -57,29 +45,24 @@ function validateSite(site) {
   return Joi.validate(site, schema, { allowUnknown: true });
 }
 
-const CitySite = Site.discriminator(
-  "CitySite",
+const GroundSite = Site.discriminator(
+  "GroundSite",
   new Schema({
-    type: { type: String, default: "City" },
+    type: { type: String, default: "Ground" },
+    subType: { type: String, default: "City", enum: ["City", "Crash"] },
+    geoDMS: {
+      latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
+      longDMS: { type: String, minlength: 7, maxlength: 14 }, // format DDD MM SS.S E or W example 073 59 11.02 W
+    },
+    geoDecimal: {
+      latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
+      longDecimal: { type: Number, min: -180, max: 180 }, // Postive is East, Negative is West
+    },
+    coastal: {
+      type: Boolean,
+      default: false,
+    },
     dateline: { type: String, default: "Dateline" },
-  })
-);
-
-function validateCity(citySite) {
-  //modelDebugger(`Validating ${citySite.cityName}...`);
-
-  const schema = {
-    name: Joi.string().min(2).max(50).required(),
-    siteCode: Joi.string().min(2).max(20).required(),
-  };
-
-  return Joi.validate(citySite, schema, { allowUnknown: true });
-}
-
-const CrashSite = Site.discriminator(
-  "Crash",
-  new Schema({
-    type: { type: String, default: "Crash" },
     salvage: [{ type: ObjectId, ref: "System" }],
     status: {
       public: { type: Boolean, default: false },
@@ -88,22 +71,50 @@ const CrashSite = Site.discriminator(
   })
 );
 
-function validateCrash(crashSite) {
-  //modelDebugger(`Validating ${crashSite.crashName}...`);
-
+function validateGround(groundSite) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
     siteCode: Joi.string().min(2).max(20).required(),
   };
 
-  return Joi.validate(crashSite, schema, { allowUnknown: true });
+  return Joi.validate(groundSite, schema, { allowUnknown: true });
+}
+
+const SpaceSite = Site.discriminator(
+  "SpaceSite",
+  new Schema({
+    type: { type: String, default: "Space" },
+    subType: {
+      type: String,
+      required: true,
+      min: 2,
+      maxlength: 50,
+      enum: ["Satellite", "Cruiser", "Battleship", "Hauler", "Station"],
+    },
+    status: {
+      damaged: { type: Boolean, default: false },
+      destroyed: { type: Boolean, default: false },
+      upgrade: { type: Boolean, default: false },
+      repair: { type: Boolean, default: false },
+      secret: { type: Boolean },
+    },
+  })
+);
+
+function validateSpace(spaceSite) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required(),
+    siteCode: Joi.string().min(2).max(20).required(),
+  };
+
+  return Joi.validate(spaceSite, schema, { allowUnknown: true });
 }
 
 module.exports = {
   Site,
   validateSite,
-  CitySite,
-  validateCity,
-  CrashSite,
-  validateCrash,
+  GroundSite,
+  validateGround,
+  SpaceSite,
+  validateSpace,
 };

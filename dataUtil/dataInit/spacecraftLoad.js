@@ -21,7 +21,7 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Spacecraft Model - Using Mongoose Model
-const { Spacecraft, validateSpacecraft } = require("../models/spacecraft");
+const { SpaceSite, validateSpace } = require("../models/sites/site");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
 const { Facility } = require("../models/gov/facility/facility");
@@ -85,16 +85,16 @@ async function loadSpacecraft(iData, rCounts) {
   let loadName = "";
   let loadCode = "";
   try {
-    let spacecraft = await Spacecraft.findOne({ name: iData.name });
+    let spacecraft = await SpaceSite.findOne({ name: iData.name });
 
     loadName = iData.name;
     loadCode = iData.code;
 
     if (!spacecraft) {
       // New Spacecraft here
-      let spacecraft = new Spacecraft({
+      let spacecraft = new SpaceSite({
         name: iData.name,
-        spacecraftCode: iData.code,
+        siteCode: iData.code,
       });
       spacecraft.gameState = [];
       spacecraft.serviceRecord = [];
@@ -111,7 +111,7 @@ async function loadSpacecraft(iData, rCounts) {
         }
       }
 
-      let { error } = validateSpacecraft(spacecraft);
+      let { error } = validateSpace(spacecraft);
       if (error) {
         //spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
         loadError = true;
@@ -119,7 +119,7 @@ async function loadSpacecraft(iData, rCounts) {
         //return;
       }
 
-      spacecraft.type = iData.shipType;
+      spacecraft.subType = iData.shipType;
       spacecraft.status = iData.status;
       spacecraft.hidden = iData.hidden;
 
@@ -147,7 +147,7 @@ async function loadSpacecraft(iData, rCounts) {
           spacecraft.site = site._id;
 
           //set zone based on Type
-          switch (spacecraft.type) {
+          switch (spacecraft.subType) {
             case "Spacecraft":
               useZone = "LO";
               break;
@@ -189,7 +189,7 @@ async function loadSpacecraft(iData, rCounts) {
           );
           //updateStats(spacecraftSave._id);
 
-          if (spacecraftSave.type === "Satellite") {
+          if (spacecraftSave.subType === "Satellite") {
             addSatelliteToZone(
               spacecraftSave._id,
               spacecraftSave.zone,
@@ -211,9 +211,9 @@ async function loadSpacecraft(iData, rCounts) {
       let id = spacecraft._id;
 
       spacecraft.name = iData.name;
-      spacecraft.spacecraftCode = iData.code;
+      spacecraft.siteCode = iData.code;
       spacecraft.baseDefenses = iData.baseDefenses;
-      spacecraft.type = iData.shipType;
+      spacecraft.subType = iData.shipType;
       spacecraft.status = iData.status;
       spacecraft.stats = iData.stats;
       spacecraft.hidden = iData.hidden;
@@ -245,20 +245,16 @@ async function loadSpacecraft(iData, rCounts) {
 
       useZone = "";
       if (iData.siteCode != "") {
-        onsole.log(`jeff 4a `);
         let site = await Site.findOne({ siteCode: iData.siteCode });
-        console.log(`jeff 4b `);
         if (!site) {
           //spacecraftDebugger("Spacecraft Load Site Error, New Spacecraft:", iData.name, " Site: ", iData.siteCode);
           loadError = true;
           loadErrorMsg = "Site Not Found: " + iData.siteCode;
         } else {
-          console.log(`jeff 5a `);
           spacecraft.site = site._id;
-          console.log(`jeff 5b `);
 
           //set zone based on Type
-          switch (spacecraft.type) {
+          switch (spacecraft.subType) {
             case "Spacecraft":
               useZone = "LO";
               break;
@@ -283,7 +279,7 @@ async function loadSpacecraft(iData, rCounts) {
         }
       }
 
-      const { error } = validateSpacecraft(spacecraft);
+      const { error } = validateSpace(spacecraft);
       if (error) {
         //spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
         loadError = true;
@@ -330,7 +326,7 @@ async function deleteAllSpacecraft(doLoad) {
   if (!doLoad) return;
 
   try {
-    for await (const spacecraft of Spacecraft.find()) {
+    for await (const spacecraft of SpaceSite.find({ subType: "Space" })) {
       let id = spacecraft._id;
       try {
         let spacecraftDel = await Spacecraft.findByIdAndRemove(id);
