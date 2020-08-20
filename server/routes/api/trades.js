@@ -83,6 +83,10 @@ router.put('/modify', async function (req, res){
     let trade = await Trade.findById({_id: req.body._id});
     let mName = "";
 
+    //save new trade deal over old one
+    trade.initiator = initiator; 
+    trade.tradePartner = tradePartner; 
+
     if (initiator.modified === true){//if the initiator modified the trade
         trade.initiator.ratified = true;
         trade.tradePartner.ratified = false;
@@ -95,19 +99,8 @@ router.put('/modify', async function (req, res){
         trade.initiator.ratified = false;
         mName = trade.tradePartner.team;
     }
-
-    //save new trade deal over old one
-    trade.initiator.offer.megabucks = initiator.offer.megabucks;
-    trade.initiator.offer.aircraft = initiator.offer.aircraft;
-    trade.initiator.offer.research = initiator.offer.research;
-    trade.initiator.offer.equipment = initiator.offer.equipment;
-    trade.initiator.offer.comments = initiator.offer.comments;
-
-    trade.tradePartner.offer.megabucks = tradePartner.offer.megabucks;
-    trade.tradePartner.offer.aircraft = tradePartner.offer.aircraft;
-    trade.tradePartner.offer.research = tradePartner.offer.research;
-    trade.tradePartner.offer.equipment = tradePartner.offer.equipment;
-    trade.tradePartner.offer.comments = tradePartner.offer.comments;
+    else
+        res.status(400).send(`Could not determine who modified this trade`); 
 
     //set status flags
     trade.status.draft = false;
