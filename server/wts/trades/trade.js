@@ -13,80 +13,34 @@ const { techTree } = require('../../wts/research/techTree');
 
 
 
-async function resolveTrade(req, res){
-    console.log(req.body); 
-    let report = new TradeReport;
+async function resolveTrade(req, res){//I have not tested this much at all will need reviewing
+    let { initiator, tradePartner } = req.body;
+    let trade = await Trade.findById({_id: req.body._id});
 
-    let { offer, status } = req.body;
-   
-    if (offer.length < 1){
-        res.status(400).send(`You dummy sent me the bad info for this trade`);
-    }
-    else if (offer.length === 2){
-        let team1 = offer[0].team;
-        let team2 = offer[1].team;
+    let initiatorReport = new TradeReport;
+    let tradePartnerReport = new TradeReport;
 
-        report.team1 = team1;
-        report.team2 = team2;
-        report.offer1 = offer[0];
-        report.offer2 = offer[1];
+    //maybe check to see if the trade data is good.
 
-        for (let element of offer){
-            let team = element.team;
-            let opposingTeam = (team === team1) ? team2 : team1;            
+    initiatorReport.team = initiator.team;
+    tradePartnerReport.team = tradePartner.team;
 
-            routeDebugger(`Working on offer of ${element.team} of ${team}`);        
-
-            for (let [key, value] of Object.entries(element)){
-                console.log(`${key}, ${value}`);
-                routeDebugger(`Working on element ${key} of value ${value}`);
+    initiatorReport.trade = initiator.offer;
+    tradePartnerReport.trade = tradePartner.offer;
+        
+    await resolveOffer(initiator.offer, initiator.team, tradePartner.team);     
+    await resolveOffer(tradePartner.offer, tradePartner.team, initiator.team);     
                
-                switch (key){
-                    case "megabucks":
-                        routeDebugger(`Working on Megabucks`); 
-                        let accountFrom = await Account.findOne({"team" : team, "name" : "Treasury"});
-                        let accountTo = await Account.findOne({"team" : opposingTeam, "name" : "Treasury"});
+    initiatorReport.saveReport(initiator.team, initiator.offer);
+    tradePartnerReport.saveReport(tradePartner.team, tradePartner.offer);
 
-                        await withdrawal(accountFrom, value, `Trade with so and so`);
-                        await deposit(accountTo, value, `Stuff`);
-                        break;
-                    case "aircraft" : 
-                        for (let plane of value){
-                            routeDebugger(`Working on Aircraft Transfer`); 
-                            let aircraft = await Aircraft.findById(plane); 
-                            aircraft.team = opposingTeam; //change the aircraft's team
-                            exchangeEquipment(aircraft.systems, opposingTeam); //change the aircraft's equiptment
+    trade.status.complete = true;
+    trade.status.pending = false;
+    trade.status.proposal = false;
+    trade = await trade.save();
 
-                            await aircraft.save();
-                        }//for plane
-                        break;
-                    case "research" : 
-                        for (let item of value){
-                            //1) get the tech that needs to be copied 
-                            let tech = await Research.findById(item)
-                            let newTech = techTree.find(el => el.code === tech.code);
-                            //2) copy the tech to the new team 
-                            let createdTech = await newTech.unlock({ _id: opposingTeam});
-                            //3)with a certain amount researched
-                            createdTech.progress = 80; //or whatever you want them to get...
-                            createdTech.save();
-                            console.log(`Created a new of ${createdTech.name} tech for team: ${createdTech._id}`);
-                        }//for plane
-                        break;
-                    case "equiptment" :            
-                        exchangeEquipment(target, opposingTeam);   
-                        break;
-                    case "facility":
-                        //we'll come back right after these messages
-                        break;
-                }//switch (key)
-            }//for Object.entries            
-        }//for (let element)
-
-    }//else if
-    report.saveReport(offer[0].team);
-    report.saveReport(offer[1].team);
     res.status(200).send('ok done now');
+
 }//resolveTrade
 
 async function exchangeEquipment(transferred, newOwner){
@@ -103,5 +57,51 @@ async function exchangeEquipment(transferred, newOwner){
         }   
     }//for thing
 }//exchangeEquipment
+
+async function resolveOffer(senderOffer, senderTeam, opposingTeam){
+    //case "megabucks":
+    routeDebugger(`Working on Megabucks`); 
+    if (senderOffer.megabucks > 0){
+        try{
+            let accountFrom = await Account.findOne({"team" : senderTeam, "name" : "Treasury"});
+            let accountTo = await Account.findOne({"team" : opposingTeam, "name" : "Treasury"});
+            await withdrawal(accountFrom, senderOffer.megabucks, `Trade with so and so`);
+            await deposit(accountTo, senderOffer.megabucks, `Stuff`);              
+        }
+        catch(err){
+            console.log(`ERROR WITH MEGABUCK TRADE: ${err}`);
+        }
+      
+    }
+
+    //case "aircraft" : 
+    for (let plane of senderOffer.aircraft){
+        routeDebugger(`Working on Aircraft Transfer`); 
+        let aircraft = await Aircraft.findById(plane); 
+        aircraft.team = opposingTeam; //change the aircraft's team
+        exchangeEquipment(aircraft.systems, opposingTeam); //change the aircraft's equiptment
+        await aircraft.save();
+    }//for plane
+
+    //case "research" : 
+    for (let item of senderOffer.research){
+        //1) get the tech that needs to be copied 
+        let tech = await Research.findById(item)
+        let newTech = techTree.find(el => el.code === tech.code);
+
+        //2) copy the tech to the new team 
+        let createdTech = await newTech.unlock({ _id: opposingTeam});
+
+        //3)with a certain amount researched
+        createdTech.progress = 80; //or whatever you want them to get...
+        createdTech.save();
+        console.log(`Created a new of ${createdTech.name} tech for team: ${createdTech._id}`);
+    }//for plane
+   
+    //case "equiptment" :
+    for (let target of senderOffer.equipment){
+        exchangeEquipment(target, opposingTeam);           
+    }            
+}
 
 module.exports = { resolveTrade } 
