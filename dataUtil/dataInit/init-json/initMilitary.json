@@ -4,7 +4,7 @@
     "name": "USA Modern Attack Sub Fleet 1",
     "team": "USA",
     "country": "US",
-    "origin": "USBA",
+    "origin": "USSFO",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },

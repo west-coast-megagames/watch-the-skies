@@ -15,7 +15,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 8,
         "aircraft": [],
         "active": true
       },
@@ -71,12 +71,12 @@
         "active": true
       },
       "ground": {
-        "capacity": 4,
+        "capacity": 7,
         "corps": [],
         "active": true
       },
       "naval": {
-        "capacity": 10,
+        "capacity": 20,
         "fleet": [],
         "active": true
       }
@@ -148,12 +148,12 @@
         "active": true
       },
       "ground": {
-        "capacity": 4,
+        "capacity": 2,
         "corps": [],
         "active": true
       },
       "naval": {
-        "capacity": 2,
+        "capacity": 3,
         "fleet": [],
         "active": true
       }
@@ -192,6 +192,11 @@
         "capacity": 4,
         "corps": [],
         "active": true
+      },
+      "naval": {
+        "capacity": 2,
+        "fleet": [],
+        "active": true
       }
     },
     "countryCode": "ZA",
@@ -215,7 +220,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 6,
         "aircraft": [],
         "active": true
       },
@@ -261,12 +266,12 @@
         "active": true
       },
       "ground": {
-        "capacity": 4,
+        "capacity": 8,
         "corps": [],
         "active": true
       },
       "naval": {
-        "capacity": 5,
+        "capacity": 6,
         "fleet": [],
         "active": true
       }
@@ -292,7 +297,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 7,
         "aircraft": [],
         "active": true
       },
@@ -301,8 +306,13 @@
         "equipment": [],
         "active": true
       },
+      "ground": {
+        "capacity": 2,
+        "corps": [],
+        "active": true
+      },
       "naval": {
-        "capacity": 5,
+        "capacity": 15,
         "fleet": [],
         "active": true
       }
@@ -343,7 +353,7 @@
         "active": true
       },
       "naval": {
-        "capacity": 5,
+        "capacity": 3,
         "fleet": [],
         "active": true
       }
@@ -369,7 +379,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 6,
         "aircraft": [],
         "active": true
       },
@@ -379,12 +389,12 @@
         "active": true
       },
       "ground": {
-        "capacity": 4,
+        "capacity": 8,
         "corps": [],
         "active": true
       },
       "naval": {
-        "capacity": 5,
+        "capacity": 6,
         "fleet": [],
         "active": true
       }
@@ -425,7 +435,7 @@
         "active": true
       },
       "naval": {
-        "capacity": 5,
+        "capacity": 4,
         "fleet": [],
         "active": true
       }
@@ -460,6 +470,11 @@
         "equipment": [],
         "active": true
       },
+      "ground": {
+        "capacity": 4,
+        "corps": [],
+        "active": true
+      },
       "naval": {
         "capacity": 2,
         "fleet": [],
@@ -487,7 +502,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 8,
         "aircraft": [],
         "active": true
       },
@@ -497,12 +512,12 @@
         "active": true
       },
       "ground": {
-        "capacity": 4,
+        "capacity": 15,
         "corps": [],
         "active": true
       },
       "naval": {
-        "capacity": 2,
+        "capacity": 10,
         "fleet": [],
         "active": true
       }
@@ -578,6 +593,11 @@
         "equipment": [],
         "active": true
       },
+      "ground": {
+        "capacity": 2,
+        "corps": [],
+        "active": true
+      },
       "naval": {
         "capacity": 4,
         "fleet": [],
@@ -605,7 +625,7 @@
         "sciBonus": 0
       },
       "airMission": {
-        "capacity": 4,
+        "capacity": 8,
         "aircraft": [],
         "active": true
       },
@@ -653,6 +673,11 @@
       "ground": {
         "capacity": 4,
         "corps": [],
+        "active": true
+      },
+      "naval": {
+        "capacity": 4,
+        "fleet": [],
         "active": true
       }
     },
