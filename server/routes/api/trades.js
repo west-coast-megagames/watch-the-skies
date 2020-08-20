@@ -117,6 +117,20 @@ router.post('/process', async function (req, res){
     resolveTrade(req, res);
 });//router
 
+router.put('/reject', async function (req, res){
+    let trade = await Trade.findById({_id: req.body._id});
 
+    trade.initiator.ratified = false;
+    trade.tradePartner.ratified = false;
+
+    //set status flags
+    trade.status.draft = false;
+    trade.status.rejected = true;
+    trade.status.proposal = false;
+    trade = await trade.save();
+    
+    res.status(200).send(`Trade Deal Rejected`); 
+
+});//router
 
 module.exports = router;
