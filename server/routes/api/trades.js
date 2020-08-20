@@ -44,6 +44,9 @@ router.post('/', async function (req, res){
     res.status(200).json(trade);
 });
 
+// @route   DELETE api/trades
+// @Desc    Delete all trades
+// @access  Public
 router.delete('/', async function (req, res){
 
     let data = await Trade.deleteMany();
@@ -55,6 +58,9 @@ router.delete('/', async function (req, res){
     res.status(200).send(`We killed ${data.deletedCount}`)    
 });
 
+// @route   DELETE api/trades/id
+// @Desc    Delete a specific trade
+// @access  Public
 router.delete('/id', async function (req, res){
     try{
         let removalTeam = await Team.findById({_id: req.body.teamID});
@@ -78,6 +84,9 @@ router.delete('/id', async function (req, res){
   }//catch
 });
 
+// @route   PUT api/trades/modify
+// @Desc    Modify a specific Trade
+// @access  Public
 router.put('/modify', async function (req, res){
     let { initiator, tradePartner } = req.body;
     let trade = await Trade.findById({_id: req.body._id});
@@ -112,11 +121,16 @@ router.put('/modify', async function (req, res){
     res.status(200).send(`Trade deal modified successfully by ${mName}`); 
 }); 
 
-
+// @route   POST api/trades/process
+// @Desc    Create a new trade
+// @access  Public
 router.post('/process', async function (req, res){
     resolveTrade(req, res);
 });//router
 
+// @route   PUT api/trades/reject
+// @Desc    Reject a trade deal
+// @access  Public
 router.put('/reject', async function (req, res){
     let trade = await Trade.findById({_id: req.body._id});
 
@@ -128,7 +142,7 @@ router.put('/reject', async function (req, res){
     trade.status.rejected = true;
     trade.status.proposal = false;
     trade = await trade.save();
-    
+
     res.status(200).send(`Trade Deal Rejected`); 
 
 });//router
