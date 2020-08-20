@@ -74,9 +74,9 @@ export const addfacility = facility =>
 
 // Selector
 export const getLabs = createSelector(
-  state => state.entities.research.list,
+  state => state.entities.facilities.list,
   state => state.auth.team,
-  (research, team) => research.filter(
-    tech => tech.status.available === true && tech.team === team._id
+  (facilities, team) => facilities.filter(
+    facility => facility.capability.research.active === true && facility.team._id === team._id
   )
 );

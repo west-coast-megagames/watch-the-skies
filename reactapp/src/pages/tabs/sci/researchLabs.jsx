@@ -11,7 +11,6 @@ import { getAvailibleResearch } from '../../../store/entities/research';
 const { Column, HeaderCell, Cell } = Table;
 const labRepairCost = 5;
 
-
 function findTechByID(_id, research) {
 	let myResearchArray = [];
 	let i;
@@ -25,13 +24,13 @@ function findTechByID(_id, research) {
 }
 
 const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
-	if ( rowData.status.destroyed) {
+	if ( rowData.status === 'Destroyed' ) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 16, color: 'red'	}} >DESTROYED</div>
 			</Cell>
 		);
-	} else if (rowData.status.damaged) {
+	} else if (rowData.status === 'Damaged') {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
@@ -208,7 +207,7 @@ class ResearchLabs extends Component {
 					rowHeight={50}
 					data={this.state.labs}
 					>
-					<Column verticalAlign='middle' width={120} align="left" fixed>
+					<Column verticalAlign='middle' width={200} align="left" fixed>
 						<HeaderCell>Lab Name</HeaderCell>
 						<Cell dataKey="name" />
 					</Column>
@@ -219,18 +218,19 @@ class ResearchLabs extends Component {
 						{rowData => {   
 							function handleChange(value) {
 								let updatedLab = rowData;
-								updatedLab.research = findTechByID(value, props.Research);
+								updatedLab.research = findTechByID(value, props.research);
 								sendLabUpdate(updatedLab, "research");
 							}
-							if ( rowData.status.destroyed) {
+							if ( rowData.status === 'Destroyed') {
 								rowData.disableFunding = true;
 								return (
 									<div style={{fontSize: 18, color: 'red'	}} >DESTROYED</div>
 								);
 							} else {  
-								let defaultValue = "";
-								if (rowData.research.length !== 0) {		// New research is null
-									defaultValue = rowData.research[0]._id;
+								let defaultValue = "Select Project";
+								console.log(rowData.research);
+								if (rowData.research !== undefined) {		// New research is null
+									defaultValue = rowData.research;
 								}
 								return (
 									<SelectPicker
@@ -369,30 +369,33 @@ class ResearchLabs extends Component {
 
 	// Function run at start.  Initializes labs state by this team
 	initLabs = () => {
-		let teamLabs = this.props.facilities.filter(el => el.type === 'Lab' && !el.hidden && el.team !== null && el.team._id === this.props.team._id);
+		let teamLabs = this.props.facilities.filter(el => el.team !== null && el.team._id === this.props.team._id);
 		if (teamLabs.length !== 0) {
 			let labs = [];				// Array of research Objects
 			let obj = {};               // Object to add to the research array
 
-			teamLabs.forEach(el => {
-				obj = {
-					_id: 			el._id,
-					funding: 		el.funding,
-					name:			el.name,
-					research:		el.research,					
-					status:			el.status,
-					team:			{
-										_id:			el.team._id,
-										shortName:		el.team.shortName
-									}
+			teamLabs.forEach(facility => {
+				for (let i = 0; i < facility.capability.research.capacity; i++) {
+					obj = {
+						_id: 			facility._id,
+						index:			i,
+						funding: 		facility.capability.research.funding[i],
+						name:			`${facility.name} - Lab 0${i+1}`,
+						research:		facility.capability.research.projects[i],					
+						status:			facility.capability.research.damage[i],	
+						team:			{
+											_id:			facility.team._id,
+											shortName:		facility.team.shortName
+										}
+					}
+
+					// Temporary fix for backend not clearing out the labs' research array upon completion
+					// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
+					console.log(obj.name);
+					// if (getLabPct(obj._id, this.props.facilities, this.props.research, this.props.techCost) >= 100) {	obj.research = []; } 
+
+					labs.push(obj);
 				}
-
-				// Temporary fix for backend not clearing out the labs' research array upon completion
-				// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
-				console.log(obj.name);
-				if (getLabPct(obj._id, this.props.facilities, this.props.research, this.props.techCost) >= 100) {	obj.research = []; } 
-
-				labs.push(obj);
 			});
 			this.setState({labs});
 		}

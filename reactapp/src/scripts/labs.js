@@ -43,12 +43,12 @@ function getLabPct (
 {
 	const result = newLabCheck(_id, labs);
 	if (result >= 0) {		// Lab was updated, so find the new %
-		if (labs[result].research.length <= 0) {		// Research currently has no focus in that lab object
+		if (labs[result].research !== undefined) {		// Research currently has no focus in that lab object
 			return (-1);	// -1 and issue error instead of progress bar
 		} else {
-			let myResearchID = labs[result].research[0];	// ID of the tech being researched in this row
-			if (myResearchID === null) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
-				labs[result].research = [];					// initialize the research array to a null instead of null array
+			let myResearchID = labs[result].research;	// ID of the tech being researched in this row
+			if (myResearchID === undefined) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
+				labs[result].research = '';					// initialize the research array to a null instead of null array
 				return (-1);	// -1 and issue error instead of progress bar
 			} else {
 				return lookupPct(myResearchID._id, allResearch, techCost);
