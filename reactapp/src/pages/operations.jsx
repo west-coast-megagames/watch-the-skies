@@ -19,30 +19,10 @@ class Operations extends Component {
         };
         this.handleSelect = this.handleSelect.bind(this);
         this.setAccount = this.setAccount.bind(this);
-        this.setMarkers = this.setMarkers.bind(this);
     }
 
     componentDidMount() {
         this.setAccount();
-        this.setMarkers();
-    }
-
-    setMarkers() {
-        let markers = [];
-        let i = 0;
-        for (let site of this.props.sites) {
-            let marker = {
-                id: i,
-                type: site.type,
-                coordinates: [ site.geoDecimal.latDecimal, site.geoDecimal.longDecimal],
-                name: site.name,
-                color: site.type === 'City' ? 'red' : 'blue',
-                value: site.type === 'City' ? 5 : 2
-            }
-            markers.push(marker);
-            i++
-        }
-        this.setState({markers});
     }
 
     setAccount() {
