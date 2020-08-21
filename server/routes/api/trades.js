@@ -27,19 +27,22 @@ router.get('/', async function (req, res){
 router.post('/', async function (req, res){
     console.log(req.body); 
     let { tradePartner, initiator } = req.body;
-   
+   /*
     if ( tradePartner.offer.length < 1 && initiator.offer.length < 1 ){
         res.status(400).send(`This trade is empty!`);
     }
+    */
     let trade = new Trade(req.body);
     trade = await trade.save();
-    let initiatorTeam = await Team.findById({_id: initiator.team});
+    //get actual trade object and then push on their array
+    let initiatorTeam = await Team.findById({_id: initiator});
     initiatorTeam.trades.push(trade._id);
     initiatorTeam = await initiatorTeam.save();
-    initiator.team = initiatorTeam;
-    tradePartner.team = await Team.findById({_id: tradePartner.team});
 
-    nexusEvent.emit('updateTeam');
+    trade.initiator.team = initiatorTeam;
+    trade.tradePartner.team = await Team.findById({_id: tradePartner});
+
+    //nexusEvent.emit('updateTeam');
     routeDebugger(trade);
     res.status(200).json(trade);
 });

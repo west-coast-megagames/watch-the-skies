@@ -19,7 +19,7 @@ const formatData = (array) => {
     return data;
 }
 
-const TradeOffer = (props) => {
+const TradeOffer = (props) => { //trade object
     let aircraft = useSelector(getAircrafts);
     let research = useSelector(getCompletedResearch);
     let intel = []
@@ -181,22 +181,47 @@ const TradeOffer = (props) => {
 class Trade extends Component {
     state = {
         trade: {
-            offer: [
-                { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false},
-                { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false}
-            ],
-            status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, },
+            initiator: {
+                team: {},
+                ratified: false,
+                modified: false,
+                offer: {
+                    megabucks: 0, 
+                    aircraft: [], 
+                    //intel: [], 
+                    research: [], 
+                    //sites: [], 
+                    equipment: [],  
+                    comments: []
+                }
+            },//initiator
+            tradePartner: {
+                team: {},
+                ratified: false,
+                modified: false,
+                offer: {
+                    megabucks: 0, 
+                    aircraft: [], 
+                    //intel: [], 
+                    research: [], 
+                    //sites: [], 
+                    equipment: [],  
+                    comments: []
+                }
+            },//initiator
+            status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, deleted: false, },
             lastUpdated: Date.now()
         },
         partner: null,
         newTrade: false,
         viewTrade: false
-    }
+    }//state
 
     componentWillMount() {
         let trade = this.state.trade;
-        trade.offer[0].team = this.props.team;
-        trade.offer[1].team = this.props.teams[rand(this.props.teams.length - 1)];
+        trade.initiator.team = this.props.team;
+        trade.tradePartner.team = this.props.team[rand(this.props.teams.length - 1)];
+        this.setState({ trade })
     }
 
     toggleNew () {
@@ -207,12 +232,8 @@ class Trade extends Component {
     createTrade = async () => {
         console.log('Creating a new Trade...');
         let trade = {
-            offer: [{
-                team: this.props.team._id
-            },
-            {
-                team: this.state.partner
-            }],
+            initiator: this.props.team._id,
+            tradePartner: this.state.partner
         };
         try {
           console.log(trade)
@@ -227,11 +248,16 @@ class Trade extends Component {
     render() {
         let myTrade = {}
         let theirTrade = {}
-        for (let offer of this.state.trade.offer) {
-            if (Object.keys(offer.team).length > 0) {
-                offer.team.name === this.props.team.name ? myTrade = offer : theirTrade = offer;
-            }
+
+        if (this.state.trade.initiator.team.name === this.props.team.name){
+            myTrade = this.state.trade.initiator;
+            theirTrade = this.state.trade.tradePartner;
         }
+        else {
+            myTrade = this.state.trade.tradePartner;
+            theirTrade = this.state.trade.initiator;
+        }
+
         let { status, lastUpdated } = this.state.trade;
 
         return (
