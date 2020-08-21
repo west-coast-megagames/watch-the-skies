@@ -7,6 +7,7 @@ import { articleAdded } from '../store/entities/articles';
 import { logsUpdated } from '../store/entities/logs';
 import { researchReceived } from '../store/entities/research';
 import { usersRecieved, loginSocket } from '../store/entities/auth';
+import { facilitiesUpdated } from '../store/entities/facilities';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -38,6 +39,7 @@ const initUpdates = () => {
     updateEvents.updateFacilities((err, facilities) => {
         console.log(facilities)
         notify({catagory: 'update', type: 'success', title: 'Facilities Update', body: `The current state facilities has been updated...`});
+        store.dispatch(facilitiesUpdated(facilities));
     });
 
     updateEvents.updateLogs((err, logs) => {

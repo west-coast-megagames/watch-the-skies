@@ -3,27 +3,28 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
-import { getLabPct } from './../../../scripts/labs';
+import { lookupPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
-import { getAvailibleResearch } from '../../../store/entities/research';
+import { getAvailibleResearch, getTeamResearch } from '../../../store/entities/research';
 
 const { Column, HeaderCell, Cell } = Table;
 const labRepairCost = 5;
 
 function findTechByID(_id, research) {
-	let myResearchArray = [];
-	let i;
-	for (i = 0; i < research.length; i++) {
+	for (let i = 0; i < research.length; i++) {
 		if (research[i]._id === _id) {
-			myResearchArray[0] = research[i];
-			return myResearchArray;
+			return research[i]._id;
 		}
 	}
-	return myResearchArray;
+	return undefined;
 }
 
-const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
+const ProgressCell = (props) => {
+	let {rowData, techcost, research, onClick } = props;
+	console.log(`Progress Cell...`)
+	console.log(rowData)
+	console.log(techcost)
 	if ( rowData.status === 'Destroyed' ) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
@@ -38,21 +39,19 @@ const ProgressCell = ({ rowData, dataKey, onClick, ...props }) => {
 				</div> 
 			</Cell>
 		);
+	} else if (rowData.research !== undefined && rowData.research.length > 0) {
+		let progress = lookupPct(rowData.research, research, techcost);
+		return (
+			<Cell {...props} style={{ padding: 0 }}>
+				<div> <Progress.Line percent={progress} status='active' /> </div>
+			</Cell>
+		)
 	} else {
-		let getPctResult = getLabPct(rowData._id, props.labs, props.research, props.techcost);
-		if (getPctResult < 0) {
-			return (
-				<Cell {...props} style={{ padding: 0 }}>
-					<div>Choose a research</div>
-				</Cell>
-			)
-		} else {
-			return (
-				<Cell {...props} style={{ padding: 0 }}>
-					<div> <Progress.Line percent={ getPctResult } status='active' /> </div>
-				</Cell>
-			)
-		}
+		return (
+			<Cell {...props} style={{ padding: 0 }}>
+				<div>Choose a research</div>
+			</Cell>
+		)
 	}
 };
 
@@ -62,7 +61,6 @@ class ResearchLabs extends Component {
 		this.state = {
 			research: [],					// Array of research that this team has visible
 			labs : [],						// Array of all the labs this team owns
-			account: this.props.account, 	// Account of SCI for the current team
 			showModal: false,				// Boolean to tell whether to open the Repair Modal
 			repairLab: {}					// Obj that holds the lab to repair
 		}
@@ -84,7 +82,7 @@ class ResearchLabs extends Component {
   
 	// Function to submit a transaction thru Axios calls if enough funding exists
 	submitTxn = async (updatedLab, txnType) => {
-		const account     = this.state.account;	
+		const account     = this.props.account;	
 		const labs        = this.state.labs;	
 		const labIndex    = labs.findIndex(lab => lab._id === updatedLab._id);	// Index of updated lab in the labs array
 
@@ -130,22 +128,17 @@ class ResearchLabs extends Component {
 				myAxiosCall = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
 				Alert.success(myAxiosCall.data, 6000)
 
-				// Update the state of the account
-				account.balance -= cost;
-				this.setState({ account })
-
 				// Submit the lab update
 				try {
 					if (txnType === "Lab Research") {
-						// for lab update, need to provide lab object
-						const research_id = updatedLab.research[0]._id
-						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, _id: updatedLab._id, research: [research_id] }
-				
-						myAxiosCall = await axios.put(`${gameServer}api/facilities/research`, newLab);
-						Alert.success(myAxiosCall.data, 6000);
-
 						// Disable funding for the lab once it is submitted
 						labs[labIndex].disableFunding = true;
+
+						// for lab update, need to provide lab object
+						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, index: updatedLab.index, _id: updatedLab._id, research: updatedLab.research }
+						console.log(newLab);
+						myAxiosCall = await axios.put(`${gameServer}api/facilities/research`, newLab);
+						Alert.success(myAxiosCall.data, 6000);
 					}	
 					if (txnType === "Lab Repair") {
 						// For lab repair, provide the lab status of "undamaged"
@@ -161,14 +154,15 @@ class ResearchLabs extends Component {
 
 				// Error condition for lab update
 				} catch (err) {
-					console.log(err)
-					Alert.error(err.data, 4000) 
+					console.log(err.message)
+					Alert.error(err.message, 4000) 
+					labs[labIndex].disableFunding = false;
 				};
 
 			// Error condition for withdrawal 
 			} catch (err) { 
-				console.log(err)
-				Alert.error(err.data, 4000)
+				console.log(err.message)
+				Alert.error(err.message, 4000)
 			};
 
 
@@ -185,7 +179,8 @@ class ResearchLabs extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevProps !== this.props) {
-//			this.teamFilter();
+			this.initResearch();
+			this.initLabs();
 		}
 	}
 	
@@ -219,6 +214,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.research = findTechByID(value, props.research);
+								console.log(updatedLab);
 								sendLabUpdate(updatedLab, "research");
 							}
 							if ( rowData.status === 'Destroyed') {
@@ -228,7 +224,7 @@ class ResearchLabs extends Component {
 								);
 							} else {  
 								let defaultValue = "Select Project";
-								console.log(rowData.research);
+								console.log(rowData);
 								if (rowData.research !== undefined) {		// New research is null
 									defaultValue = rowData.research;
 								}
@@ -251,7 +247,7 @@ class ResearchLabs extends Component {
 			
 					<Column verticalAlign='middle' width={200}>
 						<HeaderCell>Current Progress</HeaderCell>
-						<ProgressCell 
+						<ProgressCell
 							labs={this.state.labs}
 							research={ props.research }
 							techcost={ props.techCost }
@@ -287,10 +283,8 @@ class ResearchLabs extends Component {
 						<HeaderCell>Cost</HeaderCell>
 						<Cell>
 							{rowData => {      
-								let labs = this.state.labs;
-								let account = this.state.account;
-								const result = labs.find(el => el._id === rowData._id)
-								let myFundLevel = result.funding;
+								let account = this.props.account;
+								let myFundLevel = rowData.funding;
 								let myCost = props.fundingCost[myFundLevel];
 								if (rowData.disableFunding) {
 									return (<Tag> $ { myCost } MB </Tag>);
@@ -373,15 +367,19 @@ class ResearchLabs extends Component {
 		if (teamLabs.length !== 0) {
 			let labs = [];				// Array of research Objects
 			let obj = {};               // Object to add to the research array
+			
 
 			teamLabs.forEach(facility => {
 				for (let i = 0; i < facility.capability.research.capacity; i++) {
+					console.log(facility);
+					let funding = typeof facility.capability.research.funding[i] === 'number' ? facility.capability.research.funding[i] : 0;
+					let research = facility.capability.research.projects[i] === null ? undefined : facility.capability.research.projects[i];
 					obj = {
 						_id: 			facility._id,
 						index:			i,
-						funding: 		facility.capability.research.funding[i],
+						funding: 		funding,
 						name:			`${facility.name} - Lab 0${i+1}`,
-						research:		facility.capability.research.projects[i],					
+						research:		research,					
 						status:			facility.capability.research.damage[i],	
 						team:			{
 											_id:			facility.team._id,
@@ -404,10 +402,12 @@ class ResearchLabs extends Component {
 
 
 const mapStateToProps = state => ({
+	lastUpdate: state.entities.facilities.lastFetch,
     team: state.auth.team,
     facilities: state.entities.facilities.list,
-    research: getAvailibleResearch(state),
-    account: getSciAccount(state)
+    research: getTeamResearch(state),
+	account: getSciAccount(state)
+	
 });
   
 const mapDispatchToProps = dispatch => ({});

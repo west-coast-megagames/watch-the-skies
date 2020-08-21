@@ -33,6 +33,12 @@ const slice = createSlice({
     facilityAdded: (facilities, action) => {
       console.log(`${action.type} Dispatched`)
       facilities.list.push(action.payload);
+    },
+    facilitiesUpdated: (facilities, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('Facilities updated!', 2000);
+      facilities.list = action.payload;
+      facilities.lastFetch = Date.now();
     }
   }
 });
@@ -42,7 +48,9 @@ export const {
   facilityAdded,
   facilitiesReceived,
   facilitiesRequested,
-  facilitiesRequestFailed
+  facilitiesRequestFailed,
+  facilitiesUpdated
+
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

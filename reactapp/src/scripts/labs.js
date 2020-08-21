@@ -21,11 +21,13 @@ function lookupPct (
 ) 
 {
 	const myResearch = allResearch.filter(el => el._id === _id);	// lookup entry in the allResearch Obj which holds the Pct
+	console.log(myResearch);
 	const myProgress = myResearch[0].progress;						// Progress found in myResearch
 	const myLevel    = myResearch[0].level;							// Level of Tech of myResearch
 	const myTechCost = techCost[myLevel];							// Tech Cost for 100% completion of myResearch 
 	let   finalPct	 = (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost	
 	if (finalPct > 100) { finalPct = 100; }							// Pct displayed is max 100%
+	console.log(`${myResearch[0].name} at ${finalPct}%`)
 	return (finalPct);	
 }
 
@@ -39,8 +41,9 @@ function getLabPct (
 	labs, 					// list of all labs for this team
 	allResearch, 			// Array of all research objects for this team
 	techCost				// Array of tech costs
-) 
+)
 {
+	console.log(`Get Lab Percentage Called...`)
 	const result = newLabCheck(_id, labs);
 	if (result >= 0) {		// Lab was updated, so find the new %
 		if (labs[result].research !== undefined) {		// Research currently has no focus in that lab object
@@ -48,7 +51,7 @@ function getLabPct (
 		} else {
 			let myResearchID = labs[result].research;	// ID of the tech being researched in this row
 			if (myResearchID === undefined) {					// Most cases, obj is a number.  When removed via "X" (user chooses to research nothing), it becomes null
-				labs[result].research = '';					// initialize the research array to a null instead of null array
+				labs[result].research = '';				 	// initialize the research array to a null instead of null array
 				return (-1);	// -1 and issue error instead of progress bar
 			} else {
 				return lookupPct(myResearchID._id, allResearch, techCost);
