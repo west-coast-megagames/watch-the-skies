@@ -14,38 +14,43 @@ const { techTree } = require('./techTree');
 const { knowledgeTree } = require('./knowledge'); 
 
 async function startResearch () {
-    for await (let facility of await Facility.find({ 'capability.research.active': true })) {
-        let research = facility.capability.research;
+    researchDebugger('Research system triggered...')
+    try {
+        for await (let facility of await Facility.find({ 'capability.research.active': true })) {
+            let research = facility.capability.research;
 
-        for (let i = 0; i < research.capacity; i++) {
-            let lab = {
-                _id: facility._id,
-                team: facility.team,
-                name: `${facility.name} - 0${i+1}`,
-                project: research.research[i],
-                funding: research.funding[i],
-                sciRate: research.sciRate,
-                sciBonus: research.sciBonus }
-            if (lab.project === undefined) {
-                researchDebugger(`${lab.name} labs have no research to conduct...`);
-                let projects = await Research.find({team: facility.team, 'status.completed': false, type: 'Technology'});
-                let rand = Math.floor(Math.random() * (projects.length - 1));
-    
-                if (projects.length > 0) {
-                    let project = projects[rand];
-                    researchDebugger(`${facility.name} labs have independently choosen to work on ${project.name}...`);
-                    lab.project = project._id;
-                    lab.funding = 0;
+            for (let i = 0; i < research.capacity; i++) {
+                let lab = {
+                    _id: facility._id,
+                    team: facility.team,
+                    name: `${facility.name} - 0${i+1}`,
+                    project: research.projects[i],
+                    funding: research.funding[i],
+                    sciRate: research.sciRate,
+                    sciBonus: research.sciBonus }
+                if (lab.project === undefined) {
+                    researchDebugger(`${lab.name} labs have no research to conduct...`);
+                    let projects = await Research.find({team: facility.team, 'status.completed': false, type: 'Technology'});
+                    let rand = Math.floor(Math.random() * (projects.length - 1));
+        
+                    if (projects.length > 0) {
+                        let project = projects[rand];
+                        researchDebugger(`${facility.name} labs have independently choosen to work on ${project.name}...`);
+                        lab.project = project._id;
+                        lab.funding = 0;
+                        await conductResearch(lab);
+                    }
+                } else {
+                    researchDebugger(`${lab.name} has research to conduct`);
                     await conductResearch(lab);
                 }
-            } else {
-                researchDebugger(`${lab.name} has ${lab.projects.length} research to conduct`);
-                await conductResearch(lab);
             }
         }
+        nexusEvent.emit('updateResearch');
+        nexusEvent.emit('updateFacilities');
+    } catch (err) {
+        logger.error(`Research System Error: ${err.message}`, {meta: err,})
     }
-    nexusEvent.emit('updateResearch');
-    nexusEvent.emit('updateFacilities');
 }
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
