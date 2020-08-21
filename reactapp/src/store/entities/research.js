@@ -79,3 +79,12 @@ export const getAvailibleResearch = createSelector(
     tech => tech.status.available === true && tech.team === team._id
   )
 );
+
+// Selector
+export const getTeamResearch = createSelector(
+  state => state.entities.research.list,
+  state => state.auth.team,
+  (research, team) => research.filter(
+    tech => tech.team === team._id
+  )
+);
