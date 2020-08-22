@@ -56,6 +56,11 @@ const TradeOffer = (props) => { //trade object
       const disabled = mode === 'disabled';
       const readOnly = mode === 'readonly';
 
+     function onEdit(){
+          props.onOfferEdit();
+          setMode("normal");
+      }
+
     return(
         <div className='trade' style={{padding: '8px'}}>
             <h3><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h3>
@@ -171,7 +176,7 @@ const TradeOffer = (props) => { //trade object
                     readOnly={readOnly}
                     />
                 </FormGroup>
-                {disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => setMode("normal")}>Edit Trade</IconButton>}
+                {disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
                 {!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}>Save Offer</IconButton> }
             </Form>
         </div>
@@ -210,12 +215,17 @@ class Trade extends Component {
                 }
             },//initiator
             status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, deleted: false, },
-            lastUpdated: Date.now()
+            lastUpdated: Date.now(),
+            _id: ""
         },
         partner: null,
         newTrade: false,
         viewTrade: false
     }//state
+
+    onOfferEdit(team, offer) {
+        Alert.success(`WE DID IT REDDIT`, 3000);
+    }
 
     componentWillMount() {
         let trade = this.state.trade;
@@ -225,7 +235,7 @@ class Trade extends Component {
     }
 
     toggleNew () {
-        let { newTrade } = this.state
+        let { newTrade } = this.state;
         this.setState({ newTrade: !newTrade })
     }
 
@@ -244,6 +254,24 @@ class Trade extends Component {
           Alert.error(`${err.data} - ${err.message}`)
         };
       }
+
+    submitProposal = async () => {
+      console.log('Submitting trade proposal...');
+      try {
+          console.log(this.state)
+          let { initiator, tradePartner } = this.state.trade;
+          if (initiator.team._id === this.props.team._id)
+              initiator.modified = true;
+          else    
+              tradePartner.modified = true;
+
+          let response = await axios.put(`${gameServer}api/trades/modify`, this.state.trade);    
+        //   Alert.success(response.data.comment[0].body);
+          this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
+        } catch (err) {
+          Alert.error(`${err.data} - ${err.message}`)
+        };
+    }
 
     render() {
         let myTrade = {}
@@ -266,16 +294,16 @@ class Trade extends Component {
                     { !this.state.viewTrade && <h4>I didn't create a trade feed... so sorry...</h4>}
                     { this.state.viewTrade && <FlexboxGrid>
                         <FlexboxGrid.Item colspan={12}>
-                            <TradeOffer account={this.props.account} team={myTrade.team} />
+                            <TradeOffer account={this.props.account} team={myTrade.team} onOfferEdit={this.onOfferEdit}/>
                         </FlexboxGrid.Item>
                         <FlexboxGrid.Item colspan={12}>
-                            <TradeOffer team={theirTrade.team} />
+                            <TradeOffer team={theirTrade.team} onOfferEdit={this.onOfferEdit}/>
                         </FlexboxGrid.Item>
                     </FlexboxGrid>}
                 </Content>
                 <Sidebar>
                     {!this.state.newTrade && !this.state.viewTrade && <IconButton block size='sm' onClick={() => this.toggleNew()} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
-                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() => Alert.warning('Submission has not been implemented...', 4000)}>Submit Proposal</IconButton>}
+                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() =>this.submitProposal()}>Submit Proposal</IconButton>}
                     { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => Alert.warning('Rejection has not been implemented...', 4000)}>Reject Proposal</IconButton>}
                     { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => Alert.warning('Trashing a trade deal has not been implemented...', 4000)}>Trash Trade</IconButton>}
                     { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => this.setState({ viewTrade: false })}>Close Trade</IconButton>}

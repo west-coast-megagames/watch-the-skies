@@ -8,14 +8,7 @@ const TradeLog = require('../../models/logs/tradeLog');
 const RepairLog = require('../../models/logs/repairLog');
 const { TerrorLog } = require('../../models/logs/log');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-
-// Function that makes a timestamp for log files
-function makeTimestamp() {
-    const gameClock = require('../gameClock/gameClock')
-    let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
-    let timestamp = { timestamp: { turn, phase, turnNum, clock: `${minutes}:${seconds}` }}
-    return timestamp;
-}
+const Gameclock = require('../gameClock/gameClock')
 
 function createServiceRecord() {
     return
@@ -48,7 +41,7 @@ class ResearchReport {
     async saveReport() {
         try {
         reportDebugger(`Saving report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new ResearchLog({...timestamp,...this})
 
@@ -80,7 +73,7 @@ class ReconReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Recon report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new ReconLog({...timestamp,...this});
 
@@ -111,7 +104,7 @@ class TransportReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Transport report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new TransportLog({...timestamp,...this});
 
@@ -149,7 +142,7 @@ class BattleReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Battle report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new TransportLog({...timestamp,...this});
 
@@ -177,7 +170,7 @@ class CrashReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Crash report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new CrashLog({...timestamp,...this});
 
@@ -206,7 +199,7 @@ class DeploymentReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Deployment report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new DeployLog({...timestamp,...this});
 
@@ -231,7 +224,7 @@ class TheoryReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Theory report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new TheoryLog({...timestamp,...this});
 
@@ -291,7 +284,7 @@ class TradeReport {
 
             this.team = team;
             this.trade = trade;
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new TradeLog({...timestamp,...this})
             submission = await submission.save();
@@ -319,7 +312,7 @@ class RepairReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Repair Report!`);
-            let timestamp = makeTimestamp();
+            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
             let submission = new RepairLog({...timestamp,...this})
             submission = await submission.save();

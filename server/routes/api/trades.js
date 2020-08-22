@@ -33,11 +33,14 @@ router.post('/', async function (req, res){
     }
     */
     let trade = new Trade(req.body);
-    trade = await trade.save();
+
     //get actual trade object and then push on their array
     let initiatorTeam = await Team.findById({_id: initiator});
+    trade = await trade.saveActivity(trade, `Trade Created By ${initiatorTeam.name}`);    
     initiatorTeam.trades.push(trade._id);
     initiatorTeam = await initiatorTeam.save();
+
+
 
     trade.initiator.team = initiatorTeam;
     trade.tradePartner.team = await Team.findById({_id: tradePartner});
@@ -75,7 +78,7 @@ router.delete('/id', async function (req, res){
         }
         let trade = await Trade.findById({_id: req.body._id});
         trade.status.deleted = true;
-        trade = await trade.save();
+        trade = await trade.saveActivity(trade, `Trade Closed By ${removalTeam.name}`);
 
         res.status(200).send(`We killed trade: ${req.body.tradeID}`);            
     }//try
@@ -92,27 +95,29 @@ router.delete('/id', async function (req, res){
 // @access  Public
 router.put('/modify', async function (req, res){
     let { initiator, tradePartner } = req.body;
+    //console.log(req.body)
     let trade = await Trade.findById({_id: req.body._id});
     let mName = "";
 
-    //save new trade deal over old one
-    trade.initiator = initiator; 
-    trade.tradePartner = tradePartner; 
 
     if (initiator.modified === true){//if the initiator modified the trade
         trade.initiator.ratified = true;
         trade.tradePartner.ratified = false;
         trade.initiator.modified = false;
-        mName = trade.initiator.team;
+        mName = trade.initiator.team.name;
     }
     else if (tradePartner.modified === true){ //if the partner modified the deal
         trade.tradePartner.modified = false;
         trade.tradePartner.ratified = true;
         trade.initiator.ratified = false;
-        mName = trade.tradePartner.team;
+        mName = trade.tradePartner.team.name;
     }
     else
         res.status(400).send(`Could not determine who modified this trade`); 
+
+    //save new trade deal over old one
+    trade.initiator = initiator; 
+    trade.tradePartner = tradePartner; 
 
     //set status flags
     trade.status.draft = false;
@@ -120,7 +125,7 @@ router.put('/modify', async function (req, res){
     trade.status.deleted = false;
     trade.status.proposal = true;
     
-    trade = await trade.save();
+    trade = await trade.saveActivity(trade, `Trade Modified By ${mName}`);
     res.status(200).send(`Trade deal modified successfully by ${mName}`); 
 }); 
 
@@ -135,7 +140,18 @@ router.post('/process', async function (req, res){
 // @Desc    Reject a trade deal
 // @access  Public
 router.put('/reject', async function (req, res){
-    let trade = await Trade.findById({_id: req.body._id});
+    let { initiator, tradePartner } = req.body;
+    let trade = await Trade.findById({_id: req.body._id}).populate("initiator.team").populate("tradePartner.team");
+    let mName = "";
+
+    if (initiator.modified === true){//if the initiator modified the trade
+        trade.initiator.modified = false;
+        mName = trade.initiator.team.name;
+    }
+    else if (tradePartner.modified === true){ //if the partner modified the deal
+        trade.tradePartner.modified = false;
+        mName = trade.tradePartner.team.name;
+    }
 
     trade.initiator.ratified = false;
     trade.tradePartner.ratified = false;
@@ -144,7 +160,7 @@ router.put('/reject', async function (req, res){
     trade.status.draft = false;
     trade.status.rejected = true;
     trade.status.proposal = false;
-    trade = await trade.save();
+    trade = await trade.saveActivity(trade, `Trade Rejected By ${mName}`);
 
     res.status(200).send(`Trade Deal Rejected`); 
 
