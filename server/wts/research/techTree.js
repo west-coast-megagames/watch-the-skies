@@ -6,10 +6,13 @@ const infrastructureData = JSON.parse(fs.readFileSync(require.resolve('../json/t
 const medicalData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/medical.json')));
 const agricultureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/agriculture.json')));
 const analysisData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/analysis.json')));
+const placeholderData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/placeholder.json')));
 const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
 const { Technology } = require('./technology');
-const { Research, KnowledgeResearch } = require('../../models/sci/research')
+const { Research, TechResearch } = require('../../models/sci/research');
+const { Team } = require('../../models/team/team');
+const { Facility } = require('../../models/gov/facility/facility');
 
 const techTree = [] // Server side array to track all available technology.
 
@@ -39,6 +42,32 @@ async function loadTech () {
         techTree[count] = new Technology(tech);
         count++;
     };
+
+    let control = await Team.findOne({type: 'Control'})
+
+    let placeholderTech = new TechResearch({
+        name: placeholderData.name,
+        code: placeholderData.code,
+        level: placeholderData.level,
+        prereq: placeholderData.prereq,
+        desc: placeholderData.desc,
+        field: placeholderData.field,
+        team: control._id,
+        unlocks: placeholderData.unlocks,
+        knowledge: placeholderData.knowledge,
+    });
+
+    placeholderTech = await placeholderTech.save();
+
+    for await (let facility of await Facility.find({'capability.research.capacity': { $gt: 0 }})) {
+        let { research } = facility.capability;
+        for (let i = 0; i < research.capacity; i++) {
+            research.damage.set(i, 'Active');
+            research.funding.set(i, 0);
+            research.projects.set(i, control._id);
+            await facility.save();
+        }
+    }
 
     techTreeDebugger(`${count} technology loaded into tech tree...`)
     return `${count} technology loaded into tech tree...`
