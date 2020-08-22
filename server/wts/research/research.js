@@ -24,6 +24,7 @@ async function startResearch () {
                     _id: facility._id,
                     team: facility.team,
                     name: `${facility.name} - 0${i+1}`,
+                    index: i,
                     project: research.projects[i],
                     funding: research.funding[i],
                     sciRate: research.sciRate,
@@ -86,8 +87,14 @@ async function conductResearch(lab) {
                 : tech.progress >= techCost[tech.level] && tech.type === 'Knowledge' ? tech.status.pending = true 
                     : null; // Checks for compleation of current research
 
+            let facility = await Facility.findById(lab._id);
+            facility.capability.research.funding.set(lab.index, 0);
+
             if (tech.status.completed === true) {
                 researchDebugger(`${tech.name} completed!`)
+                let placeholder = await Research.findOne({name: 'Empty Lab'});
+                facility.capability.research.projects.set(lab.index, placeholder._id);
+                
                 tech = await completeResearch(tech);
             } else {
                 researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
@@ -109,6 +116,7 @@ async function conductResearch(lab) {
             report = await report.saveReport();
 
             tech.researchHistory.push(report._id);
+            await facility.save();
             tech = await tech.save(); // Saves the current project to the database
             researchDebugger(tech);
 
@@ -180,6 +188,15 @@ async function completeResearch(research) {
     research.status.completed = true;
     let team = await Team.findById({_id: research.team._id});
 
+    if (research.type === 'Knowledge') {
+        if (research.level < 5) {
+            let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
+            await nextKnowledge.unlock();
+            researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
+            console.log(nextKnowledge);
+        };
+    }
+
     for await (let item of research.unlocks) {
         console.log(item)
         if (item.type === 'Technology') {
@@ -187,18 +204,9 @@ async function completeResearch(research) {
             researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
             await newTech.unlock(team); //changed 'lab' to 'team'
         }
-        
-        if (research.type === 'Knowledge') {
-            if (research.level < 5) {
-                let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
-                await nextKnowledge.unlock();
-                researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
-                console.log(nextKnowledge);
-            };
-        }
     }
 
-    reserach = await research.save();
+    research = await research.save();
   
     return research;
 };
@@ -242,4 +250,32 @@ async function produceBreakthrough(research, lab, count) {
     return;
 }
 
-module.exports = { startResearch, conductResearch, techCost, fundingCost };
+// Assigns credit for all pending knowledge fields
+async function assignKnowledgeCredit() {
+    try {
+        let research = await Research.find({'status.pending': true, type: 'Knowledge'}); //Gets all pending knowledge from the DB
+        researchDebugger(`${research.length} research to give credit for!`);
+
+        // For loop that looks through each field that is pending
+        for (let field of research) {
+            let credit = undefined; // Temp assignment of who gets credit for this research
+            let highProgress = 0 // Current highest progress
+
+            // For loop that looks through each teams progress towards the knowledge field
+            for (let country of teamProgress) {
+                if (country.progress > highProgress) {
+                    highProgress = country.progress; // Assigns the current progress to highProgress if the team has more
+                    credit = country.team._id; // Assigns the current country to credit if the team has more
+                }
+            }
+
+            field.credit = credit; // Gives credit to whatever team has the most at the end of the loop
+            await completeResearch(field);
+        }
+        researchDebugger('Giving credit for research completed!')
+    } catch (err) {
+        logger.error(`Knowledge Credit Error: ${err.message}`, {meta: err})
+    }
+}
+
+module.exports = { startResearch, conductResearch, assignKnowledgeCredit, techCost, fundingCost };
