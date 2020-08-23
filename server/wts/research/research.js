@@ -15,6 +15,7 @@ const { knowledgeTree } = require('./knowledge');
 
 async function startResearch () {
     researchDebugger('Research system triggered...')
+    let placeholder = await Research.findOne({name: "Empty Lab"})
     try {
         for await (let facility of await Facility.find({ 'capability.research.active': true })) {
             let research = facility.capability.research;
@@ -29,7 +30,8 @@ async function startResearch () {
                     funding: research.funding[i],
                     sciRate: research.sciRate,
                     sciBonus: research.sciBonus }
-                if (lab.project === undefined) {
+
+                if (lab.project.toHexString() === placeholder._id.toHexString()) {
                     researchDebugger(`${lab.name} labs have no research to conduct...`);
                     let projects = await Research.find({team: facility.team, 'status.completed': false, type: 'Technology'});
                     let rand = Math.floor(Math.random() * (projects.length - 1));
@@ -186,10 +188,10 @@ async function completeResearch(research) {
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.available = false;
     research.status.completed = true;
-    let team = await Team.findById({_id: research.team._id});
 
     if (research.type === 'Knowledge') {
         if (research.level < 5) {
+            research.status.pending = false;
             let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
             await nextKnowledge.unlock();
             researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
@@ -197,12 +199,14 @@ async function completeResearch(research) {
         };
     }
 
-    for await (let item of research.unlocks) {
-        console.log(item)
-        if (item.type === 'Technology') {
-            let newTech = techTree.find(el => el.code === item.code);
-            researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
-            await newTech.unlock(team); //changed 'lab' to 'team'
+    if (research.type === 'Technology') {
+        for await (let item of research.unlocks) {
+            if (item.type === 'Technology') {
+                let team = await Team.findById({_id: research.team._id});
+                let newTech = techTree.find(el => el.code === item.code);
+                researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
+                await newTech.unlock(team); //changed 'lab' to 'team'
+            }
         }
     }
 
@@ -228,7 +232,7 @@ async function advanceKnowledge(research, lab) {
 }
 
 async function produceBreakthrough(research, lab, count) {
-    let options = [...reserach.breakthrough, ...research.unlocks];
+    let options = [...research.breakthrough, ...research.unlocks];
     let team = await Team.findById(lab.team);
     for (let i = 0; i < count; i++) {
         let breakthrough = false;
@@ -259,19 +263,24 @@ async function assignKnowledgeCredit() {
         // For loop that looks through each field that is pending
         for (let field of research) {
             let credit = undefined; // Temp assignment of who gets credit for this research
+            let creditName = undefined;
             let highProgress = 0 // Current highest progress
 
             // For loop that looks through each teams progress towards the knowledge field
-            for (let country of teamProgress) {
+            for (let country of field.teamProgress) {
                 if (country.progress > highProgress) {
                     highProgress = country.progress; // Assigns the current progress to highProgress if the team has more
                     credit = country.team._id; // Assigns the current country to credit if the team has more
+                    creditName = country.team.name;
                 }
+                researchDebugger(`${creditName} has been credited with advancing ${field.name}`);
             }
-
+            
             field.credit = credit; // Gives credit to whatever team has the most at the end of the loop
-            await completeResearch(field);
+            let knowledge = await field.save()
+            await completeResearch(knowledge);
         }
+        
         researchDebugger('Giving credit for research completed!')
     } catch (err) {
         logger.error(`Knowledge Credit Error: ${err.message}`, {meta: err})
