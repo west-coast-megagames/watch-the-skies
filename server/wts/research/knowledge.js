@@ -44,7 +44,8 @@ async function loadKnowledge () {
 };
 
 async function knowledgeSeed() {
-    await Research.deleteMany()
+    let result = await Research.deleteMany()
+    knowledgeDebugger(`${result.deletedCount} research deleted...`)
     let seeded = []
     let i = 1;
 
@@ -63,7 +64,7 @@ async function knowledgeSeed() {
     for await (let knowledge of seeded) {
         // Knowledge.unlock is the Method of the Knowledge Class that unlocks the next knowledge level of a field
         let newKnowledge = await knowledge.unlock(); 
-        knowledgeDebugger(newKnowledge);
+        knowledgeDebugger(`Seeding: ${newKnowledge.name}`);
         
         let tree = knowledgeTree;
 
@@ -71,18 +72,14 @@ async function knowledgeSeed() {
 
         while (newKnowledge.level !== 0 && index !== -1) {
             index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level - 1);
-            console.log(`Index: ${index}`);
 
             if (index != -1) {
-                console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
                 //knowledgeDebugger(newKnowledge)
                 if (newKnowledge.teamProgress.length > 0) {
                   rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
                   rand = Math.max(rand, 0);   // don't go negative
-                  //knowledgeDebugger(`Rand: ${rand} teamProgress.length: ${newKnowledge.teamProgress.length}`);
                   newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
-                  //knowledgeDebugger(newKnowledge);
                 }
                 knowledgeDebugger(`Completing knowledge`)
                 await completeKnowledge(newKnowledge);
@@ -91,9 +88,9 @@ async function knowledgeSeed() {
             }
         }
     };
-    for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
-        console.log(knowledge);
-    }
+    // for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
+    //     console.log(knowledge);
+    // }
 
     knowledgeDebugger(`Knowledge seed complete...`)
     return;
