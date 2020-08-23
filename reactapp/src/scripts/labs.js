@@ -20,14 +20,20 @@ function lookupPct (
 	techCost				// Array of tech costs
 ) 
 {
-	const myResearch = allResearch.filter(el => el._id === _id);	// lookup entry in the allResearch Obj which holds the Pct
-	console.log(myResearch);
-	const myProgress = myResearch[0].progress;						// Progress found in myResearch
-	const myLevel    = myResearch[0].level;							// Level of Tech of myResearch
+	let myResearch = {name: 'Placeholder'}
+	let myProgress = 0;				
+	let myLevel = 0;
+
+	if (allResearch.some(el => el._id === _id)) {
+		myResearch = allResearch.find(el => el._id === _id);	// lookup entry in the allResearch Obj which holds the Pct
+		myProgress = myResearch.progress;						// Progress found in myResearch
+		myLevel    = myResearch.level;							// Level of Tech of myResearch
+	}
+					
 	const myTechCost = techCost[myLevel];							// Tech Cost for 100% completion of myResearch 
 	let   finalPct	 = (Math.trunc(myProgress*100/myTechCost));		// Pct is progress/cost	
 	if (finalPct > 100) { finalPct = 100; }							// Pct displayed is max 100%
-	console.log(`${myResearch[0].name} at ${finalPct}%`)
+	console.log(`${myResearch.name} at ${finalPct}%`)
 	return (finalPct);	
 }
 
