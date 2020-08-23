@@ -109,7 +109,7 @@ const TechResearch = Research.discriminator(
     type: { type: String, default: "Technology" },
     field: {
       type: String,
-      enum: [ "Military", "Infrastructure", "Biomedical", "Agriculture", "Analysis" ],
+      enum: [ "Military", "Infrastructure", "Biomedical", "Agriculture", "Analysis", "Placeholder" ],
     },
     team: { type: Schema.Types.ObjectId, ref: "Team" },
     funding: { type: Number, default: 0 },
