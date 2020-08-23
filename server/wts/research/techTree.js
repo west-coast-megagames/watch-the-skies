@@ -22,14 +22,41 @@ function getTechTree() {
 
 async function techSeed() {
     for await (let research of await Research.find({'status.completed': true})) {
-        // console.log(`JESSICA - FIX MEEH: ${research.name}`)
         for await (let tech of research.unlocks) {
-            // console.log(tech)
             let newTech = techTree.find(el => el.code === tech.code);
-            // console.log(newTech)
             await newTech.checkAvailable();
         }
     }
+
+    let control =await Team.findOne({type: 'Control'})
+    let result = await Research.deleteMany({name: 'Empty Lab'});
+
+    techTreeDebugger(`${result.deletedCount} placeholder deleted!`);
+
+    let placeholderTech = new TechResearch({
+        name: placeholderData[0].name,
+        code: placeholderData[0].code,
+        level: placeholderData[0].level,
+        prereq: placeholderData[0].prereq,
+        desc: placeholderData[0].desc,
+        field: placeholderData[0].field,
+        team: control._id,
+        unlocks: placeholderData[0].unlocks,
+        knowledge: placeholderData[0].knowledge,
+    });
+
+    placeholderTech = await placeholderTech.save();
+
+    for await (let facility of await Facility.find({'capability.research.capacity': { $gt: 0 }})) {
+        let { research } = facility.capability;
+        for (let i = 0; i < research.capacity; i++) {
+            research.damage.set(i, 'Active');
+            research.funding.set(i, 0);
+            research.projects.set(i, placeholderTech._id);
+            await facility.save();
+        }
+    }
+
     return;
 }
 
@@ -42,32 +69,6 @@ async function loadTech () {
         techTree[count] = new Technology(tech);
         count++;
     };
-
-    let control = await Team.findOne({type: 'Control'})
-
-    let placeholderTech = new TechResearch({
-        name: placeholderData.name,
-        code: placeholderData.code,
-        level: placeholderData.level,
-        prereq: placeholderData.prereq,
-        desc: placeholderData.desc,
-        field: placeholderData.field,
-        team: control._id,
-        unlocks: placeholderData.unlocks,
-        knowledge: placeholderData.knowledge,
-    });
-
-    placeholderTech = await placeholderTech.save();
-
-    for await (let facility of await Facility.find({'capability.research.capacity': { $gt: 0 }})) {
-        let { research } = facility.capability;
-        for (let i = 0; i < research.capacity; i++) {
-            research.damage.set(i, 'Active');
-            research.funding.set(i, 0);
-            research.projects.set(i, control._id);
-            await facility.save();
-        }
-    }
 
     techTreeDebugger(`${count} technology loaded into tech tree...`)
     return `${count} technology loaded into tech tree...`
