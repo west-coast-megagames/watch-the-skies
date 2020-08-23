@@ -181,6 +181,8 @@ async function newNational(tData, rCounts) {
   });
   national.gameState = [];
   national.serviceRecord = [];
+  national.trades = [];
+  national.treaties = [];
 
   loadName = tData.name;
   let { error } = validateNational(national);
@@ -246,6 +248,8 @@ async function newAlien(tData, rCounts) {
   });
   alien.gameState = [];
   alien.serviceRecord = [];
+  alien.trades = [];
+  alien.treaties = [];
 
   loadName = tData.name;
   let { error } = validateAlien(alien);
@@ -293,6 +297,8 @@ async function newMedia(tData, rCounts) {
   });
   media.gameState = [];
   media.serviceRecord = [];
+  media.trades = [];
+  media.treaties = [];
   media.agents = tData.agents;
   loadName = tData.name;
 
@@ -338,6 +344,8 @@ async function newControl(tData, rCounts) {
   });
   control.gameState = [];
   control.serviceRecord = [];
+  control.trades = [];
+  control.treaties = [];
 
   loadName = tData.name;
 
@@ -387,6 +395,8 @@ async function newNPC(tData, rCounts) {
   });
   npc.gameState = [];
   npc.serviceRecord = [];
+  npc.trades = [];
+  npc.treaties = [];
 
   loadName = tData.name;
 

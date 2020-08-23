@@ -292,6 +292,8 @@ async function loadTeam(tName, tCode, tLoadFlg, tType, rCounts) {
           });
           team.gameState = [];
           team.serviceRecord = [];
+          team.trades = [];
+          team.treaties = [];
           let { error } = validateTeam(team);
           if (error) {
             loadError = true;
@@ -570,6 +572,8 @@ async function newNational(tName, tCode, rCounts) {
   });
   national.gameState = [];
   national.serviceRecord = [];
+  national.trades = [];
+  national.treaties = [];
 
   let { error } = validateNational(national);
   if (error) {
@@ -612,6 +616,8 @@ async function newAlien(tName, tCode, rCounts) {
   });
   alien.gameState = [];
   alien.serviceRecord = [];
+  alien.trades = [];
+  alien.treaties = [];
 
   let { error } = validateAlien(alien);
   if (error) {
@@ -651,6 +657,8 @@ async function newControl(tName, tCode, rCounts) {
   });
   control.gameState = [];
   control.serviceRecord = [];
+  control.trades = [];
+  control.treaties = [];
 
   let { error } = validateControl(control);
   if (error) {
@@ -693,6 +701,8 @@ async function newMedia(tName, tCode, rCounts) {
   });
   media.gameState = [];
   media.serviceRecord = [];
+  media.trades = [];
+  media.treaties = [];
 
   let { error } = validateMedia(media);
   if (error) {
@@ -733,6 +743,8 @@ async function newNpc(tName, tCode, rCounts) {
   });
   npc.gameState = [];
   npc.serviceRecord = [];
+  npc.trades = [];
+  npc.treaties = [];
 
   let { error } = validateNpc(npc);
   if (error) {

@@ -17,6 +17,9 @@ const {
 } = require("../models/team/team");
 const { Country } = require("../models/country");
 const { Account } = require("../models/gov/account");
+const { Log } = require("../models/logs/log");
+const { Treaties } = require("../models/dip/treaties");
+const { Trades } = require("../models/dip/trades");
 
 const teamCheckDebugger = require("debug")("app:teamCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -60,6 +63,32 @@ async function chkTeam(runFlag) {
         if (!lFind) {
           logger.error(
             `Team ${team.name} ${team._id} has an invalid serviceRecord reference ${i}: ${team.serviceRecord[i]}`
+          );
+        }
+      }
+    }
+
+    if (!team.hasOwnProperty("treaties")) {
+      logger.error(`treaties missing for Team ${team.name} ${team._id}`);
+    } else {
+      for (let i = 0; i < team.treaties.length; ++i) {
+        let tFind = await Treaties.findById(team.treaties[i]);
+        if (!tFind) {
+          logger.error(
+            `Team ${team.name} ${team._id} has an invalid treaties reference ${i}: ${team.treaties[i]}`
+          );
+        }
+      }
+    }
+
+    if (!team.hasOwnProperty("trades")) {
+      logger.error(`trades missing for Team ${team.name} ${team._id}`);
+    } else {
+      for (let i = 0; i < team.trades.length; ++i) {
+        let trFind = await Trades.findById(team.trades[i]);
+        if (!trFind) {
+          logger.error(
+            `Team ${team.name} ${team._id} has an invalid trades reference ${i}: ${team.trades[i]}`
           );
         }
       }
