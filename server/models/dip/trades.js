@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { boolean } = require('joi');
 const Schema = mongoose.Schema;
-const Gameclock = require('../../wts/gameClock/gameClock')
+const Gameclock = require('../../wts/gameClock/gameClock');
 
 const tradeDebugger = require('debug')('app:trade');
 

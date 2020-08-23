@@ -43,6 +43,7 @@ const TeamSchema = new Schema({
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
   trades: [],
+  treaties: [],
 });
 
 TeamSchema.methods.validateTeam = function (team) {

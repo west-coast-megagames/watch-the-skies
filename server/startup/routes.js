@@ -25,6 +25,7 @@ const sites = require('../routes/api/sites');
 const team = require('../routes/api/team');
 const tableau = require('../routes/api/tableau');
 const trades = require('../routes/api/trades')
+const treaties = require('../routes/api/treaties')
 const zones = require('../routes/api/zones');
 
 const game = require('../routes/game/game');
@@ -67,7 +68,8 @@ module.exports = function(app) {
     app.use('/api/logErrors', logError); // Route for manipulating logError
     app.use('/api/logInfo', logInfo); // Route for manipulating logInfo
     app.use('/tableau', tableau); // Route for tableau API
-    app.use('/api/trades', trades);
+    app.use('/api/trades', trades); //
+    app.use('/api/treaties', treaties); //treaties
     //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use('/api/control', control)
