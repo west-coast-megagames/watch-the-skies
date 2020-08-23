@@ -33,7 +33,7 @@ async function chkAircraft(runFlag) {
     /*
                                .populate("team", "name teamType")
                                .populate("zone", "zoneName")
-                               .populate("baseOrig", "name")
+                               .populate("origin", "name")
                                .populate("country", "name")
                                .populate("site", "name")
                                */
@@ -81,18 +81,18 @@ async function chkAircraft(runFlag) {
     }
 
     let skipSiteCheck = false;
-    // assume all types should have a site/baseOrig
+    // assume all types should have a site/origin
 
     if (!skipSiteCheck) {
-      if (!aircraft.hasOwnProperty("baseOrig")) {
+      if (!aircraft.hasOwnProperty("origin")) {
         logger.error(
-          `baseOrig missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          `origin missing for Aircraft ${aircraft.name} ${aircraft._id}`
         );
       } else {
-        let site = await Site.findById({ _id: aircraft.baseOrig });
+        let site = await Site.findById({ _id: aircraft.origin });
         if (!site) {
           logger.error(
-            `baseOrig reference is invalid for Aircraft ${aircraft.name} ${aircraft._id}`
+            `origin reference is invalid for Aircraft ${aircraft.name} ${aircraft._id}`
           );
         }
       }

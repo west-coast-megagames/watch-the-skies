@@ -1,16 +1,16 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
-const { Account } = require('../../models/gov/account');
-const { Aircraft } = require ('../../models/ops/aircraft')
-const { Team } = require ('../../models/team/team')
-const { deposit, withdrawal, transfer } = require ("../../wts/banking/banking")
-const { TradeReport } = require ('../../wts/reports/reportClasses')
+const nexusEvent = require('../../startup/events');
+
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 // Trade Models - Using Mongoose Model
 const { Trade } = require('../../models/dip/trades');
-const { Research } = require('../../models/sci/research');
-const { techTree } = require('../../wts/research/techTree');
+const { Team } = require('../../models/team/team');
+
+const { resolveTrade } = require('../../wts/trades/trade')
+
 
 // @route   GET api/trades
 // @Desc    Get all trades
@@ -26,113 +26,144 @@ router.get('/', async function (req, res){
 // @access  Public
 router.post('/', async function (req, res){
     console.log(req.body); 
-    let { offer } = req.body;
-   
-    if (offer.length < 1){
-        res.status(400).send(`You dummy sent me the bad info for this trade`);
+    let { tradePartner, initiator } = req.body;
+   /*
+    if ( tradePartner.offer.length < 1 && initiator.offer.length < 1 ){
+        res.status(400).send(`This trade is empty!`);
     }
+    */
     let trade = new Trade(req.body);
-    trade = await trade.save();
-    for await (let offer of trade.offer) {
-        offer.team = await Team.findById(offer.team)
-    }
+
+    //get actual trade object and then push on their array
+    let initiatorTeam = await Team.findById({_id: initiator});
+    trade = await trade.saveActivity(trade, `Trade Created By ${initiatorTeam.name}`);    
+    initiatorTeam.trades.push(trade._id);
+    initiatorTeam = await initiatorTeam.save();
+
+
+
+    trade.initiator.team = initiatorTeam;
+    trade.tradePartner.team = await Team.findById({_id: tradePartner});
+
+    //nexusEvent.emit('updateTeam');
     routeDebugger(trade);
     res.status(200).json(trade);
 });
 
+// @route   DELETE api/trades
+// @Desc    Delete all trades
+// @access  Public
 router.delete('/', async function (req, res){
+
     let data = await Trade.deleteMany();
+    let teams = await Team.find();
+    for (let team of teams){
+        team.trades = [];
+        team.save();
+    }
     res.status(200).send(`We killed ${data.deletedCount}`)    
 });
 
-router.post('/process', async function (req, res){
-    console.log(req.body); 
-    let report = new TradeReport;
+// @route   DELETE api/trades/id
+// @Desc    Delete a specific trade
+// @access  Public
+router.delete('/id', async function (req, res){
+    try{
+        let removalTeam = await Team.findById({_id: req.body.teamID});
+        for (i=0; i< removalTeam.trades.length; i++){
+            if (removalTeam.trades[i] == req.body.tradeID){
+                removalTeam.trades.splice(i, 1);
+                removalTeam.save();
+            }
+        }
+        let trade = await Trade.findById({_id: req.body._id});
+        trade.status.deleted = true;
+        trade = await trade.saveActivity(trade, `Trade Closed By ${removalTeam.name}`);
 
-    let { offer, status } = req.body;
-   
-    if (offer.length < 1){
-        res.status(400).send(`You dummy sent me the bad info for this trade`);
+        res.status(200).send(`We killed trade: ${req.body.tradeID}`);            
+    }//try
+    catch (err) {
+    logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
+      meta: err,
+    });
+    res.status(400).send(`Error deleting trade: ${err}`);
+  }//catch
+});
+
+// @route   PUT api/trades/modify
+// @Desc    Modify a specific Trade
+// @access  Public
+router.put('/modify', async function (req, res){
+    let { initiator, tradePartner } = req.body;
+    //console.log(req.body)
+    let trade = await Trade.findById({_id: req.body._id});
+    let mName = "";
+
+
+    if (initiator.modified === true){//if the initiator modified the trade
+        trade.initiator.ratified = true;
+        trade.tradePartner.ratified = false;
+        trade.initiator.modified = false;
+        mName = trade.initiator.team.name;
     }
-    else if (offer.length === 2){
-        let team1 = offer[0].team;
-        let team2 = offer[1].team;
+    else if (tradePartner.modified === true){ //if the partner modified the deal
+        trade.tradePartner.modified = false;
+        trade.tradePartner.ratified = true;
+        trade.initiator.ratified = false;
+        mName = trade.tradePartner.team.name;
+    }
+    else
+        res.status(400).send(`Could not determine who modified this trade`); 
 
-        report.team1 = team1;
-        report.team2 = team2;
-        report.offer1 = offer[0];
-        report.offer2 = offer[1];
+    //save new trade deal over old one
+    trade.initiator = initiator; 
+    trade.tradePartner = tradePartner; 
 
-        for (let element of offer){
-            let team = element.team;
-            let opposingTeam = (team === team1) ? team2 : team1;            
+    //set status flags
+    trade.status.draft = false;
+    trade.status.rejected = false;
+    trade.status.deleted = false;
+    trade.status.proposal = true;
+    
+    trade = await trade.saveActivity(trade, `Trade Modified By ${mName}`);
+    res.status(200).send(`Trade deal modified successfully by ${mName}`); 
+}); 
 
-            routeDebugger(`Working on offer of ${element.team} of ${team}`);        
-
-            for (let [key, value] of Object.entries(element)){
-                console.log(`${key}, ${value}`);
-                routeDebugger(`Working on element ${key} of value ${value}`);
-               
-                switch (key){
-                    case "megabucks":
-                        routeDebugger(`Working on Megabucks`); 
-                        let accountFrom = await Account.findOne({"team" : team, "name" : "Treasury"});
-                        let accountTo = await Account.findOne({"team" : opposingTeam, "name" : "Treasury"});
-
-                        await withdrawal(accountFrom, value, `Trade with so and so`);
-                        await deposit(accountTo, value, `Stuff`);
-                        break;
-                    case "aircraft" : 
-                        for (let plane of value){
-                            routeDebugger(`Working on Aircraft Transfer`); 
-                            let aircraft = await Aircraft.findById(plane); 
-                            aircraft.team = opposingTeam; //change the aircraft's team
-                            exchangeEquiptment(aircraft.systems, opposingTeam); //change the aircraft's equiptment
-
-                            await aircraft.save();
-                        }//for plane
-                        break;
-                    case "research" : 
-                        for (let item of value){
-                            //1) get the tech that needs to be copied 
-                            let tech = await Research.findById(item)
-                            let newTech = techTree.find(el => el.code === tech.code);
-                            //2) copy the tech to the new team 
-                            let createdTech = await newTech.unlock({ _id: opposingTeam});
-                            //3)with a certain amount researched
-                            createdTech.progress = 80; //or whatever you want them to get...
-                            createdTech.save();
-                            console.log(`Created a new of ${createdTech.name} tech for team: ${createdTech._id}`);
-                        }//for plane
-                        break;
-                    case "equiptment" :            
-                        exchangeEquiptment(target, opposingTeam);   
-                        break;
-                    case "facility":
-                        break;
-                }//switch (key)
-            }//for Object.entries            
-        }//for (let element)
-
-    }//else if
-    report.saveReport(offer[0].team);
-    report.saveReport(offer[1].team);
-    res.status(200).send('ok done now');
+// @route   POST api/trades/process
+// @Desc    Create a new trade
+// @access  Public
+router.post('/process', async function (req, res){
+    resolveTrade(req, res);
 });//router
 
-async function exchangeEquiptment(transferred, newOwner){
-    for (let thing of transferred){
-        //check what currently has the equiptment
-        try{
-            let target = await Equiptment.findById(thing);  
-            target.team = newOwner;    
-            await target.save();            
-        }
-        catch(err){
-            routeDebugger(`ERROR WITH exchangeEquiptment CALL: ${err}`);
-            //ADD A RETURN TO LET THE CODE KNOW THE EQUIPTMENT WAS NOT TRADED SUCCESSFULLY
-        }   
-    }//for thing
-}//exchangeEquiptment
+// @route   PUT api/trades/reject
+// @Desc    Reject a trade deal
+// @access  Public
+router.put('/reject', async function (req, res){
+    let { initiator, tradePartner } = req.body;
+    let trade = await Trade.findById({_id: req.body._id}).populate("initiator.team").populate("tradePartner.team");
+    let mName = "";
+
+    if (initiator.modified === true){//if the initiator modified the trade
+        trade.initiator.modified = false;
+        mName = trade.initiator.team.name;
+    }
+    else if (tradePartner.modified === true){ //if the partner modified the deal
+        trade.tradePartner.modified = false;
+        mName = trade.tradePartner.team.name;
+    }
+
+    trade.initiator.ratified = false;
+    trade.tradePartner.ratified = false;
+
+    //set status flags
+    trade.status.draft = false;
+    trade.status.rejected = true;
+    trade.status.proposal = false;
+    trade = await trade.saveActivity(trade, `Trade Rejected By ${mName}`);
+
+    res.status(200).send(`Trade Deal Rejected`); 
+
+});//router
 
 module.exports = router;

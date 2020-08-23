@@ -6,10 +6,13 @@ const infrastructureData = JSON.parse(fs.readFileSync(require.resolve('../json/t
 const medicalData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/medical.json')));
 const agricultureData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/agriculture.json')));
 const analysisData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/analysis.json')));
+const placeholderData = JSON.parse(fs.readFileSync(require.resolve('../json/tech/placeholder.json')));
 const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
 const { Technology } = require('./technology');
-const { Research, KnowledgeResearch } = require('../../models/sci/research')
+const { Research, TechResearch } = require('../../models/sci/research');
+const { Team } = require('../../models/team/team');
+const { Facility } = require('../../models/gov/facility/facility');
 
 const techTree = [] // Server side array to track all available technology.
 
@@ -19,14 +22,41 @@ function getTechTree() {
 
 async function techSeed() {
     for await (let research of await Research.find({'status.completed': true})) {
-        // console.log(`JESSICA - FIX MEEH: ${research.name}`)
         for await (let tech of research.unlocks) {
-            // console.log(tech)
             let newTech = techTree.find(el => el.code === tech.code);
-            // console.log(newTech)
             await newTech.checkAvailable();
         }
     }
+
+    let control =await Team.findOne({type: 'Control'})
+    let result = await Research.deleteMany({name: 'Empty Lab'});
+
+    techTreeDebugger(`${result.deletedCount} placeholder deleted!`);
+
+    let placeholderTech = new TechResearch({
+        name: placeholderData[0].name,
+        code: placeholderData[0].code,
+        level: placeholderData[0].level,
+        prereq: placeholderData[0].prereq,
+        desc: placeholderData[0].desc,
+        field: placeholderData[0].field,
+        team: control._id,
+        unlocks: placeholderData[0].unlocks,
+        knowledge: placeholderData[0].knowledge,
+    });
+
+    placeholderTech = await placeholderTech.save();
+
+    for await (let facility of await Facility.find({'capability.research.capacity': { $gt: 0 }})) {
+        let { research } = facility.capability;
+        for (let i = 0; i < research.capacity; i++) {
+            research.damage.set(i, 'Active');
+            research.funding.set(i, 0);
+            research.projects.set(i, placeholderTech._id);
+            await facility.save();
+        }
+    }
+
     return;
 }
 

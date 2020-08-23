@@ -19,7 +19,7 @@ const formatData = (array) => {
     return data;
 }
 
-const TradeOffer = (props) => {
+const TradeOffer = (props) => { //trade object
     let aircraft = useSelector(getAircrafts);
     let research = useSelector(getCompletedResearch);
     let intel = []
@@ -55,6 +55,11 @@ const TradeOffer = (props) => {
       const [mode, setMode] = useState('disabled');
       const disabled = mode === 'disabled';
       const readOnly = mode === 'readonly';
+
+     function onEdit(){
+          props.onOfferEdit();
+          setMode("normal");
+      }
 
     return(
         <div className='trade' style={{padding: '8px'}}>
@@ -171,7 +176,7 @@ const TradeOffer = (props) => {
                     readOnly={readOnly}
                     />
                 </FormGroup>
-                {disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => setMode("normal")}>Edit Trade</IconButton>}
+                {disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
                 {!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}>Save Offer</IconButton> }
             </Form>
         </div>
@@ -181,38 +186,64 @@ const TradeOffer = (props) => {
 class Trade extends Component {
     state = {
         trade: {
-            offer: [
-                { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false},
-                { team: {}, megabucks: 0, units: [], intel: [], research: [], countries: [], equipment: [], ratified: false, pending: false, complete: false}
-            ],
-            status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, },
-            lastUpdated: Date.now()
+            initiator: {
+                team: {},
+                ratified: false,
+                modified: false,
+                offer: {
+                    megabucks: 0, 
+                    aircraft: [], 
+                    //intel: [], 
+                    research: [], 
+                    //sites: [], 
+                    equipment: [],  
+                    comments: []
+                }
+            },//initiator
+            tradePartner: {
+                team: {},
+                ratified: false,
+                modified: false,
+                offer: {
+                    megabucks: 0, 
+                    aircraft: [], 
+                    //intel: [], 
+                    research: [], 
+                    //sites: [], 
+                    equipment: [],  
+                    comments: []
+                }
+            },//initiator
+            status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, deleted: false, },
+            lastUpdated: Date.now(),
+            _id: ""
         },
         partner: null,
         newTrade: false,
         viewTrade: false
+    }//state
+
+    onOfferEdit(team, offer) {
+        Alert.success(`WE DID IT REDDIT`, 3000);
     }
 
     componentWillMount() {
         let trade = this.state.trade;
-        trade.offer[0].team = this.props.team;
-        trade.offer[1].team = this.props.teams[rand(this.props.teams.length - 1)];
+        trade.initiator.team = this.props.team;
+        trade.tradePartner.team = this.props.team[rand(this.props.teams.length - 1)];
+        this.setState({ trade })
     }
 
     toggleNew () {
-        let { newTrade } = this.state
+        let { newTrade } = this.state;
         this.setState({ newTrade: !newTrade })
     }
 
     createTrade = async () => {
         console.log('Creating a new Trade...');
         let trade = {
-            offer: [{
-                team: this.props.team._id
-            },
-            {
-                team: this.state.partner
-            }],
+            initiator: this.props.team._id,
+            tradePartner: this.state.partner
         };
         try {
           console.log(trade)
@@ -224,14 +255,37 @@ class Trade extends Component {
         };
       }
 
+    submitProposal = async () => {
+      console.log('Submitting trade proposal...');
+      try {
+          console.log(this.state)
+          let { initiator, tradePartner } = this.state.trade;
+          if (initiator.team._id === this.props.team._id)
+              initiator.modified = true;
+          else    
+              tradePartner.modified = true;
+
+          let response = await axios.put(`${gameServer}api/trades/modify`, this.state.trade);    
+        //   Alert.success(response.data.comment[0].body);
+          this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
+        } catch (err) {
+          Alert.error(`${err.data} - ${err.message}`)
+        };
+    }
+
     render() {
         let myTrade = {}
         let theirTrade = {}
-        for (let offer of this.state.trade.offer) {
-            if (Object.keys(offer.team).length > 0) {
-                offer.team.name === this.props.team.name ? myTrade = offer : theirTrade = offer;
-            }
+
+        if (this.state.trade.initiator.team.name === this.props.team.name){
+            myTrade = this.state.trade.initiator;
+            theirTrade = this.state.trade.tradePartner;
         }
+        else {
+            myTrade = this.state.trade.tradePartner;
+            theirTrade = this.state.trade.initiator;
+        }
+
         let { status, lastUpdated } = this.state.trade;
 
         return (
@@ -240,16 +294,16 @@ class Trade extends Component {
                     { !this.state.viewTrade && <h4>I didn't create a trade feed... so sorry...</h4>}
                     { this.state.viewTrade && <FlexboxGrid>
                         <FlexboxGrid.Item colspan={12}>
-                            <TradeOffer account={this.props.account} team={myTrade.team} />
+                            <TradeOffer account={this.props.account} team={myTrade.team} onOfferEdit={this.onOfferEdit}/>
                         </FlexboxGrid.Item>
                         <FlexboxGrid.Item colspan={12}>
-                            <TradeOffer team={theirTrade.team} />
+                            <TradeOffer team={theirTrade.team} onOfferEdit={this.onOfferEdit}/>
                         </FlexboxGrid.Item>
                     </FlexboxGrid>}
                 </Content>
                 <Sidebar>
                     {!this.state.newTrade && !this.state.viewTrade && <IconButton block size='sm' onClick={() => this.toggleNew()} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
-                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() => Alert.warning('Submission has not been implemented...', 4000)}>Submit Proposal</IconButton>}
+                    { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() =>this.submitProposal()}>Submit Proposal</IconButton>}
                     { this.state.viewTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => Alert.warning('Rejection has not been implemented...', 4000)}>Reject Proposal</IconButton>}
                     { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => Alert.warning('Trashing a trade deal has not been implemented...', 4000)}>Trash Trade</IconButton>}
                     { this.state.viewTrade &&<IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => this.setState({ viewTrade: false })}>Close Trade</IconButton>}

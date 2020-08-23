@@ -6,7 +6,7 @@ const supportsColor = require("supports-color");
 
 const ZoneSchema = new Schema({
   model: { type: String, default: "Zone" },
-  zoneCode: {
+  code: {
     type: String,
     required: true,
     minlength: 2,
@@ -15,7 +15,7 @@ const ZoneSchema = new Schema({
     index: true,
     unique: true,
   },
-  zoneName: { type: String, required: true, minlength: 3, maxlength: 50 },
+  name: { type: String, required: true, minlength: 3, maxlength: 50 },
   terror: {
     type: Number,
     min: 0,
@@ -28,10 +28,10 @@ const ZoneSchema = new Schema({
 });
 
 ZoneSchema.methods.validateZone = function (zone) {
-  //zoneDebugger("In methods validateZone", zone.zoneName, zone.zoneCode);
+  //zoneDebugger("In methods validateZone", zone.name, zone.code);
   const schema = {
-    zoneName: Joi.string().min(3).max(50).required(),
-    zoneCode: Joi.string().min(2).max(2).required().uppercase(),
+    name: Joi.string().min(3).max(50).required(),
+    code: Joi.string().min(2).max(2).required().uppercase(),
     terror: Joi.number().min(0).max(250),
   };
 
@@ -42,10 +42,10 @@ ZoneSchema.methods.validateZone = function (zone) {
 let Zone = mongoose.model("Zone", ZoneSchema);
 
 function validateZone(zone) {
-  //zoneDebugger("In function validateZone", zone.zoneName);
+  //zoneDebugger("In function validateZone", zone.name);
   const schema = {
-    zoneCode: Joi.string().min(2).max(2).required().uppercase(),
-    zoneName: Joi.string().min(3).max(50).required(),
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    name: Joi.string().min(3).max(50).required(),
     terror: Joi.number().min(0).max(250),
   };
 

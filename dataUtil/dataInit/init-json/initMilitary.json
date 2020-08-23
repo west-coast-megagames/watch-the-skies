@@ -1,1064 +1,1066 @@
-[{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase" : "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 2",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase": "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 3",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 4",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 5",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 6",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 7",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 8",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 9",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 10",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Attack Sub Fleet 11",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "UK Modern Attack Sub Fleet 1",
-    "team" : "TUK",
-    "country" : "GB",
-    "homeBase": "GB LHR",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "South Africa Standard Attack Sub Fleet 1",
-    "team" : "RSA",
-    "country" : "ZA",
-    "homeBase": "ZA CPT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Attack Sub Fleet 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Attack Sub Fleet 2",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Attack Sub Fleet 3",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Attack Sub Fleet 1",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Attack Sub Fleet 2",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Attack Sub Fleet 3",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Attack Sub Fleet 4",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Attack Sub Fleet 5",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Standard Attack Sub Fleet 1",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Standard Attack Sub Fleet 2",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Standard Attack Sub Fleet 3",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Standard Attack Sub Fleet 1",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Small Modern Attack Sub Fleet 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Standard Attack Sub Fleet 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Standard Attack Sub Fleet 2",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Standard Attack Sub Fleet 3",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "France Modern Attack Sub Fleet 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR ATY",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Standard Attack Sub Fleet 1",
-    "team" : "EPT",
-    "country" : "EG",
-    "homeBase" : "EG CAI",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Attack Sub Fleet 1",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Attack Sub Fleet 2",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Attack Sub Fleet 3",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Attack Sub Fleet 4",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Standard Attack Sub Fleet 1",
-    "team" : "BRZ",
-    "country" : "BR",
-    "homeBase" : "BR GIG",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Australia Standard Attack Sub Fleet 1",
-    "team" : "AUS",
-    "country" : "AU",
-    "homeBase" : "AU SYD",
-    "gear" : [ "SBG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Surface Fleet 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Surface Fleet 2",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Surface Fleet 3",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Surface Fleet 4",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "UK Surface Fleet 1",
-    "team" : "TUK",
-    "country" : "GB",
-    "homeBase": "GB LHR",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Surface Fleet 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Surface Fleet 1",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Surface Fleet 2",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Surface Fleet 3",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Surface Fleet 4",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Surface Fleet 5",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Surface Fleet 1",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Surface Fleet 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "France Surface Fleet 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR ATY",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Surface Fleet 1",
-    "team" : "EPT",
-    "country" : "EG",
-    "homeBase" : "EG CAI",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Surface Fleet 1",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Surface Fleet 2",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Surface Fleet 3",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Surface Fleet 4",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Surface Fleet 5",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Australia Surface Fleet 1",
-    "team" : "AUS",
-    "country" : "AU",
-    "homeBase" : "AU SYD",
-    "gear" : [ "SFG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Carrier Fleet 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Carrier Fleet 2",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},{
-    "model" : "Military",
-    "name" : "USA Carrier Fleet 3",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Carrier Fleet 4",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Carrier Fleet 5",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "UK Carrier Fleet 1",
-    "team" : "TUK",
-    "country" : "GB",
-    "homeBase": "GB LHR",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Carrier Fleet 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "India Carrier Fleet 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "France Carrier Fleet 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR ATY",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Carrier Fleet 1",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Carrier Fleet 2",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Carrier Fleet 3",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Carrier Fleet 4",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "China Carrier Fleet 5",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Carrier Fleet 1",
-    "team" : "BRZ",
-    "country" : "BR",
-    "homeBase" : "BR GIG",
-    "gear" : [ "CAG-1" ],
-    "type" : "Fleet"
-},
-{
-    "model" : "Military",
-    "name" : "USA Marine Corps 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-MV1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Old Technology Corps 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Old Technology Corps 2",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Old Technology Corps 3",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Old Technology Corps 4",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "UK Old Technology Corps 1",
-    "team" : "TUK",
-    "country" : "GB",
-    "homeBase": "GB LHR",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "South Africa Old Technology Corps 1",
-    "team" : "RSA",
-    "country" : "ZA",
-    "homeBase": "ZA CPT",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Old Technology Corps 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Old Technology Corps 2",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Old Technology Corps 3",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Old Technology Corps 4",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Old Technology Corps 1",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "India Old Technology Corps 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "India Old Technology Corps 2",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "India Old Technology Corps 3",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "India Old Technology Corps 4",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "France Old Technology Corps 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR ATY",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Old Technology Corps 1",
-    "team" : "EPT",
-    "country" : "EG",
-    "homeBase" : "EG CAI",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Old Technology Corps 1",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Old Technology Corps 2",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Old Technology Corps 3",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Old Technology Corps 4",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Old Technology Corps 1",
-    "team" : "BRZ",
-    "country" : "BR",
-    "homeBase" : "BR GIG",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Australia Old Technology Corps 1",
-    "team" : "AUS",
-    "country" : "AU",
-    "homeBase" : "AU SYD",
-    "gear" : [ "V-OT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Technology Corps 1",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "USA Modern Technology Corps 2",
-    "team" : "USA",
-    "country" : "US",
-    "homeBase":  "US SFO",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "UK Modern Technology Corps 1",
-    "team" : "TUK",
-    "country" : "GB",
-    "homeBase": "GB LHR",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Technology Corps 1",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Japan Modern Technology Corps 2",
-    "team" : "JPN",
-    "country" : "JP",
-    "homeBase": "JP NRT",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "India Modern Technology Corps 1",
-    "team" : "IND",
-    "country" : "IN",
-    "homeBase": "IN BOM",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training" : "Corps",
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "France Modern Technology Corps 1",
-    "team" : "TFR",
-    "country" : "FR",
-    "homeBase" : "FR ATY",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Technology Corps 1",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "China Modern Technology Corps 2",
-    "team" : "PRC",
-    "country" : "CN",
-    "homeBase" : "CN BJS",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "training" : "Corps",
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Australia Modern Technology Corps 1",
-    "team" : "AUS",
-    "country" : "AU",
-    "homeBase" : "AU SYD",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "South Africa Modern Technology Corps 1",
-    "team" : "RSA",
-    "country" : "ZA",
-    "homeBase": "ZA CPT",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Technology Corps 1",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Technology Corps 2",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Russia Modern Technology Corps 3",
-    "team" : "RFD",
-    "country" : "RU",
-    "homeBase": "RU BKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Modern Technology Corps 1",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Modern Technology Corps 2",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Iran Modern Technology Corps 3",
-    "team" : "IRN",
-    "country" : "IR",
-    "homeBase": "IR IKA",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Modern Technology Corps 1",
-    "team" : "EPT",
-    "country" : "EG",
-    "homeBase" : "EG CAI",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Egypt Modern Technology Corps 2",
-    "team" : "EPT",
-    "country" : "EG",
-    "homeBase" : "EG CAI",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Modern Technology Corps 1",
-    "team" : "BRZ",
-    "country" : "BR",
-    "homeBase" : "BR GIG",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-},
-{
-    "model" : "Military",
-    "name" : "Brazil Modern Technology Corps 2",
-    "team" : "BRZ",
-    "country" : "BR",
-    "homeBase" : "BR GIG",
-    "gear" : [ "V-MT1",  "COR-1"],
-    "type" : "Corps"
-}
+[
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 6",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 7",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 8",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 9",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 10",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Attack Sub Fleet 11",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "UK Modern Attack Sub Fleet 1",
+    "team": "TUK",
+    "country": "GB",
+    "origin": "GBBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "South Africa Standard Attack Sub Fleet 1",
+    "team": "RSA",
+    "country": "ZA",
+    "origin": "ZABA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Attack Sub Fleet 1",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Attack Sub Fleet 2",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Attack Sub Fleet 3",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Attack Sub Fleet 1",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Attack Sub Fleet 2",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Attack Sub Fleet 3",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Attack Sub Fleet 4",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Attack Sub Fleet 5",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Standard Attack Sub Fleet 1",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Standard Attack Sub Fleet 2",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Standard Attack Sub Fleet 3",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Standard Attack Sub Fleet 1",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Small Modern Attack Sub Fleet 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Standard Attack Sub Fleet 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Standard Attack Sub Fleet 2",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Standard Attack Sub Fleet 3",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "France Modern Attack Sub Fleet 1",
+    "team": "TFR",
+    "country": "FR",
+    "origin": "FRBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Egypt Standard Attack Sub Fleet 1",
+    "team": "EPT",
+    "country": "EG",
+    "origin": "EGBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Attack Sub Fleet 1",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Attack Sub Fleet 2",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Attack Sub Fleet 3",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Attack Sub Fleet 4",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Brazil Standard Attack Sub Fleet 1",
+    "team": "BRZ",
+    "country": "BR",
+    "origin": "BRBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Australia Standard Attack Sub Fleet 1",
+    "team": "AUS",
+    "country": "AU",
+    "origin": "AUBA",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Surface Fleet 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Surface Fleet 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Surface Fleet 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Surface Fleet 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "UK Surface Fleet 1",
+    "team": "TUK",
+    "country": "GB",
+    "origin": "GBBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Surface Fleet 1",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Surface Fleet 1",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Surface Fleet 2",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Surface Fleet 3",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Surface Fleet 4",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Surface Fleet 5",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Surface Fleet 1",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Surface Fleet 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "France Surface Fleet 1",
+    "team": "TFR",
+    "country": "FR",
+    "origin": "FRBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Egypt Surface Fleet 1",
+    "team": "EPT",
+    "country": "EG",
+    "origin": "EGBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Surface Fleet 1",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Surface Fleet 2",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Surface Fleet 3",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Surface Fleet 4",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Surface Fleet 5",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Australia Surface Fleet 1",
+    "team": "AUS",
+    "country": "AU",
+    "origin": "AUBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Carrier Fleet 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Carrier Fleet 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Carrier Fleet 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Carrier Fleet 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Carrier Fleet 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "UK Carrier Fleet 1",
+    "team": "TUK",
+    "country": "GB",
+    "origin": "GBBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Carrier Fleet 1",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "India Carrier Fleet 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "France Carrier Fleet 1",
+    "team": "TFR",
+    "country": "FR",
+    "origin": "FRBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Carrier Fleet 1",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Carrier Fleet 2",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Carrier Fleet 3",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Carrier Fleet 4",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "China Carrier Fleet 5",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "Brazil Carrier Fleet 1",
+    "team": "BRZ",
+    "country": "BR",
+    "origin": "BRBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+  },
+  {
+    "model": "Military",
+    "name": "USA Marine Corps 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-MV1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Old Technology Corps 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Old Technology Corps 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Old Technology Corps 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Old Technology Corps 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "UK Old Technology Corps 1",
+    "team": "TUK",
+    "country": "GB",
+    "origin": "GBBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "South Africa Old Technology Corps 1",
+    "team": "RSA",
+    "country": "ZA",
+    "origin": "ZABA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Old Technology Corps 1",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Old Technology Corps 2",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Old Technology Corps 3",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Old Technology Corps 4",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Old Technology Corps 1",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "India Old Technology Corps 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "India Old Technology Corps 2",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "India Old Technology Corps 3",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "India Old Technology Corps 4",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "France Old Technology Corps 1",
+    "team": "TFR",
+    "country": "FR",
+    "origin": "FRBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Egypt Old Technology Corps 1",
+    "team": "EPT",
+    "country": "EG",
+    "origin": "EGBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Old Technology Corps 1",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Old Technology Corps 2",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Old Technology Corps 3",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Old Technology Corps 4",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Brazil Old Technology Corps 1",
+    "team": "BRZ",
+    "country": "BR",
+    "origin": "BRBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Australia Old Technology Corps 1",
+    "team": "AUS",
+    "country": "AU",
+    "origin": "AUBA",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Technology Corps 1",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Modern Technology Corps 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSFO",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "UK Modern Technology Corps 1",
+    "team": "TUK",
+    "country": "GB",
+    "origin": "GBBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Technology Corps 1",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Japan Modern Technology Corps 2",
+    "team": "JPN",
+    "country": "JP",
+    "origin": "JPBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "India Modern Technology Corps 1",
+    "team": "IND",
+    "country": "IN",
+    "origin": "INBA",
+    "gear": ["V-MT1", "COR-1"],
+    "training": "Corps",
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "France Modern Technology Corps 1",
+    "team": "TFR",
+    "country": "FR",
+    "origin": "FRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Technology Corps 1",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "China Modern Technology Corps 2",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBA",
+    "gear": ["V-MT1", "COR-1"],
+    "training": "Corps",
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Australia Modern Technology Corps 1",
+    "team": "AUS",
+    "country": "AU",
+    "origin": "AUBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "South Africa Modern Technology Corps 1",
+    "team": "RSA",
+    "country": "ZA",
+    "origin": "ZABA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Technology Corps 1",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Technology Corps 2",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Russia Modern Technology Corps 3",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Modern Technology Corps 1",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Modern Technology Corps 2",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Iran Modern Technology Corps 3",
+    "team": "IRN",
+    "country": "IR",
+    "origin": "IRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Egypt Modern Technology Corps 1",
+    "team": "EPT",
+    "country": "EG",
+    "origin": "EGBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Egypt Modern Technology Corps 2",
+    "team": "EPT",
+    "country": "EG",
+    "origin": "EGBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Brazil Modern Technology Corps 1",
+    "team": "BRZ",
+    "country": "BR",
+    "origin": "BRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "Brazil Modern Technology Corps 2",
+    "team": "BRZ",
+    "country": "BR",
+    "origin": "BRBA",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+  }
 ]

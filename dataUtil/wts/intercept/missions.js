@@ -164,9 +164,9 @@ async function runTransports() {
       aircraft.mission = "Docked";
       aircraft.status.ready = true;
       aircraft.status.deployed = false;
-      aircraft.country = aircraft.baseOrig.country;
-      aircraft.site = aircraft.baseOrig._id;
-      aircraft.zone = aircraft.baseOrig.zone;
+      aircraft.country = aircraft.origin.country;
+      aircraft.site = aircraft.origin._id;
+      aircraft.zone = aircraft.origin.zone;
 
       await aircraft.save();
     }
@@ -184,7 +184,7 @@ async function runRecon() {
     let aircraft = await Aircraft.findById(recon.aircraft)
       .populate("country", "name")
       .populate("systems")
-      .populate("baseOrig");
+      .populate("origin");
     let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
     if (aircraft.mission === "Recon Aircraft") {
       let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
@@ -224,9 +224,9 @@ async function runRecon() {
         aircraft.mission = "Docked";
         aircraft.status.ready = true;
         aircraft.status.deployed = false;
-        aircraft.country = aircraft.baseOrig.country;
-        aircraft.site = aircraft.baseOrig._id;
-        aircraft.zone = aircraft.baseOrig.zone;
+        aircraft.country = aircraft.origin.country;
+        aircraft.site = aircraft.origin._id;
+        aircraft.zone = aircraft.origin.zone;
 
         await aircraft.save();
 
@@ -272,9 +272,9 @@ async function runRecon() {
         aircraft.mission = "Docked";
         aircraft.status.ready = true;
         aircraft.status.deployed = false;
-        aircraft.country = aircraft.baseOrig.country;
-        aircraft.site = aircraft.baseOrig._id;
-        aircraft.zone = aircraft.baseOrig.zone;
+        aircraft.country = aircraft.origin.country;
+        aircraft.site = aircraft.origin._id;
+        aircraft.zone = aircraft.origin.zone;
 
         await aircraft.save();
 
@@ -290,7 +290,7 @@ async function runDiversions() {
     let aircraft = await Aircraft.findById(mission.aircraft)
       .populate("country", "name")
       .populate("systems")
-      .populate("baseOrig")
+      .populate("origin")
       .populate("team");
     if (team.type === "Alien") terror.alienActivity(aircraft.country._id);
 
@@ -299,9 +299,9 @@ async function runDiversions() {
     aircraft.mission = "Docked";
     aircraft.status.ready = true;
     aircraft.status.deployed = false;
-    aircraft.country = aircraft.baseOrig.country;
-    aircraft.site = aircraft.baseOrig._id;
-    aircraft.zone = aircraft.baseOrig.zone;
+    aircraft.country = aircraft.origin.country;
+    aircraft.site = aircraft.origin._id;
+    aircraft.zone = aircraft.origin.zone;
 
     await aircraft.save();
   }

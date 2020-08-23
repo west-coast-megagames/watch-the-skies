@@ -1,122 +1,122 @@
 [
-{
-    "model" : "Squad",
-    "name" : "FFG Raid Squad 1",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Raid"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Raid Squad 2",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Raid"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Raid Squad 3",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Raid"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Assault Squad 1",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Assault"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Assault Squad 2",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Assault"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Assault Squad 3",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Assault"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Infiltration Squad 1",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Infiltration"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Infiltration Squad 2",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Infiltration"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Infiltration Squad 3",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Infiltration"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Envoy Squad 1",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Envoy"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Envoy Squad 2",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Envoy"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Envoy Squad 3",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Envoy"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Science Squad 1",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Science"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Science Squad 2",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Science"
-},
-{
-    "model" : "Squad",
-    "name" : "FFG Science Squad 3",
-    "team" : "FFG",
-    "country" : "F1",
-    "homeBase" : "FFGMA",
-    "type" : "Science"
-}
+  {
+    "model": "Squad",
+    "name": "FFG Raid Squad 1",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Raid"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Raid Squad 2",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Raid"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Raid Squad 3",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Raid"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Assault Squad 1",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Assault"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Assault Squad 2",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Assault"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Assault Squad 3",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Assault"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Infiltration Squad 1",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Infiltration"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Infiltration Squad 2",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Infiltration"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Infiltration Squad 3",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Infiltration"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Envoy Squad 1",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Envoy"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Envoy Squad 2",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Envoy"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Envoy Squad 3",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Envoy"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Science Squad 1",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Science"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Science Squad 2",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Science"
+  },
+  {
+    "model": "Squad",
+    "name": "FFG Science Squad 3",
+    "team": "FFG",
+    "country": "F1",
+    "origin": "FFGMA",
+    "type": "Science"
+  }
 ]

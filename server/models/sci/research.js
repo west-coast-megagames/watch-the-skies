@@ -25,8 +25,13 @@ const fields = [
 ];
 
 const ProgressSchema = new Schema({
-  team: { type: Schema.Types.ObjectId, ref: "Team" },
-  progress: { type: Number, default: 0 },
+  team: {
+    _id: { type: Schema.Types.ObjectId, ref: "Team", required: true},
+    name: { type: String, required: true}
+  },
+  progress: { type: Number, default: 0, required: true},
+  funding: { type: Number, default: 0, required: true},
+  totalFunding: { type: Number, default: 0, required: true},
 });
 
 const ResearchSchema = new Schema({
@@ -40,6 +45,7 @@ const ResearchSchema = new Schema({
   unlocks: [UnlockSchema],
   breakthrough: [BreakthroughSchema],
   gameState: [],
+  researchHistory: [{ type: Schema.Types.ObjectId, ref: "Log" }],
 });
 
 let Research = mongoose.model("Research", ResearchSchema, "research");
@@ -51,9 +57,10 @@ const KnowledgeResearch = Research.discriminator(
     field: { type: String, enum: fields },
     credit: { type: Schema.Types.ObjectId, ref: "Team" },
     status: {
+      pending: { type: Boolean, default: false },
       available: { type: Boolean, default: true },
       completed: { type: Boolean, default: false },
-      published: { type: Boolean, default: false },
+      published: { type: Boolean, default: false }
     },
     teamProgress: [ProgressSchema],
   })
@@ -71,10 +78,7 @@ const AnalysisResearch = Research.discriminator(
         infrastructure: { type: Schema.Types.ObjectId, ref: "Equipment" },
         facility: { type: Schema.Types.ObjectId, ref: "Facility" },
         site: { type: Schema.Types.ObjectId, ref: "Site" },
-        outcome: {
-          type: String,
-          enum: ["Destroy", "Damage", "Kill", "Preserve"],
-        },
+        outcome: { type: String, enum: ["Destroy", "Damage", "Kill", "Preserve"] },
       },
     ],
     status: {
@@ -94,27 +98,29 @@ const TheorySchema = new Schema({
   field: { type: String },
 });
 
+const FieldSchema = new Schema({
+  field: { type: String },
+  rolls: { type: Number }
+});
+
 const TechResearch = Research.discriminator(
   "TechResearch",
   new Schema({
     type: { type: String, default: "Technology" },
     field: {
       type: String,
-      enum: [
-        "Military",
-        "Infrastructure",
-        "Biomedical",
-        "Agriculture",
-        "Analysis",
-      ],
+      enum: [ "Military", "Infrastructure", "Biomedical", "Agriculture", "Analysis", "Placeholder" ],
     },
     team: { type: Schema.Types.ObjectId, ref: "Team" },
+    funding: { type: Number, default: 0 },
     status: {
       visible: { type: Boolean, default: true },
       available: { type: Boolean, default: false },
       completed: { type: Boolean, default: false },
+
     },
     theoretical: [TheorySchema],
+    knowledge: [FieldSchema]
   })
 );
 

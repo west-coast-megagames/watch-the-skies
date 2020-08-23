@@ -1,32 +1,32 @@
 const fs = require('fs')
 const file = fs.readFileSync(require.resolve('../json/knowledge.json'));
 const knowledgeData = JSON.parse(file);
+const knowledgeDebugger = require('debug')('app:knowledge');
 
-knowledgeDebugger = require('debug')('app:knowledge');
+const { Team } = require('../../models/team/team'); // Team Model
+const { Research, KnowledgeResearch } = require('../../models/sci/research'); // Research model and Knowledge Discriminator
 
-const { Team } = require('../../models/team/team');
-const { Research, KnowledgeResearch } = require('../../models/sci/research');
+// Science Game State
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
-
-const techCost = [ 20, 30, 40, 50, 60, 70 ] // Arbitratily set at increments of 50 currently
-
+const knowledgeCost = [ 20, 30, 40, 50, 60, 70 ] // Cost for each level of tech, arbitratily set at increments of 10 currently
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
-const knowledgeTree = [];
-let controlTeam = {};
-let tp = [];
-let seed = true;
+const knowledgeTree = []; // Tree of all knowledge classes in the game, loaded on server load
+let controlTeam = {}; // Current control team from DB
+let teamProgress = []; // Progress array for Knowledge classes
+let seed = true; // Are we currently seeding boolean
 
+//
 async function loadGlobalVariables() {
     let progress = [];
     let count = 0;
     let control = await Team.find({teamCode: 'TCN'});
     for (let team of await Team.find({teamType: 'N'})) {
-        let el = { team: team._id, progress: 0 }
+        let el = { team: { _id: team._id, name: team.name }, progress: 0 }
         progress.push(el);
         count++
     }
     knowledgeDebugger(`Loaded ${count} teams into progress...`);
-    tp = progress;
+    teamProgress = progress;
     controlTeam = control;
 }
 
@@ -35,7 +35,7 @@ async function loadKnowledge () {
     let count = 0;
 
     await knowledgeData.forEach(knowledge => {
-        knowledgeTree[count] = new Knowledge(knowledge);
+        knowledgeTree[count] = new KnowledgeClass(knowledge);
         // knowledgeDebugger(`${knowledge.name} Loaded...`)
         count++;
     });
@@ -44,7 +44,8 @@ async function loadKnowledge () {
 };
 
 async function knowledgeSeed() {
-    await Research.deleteMany()
+    let result = await Research.deleteMany()
+    knowledgeDebugger(`${result.deletedCount} research deleted...`)
     let seeded = []
     let i = 1;
 
@@ -61,31 +62,24 @@ async function knowledgeSeed() {
     }
 
     for await (let knowledge of seeded) {
-        let newKnowledge = await knowledge.unlock(); //????????????
-        // knowledgeDebugger(seeded);
-        // knowledgeDebugger(newKnowledge);
+        // Knowledge.unlock is the Method of the Knowledge Class that unlocks the next knowledge level of a field
+        let newKnowledge = await knowledge.unlock(); 
+        knowledgeDebugger(`Seeding: ${newKnowledge.name}`);
         
         let tree = knowledgeTree;
-
-        // let index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level + 1);
-        // await tree[index].unlock();
 
         let index = 0;
 
         while (newKnowledge.level !== 0 && index !== -1) {
             index = tree.findIndex(field => field.field === newKnowledge.field && field.level === newKnowledge.level - 1);
-            console.log(`Index: ${index}`);
 
             if (index != -1) {
-                console.log('Index: != -1')
                 newKnowledge = await tree[index].seed()
                 //knowledgeDebugger(newKnowledge)
                 if (newKnowledge.teamProgress.length > 0) {
                   rand = Math.floor(Math.random() * (newKnowledge.teamProgress.length - 1));
                   rand = Math.max(rand, 0);   // don't go negative
-                  //knowledgeDebugger(`Rand: ${rand} teamProgress.length: ${newKnowledge.teamProgress.length}`);
                   newKnowledge.teamProgress[rand].progress = newKnowledge.progress;
-                  //knowledgeDebugger(newKnowledge);
                 }
                 knowledgeDebugger(`Completing knowledge`)
                 await completeKnowledge(newKnowledge);
@@ -94,16 +88,16 @@ async function knowledgeSeed() {
             }
         }
     };
-    for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
-        console.log(knowledge);
-    }
+    // for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
+    //     console.log(knowledge);
+    // }
 
     knowledgeDebugger(`Knowledge seed complete...`)
     return;
 }
 
-// Knowledge Constructor Function
-function Knowledge(knowledge) {
+// KnowledgeClass Constructor Function
+function KnowledgeClass(knowledge) {
     this.name = knowledge.name;
     this.level = knowledge.level;
     this.prereq = knowledge.prereq;
@@ -111,11 +105,10 @@ function Knowledge(knowledge) {
     this.field = knowledge.field;
     this.code = knowledge.code;
     this.unlocks = knowledge.unlocks;
-    this.teamProgress = tp;
+    this.teamProgress = teamProgress;
 
-
+    //Method that seeds knowledge pre-game
     this.seed = async function() {
-        
         console.log(`seeding ${this.name}`)
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
@@ -127,7 +120,7 @@ function Knowledge(knowledge) {
             desc: this.desc,
             code: this.code,
             unlocks: this.unlocks,
-            progress: techCost[this.level],
+            progress: knowledgeCost[this.level],
             status: {
                 available: false,
                 completed: true,
@@ -142,6 +135,7 @@ function Knowledge(knowledge) {
         return newKnowledge;
     }
     
+    // Method that unlocks a knowledge level
     this.unlock = async function() {
         console.log(`Unlocking ${this.name}`)
         let newKnowledge = new KnowledgeResearch({
@@ -173,9 +167,9 @@ async function completeKnowledge (research) {
     research.status.available = false;
     research.status.completed = true;
   
-    let high = 0;
+    let highestProgress = 0;
     for await (let team of research.teamProgress) {
-      if (team.progress > high) research.credit = team.team;
+      if (team.progress > highestProgress) research.credit = team.team;
     }
     let team = await Team.findById(research.credit);
     // credit = await Team.findById(research.credit);
@@ -186,7 +180,7 @@ async function completeKnowledge (research) {
         nextKnowledge.unlock();
     };
 
-    reserach = await research.save();
+   research = await research.save();
 
     if (!seed) {
         for await (let tech of research.unlocks) {
@@ -208,4 +202,4 @@ async function publishKnowledge (research) {
     return research;
 };
 
-module.exports = { Knowledge, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree, loadGlobalVariables };
+module.exports = { KnowledgeClass, loadKnowledge, knowledgeSeed, completeKnowledge, knowledgeTree, loadGlobalVariables };

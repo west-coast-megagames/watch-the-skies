@@ -41,6 +41,7 @@ function startClock() {
     gameActive = true;
 };
 
+
 // FUNCTION - pauseClock { IN: N/A, OUT: N/A }
 // PROCESS: Sets gameActive state to false, and updates current time and deadline to maintain the same time.
 function pauseClock() {
@@ -106,6 +107,13 @@ function getTimeRemaining(){
     };
 };
 
+// Function that makes a timestamp for log files
+function makeTimestamp() {
+    let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
+    let timestamp = {  turn, phase, turnNum, clock: `${minutes}:${seconds}` }
+    return timestamp;
+}
+
 // FUNCTION - incrementPhase { IN: N/A, OUT: N/A }
 // PROCESS: Changes the game state to the next phase
 function incrementPhase() {
@@ -152,4 +160,4 @@ function incrementTurn() {
     return 0;
 };
 
-module.exports = { getTimeRemaining, pauseClock, startClock, skipPhase, resetClock };
+module.exports = { getTimeRemaining, pauseClock, startClock, skipPhase, resetClock, makeTimestamp };

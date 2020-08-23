@@ -1,5 +1,6 @@
 const routeDebugger = require('debug')('app:routes:facilities');
 const express = require('express');
+const nexusEvent = require('../../startup/events');
 const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
@@ -7,6 +8,7 @@ const { logger } = require('../../middleware/winston');
 
 // Facility Model - Using Mongoose Model
 const { Facility } = require('../../models/gov/facility/facility');
+
 
 // @route   GET api/facilities
 // @Desc    Get all facilities
@@ -47,24 +49,29 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 router.put('/research', async function (req, res) {
   routeDebugger('Updating facility...');
   let update = req.body;
+  console.log(update);
+  try {
+
+    let facility = await Facility.findById(update._id);
   
-  let facility = await Facility.findById(update._id);
-  
-  if (!facility){
-    res.status(404).send(`The facility with the ID ${update._id} was not found!`);
-  } else {
-    if (facility.type === "Lab"){
-      routeDebugger(`${facility.name} lab is being updated...`)
-      let funding = parseInt(update.funding);
-      let research = update.research; 
-      facility.funding = funding;
-      facility.research = research
+    if (!facility){
+      res.status(404).send(`The facility with the ID ${update._id} was not found!`);
+    } else {
+      if (facility.capability.research.active){
+        routeDebugger(`${facility.name} lab 0${update.index + 1} is being updated...`)
+        facility.capability.research.funding.set(update.index, parseInt(update.funding));
+        facility.capability.research.projects.set(update.index, update.research);
+      }
+    
+      facility = await facility.save();
+      console.log(facility);
+      res.status(200).send(`Research goals for ${facility.name} lab 0${update.index} have been updated!`);
+      nexusEvent.emit("updateFacilities");
     }
-  
-    facility = await facility.save();
-    routeDebugger(facility)
-    res.status(200).send(`Research goals for ${facility.name} updated!`);
+  } catch (err) {
+    res.status(400).send(err.message)
   }
+
 });
 
 module.exports = router;
