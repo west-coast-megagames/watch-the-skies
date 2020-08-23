@@ -9,7 +9,8 @@
     "desc": "Improves national capacity for food processing.",
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Agr2A"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr2A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr2A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Water Purification",
@@ -21,7 +22,8 @@
     "desc": "Improves national capacity for water purification and distribution.",
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Bio3A"}],
-    "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr3B"}]
+    "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr3B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Improved Agriculture",
@@ -33,7 +35,8 @@
     "desc": "Improves national agriculture yields.",
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Agr3A"}, {"type": "Technology", "code": "Agr2C"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr2C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr2C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Processing",
@@ -45,7 +48,8 @@
     "desc": "Improves the national capacity to preserve foods.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-1"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Water Distribution",
@@ -57,7 +61,8 @@
     "desc": "Decreases water loss during distribution through network.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-2"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4B"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr4B"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4B"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Agriculture",
@@ -69,7 +74,8 @@
     "desc": "Improves national agriculture yields.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr3C"}, {"type": "Technology", "code": "Agr3B"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr3C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr3C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Autonomous Farming",
@@ -81,7 +87,8 @@
     "desc": "Allows launch of a campaign to replace human agricultural labor with specialized robots.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-3"}, {"type": "Technology", "code": "Agr3C"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Advanced Hydroponics",
@@ -93,7 +100,8 @@
     "desc": "Improved techniques for growing food with little or no soil using less water and sunlight.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4A"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr4A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Integrated Farm Management",
@@ -105,7 +113,8 @@
     "desc": "Launches a program to train farm managers in effective methods and implementation of newer technology.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-3"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Agr4B"}],
-    "breakthrough": [{"type": "Technology", "code": "Inf4F"}]
+    "breakthrough": [{"type": "Technology", "code": "Inf4F"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Herbacloning (Plant Cloning)",
@@ -117,7 +126,8 @@
     "desc": "Cloning of genetic plant material.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4C"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Super Adaptable Crops",
@@ -129,7 +139,8 @@
     "desc": "Deploy versions of food crops that can grow in almost any conditions and are disease resistant.",
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr5A"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr5A"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5A"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Industrial Food Synthesis",
@@ -141,7 +152,8 @@
     "desc": "Large food synthesizers for distribution to masses.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-4"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Agr5B"}],
-    "breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5G"}]
+    "breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5G"}],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Terraforming",
@@ -153,7 +165,8 @@
     "desc": "Ability to slowly change an uninhabitable terrain into life supporting climate.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-5"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 },
 {   
     "name": "Compact Food Synthesis",
@@ -165,6 +178,7 @@
     "desc": "Individualized food synthesis.",
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-6"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio5D"}],
-    "breakthrough": []
+    "breakthrough": [],
+    "knowledge": [{"field": "Engineering", "rolls": 2}]
 }
 ]

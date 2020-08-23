@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Table, Icon, Button, Progress } from 'rsuite';
+import { Table, Icon, IconButton, Progress } from 'rsuite';
 import { lookupPct } from './../../../scripts/labs';
 import SciIcon from './../../../components/common/sciencIcon';
 import InfoTech from './InfoTech';
@@ -94,7 +94,7 @@ class TechList extends Component {
                         <Column align='center' verticalAlign='middle' width={150}  >
                             <HeaderCell>Current Progress</HeaderCell>
                             <ProgressCell 
-                                allresearch={ props.allResearch }
+                                research={ props.research }
                                 techcost={ props.techCost }
                             />
                         </Column>
@@ -111,7 +111,7 @@ class TechList extends Component {
                                 if (rowData.type !== 'category') {
                                 return (
                                     <div style={{ verticalAlign: 'top'}}>
-                                        <Button color='blue' size='sm' onClick={ () => this.infoPressed(rowData) } > Add'l Info </Button>
+                                        <IconButton color='blue' icon={<Icon icon="info-circle" />} size='sm' onClick={ () => this.infoPressed(rowData) } />
                                     </div>)
                                 } 
                             }}
@@ -153,7 +153,7 @@ class TechList extends Component {
         for (let field of fields) {   
             id_count++; 
 //            console.log("TEAM=",this.props.team);
-            research = this.props.allResearch.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id && el.field === field);
+            research = this.props.research.filter(el => el.type !== "Knowledge" && el.team === this.props.team._id && el.field === field);
 //            console.log("RES=",research);
             obj = {
                 id: id_count,       // Unique ID.  For categories, use "1, 2, 3, 4, etc"
@@ -187,7 +187,7 @@ class TechList extends Component {
 const mapStateToProps = state => ({
     login: state.auth.login,
     team: state.auth.team,
-    allResearch: state.entities.research.list,
+    research: state.entities.research.list,
     account: getSciAccount(state)
 });
 

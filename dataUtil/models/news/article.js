@@ -21,6 +21,7 @@ const ArticleSchema = new Schema({
   imageSrc: { type: String },
   agency: { type: String },
   gameState: [],
+  hidden: { type: Boolean, default: false }
 });
 
 let Article = mongoose.model("article", ArticleSchema);

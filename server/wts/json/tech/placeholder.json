@@ -1,0 +1,15 @@
+[
+    {   
+    "name": "Empty Lab",
+    "code": "Gam1A",
+    "level": 99,
+    "prereq": [],
+    "type": "Placeholder",
+    "field": "Placeholder",
+    "desc": "The lab is being cleaned and restocked!",
+    "effects": [],
+    "unlocks": [],
+    "breakthrough": [],
+    "knowledge": []
+    }
+]

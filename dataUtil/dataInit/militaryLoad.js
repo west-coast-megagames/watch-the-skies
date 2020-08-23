@@ -37,7 +37,8 @@ const {
   gears,
   validUnitType,
 } = require("../wts/construction/equipment/milGear");
-const { Site, BaseSite } = require("../models/sites/site");
+const { Site } = require("../models/sites/site");
+const { Facility } = require("../models/gov/facility/facility");
 const app = express();
 
 // Bodyparser Middleware
@@ -215,15 +216,22 @@ async function createFleet(iData, rCounts) {
     }
   }
 
-  if (iData.homeBase != "") {
-    let site = await Site.findOne({ siteCode: iData.homeBase });
-    if (!site) {
+  fleetSite = undefined;
+  if (iData.origin != "") {
+    let facility = await Facility.findOne({ code: iData.origin });
+    if (!facility) {
       loadError = true;
-      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
-      //militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadErrorMsg = `origin Not Found: ${iData.origin}`;
+      //militaryLoadDebugger("Military Load Home Base Error, New Military:", iData.name, " origin: ", iData.origin);
     } else {
-      fleet.homeBase = site._id;
-      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      if (facility.capability.naval.capacity > 0) {
+        fleet.origin = facility._id;
+        fleetSite = facility.site;
+        //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " origin: ", iData.origin, "Facility ID:", facility._id);
+      } else {
+        loadError = true;
+        loadErrorMsg = `origin ${iData.origin} does not have positive naval capacity`;
+      }
     }
   }
 
@@ -240,7 +248,7 @@ async function createFleet(iData, rCounts) {
       fleet.site = site._id;
     }
   } else {
-    fleet.site = fleet.homeBase;
+    fleet.site = fleetSite;
   }
 
   fleet.equipment = [];
@@ -354,15 +362,22 @@ async function createCorps(iData, rCounts) {
     }
   }
 
-  if (iData.homeBase != "") {
-    let site = await Site.findOne({ siteCode: iData.homeBase });
-    if (!site) {
+  corpsSite = undefined;
+  if (iData.origin != "") {
+    let facility = await Facility.findOne({ code: iData.origin });
+    if (!facility) {
       loadError = true;
-      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
-      //logger.info("Military Load Home Base Error, New Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadErrorMsg = `origin Not Found: ${iData.origin}`;
+      //logger.info("Military Load Home Base Error, New Military:", iData.name, " origin: ", iData.origin);
     } else {
-      corps.homeBase = site._id;
-      //logger.info("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      if (facility.capability.ground.capacity > 0) {
+        corps.origin = facility._id;
+        corpsSite = facility.site;
+        //logger.info("Military Load Home Base Found, Military:", iData.name, " origin: ", iData.origin, "Site ID:", site._id);
+      } else {
+        loadError = true;
+        loadErrorMsg = `origin ${iData.origin} does not have positive ground capacity`;
+      }
     }
   }
 
@@ -379,7 +394,7 @@ async function createCorps(iData, rCounts) {
       corps.site = site._id;
     }
   } else {
-    corps.site = corps.homeBase;
+    corps.site = corpsSite;
   }
 
   corps.equipment = [];
@@ -492,15 +507,22 @@ async function updateFleet(iData, rCounts) {
     }
   }
 
-  if (iData.homeBase != "") {
-    let site = await Site.findOne({ siteCode: iData.homeBase });
-    if (!site) {
+  fleetSite = undefined;
+  if (iData.origin != "") {
+    let facility = await Facility.findOne({ code: iData.origin });
+    if (!facility) {
       loadError = true;
-      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
-      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadErrorMsg = `origin Not Found: ${iData.origin}`;
+      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " origin: ", iData.origin);
     } else {
-      fleet.homeBase = site._id;
-      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      if (facility.capability.naval.capacity > 0) {
+        fleet.origin = facility._id;
+        fleetSite = facility.site;
+        //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " origin: ", iData.origin, "Facility ID:", facility._id);
+      } else {
+        loadError = true;
+        loadErrorMsg = `origin ${iData.origin} does not have positive naval capacity`;
+      }
     }
   }
 
@@ -517,7 +539,7 @@ async function updateFleet(iData, rCounts) {
       fleet.site = site._id;
     }
   } else {
-    fleet.site = fleet.homeBase;
+    fleet.site = fleetSite;
   }
 
   // create gears records for military and store ID in military.system
@@ -634,15 +656,22 @@ async function updateCorps(iData, rCounts) {
     }
   }
 
-  if (iData.homeBase != "") {
-    let site = await Site.findOne({ code: iData.homeBase });
-    if (!site) {
+  corpsSite = undefined;
+  if (iData.origin != "") {
+    let facility = await Facility.findOne({ code: iData.origin });
+    if (!facility) {
       loadError = true;
-      loadErrorMsg = `homeBase Not Found: ${iData.homeBase}`;
-      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " homeBase: ", iData.homeBase);
+      loadErrorMsg = `origin Not Found: ${iData.origin}`;
+      //militaryLoadDebugger("Military Load Home Base Error, Update Military:", iData.name, " origin: ", iData.origin);
     } else {
-      corps.homeBase = site._id;
-      //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " homeBase: ", iData.homeBase, "Site ID:", site._id);
+      if (facility.capability.ground.capacity > 0) {
+        corps.origin = facility._id;
+        corpsSite = facility.site;
+        //militaryLoadDebugger("Military Load Home Base Found, Military:", iData.name, " origin: ", iData.origin, "Facility ID:", facility._id);
+      } else {
+        loadError = true;
+        loadErrorMsg = `origin ${iData.origin} does not have positive naval capacity`;
+      }
     }
   }
 
@@ -659,7 +688,7 @@ async function updateCorps(iData, rCounts) {
       corps.site = site._id;
     }
   } else {
-    corps.site = corps.homeBase;
+    corps.site = corpsSite;
   }
 
   // create gears records for military and store ID in military.system

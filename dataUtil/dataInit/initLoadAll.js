@@ -3,7 +3,7 @@ const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
 const runUserLoad = require("../dataInit/userLoad");
-const runBaseSiteLoad = require("../dataInit/baseSiteLoad");
+const runBaseFacilityLoad = require("../dataInit/baseFacilityLoad");
 const runCitySiteLoad = require("../dataInit/citySiteLoad");
 const runSpacecraftLoad = require("../dataInit/spacecraftLoad");
 const runAccountLoad = require("../dataInit/accountLoad");
@@ -50,14 +50,6 @@ async function fullInit(selStr) {
       }
 
     case "All":
-    case "BaseSite":
-      let baseSiteDone = await runBaseSiteLoad(true); // load expanded Base Sites fields
-      logger.debug(`Base Sites Load Done: ${baseSiteDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
     case "CitySite":
       let citySiteDone = await runCitySiteLoad(true); // load expanded City Sites fields
       logger.debug(`City Sites Load Done: ${citySiteDone}`);
@@ -66,8 +58,16 @@ async function fullInit(selStr) {
       }
 
     case "All":
+    case "BaseFacility":
+      let baseFacilityDone = await runBaseFacilityLoad(true); // load expanded Base Facility fields
+      logger.debug(`Base Facility Load Done: ${baseFacilityDone}`);
+      if (selStr != "All") {
+        break;
+      }
+
+    case "All":
     case "Spacecraft":
-      let spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft Sites fields
+      let spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
       logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
       if (selStr != "All") {
         break;

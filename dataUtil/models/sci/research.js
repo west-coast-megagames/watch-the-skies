@@ -40,6 +40,7 @@ const ResearchSchema = new Schema({
   unlocks: [UnlockSchema],
   breakthrough: [BreakthroughSchema],
   gameState: [],
+  funding: { type: Number, default: 0 },
 });
 
 let Research = mongoose.model("Research", ResearchSchema, "research");

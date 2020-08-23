@@ -2,23 +2,74 @@ const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app:facilityModel");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
+const ObjectId = mongoose.ObjectId;
+
+let FacTypes = ["Civilian", "Crises", "Hanger", "Research", "Base"];
 
 const FacilitySchema = new Schema({
   model: { type: String, default: "Facility" },
+  type: { type: String, min: 2, maxlength: 50 },
   name: { type: String, required: true, min: 2, maxlength: 50 },
-  team: { type: Schema.Types.ObjectId, ref: "Team" },
-  site: { type: Schema.Types.ObjectId, ref: "Site" },
-  equipment: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
-  capacity: { type: Number, default: 1 },
+  team: { type: ObjectId, ref: "Team" },
+  site: { type: ObjectId, ref: "Site" },
+  code: {
+    type: String,
+    minlength: 2,
+    maxlength: 20,
+    required: true,
+    unique: true,
+  },
   status: {
     repair: { type: Boolean, default: true },
     damaged: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
+    defenses: { type: Boolean, default: false },
   },
   hidden: { type: Boolean, default: false },
-  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  serviceRecord: [{ type: ObjectId, ref: "Log" }],
   gameState: [],
+  capability: {
+    research: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      projects: [{ type: ObjectId, ref: "Research" }],
+      funding: [Number],
+      sciRate: { type: Number, default: 0 },
+      sciBonus: { type: Number, default: 0 },
+      active: { type: Boolean },
+    },
+    airMission: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      aircraft: [{ type: ObjectId, ref: "Aircraft" }],
+      active: { type: Boolean },
+    },
+    storage: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      equipment: [{ type: ObjectId, ref: "Equipment" }],
+      active: { type: Boolean },
+    },
+    manufacturing: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      equipment: [{ type: ObjectId, ref: "Equipment" }],
+      active: { type: Boolean },
+    },
+    naval: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      fleet: [{ type: ObjectId, ref: "Military" }],
+      active: { type: Boolean },
+    },
+    ground: {
+      capacity: { type: Number, default: 0 },
+      damage: [String],
+      corps: [{ type: ObjectId, ref: "Military" }],
+      active: { type: Boolean },
+    },
+  },
 });
 
 let Facility = mongoose.model("Facility", FacilitySchema);
@@ -31,52 +82,7 @@ function validateFacility(facility) {
   return Joi.validate(facility, schema, { allowUnknown: true });
 }
 
-const Lab = Facility.discriminator(
-  "Lab",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Lab" },
-    sciRate: { type: Number, default: 0 },
-    bonus: { type: Number, default: 0 },
-    funding: { type: Number, default: 0 },
-    research: [{ type: Schema.Types.ObjectId, ref: "Research" }],
-  })
-);
-
-const Hanger = Facility.discriminator(
-  "Hanger",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Hanger" },
-  })
-);
-
-const Factory = Facility.discriminator(
-  "Factory",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Factory" },
-    project: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
-  })
-);
-
-const Crisis = Facility.discriminator(
-  "Crisis",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Crisis" },
-  })
-);
-
-const Civilian = Facility.discriminator(
-  "Civilian",
-  new Schema({
-    type: { type: String, min: 2, maxlength: 50, default: "Civilian" },
-  })
-);
-
 module.exports = {
   Facility,
   validateFacility,
-  Lab,
-  Hanger,
-  Factory,
-  Crisis,
-  Civilian,
 };

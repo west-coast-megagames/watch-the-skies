@@ -1,0 +1,51 @@
+{
+  "name": "wts-server",
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  },
+  "version": "0.1.1",
+  "description": "Server for West Coast Megagames Watch the Skies Prototype.",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix ../reactapp",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "jest --detectOpenHandles --coverage"
+  },
+  "engines": {
+    "node": "10.15.3",
+    "npm": "6.x"
+  },
+  "author": "John T. Cleveland",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "concurrently": "^5.2.0",
+    "config": "^3.3.1",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^3.22.0",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.5.6",
+    "mongoose": "^5.9.10",
+    "socket.io": "^2.3.0",
+    "supports-color": "^7.1.0",
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0",
+    "nodemon": "^2.0.4",
+    "supertest": "^4.0.2"
+  }
+}

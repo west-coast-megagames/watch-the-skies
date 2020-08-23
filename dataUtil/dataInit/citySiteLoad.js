@@ -21,9 +21,10 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // City Model - Using Mongoose Model
-const { CitySite, validateCity } = require("../models/sites/site");
+const { GroundSite, validateGround } = require("../models/sites/site");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
+const { isDate } = require("util");
 
 const app = express();
 
@@ -69,7 +70,7 @@ async function loadCity(iData, rCounts) {
   let loadName = "";
   let loadCode = "";
   try {
-    let citySite = await CitySite.findOne({ siteCode: iData.code });
+    let citySite = await GroundSite.findOne({ siteCode: iData.code });
 
     loadName = iData.name;
     loadCode = iData.code;
@@ -78,9 +79,10 @@ async function loadCity(iData, rCounts) {
       // New City here
       let newLatDMS = convertToDms(iData.latDecimal, false);
       let newLongDMS = convertToDms(iData.longDecimal, true);
-      let citySite = new CitySite({
+      let citySite = new GroundSite({
         name: iData.name,
         siteCode: iData.code,
+        subType: iData.subType,
         geoDMS: {
           latDMS: newLatDMS,
           longDMS: newLongDMS,
@@ -95,7 +97,7 @@ async function loadCity(iData, rCounts) {
       citySite.serviceRecord = [];
       citySite.gameState = [];
 
-      let { error } = validateCity(citySite);
+      let { error } = validateGround(citySite);
       if (error) {
         //citySiteLoadDebugger("New CitySite Validate Error", iData.name, error.message);
         loadError = true;
@@ -155,6 +157,7 @@ async function loadCity(iData, rCounts) {
 
       let newLatDMS = convertToDms(iData.latDecimal, false);
       let newLongDMS = convertToDms(iData.longDecimal, true);
+      citySite.subType = iData.subType;
       citySite.name = iData.name;
       citySite.siteCode = iData.code;
       citySite.geoDMS.latDMS = newLatDMS;
@@ -191,7 +194,7 @@ async function loadCity(iData, rCounts) {
         }
       }
 
-      const { error } = validateCity(citySite);
+      const { error } = validateGround(citySite);
       if (error) {
         //citySiteLoadDebugger("CitySite Update Validate Error", iData.name, error.message);
         loadError = true;
@@ -233,10 +236,10 @@ async function deleteAllCitys(doLoad) {
   if (!doLoad) return;
 
   try {
-    for await (const citySite of CitySite.find()) {
+    for await (const citySite of GroundSite.find({ subType: "City" })) {
       let id = citySite._id;
       try {
-        let cityDel = await CitySite.findByIdAndRemove(id);
+        let cityDel = await GroundSite.findByIdAndRemove(id);
         if ((cityDel = null)) {
           citySiteLoadDebugger(`The CitySite with the ID ${id} was not found!`);
         }
