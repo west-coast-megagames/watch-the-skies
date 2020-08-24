@@ -6,13 +6,13 @@ const nexusEvent = require('../../startup/events');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 // Trade Models - Using Mongoose Model
-const { Trade } = require('../../models/dip/trades');
+const { Trade } = require('../../models/dip/trade');
 const { Team } = require('../../models/team/team');
 
 const { resolveTrade } = require('../../wts/trades/trade')
 
 
-// @route   GET api/trades
+// @route   GET api/trade
 // @Desc    Get all trades
 // @access  Public
 router.get('/', async function (req, res){

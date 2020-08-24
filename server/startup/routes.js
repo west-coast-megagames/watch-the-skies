@@ -24,8 +24,8 @@ const research = require('../routes/api/research');
 const sites = require('../routes/api/sites');
 const team = require('../routes/api/team');
 const tableau = require('../routes/api/tableau');
-const trades = require('../routes/api/trades')
-const treaties = require('../routes/api/treaties')
+const trade = require('../routes/api/trade')
+const treaty = require('../routes/api/treaty')
 const zones = require('../routes/api/zones');
 
 const debug = require('../routes/debugRoute');
@@ -70,8 +70,8 @@ module.exports = function(app) {
     app.use('/api/logErrors', logError); // Route for manipulating logError
     app.use('/api/logInfo', logInfo); // Route for manipulating logInfo
     app.use('/tableau', tableau); // Route for tableau API
-    app.use('/api/trades', trades); //
-    app.use('/api/treaties', treaties); //treaties
+    app.use('/api/trade', trade); //
+    app.use('/api/treaty', treaty); //treaties
     //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use('/api/control', control)

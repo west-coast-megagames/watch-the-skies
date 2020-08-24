@@ -7,7 +7,7 @@ const { Team } = require ('../../models/team/team');
 const { deposit, withdrawal, transfer } = require ("../../wts/banking/banking");
 const { TradeReport } = require ('../../wts/reports/reportClasses');
 
-const { Trade } = require('../../models/dip/trades');
+const { Trade } = require('../../models/dip/trade');
 const { Research } = require('../../models/sci/research');
 const { techTree } = require('../../wts/research/techTree');
 
