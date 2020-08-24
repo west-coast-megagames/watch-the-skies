@@ -18,8 +18,8 @@ const {
 const { Country } = require("../models/country");
 const { Account } = require("../models/gov/account");
 const { Log } = require("../models/logs/log");
-const { Treaty } = require("../models/dip/treaties");
-const { Trade } = require("../models/dip/trades");
+const { Treaty } = require("../models/dip/treaty");
+const { Trade } = require("../models/dip/trade");
 
 const teamCheckDebugger = require("debug")("app:teamCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
