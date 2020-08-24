@@ -79,7 +79,13 @@ router.put('/ratify', async function (req, res){
 3) "author": checks the treaties author array. if the changed author is not in the array, they will be 
     added, then will check and add them to witnesses if they are absent. Else if they are already 
     in the array, they will be removed from the authorship (but NOT from witness)
-4) 
+4) "witness": adds the desired team to the witness array only if they aren't in there already
+5) "excluded":
+6) "expiration": replaces treaty's name with whatever "expiration" is paired with
+7) "alliance":
+8) "clauses": replaces treaty's cost with whatever "clauses" is paired with
+9) "violition": replaces treaty's cost with whatever "violition" is paired with
+10) "status": NOT HERE making it's own thing
 */
 router.put('/modify', async function (req, res){
     let { treaty, changes, modifier } = req.body;
@@ -87,15 +93,18 @@ router.put('/modify', async function (req, res){
         res.status(400).send(`Cannot modify a treaty that is in the proposal state`);
     }
     try{
+        let cNum = 0;
         treaty = await Treaty.findById({_id: treaty._id});//populate treaty
         modifier = await Team.findById({_id: modifier});
         for (let element of changes){
             switch(element.changeType){
                 case "name"://change the name of the treaty
                     treaty.name = element.data;
+                    cNum++;
                     break;
                 case "cost"://adjust cost of treaty
                     treaty.cost = element.data;
+                    cNum++;
                     break;
                 case "author"://add authorship rights of this treaty for another team
                     let newAuthor = await Team.findById({_id: element.data});                
@@ -114,40 +123,45 @@ router.put('/modify', async function (req, res){
                         treaty.authors.splice(x, 1);//remove author from treaty array
                     }
                     newAuthor = await newAuthor.save();
+                    cNum++;
                     break;
                 case "witness"://allow other teams to view this treaty
                     let newWitness = await Team.findById({_id: element.data});   
                     if(!treaty.witness.includes(newWitness._id)){//if witness is not in the treaty array yet
-                        treaty/witness.push(newWitness._id);
+                        treaty.witness.push(newWitness._id);
                         newWitness.treaties.push(treaty._id);
+                        cNum++;                        
                     }
-                    else{
-                        let x = treaty.witness.indexOf(newWitness._id);
-                        treaty.witness.splice(x, 1);//remove target from array
-                    }
-
                     break;
                 case "excluded"://block country from ratifying this treaty
                     
                     break;
+                case "expiration"://change the expiration date
+                    treaty.expiration = element.data;
+                    cNum++;
+                    break;
                 case "alliance"://add an alliance type to the treaty
-                    
+                    //once we figure out what alliances are n such we'll come back
+                    if(!treaty.alliances.includes(element.data)){
+                        treaty.alliances.push(element.data);
+                    }
+                    else{
+                        let x = treaty.alliances.indexOf(element.data);
+                        treaty.alliances.splice(x, 1);//remove author from treaty array
+                    }
                     break;
                 case "clauses"://change the clauses of the treaty
-                    
+                    treaty.clauses = element.data;
+                    cNum++;
                     break;
                 case "violition"://change the violition of the treaty
-                    
-                    break;
-                case "status"://modify any status of the treaty (from draft to proposal)
-                    
-                    break;
-                
-                
+                    treaty.violition = element.data;
+                    cNum++;
+                    break;    
             }//switch
         }//for
-        treaty = await treaty.saveActivity(treaty, `${changes.length} Elements of Treaty Modified `); 
-        res.status(200).send(`${changes.length} Elements of Treaty Modified by ${modifier.name}`);  
+        treaty = await treaty.saveActivity(treaty, `${cNum} Elements of Treaty Modified `); 
+        res.status(200).send(`${cNum} Elements of Treaty Modified by ${modifier.name}`);  
     }
     catch (err) {
         logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
@@ -156,6 +170,38 @@ router.put('/modify', async function (req, res){
         res.status(400).send(`Error modifying treaty: ${err}`);
     }//catch
 }); 
+
+//EXPECTATIONS: "treaty": {<Treaty Object>}, "modifier": "<ID>"
+router.put('/status', async function (req, res){
+    let { treaty } = req.body;
+    try{
+        treaty = await Treaty.findById({_id: treaty._id});//populate treaty
+        if(modifier != treaty.creator){
+            res.status(400).send(`Cannot modify treaty status if you are not it's creator`);
+        }
+        treaty.status.draft = false;
+        treaty.status.proposal = false;
+        treaty.status.deleted = false;
+    
+        switch(status){
+            case "draft":
+                treaty.status.draft = true;
+                break;
+            case "proposal":
+                treaty.status.proposal = true;
+                break;
+        }//switch(status)
+        treaty = await treaty.saveActivity(treaty, `Treaty Status Changed ${modifier.name}`); 
+        res.status(200).send(`Treaty Status Changed ${modifier.name}!`);  
+    }
+    catch (err) {
+        logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
+          meta: err,
+        });
+        res.status(400).send(`Error changing treaty status: ${err}`);
+      }//catch
+});
+
 
 // @route   DELETE api/treaties
 // @Desc    Delete all treaties
@@ -186,7 +232,9 @@ router.delete('/id', async function (req, res){
         treaty.status.deleted = true;
         treaty = await treaty.saveActivity(treaty, `Treaty Deleted By ${treaty.creator}`);
         let temp = treaty.name;
-        await Treaty.findByIdAndDelete({_id: req.body._id})
+        await Treaty.findByIdAndDelete({_id: req.body._id});
+        //AND remove the deleted treaty from the teams maybe?
+
         res.status(200).send(`We killed treaty: ${temp}`);            
     }//try
     catch (err) {
