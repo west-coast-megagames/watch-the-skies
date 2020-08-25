@@ -17,7 +17,7 @@ const AircraftSchema = new Schema({
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
   country: { type: Schema.Types.ObjectId, ref: "Country" },
   site: { type: Schema.Types.ObjectId, ref: "Site" },
-  origin: { type: Schema.Types.ObjectId, ref: "Site" },
+  origin: { type: Schema.Types.ObjectId, ref: "Facility" },
   mission: { type: String },
   status: {
     damaged: { type: Boolean, default: false },

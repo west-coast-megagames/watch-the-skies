@@ -51,7 +51,7 @@ class InfoAircraft extends Component {
                   <b>Name:</b> {this.props.aircraft.name}
                 </p>
                 <p>
-                  <b>Location:</b> {this.props.aircraft.country.name} |{" "}
+                  <b>Location:</b> {this.props.aircraft.country.name} |
                   {this.props.aircraft.zone.zoneName} zone
                 </p>
               </FlexboxGrid.Item>
@@ -60,7 +60,7 @@ class InfoAircraft extends Component {
                   <b>Class:</b> {this.props.aircraft.type}
                 </p>
                 <p>
-                  <b>Base:</b> {this.props.aircraft.origin.name}{" "}
+                  <b>Base:</b> {this.props.aircraft.origin.name}
                   <IconButton
                     size="xs"
                     onClick={() =>
@@ -117,11 +117,10 @@ class InfoAircraft extends Component {
               <Whisper placement="top" speaker={hullSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper>
-              <b> Hull Integrity:</b> {stats.hull}/{stats.hullMax}{" "}
+              <b> Hull Integrity:</b> {stats.hull}/{stats.hullMax}
               {stats.hull < stats.hullMax && (
                 <span>
-                  {" "}
-                  <Badge content="Damaged" />{" "}
+                  <Badge content="Damaged" />
                   <IconButton
                     size="xs"
                     onClick={() => this.repair()}
@@ -136,13 +135,13 @@ class InfoAircraft extends Component {
             <div>
               <Whisper placement="top" speaker={weaponSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
-              </Whisper>{" "}
+              </Whisper>
               <b> Weapons Rating:</b> {stats.attack}
             </div>
             <div>
               <Whisper placement="top" speaker={evadeSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
-              </Whisper>{" "}
+              </Whisper>
               <b> Evade Rating:</b> {stats.evade}
             </div>
           </FlexboxGrid.Item>
@@ -166,7 +165,7 @@ class InfoAircraft extends Component {
             <div>
               <Whisper placement="top" speaker={rangeSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
-              </Whisper>{" "}
+              </Whisper>
               <b> Mission Range:</b> {stats.range}km
             </div>
           </FlexboxGrid.Item>
