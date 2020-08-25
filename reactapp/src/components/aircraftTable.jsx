@@ -43,7 +43,7 @@ class AircraftTable extends Component {
                     </Column>
                     <Column flexGrow={2}>
                         <HeaderCell>Integrity</HeaderCell>
-                        <Cell>
+                        <Cell style={{padding: '8px'}}>
                             {rowData => {
                                 let { stats } = rowData
                                 return(
@@ -64,7 +64,7 @@ class AircraftTable extends Component {
                         <HeaderCell>Status</HeaderCell>
                         <Cell dataKey='mission' />
                     </Column>
-                    <Column flexGrow={3}>
+                    <Column flexGrow={2}>
                         <HeaderCell>Actions</HeaderCell>
                         <Cell style={{padding: '8px'}}>
                             {rowData => {
