@@ -82,7 +82,7 @@ class InfoDeploy extends Component {
               <hr />
             </ FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <p><b>Location:</b> {model === "Aircraft" ? `${country.name} Airspace` : `${country.name}`} - {zone.zoneName}</p>
+              <p><b>Location:</b> {model === "Aircraft" ? `${country.name} Airspace` : `${country.name}`} - {zone.name}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}

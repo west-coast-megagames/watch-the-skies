@@ -27,7 +27,7 @@ async function crisis(zoneId, crisis) {
     newTerror = zone.terror;
     await zone.save();
 
-    reason = `Crisis: ${crisis.name} has caused ${terror}pts in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+    reason = `Crisis: ${crisis.name} has caused ${terror}pts in ${zone.name}. Current Terror: ${zone.terror}`;
     logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
     logger.info(`${reason}`);
     //await console.log(`${reason}`);
@@ -61,7 +61,7 @@ async function battle(countryId) {
       newTerror = zone.terror;
       zoneId = zone._id;
       await zone.save();
-      reason = `A battle in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `A battle in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       //await console.log(`${reason}`);
@@ -99,7 +99,7 @@ async function invasion(countryId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       //await console.log(${reason});
@@ -137,7 +137,7 @@ async function publicAnnouncement() {
     newTerror = zone.terror;
     zoneId = zone._id;
     await zone.save(); // Saves Terror to Database
-    reason = `The public announcement of aliens has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+    reason = `The public announcement of aliens has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
     logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
     logger.info(`${reason}`);
     //console.log(`${reason}`);
@@ -164,7 +164,7 @@ async function coverage() {
       newTerror = zone.terror;
       zoneId = zone._id;
       await zone.save(); // Saves Terror to Database
-      reason = `Lack of satellite coverage over has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `Lack of satellite coverage over has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       report = `${report} ${reason} | `
@@ -198,7 +198,7 @@ async function nuclearStrike(siteId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `A nuclear strike on the ${site.name} in ${countryName} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `A nuclear strike on the ${site.name} in ${countryName} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       return reason; 
@@ -241,7 +241,7 @@ async function cityDestruction(siteId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `The destruction of ${site.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`
+      reason = `The destruction of ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       return reason;
@@ -278,7 +278,7 @@ async function industryDestruction(countryId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `The destruction of industry in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`
+      reason = `The destruction of industry in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`
       logger.info(`${reason}`);
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       return reason;
@@ -314,7 +314,7 @@ async function alienActivity(countryId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `Alien activity in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `Alien activity in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       logger.info(`${reason}`);
       return reason;
@@ -349,7 +349,7 @@ async function alienRaid(countryId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `Alien raid in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `Alien raid in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       return reason;
     } else {
@@ -383,7 +383,7 @@ async function alienGroundForces(countryId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `Alien ground troops in ${country.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `Alien ground troops in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       return reason;
     } else {
@@ -423,7 +423,7 @@ async function orbitalStrike (siteId) {
       zone.terror = Math.min(zone.terror, 250);   // don't go beyond 250
       newTerror = zone.terror;
       await zone.save(); // Saves Terror to Database
-      reason = `An orbital strike on ${site.name} has caused ${terror}pts of terror in ${zone.zoneName}. Current Terror: ${zone.terror}`;
+      reason = `An orbital strike on ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
       logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
       return reason;
     } else {

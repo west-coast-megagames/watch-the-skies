@@ -82,7 +82,7 @@ router.get("/id/:id", validateObjectId, async (req, res) => {
   let aircraft = await Aircraft.findById(id)
     .sort({ team: 1 })
     .populate("team", "name shortName")
-    .populate("zone", "zoneName")
+    .populate("zone", "name")
     .populate("country", "name")
     .populate("systems", "name category")
     .populate("site", "name")
@@ -252,7 +252,7 @@ router.post("/", async function (req, res) {
     aircraft = await Aircraft.findById(aircraft._id)
       .populate("team", "shortName")
       .populate("systems", "name category")
-      .populate("zone", "zoneName")
+      .populate("zone", "name")
       .populate("country", "name")
       .populate("site", "name")
       .populate("origin", "name");
@@ -416,7 +416,7 @@ router.put("/:id", async function (req, res) {
   aircraft = await Aircraft.findById(aircraft._id)
     .populate("team", "shortName")
     .populate("systems", "name category")
-    .populate("zone", "zoneName")
+    .populate("zone", "name")
     .populate("country", "name")
     .populate("site", "name")
     .populate("origin", "name");

@@ -153,7 +153,7 @@ const InterceptLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
         <p>
           <b>Report:</b> {log.report}
@@ -188,7 +188,7 @@ const ConstructionLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -220,7 +220,7 @@ const DeployLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -255,7 +255,7 @@ const CrisisLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -287,7 +287,7 @@ const TerrorLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -319,7 +319,7 @@ const TreatyLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -351,7 +351,7 @@ const TradeLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>

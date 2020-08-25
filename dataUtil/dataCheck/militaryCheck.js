@@ -32,7 +32,7 @@ async function chkMilitary(runFlag) {
   for (const military of await Military.find()
     //.populate("team", "name teamType")       does not work with .lean()
     //.populate("country", "name type")        does not work with .lean()
-    //.populate("zone", "zoneName")            does not work with .lean()
+    //.populate("zone", "name")            does not work with .lean()
     //.populate("origin", "name")            does not work with .lean()
     .lean()) {
     /* does not work with .lean()

@@ -70,10 +70,10 @@ describe("/zones/", () => {
       expect(res.status).toBe(200);
       //returns array of 1 object
       const returnedZoneCode = res.body[0].code;
-      const returnedZoneName = res.body[0].name;
+      const returnedname = res.body[0].name;
       const returnedTerror = res.body[0].terror;
       expect(returnedZoneCode).toMatch(/Z4/);
-      expect(returnedZoneName).toMatch(/Zone Test 4/);
+      expect(returnedname).toMatch(/Zone Test 4/);
       expect(returnedTerror).toEqual(5);
     });
 
@@ -87,18 +87,18 @@ describe("/zones/", () => {
   describe("POST /", () => {
     // sample of re-usable function from MOSH course
     let token;
-    let newZoneName;
+    let newname;
     let newZoneCode;
     let newTerror;
     const exec = async () => {
       return await request(server)
         .post("api/zones/")
-        .send({ code: newZoneCode, name: newZoneName, terror: newTerror });
+        .send({ code: newZoneCode, name: newname, terror: newTerror });
     };
 
     beforeEach(() => {
       newZoneCode = "Z5";
-      newZoneName = "Post Zone Test 1";
+      newname = "Post Zone Test 1";
       newTerror = 5;
     });
 
@@ -125,10 +125,10 @@ describe("/zones/", () => {
 
     it("should return 400 if zone name is more than 50 characters", async () => {
       // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation
-      const testZoneName = new Array(52).join("a");
+      const testname = new Array(52).join("a");
       const res = await request(server)
         .post("/api/zones")
-        .send({ code: "Z6", name: testZoneName, terror: 5 });
+        .send({ code: "Z6", name: testname, terror: 5 });
       expect(res.status).toBe(400);
     });
 
@@ -183,11 +183,11 @@ describe("/zones/", () => {
 
       id = zone._id;
 
-      newZoneName = "T1";
+      newname = "T1";
 
       const res = await request(server)
         .put("/api/zones/" + id)
-        .send({ code: zone.code, name: newZoneName, terror: zone.terror });
+        .send({ code: zone.code, name: newname, terror: zone.terror });
 
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -203,11 +203,11 @@ describe("/zones/", () => {
 
       id = zone._id;
       // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation
-      newZoneName = new Array(52).join("a");
+      newname = new Array(52).join("a");
 
       const res = await request(server)
         .put("/api/zones/" + id)
-        .send({ code: "Z9", name: newZoneName, terror: 5 });
+        .send({ code: "Z9", name: newname, terror: 5 });
 
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
@@ -257,11 +257,11 @@ describe("/zones/", () => {
       await zone.save();
 
       let id = 1;
-      newZoneName = zone.name;
+      newname = zone.name;
 
       const res = await request(server)
         .put("/api/zones/" + id)
-        .send({ name: newZoneName });
+        .send({ name: newname });
 
       expect(res.status).toBe(404);
       expect(res.text).toMatch(/Invalid ID/);
@@ -269,11 +269,11 @@ describe("/zones/", () => {
 
     it("should return 404 if zone with the given id was not found", async () => {
       id = mongoose.Types.ObjectId();
-      newZoneName = "Zone Put Test 4";
+      newname = "Zone Put Test 4";
 
       const res = await request(server)
         .put("/api/zones/" + id)
-        .send({ name: newZoneName, code: "ZA" });
+        .send({ name: newname, code: "ZA" });
 
       expect(res.status).toBe(404);
       expect(res.text).toMatch(/was not found/);
@@ -284,15 +284,15 @@ describe("/zones/", () => {
       zone = new Zone({ name: "Zone Put Test 5", code: "ZA" });
       await zone.save();
 
-      newZoneName = "UpdPutZone5";
+      newname = "UpdPutZone5";
 
       const res = await request(server)
         .put("/api/zones/" + zone._id)
-        .send({ name: newZoneName, code: zone.code });
+        .send({ name: newname, code: zone.code });
 
       const updatedZone = await Zone.findById(zone._id);
 
-      expect(updatedZone.name).toBe(newZoneName);
+      expect(updatedZone.name).toBe(newname);
     });
 
     it("should return the updated zone if it is valid", async () => {
@@ -300,14 +300,14 @@ describe("/zones/", () => {
       zone = new Zone({ name: "Zone Put Test 6", code: "ZB" });
       await zone.save();
 
-      newZoneName = "UpdPutZone6";
+      newname = "UpdPutZone6";
 
       const res = await request(server)
         .put("/api/zones/" + zone._id)
-        .send({ name: newZoneName, code: zone.code });
+        .send({ name: newname, code: zone.code });
 
       expect(res.body).toHaveProperty("_id");
-      expect(res.body).toHaveProperty("name", newZoneName);
+      expect(res.body).toHaveProperty("name", newname);
     });
   });
 

@@ -44,7 +44,7 @@ async function chkSite(runFlag) {
     /* does not work with .lean()
                                      .populate("team", "name")
                                      .populate("site", "name")
-                                     .populate("zone", "zoneName")
+                                     .populate("zone", "name")
                                      */
     .lean()) {
     /*  does not work with .lean()

@@ -26,7 +26,7 @@ async function chkSquad(runFlag) {
     /* does not work with .lean()
                                .populate("team", "name teamType")
                                .populate("country", "name type")
-                               .populate("zone", "zoneName")
+                               .populate("zone", "name")
                                .populate("homeBase", "name")
                                */
     .lean()) {

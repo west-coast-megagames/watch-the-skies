@@ -52,7 +52,7 @@ class InfoAircraft extends Component {
                 </p>
                 <p>
                   <b>Location:</b> {this.props.aircraft.country.name} |
-                  {this.props.aircraft.zone.zoneName} zone
+                  {this.props.aircraft.zone.name} zone
                 </p>
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={12}>

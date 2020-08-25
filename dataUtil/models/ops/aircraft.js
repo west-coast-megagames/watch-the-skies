@@ -119,7 +119,7 @@ async function getAircrafts() {
   let aircrafts = await Aircraft.find()
     .sort({ team: 1 })
     .populate("team", "name shortName")
-    .populate("zone", "zoneName")
+    .populate("zone", "name")
     .populate("country", "name")
     .populate("systems", "name category")
     .populate("origin", "name");

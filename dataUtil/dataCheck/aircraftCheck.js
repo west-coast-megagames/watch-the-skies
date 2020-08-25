@@ -32,7 +32,7 @@ async function chkAircraft(runFlag) {
     // does not work with .lean
     /*
                                .populate("team", "name teamType")
-                               .populate("zone", "zoneName")
+                               .populate("zone", "name")
                                .populate("origin", "name")
                                .populate("country", "name")
                                .populate("site", "name")
