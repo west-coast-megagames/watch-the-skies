@@ -32,40 +32,43 @@ const FacilitySchema = new Schema({
   capability: {
     research: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
       projects: [{ type: ObjectId, ref: "Research" }],
       funding: [Number],
       sciRate: { type: Number, default: 0 },
       sciBonus: { type: Number, default: 0 },
       active: { type: Boolean },
+      status: {
+        damage: [Boolean],
+        pending: [Boolean]
+      }
     },
     airMission: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       aircraft: [{ type: ObjectId, ref: "Aircraft" }],
       active: { type: Boolean },
     },
     storage: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       equipment: [{ type: ObjectId, ref: "Equipment" }],
       active: { type: Boolean },
     },
     manufacturing: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       equipment: [{ type: ObjectId, ref: "Equipment" }],
       active: { type: Boolean },
     },
     naval: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       fleet: [{ type: ObjectId, ref: "Military" }],
       active: { type: Boolean },
     },
     ground: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       corps: [{ type: ObjectId, ref: "Military" }],
       active: { type: Boolean },
     },
