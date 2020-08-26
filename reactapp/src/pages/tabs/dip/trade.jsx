@@ -247,7 +247,7 @@ class Trade extends Component {
         };
         try {
           console.log(trade)
-          let response = await axios.post(`${gameServer}api/trades`, trade);    
+          let response = await axios.post(`${gameServer}api/trade`, trade);    
         //   Alert.success(response.data.comment[0].body);
           this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
         } catch (err) {
@@ -265,7 +265,7 @@ class Trade extends Component {
           else    
               tradePartner.modified = true;
 
-          let response = await axios.put(`${gameServer}api/trades/modify`, this.state.trade);    
+          let response = await axios.put(`${gameServer}api/trade/modify`, this.state.trade);    
         //   Alert.success(response.data.comment[0].body);
           this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
         } catch (err) {
