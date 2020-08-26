@@ -10,7 +10,7 @@
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Agr2A"}],
     "breakthrough": [{"type": "Technology", "code": "Agr2A"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Genetics", "rolls": 1}]
 },
 {   
     "name": "Improved Water Purification",
@@ -23,7 +23,7 @@
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Inf3G"}, {"type": "Technology", "code": "Agr3B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Bio3A"}],
     "breakthrough": [{"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Agr2B"}, {"type": "Technology", "code": "Agr3B"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Biology", "rolls": 1}]
 },
 {   
     "name": "Improved Agriculture",
@@ -36,7 +36,7 @@
     "effects": [{"type": "terror", "effect": -5 }],
     "unlocks": [{"type": "Technology", "code": "Agr3A"}, {"type": "Technology", "code": "Agr2C"}],
     "breakthrough": [{"type": "Technology", "code": "Agr2C"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Genetics", "rolls": 1}]
 },
 {   
     "name": "Advanced Processing",
@@ -49,7 +49,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-1"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4C"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
     "name": "Advanced Water Distribution",
@@ -62,7 +62,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-2"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4B"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4B"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
     "name": "Advanced Agriculture",
@@ -75,7 +75,7 @@
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr3C"}, {"type": "Technology", "code": "Agr3B"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr3C"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Genetics", "rolls": 1}]
 },
 {   
     "name": "Autonomous Farming",
@@ -88,7 +88,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-3"}, {"type": "Technology", "code": "Agr3C"}],
     "breakthrough": [{"type": "Technology", "code": "Agr5A"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
     "name": "Advanced Hydroponics",
@@ -101,7 +101,7 @@
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4A"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4A"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Biology", "rolls": 1}]
 },
 {   
     "name": "Integrated Farm Management",
@@ -114,7 +114,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-3"}, {"type": "Technology", "code": "Inf4F"}, {"type": "Technology", "code": "Agr4B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4F"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
     "name": "Herbacloning (Plant Cloning)",
@@ -127,7 +127,7 @@
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4C"}],
     "breakthrough": [{"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Agr4C"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Genetics", "rolls": 1}]
 },
 {   
     "name": "Super Adaptable Crops",
@@ -140,7 +140,7 @@
     "effects": [],
     "unlocks": [{"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Agr5A"}],
     "breakthrough": [{"type": "Technology", "code": "Agr5A"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Genetics", "rolls": 1}]
 },
 {   
     "name": "Industrial Food Synthesis",
@@ -153,7 +153,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-4"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Agr5B"}],
     "breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil5G"}],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
     "name": "Terraforming",
@@ -166,7 +166,7 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-5"}],
     "breakthrough": [],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
     "name": "Compact Food Synthesis",
@@ -179,6 +179,6 @@
     "effects": [],
     "unlocks": [{"type": "Equipment", "code": "KA-6"}, {"type": "Technology", "code": "Agr4A"}, {"type": "Technology", "code": "Bio5D"}],
     "breakthrough": [],
-    "knowledge": [{"field": "Engineering", "rolls": 2}]
+    "knowledge": [{"field": "Engineering", "rolls": 1}]
 }
 ]
