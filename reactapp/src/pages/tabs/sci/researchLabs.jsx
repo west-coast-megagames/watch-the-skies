@@ -296,12 +296,12 @@ class ResearchLabs extends Component {
 						</Cell>
 					</Column>
 
-					<Column verticalAlign='middle' width={60} fixed="right">
+					<Column verticalAlign='middle' width={80} fixed="right">
 						<HeaderCell/>
 						<Cell style={{ padding: 0 }} >
 							{rowData => {
 								let disable = rowData.status.pending || rowData.status.damage
-								return(	<Button	disabled={disable} appearance="primary" onClick={() => submitTxn(rowData, "Lab Research") } >Submit Research</Button>)
+								return(	<Button	disabled={disable} appearance="primary" onClick={() => submitTxn(rowData, "Lab Research") } >Submit</Button>)
 							}}	
 						</Cell>
 					</Column>
