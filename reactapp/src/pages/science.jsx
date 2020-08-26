@@ -13,7 +13,7 @@ import ResearchLabs from './tabs/sci/researchLabs';
 import TechList from './tabs/sci/techList';
 
 // Components
-import { Nav, Container, Header, Content, Icon, Alert } from 'rsuite'; // rsuite common components
+import { Nav, Container, Header, Content, Icon, Alert, Sidebar, Button } from 'rsuite'; // rsuite common components
 import LoginLink from '../components/common/loginLink';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Font Awesome Icon
 import { faFlask, faAtom, faMicrochip } from '@fortawesome/free-solid-svg-icons' // Font awesome symbols
@@ -73,6 +73,7 @@ class Science extends Component {
                     {/* <Nav.Item eventKey="salvage" to={`${url}/salvage`} componentClass={NavLink}icon={<FontAwesomeIcon icon={faTools faVials} />}> Salvage</Nav.Item> */}
                 </Nav>
             </Header>
+            <Container>
             <Content className='tabContent' style={{ paddingLeft: 20 }}>
                 <Switch>
                     <Route path={`${url}/dashboard`} render={() => (
@@ -110,6 +111,10 @@ class Science extends Component {
                     <Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
                 </Switch>
             </Content>
+            <Sidebar>
+                <Button block onClick={() => Alert.warning('Surpise! Yet another placeholder...', 4000)}>Rawr</Button>
+            </Sidebar>
+            </Container>
         </Container>
         );
     }
