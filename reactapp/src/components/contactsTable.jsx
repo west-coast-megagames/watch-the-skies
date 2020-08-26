@@ -100,24 +100,6 @@ class Contacts extends Component {
         {
             id: '2',
             type: `category`,
-            labelName: `EX-COM Bases`,
-            status: this.props.bases.length !== 0 ? `${this.props.bases.length} bases` : 'No bases',
-            info: `Extraterrestirial Response Bases`,
-            children: this.props.bases.map(el => {
-                return {
-                    id:el._id,
-                    labelName:el.name,
-                    status:'Unknown',
-                    type:el.type,
-                    info: `Base owned and operated by ${el.team.name}`,
-                    location:el.country.name,
-                    target: el,
-                    deploy: this.props.assignTarget };
-            })
-        },
-        {
-            id: '3',
-            type: `category`,
             labelName: `Cities`,
             status: this.props.cities.length !== 0 ? `${this.props.cities.length} cities` : 'No cities',
             info: `Urban Centers`,
