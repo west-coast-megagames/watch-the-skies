@@ -71,10 +71,10 @@ export const addsite = site =>
 
   export const getCities = createSelector(
     state => state.entities.sites.list,
-    sites => sites.filter(site => site.type === 'City')
+    sites => sites.filter(site => site.subType === 'City')
   );
 
   export const getBases = createSelector(
     state => state.entities.sites.list,
-    sites => sites.filter(site => site.type === 'Base')
+    sites => sites.filter(site => site.subType === 'Base')
   );
