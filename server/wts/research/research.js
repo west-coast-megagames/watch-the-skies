@@ -15,7 +15,6 @@ const { knowledgeTree } = require('./knowledge');
 
 async function startResearch () {
     researchDebugger('Research system triggered...')
-    let placeholder = await Research.findOne({name: "Empty Lab"})
     try {
         for await (let facility of await Facility.find({ 'capability.research.active': true })) {
             let research = facility.capability.research;
@@ -29,9 +28,13 @@ async function startResearch () {
                     project: research.projects[i],
                     funding: research.funding[i],
                     sciRate: research.sciRate,
-                    sciBonus: research.sciBonus }
+                    sciBonus: research.sciBonus,
+                    status: {
+                        pending: research.status.pending[i]
+                    }
+                }
 
-                if (lab.project.toHexString() === placeholder._id.toHexString()) {
+                if (lab.status.pending) {
                     researchDebugger(`${lab.name} labs have no research to conduct...`);
                     let projects = await Research.find({team: facility.team, 'status.completed': false, type: 'Technology'});
                     let rand = Math.floor(Math.random() * (projects.length - 1));
@@ -91,6 +94,7 @@ async function conductResearch(lab) {
 
             let facility = await Facility.findById(lab._id);
             facility.capability.research.funding.set(lab.index, 0);
+            facility.capability.research.status.pending.set(lab.index, false);
 
             if (tech.status.completed === true) {
                 researchDebugger(`${tech.name} completed!`)
@@ -118,6 +122,7 @@ async function conductResearch(lab) {
             report = await report.saveReport();
 
             tech.researchHistory.push(report._id);
+            facility.serviceRecord.push(report._id);
             await facility.save();
             tech = await tech.save(); // Saves the current project to the database
             researchDebugger(tech);
@@ -273,9 +278,9 @@ async function assignKnowledgeCredit() {
                     credit = country.team._id; // Assigns the current country to credit if the team has more
                     creditName = country.team.name;
                 }
-                researchDebugger(`${creditName} has been credited with advancing ${field.name}`);
             }
-            
+
+            researchDebugger(`${creditName} has been credited with advancing ${field.name}`);            
             field.credit = credit; // Gives credit to whatever team has the most at the end of the loop
             let knowledge = await field.save()
             await completeResearch(knowledge);
