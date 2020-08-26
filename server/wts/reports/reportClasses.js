@@ -8,7 +8,7 @@ const TradeLog = require('../../models/logs/tradeLog');
 const RepairLog = require('../../models/logs/repairLog');
 const { TerrorLog } = require('../../models/logs/log');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-const Gameclock = require('../gameClock/gameClock')
+const { makeTimestamp } = require('../gameClock/gameClock')
 
 function createServiceRecord() {
     return
@@ -41,9 +41,10 @@ class ResearchReport {
     async saveReport() {
         try {
         reportDebugger(`Saving report!`);
-            let timestamp = Gameclock.makeTimestamp();
+            //let timestamp = makeTimestamp();
             this.date = Date.now();
-            let submission = new ResearchLog({...timestamp,...this})
+            let submission = new ResearchLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
