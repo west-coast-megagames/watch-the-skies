@@ -199,6 +199,8 @@ async function completeResearch(research) {
     if (research.type === 'Knowledge') {
         if (research.level < 5) {
             research.status.pending = false;
+            research.status.completed = true;
+            research.status.available = false;
             let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
             await nextKnowledge.unlock();
             researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
