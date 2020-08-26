@@ -15,6 +15,8 @@ const { knowledgeTree } = require('./knowledge');
 
 async function startResearch () {
     researchDebugger('Research system triggered...')
+    let placeholder = await Research.findOne({name: "Empty Lab"})
+    
     try {
         for await (let facility of await Facility.find({ 'capability.research.active': true })) {
             let research = facility.capability.research;
@@ -34,7 +36,7 @@ async function startResearch () {
                     }
                 }
 
-                if (lab.status.pending) {
+                if (lab.project.toHexString() === placeholder._id.toHexString()) {
                     researchDebugger(`${lab.name} labs have no research to conduct...`);
                     let projects = await Research.find({team: facility.team, 'status.completed': false, type: 'Technology'});
                     let rand = Math.floor(Math.random() * (projects.length - 1));
