@@ -5,9 +5,12 @@ const { d6 } = require("../../util/systems/dice");
 const terror = require("../terror/terror");
 
 const { Aircraft } = require("../../models/ops/aircraft");
+const { Facility } = require("../../models/gov/facility/facility");
 const { Site } = require("../../models/sites/site");
 
 const { ReconReport } = require("../reports/reportClasses");
+const { getDistance } = require("../../util/systems/geo");
+
 
 let interceptionMissions = []; // Attempted Interception missions for the round
 let escortMissions = []; // Attempted Escort missions for the round
@@ -21,41 +24,50 @@ let totalCount = 0;
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start(aircraft, target, mission) {
-  let result = `Plan for ${mission.toLowerCase()} mission by ${
-    aircraft.name
-  } submitted.`;
+  let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`;
+  let origin = await Facility.findById(aircraft.origin).populate('site');
+  let targetGeo = undefined
+  target.model === 'Aircraft' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal;
+  let { latDecimal, longDecimal } = origin.site.geoDecimal;
+  
   aircraft = aircraft._id; // Saves just the _ID of the aircraft
   target = target._id; // Saves just the _ID of the target
+   
+
+  missionDebugger(targetGeo)
+  missionDebugger(origin.site.geoDecimal)
+  let distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal);
+  missionDebugger(`Mission distance ${distance}km`);
 
   // SWITCH Sorts the mission into the correct mission array
   switch (true) {
     case mission === "Interception":
-      let newIntercept = [{ aircraft, target }]; // Saves the Intercept combination
+      let newIntercept = [{ aircraft, target, distance }]; // Saves the Intercept combination
       interceptionMissions = [...interceptionMissions, ...newIntercept]; // Adds Interception to be resolved
       missionDebugger(interceptionMissions);
       break;
     case mission === "Escort":
-      let newEscort = [{ aircraft, target }]; // Saves the Escort combination
+      let newEscort = [{ aircraft, target, distance}]; // Saves the Escort combination
       escortMissions = [...escortMissions, ...newEscort]; // Adds Escort to be resolved
       missionDebugger(escortMissions);
       break;
     case mission === "Patrol":
-      let newPatrol = [{ aircraft, target }]; // Saves the Patrol combination
+      let newPatrol = [{ aircraft, target, distance }]; // Saves the Patrol combination
       patrolMissions = [...patrolMissions, ...newPatrol]; // Adds Patrol to be resolved
       missionDebugger(patrolMissions);
       break;
     case mission === "Transport":
-      let newTransport = [{ aircraft, target }]; // Saves the Transport combination
+      let newTransport = [{ aircraft, target, distance }]; // Saves the Transport combination
       transportMissions = [...transportMissions, ...newTransport]; // Adds Transport to be resolved
       missionDebugger(transportMissions);
       break;
     case mission === "Recon Site" || mission === "Recon Airship":
-      let newRecon = [{ aircraft, target }]; // Saves the Recon combination
+      let newRecon = [{ aircraft, target, distance }]; // Saves the Recon combination
       reconMissions = [...reconMissions, ...newRecon]; // Adds Recon to be resolved
       missionDebugger(reconMissions);
       break;
     case mission === "Diversion":
-      let newDiversion = [{ aircraft, target }]; // Saves the Recon combination
+      let newDiversion = [{ aircraft, target, distance }]; // Saves the Recon combination
       diversionMissions = [...diversionMissions, ...newDiversion]; // Adds Recon to be resolved
       missionDebugger(diversionMissions);
       break;
@@ -63,6 +75,7 @@ async function start(aircraft, target, mission) {
       result = `${result} This is not an acceptable mission type.`;
   }
 
+  missionDebugger(interceptionMissions.sort((a,b) => a.distance - b.distance));
   missionDebugger(`${result}`);
 
   return;
@@ -72,7 +85,7 @@ async function start(aircraft, target, mission) {
 async function resolveMissions() {
   missionDebugger("Resolving Missions...");
 
-  await runInterceptions();
+  await runInterceptions(); // Runs 
   await runTransports();
   await runRecon();
   await runDiversions();
@@ -89,7 +102,7 @@ async function resolveMissions() {
 
 // Iterate over all submitted Interceptions
 async function runInterceptions() {
-  for await (let interception of interceptionMissions) {
+  for await (let interception of interceptionMissions.sort((a,b) => a.distance - b.distance)) {
     count++; // Count iteration for each interception
     missionDebugger(`Mission #${count} - Intercept Mission`);
     let stance = "passive"; // Targets stance for interception defaults to 'passive'
