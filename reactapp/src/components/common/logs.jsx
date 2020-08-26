@@ -57,6 +57,7 @@ const TransactionLog = props => {
 // TODO - Research log should be fleshed out for March.
 const ResearchLog = props => {
   let { outcomes, rolls, _id, team, logType, timestamp, lab, funding, stats, progress, project } = props.log;
+  if (props.log.project === null) console.log(props.log)
   let date = new Date(props.log.date);
   if (timestamp === undefined) timestamp = {turn: 'void', phase: 'uncertian', clock: '00:00'};
 
