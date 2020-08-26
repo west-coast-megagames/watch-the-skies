@@ -40,8 +40,7 @@ class ResearchReport {
 
     async saveReport() {
         try {
-        reportDebugger(`Saving report!`);
-            //let timestamp = makeTimestamp();
+        reportDebugger(`Saving research report!`);
             this.date = Date.now();
             let submission = new ResearchLog({...this})
             submission = submission.createTimestamp(submission);
@@ -74,14 +73,14 @@ class ReconReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Recon report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new ReconLog({...timestamp,...this});
+            let submission = new ReconLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Recon Report Error: ${err}`);
             return
@@ -105,14 +104,14 @@ class TransportReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Transport report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new TransportLog({...timestamp,...this});
+            let submission = new TransportLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Transport Report Error: ${err}`);
             return
@@ -143,14 +142,14 @@ class BattleReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Battle report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new TransportLog({...timestamp,...this});
+            let submission = new BattleLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Transport Report Error: ${err}`);
             return
@@ -171,14 +170,14 @@ class CrashReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Crash report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new CrashLog({...timestamp,...this});
+            let submission = new CrashLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Crash Report Error: ${err}`);
             return
@@ -200,14 +199,14 @@ class DeploymentReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Deployment report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new DeployLog({...timestamp,...this});
+            let submission = new DeploymentLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Deployment Report Error: ${err}`);
             return
@@ -225,14 +224,14 @@ class TheoryReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Theory report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new TheoryLog({...timestamp,...this});
+            let submission = new TheoryLog({...this})
+            submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
             reportDebugger(submission);
 
-            return submission
+            return submission;
         } catch (err) {
             reportDebugger(`Theory Report Error: ${err}`);
             return
@@ -256,13 +255,14 @@ class TerrorReport {
   async saveReport() {
     try {
       reportDebugger(`Saving Terror report!`);
-      let timestamp = makeTimestamp();
       this.date = Date.now();
-      let submission = new TerrorLog({...timestamp,...this})
+      let submission = new TerrorLog({...this})
+      submission = submission.createTimestamp(submission);
+
       submission = await submission.save();
       reportDebugger(submission);
-  
-      return submission
+
+      return submission;
     } catch (err) {
       reportDebugger(`Terror Report Error: ${err}`);
       logger.error(`Terror Report Error${err}`, {meta: err});  
@@ -285,13 +285,14 @@ class TradeReport {
 
             this.team = team;
             this.trade = trade;
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new TradeLog({...timestamp,...this})
+            let submission = new TradeLog({...this})
+            submission = submission.createTimestamp(submission);
+
             submission = await submission.save();
             reportDebugger(submission);
-
-            return submission
+      
+            return submission;
         } catch (err) {
             reportDebugger(`Trade Report Error: ${err}`);
             logger.error(`Trade Report Error: ${err}`, {meta: err});
@@ -313,13 +314,14 @@ class RepairReport {
     async saveReport() {
         try {
             reportDebugger(`Saving Repair Report!`);
-            let timestamp = Gameclock.makeTimestamp();
             this.date = Date.now();
-            let submission = new RepairLog({...timestamp,...this})
+            let submission = new RepairLog({...this})
+            submission = submission.createTimestamp(submission);
+
             submission = await submission.save();
             reportDebugger(submission);
-
-            return submission
+      
+            return submission;
         } catch (err) {
             reportDebugger(`Repair Report Error: ${err}`);
             logger.error(`Repair Report Error: ${err}`, {meta: err});
