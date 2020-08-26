@@ -50,7 +50,8 @@ async function techSeed() {
     for await (let facility of await Facility.find({'capability.research.capacity': { $gt: 0 }})) {
         let { research } = facility.capability;
         for (let i = 0; i < research.capacity; i++) {
-            research.damage.set(i, 'Active');
+            research.status.damage.set(i, false);
+            research.status.pending.set(i, false);
             research.funding.set(i, 0);
             research.projects.set(i, placeholderTech._id);
             await facility.save();
