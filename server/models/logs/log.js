@@ -3,17 +3,28 @@ const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 const modelDebugger = require('debug')('app:logModel');
 
+
 const LogSchema = new Schema({
     date: { type: Date },
-    timestamp: {
-        turn: { type: String },
-        phase: { type: String },
-        turnNum: { type: Number },
-        clock: { type: String } 
-    },
+    timestamp: { type: Schema.Types.Mixed },
     model: { type: String, default: 'Log'},
     team: { type: Schema.Types.ObjectId, ref: 'Team'}
 });
+
+
+LogSchema.methods.createTimestamp = (log) => {
+  const Gameclock = require('../../wts/gameClock/gameClock');
+  let { turn, phase, turnNum, minutes, seconds } = Gameclock.getTimeRemaining();
+  log.timestamp = {
+    turn,
+    phase,
+    turnNum,
+    clock: `${minutes}:${seconds}`
+}
+
+  return log;
+}
+
 
 let Log = mongoose.model('Log', LogSchema);
 
