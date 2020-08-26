@@ -16,7 +16,7 @@ const { knowledgeTree } = require('./knowledge');
 async function startResearch () {
     researchDebugger('Research system triggered...')
     let placeholder = await Research.findOne({name: "Empty Lab"})
-    
+
     try {
         for await (let facility of await Facility.find({ 'capability.research.active': true })) {
             let research = facility.capability.research;
@@ -233,7 +233,7 @@ async function advanceKnowledge(research, lab) {
         lab.project = project._id;
         lab.funding = knowledge.rolls;
         researchDebugger(`Progressing Human Knowledge: ${project.type} - ${project.name}`);
-        await conductResearch(lab);
+        if (project !== null) await conductResearch(lab);
     }
     return
 }
