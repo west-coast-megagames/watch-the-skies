@@ -31,11 +31,11 @@ const ProgressCell = (props) => {
 				<div style={{fontSize: 16, color: 'red'	}} >DESTROYED</div>
 			</Cell>
 		);
-	} else if (rowData.status === 'Damaged') {
+	} else if (rowData.status.damage) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
 				<div style={{fontSize: 18, color: 'orange'	}} >
-					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick(rowData)} disabled={!rowData.status.damaged} icon={<Icon icon="wrench" />}>${labRepairCost} MB</IconButton></span>}
+					<b>LAB DAMAGED</b> {<span> <IconButton size="xs" onClick={() => onClick(rowData)} disabled={!rowData.status.damage} icon={<Icon icon="wrench" />}>${labRepairCost} MB</IconButton></span>}
 				</div> 
 			</Cell>
 		);
@@ -96,7 +96,8 @@ class ResearchLabs extends Component {
 		if (txnType === "Lab Research") {
 			cost = this.props.fundingCost[updatedLab.funding];
 			txnNote = `Level ${updatedLab.funding} funding for science lab ${updatedLab.name}`;
-			if (updatedLab.research.length === 0) {
+			let validResearch = this.state.research.some(el => el._id === updatedLab.research);
+			if (!validResearch) {
 				warning = `Select a Tech to research for Lab ${updatedLab.name} before submitting.`;
 				statusOK = false;
 			}
@@ -132,13 +133,13 @@ class ResearchLabs extends Component {
 				try {
 					if (txnType === "Lab Research") {
 						// Disable funding for the lab once it is submitted
-						labs[labIndex].disableFunding = true;
+						labs[labIndex].status.pending = true;
 
 						// for lab update, need to provide lab object
 						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, index: updatedLab.index, _id: updatedLab._id, research: updatedLab.research }
 						console.log(newLab);
-						myAxiosCall = await axios.put(`${gameServer}api/facilities/research`, newLab);
-						Alert.success(myAxiosCall.data, 6000);
+						myAxiosCall = await axios.put(`${gameServer}game/research`, newLab);
+						Alert.success(myAxiosCall.data, 4000);
 					}	
 					if (txnType === "Lab Repair") {
 						// For lab repair, provide the lab status of "undamaged"
@@ -148,7 +149,7 @@ class ResearchLabs extends Component {
 						Alert.success(`Successfully repaired ${updatedLab.name}`, 6000);
 						
 						// Update repair status for the lab once it is submitted, and close the modal
-						labs[labIndex].status.damaged = false;
+						labs[labIndex].status.damage = false;
 					}				
 					this.setState({ labs });
 
@@ -184,7 +185,6 @@ class ResearchLabs extends Component {
 		}
 	}
 	
-
 	render() { 
 		let props = this.props;
 		let research = this.state.research;
@@ -234,7 +234,7 @@ class ResearchLabs extends Component {
 										groupBy='field'
 										valueKey='_id'
 										labelKey='name'
-										disabled={rowData.disableFunding}
+										disabled={rowData.status.pending}
 										onChange={handleChange}
 										data={ research }
 										style={{ width: 200 }}
@@ -268,7 +268,7 @@ class ResearchLabs extends Component {
 								<InputNumber 
 									prefix="Funding" 
 									defaultValue={rowData.funding}
-									disabled={rowData.disableFunding}
+									disabled={rowData.status.pending}
 									max={4} 
 									min={0} 
 									step={1} 
@@ -286,7 +286,7 @@ class ResearchLabs extends Component {
 								let account = this.props.account;
 								let myFundLevel = rowData.funding;
 								let myCost = props.fundingCost[myFundLevel];
-								if (rowData.disableFunding) {
+								if (rowData.status.pending) {
 									return (<Tag> $ { myCost } MB </Tag>);
 								} else if (account.balance < myCost) {
 									return (<Tag color="red">   $ { myCost - account.balance } MB More </Tag>);
@@ -296,11 +296,12 @@ class ResearchLabs extends Component {
 						</Cell>
 					</Column>
 
-					<Column verticalAlign='middle' width={130} fixed="right">
+					<Column verticalAlign='middle' width={60} fixed="right">
 						<HeaderCell/>
 						<Cell style={{ padding: 0 }} >
 							{rowData => {
-								return(	<Button	disabled={rowData.disableFunding} appearance="primary" onClick={() => submitTxn(rowData, "Lab Research") } >Submit Research</Button>)
+								let disable = rowData.status.pending || rowData.status.damage
+								return(	<Button	disabled={disable} appearance="primary" onClick={() => submitTxn(rowData, "Lab Research") } >Submit Research</Button>)
 							}}	
 						</Cell>
 					</Column>
@@ -371,16 +372,20 @@ class ResearchLabs extends Component {
 
 			teamLabs.forEach(facility => {
 				for (let i = 0; i < facility.capability.research.capacity; i++) {
+					let { funding, projects, status } = facility.capability.research;
 					console.log(facility);
-					let funding = typeof facility.capability.research.funding[i] === 'number' ? facility.capability.research.funding[i] : 0;
-					let research = facility.capability.research.projects[i] === null ? undefined : facility.capability.research.projects[i];
+					let funds = typeof funding[i] === 'number' ? funding[i] : 0;
+					let research = projects[i] === null ? undefined : projects[i];
 					obj = {
 						_id: 			facility._id,
 						index:			i,
-						funding: 		funding,
+						funding: 		funds,
 						name:			`${facility.name} - Lab 0${i+1}`,
 						research:		research,					
-						status:			facility.capability.research.damage[i],	
+						status:			{ 
+											damage: status.damage[i],
+											pending: status.pending[i]
+										},
 						team:			{
 											_id:			facility.team._id,
 											shortName:		facility.team.shortName

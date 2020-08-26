@@ -9,6 +9,7 @@ const { Team } = require('../../models/team/team');
 const { Military } = require('../../models/ops/military/military')
 const { Site } = require('../../models/sites/site');
 const { Account } = require('../../models/gov/account');
+const { Facility } = require('../../models/gov/facility/facility');
 
 // Game Systems - Used to run Game functions
 const banking = require('../../wts/banking/banking');
@@ -74,27 +75,59 @@ router.put('/military/deploy', async function (req, res) {
 // @desc    Update aircraft to max health
 // @access  Public
 router.put('/repairAircraft', async function (req, res) {
-    let aircraft = await Aircraft.findById(req.body._id);
-    console.log(req.body);
-    console.log(aircraft);
-    let account = await Account.findOne({ name: 'Operations', 'team': aircraft.team });
-    if (account.balance < 2) {
-      routeDebugger('Not enough funding...')
-      res.status(402).send(`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`)
-    } else {
-      account = await banking.withdrawal(account, 2, `Repairs for ${aircraft.name}`);
-      await account.save();
-      routeDebugger(account)
-  
-      aircraft.status.repair = true;
-      aircraft.status.ready = false;
-      await aircraft.save();
+  let aircraft = await Aircraft.findById(req.body._id);
+  console.log(req.body);
+  console.log(aircraft);
+  let account = await Account.findOne({ name: 'Operations', 'team': aircraft.team });
+  if (account.balance < 2) {
+    routeDebugger('Not enough funding...')
+    res.status(402).send(`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`)
+  } else {
+    account = await banking.withdrawal(account, 2, `Repairs for ${aircraft.name}`);
+    await account.save();
+    routeDebugger(account)
 
-      routeDebugger(`${aircraft.name} put in for repairs...`)
+    aircraft.status.repair = true;
+    aircraft.status.ready = false;
+    await aircraft.save();
+
+    routeDebugger(`${aircraft.name} put in for repairs...`)
+
+    res.status(200).send(`${aircraft.name} put in for repairs...`);
+    nexusEvent.emit('updateAircrafts');
+  }
+});
+
+// @route   PUT game/research
+// @Desc    Assign a research to a lab
+// @access  Public
+router.put('/research', async function (req, res) {
+  routeDebugger('Updating facility...');
+  let update = req.body;
+  console.log(update);
+  try {
+    let facility = await Facility.findById(update._id);
   
-      res.status(200).send(`${aircraft.name} put in for repairs...`);
-      nexusEvent.emit('updateAircrafts');
+    if (!facility){
+      res.status(404).send(`The facility with the ID ${update._id} was not found!`);
+    } else {
+      if (facility.capability.research.active) {
+        routeDebugger(`${facility.name} lab 0${update.index + 1} is being updated...`)
+        facility.capability.research.funding.set(update.index, parseInt(update.funding));
+        facility.capability.research.projects.set(update.index, update.research);
+        facility.capability.research.status.pending.set(update.index, true);
+      }
+    
+      facility = await facility.save();
+      console.log(facility);
+      res.status(200).send(`Research goals for ${facility.name} lab 0${update.index} have been updated!`);
+      nexusEvent.emit("updateFacilities");
     }
-  });
+  } catch (err) {
+    console.log(err)
+    res.status(400).send(err.message)
+  }
+
+});
 
   module.exports = router
