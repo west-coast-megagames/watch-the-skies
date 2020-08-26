@@ -12,7 +12,7 @@
       "desc":"Must be discarded after successful research."}],
   "unlocks": [{"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4E"}, {"type": "Technology", "code": "Inf3G"}],
   "breakthrough": [{"type": "Technology", "code": "Mil4E"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Materials", "rolls": 1}]
 },
 {
   "name": "Biological Analysis",
@@ -28,7 +28,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Bio2D"}],
   "breakthrough": [{"type": "Technology", "code": "Mil3B"}, {"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Bio3B"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Biology", "rolls": 1}]
 },
 {   
   "name": "Plasma Analysis",
@@ -44,7 +44,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Mil4I"}],
   "breakthrough": [{"type": "Technology", "code": "Mil5D"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Technology", "rolls": 1}]
 },
 {   
   "name": "Mining Unit Analysis",
@@ -60,7 +60,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Mil4I"}, {"type": "Technology", "code": "Inf3G"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "Shield Analysis",
@@ -76,7 +76,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Mil4A"}],
   "breakthrough": [{"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Mil3H"}, {"type": "Technology", "code": "Mil3F"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Theoretical Physics", "rolls": 1}]
 },
 {   
   "name": "Laser Analysis",
@@ -92,7 +92,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Mil2B"}],
   "breakthrough": [{"type": "Technology", "code": "Mil2A"}, {"type": "Technology", "code": "Mil1A"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Mil1D"}, {"type": "Technology", "code": "Inf2A"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Theoretical Physics", "rolls": 1}]
 },
 {   
   "name": "Nanites Analysis",
@@ -108,7 +108,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Agr5B"}, {"type": "Technology", "code": "Mil2C"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Inf2D"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "Robot Analysis",
@@ -124,7 +124,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Mil4D"}],
   "breakthrough": [{"type": "Technology", "code": "Bio5B"}, {"type": "Technology", "code": "Mil3D"}, {"type": "Technology", "code": "Mil2C"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "Reactor Analysis",
@@ -140,7 +140,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Inf4A"}],
   "breakthrough": [{"type": "Technology", "code": "Inf3A"}, {"type": "Technology", "code": "Inf2A"}, {"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Mil4M"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Theoretical Physics", "rolls": 1}]
 },
 {   
   "name": "Comm. Panel Analysis",
@@ -156,7 +156,7 @@
   }],
   "unlocks": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Mil4F"}],
   "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf2E"}, {"type": "Technology", "code": "Inf2B"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "Healing Device Analysis",
@@ -172,7 +172,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Bio3D"}, {"type": "Technology", "code": "Bio4A"}, {"type": "Technology", "code": "Bio3A"}, {"type": "Technology", "code": "Bio2B"}, {"type": "Technology", "code": "Bio2A"}, {"type": "Technology", "code": "Agr4A"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Biology", "rolls": 1}]
 },
 {   
   "name": "AI Analysis",
@@ -188,7 +188,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Inf1D"}, {"type": "Technology", "code": "Mil3E"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "CPU Analysis",
@@ -204,7 +204,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Inf3E"}, {"type": "Technology", "code": "Inf1E"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Bio3B"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Electronics", "rolls": 1}]
 },
 {   
   "name": "FTL Analysis",
@@ -220,7 +220,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf2B"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Astrophysics", "rolls": 1}]
 },
 {   
   "name": "Space Tools Analysis",
@@ -236,7 +236,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Mil3C"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4O"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Engineering", "rolls": 1}]
 },
 {   
   "name": "Environment Unit Analysis",
@@ -252,7 +252,7 @@
   }],
   "unlocks": [],
   "breakthrough": [{"type": "Technology", "code": "Inf3B"}, {"type": "Technology", "code": "Inf4B"}, {"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}],
-  "knowledge": [{"field": "Engineering", "rolls": 2}]
+  "knowledge": [{"field": "Astrophysics", "rolls": 1}]
 },
 {   
     "name": "Drew's System Analysis",
@@ -269,5 +269,5 @@
     "unlocks": [],
     "breakthrough": [{"type": "Technology", "code": "Agr1B"}, {"type": "Technology", "code": "Agr2B"}],
 
-  "knowledge": [{"field": "Engineering", "rolls": 2}]}
+  "knowledge": [{"field": "Psychology", "rolls": 1}]}
 ]
