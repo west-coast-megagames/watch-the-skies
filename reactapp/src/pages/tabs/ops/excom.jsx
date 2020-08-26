@@ -96,9 +96,9 @@ class ExcomOps extends Component {
             account={this.props.account}
           />
         </Content>
-        <Sidebar>
+        {/* <Sidebar>
           <Button block onClick={() => Alert.warning('Surpise! The rawr button is a placeholder...', 4000)}>Rawr</Button>
-        </Sidebar>
+        </Sidebar> */}
       </Container>
     );
   }
