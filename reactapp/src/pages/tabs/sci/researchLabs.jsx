@@ -179,7 +179,7 @@ class ResearchLabs extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if (prevProps !== this.props) {
+		if (prevProps.lastUpdate !== this.props.lastUpdate) {
 			this.initResearch();
 			this.initLabs();
 		}
