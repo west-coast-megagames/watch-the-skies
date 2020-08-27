@@ -4,13 +4,6 @@ const Schema = mongoose.Schema;
 const Joi = require("joi");
 const ObjectId = mongoose.ObjectId;
 
-const fs = require('fs')
-
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/facilities/facilities.json'));
-const facilData = JSON.parse(file);
-
-
-
 const FacilitySchema = new Schema({
   model: { type: String, default: "Facility" },
   type: { type: String, min: 2, maxlength: 50 },
@@ -90,20 +83,4 @@ function validateFacility(facility) {
   return Joi.validate(facility, schema, { allowUnknown: true });
 }
 
-// Load function to load all facilitys
-async function loadFacilitys () {
-  let count = 0;
-
-  await facilData.forEach(facil => {
-      facilityDebugger(facil);
-      facilitys[count] = new Facility(facil);
-      count++;
-  });
-
-  return `${count} Facility Templates available in WTS...`
-};
-
-module.exports = {
-  Facility,
-  validateFacility,
-};
+module.exports = { Facility, validateFacility };
