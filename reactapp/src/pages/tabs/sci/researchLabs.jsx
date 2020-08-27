@@ -202,12 +202,12 @@ class ResearchLabs extends Component {
 					rowHeight={50}
 					data={this.state.labs}
 					>
-					<Column verticalAlign='middle' width={200} align="left" fixed>
+					<Column verticalAlign='middle' flexGrow={2} align="left" fixed>
 						<HeaderCell>Lab Name</HeaderCell>
 						<Cell dataKey="name" />
 					</Column>
 			
-					<Column verticalAlign='middle' width={250} align="left" fixed>
+					<Column verticalAlign='middle' flexGrow={2} align="left" fixed>
 						<HeaderCell>Research Focus</HeaderCell>
 						<Cell style={{ padding: 0 }} dataKey="name">
 						{rowData => {   
@@ -230,6 +230,7 @@ class ResearchLabs extends Component {
 								}
 								return (
 									<SelectPicker
+										block
 										defaultValue={ defaultValue }
 										groupBy='field'
 										valueKey='_id'
@@ -237,7 +238,6 @@ class ResearchLabs extends Component {
 										disabled={rowData.status.pending}
 										onChange={handleChange}
 										data={ research }
-										style={{ width: 200 }}
 									/>
 								)
 							}
@@ -245,7 +245,7 @@ class ResearchLabs extends Component {
 						</Cell>
 					</Column>
 			
-					<Column verticalAlign='middle' width={200}>
+					<Column verticalAlign='middle' flexGrow={2}>
 						<HeaderCell>Current Progress</HeaderCell>
 						<ProgressCell
 							labs={this.state.labs}
@@ -271,8 +271,8 @@ class ResearchLabs extends Component {
 									disabled={rowData.status.pending}
 									max={4} 
 									min={0} 
-									step={1} 
-									style={{ width: 140 } }
+									step={1}
+									style={{ width: 130 } }
 									onChange={ handleChange }
 								/>
 							)}}

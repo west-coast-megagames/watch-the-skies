@@ -106,7 +106,7 @@ class TransferForm extends Component {
                         value={this.state.transfer.from}
                         labelKey='name'
                         valueKey='_id'
-                        placeholder='withdrawal Account...'
+                        placeholder='Withdrawal Account...'
                         handleChange={this.handleChange}
                     />
                     <Select
