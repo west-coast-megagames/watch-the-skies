@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 
 // Error handling and Logging
-const error = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { routeError, logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 const cors = require('cors');
 
 // Routes - Using Express
@@ -39,6 +39,8 @@ const users = require('../routes/users');
 
 
 module.exports = function(app) {
+    logger.info('Opening routes...')
+
     // Bodyparser Middleware
     app.use(bodyParser.json());
 
@@ -76,5 +78,5 @@ module.exports = function(app) {
 
     app.use('/api/control', control)
 
-    app.use(error.routeError);
+    app.use(routeError);
 }

@@ -20,35 +20,14 @@ const {
 const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
-const {
-  Facility,
-  Lab,
-  Hanger,
-  Factory,
-  Crisis,
-  Civilian,
-} = require("../../models/gov/facility/facility");
+const { Facility } = require("../../models/gov/facility/facility");
 const { convertToDms } = require("../../util/systems/geo");
 const { System } = require("../../models/gov/equipment/equipment");
-const {
-  loadSystems,
-  systems,
-} = require("../../wts/construction/systems/systems");
-const {
-  loadFacilitys,
-  facilitys,
-} = require("../../wts/construction/facilities/facilities");
-const {
-  validUnitType,
-} = require("../../wts/util/construction/validateUnitType");
-const {
-  delFacilities,
-} = require("../../wts/util/construction/deleteFacilities");
+const { validUnitType } = require("../../wts/util/construction/validateUnitType");
+const { delFacilities } = require("../../wts/util/construction/deleteFacilities");
 const { delSystems } = require("../../wts/util/construction/deleteSystems");
 const { genSiteCode } = require("../../wts/util/construction/genSiteCode");
-const {
-  addSatelliteToZone,
-} = require("../../wts/util/construction/zoneSatellite");
+const { addSatelliteToZone } = require("../../wts/util/construction/zoneSatellite");
 
 // @route   GET api/sites
 // @Desc    Get all sites

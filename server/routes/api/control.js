@@ -3,19 +3,9 @@ const router = express.Router();
 const nexusEvent = require("../../startup/events");
 
 // Aircraft Model - Using Mongoose Model
-const {
-  Aircraft,
-  updateStats,
-  validateAircraft,
-} = require("../../models/ops/aircraft");
+const { Aircraft, updateStats, validateAircraft } = require("../../models/ops/aircraft");
 const { System } = require("../../models/gov/equipment/equipment");
-const {
-  loadSystems,
-  systems,
-} = require("../../wts/construction/systems/systems");
-const {
-  validUnitType,
-} = require("../../wts/util/construction/validateUnitType");
+const { validUnitType } = require("../../wts/util/construction/validateUnitType");
 const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
@@ -65,14 +55,6 @@ router.patch("/alien/return", async function (req, res) {
     res.status(200).send(`${count} alien crafts have returned to base...`);
   }
   nexusEvent.emit("updateAircrafts");
-});
-
-// @route   PATCH api/control/loadSystems
-// @desc    Loads all systems into game server
-// @access  Public
-router.patch("/loadSystems", async function (req, res) {
-  let response = await loadSystems();
-  res.status(200).send(response);
 });
 
 // @route   GET api/control/salvage
