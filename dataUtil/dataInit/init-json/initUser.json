@@ -658,5 +658,25 @@
     "discord": "mgiese",
     "teamCode": "PRC",
     "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "Sensou",
+    "name": { "first": "Daniel", "last": "White" },
+    "email": "thevojoc@gmail.com",
+    "phone": "5555555560",
+    "password": "pancakes",
+    "address": {
+      "street1": "123 ABC St.",
+      "street2": "Unit 999",
+      "city": "City",
+      "state": "CA",
+      "zipcode": "99999"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "sensou#6453",
+    "teamCode": "PRC",
+    "roles": ["Player"]
   }
 ]
