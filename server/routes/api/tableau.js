@@ -3,11 +3,7 @@ const router = express.Router();
 const routeDebugger = require("debug")("app:routes:tableau");
 
 // Mongoose Models - Database models
-const {
-  Aircraft,
-  validateAircraft,
-  updateStats,
-} = require("../../models/ops/aircraft");
+const { Aircraft, validateAircraft, updateStats } = require("../../models/ops/aircraft");
 const { Article } = require("../../models/news/article");
 const { Account } = require("../../models/gov/account");
 const { Facility } = require("../../models/gov/facility/facility");
