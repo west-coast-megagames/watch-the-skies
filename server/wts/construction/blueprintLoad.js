@@ -4,7 +4,7 @@ const config = require('config');
 const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/facilities/facilities.json'));
 const facilData = JSON.parse(file);
 
-const BlueprintFacility = require('../../../models/gov/blueprints');
+const BlueprintFacility = require('../../models/gov/blueprints');
 
 facilityDebugger = require('debug')('app:facility');
 
