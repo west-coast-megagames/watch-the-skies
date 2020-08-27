@@ -43,4 +43,21 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
   } 
 });
 
+// @route   POST api/facility
+// @Desc    Takes in blueprint and name and site and starts construction on a new Facility
+// @access  Public
+router.post('/build', validateObjectId, async (req, res) => {
+  let { blueprint, name, site } = req.body;
+  let facility;
+  /*
+  let facility = new Facility({
+    name: iData.name,
+    code: iData.code,
+    siteCode: iData.siteCode,
+    coastal: iData.coastal,
+    type: iData.type,
+  });
+  */
+
+});
 module.exports = router;
