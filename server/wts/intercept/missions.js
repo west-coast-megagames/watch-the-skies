@@ -10,6 +10,8 @@ const { Site } = require("../../models/sites/site");
 
 const { ReconReport } = require("../reports/reportClasses");
 const { getDistance } = require("../../util/systems/geo");
+const { makeAfterActionReport } = require("./report");
+const { engageDesc } = require("./battleDetails");
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -25,18 +27,17 @@ let totalCount = 0;
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start(aircraft, target, mission) {
   let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`;
-  let origin = await Facility.findById(aircraft.origin).populate('site');
-  let targetGeo = undefined
-  target.model === 'Aircraft' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal;
-  let { latDecimal, longDecimal } = origin.site.geoDecimal;
+  let origin = await Facility.findById(aircraft.origin).populate('site'); // Populate home facility for the aircraft
+  let targetGeo = undefined // Initiate targets Geo position placeholder
+  target.model === 'Aircraft' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
+  let { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
   
   aircraft = aircraft._id; // Saves just the _ID of the aircraft
   target = target._id; // Saves just the _ID of the target
    
-
   missionDebugger(targetGeo)
   missionDebugger(origin.site.geoDecimal)
-  let distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal);
+  let distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
   missionDebugger(`Mission distance ${distance}km`);
 
   // SWITCH Sorts the mission into the correct mission array
@@ -85,7 +86,7 @@ async function start(aircraft, target, mission) {
 async function resolveMissions() {
   missionDebugger("Resolving Missions...");
 
-  await runInterceptions(); // Runs 
+  await runInterceptions(); // Runs through all 
   await runTransports();
   await runRecon();
   await runDiversions();
@@ -100,51 +101,50 @@ async function resolveMissions() {
   return 0;
 }
 
-// Iterate over all submitted Interceptions
+// Iterate over all submitted Interceptions in range order
 async function runInterceptions() {
   for await (let interception of interceptionMissions.sort((a,b) => a.distance - b.distance)) {
     count++; // Count iteration for each interception
     missionDebugger(`Mission #${count} - Intercept Mission`);
     let stance = "passive"; // Targets stance for interception defaults to 'passive'
-    let aircraft = await Aircraft.findById(interception.aircraft)
-      .populate("country", "name")
-      .populate("systems");
+    let aircraft = await Aircraft.findById(interception.aircraft).populate("country", "name").populate("systems");
 
     if (aircraft.status.destroyed || aircraft.systems.length < 1) {
-      console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+      missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
       continue;
     }
 
-    let target = await Aircraft.findById(interception.target).populate(
-      "systems"
-    );
+    let target = await Aircraft.findById(interception.target).populate("systems");
     missionDebugger(`${aircraft.name} vs. ${target.name}`);
-    let atkReport = `${aircraft.name} is attempting to engage a contact in ${aircraft.country.name} airspace.`;
+    let atkReport = `${aircraft.name} en route to ${country.name} airspace. ${aircraft.name} attempting to engage a contact.`;
 
-    let escortCheck = await checkEscort(interception.target, atkReport);
+    let escortCheck = await checkEscort(interception.target, atkReport); // Checks to see if the target is escorted
 
     target = escortCheck.target;
     atkReport = escortCheck.atkReport;
     defReport = escortCheck.defReport;
 
     if (target.status.destroyed || target.systems.length < 1) {
-      atkReport = `${atkReport} Target has been shot down prior to engagement.`;
+      let log = {
+        logType: 'Failure',
+        team: aircraft.team,
+        position: 'Offense',
+        country: aircraft.country._id,
+        zone: aircraft.zone._id,
+        site: aircraft.site._id,
+        report: `${atkReport} ${aircraft.name} was unable to find mission target.`,
+        unit: aircraft._id,
+        opponent: target._id
+      };
+      await makeAfterActionReport(log);
+      // TODO return attacker to base
       missionDebugger(atkReport);
-      // Intercept Report
-
       continue;
     }
 
     missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
-    atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
-    await intercept(
-      aircraft,
-      "aggresive",
-      atkReport,
-      target,
-      stance,
-      defReport
-    );
+    atkReport = `${atkReport} ${engageDesc(aircraft, aircraft.country, )}`;
+    await intercept( aircraft, "aggresive", atkReport, target, stance, defReport );
   }
   return 0;
 }

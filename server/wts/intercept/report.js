@@ -56,11 +56,11 @@ function interceptLogging (finalReport, attacker, defender) {
         salvage: finalReport.salvage
     };
         
-    atkLog = interceptLog(atkLog);
-    defLog = interceptLog(defLog);
+    atkLog = makeAfterActionReport(atkLog);
+    defLog = makeAfterActionReport(defLog);
 };
 
-async function interceptLog (log) {
+async function makeAfterActionReport(log) {
     const gameClock = require('../gameClock/gameClock')
     let { turn, phase, turnNum, minutes, seconds } = gameClock.getTimeRemaining();
     let timestamp = { timestamp: { turn, phase, turnNum, clock: `${minutes}:${seconds}` } }
@@ -78,4 +78,4 @@ async function interceptLog (log) {
     interceptDebugger(newLog);
  };
 
- module.exports = interceptLogging;
+ module.exports = { interceptLogging, makeAfterActionReport };

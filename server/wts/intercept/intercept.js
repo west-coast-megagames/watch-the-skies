@@ -3,7 +3,7 @@ const interceptDebugger = require('debug')('app:intercept');
 const { outcome } = require('./outcome')
 const { interceptDmg } = require('./damage');
 const { generateCrash } = require('./salvage');
-const interceptLogging = require('./report');
+const { interceptLogging } = require('./report');
 
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 async function intercept (attacker, atkStance, atkReport, defender, defStance, defReport) {
