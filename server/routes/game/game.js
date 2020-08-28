@@ -17,6 +17,7 @@ const banking = require('../../wts/banking/banking');
 
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
+const { func } = require('joi');
 
 // @route   PUT game/military/deploy
 // @Desc    Deploy a group of units for a country
@@ -130,4 +131,32 @@ router.put('/research', async function (req, res) {
 
 });
 
+//EXPECTATION: 
+router.put('/rename', async function (req, res) {
+  let target;
+  let originalName;
+  switch (req.body.model) {
+    case ('Facility'):
+        target = await Facility.findById(req.body._id);
+        originalName = target.name;
+        target.name = req.body.name;
+        target = await target.save();
+        break;
+    case ('Aircraft'):
+      target = await Aircraft.findById(req.body._id);
+      originalName = target.name;
+      target.name = req.body.name;
+      target = await target.save();
+        break;
+    case ('Squad'):
+      //return once squads are finished
+        break;
+    case ('Upgrade'):
+      //return once upgrades are finished
+        break;
+    default:
+      res.status(200).send(`Unable to determine the type of Object you want to rename`);
+  }
+res.status(200).send(`Renamed '${originalName}' to '${target.name}'`);
+});
   module.exports = router
