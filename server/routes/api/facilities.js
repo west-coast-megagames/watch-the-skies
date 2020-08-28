@@ -52,7 +52,7 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @Desc    Takes in blueprint and name and site and starts construction on a new Facility
 // @access  Public
 router.post('/build', async (req, res) => {
-  let { name, site, code } = req.body; //please give me these things
+  let { name, site, code, team } = req.body; //please give me these things
   await loadBlueprints(); //this can me taken out when you implement the init loadBlueprints
   let blue = await FacilityBlueprint.find();
 
@@ -63,6 +63,7 @@ router.post('/build', async (req, res) => {
   facility.name = name;
   facility.site = site;
   facility.code = code;
+  facility.team = team;
   facility = await facility.save();
 
   res.status(200).json(facility);
