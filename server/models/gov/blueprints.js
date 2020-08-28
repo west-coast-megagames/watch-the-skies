@@ -12,18 +12,20 @@ const BlueprintSchema = new Schema({
   buildTime: { type: Number, required: true, default: 0 },
   desc: { type: String, required: true, default: "Blueprint" },
   prereq: [],
-  hidden: { type: Boolean, required: true, default: false },
+  hidden: { type: Boolean, required: true, default: false }
 });
 
 let Blueprint = mongoose.model("Blueprint", BlueprintSchema);
 
 const FacilityBlueprint = Blueprint.discriminator('FacilityBlueprint', new Schema({
   site: { type: ObjectId, ref: "Site" },
+  upgrades: [Schema.Types.Mixed],
   capability: { type: Schema.Types.Mixed }
 }));
 
 const AircraftBlueprint = Blueprint.discriminator('AircraftBlueprint', new Schema({
-  stats: { type: Schema.Types.Mixed }
+  stats: { type: Schema.Types.Mixed },
+  upgrades: [Schema.Types.Mixed],
 }));
 
 const SquadBlueprint = Blueprint.discriminator('SquadBlueprint', new Schema({
