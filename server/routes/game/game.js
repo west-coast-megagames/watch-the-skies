@@ -10,6 +10,7 @@ const { Military } = require('../../models/ops/military/military')
 const { Site } = require('../../models/sites/site');
 const { Account } = require('../../models/gov/account');
 const { Facility } = require('../../models/gov/facility/facility');
+const { Squad } = require('../../models/ops/squad');
 
 // Game Systems - Used to run Game functions
 const banking = require('../../wts/banking/banking');
@@ -149,7 +150,11 @@ router.put('/rename', async function (req, res) {
       target = await target.save();
         break;
     case ('Squad'):
-      //return once squads are finished
+      //this is untested
+      target = await Squad.findById(req.body._id);
+      originalName = target.name;
+      target.name = req.body.name;
+      target = await target.save();
         break;
     case ('Upgrade'):
       //return once upgrades are finished
