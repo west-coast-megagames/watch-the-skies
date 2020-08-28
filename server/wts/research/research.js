@@ -90,9 +90,8 @@ async function conductResearch(lab) {
                 tech.progress += progressInfo.progress; // Adds progress to the current Research
             }
 
-            tech.progress >= techCost[tech.level] && tech.type !== 'Knowledge' ? tech.status.completed = true 
-                : tech.progress >= techCost[tech.level] && tech.type === 'Knowledge' ? tech.status.pending = true 
-                    : null; // Checks for compleation of current research
+            if (tech.progress >= techCost[tech.level] && tech.type !== 'Knowledge') tech.status.completed = true;
+            if (tech.progress >= techCost[tech.level * 5] && tech.type === 'Knowledge') tech.status.pending = true; // Checks for compleation of current research
 
             let facility = await Facility.findById(lab._id);
             facility.capability.research.funding.set(lab.index, 0);
@@ -127,9 +126,9 @@ async function conductResearch(lab) {
             facility.serviceRecord.push(report._id);
             await facility.save();
             tech = await tech.save(); // Saves the current project to the database
-            researchDebugger(tech);
+            if (tech.type === 'Knowledge') researchDebugger(tech);
 
-            tech.type !== 'Knowledge' ? await advanceKnowledge(tech, lab) : null;
+            if (tech.type !== 'Knowledge') await advanceKnowledge(tech, lab)
 
             if (progressInfo.breakthroughs > 0) {
                 await produceBreakthrough(tech, lab, progressInfo.breakthroughs);
@@ -194,23 +193,22 @@ function calculateProgress(sciRate, funding, sciBonus) {
 async function completeResearch(research) {
     researchDebugger(`Enough progress has been made to complete ${research.name}...`);
     research.status.available = false;
-    research.status.completed = true;
 
     if (research.type === 'Knowledge') {
+        research.status.pending = false;
+        research.status.completed = true;
         if (research.level < 5) {
-            research.status.pending = false;
-            research.status.completed = true;
-            research.status.available = false;
             let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
-            await nextKnowledge.unlock();
+            let check = await Research.find({name: nextKnowledge.name})
+            if (check.length === 0) await nextKnowledge.unlock();
             researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
-            console.log(nextKnowledge);
         };
     }
 
     if (research.type === 'Technology') {
         for await (let item of research.unlocks) {
             if (item.type === 'Technology') {
+                research.status.completed = true;
                 let team = await Team.findById({_id: research.team._id});
                 let newTech = techTree.find(el => el.code === item.code);
                 researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
@@ -232,10 +230,12 @@ async function advanceKnowledge(research, lab) {
             'status.available': true,
             'status.completed': false
         })
-        lab.project = project._id;
-        lab.funding = knowledge.rolls;
-        researchDebugger(`Progressing Human Knowledge: ${project.type} - ${project.name}`);
-        if (project !== null) await conductResearch(lab);
+        if (project !== null){ 
+            lab.project = project._id;
+            lab.funding = knowledge.rolls;
+            researchDebugger(`Progressing Human Knowledge: ${project.type} - ${project.name}`);
+            await conductResearch(lab);
+        }
     }
     return
 }
@@ -290,7 +290,8 @@ async function assignKnowledgeCredit() {
             await completeResearch(knowledge);
         }
         
-        researchDebugger('Giving credit for research completed!')
+        nexusEvent.emit('updateResearch');
+        researchDebugger('Giving credit for research completed!');
     } catch (err) {
         logger.error(`Knowledge Credit Error: ${err.message}`, {meta: err})
     }

@@ -46,7 +46,7 @@ class ResearchReport {
             submission = submission.createTimestamp(submission);
 
             submission = await submission.save();
-            reportDebugger(submission);
+            //reportDebugger(submission);
 
             return submission;
         } catch (err) {

@@ -8,7 +8,7 @@ const { Research, KnowledgeResearch } = require('../../models/sci/research'); //
 
 // Science Game State
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js
-const knowledgeCost = [ 20, 30, 40, 50, 60, 70 ] // Cost for each level of tech, arbitratily set at increments of 10 currently
+const knowledgeCost = [ 30, 60, 100, 150, 220, 300 ]  // Cost for each level of tech, arbitratily set at increments of 10 currently
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
 const knowledgeTree = []; // Tree of all knowledge classes in the game, loaded on server load
 let controlTeam = {}; // Current control team from DB
@@ -64,7 +64,6 @@ async function knowledgeSeed() {
     for await (let knowledge of seeded) {
         // Knowledge.unlock is the Method of the Knowledge Class that unlocks the next knowledge level of a field
         let newKnowledge = await knowledge.unlock(); 
-        knowledgeDebugger(`Seeding: ${newKnowledge.name}`);
         
         let tree = knowledgeTree;
 
@@ -109,7 +108,7 @@ function KnowledgeClass(knowledge) {
 
     //Method that seeds knowledge pre-game
     this.seed = async function() {
-        console.log(`seeding ${this.name}`)
+        knowledgeDebugger(`Seeding: ${this.name}`);
         let newKnowledge = new KnowledgeResearch({
             name: this.name,
             level: this.level,
@@ -173,12 +172,7 @@ async function completeKnowledge (research) {
     }
     let team = await Team.findById(research.credit);
     // credit = await Team.findById(research.credit);
-    knowledgeDebugger(`${team.name} has been credited with advancing the world to ${research.name}`)
-    
-    if (research.level < 5) {
-        let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
-        nextKnowledge.unlock();
-    };
+    knowledgeDebugger(`${team.name} has been credited with advancing the world to ${research.name}`);
 
    research = await research.save();
 

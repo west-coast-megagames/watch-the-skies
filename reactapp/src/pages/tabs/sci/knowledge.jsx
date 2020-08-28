@@ -35,7 +35,7 @@ class Knowledge extends Component {
     
     createTable = () => {
         let knowledge = this.props.knowledge
-        let data = this.state.data;
+        let data = [];
         for (let field of fields) {
             let object = {};
             object.field = field;
@@ -51,8 +51,10 @@ class Knowledge extends Component {
                     object.research_id = el._id
                 }
             };
+            if (object.research === undefined) object.research = knowledge.find(el => el.field === field && el.level === 5);
             data.push(object);
         }
+        console.log(data);
         return data;
     }
     
@@ -84,7 +86,7 @@ class Knowledge extends Component {
                     <HeaderCell>Global Progress Towards next Level</HeaderCell>
                     <Cell style={{padding: '8px'}}>{rowData => {
                         let progress = rowData.research.progress;
-                        let percent = progress / this.props.techCost[rowData.research.level] * 100
+                        let percent = Math.floor(progress / (this.props.techCost[rowData.research.level] * 10) * 100);
                         return(
                             <Progress.Line percent={percent} />
                     )}}</Cell>
