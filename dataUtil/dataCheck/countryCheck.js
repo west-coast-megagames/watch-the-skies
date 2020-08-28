@@ -70,6 +70,16 @@ async function chkCountry(runFlag) {
       logger.error(
         `loadZoneCode missing for Country ${country.code} ${country._id}`
       );
+    } else {
+      if (
+        country.loadZoneCode === "" ||
+        country.loadZoneCode == undefined ||
+        country.loadZoneCode == null
+      ) {
+        logger.error(
+          `loadZoneCode is blank for Country ${country.code} ${country._id}`
+        );
+      }
     }
 
     if (!country.hasOwnProperty("zone")) {
@@ -98,6 +108,16 @@ async function chkCountry(runFlag) {
       logger.error(
         `loadTeamCode missing for Country ${country.code} ${country._id}`
       );
+    } else {
+      if (
+        country.loadTeamCode === "" ||
+        country.loadTeamCode == undefined ||
+        country.loadTeamCode == null
+      ) {
+        logger.error(
+          `loadTeamCode is blank for Country ${country.code} ${country._id}`
+        );
+      }
     }
 
     if (!country.hasOwnProperty("code")) {
@@ -199,11 +219,23 @@ async function chkCountry(runFlag) {
         logger.error(
           `stats.sciRate missing for Country ${country.code} ${country._id}`
         );
+      } else {
+        if (isNaN(country.stats.sciRate)) {
+          logger.error(
+            `Country ${country.code} ${country._id} stats.sciRate is not a number ${country.stats.sciRate}`
+          );
+        }
       }
       if (!country.stats.hasOwnProperty("balance")) {
         logger.error(
           `stats.balance missing for Country ${country.code} ${country._id}`
         );
+      } else {
+        if (isNaN(country.stats.balance)) {
+          logger.error(
+            `Country ${country.code} ${country._id} stats.balance is not a number ${country.stats.balance}`
+          );
+        }
       }
     }
 
@@ -247,9 +279,9 @@ async function chkCountry(runFlag) {
         let sCountryId = sFinds[j].country.toHexString();
 
         if (sCountryId === countryId) {
-          if (sFinds[j].type === "City") {
+          if (sFinds[j].subType === "City" && sFinds[j].type === "Ground") {
             ++cityCount;
-          } else if (sFinds[j].type === "Spacecraft") {
+          } else if (sFinds[j].type === "Space") {
             ++spacecraftCount;
           }
         }

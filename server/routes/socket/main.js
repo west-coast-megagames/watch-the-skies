@@ -46,8 +46,17 @@ module.exports = function(io) {
     
         client.on('bankingTransfer', async (transfer) => {
             let { to, from, amount, note } = transfer;
+
+            if (to === from){
+                let err = `Someone tried to send money to themselves`
+                return nexusEvent.emit(`error`, err);                
+            }
+
+
             socketDebugger(transfer);
             await banking.transfer(to, from, amount, note);
+
+
 
             nexusEvent.emit('updateAccounts');
             nexusEvent.emit('updateLogs');
@@ -66,5 +75,6 @@ module.exports = function(io) {
             MainClients.delClient(client);
             socketDebugger( `${MainClients.connections.length} clients connected`);
           });
+
     })
 }

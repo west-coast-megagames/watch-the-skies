@@ -104,6 +104,14 @@ async function chkTeam(runFlag) {
 
     if (!team.hasOwnProperty("shortName")) {
       logger.error(`shortName missing for team ${team.name} ${team._id}`);
+    } else {
+      if (
+        team.shortName === "" ||
+        team.shortName == undefined ||
+        team.shortName == null
+      ) {
+        logger.error(`shortName is blank for Team ${team.name} ${team._id}`);
+      }
     }
 
     if (!team.hasOwnProperty("teamCode")) {
