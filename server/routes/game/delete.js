@@ -11,6 +11,7 @@ const {Log} = require('../../models/logs/log');
 router.delete('/logs', async function (req, res) {
     let data = await Log.deleteMany();
     console.log(data);
+    nexusEvent.emit('updateLogs');
     res.status(200).send(`We wiped out ${data.deletedCount} records in the Logs Database!`);
 });
 

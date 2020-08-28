@@ -7,6 +7,8 @@ import { lookupPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
 import { getAvailibleResearch, getTeamResearch } from '../../../store/entities/research';
+import { getLogsByTeam } from '../../../store/entities/logs';
+import { getLabs } from '../../../store/entities/facilities';
 
 const { Column, HeaderCell, Cell } = Table;
 const labRepairCost = 5;
@@ -409,7 +411,7 @@ class ResearchLabs extends Component {
 const mapStateToProps = state => ({
 	lastUpdate: state.entities.facilities.lastFetch,
     team: state.auth.team,
-    facilities: state.entities.facilities.list,
+    facilities: getLabs(state),
     research: getTeamResearch(state),
 	account: getSciAccount(state)
 	
