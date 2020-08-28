@@ -6,8 +6,13 @@ const validateObjectId = require('../../middleware/validateObjectId');
 
 const { logger } = require('../../middleware/winston');
 
+const { loadBlueprints } = require('../../wts/construction/blueprintLoad');
+
 // Facility Model - Using Mongoose Model
 const { Facility } = require('../../models/gov/facility/facility');
+const { Site } = require('../../models/sites/site');
+const { FacilityBlueprint, Blueprint } = require('../../models/gov/blueprints');
+const { find } = require('../../models/logs/alert');
 
 
 // @route   GET api/facilities
@@ -46,18 +51,21 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @route   POST api/facility
 // @Desc    Takes in blueprint and name and site and starts construction on a new Facility
 // @access  Public
-router.post('/build', validateObjectId, async (req, res) => {
-  let { blueprint, name, site } = req.body;
-  let facility;
-  /*
-  let facility = new Facility({
-    name: iData.name,
-    code: iData.code,
-    siteCode: iData.siteCode,
-    coastal: iData.coastal,
-    type: iData.type,
-  });
-  */
+router.post('/build', async (req, res) => {
+  let { name, site, code } = req.body; //please give me these things
+  await loadBlueprints(); //this can me taken out when you implement the init loadBlueprints
+  let blue = await FacilityBlueprint.find();
+
+  let facility = new Facility(blue);
+  //console.log(facility);
+  //site = await Site.find(site);
+
+  facility.name = name;
+  facility.site = site;
+  facility.code = code;
+  facility = await facility.save();
+
+  res.status(200).json(facility);
 
 });
 module.exports = router;

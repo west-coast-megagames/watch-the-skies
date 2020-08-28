@@ -18,6 +18,7 @@ const BlueprintSchema = new Schema({
 let Blueprint = mongoose.model("Blueprint", BlueprintSchema);
 
 const FacilityBlueprint = Blueprint.discriminator('FacilityBlueprint', new Schema({
+  site: { type: ObjectId, ref: "Site" },
   capability: { type: Schema.Types.Mixed }
 }));
 

@@ -1,10 +1,10 @@
 const fs = require('fs')
 const bpLoadDebugger = require('debug')('app:blueprints');
 const facilityData = JSON.parse(fs.readFileSync(require.resolve('../json/facilities/facilities.json')));
-const aircraftData = JSON.parse();
-const squadData = JSON.parse();
-const upgradeData = JSON.parse();
-const blueprintsData = [...facilityData, ...aircraftData, ...squadData, ...upgradeData];
+//const aircraftData = JSON.parse();
+//const squadData = JSON.parse(); //js dislikes empty parse functions
+//const upgradeData = JSON.parse();
+const blueprintsData = [...facilityData, ];//...aircraftData, ...squadData, ...upgradeData
 
 // Import Blueprint discriminators for all buildables
 // Facility | Aircraft | Spacecraft | Squad | Upgrade
@@ -47,5 +47,5 @@ async function loadBlueprints () {
     return `${total} Bluprints available in WTS | ${facilityCount} Faclities | ${aircraftCount} Aircrafts | ${squadCount} Squads | ${upgradeCount} upgrades`
 };
 
-
+//
 module.exports = { loadBlueprints };
