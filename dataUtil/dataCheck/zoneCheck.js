@@ -90,10 +90,12 @@ async function chkZone(runFlag) {
       }
     }
 
+    /* 2020-08-27 no longer requiring at least one country per zone
     //zoneCheckDebugger(`Zone ${zone.code} has ${countryCount} countries`);
     if (countryCount < 1) {
       logger.error(`No Countries Found In Zone ${zone.code} ${zone.name}`);
     }
+    */
 
     if (zone.hasOwnProperty("satellite")) {
       //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} Check of Satellite ${zone.satellite.length}`);
@@ -105,11 +107,11 @@ async function chkZone(runFlag) {
             `Zone ${zone.name} ${zone._id} has an invalid satellite reference ${i}: ${zone.satellite[i]}`
           );
         } else {
-          if (!(sFind.type === "Spacecraft")) {
+          if (!(sFind.type === "Space")) {
             logger.error(
-              `Zone ${zone.name} ${zone._id} has non-Spacecraft satellite reference ${i}: ${zone.satellite[i]} ${sFind.type}`
+              `Zone ${zone.name} ${zone._id} has non-Space satellite reference ${i}: ${zone.satellite[i]} ${sFind.type}`
             );
-          } else if (!(sFind.shipType === "Satellite")) {
+          } else if (!(sFind.subType === "Satellite")) {
             logger.error(
               `Zone ${zone.name} ${zone._id} has non-satellite reference ${i}: ${zone.satellite[i]} ${sFind.shipType}`
             );
