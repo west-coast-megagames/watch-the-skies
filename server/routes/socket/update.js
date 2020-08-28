@@ -132,4 +132,12 @@ module.exports = function (io) {
       socketDebugger(`Error: ${error.message}`);
     }
   });
+
+  nexusEvent.on(`error`, async (err) => {
+    //something here? I don't get how your sockets work.
+    console.log(err);
+    //it does log so that works.  
+    
+  });
+
 };
