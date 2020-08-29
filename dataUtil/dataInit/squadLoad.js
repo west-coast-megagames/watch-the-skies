@@ -24,6 +24,7 @@ const { Squad, validateSquad } = require("../models/ops/squad");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
 const { Site } = require("../models/sites/site");
+const { Facility } = require("../models/gov/facility/facility");
 const app = express();
 
 // Bodyparser Middleware
@@ -111,10 +112,7 @@ async function loadSquad(iData, rCounts) {
       if (iData.site != "") {
         let site = await Site.findOne({ siteCode: iData.site });
         if (!site) {
-          // not an error ... just set to origin
-          //loadError = true;
-          //loadErrorMsg = `Site Not Found: ${iData.site}`;
-          //squadLoadDebugger("Squad Load Site Error, New Squad:", iData.name, " origin: ", iData.site);
+          //not an error ???
         } else {
           squad.site = site._id;
           //squadLoadDebugger("Squad Load Site Found, Squad:", iData.name, " Site: ", iData.site, "Site ID:", site._id);
@@ -122,15 +120,15 @@ async function loadSquad(iData, rCounts) {
       }
 
       if (iData.origin != "") {
-        let site = await Site.findOne({ siteCode: iData.origin });
-        if (!site) {
+        let facility = await Facility.findOne({ code: iData.origin });
+        if (!facility) {
           loadError = true;
           loadErrorMsg = `origin Not Found: ${iData.origin}`;
           //squadLoadDebugger("Squad Load Home Base Error, New Squad:", iData.name, " origin: ", iData.origin);
         } else {
-          squad.origin = site._id;
+          squad.origin = facility._id;
           if (!squad.site) {
-            squad.site = site._id;
+            squad.site = facility.site;
           }
           //squadLoadDebugger("Squad Load Home Base Found, Squad:", iData.name, " origin: ", iData.origin, "Site ID:", site._id);
         }
