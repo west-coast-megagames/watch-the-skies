@@ -121,30 +121,6 @@ router.patch("/resethull", auth, async function (req, res) {
   nexusEvent.emit("updateAircrafts");
 });
 
-// @route   PATCH api/aircraft/return
-// @desc    Update all aircrafts to return to base
-// @access  Public
-router.patch("/return", async function (req, res) {
-  let count = 0;
-  for await (const aircraft of Aircraft.find().populate("origin")) {
-    if (
-      aircraft.site.toHexString() !== aircraft.origin._id.toHexString() ||
-      aircraft.status.deployed
-    ) {
-      aircraft.mission = "Docked";
-      aircraft.status.ready = true;
-      aircraft.status.deployed = false;
-      aircraft.country = aircraft.origin.country;
-      aircraft.site = aircraft.origin._id;
-      aircraft.zone = aircraft.origin.zone;
-      await aircraft.save();
-      count++;
-    }
-  }
-  res.status(200).send(`${count} aircrafts succesfully returned!`);
-  nexusEvent.emit("updateAircrafts");
-});
-
 // @route   PATCH api/aircraft/restore
 // @desc    Update all aircrafts to be deployed
 // @access  Public
