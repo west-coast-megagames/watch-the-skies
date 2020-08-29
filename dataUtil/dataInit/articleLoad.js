@@ -74,7 +74,7 @@ async function loadArticle(iData, rCounts) {
   try {
     //there is no article key field or updates ... just new ones
     // New Article/Article here
-    let convDate = new Date(iData.date);
+    let convDate = new Date(); //new Date(iData.date);
     let article = new Article({
       timestamp: iData.timestamp,
       headline: iData.headline,
