@@ -140,6 +140,72 @@ async function loadBase(iData, rCounts) {
 
       facility.capability = {};
       facility.capability = iData.capability;
+
+      //John's additional settings
+      let {
+        research,
+        airMission,
+        storage,
+        manufacturing,
+        naval,
+        ground,
+      } = facility.capability;
+
+      research.status.damage = [];
+      research.status.pending = [];
+      research.funding = [];
+      if (research.capacity > 0) {
+        for (let i = 0; i < research.capacity; i++) {
+          research.status.damage.set(i, false);
+
+          research.funding.set(i, 0);
+
+          research.status.pending.set(i, false);
+        }
+
+        research.active = true;
+
+        research.sciRate = Math.floor(Math.random() * 26);
+
+        research.sciBonus = 0;
+      } else {
+        research.active = false;
+        research.sciBonus = 0;
+        research.sciRate = 0;
+      }
+
+      if (airMission.capacity > 0) {
+        airMission.active = true;
+      } else {
+        airMission.active = false;
+      }
+
+      if (storage.capacity > 0) {
+        storage.active = true;
+      } else {
+        storage.active = false;
+      }
+
+      if (manufacturing.capacity > 0) {
+        manufacturing.active = true;
+      } else {
+        manufacturing.active = true;
+      }
+
+      if (naval.capacity > 0) {
+        naval.active = true;
+      } else {
+        naval.active = false;
+      }
+
+      if (ground.capacity > 0) {
+        ground.active = true;
+      } else {
+        ground.active = true;
+      }
+
+      //end of John's additional settings
+
       if (loadError) {
         logger.error(
           `Base skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
