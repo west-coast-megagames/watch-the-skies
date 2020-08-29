@@ -12,27 +12,36 @@
         "projects": [],
         "active": true,
         "sciRate": 12,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 8,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "manufacturing": {
         "capacity": 1,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "US",
@@ -53,32 +62,42 @@
         "projects": [],
         "active": true,
         "sciRate": 12,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "manufacturing": {
         "capacity": 1,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 7,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 20,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "US",
@@ -99,22 +118,30 @@
         "projects": [],
         "active": true,
         "sciRate": 5,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "US",
@@ -135,27 +162,36 @@
         "projects": [],
         "active": true,
         "sciRate": 3,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 2,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 3,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "GB",
@@ -176,27 +212,36 @@
         "projects": [],
         "active": true,
         "sciRate": 20,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 2,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "ZA",
@@ -217,22 +262,30 @@
         "projects": [],
         "active": true,
         "sciRate": 2,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 6,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "RU",
@@ -253,27 +306,36 @@
         "projects": [],
         "active": true,
         "sciRate": 2,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 8,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 6,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "RU",
@@ -294,27 +356,36 @@
         "projects": [],
         "active": true,
         "sciRate": 12,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 7,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 2,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 15,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "JP",
@@ -335,27 +406,36 @@
         "projects": [],
         "active": true,
         "sciRate": 12,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 3,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "IR",
@@ -376,27 +456,36 @@
         "projects": [],
         "active": true,
         "sciRate": 14,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 6,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 8,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 6,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "IN",
@@ -417,27 +506,36 @@
         "projects": [],
         "active": true,
         "sciRate": 8,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 4,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "FR",
@@ -458,27 +556,36 @@
         "projects": [],
         "active": true,
         "sciRate": 5,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 2,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "EG",
@@ -499,27 +606,36 @@
         "projects": [],
         "active": true,
         "sciRate": 9,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 8,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 15,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 10,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "CN",
@@ -540,27 +656,36 @@
         "projects": [],
         "active": true,
         "sciRate": 16,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 2,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "BZ",
@@ -581,27 +706,36 @@
         "projects": [],
         "active": true,
         "sciRate": 22,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 2,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 4,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "AU",
@@ -622,22 +756,30 @@
         "projects": [],
         "active": true,
         "sciRate": 10,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 8,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "AQ",
@@ -658,27 +800,36 @@
         "projects": [],
         "active": true,
         "sciRate": 12,
-        "sciBonus": 0
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
       },
       "airMission": {
         "capacity": 4,
         "aircraft": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "storage": {
         "capacity": 3,
         "equipment": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "ground": {
         "capacity": 4,
         "corps": [],
-        "active": true
+        "active": true,
+        "damage": []
       },
       "naval": {
         "capacity": 4,
         "fleet": [],
-        "active": true
+        "active": true,
+        "damage": []
       }
     },
     "countryCode": "MX",

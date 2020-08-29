@@ -222,7 +222,7 @@ async function loadBase(iData, rCounts) {
       }
 
       facility.capability = {};
-
+      facility.capability = iData.capability;
       if (loadError) {
         logger.error(
           `Base Site skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
