@@ -7,23 +7,21 @@ const { Aircraft } = require("../../models/ops/aircraft");
 
 async function interceptDmg(attacker, defender, atkResult, defResult) {
   interceptDebugger("Prepearing damage report...");
-  let atkEvade = atkResult.evade + attacker.stats.evade;
-  let defEvade = defResult.evade + defender.stats.evade;
   let defOutcome = {
-    evade: defEvade - Math.floor(atkEvade / 2),
-    damage: defResult.damage,
-    sysDmg: defResult.sysDmg,
-    hit: atkResult.hit,
-    weaponDmg: attacker.stats.attack,
-    sysHit: attacker.stats.penetration - defender.stats.armor,
+    evade: defResult.evade - Math.floor(atkResult.evade / 2), // Final defender evade
+    damage: defResult.damage,                                 // Final self dmg to defender
+    sysDmg: defResult.sysDmg,                                 // Hard system damage
+    hit: atkResult.hit,                                       // If defender was hit
+    weaponDmg: atkResult.attack,                              // Weapon damage on hit
+    sysHit: attacker.stats.penetration - defender.stats.armor,// # of system hits
   };
 
   let atkOutcome = {
-    evade: atkEvade - Math.floor(defEvade / 2),
+    evade: atkResult.evade - Math.floor(defResult.evade / 2),
     damage: atkResult.damage,
     sysDmg: atkResult.sysDmg,
     hit: defResult.hit,
-    weaponDmg: defender.stats.attack,
+    weaponDmg: defResult.attack,
     sysHit: defender.stats.penetration - attacker.stats.armor,
   };
 
@@ -48,7 +46,7 @@ async function interceptDmg(attacker, defender, atkResult, defResult) {
 }
 
 async function dmgCalc(unit, report) {
-  let { evade, damage, sysDmg, hit, weaponDmg, sysHit } = report;
+  let { evade, damage, sysDmg, hit, weaponDmg, sysHit, performance } = report;
   let { name } = unit;
 
   interceptDebugger(`Calculating ${name} damage...`);
@@ -60,20 +58,21 @@ async function dmgCalc(unit, report) {
   let crash = false;
 
   let atkDmg = 0;
+  let evaded = 0;
+  let systemHits = 0;
 
   if (evade > 0) {
-    weaponDmg < evade ? (amount = weaponDmg) : (amount = evade);
-    weaponDmg < evade ? (weaponDmg = 0) : (weaponDmg -= evade);
-    battleReport = `${battleReport}${name} evades ${amount}pts of damage. `;
+    weaponDmg < evade ? evaded = weaponDmg : evaded = evade;
+    weaponDmg < evade ? weaponDmg = 0 : weaponDmg -= evade;
+    battleReport = `${battleReport}${name} evades ${evaded}pts of damage. `;
     interceptDebugger(battleReport);
   }
 
-  hit === true ? (atkDmg = weaponDmg) : (sysHit = 0);
+  hit === true ? atkDmg = weaponDmg : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
 
   let hullDmg = atkDmg + damage;
   interceptDebugger(`${unit.name} takes ${hullDmg} damage!`);
 
-  let systemHits = 0;
   if (sysHit > 0 || sysDmg) {
     sysDmg === true ? (systemHits = sysHit + 1) : (systemHits = sysHit);
 

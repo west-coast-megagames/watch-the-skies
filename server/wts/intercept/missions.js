@@ -11,7 +11,8 @@ const { Site } = require("../../models/sites/site");
 const { ReconReport } = require("../reports/reportClasses");
 const { getDistance } = require("../../util/systems/geo");
 const { makeAfterActionReport } = require("./report");
-const { engageDesc } = require("./battleDetails");
+const dynReport = require("./battleDetails");
+const { logger } = require("../../middleware/winston");
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -28,6 +29,7 @@ let totalCount = 0;
 async function start(aircraft, target, mission) {
   let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`;
   let origin = await Facility.findById(aircraft.origin).populate('site'); // Populate home facility for the aircraft
+
   let targetGeo = undefined // Initiate targets Geo position placeholder
   target.model === 'Aircraft' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
   let { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
@@ -40,40 +42,36 @@ async function start(aircraft, target, mission) {
   let distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
   missionDebugger(`Mission distance ${distance}km`);
 
-  // SWITCH Sorts the mission into the correct mission array
+  // SWITCH Sorts the mission into the correct mission 
+  let newMission = [{ aircraft, target, distance, origin }]; // Saves the mission combination
   switch (true) {
     case mission === "Interception":
-      let newIntercept = [{ aircraft, target, distance }]; // Saves the Intercept combination
-      interceptionMissions = [...interceptionMissions, ...newIntercept]; // Adds Interception to be resolved
+      interceptionMissions = [...interceptionMissions, ...newMission]; // Adds Interception to be resolved
       missionDebugger(interceptionMissions);
       break;
     case mission === "Escort":
-      let newEscort = [{ aircraft, target, distance}]; // Saves the Escort combination
-      escortMissions = [...escortMissions, ...newEscort]; // Adds Escort to be resolved
+      escortMissions = [...escortMissions, ...newMission]; // Adds Escort to be resolved
       missionDebugger(escortMissions);
       break;
     case mission === "Patrol":
-      let newPatrol = [{ aircraft, target, distance }]; // Saves the Patrol combination
-      patrolMissions = [...patrolMissions, ...newPatrol]; // Adds Patrol to be resolved
+      patrolMissions = [...patrolMissions, ...newMission]; // Adds Patrol to be resolved
       missionDebugger(patrolMissions);
       break;
     case mission === "Transport":
-      let newTransport = [{ aircraft, target, distance }]; // Saves the Transport combination
-      transportMissions = [...transportMissions, ...newTransport]; // Adds Transport to be resolved
+      transportMissions = [...transportMissions, ...newMission]; // Adds Transport to be resolved
       missionDebugger(transportMissions);
       break;
     case mission === "Recon Site" || mission === "Recon Airship":
-      let newRecon = [{ aircraft, target, distance }]; // Saves the Recon combination
-      reconMissions = [...reconMissions, ...newRecon]; // Adds Recon to be resolved
+      reconMissions = [...reconMissions, ...newMission]; // Adds Recon to be resolved
       missionDebugger(reconMissions);
       break;
     case mission === "Diversion":
-      let newDiversion = [{ aircraft, target, distance }]; // Saves the Recon combination
-      diversionMissions = [...diversionMissions, ...newDiversion]; // Adds Recon to be resolved
+      diversionMissions = [...diversionMissions, ...newMission]; // Adds Recon to be resolved
       missionDebugger(diversionMissions);
       break;
     default:
       result = `${result} This is not an acceptable mission type.`;
+      logger.error(`Invalid Air Mission: ${mission} is not a valid mission type.`)
   }
 
   missionDebugger(interceptionMissions.sort((a,b) => a.distance - b.distance));
@@ -86,7 +84,7 @@ async function start(aircraft, target, mission) {
 async function resolveMissions() {
   missionDebugger("Resolving Missions...");
 
-  await runInterceptions(); // Runs through all 
+  await runInterceptions(); // Runs through all Inteceptions | Checks for escorts
   await runTransports();
   await runRecon();
   await runDiversions();
@@ -106,23 +104,27 @@ async function runInterceptions() {
   for await (let interception of interceptionMissions.sort((a,b) => a.distance - b.distance)) {
     count++; // Count iteration for each interception
     missionDebugger(`Mission #${count} - Intercept Mission`);
-    let stance = "passive"; // Targets stance for interception defaults to 'passive'
-    let aircraft = await Aircraft.findById(interception.aircraft).populate("country", "name").populate("systems");
 
+    let stance = "passive"; // Target stance for interception defaults to 'passive'
+    let aircraft = await Aircraft.findById(interception.aircraft).populate("country", "name").populate("systems"); // Gets the Initiator from the DB
+    let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
+
+    // Skips mission if the current aircraft is dead
     if (aircraft.status.destroyed || aircraft.systems.length < 1) {
       missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
       continue;
     }
 
-    let target = await Aircraft.findById(interception.target).populate("systems");
+    let target = await Aircraft.findById(interception.target).populate("systems"); // Gets the Target from the DB
     missionDebugger(`${aircraft.name} vs. ${target.name}`);
-    let atkReport = `${aircraft.name} en route to ${country.name} airspace. ${aircraft.name} attempting to engage a contact.`;
 
-    let escortCheck = await checkEscort(interception.target, atkReport); // Checks to see if the target is escorted
+
+    let escortCheck = await checkEscort(interception.target, atkReport, aircraft); // Checks to see if the target is escorted
 
     target = escortCheck.target;
     atkReport = escortCheck.atkReport;
     defReport = escortCheck.defReport;
+    stance = escortCheck.stance;
 
     if (target.status.destroyed || target.systems.length < 1) {
       let log = {
@@ -143,7 +145,7 @@ async function runInterceptions() {
     }
 
     missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
-    atkReport = `${atkReport} ${engageDesc(aircraft, aircraft.country, )}`;
+    atkReport = `${atkReport} ${dynReport.engageDesc(aircraft, aircraft.country )}`;
     await intercept( aircraft, "aggresive", atkReport, target, stance, defReport );
   }
   return 0;
@@ -366,29 +368,31 @@ async function checkPatrol(target, atkReport, aircraft) {
 }
 
 // Check for all escort missions for any that are guarding (Aircraft)
-async function checkEscort(target, atkReport) {
-  for (let escort of escortMissions) {
+async function checkEscort(target, atkReport, attacker) {
+
+  // Checks all remaining escort missions sorted by distance
+  for (let escort of escortMissions.sort((a,b) => a.distance - b.distance)) {
     missionDebugger("Checking escort missions...");
+
     if (target.toHexString() === escort.target.toHexString()) {
       // toHexString allows checking equality for _id
       missionDebugger("Escort engaging!");
-      target = await Aircraft.findById(target);
-      let newTarget = await Aircraft.findById(escort.aircraft).populate(
-        "systems"
-      );
-      escortMissions.splice(escortMissions.indexOf(escort), 1);
-      stance = "aggresive";
-      let defReport = `${newTarget.name} broke away from ${target.name} to engage incoming aircraft.`;
-      atkReport = `${atkReport} Contact seems to have an escort, escort is breaking off to engage.`;
+      target = await Aircraft.findById(target); // Gets the original target of the interception
+      let newTarget = await Aircraft.findById(escort.aircraft).populate("systems").populate('country'); // Gets the escorter for the target
+      escortMissions.splice(escortMissions.indexOf(escort), 1); // Removes the current escort from the missions array
+      let stance = "aggresive"; // Sets the stance for the new target to
+      let defReport = dynReport.escortDesc(newTarget, target);
+      atkReport = dynReport.escortEngageDesc(attacker, atkReport);
+
       target = newTarget;
-      return { target, atkReport, defReport };
+      return { target, atkReport, defReport, stance };
     }
+
   }
-  target = await Aircraft.findById(target)
-    .populate("systems")
-    .populate("country");
-  let defReport = `${target.name} was engaged over ${target.country.name} airspace.`;
-  return { target, atkReport, defReport };
+
+  target = await Aircraft.findById(target).populate("systems").populate("country"); // Loads original target in for interception
+  let defReport = `${target.name} was engaged over ${target.country.name} airspace.`; // Possible dynReport point
+  return { target, atkReport, defReport, stance: 'defensive' }; // Returns to mission function that called it
 }
 
 function clearMissions() {

@@ -23,8 +23,8 @@ async function intercept (attacker, atkStance, atkReport, defender, defStance, d
         await generateCrash(interceptReport.salvage, attacker.site, attacker.country);
     }
 
-    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport}` 
-    interceptReport.defReport = `${defReport} ${interceptReport.defReport}`
+    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport} ${interceptReport.defReport}` 
+    interceptReport.defReport = `${defReport} ${interceptReport.defReport} ${interceptReport.atkReport}`
     interceptLogging(interceptReport, attacker, defender); // Creates the final intercept logs for both teams | report.js
     interceptDebugger(`Atk After Action Report - ${atkReport} ${interceptReport.atkReport}`);
     interceptDebugger(`Def After Action Report - ${defReport} ${interceptReport.defReport}`);
