@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app:aircraftModel");
+
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
@@ -110,18 +111,20 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   }
 };
 
-AircraftSchema.methods.returnToBase = async (aircraft) => {
-  modelDebugger(`Returning ${aircraft.name} to ${origin.name}...`);
+AircraftSchema.methods.returnToBase = async (aircraft) =>  {
+  const { Facility } = require("../gov/facility/facility");
+
+  let origin = await Facility.findById(aircraft.origin._id).populate('site')
+  modelDebugger(`${aircraft.name} returning to ${origin.name} in ${origin.site.name}`);
   aircraft.mission = "Docked";
   aircraft.status.ready = true;
   aircraft.status.deployed = false;
-  aircraft.country = update.origin.country;
-  aircraft.site = update.origin._id;
-  aircraft.zone = update.origin.zone;
+  aircraft.country = origin.site.country._id;
+  aircraft.site = origin.site._id;
+  aircraft.zone = origin.site.zone._id;
+  await aircraft.save();
 
-  aircraft = await aircraft.save();
-
-  return aircraft;
+  return `${aircraft.name} succesfully returned to ${origin.name}!`;
 };
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {

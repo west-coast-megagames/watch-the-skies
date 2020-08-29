@@ -143,7 +143,7 @@ class Control extends Component {
 
     returnAll = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/interceptor/return`)
+            const response = await axios.patch(`${gameServer}debug/returnAircraft`)
             this.props.alert({type: 'success', title: 'Interceptors returned to Base', body: response.data })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Interceptors failed to return to Base', body: `${err.response.data} - ${err.message}` })
