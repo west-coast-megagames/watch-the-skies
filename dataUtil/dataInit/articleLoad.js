@@ -74,7 +74,6 @@ async function loadArticle(iData, rCounts) {
   try {
     //there is no article key field or updates ... just new ones
     // New Article/Article here
-    let convDate = new Date(); //new Date(iData.date);
     let article = new Article({
       timestamp: iData.timestamp,
       headline: iData.headline,
@@ -82,7 +81,7 @@ async function loadArticle(iData, rCounts) {
       likes: iData.likes,
       tags: iData.tags,
       imageSrc: iData.imageSrc,
-      date: convDate,
+      date: Date.now(),
     });
     article.gameState = [];
 
