@@ -9,7 +9,7 @@ const AircraftSchema = new Schema({
     type: String,
     min: 2,
     maxlength: 50,
-    enum: ["Recon", "Transport", "Decoy", "Fighter"],
+    enum: ["Recon", "Transport", "Decoy", "Fighter", "Interceptor"],
     default: "Fighter",
   },
   name: { type: String, required: true, min: 2, maxlength: 50 },
