@@ -2,14 +2,10 @@
 const {
   Site,
   validateSite,
-  BaseSite,
-  validateBase,
-  CrashSite,
-  validateCrash,
-  CitySite,
-  validateCity,
-  Spacecraft,
-  validateSpacecraft,
+  GroundSite,
+  validateGround,
+  SpaceSite,
+  validateSpace,
 } = require("../models/sites/site");
 const { Equipment } = require("../models/gov/equipment/equipment");
 const { Facility } = require("../models/gov/facility/facility");
@@ -23,8 +19,9 @@ require("winston-mongodb");
 
 const supportsColor = require("supports-color");
 
-const typeVals = ["City", "Base", "Crash", "Spacecraft"];
-const shipTypeVals = [
+const groundSubTypeVals = ["City", "Crash"];
+const typeVals = ["Ground", "Space"];
+const spaceSubTypeVals = [
   "Satellite",
   "Cruiser",
   "Battleship",
@@ -126,10 +123,6 @@ async function chkSite(runFlag) {
       }
     }
 
-    if (!site.hasOwnProperty("coastal")) {
-      logger.error(`coastal missing for Site ${site.name} ${site._id}`);
-    }
-
     if (!site.hasOwnProperty("name")) {
       logger.error(`name missing for Site ${site.siteCode} ${site._id}`);
     }
@@ -146,62 +139,16 @@ async function chkSite(runFlag) {
       }
     }
 
-    if (!site.hasOwnProperty("geoDMS")) {
-      logger.error(`geoDMS missing for Site ${site.name} ${site._id}`);
+    if (!site.hasOwnProperty("facilities")) {
+      logger.error(`facilities missing for Site ${site.name} ${site._id}`);
     } else {
-      if (!site.geoDMS.hasOwnProperty("latDMS")) {
-        logger.error(
-          `citySite Site ${site.name} ${site._id} has missing geoDMS latDMS`
-        );
-      } else {
-        if (site.geoDMS.latDMS === "" || site.geoDMS.latDMS === "undefined") {
+      //check facility references
+      //siteCheckDebugger(`Site ${site.name} ${site._id} ${site.type} Check of facility ${site.facilities.length} `)
+      for (let i = 0; i < site.facilities.length; ++i) {
+        let fFind = await Facility.findById(site.facilities[i]);
+        if (!fFind) {
           logger.error(
-            `citySite Site ${site.name} ${site._id} has an invalid or blank geoDMS latDMS ${site.geoDMS.latDMS}`
-          );
-        }
-      }
-
-      if (!site.geoDMS.hasOwnProperty("longDMS")) {
-        logger.error(
-          `citySite Site ${site.name} ${site._id} has missing geoDMS longDMS ${site.geoDMS.latDMS}`
-        );
-      } else {
-        if (site.geoDMS.longDMS === "" || site.geoDMS.longDMS === "undefined") {
-          logger.error(
-            `citySite Site ${site.name} ${site._id} has an invalid or blankk geoDMS longDMS ${site.geoDMS.longDMS}`
-          );
-        }
-      }
-    }
-
-    if (!site.hasOwnProperty("geoDecimal")) {
-      logger.error(`geoDecimal missing for Site ${site.name} ${site._id}`);
-    } else {
-      if (!site.geoDecimal.hasOwnProperty("latDecimal")) {
-        logger.error(
-          `citySite Site ${site.name} ${site._id} has missing geoDecimal latDecimal`
-        );
-      } else {
-        if (
-          site.geoDecimal.latDecimal < -90 ||
-          site.geoDecimal.latDecimal > 90
-        ) {
-          logger.error(
-            `Site ${site.name} ${site._id} has an invalid geoDecimal latDecimal ${site.geoDecimal.latDecimal}`
-          );
-        }
-      }
-      if (!site.geoDecimal.hasOwnProperty("longDecimal")) {
-        logger.error(
-          `citySite Site ${site.name} ${site._id} has missing geoDecimal longDecimal`
-        );
-      } else {
-        if (
-          site.geoDecimal.longDecimal < -180 ||
-          site.geoDecimal.longDecimal > 180
-        ) {
-          logger.error(
-            `Site ${site.name} ${site._id} has an invalid geoDecimal longDecimal ${site.geoDecimal.longDecimal}`
+            `${site.type} Site ${site.name} ${site._id} has an invalid facilities reference ${i}: ${site.facilities[i]}`
           );
         }
       }
@@ -211,82 +158,114 @@ async function chkSite(runFlag) {
       logger.error(`hidden missing for Site ${site.name} ${site._id}`);
     }
 
+    checkSiteType = "";
     if (!site.hasOwnProperty("type")) {
       logger.error(`Site type is missing  ${site.name} ${site._id}`);
     } else {
+      checkSiteType = site.type;
       if (!inArray(typeVals, site.type)) {
         logger.error(
           `Invalid type ${site.type} for Site ${site.name} ${site._id}`
         );
       }
+    }
 
-      if (!site.hasOwnProperty("facilities")) {
-        logger.error(`facilities missing for Site ${site.name} ${site._id}`);
-      } else {
-        //check facility references
-        //siteCheckDebugger(`Site ${site.name} ${site._id} ${site.type} Check of facility ${site.facilities.length} `)
-        for (let i = 0; i < site.facilities.length; ++i) {
-          let fFind = await Facility.findById(site.facilities[i]);
-          if (!fFind) {
+    if (!site.hasOwnProperty("subType")) {
+      logger.error(`Site subType is missing  ${site.name} ${site._id}`);
+    } else {
+      switch (checkSiteType) {
+        case "Ground":
+          if (!inArray(groundSubTypeVals, site.subType)) {
             logger.error(
-              `${site.type} Site ${site.name} ${site._id} has an invalid facilities reference ${i}: ${site.facilities[i]}`
+              `Invalid Ground subType ${site.subType} for Site ${site.name} ${site._id}`
             );
           }
-        }
-      }
+          break;
 
-      if (site.type === "Base") {
-        if (!site.hasOwnProperty("defenses")) {
-          logger.error(
-            `defenses missing for Base Site ${site.name} ${site._id}`
-          );
-        }
-
-        if (!site.hasOwnProperty("public")) {
-          logger.error(`public missing for Base Site ${site.name} ${site._id}`);
-        }
-
-        try {
-          let { error } = await validateBase(site);
-          if (error) {
+        case "Space":
+          if (!inArray(spaceSubTypeVals, site.subType)) {
             logger.error(
-              `Base Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`
+              `Invalid Space subType ${site.subType} for Site ${site.name} ${site._id}`
             );
           }
-        } catch (err) {
-          logger.error(
-            `Base Site Validation Error For ${site.name} ${site._id} Error: ${err.details[0].message}`
-          );
-        }
+          break;
+
+        default:
+        //logger.error(`Invalid Site Type: ${}`);
       }
 
-      if (site.type === "City") {
-        if (!site.hasOwnProperty("dateline")) {
-          logger.error(
-            `dateline missing for City Site ${site.name} ${site._id}`
-          );
+      if (site.subType === "Ground") {
+        if (!site.hasOwnProperty("coastal")) {
+          logger.error(`coastal missing for Site ${site.name} ${site._id}`);
+        }
+
+        if (!site.hasOwnProperty("geoDMS")) {
+          logger.error(`geoDMS missing for Site ${site.name} ${site._id}`);
         } else {
-          if (site.dateline === "" || site.dateline === "undefined") {
+          if (!site.geoDMS.hasOwnProperty("latDMS")) {
             logger.error(
-              `citySite Site ${site.name} ${site._id} has an invalid or blank dateline ${site.dateline}`
+              `citySite Site ${site.name} ${site._id} has missing geoDMS latDMS`
             );
+          } else {
+            if (
+              site.geoDMS.latDMS === "" ||
+              site.geoDMS.latDMS === "undefined"
+            ) {
+              logger.error(
+                `citySite Site ${site.name} ${site._id} has an invalid or blank geoDMS latDMS ${site.geoDMS.latDMS}`
+              );
+            }
           }
-        }
-        try {
-          let { error } = await validateCity(site);
-          if (error) {
-            logger.error(
-              `City Validation Error For ${site.name} ${site._id} Error: ${error.details[0].message}`
-            );
-          }
-        } catch (err) {
-          logger.error(
-            `City Site Validation Error For ${site.name} ${site._id} Error: ${err.details[0].message}`
-          );
-        }
-      }
 
-      if (site.type === "Crash") {
+          if (!site.geoDMS.hasOwnProperty("longDMS")) {
+            logger.error(
+              `citySite Site ${site.name} ${site._id} has missing geoDMS longDMS ${site.geoDMS.latDMS}`
+            );
+          } else {
+            if (
+              site.geoDMS.longDMS === "" ||
+              site.geoDMS.longDMS === "undefined"
+            ) {
+              logger.error(
+                `citySite Site ${site.name} ${site._id} has an invalid or blankk geoDMS longDMS ${site.geoDMS.longDMS}`
+              );
+            }
+          }
+        }
+
+        if (!site.hasOwnProperty("geoDecimal")) {
+          logger.error(`geoDecimal missing for Site ${site.name} ${site._id}`);
+        } else {
+          if (!site.geoDecimal.hasOwnProperty("latDecimal")) {
+            logger.error(
+              `citySite Site ${site.name} ${site._id} has missing geoDecimal latDecimal`
+            );
+          } else {
+            if (
+              site.geoDecimal.latDecimal < -90 ||
+              site.geoDecimal.latDecimal > 90
+            ) {
+              logger.error(
+                `Site ${site.name} ${site._id} has an invalid geoDecimal latDecimal ${site.geoDecimal.latDecimal}`
+              );
+            }
+          }
+          if (!site.geoDecimal.hasOwnProperty("longDecimal")) {
+            logger.error(
+              `citySite Site ${site.name} ${site._id} has missing geoDecimal longDecimal`
+            );
+          } else {
+            if (
+              site.geoDecimal.longDecimal < -180 ||
+              site.geoDecimal.longDecimal > 180
+            ) {
+              logger.error(
+                `Site ${site.name} ${site._id} has an invalid geoDecimal longDecimal ${site.geoDecimal.longDecimal}`
+              );
+            }
+          }
+        }
+
         if (!site.hasOwnProperty("salvage")) {
           logger.error(
             `salvage missing for Crash Site ${site.name} ${site._id}`
@@ -301,6 +280,18 @@ async function chkSite(runFlag) {
                 `Crash Site ${site.name} ${site._id} has an invalid salvage reference ${i}: ${site.salvage[i]}`
               );
             }
+          }
+        }
+
+        if (!site.hasOwnProperty("dateline")) {
+          logger.error(
+            `dateline missing for Ground Site ${site.name} ${site._id}`
+          );
+        } else {
+          if (site.dateline === "" || site.dateline === "undefined") {
+            logger.error(
+              `Ground Site ${site.name} ${site._id} has an invalid or blank dateline ${site.dateline}`
+            );
           }
         }
 
@@ -322,69 +313,57 @@ async function chkSite(runFlag) {
         }
 
         try {
-          let { error } = await validateCrash(site);
+          let { error } = await validateGround(site);
           if (error) {
             logger.error(
-              `Crash Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`
+              `Ground Validation Error For ${site.name} ${site._id} Error: ${error.details[0].message}`
             );
           }
         } catch (err) {
           logger.error(
-            `Crash Site Validation Error For ${site.name} ${site._id} Error: ${err.details[0].message}`
+            `Ground Site Validation Error For ${site.name} ${site._id} Error: ${err.details[0].message}`
           );
         }
       }
 
-      if (site.type === "Spacecraft") {
-        if (!site.hasOwnProperty("shipType")) {
-          logger.error(
-            `shipType missing for Spacecraft Site ${site.name} ${site._id}`
-          );
-        } else {
-          if (!inArray(shipTypeVals, site.shipType)) {
-            logger.error(
-              `Invalid shipType ${site.shipType} for Spacecraft Site ${site.name} ${site._id}`
-            );
-          }
-        }
-
+      if (site.type === "Spacec") {
         if (!site.hasOwnProperty("status")) {
           logger.error(
-            `status missing for Spacecraft Site ${site.name} ${site._id}`
+            `status missing for Space Site ${site.name} ${site._id}`
           );
         } else {
           if (!site.status.hasOwnProperty("damaged")) {
             logger.error(
-              `status.damaged missing for Spacecraft Site ${site.name} ${site._id}`
+              `status.damaged missing for Space Site ${site.name} ${site._id}`
             );
           }
           if (!site.status.hasOwnProperty("destroyed")) {
             logger.error(
-              `status.destroyed missing for Spacecraft Site ${site.name} ${site._id}`
+              `status.destroyed missing for Space Site ${site.name} ${site._id}`
             );
           }
           if (!site.status.hasOwnProperty("upgrade")) {
             logger.error(
-              `status.upgrade missing for Spacecraft Site ${site.name} ${site._id}`
+              `status.upgrade missing for Space Site ${site.name} ${site._id}`
             );
           }
           if (!site.status.hasOwnProperty("repair")) {
             logger.error(
-              `status.repair missing for Spacecraft Site ${site.name} ${site._id}`
+              `status.repair missing for Space Site ${site.name} ${site._id}`
             );
           }
           if (!site.status.hasOwnProperty("secret")) {
             logger.error(
-              `status.secret missing for Spacecraft Site ${site.name} ${site._id}`
+              `status.secret missing for Space Site ${site.name} ${site._id}`
             );
           }
         }
 
         try {
-          let { error } = await validateSpacecraft(site);
+          let { error } = await validateSpace(site);
           if (error) {
             logger.error(
-              `Spacecraft Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`
+              `Space Validation Error For ${site.name} ${site._id} ${site.type} Error: ${error.details[0].message}`
             );
           }
         } catch (err) {
