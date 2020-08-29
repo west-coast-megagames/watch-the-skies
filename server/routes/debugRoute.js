@@ -7,8 +7,10 @@ const { logger } = require('../middleware/winston');
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
 const { Facility } = require('../models/gov/facility/facility');
+const { Aircraft } = require('../models/ops/aircraft')
 
 const { rand } = require('../util/systems/dice');
+const { resolveMissions } = require('../wts/intercept/missions');
 
 // @route   PATCH debug/research
 // @desc    Trigger the research system
@@ -63,5 +65,24 @@ router.patch('/fixFacilities', async function (req, res) {
     }
     return res.status(200).send(`We handled ${count} facilities...`)
 })
+
+router.patch('/missions', async function (req, res) {
+    resolveMissions();
+})
+
+// @route   PATCH debug/returnAircraft
+// @desc    Update all aircrafts to return to base
+// @access  Public
+router.patch("/returnAircraft", async function (req, res) {
+    routeDebugger(`Returning all aircraft to base!`);
+    let count = 0;
+    for (const aircraft of await Aircraft.find()) {
+        let response = await aircraft.returnToBase(aircraft);
+        routeDebugger(response);
+        count++;
+    }
+    res.status(200).send(`${count} aircrafts succesfully returned!`);
+    nexusEvent.emit("updateAircrafts");
+});
 
 module.exports = router
