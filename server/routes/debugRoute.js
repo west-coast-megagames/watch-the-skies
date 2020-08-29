@@ -9,6 +9,7 @@ const { startResearch, assignKnowledgeCredit } = require('../wts/research/resear
 const { Facility } = require('../models/gov/facility/facility');
 
 const { rand } = require('../util/systems/dice');
+const { resolveMissions } = require('../wts/intercept/missions');
 
 // @route   PATCH debug/research
 // @desc    Trigger the research system
@@ -62,6 +63,10 @@ router.patch('/fixFacilities', async function (req, res) {
         count++
     }
     return res.status(200).send(`We handled ${count} facilities...`)
+})
+
+router.patch('/missions', async function (req, res) {
+    resolveMissions();
 })
 
 module.exports = router
