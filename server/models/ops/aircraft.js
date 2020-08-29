@@ -5,7 +5,13 @@ const Joi = require("joi");
 
 const AircraftSchema = new Schema({
   model: { type: String, default: "Aircraft" },
-  type: { type: String, min: 2, maxlength: 50, enum: ["Recon", "Transport", "Decoy", "Fighter"], default: "Interceptor" },
+  type: {
+    type: String,
+    min: 2,
+    maxlength: 50,
+    enum: ["Recon", "Transport", "Decoy", "Fighter"],
+    default: "Fighter",
+  },
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
@@ -25,35 +31,35 @@ const AircraftSchema = new Schema({
   systems: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
   newSystems: {
     cockpit: {
-        active: { type: Boolean, default: false },
-        damaged: { type: Boolean, default: false },
-        upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     engine: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     weapon: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     sensor: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     armor: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     utility: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref:"Upgrade"}
-    }
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
   },
   stats: {
     hull: { type: Number, default: 0 },
