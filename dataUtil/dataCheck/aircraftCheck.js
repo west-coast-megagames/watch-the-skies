@@ -11,6 +11,7 @@ const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Site } = require("../models/sites/site");
 const { Log } = require("../models/logs/log");
+const { Facility } = require("../models/gov/facility/facility");
 
 const aircraftCheckDebugger = require("debug")("app:aircraftCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -89,8 +90,8 @@ async function chkAircraft(runFlag) {
           `origin missing for Aircraft ${aircraft.name} ${aircraft._id}`
         );
       } else {
-        let site = await Site.findById({ _id: aircraft.origin });
-        if (!site) {
+        let facility = await Facility.findById({ _id: aircraft.origin });
+        if (!facility) {
           logger.error(
             `origin reference is invalid for Aircraft ${aircraft.name} ${aircraft._id}`
           );
