@@ -8,7 +8,7 @@ const { Aircraft } = require("../../models/ops/aircraft");
 const { Facility } = require("../../models/gov/facility/facility");
 const { Site } = require("../../models/sites/site");
 
-const { ReconReport } = require("../reports/reportClasses");
+const { ReconReport, TransportReport, } = require("../reports/reportClasses");
 const { getDistance } = require("../../util/systems/geo");
 const { makeAfterActionReport } = require("./report");
 const dynReport = require("./battleDetails");
@@ -107,7 +107,7 @@ async function runInterceptions() {
 
     let stance = "passive"; // Target stance for interception defaults to 'passive'
     let aircraft = await Aircraft.findById(interception.aircraft).populate("country", "name").populate("systems"); // Gets the Initiator from the DB
-    let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
+    let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. Projected target intercept is ${interception.distance}km away. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
 
     // Skips mission if the current aircraft is dead
     if (aircraft.status.destroyed || aircraft.systems.length < 1) {
@@ -153,12 +153,14 @@ async function runInterceptions() {
 
 // Iterate over all remaining transport missions
 async function runTransports() {
-  for await (let transport of transportMissions) {
+  for await (let transport of transportMissions.sort((a,b) => a.distance - b.distance)) {
     count++; // Count iteration for each mission
     missionDebugger(`Mission #${count} - Transport Mission`);
-    let aircraft = await Aircraft.findById(transport.aircraft)
-      .populate("country", "name")
-      .populate("systems");
+    
+    let report = new TransportReport();
+
+    
+    let aircraft = await Aircraft.findById(transport.aircraft).populate("country", "name").populate("systems");
 
     if (aircraft.status.destroyed || aircraft.systems.length < 1) {
       console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
@@ -167,24 +169,24 @@ async function runTransports() {
 
     let target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
     missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
-    let atkReport = `${aircraft.name} hauling cargo through ${aircraft.country.name} airspace from ${target.name}`;
+    let atkReport = `${aircraft.name} has launched for a hauling run, en route to ${target.name}. Mission target is in a ${aircraft.country.name} controlled region.`;
 
     let patrolCheck = await checkPatrol(transport.target, atkReport, aircraft);
 
     if (patrolCheck.continue === true) {
       atkReport = `${atkReport} ${aircraft.name} arrived safely at ${target.name}.`;
       missionDebugger(`${aircraft.name} arrived safely at ${target.name}`);
-      // Make a mission log
+
+      report.team = aircraft.team._id;
+      report.unit = aircraft._id;
+      report.site = aircraft.site;
+      report.country = aircraft.country;
+      report.zone = aircraft.zone;
+      await report.save();
+
       // Schedule a ground mission.
 
-      aircraft.mission = "Docked";
-      aircraft.status.ready = true;
-      aircraft.status.deployed = false;
-      aircraft.country = aircraft.origin.country;
-      aircraft.site = aircraft.origin._id;
-      aircraft.zone = aircraft.origin.zone;
-
-      await aircraft.save();
+      await aircraft.returnToBase(aircraft);
     }
   }
 
@@ -193,7 +195,7 @@ async function runTransports() {
 
 // Iterate over all remaining Recon missions - DONE [NOT TESTED]
 async function runRecon() {
-  for await (let recon of reconMissions) {
+  for await (let recon of reconMissions.sort((a,b) => a.distance - b.distance)) {
     let MissionReport = new ReconReport();
     count++; // Count iteration for each mission
     missionDebugger(`Mission #${count} - Recon Mission`);
@@ -224,6 +226,8 @@ async function runRecon() {
         atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
         let roll = d6();
 
+        //Generate Intel
+
         MissionReport.team = aircraft.team._id;
         MissionReport.unit = aircraft._id;
         MissionReport.targetAircraft = target._id;
@@ -235,17 +239,7 @@ async function runRecon() {
 
         MissionReport.saveReport();
 
-        console.log(aircraft);
-
-        aircraft.mission = "Docked";
-        aircraft.status.ready = true;
-        aircraft.status.deployed = false;
-        aircraft.country = aircraft.origin.country;
-        aircraft.site = aircraft.origin._id;
-        aircraft.zone = aircraft.origin.zone;
-
-        await aircraft.save();
-
+        await aircraft.returnToBase(aircraft);
         return;
       } else {
         defReport = escortCheck.defReport;
@@ -254,7 +248,7 @@ async function runRecon() {
         atkReport = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
         await intercept(
           aircraft,
-          "aggresive",
+          "passive",
           atkReport,
           target,
           stance,
@@ -284,16 +278,7 @@ async function runRecon() {
 
         MissionReport.saveReport();
 
-        console.log(aircraft);
-        aircraft.mission = "Docked";
-        aircraft.status.ready = true;
-        aircraft.status.deployed = false;
-        aircraft.country = aircraft.origin.country;
-        aircraft.site = aircraft.origin._id;
-        aircraft.zone = aircraft.origin.zone;
-
-        await aircraft.save();
-
+        await aircraft.returnToBase(aircraft);
         return;
       }
     }
@@ -301,7 +286,7 @@ async function runRecon() {
 }
 
 async function runDiversions() {
-  for await (let mission of diversionMissions) {
+  for await (let mission of diversionMissions.sort((a,b) => a.distance - b.distance)) {
     missionDebugger(`Running diversion for ${mission.aircraft.name}`);
     let aircraft = await Aircraft.findById(mission.aircraft)
       .populate("country", "name")
@@ -312,14 +297,7 @@ async function runDiversions() {
 
     // Diversion mission log
 
-    aircraft.mission = "Docked";
-    aircraft.status.ready = true;
-    aircraft.status.deployed = false;
-    aircraft.country = aircraft.origin.country;
-    aircraft.site = aircraft.origin._id;
-    aircraft.zone = aircraft.origin.zone;
-
-    await aircraft.save();
+    await aircraft.returnToBase(aircraft);
   }
 }
 
@@ -342,24 +320,10 @@ async function checkPatrol(target, atkReport, aircraft) {
       if (aircraft._id.toHexString() === escortCheck.target.toHexString()) {
         defReport = escortCheck.atkReport;
         let escortReport = `${atkReport} ${escortCheck.defReport}`;
-        await intercept(
-          escortReport.target,
-          "aggresive",
-          escortReport,
-          target,
-          "aggresive",
-          defReport
-        );
+        await intercept(escortReport.target, "aggresive", escortReport, target, "aggresive", defReport);
         atkReport = `${atkReport} Escort has broken off to engage patrol.`;
       } else {
-        await intercept(
-          aircraft,
-          "passive",
-          atkReport,
-          target,
-          "aggresive",
-          defReport
-        );
+        await intercept(aircraft, "passive", atkReport, target, "aggresive", defReport);
         return { continue: false };
       }
     }
@@ -395,7 +359,10 @@ async function checkEscort(target, atkReport, attacker) {
   return { target, atkReport, defReport, stance: 'defensive' }; // Returns to mission function that called it
 }
 
-function clearMissions() {
+async function clearMissions() {
+  for (let aircraft of await Aircraft.find()) {
+    await aircraft.returnToBase(aircraft);
+  }
   interceptionMissions = []; // Attempted Interception missions for the round
   escortMissions = []; // Attempted Escort missions for the round
   patrolMissions = []; // Attempted Patrol missions for the round

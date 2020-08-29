@@ -19,7 +19,7 @@ async function generateSalvage (system, status) {
     return system;
 }
 
-async function generateCrash (salvage, site, country) {
+async function generateCrash (salvage, site) {
     let currentSite = await Site.findById({_id: site}).populate('country');
 
     salvageDebugger(currentSite);
