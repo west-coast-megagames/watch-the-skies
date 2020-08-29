@@ -4,8 +4,6 @@ const Schema = mongoose.Schema;
 const Joi = require("joi");
 const ObjectId = mongoose.ObjectId;
 
-let FacTypes = ["Civilian", "Crises", "Hanger", "Research", "Base"];
-
 const FacilitySchema = new Schema({
   model: { type: String, default: "Facility" },
   type: { type: String, min: 2, maxlength: 50 },
@@ -32,42 +30,45 @@ const FacilitySchema = new Schema({
   capability: {
     research: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
       projects: [{ type: ObjectId, ref: "Research" }],
       funding: [Number],
       sciRate: { type: Number, default: 0 },
       sciBonus: { type: Number, default: 0 },
       active: { type: Boolean },
+      status: {
+        damage: [Boolean],
+        pending: [Boolean]
+      }
     },
     airMission: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       aircraft: [{ type: ObjectId, ref: "Aircraft" }],
-      active: { type: Boolean },
+      active: { type: Boolean, default: false },
     },
     storage: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       equipment: [{ type: ObjectId, ref: "Equipment" }],
-      active: { type: Boolean },
+      active: { type: Boolean, default: false },
     },
     manufacturing: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       equipment: [{ type: ObjectId, ref: "Equipment" }],
-      active: { type: Boolean },
+      active: { type: Boolean, default: false },
     },
     naval: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       fleet: [{ type: ObjectId, ref: "Military" }],
-      active: { type: Boolean },
+      active: { type: Boolean, default: false },
     },
     ground: {
       capacity: { type: Number, default: 0 },
-      damage: [String],
+      damage: [Boolean],
       corps: [{ type: ObjectId, ref: "Military" }],
-      active: { type: Boolean },
+      active: { type: Boolean, default: false },
     },
   },
 });
@@ -82,7 +83,4 @@ function validateFacility(facility) {
   return Joi.validate(facility, schema, { allowUnknown: true });
 }
 
-module.exports = {
-  Facility,
-  validateFacility,
-};
+module.exports = { Facility, validateFacility };
