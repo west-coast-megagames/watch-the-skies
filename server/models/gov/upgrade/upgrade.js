@@ -27,6 +27,50 @@ const UpgradeSchema = new Schema({
   },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
+  militaryStats: {
+    category: {
+      type: String,
+      enum: ["Weapons", "Vehicles", "Transport", "Training"],
+    },
+    stats: {
+      healthMax: { type: Number },
+      attack: { type: Number },
+      defense: { type: Number },
+      localDeploy: { type: Number },
+      globalDeploy: { type: Number },
+      invasion: { type: Number },
+    },
+  },
+  facilityStats: {
+    code: { type: String },
+    stats: { 
+      sciRate: { type: Number },
+      sciBonus: { type: Number },
+      capacity: { type: Number },
+    },
+    effects: [
+      {
+        type: { type: String },
+        effect: { type: Number },
+      },
+    ],
+  },
+  aircraftStats: {
+    category: {
+      type: String,
+      enum: ["Weapon", "Engine", "Sensor", "Compartment", "Util"],
+    },
+    stats: {
+      hullMax: { type: Number },
+      attack: { type: Number },
+      penetration: { type: Number },
+      armor: { type: Number },
+      shield: { type: Number },
+      evade: { type: Number },
+      range: { type: Number },
+      cargo: { type: Number },
+    },
+  }
 });
 
 let Upgrade = mongoose.model("Upgrade", UpgradeSchema);
@@ -47,63 +91,4 @@ function validateUpgrade(Upgrade) {
   return Joi.validate(Upgrade, schema, { allowUnknown: true });
 }
 
-const Gear = Upgrade.discriminator(
-  "Gear",
-  new Schema({
-    type: { type: String, default: "Gear" },
-    category: {
-      type: String,
-      enum: ["Weapons", "Vehicles", "Transport", "Training"],
-    },
-    stats: {
-      healthMax: { type: Number },
-      attack: { type: Number },
-      defense: { type: Number },
-      localDeploy: { type: Number },
-      globalDeploy: { type: Number },
-      invasion: { type: Number },
-    },
-  })
-);
-
-const Kit = Upgrade.discriminator(
-  "Kit",
-  new Schema({
-    type: { type: String, default: "Kit" },
-    code: { type: String },
-    stats: { //will need to be updated
-      sciRate: { type: Number },
-      sciBonus: { type: Number },
-      capacity: { type: Number },
-    },
-    effects: [
-      {
-        type: { type: String },
-        effect: { type: Number },
-      },
-    ],
-  })
-);
-
-const System = Upgrade.discriminator(
-  "System",
-  new Schema({
-    type: { type: String, default: "System" },
-    category: {
-      type: String,
-      enum: ["Weapon", "Engine", "Sensor", "Compartment", "Util"],
-    },
-    stats: {
-      hullMax: { type: Number },
-      attack: { type: Number },
-      penetration: { type: Number },
-      armor: { type: Number },
-      shield: { type: Number },
-      evade: { type: Number },
-      range: { type: Number },
-      cargo: { type: Number },
-    },
-  })
-);
-
-module.exports = { Upgrade, validateUpgrade, Gear, Kit, System };
+module.exports = { Upgrade, validateUpgrade, };

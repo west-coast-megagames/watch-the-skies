@@ -25,7 +25,6 @@ const FacilitySchema = new Schema({
     defenses: { type: Boolean, default: false },
   },
   hidden: { type: Boolean, default: false },
-  serviceRecord: [{ type: ObjectId, ref: "Log" }],
   gameState: [],
   capability: {
     research: {
@@ -38,13 +37,15 @@ const FacilitySchema = new Schema({
       status: {
         damage: [Boolean],
         pending: [Boolean]
-      }
+      },
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
     },
     airMission: {
       capacity: { type: Number, default: 0 },
       damage: [Boolean],
       aircraft: [{ type: ObjectId, ref: "Aircraft" }],
       active: { type: Boolean, default: false },
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
     },
     storage: {
       capacity: { type: Number, default: 0 },
@@ -63,12 +64,14 @@ const FacilitySchema = new Schema({
       damage: [Boolean],
       fleet: [{ type: ObjectId, ref: "Military" }],
       active: { type: Boolean, default: false },
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
     },
     ground: {
       capacity: { type: Number, default: 0 },
       damage: [Boolean],
       corps: [{ type: ObjectId, ref: "Military" }],
       active: { type: Boolean, default: false },
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
     },
   },
 });

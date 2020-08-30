@@ -683,6 +683,7 @@ router.post("/city/", async function (req, res) {
 // @route   POST api/sites/crash/
 // @Desc    Post a new crash
 // @access  Public
+/*
 router.post("/crash/", async function (req, res) {
   let {
     name,
@@ -863,9 +864,9 @@ router.post("/crash/", async function (req, res) {
       let sysRef = systems[systems.findIndex((system) => system.code === sys)];
       //console.log("jeff in crash site systems ", sys, "sysRef:", sysRef);
       if (sysRef) {
-        /* do not care about unitType check for crash site
-        if (validUnitType(sysRef.unitType, "Any")) {
-        */
+        ///* do not care about unitType check for crash site
+        //if (validUnitType(sysRef.unitType, "Any")) {
+        
         systemsError = false;
         newSystem = await new System(sysRef);
         newSystem.team = newCrashSite.team;
@@ -910,5 +911,5 @@ router.post("/crash/", async function (req, res) {
     res.status(400).send(`City ${siteCode} already exists!`);
   }
 });
-
+*/
 module.exports = router;
