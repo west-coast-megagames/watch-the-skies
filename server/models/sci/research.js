@@ -73,9 +73,9 @@ const AnalysisResearch = Research.discriminator(
     team: { type: Schema.Types.ObjectId, ref: "Team" },
     salvage: [
       {
-        gear: { type: Schema.Types.ObjectId, ref: "Equipment" },
-        system: { type: Schema.Types.ObjectId, ref: "Equipment" },
-        infrastructure: { type: Schema.Types.ObjectId, ref: "Equipment" },
+        gear: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+        system: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+        infrastructure: { type: Schema.Types.ObjectId, ref: "Upgrade" },
         facility: { type: Schema.Types.ObjectId, ref: "Facility" },
         site: { type: Schema.Types.ObjectId, ref: "Site" },
         outcome: { type: String, enum: ["Destroy", "Damage", "Kill", "Preserve"] },

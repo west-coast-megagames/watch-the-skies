@@ -27,13 +27,13 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
       "manufacturing": {
         "capacity": 1,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -77,13 +77,13 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
       "manufacturing": {
         "capacity": 1,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -133,7 +133,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -177,7 +177,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -227,7 +227,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -277,7 +277,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -321,7 +321,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -371,7 +371,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -421,7 +421,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -471,7 +471,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -521,7 +521,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -571,7 +571,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -621,7 +621,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -671,7 +671,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -721,7 +721,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -771,7 +771,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },
@@ -815,7 +815,7 @@
       },
       "storage": {
         "capacity": 3,
-        "equipment": [],
+        "upgrade": [],
         "active": true,
         "damage": []
       },

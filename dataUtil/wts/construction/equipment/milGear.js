@@ -1,26 +1,26 @@
 const fs = require('fs')
 const config = require('config');
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/equipment/milGear.json'));
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/upgrade/milGear.json'));
 const gearData = JSON.parse(file);
 
-equipmentDebugger = require('debug')('app:equipment');
+upgradeDebugger = require('debug')('app:upgrade');
 
 const gears = []
 
-const { Gear } = require('../../../models/gov/equipment/equipment');
+const { Gear } = require('../../../models/gov/upgrade/upgrade');
 
-// Load function to load all equipment.
+// Load function to load all upgrade.
 async function loadMilGears () {
     let count = 0;
 
     await gearData.forEach(gear => {
-        equipmentDebugger(gear);
+        upgradeDebugger(gear);
         gears[count] = new Equip(gear);
         count++;
     });
 
-    return `${count} military equipment available in WTS...`
+    return `${count} military upgrade available in WTS...`
 };
 
 // Knowledge Constructor Function

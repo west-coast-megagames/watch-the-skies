@@ -52,11 +52,8 @@ module.exports = function(io) {
                 return nexusEvent.emit(`error`, err);                
             }
 
-
             socketDebugger(transfer);
             await banking.transfer(to, from, amount, note);
-
-
 
             nexusEvent.emit('updateAccounts');
             nexusEvent.emit('updateLogs');

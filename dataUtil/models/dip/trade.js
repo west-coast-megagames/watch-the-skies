@@ -23,7 +23,7 @@ const TradeSchema = new Schema({
             //intel here
             research: [{type: Schema.Types.ObjectId, ref: 'Research'}],
             //sites here
-            equipment: [{type: Schema.Types.ObjectId, ref: 'Equipment'}],
+            upgrade: [{type: Schema.Types.ObjectId, ref: 'Upgrade'}],
             comments: [],     
         },//initiator
     },
@@ -37,7 +37,7 @@ const TradeSchema = new Schema({
             //intel here
             research: [{type: Schema.Types.ObjectId, ref: 'Research'}],
             //sites here
-            equipment: [{type: Schema.Types.ObjectId, ref: 'Equipment'}],
+            upgrade: [{type: Schema.Types.ObjectId, ref: 'Upgrade'}],
             comments: [],
         },//tradePartner
     },

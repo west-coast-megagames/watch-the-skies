@@ -29,7 +29,7 @@ const AircraftSchema = new Schema({
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
   },
-  systems: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
+  upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   newSystems: {
     cockpit: {
       active: { type: Boolean, default: false },
@@ -74,7 +74,6 @@ const AircraftSchema = new Schema({
     passiveRolls: [Number],
     activeRolls: [Number],
   },
-  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
 });
 

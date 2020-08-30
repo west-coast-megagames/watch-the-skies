@@ -3,7 +3,7 @@ const runCountryCheck = require("../dataCheck/countryCheck");
 const runFacilityCheck = require("../dataCheck/facilityCheck");
 const runSiteCheck = require("../dataCheck/siteCheck");
 const runUserCheck = require("../dataCheck/userCheck");
-const runEquipmentCheck = require("../dataCheck/equipmentCheck");
+const runUpgradeCheck = require("../dataCheck/upgradeCheck");
 const runAircraftCheck = require("../dataCheck/aircraftCheck");
 const runMilitaryCheck = require("../dataCheck/militaryCheck");
 const runSquadCheck = require("../dataCheck/squadCheck");
@@ -65,9 +65,9 @@ async function fullInitCheck(selStr) {
       }
 
     case "All":
-    case "Equipment":
-      let equipmentCheckDone = await runEquipmentCheck(true); // check equipment records
-      logger.info(`Equipment Check Done: ${equipmentCheckDone}`);
+    case "Upgrade":
+      let upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
+      logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
 
       if (selStr != "All") {
         break;

@@ -11,7 +11,7 @@ const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
 const { BaseSite } = require("../../models/sites/site");
-const { System } = require("../../models/gov/equipment/equipment");
+const { System } = require("../../models/gov/upgrade/upgrade");
 const { validUnitType } = require("../../wts/util/construction/validateUnitType");
 
 // @route   GET api/aircraft

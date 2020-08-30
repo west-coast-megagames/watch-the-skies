@@ -117,7 +117,7 @@
     "field": "Biomedical",
     "desc": "Develops a gene-therapy that will reduce radiation damage.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KB-1"}, {"type": "Technology", "code": "Mil4J"}, {"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Bio5C"}],
+    "unlocks": [{"type": "Upgrade", "code": "KB-1"}, {"type": "Technology", "code": "Mil4J"}, {"type": "Technology", "code": "Agr4B"}, {"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4J"}]
 },
 {   
@@ -165,7 +165,7 @@
     "field": "Biomedical",
     "desc": "Physical cybernetic limb replacements and enhancements.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KB-2"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}],
+    "unlocks": [{"type": "Upgrade", "code": "KB-2"}, {"type": "Technology", "code": "Mil5E"}, {"type": "Technology", "code": "Mil3F"}, {"type": "Technology", "code": "Mil4F"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Mil4F"}]
 },
 {   
@@ -201,7 +201,7 @@
     "field": "Biomedical",
     "desc": "Develops nursing suit for Labor Bots and an integrated healthcare management.",
     "effects": [{"type": "terror", "effect": -15 }, {"type": "pr", "effect": 1}],
-    "unlocks": [{"type": "Equipment", "code": "KB-3"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5C"}],
+    "unlocks": [{"type": "Upgrade", "code": "KB-3"}, {"type": "Technology", "code": "Mil5G"}, {"type": "Technology", "code": "Bio5C"}],
     "breakthrough": [{"type": "Technology", "code": "Bio5C"}, {"type": "Technology", "code": "Mil5G"}]
 },
 {   
@@ -213,7 +213,7 @@
     "field": "Biomedical",
     "desc": "Develops methods for an automated medical system using a large suite of technology.",
     "effects": [{"type": "terror", "effect": -10 }],
-    "unlocks": [{"type": "Equipment", "code": "KB-4"}],
+    "unlocks": [{"type": "Upgrade", "code": "KB-4"}],
     "breakthrough": []
 },
 {   

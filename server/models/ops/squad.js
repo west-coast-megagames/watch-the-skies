@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app:SquadModel");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
+const ObjectId = mongoose.ObjectId;
 
 const SquadSchema = new Schema({
   model: { type: String, default: "Squad" },
@@ -10,6 +11,8 @@ const SquadSchema = new Schema({
     default: "Raid",
     enum: ["Raid", "Assault", "Infiltration", "Envoy", "Science"],
   },
+  rollBonus: { type: Number, required: true, default: 0 },
+  upgrades: [{ type: ObjectId, ref: "Upgrade" }],
   name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
@@ -23,7 +26,6 @@ const SquadSchema = new Schema({
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
   },
-  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
 });
 

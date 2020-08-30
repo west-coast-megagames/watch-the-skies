@@ -89,7 +89,7 @@ module.exports = function (io) {
       .populate("site", "name type")
       .populate("team", "shortName name")
       .populate("research")
-      .populate("equipment");
+      .populate("upgrade");
     updateSocket.emit("updateFacilities", facilities);
   });
 

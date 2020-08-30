@@ -19,8 +19,7 @@ const MilitarySchema = new Schema({
     secret: { type: Boolean, default: false },
   },
   hidden: { type: Boolean, default: false },
-  gear: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
-  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
+  upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   gameState: [],
 });
 

@@ -11,7 +11,7 @@ const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
 const { Site } = require("../../models/sites/site");
-const { Gear } = require("../../models/gov/equipment/equipment");
+const { Gear } = require("../../models/gov/upgrade/upgrade");
 
 // @route   GET api/military
 // @Desc    Get all Militarys

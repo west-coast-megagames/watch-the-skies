@@ -5,7 +5,7 @@ const {
   validateName,
   validateAddr,
 } = require("../models/ops/aircraft");
-const { System } = require("../models/gov/equipment/equipment");
+const { System } = require("../models/gov/upgrade/upgrade");
 const { Team } = require("../models/team/team");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");

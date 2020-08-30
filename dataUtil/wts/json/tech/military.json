@@ -106,7 +106,7 @@
     "field": "Military",
     "desc": "Framework for autonomous vehicles.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KM-1"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3G"} ],
+    "unlocks": [{"type": "Upgrade", "code": "KM-1"}, {"type": "Technology", "code": "Mil5A"}, {"type": "Technology", "code": "Inf3C"}, {"type": "Technology", "code": "Mil3G"} ],
     "breakthrough": [{"type": "Technology", "code": "Inf3C"}]
 },
 {   
@@ -166,7 +166,7 @@
     "field": "Military",
     "desc": "Develops flexible and intelligent robotic workforce.",
     "effects": [{"type": "terror", "effect": 10 }],
-    "unlocks": [{"type": "Equipment", "code": "KM-2"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Bio5B"}],
+    "unlocks": [{"type": "Upgrade", "code": "KM-2"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Inf4E"}, {"type": "Technology", "code": "Inf4A"}, {"type": "Technology", "code": "Bio5B"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4C"}, {"type": "Technology", "code": "Agr3A"}]
 },
 {   

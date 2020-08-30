@@ -24,14 +24,14 @@ const TradeOffer = (props) => { //trade object
     let research = useSelector(getCompletedResearch);
     let intel = []
     let sites = []
-    let equipment = []
+    let upgrade = []
     let facilities = []
     if (props.team._id !== useSelector(state => state.auth.team)._id) {
         aircraft = []
         research = []
         intel = []
         sites = []
-        equipment = []
+        upgrade = []
         facilities = []
     } else {
         research = formatData(research);
@@ -48,7 +48,7 @@ const TradeOffer = (props) => { //trade object
         intel: [],
         research: [],
         sites: [],
-        equipment: [],
+        upgrade: [],
         facilities: []
       });
 
@@ -149,20 +149,20 @@ const TradeOffer = (props) => { //trade object
                     <PanelGroup>{formValue.sites.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
-                {!disabled && equipment.length > 0 ? <FormGroup>
-                    <ControlLabel>Equipment</ControlLabel>
+                {!disabled && upgrade.length > 0 ? <FormGroup>
+                    <ControlLabel>Upgrade</ControlLabel>
                     <FormControl
                     block
-                    name="equipment"
+                    name="upgrade"
                     accepter={TagPicker}
-                    data={equipment}
+                    data={upgrade}
                     disabled={disabled}
                     readOnly={readOnly}
                     />
                 </FormGroup> : null }
 
-                {disabled && formValue.equipment.length > 0 ? <Panel header={<span><b>Equipment</b> - {formValue.equipment.length} Equipment</span>} collapsible>
-                    <PanelGroup>{formValue.equipment.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
+                {disabled && formValue.upgrade.length > 0 ? <Panel header={<span><b>Upgrade</b> - {formValue.upgrade.length} Upgrade</span>} collapsible>
+                    <PanelGroup>{formValue.upgrade.map((unit) => <Panel className='trade-list' hover key={unit}>{unit}</Panel>)}</PanelGroup>
                 </Panel> : null }
 
                 <FormGroup >
@@ -196,7 +196,7 @@ class Trade extends Component {
                     //intel: [], 
                     research: [], 
                     //sites: [], 
-                    equipment: [],  
+                    upgrade: [],  
                     comments: []
                 }
             },//initiator
@@ -210,7 +210,7 @@ class Trade extends Component {
                     //intel: [], 
                     research: [], 
                     //sites: [], 
-                    equipment: [],  
+                    upgrade: [],  
                     comments: []
                 }
             },//initiator

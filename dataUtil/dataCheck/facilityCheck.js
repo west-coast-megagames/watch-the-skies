@@ -2,7 +2,7 @@ const {
   Facility,
   validateFacility,
 } = require("../models/gov/facility/facility");
-const { Equipment } = require("../models/gov/equipment/equipment");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { Research } = require("../models/sci/research");
 const { Team } = require("../models/team/team");
 const { Site } = require("../models/sites/site");
@@ -325,36 +325,36 @@ async function chkFacility(runFlag) {
           storageActive = facility.capability.storage.active;
         }
 
-        if (!facility.capability.storage.hasOwnProperty("equipment")) {
+        if (!facility.capability.storage.hasOwnProperty("upgrade")) {
           logger.error(
-            `storage equipment missing for Facility ${facility.name} ${facility._id}`
+            `storage upgrade missing for Facility ${facility.name} ${facility._id}`
           );
         } else {
-          if (facility.capability.storage.equipment.length > storageCapacity) {
+          if (facility.capability.storage.upgrade.length > storageCapacity) {
             logger.error(
-              `storage equipment entries exceeds capacity for Facility ${facility.name} ${facility._id}`
+              `storage upgrade entries exceeds capacity for Facility ${facility.name} ${facility._id}`
             );
           }
 
           if (
-            facility.capability.storage.equipment.length > 0 &&
+            facility.capability.storage.upgrade.length > 0 &&
             !storageActive
           ) {
             logger.error(
-              `equipment entries for in-active storage for Facility ${facility.name} ${facility._id}`
+              `upgrade entries for in-active storage for Facility ${facility.name} ${facility._id}`
             );
           }
           for (
             let i = 0;
-            i < facility.capability.storage.equipment.length;
+            i < facility.capability.storage.upgrade.length;
             ++i
           ) {
-            let eFind = await Equipment.findById(
-              facility.capability.storage.equipment[i]
+            let eFind = await upgrade.findById(
+              facility.capability.storage.upgrade[i]
             );
             if (!eFind) {
               logger.error(
-                `Facility ${facility.name} ${facility._id} has an invalid storage equipment reference ${i}: ${facility.capability.storage.equipment[i]}`
+                `Facility ${facility.name} ${facility._id} has an invalid storage upgrade reference ${i}: ${facility.capability.storage.upgrade[i]}`
               );
             }
           }
@@ -391,39 +391,39 @@ async function chkFacility(runFlag) {
         manufacturingActive = facility.capability.manufacturing.active;
       }
 
-      if (!facility.capability.manufacturing.hasOwnProperty("equipment")) {
+      if (!facility.capability.manufacturing.hasOwnProperty("upgrade")) {
         logger.error(
-          `manufacturing equipment missing for Facility ${facility.name} ${facility._id}`
+          `manufacturing upgrade missing for Facility ${facility.name} ${facility._id}`
         );
       } else {
         if (
-          facility.capability.manufacturing.equipment.length >
+          facility.capability.manufacturing.upgrade.length >
           manufacturingCapacity
         ) {
           logger.error(
-            `manufacturing equipment entries exceeds capacity for Facility ${facility.name} ${facility._id}`
+            `manufacturing upgrade entries exceeds capacity for Facility ${facility.name} ${facility._id}`
           );
         }
 
         if (
-          facility.capability.manufacturing.equipment.length > 0 &&
+          facility.capability.manufacturing.upgrade.length > 0 &&
           !manufacturingActive
         ) {
           logger.error(
-            `equipment entries for in-active manufacturing for Facility ${facility.name} ${facility._id}`
+            `upgrade entries for in-active manufacturing for Facility ${facility.name} ${facility._id}`
           );
         }
         for (
           let i = 0;
-          i < facility.capability.manufacturing.equipment.length;
+          i < facility.capability.manufacturing.upgrade.length;
           ++i
         ) {
-          let eFind = await Equipment.findById(
-            facility.capability.manufacturing.equipment[i]
+          let eFind = await Upgrade.findById(
+            facility.capability.manufacturing.upgrade[i]
           );
           if (!eFind) {
             logger.error(
-              `Facility ${facility.name} ${facility._id} has an invalid manufacturing equipment reference ${i}: ${facility.capability.manufacturing.equipment[i]}`
+              `Facility ${facility.name} ${facility._id} has an invalid manufacturing upgrade reference ${i}: ${facility.capability.manufacturing.upgrade[i]}`
             );
           }
         }

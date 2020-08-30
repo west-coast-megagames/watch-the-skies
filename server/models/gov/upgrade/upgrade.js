@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const modelDebugger = require("debug")("app:equipmentModel");
+const modelDebugger = require("debug")("app:upgradeModel");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
-const EquipmentSchema = new Schema({
-  model: { type: String, default: "Equipment" },
+const UpgradeSchema = new Schema({
+  model: { type: String, default: "Upgrade" },
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   unitType: { type: String },
@@ -27,30 +27,7 @@ const EquipmentSchema = new Schema({
   },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
-});
-
-let Equipment = mongoose.model("Equipment", EquipmentSchema);
-
-EquipmentSchema.methods.validateEquipment = function (Equipment) {
-  const schema = {
-    name: Joi.string().min(2).max(50).required(),
-  };
-
-  return Joi.validate(Equipment, schema, { allowUnknown: true });
-};
-
-function validateEquipment(Equipment) {
-  const schema = {
-    name: Joi.string().min(2).max(50).required(),
-  };
-
-  return Joi.validate(Equipment, schema, { allowUnknown: true });
-}
-
-const Gear = Equipment.discriminator(
-  "Gear",
-  new Schema({
-    type: { type: String, default: "Gear" },
+  militaryStats: {
     category: {
       type: String,
       enum: ["Weapons", "Vehicles", "Transport", "Training"],
@@ -63,15 +40,10 @@ const Gear = Equipment.discriminator(
       globalDeploy: { type: Number },
       invasion: { type: Number },
     },
-  })
-);
-
-const Kit = Equipment.discriminator(
-  "Kit",
-  new Schema({
-    type: { type: String, default: "Kit" },
+  },
+  facilityStats: {
     code: { type: String },
-    stats: {
+    stats: { 
       sciRate: { type: Number },
       sciBonus: { type: Number },
       capacity: { type: Number },
@@ -82,13 +54,8 @@ const Kit = Equipment.discriminator(
         effect: { type: Number },
       },
     ],
-  })
-);
-
-const System = Equipment.discriminator(
-  "System",
-  new Schema({
-    type: { type: String, default: "System" },
+  },
+  aircraftStats: {
     category: {
       type: String,
       enum: ["Weapon", "Engine", "Sensor", "Compartment", "Util"],
@@ -103,7 +70,25 @@ const System = Equipment.discriminator(
       range: { type: Number },
       cargo: { type: Number },
     },
-  })
-);
+  }
+});
 
-module.exports = { Equipment, validateEquipment, Gear, Kit, System };
+let Upgrade = mongoose.model("Upgrade", UpgradeSchema);
+
+UpgradeSchema.methods.validateUpgrade = function (Upgrade) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required(),
+  };
+
+  return Joi.validate(Upgrade, schema, { allowUnknown: true });
+};
+
+function validateUpgrade(Upgrade) {
+  const schema = {
+    name: Joi.string().min(2).max(50).required(),
+  };
+
+  return Joi.validate(Upgrade, schema, { allowUnknown: true });
+}
+
+module.exports = { Upgrade, validateUpgrade, };
