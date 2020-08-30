@@ -108,7 +108,6 @@ class SubNews extends React.Component {
                 <TreePicker
                   block
                   id="location"
-                  defaultExpandAll
                   value={location}
                   data={this.state.data}
                   labelKey='name'
