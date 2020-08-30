@@ -1,5 +1,12 @@
 // Zone Model - Using Mongoose Model
-const { Zone, validateZone } = require("../models/zone");
+const {
+  Zone,
+  validateZone,
+  GroundZone,
+  validateGroundZone,
+  SpaceZone,
+  validateSpaceZone,
+} = require("../models/zone");
 const { Country } = require("../models/country");
 const { Site } = require("../models/sites/site");
 
@@ -13,9 +20,7 @@ async function chkZone(runFlag) {
   // get countries once
   let cFinds = await Country.find();
   //zoneCheckDebugger(`jeff here length of cFinds ${cFinds.length}`);
-  for (const zone of await Zone.find()
-    //.populate("satellite", "name")  does not work with .lean
-    .lean()) {
+  for (const zone of await Zone.find().lean()) {
     //do not need toObject with .lean()
     //let testPropertys = zone.toObject();
 
@@ -32,16 +37,6 @@ async function chkZone(runFlag) {
     } else {
       if (zone.name === "" || zone.name == undefined || zone.name == null) {
         logger.error(`name is blank for Zone ${zone.code} ${zone._id}`);
-      }
-    }
-
-    if (!zone.hasOwnProperty("terror")) {
-      logger.error(`Terror missing for zone ${zone.name} ${zone._id}`);
-    } else {
-      if (isNaN(zone.terror)) {
-        logger.error(
-          `Zone ${zone.name} ${zone._id} terror is not a number ${zone.terror}`
-        );
       }
     }
 
@@ -66,16 +61,6 @@ async function chkZone(runFlag) {
       }
     }
 
-    if (!zone.hasOwnProperty("satellite")) {
-      logger.error(`satellite missing for zone ${zone.name} ${zone._id}`);
-    }
-
-    /* populate does not work with .lean
-    if (!zone.populated("satellite")) {  
-      logger.error(`satellite link missing for zone ${zone.name} ${zone._id}`);
-    }
-    */
-
     // should be at least one country in the zone
     let countryCount = 0;
     let zoneId = zone._id.toHexString();
@@ -97,41 +82,42 @@ async function chkZone(runFlag) {
     }
     */
 
-    if (zone.hasOwnProperty("satellite")) {
-      //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} Check of Satellite ${zone.satellite.length}`);
-      for (let i = 0; i < zone.satellite.length; ++i) {
-        //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} about to find satellite for ID ${i}: ${zone.satellite[i]}`);
-        let sFind = await Site.findById(zone.satellite[i]);
-        if (!sFind) {
+    if (zone.type === "Space") {
+      try {
+        let { error } = await validateSpaceZone(zone);
+        if (error) {
           logger.error(
-            `Zone ${zone.name} ${zone._id} has an invalid satellite reference ${i}: ${zone.satellite[i]}`
+            `Zone Space Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
           );
-        } else {
-          if (!(sFind.type === "Space")) {
-            logger.error(
-              `Zone ${zone.name} ${zone._id} has non-Space satellite reference ${i}: ${zone.satellite[i]} ${sFind.type}`
-            );
-          } else if (!(sFind.subType === "Satellite")) {
-            logger.error(
-              `Zone ${zone.name} ${zone._id} has non-satellite reference ${i}: ${zone.satellite[i]} ${sFind.shipType}`
-            );
-          }
-          //zoneCheckDebugger(`Zone ${zone.name} ${zone._id} Found satellite for ID ${i}: ${zone.satellite[i]} ${sFind.name}`);
         }
-      }
-    }
-
-    try {
-      let { error } = await validateZone(zone);
-      if (error) {
+      } catch (err) {
         logger.error(
-          `Zone Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
+          `Zone Space Validation Error For ${zone.code} ${zone.name} Error: ${err.details[0].message}`
         );
       }
-    } catch (err) {
-      logger.error(
-        `Zone Validation Error For ${zone.code} ${zone.name} Error: ${err.details[0].message}`
-      );
+    } else {
+      if (!zone.hasOwnProperty("terror")) {
+        logger.error(`Terror missing for zone ${zone.name} ${zone._id}`);
+      } else {
+        if (isNaN(zone.terror)) {
+          logger.error(
+            `Zone ${zone.name} ${zone._id} terror is not a number ${zone.terror}`
+          );
+        }
+      }
+
+      try {
+        let { error } = await validateGroundZone(zone);
+        if (error) {
+          logger.error(
+            `Zone Ground Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
+          );
+        }
+      } catch (err) {
+        logger.error(
+          `Zone Ground Validation Error For ${zone.code} ${zone.name} Error: ${err.details[0].message}`
+        );
+      }
     }
   }
   return true;

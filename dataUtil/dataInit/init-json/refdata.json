@@ -4,77 +4,88 @@
     "name": "Low Earth Orbit",
     "code": "LE",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Space"
   },
   {
     "loadType": "zone",
     "name": "Mid Earth Orbit",
     "code": "ME",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Space"
   },
   {
     "loadType": "zone",
     "name": "High Earth Orbit",
     "code": "HE",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Space"
   },
   {
     "loadType": "zone",
     "name": "Lunar Orbit",
     "code": "LO",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Space"
   },
   {
     "loadType": "zone",
     "name": "North America",
     "code": "NA",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "South America",
     "code": "SA",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "Europe",
     "code": "EU",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "Africa",
     "code": "AF",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "Austr-Asia",
     "code": "AU",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "Antarctica",
     "code": "AN",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "zone",
     "name": "Arabstan",
     "code": "AS",
     "loadFlag": "true",
-    "refNumber1": 0
+    "refNumber1": 0,
+    "parentCode1": "Ground"
   },
   {
     "loadType": "team",

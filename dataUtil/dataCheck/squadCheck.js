@@ -5,6 +5,7 @@ const { Site } = require("../models/sites/site");
 const { Country, validateCountry } = require("../models/country");
 const { Team } = require("../models/team/team");
 const { Zone } = require("../models/zone");
+const { Facility } = require("../models/gov/facility/facility");
 
 const squadCheckDebugger = require("debug")("app:squadCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -27,7 +28,7 @@ async function chkSquad(runFlag) {
                                .populate("team", "name teamType")
                                .populate("country", "name type")
                                .populate("zone", "name")
-                               .populate("homeBase", "name")
+                               .populate("origin", "name")
                                */
     .lean()) {
     if (!squad.hasOwnProperty("model")) {
@@ -86,13 +87,13 @@ async function chkSquad(runFlag) {
       }
     }
 
-    if (!squad.hasOwnProperty("homeBase")) {
-      logger.error(`homeBase missing for Squad ${squad.name} ${squad._id}`);
+    if (!squad.hasOwnProperty("origin")) {
+      logger.error(`origin missing for Squad ${squad.name} ${squad._id}`);
     } else {
-      let site = await Site.findById({ _id: squad.homeBase });
-      if (!site) {
+      let facility = await Facility.findById({ _id: squad.origin });
+      if (!facility) {
         logger.error(
-          `homeBase reference is invalid for Squad ${squad.name} ${squad._id}`
+          `origin reference is invalid for Squad ${squad.name} ${squad._id}`
         );
       }
     }

@@ -11,6 +11,7 @@ const { Team } = require("../models/team/team");
 const { Country } = require("../models/country");
 const { Zone } = require("../models/zone");
 const { Log } = require("../models/logs/log");
+const { Facility } = require("../models/gov/facility/facility");
 
 const militaryCheckDebugger = require("debug")("app:militaryCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -138,8 +139,8 @@ async function chkMilitary(runFlag) {
         `origin missing for Military ${military.name} ${military._id}`
       );
     } else {
-      let site = await Site.findById({ _id: military.origin });
-      if (!site) {
+      let facility = await Facility.findById({ _id: military.origin });
+      if (!facility) {
         logger.error(
           `origin reference is invalid for Military ${military.name} ${military._id}`
         );

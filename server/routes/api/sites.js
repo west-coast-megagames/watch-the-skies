@@ -23,11 +23,14 @@ const { Team } = require("../../models/team/team");
 const { Facility } = require("../../models/gov/facility/facility");
 const { convertToDms } = require("../../util/systems/geo");
 const { System } = require("../../models/gov/upgrade/upgrade");
-const { validUnitType } = require("../../wts/util/construction/validateUnitType");
-const { delFacilities } = require("../../wts/util/construction/deleteFacilities");
+const {
+  validUnitType,
+} = require("../../wts/util/construction/validateUnitType");
+const {
+  delFacilities,
+} = require("../../wts/util/construction/deleteFacilities");
 const { delSystems } = require("../../wts/util/construction/deleteSystems");
 const { genSiteCode } = require("../../wts/util/construction/genSiteCode");
-const { addSatelliteToZone } = require("../../wts/util/construction/zoneSatellite");
 
 // @route   GET api/sites
 // @Desc    Get all sites
@@ -309,14 +312,6 @@ router.post("/spacecraft/", async function (req, res) {
         newSpacecraft.name + " add saved to Spacecraft collection."
       );
       //updateStats(newSpacecraft._id);
-
-      if (newSpacecraft.shipType === "Satellite") {
-        addSatelliteToZone(
-          newSpacecraft._id,
-          newSpacecraft.zone,
-          newSpacecraft.team
-        );
-      }
 
       res.status(200).json(newSpacecraft);
     });

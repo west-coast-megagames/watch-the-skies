@@ -4,7 +4,7 @@
     "name": "FFG Raid Squad 1",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Raid"
   },
   {
@@ -12,7 +12,7 @@
     "name": "FFG Raid Squad 2",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Raid"
   },
   {
@@ -20,7 +20,7 @@
     "name": "FFG Raid Squad 3",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Raid"
   },
   {
@@ -28,7 +28,7 @@
     "name": "FFG Assault Squad 1",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Assault"
   },
   {
@@ -36,7 +36,7 @@
     "name": "FFG Assault Squad 2",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Assault"
   },
   {
@@ -44,7 +44,7 @@
     "name": "FFG Assault Squad 3",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Assault"
   },
   {
@@ -52,7 +52,7 @@
     "name": "FFG Infiltration Squad 1",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Infiltration"
   },
   {
@@ -60,7 +60,7 @@
     "name": "FFG Infiltration Squad 2",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Infiltration"
   },
   {
@@ -68,7 +68,7 @@
     "name": "FFG Infiltration Squad 3",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Infiltration"
   },
   {
@@ -76,7 +76,7 @@
     "name": "FFG Envoy Squad 1",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Envoy"
   },
   {
@@ -84,7 +84,7 @@
     "name": "FFG Envoy Squad 2",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Envoy"
   },
   {
@@ -92,7 +92,7 @@
     "name": "FFG Envoy Squad 3",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Envoy"
   },
   {
@@ -100,7 +100,7 @@
     "name": "FFG Science Squad 1",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Science"
   },
   {
@@ -108,7 +108,7 @@
     "name": "FFG Science Squad 2",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Science"
   },
   {
@@ -116,7 +116,7 @@
     "name": "FFG Science Squad 3",
     "team": "FFG",
     "country": "F1",
-    "origin": "FFGMA",
+    "origin": "FFGBA",
     "type": "Science"
   }
 ]
