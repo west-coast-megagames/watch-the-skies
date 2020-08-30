@@ -386,9 +386,35 @@ const RepairLog = props => {
   );
 };
 
+const ReconLog = props => {
+  let { log } = props;
+  let date = new Date(log.date);
+
+  return (
+    <Timeline.Item key={log._id} dot={<Icon icon="eye" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
+        }}
+        header={`Recon Report - ${log.team.teamCode} | ${
+          log.timestamp.turn
+        } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        collapsible
+      >
+        <p>
+          {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
+          Turn {log.timestamp.turnNum}
+        </p>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 export {
   TransactionLog,
   ResearchLog,
+  ReconLog,
   InterceptLog,
   TradeLog,
   TreatyLog,

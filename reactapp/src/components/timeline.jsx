@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Timeline, CheckPicker } from 'rsuite';
-import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog } from '../components/common/logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog } from '../components/common/logs'
 
 const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
 
@@ -54,11 +54,12 @@ class GameTimeline extends Component {
                 {count === 0 && <h4>No timeline for the game.</h4>}
                 {count > 0 && <Timeline className='game-timeline'>
                     {this.state.filteredLogs.map(log => {
-                        if (log.logType === 'Interception') return (<InterceptLog key={log._id} log={log} />)
-                        if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
-                        if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />)
-                        if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />)
-                        if (log.logType === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />)
+                        if (log.logType === 'Interception') return (<InterceptLog key={log._id} log={log} />);
+                        if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />);
+                        if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />);
+                        if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />);
+                        if (log.logType === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />);
+                        if (log.logType === 'Recon') return (<ReconLog key={log._id} log={log} />);
                     })}
                 </Timeline>}
             </React.Fragment>
@@ -94,7 +95,7 @@ class GameTimeline extends Component {
             console.log(postTypes);
         }
         if (typeFilter.length === 0) postTypes = postTeams
-        const sorted = postTypes.slice().sort((a,b) => new Date(b.date) - new Date(a.date));
+        const sorted = postTypes;
         
         this.setState({ filteredLogs: sorted })
     }
@@ -102,7 +103,7 @@ class GameTimeline extends Component {
 
 const mapStateToProps = state => ({
     lastFetch: state.entities.logs.lastFetch,
-    logs: state.entities.logs.list,
+    logs: state.entities.logs.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
     teams: state.entities.teams.list,
     team: state.auth.team
 })
