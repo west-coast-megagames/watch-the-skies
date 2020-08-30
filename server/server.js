@@ -19,6 +19,8 @@ require('./startup/db')(); // Bootup of MongoDB through Mongoose
 require('./startup/config')(); // Bootup for special configurations
 require('./startup/prod')(app); // Production compression and middleware
 
+app.use(express.static('public'));
+
 const port = process.env.PORT || 5000; // Server entry point - Node Server
 server.listen(port, () => logger.info(`WTS Server started on port ${port}...`)); //export server object for integration testing
 

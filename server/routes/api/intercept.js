@@ -16,22 +16,22 @@ router.put('/', async (req, res) => {
     let { aircraft, target, mission } = req.body;
     routeDebugger(req.body)
 
-    aircraft = await Aircraft.findById(aircraft).populate('systems');
+    aircraft = await Aircraft.findById(aircraft).populate('systems').populate('site').populate('origin');
 
     if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
-        target = await Aircraft.findById(target).populate('systems');
-        aircraft.site = target.site;
+        target = await Aircraft.findById(target).populate('systems').populate('site');
+        aircraft.site = target.site._id;
     } else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
         target = await Site.findById(target);
         aircraft.site = target._id;
     };
 
-    result = `${aircraft.name} launching.`;
+    result = `${aircraft.name} launching...`;
     aircraft.country = target.country;
     aircraft.zone = target.zone;
     aircraft.mission = mission;
     
-    routeDebugger(aircraft);
+    // routeDebugger(aircraft);
 
     aircraft = await aircraft.launch(aircraft, mission); // Changes attacker status
     result = `${result} ${aircraft.name} en route to attempt ${mission.toLowerCase()}.`;

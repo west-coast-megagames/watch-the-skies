@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app:aircraftModel");
+
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
@@ -9,15 +10,15 @@ const AircraftSchema = new Schema({
     type: String,
     min: 2,
     maxlength: 50,
-    enum: ["Interceptor", "Transport", "Decoy", "Fighter"],
-    default: "Interceptor",
+    enum: ["Recon", "Transport", "Decoy", "Fighter", "Interceptor"],
+    default: "Fighter",
   },
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
   country: { type: Schema.Types.ObjectId, ref: "Country" },
   site: { type: Schema.Types.ObjectId, ref: "Site" },
-  baseOrig: { type: Schema.Types.ObjectId, ref: "Site" },
+  origin: { type: Schema.Types.ObjectId, ref: "Facility" },
   mission: { type: String },
   status: {
     damaged: { type: Boolean, default: false },
@@ -29,9 +30,41 @@ const AircraftSchema = new Schema({
     secret: { type: Boolean, default: false },
   },
   systems: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
+  newSystems: {
+    cockpit: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+    engine: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+    weapon: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+    sensor: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+    armor: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+    utility: {
+      active: { type: Boolean, default: false },
+      damaged: { type: Boolean, default: false },
+      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
+    },
+  },
   stats: {
-    hull: { type: Number, default: 3 },
-    hullMax: { type: Number, default: 3 },
+    hull: { type: Number, default: 0 },
+    hullMax: { type: Number, default: 0 },
     attack: { type: Number, default: 0 },
     penetration: { type: Number, default: 0 },
     armor: { type: Number, default: 0 },
@@ -78,18 +111,20 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   }
 };
 
-AircraftSchema.methods.returnToBase = async (aircraft) => {
-  modelDebugger(`Returning ${aircraft.name} to ${baseOrig.name}...`);
+AircraftSchema.methods.returnToBase = async (aircraft) =>  {
+  const { Facility } = require("../gov/facility/facility");
+
+  let origin = await Facility.findById(aircraft.origin._id).populate('site')
+  modelDebugger(`${aircraft.name} returning to ${origin.name} in ${origin.site.name}`);
   aircraft.mission = "Docked";
   aircraft.status.ready = true;
   aircraft.status.deployed = false;
-  aircraft.country = update.baseOrig.country;
-  aircraft.site = update.baseOrig._id;
-  aircraft.zone = update.baseOrig.zone;
+  aircraft.country = origin.site.country._id;
+  aircraft.site = origin.site._id;
+  aircraft.zone = origin.site.zone._id;
+  await aircraft.save();
 
-  aircraft = await aircraft.save();
-
-  return aircraft;
+  return `${aircraft.name} succesfully returned to ${origin.name}!`;
 };
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
@@ -119,10 +154,10 @@ async function getAircrafts() {
   let aircrafts = await Aircraft.find()
     .sort({ team: 1 })
     .populate("team", "name shortName")
-    .populate("zone", "zoneName")
+    .populate("zone", "name")
     .populate("country", "name")
     .populate("systems", "name category")
-    .populate("baseOrig", "name");
+    .populate("origin", "name");
   return aircrafts;
 }
 

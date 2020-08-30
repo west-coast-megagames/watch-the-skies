@@ -11,6 +11,7 @@ const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Site } = require("../models/sites/site");
 const { Log } = require("../models/logs/log");
+const { Facility } = require("../models/gov/facility/facility");
 
 const aircraftCheckDebugger = require("debug")("app:aircraftCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -32,8 +33,8 @@ async function chkAircraft(runFlag) {
     // does not work with .lean
     /*
                                .populate("team", "name teamType")
-                               .populate("zone", "zoneName")
-                               .populate("baseOrig", "name")
+                               .populate("zone", "name")
+                               .populate("origin", "name")
                                .populate("country", "name")
                                .populate("site", "name")
                                */
@@ -81,18 +82,18 @@ async function chkAircraft(runFlag) {
     }
 
     let skipSiteCheck = false;
-    // assume all types should have a site/baseOrig
+    // assume all types should have a site/origin
 
     if (!skipSiteCheck) {
-      if (!aircraft.hasOwnProperty("baseOrig")) {
+      if (!aircraft.hasOwnProperty("origin")) {
         logger.error(
-          `baseOrig missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          `origin missing for Aircraft ${aircraft.name} ${aircraft._id}`
         );
       } else {
-        let site = await Site.findById({ _id: aircraft.baseOrig });
-        if (!site) {
+        let facility = await Facility.findById({ _id: aircraft.origin });
+        if (!facility) {
           logger.error(
-            `baseOrig reference is invalid for Aircraft ${aircraft.name} ${aircraft._id}`
+            `origin reference is invalid for Aircraft ${aircraft.name} ${aircraft._id}`
           );
         }
       }

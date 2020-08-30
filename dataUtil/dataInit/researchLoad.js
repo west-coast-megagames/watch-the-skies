@@ -56,7 +56,7 @@ async function runResearchLoad(runFlag) {
 
 async function loadTeams() {
   for await (let teams of await Team.find({ teamType: "N" })) {
-    teamArray.push(teams._id);
+    teamArray.push({ _id: teams._id, name: teams.name });
   }
   researchLoadDebugger(`Number of National Teams Loaded: ${teamArray.length}`);
 }

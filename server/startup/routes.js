@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 
 // Error handling and Logging
-const error = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { routeError, logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 const cors = require('cors');
 
 // Routes - Using Express
@@ -24,9 +24,11 @@ const research = require('../routes/api/research');
 const sites = require('../routes/api/sites');
 const team = require('../routes/api/team');
 const tableau = require('../routes/api/tableau');
-const trades = require('../routes/api/trades')
+const trade = require('../routes/api/trade')
+const treaty = require('../routes/api/treaty')
 const zones = require('../routes/api/zones');
 
+const debug = require('../routes/debugRoute');
 const game = require('../routes/game/game');
 const admin = require('../routes/game/admin');
 const del = require('../routes/game/delete');
@@ -37,6 +39,8 @@ const users = require('../routes/users');
 
 
 module.exports = function(app) {
+    logger.info('Opening routes...')
+
     // Bodyparser Middleware
     app.use(bodyParser.json());
 
@@ -45,6 +49,7 @@ module.exports = function(app) {
 
     // Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
     app.use('/', home);
+    app.use('/debug', debug); // Route for debug triggering
     app.use('/game', game);
     app.use('/game/admin', admin);
     app.use('/game/delete', del);
@@ -67,10 +72,11 @@ module.exports = function(app) {
     app.use('/api/logErrors', logError); // Route for manipulating logError
     app.use('/api/logInfo', logInfo); // Route for manipulating logInfo
     app.use('/tableau', tableau); // Route for tableau API
-    app.use('/api/trades', trades);
+    app.use('/api/trade', trade); //
+    app.use('/api/treaty', treaty); //treaties
     //app.use('/api/initData', initData); // Route for Init Data functions
 
     app.use('/api/control', control)
 
-    app.use(error.routeError);
+    app.use(routeError);
 }

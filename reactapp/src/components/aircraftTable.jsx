@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { infoRequested } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
+import { Table, Progress, IconButton, Icon, ButtonGroup, Alert } from 'rsuite';
+
+const { HeaderCell, Cell, Column } = Table;
 
 class AircraftTable extends Component {
     constructor(props) {
@@ -22,7 +25,6 @@ class AircraftTable extends Component {
     }
 
     render() {
-        console.log(this.state.aircrafts)
         const { length: count } = this.state.aircrafts;
         
         if (count === 0)
@@ -30,30 +32,54 @@ class AircraftTable extends Component {
         return (
             <React.Fragment>
                 <p>You currently have {count} interceptors in base.</p>
-                <table className="table">
-                <thead>
-                    <tr>
-                        <th>Aircraft</th>
-                        <th>Pilot</th>
-                        <th>Frame Damage</th>
-                        <th>Location</th>
-                        <th>Status</th>
-                        <th>Unit Info</th>
-                    </tr>
-                </thead>
-                <tbody>
-                { this.state.aircrafts.map(aircraft => (
-                    <tr key={ aircraft._id }>
-                        <td>{ aircraft.name }</td>
-                        <td>Someone</td>
-                        <td>{ 100 - Math.round(aircraft.stats.hull / aircraft.stats.hullMax * 100) }%</td>
-                        <td>{ this.getLocation(aircraft) }</td>
-                        <td>{ aircraft.mission }</td>
-                        <td><button type="info" value="Info" onClick={ () => this.props.infoRequest(aircraft) } className="btn btn-info">Info</button></td>
-                    </tr>
-                    ))}
-                </tbody>
-            </table>
+                <Table 
+                    rowKey='_id'
+                    autoHeight
+                    data={ this.state.aircrafts }
+                >
+                    <Column flexGrow={2}>
+                        <HeaderCell>Aircraft</HeaderCell>
+                        <Cell dataKey='name' />
+                    </Column>
+                    <Column flexGrow={2}>
+                        <HeaderCell>Integrity</HeaderCell>
+                        <Cell style={{padding: '8px'}}>
+                            {rowData => {
+                                let { stats } = rowData
+                                return(
+                                    <Progress.Line percent={stats.hull / stats.hullMax * 100} />
+                                )
+                            }}
+                        </Cell>
+                    </Column>
+                    <Column flexGrow={1} >
+                        <HeaderCell>Location</HeaderCell>
+                        <Cell>
+                            {rowData => {
+                                return this.getLocation(rowData)
+                            }}
+                        </Cell>
+                    </Column>
+                    <Column flexGrow={1} >
+                        <HeaderCell>Status</HeaderCell>
+                        <Cell dataKey='mission' />
+                    </Column>
+                    <Column flexGrow={2}>
+                        <HeaderCell>Actions</HeaderCell>
+                        <Cell style={{padding: '8px'}}>
+                            {rowData => {
+                                let aircraft = rowData;
+                                console.log(aircraft);
+                                return (
+                                <ButtonGroup size='sm'>
+                                    <IconButton icon={<Icon icon="info-circle" />} onClick={() => this.props.infoRequest(aircraft)} color="blue"/>
+                                    <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => Alert.warning('Launching aircraft from this table not been implemented...', 4000)} color="red" />
+                                </ButtonGroup>
+                                )
+                            }}    
+                        </Cell>
+                    </Column>
+                </Table>
             </React.Fragment>
         );
     }

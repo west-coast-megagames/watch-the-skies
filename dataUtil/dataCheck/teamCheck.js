@@ -17,6 +17,9 @@ const {
 } = require("../models/team/team");
 const { Country } = require("../models/country");
 const { Account } = require("../models/gov/account");
+const { Log } = require("../models/logs/log");
+const { Treaty } = require("../models/dip/treaty");
+const { Trade } = require("../models/dip/trade");
 
 const teamCheckDebugger = require("debug")("app:teamCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -65,6 +68,32 @@ async function chkTeam(runFlag) {
       }
     }
 
+    if (!team.hasOwnProperty("treaties")) {
+      logger.error(`treaties missing for Team ${team.name} ${team._id}`);
+    } else {
+      for (let i = 0; i < team.treaties.length; ++i) {
+        let tFind = await Treaty.findById(team.treaties[i]);
+        if (!tFind) {
+          logger.error(
+            `Team ${team.name} ${team._id} has an invalid treaties reference ${i}: ${team.treaties[i]}`
+          );
+        }
+      }
+    }
+
+    if (!team.hasOwnProperty("trades")) {
+      logger.error(`trades missing for Team ${team.name} ${team._id}`);
+    } else {
+      for (let i = 0; i < team.trades.length; ++i) {
+        let trFind = await Trade.findById(team.trades[i]);
+        if (!trFind) {
+          logger.error(
+            `Team ${team.name} ${team._id} has an invalid trades reference ${i}: ${team.trades[i]}`
+          );
+        }
+      }
+    }
+
     if (!team.hasOwnProperty("name")) {
       logger.error(`name missing for team ${team._id}`);
     } else {
@@ -75,6 +104,14 @@ async function chkTeam(runFlag) {
 
     if (!team.hasOwnProperty("shortName")) {
       logger.error(`shortName missing for team ${team.name} ${team._id}`);
+    } else {
+      if (
+        team.shortName === "" ||
+        team.shortName == undefined ||
+        team.shortName == null
+      ) {
+        logger.error(`shortName is blank for Team ${team.name} ${team._id}`);
+      }
     }
 
     if (!team.hasOwnProperty("teamCode")) {

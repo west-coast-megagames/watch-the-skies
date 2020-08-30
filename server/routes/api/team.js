@@ -15,7 +15,6 @@ const { Team, validateTeam, getPR, getTeam, getSciRate, validateRoles } = requir
 router.get('/', async function (req, res) {
     routeDebugger('Looking up teams...');
     let teams = await Team.find().sort({team: 1});
-    teams = teams.filter( t => t.teamType === 'N')
     res.json(teams);
 });
 

@@ -7,13 +7,21 @@ import { deployClosed } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
 
 let missions = [
-  { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false, type: 'Fighter' },
-  { value: "Escort", label: "Escort | Protect target aircraft" , aircraft: true, site: false, type: 'Fighter'},
-  { value: "Patrol", label: "Patrol | Protect target site", aircraft: false, site: true, type: 'Fighter'},
-  { value: "Transport", label: "Transport | Take cargo to/from target site", aircraft: false, site: true, type: 'Transport'},
-  { value: "Recon Aircraft", label: "Recon | Gather info about target aircraft", aircraft: true, site: false },
-  { value: "Recon Site", label: "Recon | Gather info about target site", aircraft: false, site: true, },
-  { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true, type: 'Decoy'}
+  { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false, ground: false, type: 'Fighter' },
+  { value: "Escort", label: "Escort | Protect target aircraft" , aircraft: true, site: false, ground: false, type: 'Fighter'},
+  { value: "Patrol", label: "Patrol | Protect target site", aircraft: false, site: true, ground: false, type: 'Fighter'},
+  { value: "Transport", label: "Transport | Take cargo to/from target site", aircraft: false, site: true, ground: false, type: 'Transport'},
+  { value: "Recon Aircraft", label: "Recon | Gather info about target aircraft", aircraft: true, site: false, ground: false, },
+  { value: "Recon Site", label: "Recon | Gather info about target site", aircraft: false, site: true, ground: true },
+  { value: "Diversion", label: "Diversion | Destract above target site", aircraft: false, site: true, ground: false, type: 'Decoy'},
+  { value: "Cargo", label: "Cargo Run | Pick up cargo at site", aircraft: false, site: false, ground: true },
+  { value: "Abduction", label: "Abduction | Pick up some 'willing' people", aircraft: false, site: false, ground: true },
+  { value: "Raid", label: "Raid | Squad attacks target site", aircraft: false, site: false, ground: true },
+  { value: "Sabatage", label: "Sabatage | I bet the facilities here a booming", aircraft: false, site: false, ground: true },
+]
+
+let groundMission = [
+
 ]
 class InfoDeploy extends Component {
   constructor(props) {
@@ -23,16 +31,13 @@ class InfoDeploy extends Component {
       unit: this.props.unit,
       target: this.props.target,
       mission: undefined,
-      groundMission: false,
+      groundMission: undefined,
       siteMissions: [],
-      airMissions: []
+      airMissions: [],
+      groundMissions: []
     }
     this.filterOptions = this.filterOptions.bind(this);
 }
-
-  componentDidMount() {
-      this.filterOptions();
-  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.aircrafts !== this.props.aircrafts || prevProps.target !== this.props.target) {
@@ -43,6 +48,7 @@ class InfoDeploy extends Component {
   filterOptions() {
     let siteMissions = missions.filter(mission => mission.site === true);
     let airMissions = missions.filter(mission => mission.aircraft === true);
+    let groundMissions = missions.filter(mission => mission.ground === true);
     let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true);
     let aircrafts = [];
     console.log(ships);
@@ -51,12 +57,12 @@ class InfoDeploy extends Component {
         console.log(ship)
         let data = { 
           label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
-          value: ship._id,
+          value: ship._id
         }
         aircrafts.push(data);
       }
     }
-    this.setState({ siteMissions, airMissions, aircrafts });
+    this.setState({ siteMissions, airMissions, aircrafts, groundMissions });
   }
 
   render() {
@@ -82,7 +88,7 @@ class InfoDeploy extends Component {
               <hr />
             </ FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <p><b>Location:</b> {model === "Aircraft" ? `${country.name} Airspace` : `${country.name}`} - {zone.zoneName}</p>
+              <p><b>Location:</b> {model === "Aircraft" ? `${country.name} Airspace` : `${country.name}`} - {zone.name}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}
@@ -115,16 +121,16 @@ class InfoDeploy extends Component {
             </FlexboxGrid.Item>
             </FlexboxGrid>
             <br /><br /><br />
-            { model === 'Site' && this.props.unit !== null && this.state.mission === 'transport' &&
+            { model === 'Site' && this.state.unit !== null && this.state.mission === 'Transport' &&
               <React.Fragment>
               <b>Ground Mission - Mission Perameters</b>
               <hr />
               <div className='row' style={{ display: 'flex', flex: '80%' }}>
                 <div className='col' style={{ flex: '50%' }}>
-                  <InputPicker placeholder={`Ground Mission`} data={this.state.aircraft} labelKey='label' value={this.state.unit} valueKey='value' onChange={value => (this.setState({ unit: value }))} block />
+                  <InputPicker placeholder={`Ground Unit`} data={this.state.aircraft} labelKey='label' value={this.state.unit} valueKey='value' onChange={value => (this.setState({ unit: value }))} block />
                 </div>
                 <div className='col' style={{ flex: '50%' }}>
-                  <InputPicker placeholder="Mission Type Selection" data={model === 'Site' ? this.state.siteMissions : this.state.airMissions} value={this.state.mission} onChange={value => (this.setState({ mission: value }))} block />
+                  <InputPicker placeholder="Mission Type Selection" data={this.state.groundMissions} value={this.state.mission} onChange={value => (this.setState({ groundMission: value }))} block />
                 </div>
               </div>
             </React.Fragment>

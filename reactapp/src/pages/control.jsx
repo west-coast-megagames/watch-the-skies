@@ -77,31 +77,33 @@ class Control extends Component {
                         <div>
                             <h5>Research Controls</h5>
                             <ButtonGroup>
-                                <Button color="danger" size="sm" onClick={ () => this.delResearch() }>
-                                    Delete All Research
-                                </Button>
-                                <Button color="info" size="sm" onClick={ () => this.loadKnowledge() }>
+                                <Button disabled={true} size="sm" onClick={ () => this.loadKnowledge() }>
                                     Load Knowledge
                                 </Button>
-                                <Button color="info" size="sm" onClick={ () => this.loadTech() }>
+                                <Button disabled={true}  size="sm" onClick={ () => this.loadTech() }>
                                     Load Tech
                                 </Button>
-                                <Button color="info" size="sm" onClick={ () => this.seedKnowledge() }>
+                                <Button  size="sm" onClick={ () => this.seedKnowledge() }>
                                     Seed Knowledge
                                 </Button>
-                                <Button color="info" size="sm" onClick={ () => this.seedTechnology() }>
+                                <Button  size="sm" onClick={ () => this.seedTechnology() }>
                                     Seed Technology
                                 </Button>
                             </ButtonGroup>
                         </div>
+                        <hr />
                         <div>
-                            <h5>Construction Controls</h5>
+                        <h5>Delete Controls</h5>
                             <ButtonGroup>
-                                <Button color="info" size="sm" onClick={ () => this.loadSystems() }>
-                                    Load Systems
+                                <Button color="red" size="sm" onClick={ () => this.delResearch() }>
+                                    Wipe Research
+                                </Button>
+                                <Button color="red" size="sm" onClick={ () => this.delLogs() }>
+                                    Wipe Logs
                                 </Button>
                             </ButtonGroup>
                         </div>
+
                     </div>
                     )}/>
                     
@@ -141,7 +143,7 @@ class Control extends Component {
 
     returnAll = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/interceptor/return`)
+            const response = await axios.patch(`${gameServer}debug/returnAircraft`)
             this.props.alert({type: 'success', title: 'Interceptors returned to Base', body: response.data })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Interceptors failed to return to Base', body: `${err.response.data} - ${err.message}` })
@@ -190,6 +192,16 @@ class Control extends Component {
             const response = await axios.delete(`${gameServer}api/research`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Deleted all Research', body: response.data})
+        } catch (err) {
+            this.props.alert({type: 'error', title: 'Failed to delete Research', body: `${err.response.data} - ${err.message}` })
+        };
+    }
+
+    delLogs = async () => {
+        try {
+            const response = await axios.delete(`${gameServer}game/delete/logs`)
+            console.log(response);
+            this.props.alert({type: 'success', title: 'Deleted all Logs', body: response.data})
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to delete Research', body: `${err.response.data} - ${err.message}` })
         };

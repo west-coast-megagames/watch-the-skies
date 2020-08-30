@@ -56,24 +56,24 @@ const TransactionLog = props => {
 
 // TODO - Research log should be fleshed out for March.
 const ResearchLog = props => {
-  let { log } = props;
-  let date = new Date(log.date);
+  let { outcomes, rolls, _id, team, logType, timestamp, lab, funding, stats, progress, project } = props.log;
+  if (props.log.project === null) console.log(props.log)
+  let date = new Date(props.log.date);
+  if (timestamp === undefined) timestamp = {turn: 'void', phase: 'uncertian', clock: '00:00'};
 
   let results = [];
-  for (let i = 0; i < log.rolls.length; i++) {
-    let outcome = `Roll #${i + 1} | ${log.outcomes[i]} - Die Result: ${log.rolls[i]}`;
+  for (let i = 0; i < rolls.length; i++) {
+    let outcome = `Roll #${i + 1} | ${outcomes[i]} - Die Result: ${rolls[i]}`;
     results.push(outcome);
   }
   return (
-    <Timeline.Item key={log._id} dot={<Icon icon="flask" size="2x" />}>
+    <Timeline.Item key={_id} dot={<Icon icon="flask" size="2x" />}>
       <Panel
         style={{
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d6eaf8, #fff)"
         }}
-        header={`${log.logType} - ${log.team.teamCode} | ${
-          log.timestamp.turn
-        } ${log.timestamp.phase} - ${log.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`${logType} - ${team.teamCode} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
        <FlexboxGrid>
@@ -82,19 +82,19 @@ const ResearchLog = props => {
               {/* <Whisper placement="top" speaker={teamSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b> Team:</b> {log.team.name} | <b>Science Rate:</b> {log.team.sciRate}
+              <b> Team:</b> {team.name} | <b>Science Rate:</b> {team.sciRate}
             </div>
             <div>
               {/* <Whisper placement="top" speaker={labSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b> Lab:</b> {log.lab.name} | <b>Science Rate:</b> {log.lab.sciRate}
+              <b> Lab:</b> {lab.name} | <b>Science Rate:</b> {lab.sciRate}
             </div>
             <div>
               {/* <Whisper placement="top" speaker={fundingSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b>Funding Level:</b> {log.funding}
+              <b>Funding Level:</b> {funding}
             </div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={12}>
@@ -102,21 +102,21 @@ const ResearchLog = props => {
               {/* <Whisper placement="top" speaker={amountSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b> Multiplyer:</b> {log.stats.finalMultiplyer}
+              <b> Multiplyer:</b> {stats.finalMultiplyer}
             </div> 
             <div>
               {/* <Whisper placement="top" speaker={noteSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b> Breakthroughs:</b> {log.stats.breakthroughCount}</div>
+              <b> Breakthroughs:</b> {stats.breakthroughCount}</div>
               <div>
               {/* <Whisper placement="top" speaker={noteSpeaker} trigger="click">
                 <IconButton size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
-              <b> Progress:</b> {log.progress.endingProgress}</div>
+              <b> Progress:</b> {progress.endingProgress}</div>
           </FlexboxGrid.Item>
         </FlexboxGrid>
-        <p><b>Active Project:</b> {log.project.name}</p>
+        <p><b>Active Project:</b> {project.name}</p>
           <ul>
             {results.map(el => (
               <li key={el}>{el}</li>
@@ -153,7 +153,7 @@ const InterceptLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
         <p>
           <b>Report:</b> {log.report}
@@ -188,7 +188,7 @@ const ConstructionLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -220,7 +220,7 @@ const DeployLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -255,7 +255,7 @@ const CrisisLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -287,7 +287,7 @@ const TerrorLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -319,7 +319,7 @@ const TreatyLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -351,7 +351,7 @@ const TradeLog = props => {
           <b>Team:</b> {log.team.name}
         </p>
         <p>
-          <b>Location:</b> {log.country.name} - {log.zone.zoneName}
+          <b>Location:</b> {log.country.name} - {log.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -386,9 +386,35 @@ const RepairLog = props => {
   );
 };
 
+const ReconLog = props => {
+  let { log } = props;
+  let date = new Date(log.date);
+
+  return (
+    <Timeline.Item key={log._id} dot={<Icon icon="eye" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
+        }}
+        header={`Recon Report - ${log.team.teamCode} | ${
+          log.timestamp.turn
+        } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        collapsible
+      >
+        <p>
+          {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
+          Turn {log.timestamp.turnNum}
+        </p>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 export {
   TransactionLog,
   ResearchLog,
+  ReconLog,
   InterceptLog,
   TradeLog,
   TreatyLog,

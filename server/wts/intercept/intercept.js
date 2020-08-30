@@ -3,7 +3,7 @@ const interceptDebugger = require('debug')('app:intercept');
 const { outcome } = require('./outcome')
 const { interceptDmg } = require('./damage');
 const { generateCrash } = require('./salvage');
-const interceptLogging = require('./report');
+const { interceptLogging } = require('./report');
 
 // Interception Algorithm - Expects an attacker object and a defender object from MongoDB
 async function intercept (attacker, atkStance, atkReport, defender, defStance, defReport) {
@@ -23,8 +23,8 @@ async function intercept (attacker, atkStance, atkReport, defender, defStance, d
         await generateCrash(interceptReport.salvage, attacker.site, attacker.country);
     }
 
-    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport}` 
-    interceptReport.defReport = `${defReport} ${interceptReport.defReport}`
+    interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport} ${interceptReport.defReport}` 
+    interceptReport.defReport = `${defReport} ${interceptReport.defReport} ${interceptReport.atkReport}`
     interceptLogging(interceptReport, attacker, defender); // Creates the final intercept logs for both teams | report.js
     interceptDebugger(`Atk After Action Report - ${atkReport} ${interceptReport.atkReport}`);
     interceptDebugger(`Def After Action Report - ${defReport} ${interceptReport.defReport}`);

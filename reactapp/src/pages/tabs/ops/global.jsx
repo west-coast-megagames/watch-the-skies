@@ -82,20 +82,20 @@ class GlobalOps extends Component {
     loadTable() {
         let data = []
         let military = this.props.military.filter(el => el.__t === 'Corps');
-        let zones = this.props.zones.filter(el => el.zoneName !== 'Space')
+        let zones = this.props.zones.filter(el => el.name !== 'Space')
         zones = zones.map((item) => Object.assign({}, item, {selected:false}));
         military = military.map((item) => Object.assign({}, item, {selected:false}));
 
         for (let newZone of zones) {
             let zone = {...newZone};
             zone.children = []
-            zone.name = zone.zoneName
+            zone.name = zone.name
             zone.type = 'zone'
             for (let unit of military) {
                 let checkZone = zone;
                 console.log(unit)
                 console.log(checkZone)
-                if (unit.zone.zoneName === checkZone.zoneName) {
+                if (unit.zone.name === checkZone.name) {
                     unit.type = 'unit'
                     unit.info = `Health ${unit.stats.health}/${unit.stats.healthMax} | Attack: ${unit.stats.attack} | Defense: ${unit.stats.defense}`;
                     zone.children.push(unit);

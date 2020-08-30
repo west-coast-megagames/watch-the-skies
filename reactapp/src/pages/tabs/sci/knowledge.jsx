@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import axios from 'axios';
-import { gameServer } from '../../../config';
 import { Table, Tag, Progress, Checkbox, Button, Alert } from 'rsuite';
-import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
+import FieldIcon from '../../../components/common/fieldIcon';
 
 const { Column, HeaderCell, Cell } = Table;
 const fields = ['Biology', 'Computer Science', 'Electronics', 'Engineering', 'Genetics', 'Material Science','Physics', 'Psychology', 'Social Science', 'Quantum Mechanics'];
@@ -13,37 +11,31 @@ class Knowledge extends Component {
     constructor(props) {
 		super(props);
 		this.state = {
-            myHiddenLab: {},    // The hidden lab used for scientific knowledge for this team (SRC)
             data: [],
-            checkedKeys: [],
-            cost: 0,
-            account: this.props.account
         }
         this.createTable = this.createTable.bind(this);
-        this.handleCheckAll = this.handleCheckAll.bind(this);
-        this.handleCheck = this.handleCheck.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-        let knowledge = this.props.allResearch.filter(el => el.type === 'Knowledge');
-        if (knowledge.length !== 0) {               // This is to account for knowledge not being seeded
-            let myHiddenLab = this.props.facilities.filter(el => el.type === 'Lab' && el.hidden && el.team._id === this.props.team._id);
-            let tableKnowlege = this.createTable(knowledge);
-            this.setState({ data: tableKnowlege, myHiddenLab });
+        if (this.props.knowledge.length !== 0) {              
+            let tableKnowlege = this.createTable();
+            this.setState({ data: tableKnowlege });
         } 
     }
 
     componentDidUpdate (prevProps, prevState) {
-        if (prevState.checkedKeys !== this.state.checkedKeys) {
-            let cost = this.state.checkedKeys.length * 2;
-            this.setState({cost})    
+        if (prevProps.lastFetch !== this.props.lastFetch) {
+            if (this.props.knowledge.length !== 0) {              
+                let tableKnowlege = this.createTable();
+                this.setState({ data: tableKnowlege });
+            } 
         }
         
     }
     
-    createTable = (knowledge) => {
-        let data = this.state.data;
+    createTable = () => {
+        let knowledge = this.props.knowledge
+        let data = [];
         for (let field of fields) {
             let object = {};
             object.field = field;
@@ -59,163 +51,60 @@ class Knowledge extends Component {
                     object.research_id = el._id
                 }
             };
+            if (object.research === undefined) object.research = knowledge.find(el => el.field === field && el.level === 5);
             data.push(object);
         }
+        console.log(data);
         return data;
     }
     
     render() {
-        const { data, checkedKeys } = this.state;
+        const { data } = this.state;
 
-        let checked = false;
-        let indeterminate = false;
-        
-    
-        if (checkedKeys.length === data.length) {
-          checked = true;
-        } else if (checkedKeys.length === 0) {
-          checked = false;
-        } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
-          indeterminate = true;
-        }
-        
-        
         return ( 
-            <div>
-                <BalanceHeader 
-					account={this.state.account}
-					title={"Scientific Knowledge Field Funding"}
-				/>
-                <Table
-                    rowKey="field"
-                    autoHeight
-                    data={data}
-                >
-                    <Column width={50} align="center">
-                        <HeaderCell style={{ padding: 0 }}>
-                        <div style={{ lineHeight: '40px' }}>
-                            <Checkbox
-                            inline
-                            checked={checked}
-                            indeterminate={indeterminate}
-                            onChange={this.handleCheckAll}
-                            />
-                        </div>
-                        </HeaderCell>
-                        <CheckCell
-                            dataKey="research_id"
-                            checkedKeys={checkedKeys}
-                            onChange={this.handleCheck}
-                        />
-                    </Column>
-                    <Column width={200}>
-                        <HeaderCell>Field</HeaderCell>
-                        <Cell dataKey="field" />
-                    </Column>
-                    <Column align='center' width={100}>
-                        <HeaderCell>Global Level</HeaderCell>
-                        <Cell>{rowData => {
-//                            console.log("ROWDATA=",rowData);
-                            let currentLevel = rowData.research.level - 1;
-                            return(
-                                <Tag color='green'>{currentLevel}</Tag>
-                        )}}</Cell>
-                    </Column>
+            <Table
+                rowKey="field"
+                autoHeight
+                data={data}
+            >
+                <Column width={200}>
+                    <HeaderCell>Field</HeaderCell>
+                    <Cell style={{padding:'8px'}}>{rowData => {
+                        return (<FieldIcon size='sm' field={rowData.field} />)
+                    }}</Cell>
+                </Column>
+                <Column align='center' width={100}>
+                    <HeaderCell>Global Level</HeaderCell>
+                    <Cell>{rowData => {
+                        let currentLevel = rowData.research.level - 1;
+                        return(
+                            <Tag color='green'>{currentLevel}</Tag>
+                    )}}</Cell>
+                </Column>
 
-                    <Column verticalAlign='middle' flexGrow={1}>
-                        <HeaderCell>Global Progress Towards next Level <Tag color="green" style={{float:'right'}}>Funding Cost: $M{this.state.cost}</Tag></HeaderCell>
-                        <Cell dataKey="research.progress">{rowData => {
-                            let progress = rowData.research.progress;
-                            let percent = progress / this.props.techCost[rowData.research.level] * 100
-                            return(
-                                <Progress.Line percent={percent} />
-                        )}}</Cell>
+                <Column verticalAlign='middle' flexGrow={1}>
+                    <HeaderCell>Global Progress Towards next Level</HeaderCell>
+                    <Cell style={{padding: '8px'}}>{rowData => {
+                        let progress = rowData.research.progress;
+                        let percent = Math.floor(progress / (this.props.techCost[rowData.research.level] * 10) * 100);
+                        return(
+                            <Progress.Line percent={percent} />
+                    )}}</Cell>
 
-                    </Column>
-                </Table>
-                <hr  />
-                <Button appearance="primary" onClick={() => this.handleSubmit()} style={{float:'right'}}>Submit funding</Button>
-            </div>
+                </Column>
+            </Table>
         );
         
     }
-
-    handleCheckAll = (value, checked) => {
-        const checkedKeys = checked ? this.state.data.map(item => item.research_id) : [];
-        this.setState({
-          checkedKeys
-        });
-      }
-
-    handleCheck = (value, checked) => {
-        const { checkedKeys } = this.state;
-        const nextCheckedKeys = checked
-          ? [...checkedKeys, value]
-          : checkedKeys.filter(item => item !== value);
-    
-        this.setState({
-          checkedKeys: nextCheckedKeys
-        });
-    }
-
-    handleSubmit = async () => {
-        let { account, cost, checkedKeys, myHiddenLab } = this.state
-        if (account.balance < cost) {
-            Alert.warning(`The ${account.name} account currently doesn't have the funds to cover this level of funding.`, 6000)
-        } else {
-            try {
-                const txn = {
-                    account_id : account._id,
-                    note : `$M${cost} funding for ${checkedKeys.length} fields of study.`,
-                    amount : cost
-                }
-                let { data } = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
-                Alert.success(data, 4000)  
-                try {
-                    let submission = {
-                        research: checkedKeys,
-                        funding: 0,
-                        _id: myHiddenLab[0]._id 
-                    }
-                    let { data } = await axios.put(`${gameServer}api/facilities/research`, submission);
-                    Alert.success(data, 4000)
-
-                    this.setState({
-                        checkedKeys: []
-                      });
-                } catch (err) {
-                    Alert.error(`Error: ${err}`)
-                }
-            } catch (err) {
-                Alert.error(`Error: ${err}`)
-            }
-        }
-        this.setState({
-          checkedKeys: []
-        });
-    }
 }
-
-
-const CheckCell = ({ rowData, onChange, checkedKeys, dataKey, ...props }) => (
-    <Cell {...props} style={{ padding: 0 }}>
-      <div style={{ lineHeight: '46px' }}>
-        <Checkbox
-          value={rowData[dataKey]}
-          inline
-          onChange={onChange}
-          checked={checkedKeys.some(item => item === rowData[dataKey])}
-        />
-      </div>
-    </Cell>
-  );
 
 
 const mapStateToProps = state => ({
     login: state.auth.login,
     team: state.auth.team,
+    lastFetch: state.entities.research.lastFetch,
     facilities: state.entities.facilities.list,
-    allResearch: state.entities.research.list,
+    knowledge: state.entities.research.list.filter(el => el.type === 'Knowledge'),
     account: getSciAccount(state)
 });
   

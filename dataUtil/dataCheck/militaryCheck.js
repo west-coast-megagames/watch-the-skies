@@ -11,6 +11,7 @@ const { Team } = require("../models/team/team");
 const { Country } = require("../models/country");
 const { Zone } = require("../models/zone");
 const { Log } = require("../models/logs/log");
+const { Facility } = require("../models/gov/facility/facility");
 
 const militaryCheckDebugger = require("debug")("app:militaryCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -32,8 +33,8 @@ async function chkMilitary(runFlag) {
   for (const military of await Military.find()
     //.populate("team", "name teamType")       does not work with .lean()
     //.populate("country", "name type")        does not work with .lean()
-    //.populate("zone", "zoneName")            does not work with .lean()
-    //.populate("homeBase", "name")            does not work with .lean()
+    //.populate("zone", "name")            does not work with .lean()
+    //.populate("origin", "name")            does not work with .lean()
     .lean()) {
     /* does not work with .lean()
     if (!military.populated("team")) {  
@@ -48,8 +49,8 @@ async function chkMilitary(runFlag) {
       logger.error(`Zone link missing for Military ${military.name} ${military._id}`);
     }
 
-    if (!military.populated("homeBase")) {  
-      logger.error(`homeBase link missing for Military ${military.name} ${military._id}`);
+    if (!military.populated("origin")) {  
+      logger.error(`origin link missing for Military ${military.name} ${military._id}`);
     }
     */
 
@@ -133,15 +134,15 @@ async function chkMilitary(runFlag) {
       }
     }
 
-    if (!military.hasOwnProperty("homeBase")) {
+    if (!military.hasOwnProperty("origin")) {
       logger.error(
-        `homeBase missing for Military ${military.name} ${military._id}`
+        `origin missing for Military ${military.name} ${military._id}`
       );
     } else {
-      let site = await Site.findById({ _id: military.homeBase });
-      if (!site) {
+      let facility = await Facility.findById({ _id: military.origin });
+      if (!facility) {
         logger.error(
-          `homeBase reference is invalid for Military ${military.name} ${military._id}`
+          `origin reference is invalid for Military ${military.name} ${military._id}`
         );
       }
     }

@@ -1,7 +1,7 @@
 {
-    "jwtPrivateKey": "rawr",
-    "initPath": "./util/dataInit/",
-    "initPathWTS": "../../",
-    "dbName": "test",
-    "loadSel": "All"
+  "jwtPrivateKey": "rawr",
+  "initPath": "./util/dataInit/",
+  "initPathWTS": "../../",
+  "dbName": "dev",
+  "loadSel": "All"
 }

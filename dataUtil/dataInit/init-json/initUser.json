@@ -558,5 +558,125 @@
     "discord": "farnworthkevin#7861",
     "teamCode": "RSA",
     "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "noahallington",
+    "name": { "first": "Noah", "last": "Allington" },
+    "email": "noahallington@gmail.com",
+    "phone": "9893975152",
+    "password": "AwJ5oB7B#o8p",
+    "address": {
+      "street1": "207 Kansas",
+      "street2": "",
+      "city": "Ypsilanti",
+      "state": "MI",
+      "zipcode": "48198"
+    },
+    "dob": "1991-10-01",
+    "gender": "Male",
+    "discord": "Xelath#4417",
+    "teamCode": "USA",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "Ruanek",
+    "name": { "first": "Nathan", "last": "Chaney" },
+    "email": "nathanrchaney@gmail.com",
+    "phone": "2406203295",
+    "password": "NFiupeLFDshNF79:k",
+    "address": {
+      "street1": "208 Kaden Prince Dr",
+      "street2": "",
+      "city": "Pflugerville",
+      "state": "TX",
+      "zipcode": "78660"
+    },
+    "dob": "1993-09-11",
+    "gender": "Male",
+    "discord": "Ruanek#1136",
+    "teamCode": "RFD",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "NickD",
+    "name": { "first": "Nick", "last": "Drage" },
+    "email": "nexus@funkyjesus.org",
+    "phone": "1112223339",
+    "password": "dzNPjq'dYrx66hWR",
+    "address": {
+      "street1": "STREET ADDRESS 1 HERE",
+      "street2": "STREET ADDRESS 2 HERE",
+      "city": "CITY HERE",
+      "state": "CA",
+      "zipcode": "11111"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "NickD#7799",
+    "teamCode": "TUK",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "Stefan",
+    "name": { "first": "Stefan", "last": "Salva Cruz" },
+    "email": "stefan.salvacruz@gmail.com",
+    "phone": "9995551234",
+    "password": "qwer1234;",
+    "address": {
+      "street1": "123 Fake St",
+      "street2": "",
+      "city": "Fake",
+      "state": "NY",
+      "zipcode": "10010"
+    },
+    "dob": "1999-09-09",
+    "gender": "Male",
+    "discord": "Stefon#1994",
+    "teamCode": "JPN",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "mgiese",
+    "name": { "first": "Mike", "last": "Giese" },
+    "email": "giese.mike@gmail.com",
+    "phone": "6302723353",
+    "password": "LiNetW0f!v3",
+    "address": {
+      "street1": "STREET ADDRESS 1 HERE",
+      "street2": "STREET ADDRESS 2 HERE",
+      "city": "CITY HERE",
+      "state": "CA",
+      "zipcode": "11111"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "mgiese",
+    "teamCode": "PRC",
+    "roles": ["Player"]
+  },
+  {
+    "loadType": "user",
+    "username": "Sensou",
+    "name": { "first": "Daniel", "last": "White" },
+    "email": "thevojoc@gmail.com",
+    "phone": "5555555560",
+    "password": "pancakes",
+    "address": {
+      "street1": "123 ABC St.",
+      "street2": "Unit 999",
+      "city": "City",
+      "state": "CA",
+      "zipcode": "99999"
+    },
+    "dob": "1991-01-01",
+    "gender": "Male",
+    "discord": "sensou#6453",
+    "teamCode": "PRC",
+    "roles": ["Player"]
   }
 ]

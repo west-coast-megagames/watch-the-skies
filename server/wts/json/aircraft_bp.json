@@ -1,0 +1,41 @@
+[
+    {
+        "model": "aircraft",
+        "name": "Generic Fighter",
+        "type": "Fighter",
+        "code": "NX-002",
+        "cost": 1,
+        "buildTime": 1,
+        "desc": "Generic XCOM Interceptor Bluebprint",
+        "prereq": [],
+        "hidden": false,
+        "stats": {
+            "hullMax": 3,
+            "attack": 2,
+            "penetration": 0,
+            "armor": 1,
+            "evade": 1,
+            "range": 4000,
+            "cargo": 0
+        }
+    },
+    {
+        "model": "aircraft",
+        "name": "Generic Fighter",
+        "code": "UFO-13",
+        "cost": 2,
+        "buildTime": 1,
+        "desc": "Generic UFO Bluebprint",
+        "prereq": [],
+        "hidden": false,
+        "stats": {
+            "hullMax": 5,
+            "attack": 3,
+            "penetration": 1,
+            "armor": 1,
+            "evade": 2,
+            "range": 16000,
+            "cargo": 1
+        }
+    }
+]

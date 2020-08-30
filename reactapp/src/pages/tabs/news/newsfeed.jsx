@@ -82,7 +82,7 @@ class NewsFeed extends Component {
 const mapStateToProps = state => ({
   login: state.auth.login,
   team: state.auth.team,
-  articles: state.entities.articles.list,
+  articles: state.entities.articles.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
   teams: state.entities.teams.list,
   team: state.auth.team,
   lastFetch: state.entities.articles.lastFetch

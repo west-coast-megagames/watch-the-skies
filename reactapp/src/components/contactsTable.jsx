@@ -50,8 +50,8 @@ class Contacts extends Component {
                     }}
                     >
                     <Column width={200}>
-                        <HeaderCell>Category</HeaderCell>
-                        <Cell dataKey="labelName" />
+                        <HeaderCell>Name</HeaderCell>
+                        <Cell dataKey="label" />
                     </Column>
 
                     <Column flexGrow={1}>
@@ -59,20 +59,20 @@ class Contacts extends Component {
                         <Cell dataKey="status" />
                     </Column>
 
-                    <Column flexGrow={4}>
+                    <Column flexGrow={1}>
                         <HeaderCell>Information</HeaderCell>
                         <Cell dataKey="info" />
                     </Column>
 
                     <Column flexGrow={2}>
-                        <HeaderCell>Mission Location</HeaderCell>
-                        <Cell dataKey="location" />
+                        <HeaderCell>Site Owner</HeaderCell>
+                        <Cell dataKey="owner" />
                     </Column>
                     <Column width={150} fixed="right">
                         <HeaderCell>Action</HeaderCell>
                         <Cell style={{padding: '8px'}}>
                         {rowData => {
-                            if (rowData.type !== 'category') {
+                            if (rowData.type !== 'Zone') {
                             return (
                                 <ButtonGroup size='sm'>
                                     <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Another not implemented info panel...', 4000)} color="blue"/>
@@ -88,57 +88,47 @@ class Contacts extends Component {
     }
 
     loadTable() {
-        let data = [
-        {
-            id: '1',
-            type: `category`,
-            labelName: `Activity Sites`,
-            status: `No Sites`,
-            info: `Points of interest and international activity`,
-            children: []
-        },
-        {
-            id: '2',
-            type: `category`,
-            labelName: `EX-COM Bases`,
-            status: this.props.bases.length !== 0 ? `${this.props.bases.length} bases` : 'No bases',
-            info: `Extraterrestirial Response Bases`,
-            children: this.props.bases.map(el => {
-                return {
-                    id:el._id,
-                    labelName:el.name,
-                    status:'Unknown',
-                    type:el.type,
-                    info: `Base owned and operated by ${el.team.name}`,
-                    location:el.country.name,
-                    target: el,
-                    deploy: this.props.assignTarget };
-            })
-        },
-        {
-            id: '3',
-            type: `category`,
-            labelName: `Cities`,
-            status: this.props.cities.length !== 0 ? `${this.props.cities.length} cities` : 'No cities',
-            info: `Urban Centers`,
-            children: this.props.cities.map(el => {
-                return {
-                    id:el._id,
-                    labelName:el.name,
-                    status:'Unknown',
-                    type:el.type,
-                    info: `...information about city?`,
-                    location: el.country.name,
-                    target: el,
-                    deploy: this.props.assignTarget };
-            })
-        }]
+        let data = []
+
+        for (let zone of this.props.zones) {
+            let newZone = {
+                id:zone._id,
+                label: `${zone.name} Zone`,
+                status: zone.terror,
+                type: 'Zone',
+                info: `...information about zone?`,
+                location: 'Earth',
+                target: zone,
+                deploy: this.props.assignTarget,
+                children: []
+            }
+            
+            for (let site of this.props.cities) {
+                if (site.zone.name === zone.name) {
+                    let newSite = {
+                        id: site._id,
+                        label: `${site.name} [${site.subType}]`,
+                        status:'Unknown',
+                        type: site.type,
+                        info: `...information about site?`,
+                        owner: site.country.name,
+                        target: site,
+                        deploy: this.props.assignTarget
+                    }
+                    newZone.children.push(newSite);
+                }
+                continue;
+            }
+            if (newZone.children.length > 0) data.push(newZone);
+        }
+        
         this.setState({ data })
     }
 }
 
 
 const mapStateToProps = state => ({
+    zones: state.entities.zones.list,
     account: getOpsAccount(state),
     contacts: getContacts(state),
     cities: getCities(state),

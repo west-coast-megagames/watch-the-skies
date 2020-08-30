@@ -13,10 +13,9 @@ const { Team } = require('../../models/team/team');
 const { BaseSite } = require('../../models/sites/site');
 
 // Game State - Server side template items
-const { loadSystems, systems } = require('../../wts/construction/systems/systems');
 const { validUnitType } = require('../../wts/util/construction/validateUnitType');
 
-const banking = require('../../wts/banking/banking')
+const banking = require('../../wts/banking/banking');
 
 // MUST BUILD - Initiation
 router.get('/initialteGame', async (req, res) => {

@@ -33,8 +33,8 @@ class DeployModal extends Component {
             Alert.warning(targetSite.name) // Gives me site name
             for (let unit of this.state.units) {
                 unit = this.props.military.find(el => el._id === unit) // Looks up current unit
-                if (unit.zone.zoneName === targetSite.zone.zoneName) { cost += unit.stats.localDeploy };
-                if (unit.zone.zoneName !== targetSite.zone.zoneName) { cost += unit.stats.globalDeploy }; 
+                if (unit.zone.name === targetSite.zone.name) { cost += unit.stats.localDeploy };
+                if (unit.zone.name !== targetSite.zone.name) { cost += unit.stats.globalDeploy }; 
             }
             this.setState({cost})
         }
@@ -96,7 +96,7 @@ class DeployModal extends Component {
         let military = this.props.military;
         console.log(military)
         for (let unit of military) {
-            unit.checkZone = unit.zone.zoneName;
+            unit.checkZone = unit.zone.name;
             unit.info = `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`
             data.push(unit);
         }
@@ -112,7 +112,7 @@ class DeployModal extends Component {
         let sites = this.props.sites;
         for (let site of sites) {
             console.log(site)
-            site.checkZone = site.zone.zoneName;
+            site.checkZone = site.zone.name;
             site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
             data.push(site);
         }

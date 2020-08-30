@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { createSelector } from 'reselect'
 import { Alert } from "rsuite";
 
 // Create entity slice of the store
@@ -32,6 +33,12 @@ const slice = createSlice({
     facilityAdded: (facilities, action) => {
       console.log(`${action.type} Dispatched`)
       facilities.list.push(action.payload);
+    },
+    facilitiesUpdated: (facilities, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('Facilities updated!', 2000);
+      facilities.list = action.payload;
+      facilities.lastFetch = Date.now();
     }
   }
 });
@@ -41,7 +48,9 @@ export const {
   facilityAdded,
   facilitiesReceived,
   facilitiesRequested,
-  facilitiesRequestFailed
+  facilitiesRequestFailed,
+  facilitiesUpdated
+
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
@@ -70,3 +79,12 @@ export const addfacility = facility =>
     data: facility,
     onSuccess: facilityAdded.type
   });
+
+// Selector
+export const getLabs = createSelector(
+  state => state.entities.facilities.list,
+  state => state.auth.team,
+  (facilities, team) => facilities.filter(
+    facility => facility.capability.research.active === true && facility.team._id === team._id
+  )
+);

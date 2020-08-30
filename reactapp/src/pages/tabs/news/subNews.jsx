@@ -108,7 +108,6 @@ class SubNews extends React.Component {
                 <TreePicker
                   block
                   id="location"
-                  defaultExpandAll
                   value={location}
                   data={this.state.data}
                   labelKey='name'
@@ -162,7 +161,7 @@ class SubNews extends React.Component {
 
   formatPickerData = () => {
     console.log('Formatting Picker...')
-    let zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
+    let zones = this.props.zones.filter(el => el.type !== 'Space').map((item) => Object.assign({}, item, {selected:false}));
     let countries = this.props.countries.map((item) => Object.assign({}, item, {selected:false}));
     let sites = this.props.sites.map((item) => Object.assign({}, item, {selected:false}));
     
@@ -171,8 +170,8 @@ class SubNews extends React.Component {
     };
 
     for (let zone of zones) {
-      zone.children = countries.filter(el => el.zone.zoneName === zone.zoneName);
-      zone.name = zone.zoneName;
+      zone.children = countries.filter(el => el.zone.name === zone.name);
+      zone.name = zone.name;
     };
     this.setState({ data: zones })
   }

@@ -96,9 +96,9 @@ class ExcomOps extends Component {
             account={this.props.account}
           />
         </Content>
-        <Sidebar>
+        {/* <Sidebar>
           <Button block onClick={() => Alert.warning('Surpise! The rawr button is a placeholder...', 4000)}>Rawr</Button>
-        </Sidebar>
+        </Sidebar> */}
       </Container>
     );
   }
@@ -106,29 +106,29 @@ class ExcomOps extends Component {
   loadTable() {
     let data = [];
     let contacts = this.props.contacts;
-    let zones = this.props.zones.filter((el) => el.zoneName !== "Space");
+    let zones = this.props.zones.filter((el) => el.name !== "Space");
     zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
     contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
-      console.log(newZone.zoneName)
+      console.log(newZone.name)
       let zone = {...newZone}
       console.log(zone);
       zone.children = [];
-      zone.name = zone.zoneName;
+      zone.name = zone.name;
       zone.type = "Zone";
       zone.children = [];
       for (let newUnit of contacts) {
         let unit = {...newUnit}
         let checkZone = zone;
-        if (unit.zone.zoneName === checkZone.zoneName) {
+        if (unit.zone.name === checkZone.name) {
           unit.info = `Unknown`;
           unit.location = unit.country.name;
           unit.intercept = this.intercept
           zone.children.push(unit);
         }
       }
-      zone.info = `${zone.children.length} contacts tracked above ${zone.zoneName}`;
+      zone.info = `${zone.children.length} contacts tracked above ${zone.name}`;
       if (zone.children.length > 0) {
         data.push(zone);
       }
