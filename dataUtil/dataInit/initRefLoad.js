@@ -22,7 +22,14 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Country Model - Using Mongoose Model
-const { Zone, validateZone } = require("../models/zone");
+const {
+  Zone,
+  validateZone,
+  GroundZone,
+  validateGroundZone,
+  SpaceZone,
+  validateSpaceZone,
+} = require("../models/zone");
 const { Country, validateCountry } = require("../models/country");
 const {
   Team,
@@ -84,6 +91,7 @@ async function initLoad(doLoad) {
           data.code,
           data.loadFlag,
           data.refNumber1,
+          data.parentCode1,
           zoneRecCounts
         );
       }
@@ -140,7 +148,7 @@ async function initLoad(doLoad) {
   return;
 }
 
-async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
+async function loadZone(zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
   let loadError = false;
   let loadErrorMsg = "";
   let loadName = "";
@@ -154,36 +162,71 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
     if (!zone) {
       // New Zone here
       if (zLoadFlg === "false") return; // don't load if not true
-      let zone = new Zone({
-        code: zCode,
-        name: zName,
-        terror: randomTerror, //zTerror
-      });
-      zone.serviceRecord = [];
-      zone.gameState = [];
 
-      zone.satellite = [];
-      let { error } = validateZone(zone);
-      if (error) {
-        loadError = true;
-        loadErrorMsg = `New Zone Validate Error: ${zone.code} ${error.message}`;
-      }
+      if (zType === "Space") {
+        let zone = new SpaceZone({
+          code: zCode,
+          name: zName,
+        });
 
-      if (!loadError) {
-        try {
-          let zoneSave = await zone.save();
-          ++rCounts.loadCount;
-          logger.debug(`${zoneSave.name} add saved to zones collection.`);
-          return;
-        } catch (err) {
+        zone.serviceRecord = [];
+        zone.gameState = [];
+        let { error } = validateSpaceZone(zone);
+        if (error) {
+          loadError = true;
+          loadErrorMsg = `New Space Zone Validate Error: ${zone.code} ${error.message}`;
+        }
+
+        if (!loadError) {
+          try {
+            let zoneSave = await zone.save();
+            ++rCounts.loadCount;
+            logger.debug(`${zoneSave.name} add saved to zones collection.`);
+            return;
+          } catch (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
+            return;
+          }
+        } else {
+          logger.error(
+            `Zone skipped due to errors: ${loadName} ${loadErrorMsg}`
+          );
           ++rCounts.loadErrCount;
-          logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
           return;
         }
       } else {
-        logger.error(`Zone skipped due to errors: ${loadName} ${loadErrorMsg}`);
-        ++rCounts.loadErrCount;
-        return;
+        let zone = new GroundZone({
+          code: zCode,
+          name: zName,
+          terror: randomTerror, //zTerror
+        });
+        zone.serviceRecord = [];
+        zone.gameState = [];
+        let { error } = validateGroundZone(zone);
+        if (error) {
+          loadError = true;
+          loadErrorMsg = `New Ground Zone Validate Error: ${zone.code} ${error.message}`;
+        }
+
+        if (!loadError) {
+          try {
+            let zoneSave = await zone.save();
+            ++rCounts.loadCount;
+            logger.debug(`${zoneSave.name} add saved to zones collection.`);
+            return;
+          } catch (err) {
+            ++rCounts.loadErrCount;
+            logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
+            return;
+          }
+        } else {
+          logger.error(
+            `Zone skipped due to errors: ${loadName} ${loadErrorMsg}`
+          );
+          ++rCounts.loadErrCount;
+          return;
+        }
       }
     } else {
       // Existing Zone here ... update
@@ -191,7 +234,20 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, rCounts) {
 
       zone.name = zName;
       zone.code = zCode;
-      zone.terror = randomTerror; //zTerror;
+      if (zone.type === "Space") {
+        const { error } = validateSpaceZone(zone);
+        if (error) {
+          loadError = true;
+          loadErrorMsg = `Zone Update Validate Error: ${zCode} ${zName} ${error.message}`;
+        }
+      } else {
+        zone.terror = randomTerror; //zTerror;
+        const { error } = validateGroundZone(zone);
+        if (error) {
+          loadError = true;
+          loadErrorMsg = `Zone Update Validate Error: ${zCode} ${zName} ${error.message}`;
+        }
+      }
 
       const { error } = validateZone(zone);
       if (error) {

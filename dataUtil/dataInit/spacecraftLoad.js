@@ -33,9 +33,6 @@ const {
 } = require("../wts/construction/facilities/facilities");
 const { delFacilities } = require("../wts/util/construction/deleteFacilities");
 const { validUnitType } = require("../wts/util/construction/validateUnitType");
-const {
-  addSatelliteToZone,
-} = require("../wts/util/construction/zoneSatellite");
 
 const app = express();
 
@@ -188,14 +185,6 @@ async function loadSpacecraft(iData, rCounts) {
             `${spacecraftSave.name} add saved to spacecraft collection.`
           );
           //updateStats(spacecraftSave._id);
-
-          if (spacecraftSave.subType === "Satellite") {
-            addSatelliteToZone(
-              spacecraftSave._id,
-              spacecraftSave.zone,
-              spacecraftSave.team
-            );
-          }
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
