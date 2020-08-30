@@ -169,39 +169,56 @@ async function loadBase(iData, rCounts) {
 
         research.sciBonus = 0;
       } else {
+        research.capacity = 0;
         research.active = false;
         research.sciBonus = 0;
         research.sciRate = 0;
+        research.projects = [];
       }
 
       if (airMission.capacity > 0) {
         airMission.active = true;
       } else {
         airMission.active = false;
+        airMission.capacity = 0;
+        airMission.aircraft = [];
+        airMission.damage = [];
       }
 
       if (storage.capacity > 0) {
         storage.active = true;
       } else {
         storage.active = false;
+        storage.capacity = 0;
+        storage.equipment = [];
+        storage.damage = [];
       }
 
       if (manufacturing.capacity > 0) {
         manufacturing.active = true;
       } else {
-        manufacturing.active = true;
+        manufacturing.active = false;
+        manufacturing.capacity = 0;
+        manufacturing.equipment = [];
+        manufacturing.damage = [];
       }
 
       if (naval.capacity > 0) {
         naval.active = true;
       } else {
         naval.active = false;
+        naval.capacity = 0;
+        naval.fleet = [];
+        naval.damage = [];
       }
 
       if (ground.capacity > 0) {
         ground.active = true;
       } else {
-        ground.active = true;
+        ground.active = false;
+        ground.capacity = 0;
+        ground.corps = [];
+        ground.damage = [];
       }
 
       //end of John's additional settings
