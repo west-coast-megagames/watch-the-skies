@@ -204,13 +204,13 @@ async function runRecon() {
       .populate("systems")
       .populate("origin");
     let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
+    
     if (aircraft.mission === "Recon Aircraft") {
       let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
 
       if (target.status.destroyed || target.systems.length < 1) {
         atkReport = `${atkReport} Target has been shot down prior to recon.`;
         console.log(atkReport);
-        // Recon Report
 
         continue;
       }
@@ -257,10 +257,12 @@ async function runRecon() {
 
         return 0;
       }
-    } else if (aircraft.mission === "Recon Site") {
+    }
+    
+    if (aircraft.mission === "Recon Site") {
       let patrolCheck = await checkPatrol(recon.target, atkReport, aircraft);
       let target = await Site.findById(recon.target); // Loading Aircraft that the recon is heading to.
-      if (patrolCheck === "continue") {
+      if (patrolCheck.continue === true) {
         atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
         missionDebugger(
           `${aircraft.name} safely gathered information on ${target.name}`
@@ -351,7 +353,6 @@ async function checkEscort(target, atkReport, attacker) {
       target = newTarget;
       return { target, atkReport, defReport, stance };
     }
-
   }
 
   target = await Aircraft.findById(target).populate("systems").populate("country"); // Loads original target in for interception
