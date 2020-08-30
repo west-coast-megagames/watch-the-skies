@@ -22,7 +22,7 @@ const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
 const { Facility } = require("../../models/gov/facility/facility");
 const { convertToDms } = require("../../util/systems/geo");
-const { System } = require("../../models/gov/upgrade/upgrade");
+
 const {
   validUnitType,
 } = require("../../wts/util/construction/validateUnitType");
