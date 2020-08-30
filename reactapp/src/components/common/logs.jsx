@@ -395,7 +395,7 @@ const ReconLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
+          backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
         }}
         header={`Recon Report - ${log.team.teamCode} | ${
           log.timestamp.turn
