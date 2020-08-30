@@ -11,7 +11,7 @@ const { loadBlueprints } = require('../../wts/construction/blueprintLoad');
 // Facility Model - Using Mongoose Model
 const { Facility } = require('../../models/gov/facility/facility');
 const { Site } = require('../../models/sites/site');
-const { FacilityBlueprint, Blueprint } = require('../../models/gov/blueprints');
+const { FacilityBlueprint, Blueprint } = require('../../models/gov/blueprint');
 const { find } = require('../../models/logs/alert');
 
 
