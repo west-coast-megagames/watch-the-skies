@@ -29,7 +29,7 @@ const AircraftSchema = new Schema({
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
   },
-  systems: [{ type: Schema.Types.ObjectId, ref: "Equipment" }],
+  systems: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   newSystems: {
     cockpit: {
       active: { type: Boolean, default: false },

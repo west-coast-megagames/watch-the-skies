@@ -31,12 +31,12 @@ const {
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
-const { Gear } = require("../models/gov/equipment/equipment");
+const { Gear } = require("../models/gov/upgrade/upgrade");
 const {
   loadMilGears,
   gears,
   validUnitType,
-} = require("../wts/construction/equipment/milGear");
+} = require("../wts/construction/upgrade/milGear");
 const { Site } = require("../models/sites/site");
 const { Facility } = require("../models/gov/facility/facility");
 const app = express();
@@ -51,7 +51,7 @@ async function runMilitaryLoad(runFlag) {
     //militaryLoadDebugger("Jeff in runMilitaryLoad", runFlag);
     if (!runFlag) return false;
     if (runFlag) {
-      await loadMilGears(); // load wts/json/equipment/milGear.json data into array
+      await loadMilGears(); // load wts/json/upgrade/milGear.json data into array 
 
       await deleteAllMilitarys(runFlag);
       await initLoad(runFlag);
@@ -251,7 +251,7 @@ async function createFleet(iData, rCounts) {
     fleet.site = fleetSite;
   }
 
-  fleet.equipment = [];
+  fleet.upgrade = [];
   if (!loadError) {
     // create gears records for military and store ID in military.system
     //console.log("jeff military gears  iData.gear", iData.gear);
@@ -270,7 +270,7 @@ async function createFleet(iData, rCounts) {
           newGear.unitType = fleet.type;
           try {
             await newGear.save();
-            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Upgrade collection.");
           } catch (err) {
             gearError = true;
             logger.error(`New Military Gear Save Error: ${err}`);
@@ -397,7 +397,7 @@ async function createCorps(iData, rCounts) {
     corps.site = corpsSite;
   }
 
-  corps.equipment = [];
+  corps.upgrade = [];
   if (!loadError) {
     // create gears records for military and store ID in military.system
     //console.log("jeff military gears  iData.gear", iData.gear);
@@ -416,7 +416,7 @@ async function createCorps(iData, rCounts) {
           newGear.unitType = corps.type;
           try {
             await newGear.save();
-            //logger.info(corps.name, "Gear", ger, " add saved to Equipment collection.");
+            //logger.info(corps.name, "Gear", ger, " add saved to upgrade collection.");
           } catch (err) {
             logger.error(`New Military Gear Save Error: ${err}`);
             gearError = true;
@@ -544,7 +544,7 @@ async function updateFleet(iData, rCounts) {
 
   // create gears records for military and store ID in military.system
   //console.log("jeff military gears  iData.gear", iData.gear);
-  fleet.equipment = [];
+  fleet.upgrade = [];
   if (!loadErrorMsg) {
     for (let ger of iData.gear) {
       let gearError = true;
@@ -561,7 +561,7 @@ async function updateFleet(iData, rCounts) {
           try {
             await newGear.save();
 
-            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to Equipment collection.");
+            //militaryLoadDebugger(fleet.name, "Gear", ger, " add saved to upgrade collection.");
           } catch (err) {
             logger.error(`New Military Gear Save Error: ${err}`);
             gearError = true;
@@ -693,7 +693,7 @@ async function updateCorps(iData, rCounts) {
 
   // create gears records for military and store ID in military.system
   //console.log("jeff military gears  iData.gear", iData.gear);
-  corps.equipment = [];
+  corps.upgrade = [];
   if (!loadErrorMsg) {
     for (let ger of iData.gear) {
       let gearError = true;
@@ -709,7 +709,7 @@ async function updateCorps(iData, rCounts) {
           newGear.unitType = corps.type;
           try {
             await newGear.save();
-            //militaryLoadDebugger(corps.name, "Gear", ger, " add saved to Equipment collection.");
+            //militaryLoadDebugger(corps.name, "Gear", ger, " add saved to upgrade collection.");
           } catch (err) {
             logger.error(`New Military Gear Save Error: ${err}`);
             gearError = true;

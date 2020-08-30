@@ -45,7 +45,7 @@
     "field": "Infrastructure",
     "desc": "Basic Artificial Intelligence functionality and machine learning.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KI-1"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Inf1A"}],
+    "unlocks": [{"type": "Upgrade", "code": "KI-1"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}, {"type": "Technology", "code": "Inf4D"}, {"type": "Technology", "code": "Inf3F"}, {"type": "Technology", "code": "Bio3C"}, {"type": "Technology", "code": "Inf1A"}],
     "breakthrough": [{"type": "Technology", "code": "Inf3D"}, {"type": "Technology", "code": "Mil2B"}, {"type": "Technology", "code": "Mil2E"}]
 },
 {   
@@ -154,7 +154,7 @@
     "field": "Infrastructure",
     "desc": "The break down of wastes into their constituent materials for re-use.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KI-2"}, {"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Inf4G"}],
+    "unlocks": [{"type": "Upgrade", "code": "KI-2"}, {"type": "Technology", "code": "Mil4B"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Inf4G"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4E"}]
 },
 {   
@@ -214,7 +214,7 @@
     "field": "Infrastructure",
     "desc": "Advanced Artificial Intelligence at a larger scale. Computers will think and optimize its own components as necessary.",
     "effects": [],
-    "unlocks": [{"type": "Equipment", "code": "KI-2"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}],
+    "unlocks": [{"type": "Upgrade", "code": "KI-2"}, {"type": "Technology", "code": "Mil4A"}, {"type": "Technology", "code": "Inf5C"}, {"type": "Technology", "code": "Inf5A"}, {"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4C"}, {"type": "Technology", "code": "Mil3E"}, {"type": "Technology", "code": "Mil4A"}]
 },
 {   
@@ -274,7 +274,7 @@
     "field": "Infrastructure",
     "desc": "Weather changes over a small area not usually lasting very long. Allows rain to fall in areas of drought and sunshine in areas where needed. Severe changes to weather not possible.",
     "effects": [{"type": "terror", "effect": 20 }, {"type": "pr", "effect": 1 }],
-    "unlocks": [{"type": "Equipment", "code": "KI-4"}],
+    "unlocks": [{"type": "Upgrade", "code": "KI-4"}],
     "breakthrough": [{"type": "Technology", "code": "Agr5A"}]
 },
 {   
@@ -298,7 +298,7 @@
     "field": "Infrastructure",
     "desc": "Pinnacle systems of light emitting technology, allowing realistic viewpoints and interaction with individuals.",
     "effects": [{"type": "terror", "effect": -20 }, {"type": "pr", "effect": 1}],
-    "unlocks": [{"type": "Equipment", "code": "KI-5"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}],
+    "unlocks": [{"type": "Upgrade", "code": "KI-5"}, {"type": "Technology", "code": "Mil4H"}, {"type": "Technology", "code": "Mil4G"}],
     "breakthrough": [{"type": "Technology", "code": "Mil4G"}, {"type": "Technology", "code": "Mil4H"}]
 },
 {   
@@ -322,7 +322,7 @@
     "field": "Infrastructure",
     "desc": "Megastructures for densely populated, ecologically low-impact human habitats, reducing human impact on natural resources.",
     "effects": [],
-    "unlocks": [{"type":"Equipment", "code": "KI-6"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Inf4G"}],
+    "unlocks": [{"type":"Upgrade", "code": "KI-6"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Inf4G"}],
     "breakthrough": [{"type": "Technology", "code": "Inf4G"}, {"type": "Technology", "code": "Mil4P"}, {"type": "Technology", "code": "Agr5A"}]
 },
 {   
@@ -334,7 +334,7 @@
     "field": "Infrastructure",
     "desc": "Buildings or structures built to climb into the stratosphere.",
     "effects": [],
-    "unlocks": [{"type":"Equipment", "code": "KI-7"}, {"type":"Equipment", "code": "KI-8"}],
+    "unlocks": [{"type":"Upgrade", "code": "KI-7"}, {"type":"Upgrade", "code": "KI-8"}],
     "breakthrough": []
 },
 {   
@@ -358,7 +358,7 @@
     "field": "Infrastructure",
     "desc": "Develops and deploys a fully sentient distributed AI network.",
     "effects": [],
-    "unlocks": [{"type":"Equipment", "code": "KI-9"}],
+    "unlocks": [{"type":"Upgrade", "code": "KI-9"}],
     "breakthrough": []
 },
 {   
@@ -370,7 +370,7 @@
     "field": "Infrastructure",
     "desc": "A process in which quantum information (e.g. the exact state of an atom or photon) can be transmitted (exactly, in principle) from one location to another.",
     "effects": [],
-    "unlocks": [{"type":"Equipment", "code": "KI-10"}],
+    "unlocks": [{"type":"Upgrade", "code": "KI-10"}],
     "breakthrough": []
 }
 ]

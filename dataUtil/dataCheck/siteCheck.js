@@ -11,7 +11,7 @@ const {
   Spacecraft,
   validateSpacecraft,
 } = require("../models/sites/site");
-const { Equipment } = require("../models/gov/equipment/equipment");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");//don't think this is used
 const { Facility } = require("../models/gov/facility/facility");
 const { Team } = require("../models/team/team");
 const { Zone } = require("../models/zone");

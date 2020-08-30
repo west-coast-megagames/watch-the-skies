@@ -1,14 +1,14 @@
 const fs = require('fs')
 const config = require('config');
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/equipment/systems.json'));
+const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/upgrade/systems.json'));
 const systemData = JSON.parse(file);
 
 systemsDebugger = require('debug')('app:systems');
 
 const systems = []
 
-const { System } = require('../../../models/gov/equipment/equipment');
+const { System } = require('../../../models/gov/upgrade/upgrade');
 
 // Load function to load all systems.
 async function loadSystems () {

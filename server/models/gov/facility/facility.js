@@ -49,13 +49,13 @@ const FacilitySchema = new Schema({
     storage: {
       capacity: { type: Number, default: 0 },
       damage: [Boolean],
-      equipment: [{ type: ObjectId, ref: "Equipment" }],
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
       active: { type: Boolean, default: false },
     },
     manufacturing: {
       capacity: { type: Number, default: 0 },
       damage: [Boolean],
-      equipment: [{ type: ObjectId, ref: "Equipment" }],
+      upgrade: [{ type: ObjectId, ref: "Upgrade" }],
       active: { type: Boolean, default: false },
     },
     naval: {

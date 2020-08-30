@@ -2,11 +2,11 @@
 const { Research } = require("../models/sci/research");
 const { Team } = require("../models/team/team");
 const {
-  Equipment,
+  Upgrade,
   Gear,
   Kit,
   System,
-} = require("../models/gov/equipment/equipment");
+} = require("../models/gov/upgrade/upgrade");
 const { Site } = require("../models/sites/site");
 const { Facility } = require("../models/gov/facility/facility");
 
@@ -350,7 +350,7 @@ async function chkResearch(runFlag) {
               `Analysis Research salvage is missing  ${research.name} ${research._id}`
             );
           } else {
-            let equipment = null;
+            let upgrade = null;
             let facility = null;
             let site = null;
             for (let i = 0; i < research.salvage.length; ++i) {
@@ -371,8 +371,8 @@ async function chkResearch(runFlag) {
                   `salvage.gear missing for Analysis Research ${i} ${research.name} ${research._id}`
                 );
               } else {
-                equipment = await Equipment.findById(research.salvage[i].gear);
-                if (!equipment) {
+                upgrade = await Upgrade.findById(research.salvage[i].gear);
+                if (!upgrade) {
                   logger.error(
                     `Analysis Research salvage ${i} has invalid gear Ref ${research.name} ${research._id}`
                   );
@@ -383,10 +383,10 @@ async function chkResearch(runFlag) {
                   `salvage.system missing for Analysis Research ${i} ${research.name} ${research._id}`
                 );
               } else {
-                equipment = await Equipment.findById(
+                upgrade = await Upgrade.findById(
                   research.salvage[i].system
                 );
-                if (!equipment) {
+                if (!upgrade) {
                   logger.error(
                     `Analysis Research salvage ${i} has invalid system Ref ${research.name} ${research._id}`
                   );
@@ -397,10 +397,10 @@ async function chkResearch(runFlag) {
                   `salvage.outcome missing for Analysis Research ${i} ${research.name} ${research._id}`
                 );
               } else {
-                equipment = await Equipment.findById(
+                upgrade = await Upgrade.findById(
                   research.salvage[i].infrastructure
                 );
-                if (!equipment) {
+                if (!upgrade) {
                   logger.error(
                     `Analysis Research salvage ${i} has invalid infrastructure Ref ${research.name} ${research._id}`
                   );

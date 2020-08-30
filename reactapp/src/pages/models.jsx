@@ -29,7 +29,7 @@ class Models extends Component {
                     <Nav.Item eventKey="user" to={`${url}/user`} componentClass={NavLink} > User</Nav.Item>
                     <Nav.Item eventKey="military" to={`${url}/military`} componentClass={NavLink} > Military</Nav.Item>
                     <Nav.Item eventKey="aircraft" to={`${url}/aircraft`} componentClass={NavLink} > Aircrafts</Nav.Item>
-                    <Nav.Item eventKey="equipment" to={`${url}/equipment`} componentClass={NavLink} > Equipment</Nav.Item>
+                    <Nav.Item eventKey="upgrade" to={`${url}/upgrade`} componentClass={NavLink} > Upgrade</Nav.Item>
                     <Nav.Item eventKey="facility" to={`${url}/facility`} componentClass={NavLink} > Facility</Nav.Item>
                     <Nav.Item eventKey="account" to={`${url}/account`} componentClass={NavLink} > Account</Nav.Item>
                     <Nav.Item eventKey="article" to={`${url}/article`} componentClass={NavLink} > Article</Nav.Item>

@@ -3,7 +3,7 @@ import { Form, FormGroup, FormControl, ControlLabel, HelpBlock } from 'rsuite';
 import { RadioGroup, Radio, CheckboxGroup, Checkbox, Slider, DatePicker, DateRangePicker, CheckPicker, SelectPicker, TagPicker, InputPicker, Cascader, MultiCascader } from 'rsuite';
 
 const pickerData = [];
-const models = ['Equipment', 'facility', 'site', 'account', 'log', 'article', 'military', 'aircraft', 'spacecraft', 'reserach', 'site', 'base', 'team', 'country', 'user'];
+const models = ['upgrade', 'facility', 'site', 'account', 'log', 'article', 'military', 'aircraft', 'spacecraft', 'reserach', 'site', 'base', 'team', 'country', 'user'];
 
     const Example = () => {
     const cascaderData = models;

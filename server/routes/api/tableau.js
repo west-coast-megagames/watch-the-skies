@@ -93,7 +93,7 @@ router.get("/datadump", async function (req, res) {
     .populate("site", "name type")
     .populate("team", "shortName name sciRate")
     .populate("research")
-    .populate("equipment");
+    .populate("upgrade");
 
   let data = {
     accounts,

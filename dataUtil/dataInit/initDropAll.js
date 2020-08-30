@@ -6,7 +6,7 @@ const { Log } = require("../models/logs/log");
 const { Site } = require("../models/sites/site");
 const { Aircraft } = require("../models/ops/aircraft");
 const { Account } = require("../models/gov/account");
-const { Equipment } = require("../models/gov/equipment/equipment");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { Facility } = require("../models/gov/facility/facility");
 const { Military } = require("../models/ops/military/military");
 const { Squad } = require("../models/ops/squad");
@@ -25,7 +25,7 @@ async function dropAll(doDrop) {
   await Site.deleteMany();
   await Account.deleteMany();
   await Aircraft.deleteMany();
-  await Equipment.deleteMany();
+  await Upgrade.deleteMany();
   await Facility.deleteMany();
   await Military.deleteMany();
   await Research.deleteMany();

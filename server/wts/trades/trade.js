@@ -2,7 +2,7 @@ const routeDebugger = require('debug')('app:routes');
 
 const { Account } = require('../../models/gov/account');
 const { Aircraft } = require ('../../models/ops/aircraft');
-const { Equipment } = require ('../../models/gov/equipment/equipment')
+const { Upgrade } = require ('../../models/gov/upgrade/upgrade')
 const { Team } = require ('../../models/team/team');
 const { deposit, withdrawal, transfer } = require ("../../wts/banking/banking");
 const { TradeReport } = require ('../../wts/reports/reportClasses');
@@ -43,20 +43,20 @@ async function resolveTrade(req, res){//I have not tested this much at all will 
 
 }//resolveTrade
 
-async function exchangeEquipment(transferred, newOwner){
+async function exchangeUpgrade(transferred, newOwner){
     for (let thing of transferred){
-        //check what currently has the equiptment
+        //check what currently has the upgrade
         try{
-            let target = await Equipment.findById(thing);  
+            let target = await Upgrade.findById(thing);  
             target.team = newOwner;    
             await target.save();            
         }
         catch(err){
-            routeDebugger(`ERROR WITH exchangeEquiptment CALL: ${err}`);
-            //ADD A RETURN TO LET THE CODE KNOW THE EQUIPTMENT WAS NOT TRADED SUCCESSFULLY
+            routeDebugger(`ERROR WITH exchangeUpgrade CALL: ${err}`);
+            //ADD A RETURN TO LET THE CODE KNOW THE Upgrade WAS NOT TRADED SUCCESSFULLY
         }   
     }//for thing
-}//exchangeEquipment
+}//exchangeUpgrade
 
 async function resolveOffer(senderOffer, senderTeam, opposingTeam){
     //case "megabucks":
@@ -79,7 +79,7 @@ async function resolveOffer(senderOffer, senderTeam, opposingTeam){
         routeDebugger(`Working on Aircraft Transfer`); 
         let aircraft = await Aircraft.findById(plane); 
         aircraft.team = opposingTeam; //change the aircraft's team
-        exchangeEquipment(aircraft.systems, opposingTeam); //change the aircraft's equiptment
+        exchangeUpgrade(aircraft.systems, opposingTeam); //change the aircraft's Upgrade
         await aircraft.save();
     }//for plane
 
@@ -98,9 +98,9 @@ async function resolveOffer(senderOffer, senderTeam, opposingTeam){
         console.log(`Created a new of ${createdTech.name} tech for team: ${createdTech._id}`);
     }//for plane
    
-    //case "equiptment" :
-    for (let target of senderOffer.equipment){
-        exchangeEquipment(target, opposingTeam);           
+    //case "Upgrade" :
+    for (let target of senderOffer.upgrade){
+        exchangeUpgrade(target, opposingTeam);           
     }            
 }
 

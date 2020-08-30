@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const modelDebugger = require("debug")("app:equipmentModel");
+const modelDebugger = require("debug")("app:upgradeModel");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
-const EquipmentSchema = new Schema({
-  model: { type: String, default: "Equipment" },
+const UpgradeSchema = new Schema({
+  model: { type: String, default: "Upgrade" },
   name: { type: String, required: true, min: 2, maxlength: 50 },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   unitType: { type: String },
@@ -29,25 +29,25 @@ const EquipmentSchema = new Schema({
   gameState: [],
 });
 
-let Equipment = mongoose.model("Equipment", EquipmentSchema);
+let Upgrade = mongoose.model("Upgrade", UpgradeSchema);
 
-EquipmentSchema.methods.validateEquipment = function (Equipment) {
+UpgradeSchema.methods.validateUpgrade = function (Upgrade) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
   };
 
-  return Joi.validate(Equipment, schema, { allowUnknown: true });
+  return Joi.validate(Upgrade, schema, { allowUnknown: true });
 };
 
-function validateEquipment(Equipment) {
+function validateUpgrade(Upgrade) {
   const schema = {
     name: Joi.string().min(2).max(50).required(),
   };
 
-  return Joi.validate(Equipment, schema, { allowUnknown: true });
+  return Joi.validate(Upgrade, schema, { allowUnknown: true });
 }
 
-const Gear = Equipment.discriminator(
+const Gear = Upgrade.discriminator(
   "Gear",
   new Schema({
     type: { type: String, default: "Gear" },
@@ -66,12 +66,12 @@ const Gear = Equipment.discriminator(
   })
 );
 
-const Kit = Equipment.discriminator(
+const Kit = Upgrade.discriminator(
   "Kit",
   new Schema({
     type: { type: String, default: "Kit" },
     code: { type: String },
-    stats: {
+    stats: { //will need to be updated
       sciRate: { type: Number },
       sciBonus: { type: Number },
       capacity: { type: Number },
@@ -85,7 +85,7 @@ const Kit = Equipment.discriminator(
   })
 );
 
-const System = Equipment.discriminator(
+const System = Upgrade.discriminator(
   "System",
   new Schema({
     type: { type: String, default: "System" },
@@ -106,4 +106,4 @@ const System = Equipment.discriminator(
   })
 );
 
-module.exports = { Equipment, validateEquipment, Gear, Kit, System };
+module.exports = { Upgrade, validateUpgrade, Gear, Kit, System };

@@ -28,7 +28,7 @@ const {
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
-const { System } = require("../models/gov/equipment/equipment");
+const { System } = require("../models/gov/upgrade/upgrade");
 const { loadSystems, systems } = require("../wts/construction/systems/systems");
 const { validUnitType } = require("../wts/util/construction/validateUnitType");
 const { Site } = require("../models/sites/site");
@@ -46,7 +46,7 @@ async function runaircraftLoad(runFlag) {
     //logger.debug("Jeff in runaircraftLoad", runFlag);
     if (!runFlag) return false;
     if (runFlag) {
-      await loadSystems(); // load wts/json/equipment/systems.json data into array
+      await loadSystems(); // load wts/json/upgrade/systems.json data into array
 
       await deleteAllAircrafts(runFlag);
       await initLoad(runFlag);

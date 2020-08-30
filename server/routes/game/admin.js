@@ -23,7 +23,7 @@ router.get('/initialteGame', async (req, res) => {
         // Load Knowledge
         // Load Tech
         // Seed Research
-        // Load Equipment
+        // Load upgrades
         // Load Facilities
         // Log Game state
         res.status(200).send('Successful Initiation...');

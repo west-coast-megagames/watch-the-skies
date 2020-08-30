@@ -22,7 +22,7 @@ const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
 const { Facility } = require("../../models/gov/facility/facility");
 const { convertToDms } = require("../../util/systems/geo");
-const { System } = require("../../models/gov/equipment/equipment");
+const { System } = require("../../models/gov/upgrade/upgrade");
 const { validUnitType } = require("../../wts/util/construction/validateUnitType");
 const { delFacilities } = require("../../wts/util/construction/deleteFacilities");
 const { delSystems } = require("../../wts/util/construction/deleteSystems");
@@ -701,7 +701,7 @@ router.post("/crash/", async function (req, res) {
   } = req.body;
 
   if (systems.length < 1) {
-    await loadSystems(); // load wts/json/equipment/systems.json data into array
+    await loadSystems(); // load wts/json/upgrade/systems.json data into array SCOTT: This may become upgrade/systems
   }
   if (facilitys.length < 1) {
     await loadFacilitys();

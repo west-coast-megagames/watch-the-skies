@@ -429,7 +429,7 @@
   "effects": [],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KM-1"
    },
    {
@@ -707,7 +707,7 @@
   ],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KM-2"
    },
    {
