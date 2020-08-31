@@ -1,7 +1,8 @@
 [
   {
     "name": "Old Tech Vehicles",
-    "code": "V-OT1",
+    "code": "V-OT1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -12,7 +13,8 @@
 },
 {
     "name": "Modern Tech Vehicles",
-    "code": "V-MT1",
+    "code": "V-MT1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -23,7 +25,8 @@
 },
 {
     "name": "Marine Vehicles",
-    "code": "V-MV1",
+    "code": "V-MV1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -34,7 +37,8 @@
 },
 {
     "name": "Futuristic Vehicles",
-    "code": "V-FV1",
+    "code": "V-FV1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -45,7 +49,8 @@
 },
 {
     "name": "Carrier Group",
-    "code": "CAG-1",
+    "code": "CAG-1",        
+    "model": "upgrade",
     "unitType": ["Fleet"],
     "prereq": [],
     "buildtime": 2,
@@ -56,7 +61,8 @@
 },
 {
     "name": "Submarine Group",
-    "code": "SBG-1",
+    "code": "SBG-1",        
+    "model": "upgrade",
     "unitType": ["Fleet"],
     "prereq": [],
     "buildtime": 1,
@@ -67,7 +73,8 @@
 },
 {
     "name": "Surface Group",
-    "code": "SFG-1",
+    "code": "SFG-1",        
+    "model": "upgrade",
     "unitType": ["Fleet"],
     "prereq": [],
     "buildtime": 1,
@@ -78,7 +85,8 @@
 },
 {
     "name": "Militia",
-    "code": "MIL-1",
+    "code": "MIL-1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -89,7 +97,8 @@
 },
 {
     "name": "Insurgents",
-    "code": "INS-1",
+    "code": "INS-1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -100,7 +109,8 @@
 },
 {
     "name": "Corps",
-    "code": "COR-1",
+    "code": "COR-1",        
+    "model": "upgrade",
     "unitType": ["Corps"],
     "prereq": [],
     "buildtime": 1,
@@ -111,7 +121,8 @@
 },
 {
     "name": "Marine",
-    "code": "MAR-1",
+    "code": "MAR-1",        
+    "model": "upgrade",
     "unitType": ["Fleet"],
     "prereq": [],
     "buildtime": 1,

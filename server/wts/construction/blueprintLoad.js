@@ -8,7 +8,7 @@ const blueprintsData = [...facilityData, ];//...aircraftData, ...squadData, ...u
 
 // Import Blueprint discriminators for all buildables
 // Facility | Aircraft | Spacecraft | Squad | Upgrade
-const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint } = require('../../models/gov/blueprints');
+const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint } = require('../../models/gov/blueprint');
 
 // Load function to load all facilitys
 async function loadBlueprints () {
@@ -18,12 +18,14 @@ async function loadBlueprints () {
     let squadCount = 0;
     let upgradeCount = 0;
 
+    await Blueprint.deleteMany();
     for (let bp of blueprintsData) {
         bpLoadDebugger(bp);
         let validLoad = true;
-        switch (bp.type) {
+        switch (bp.model) {
             case ('facility'):
-                bp = await new FacilityBlueprint(bp)
+                bp = new FacilityBlueprint(bp);
+                bp = await bp.save();
                 facilityCount++
                 break;
             case ('aircraft'):

@@ -7,7 +7,7 @@ const ObjectId = mongoose.ObjectId;
 const BlueprintSchema = new Schema({
   model: { type: String, required: true, default: "Blueprint" },
   name: { type: String, required: true, min: 2, maxlength: 50 },
-  code: { type: String, minlength: 2, maxlength: 20, required: true, unique: true },  
+  code: { type: String, minlength: 2, maxlength: 20, required: true, },  
   cost: { type: Number, required: true, default: 0 },
   buildTime: { type: Number, required: true, default: 0 },
   desc: { type: String, required: true, default: "Blueprint" },
@@ -33,7 +33,8 @@ const SquadBlueprint = Blueprint.discriminator('SquadBlueprint', new Schema({
 }));
 
 const UpgradeBlueprint = Blueprint.discriminator('UpgradeBlueprint', new Schema({
-  unknown: { type: Schema.Types.Mixed } //Upgrades don't exist yet...
+  unitType: {   type: String, min: 2, maxlength: 50, },
+  
 }));
 
 module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint };
