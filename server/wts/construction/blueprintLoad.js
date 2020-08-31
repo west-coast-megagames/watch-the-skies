@@ -8,7 +8,7 @@ const blueprintsData = [...facilityData, ];//...aircraftData, ...squadData, ...u
 
 // Import Blueprint discriminators for all buildables
 // Facility | Aircraft | Spacecraft | Squad | Upgrade
-const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint } = require('../../models/gov/blueprints');
+const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint } = require('../../models/gov/blueprint');
 
 // Load function to load all facilitys
 async function loadBlueprints () {
