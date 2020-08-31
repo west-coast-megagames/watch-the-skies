@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
 import { Link } from 'react-router-dom';
-import nexus from '../img/Project_Nexus_Square_Small.png'
+import nexus from '../../img/Project_Nexus_Square_Small.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faMoneyBillAlt } from '@fortawesome/free-solid-svg-icons';
-import TeamAvatar from './common/teamAvatar';
-import playTrack from './../scripts/audio';
-import { getTreasuryAccount } from '../store/entities/accounts';
-import { Avatar } from 'rsuite';
-
+import TeamAvatar from '../common/teamAvatar';
+import playTrack from '../../scripts/audio';
+import { getTreasuryAccount } from '../../store/entities/accounts';
 
 class NavBar extends Component {
     state = { 
