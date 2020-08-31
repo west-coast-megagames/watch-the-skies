@@ -1,6 +1,7 @@
 [
   {
-      "name": "Civilian Facilities",
+    "model": "facility",  
+    "name": "Civilian Facilities",
       "type": "Civilian",
       "code": "CF-1",
       "cost": 2,
@@ -62,7 +63,8 @@
       }
   },
   {
-      "name": "MegaProject Facilities",
+    "model": "facility",  
+    "name": "MegaProject Facilities",
       "type": "Civilian",
       "code": "MF-1",
       "cost": 2,
@@ -124,7 +126,8 @@
       }
   },
   {
-      "name": "Crisis Control",
+    "model": "facility",  
+    "name": "Crisis Control",
       "type": "Crisis",
       "code": "CC-1",
       "cost": 2,
@@ -186,7 +189,8 @@
       }
   },
   {
-      "name": "Base Lab",
+    "model": "facility",  
+    "name": "Base Lab",
       "type": "Lab",
       "code": "BL-1",
       "cost": 2,
@@ -248,7 +252,8 @@
       }
   },
   {
-      "name": "Base Hanger",
+    "model": "facility",  
+    "name": "Base Hanger",
       "type": "Hanger",
       "code": "BH-1",
       "cost": 2,
@@ -309,7 +314,8 @@
       }
   },
   {
-      "name": "Base Secret Lab",
+    "model": "facility",  
+    "name": "Base Secret Lab",
       "type": "Lab",
       "code": "BSL-1",
       "cost": 2,
@@ -370,7 +376,8 @@
       }
   },
   {
-      "name": "Base Factory",
+    "model": "facility",  
+    "name": "Base Factory",
       "type": "Factory",
       "code": "BF-1",
       "cost": 2,
@@ -431,7 +438,8 @@
       }
   },
   {
-      "name": "Spacecraft Lab",
+    "model": "facility",  
+    "name": "Spacecraft Lab",
       "type": "Lab",
       "code": "SL-1",
       "cost": 2,
@@ -492,7 +500,8 @@
       }
   },
   {
-      "name": "Spacecraft Hanger",
+    "model": "facility",  
+    "name": "Spacecraft Hanger",
       "type": "Hanger",
       "code": "SH-1",
       "cost": 2,
@@ -553,7 +562,8 @@
       }
   },
   {
-      "name": "Crash Site Mobile Lab",
+    "model": "facility",  
+    "name": "Crash Site Mobile Lab",
       "type": "Lab",
       "code": "CSL-1",
       "cost": 2,

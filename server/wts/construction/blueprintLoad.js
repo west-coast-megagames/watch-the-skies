@@ -18,12 +18,14 @@ async function loadBlueprints () {
     let squadCount = 0;
     let upgradeCount = 0;
 
+    await Blueprint.deleteMany();
     for (let bp of blueprintsData) {
         bpLoadDebugger(bp);
         let validLoad = true;
-        switch (bp.type) {
+        switch (bp.model) {
             case ('facility'):
-                bp = await new FacilityBlueprint(bp)
+                bp = new FacilityBlueprint(bp);
+                bp = await bp.save();
                 facilityCount++
                 break;
             case ('aircraft'):
