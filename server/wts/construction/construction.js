@@ -16,11 +16,10 @@ async function newUpgrade (blueprint){
 
 }
 
-async function newFacility (name, site, targetCode, team){
+async function newFacility (name, site, team){
     await loadBlueprints(); //this can me taken out when you implement the init loadBlueprints
     try{
-        let x = await Blueprint.find();
-        let blue = await FacilityBlueprint.findOne({ code: targetCode }); //findOne({ name: iData.name });
+        let blue = await FacilityBlueprint.findOne({ code: "BS-1" }); //findOne({ name: iData.name });
         if (!blue)
             return err = "Could not find Facility Blueprint"
 
@@ -30,7 +29,7 @@ async function newFacility (name, site, targetCode, team){
         facility.site = site;
         //facility.code = code;
         facility.team = team;
-        facility = await facility.save();
+        //facility = await facility.save();
 
         return facility;
     }

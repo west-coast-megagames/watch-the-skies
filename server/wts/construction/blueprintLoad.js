@@ -1,7 +1,7 @@
 const fs = require('fs')
 const bpLoadDebugger = require('debug')('app:blueprints');
 const facilityData = JSON.parse(fs.readFileSync(require.resolve('../json/facilities/facilities.json')));
-//const aircraftData = JSON.parse();
+//const aircraftData = JSON.parse(fs.readFileSync(require.resolve('../json/sites/aircraft_bp.json')));
 //const squadData = JSON.parse(); //js dislikes empty parse functions
 //const upgradeData = JSON.parse();
 const blueprintsData = [...facilityData, ];//...aircraftData, ...squadData, ...upgradeData
@@ -29,7 +29,8 @@ async function loadBlueprints () {
                 facilityCount++
                 break;
             case ('aircraft'):
-                bp = await new AircraftBlueprint(bp)
+                bp = await new AircraftBlueprint(bp);
+                bp = await bp.save();
                 aircraftCount++
                 break;
             case ('squad'):

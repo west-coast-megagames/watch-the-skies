@@ -53,13 +53,14 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @Desc    Takes in blueprint and name and site and starts construction on a new Facility
 // @access  Public
 router.post('/build', async (req, res) => {
-  let { name, site, targetCode, team } = req.body; //please give me these things
+  let { name, site, team } = req.body; //please give me these things
   try {
-    let facility = await newFacility(name, site, targetCode, team);
+    let facility = await newFacility(name, site, team);
+    facility = await facility.save();
     res.status(200).json(facility);
   }
   catch(err){
-    res.status(404).send(err);
+    res.status(404).send(err);//This returns a really weird json... watch out for that
   }
 });
 module.exports = router;
