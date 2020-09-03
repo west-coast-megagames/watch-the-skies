@@ -10,7 +10,7 @@ const AircraftSchema = new Schema({
     type: String,
     min: 2,
     maxlength: 50,
-    enum: ["Recon", "Transport", "Decoy", "Fighter", "Interceptor"],
+    enum: ["Recon", "Transport", "Decoy", "Fighter", "Interceptor", "UFO"],
     default: "Fighter",
   },
   name: { type: String, required: true, min: 2, maxlength: 50 },
@@ -25,9 +25,10 @@ const AircraftSchema = new Schema({
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     ready: { type: Boolean, default: true },
-    upgrade: { type: Boolean, default: false },
+    upgrade: { type: Boolean, default: false },//???
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
+    building: { type: Boolean, default: false }
   },
   upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   newSystems: {

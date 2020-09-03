@@ -25,6 +25,7 @@ const FacilityBlueprint = Blueprint.discriminator('FacilityBlueprint', new Schem
 
 const AircraftBlueprint = Blueprint.discriminator('AircraftBlueprint', new Schema({
   stats: { type: Schema.Types.Mixed },
+  type: { type: Schema.Types.String },
   upgrades: [Schema.Types.Mixed],
 }));
 

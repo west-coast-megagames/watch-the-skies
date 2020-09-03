@@ -13,6 +13,7 @@ const { Team } = require("../../models/team/team");
 const { BaseSite } = require("../../models/sites/site");
 const { System } = require("../../models/gov/upgrade/upgrade");
 const { validUnitType } = require("../../wts/util/construction/validateUnitType");
+const { newUnit } = require('../../wts/construction/construction');
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts
@@ -137,4 +138,19 @@ router.patch("/restore", async function (req, res) {
   nexusEvent.emit("updateAircrafts");
 });
 
+// @route   POST api/aircraft/build
+// @Desc    Takes in blueprint and name and facility(?) and starts construction on a new aircraft
+// @access  Public
+router.post('/build', async (req, res) => {
+  let { name, facility, type, team } = req.body; //please give me these things
+  try {
+    let AIRCRAFT = await newUnit(name, facility, type, team);//just the facility ID 
+    AIRCRAFT = await AIRCRAFT.save();
+
+    res.status(200).json(AIRCRAFT);
+  }
+  catch(err){
+    res.status(404).send(err);//This returns a really weird json... watch out for that
+  }
+});
 module.exports = router;
