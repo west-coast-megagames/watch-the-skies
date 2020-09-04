@@ -27,6 +27,14 @@ class SubNews extends React.Component {
     // console.log(this);
     console.log(value);
     console.log(id);
+    if (id === 'location') {
+      let options = [...this.props.sites, ...this.props.countries, ...this.props.zones];
+      let location = options.find(el => el._id === value);
+      if (location.model !== 'Site') {
+        Alert.warning(`You choose a ${location.model}, you must choose a site.`);
+        return;
+      }
+    }
     let article = this.state.article;
     article[id] = value;
     if (id === 'location' && value === null) article['location'] =  { _id:'' }
@@ -67,18 +75,18 @@ class SubNews extends React.Component {
   };
 
   render() {
-    const { articleBody, headline, imageSrc } = this.state.article;
+    const { articleBody, headline, imageSrc  } = this.state.article;
     const location = this.getLocation() 
     let preview = this.state.preview;
-    let disabled = articleBody.length !== 50 && headline.length !== 10 ? false : true;
+    let disabled = articleBody.length > 50 && headline.length > 10 && this.state.article.location !== '' ? false : true;
 
     return (
       <React.Fragment>
          <Modal.Header>
           <Modal.Title>
-            <TeamAvatar size={"sm"} teamCode={this.props.team.code} />
-            { !preview && <span> Submit {this.props.team.teamType === 'N' && 'Press Release'}{this.props.team.teamType === 'M' && 'Article'}</span> }
-            { preview && <span> {headline}</span> }
+            <TeamAvatar size={"sm"} teamCode={this.props.team.teamCode} />
+            { !preview && <span style={{verticalAlign: 'super'}}> Submit {this.props.team.teamType === 'N' && 'Press Release'}{this.props.team.teamType === 'M' && 'Article'}</span> }
+            { preview && <span style={{verticalAlign: 'super'}}> {headline}</span> }
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -144,12 +152,12 @@ class SubNews extends React.Component {
               </Button>
             </ButtonToolbar>
           </Form> }
-          {preview && <span>
-          <p><b>Author:</b> {this.props.user} | <b>Publisher:</b> {this.props.team.name}</p>
-          {typeof(location) === 'object' && <p>{this.props.sites.find(el => el._id === location._id).dateline} - Turn</p> }
-          {typeof(location) === 'string' && <p>{this.props.sites.find(el => el === location)}.dateline - Turn</p> }
-          <Divider />
-          <p>{articleBody}</p>
+          { preview && <span>
+            <p><b>Author:</b> {this.props.user} | <b>Publisher:</b> {this.props.team.name}</p>
+            { typeof(location) === 'object' && <p>{this.props.sites.find(el => el._id === location._id).dateline} - Turn</p> }
+            { typeof(location) === 'string' && location !== undefined && <p>{this.props.sites.find(el => el === location).dateline} - Turn</p> }
+            <Divider />
+            <p>{articleBody}</p>
           </span> }
         </Modal.Body>
         <Modal.Footer>
