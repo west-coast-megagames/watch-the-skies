@@ -3,8 +3,8 @@ const bpLoadDebugger = require('debug')('app:blueprints');
 const facilityData = JSON.parse(fs.readFileSync(require.resolve('../json/facilities/facilities.json')));
 const aircraftData = JSON.parse(fs.readFileSync(require.resolve('../json/aircraft_bp.json')));
 //const squadData = JSON.parse(); //js dislikes empty parse functions
-//const upgradeData = JSON.parse();
-const blueprintsData = [...facilityData, ...aircraftData,];// ...squadData, ...upgradeData
+const facilityUpgrade = JSON.parse(fs.readFileSync(require.resolve('../json/upgrade/facilityUpgrades.json')));
+const blueprintsData = [...facilityData, ...aircraftData, ...facilityUpgrade];// ...squadData, ...upgradeData
 
 // Import Blueprint discriminators for all buildables
 // Facility | Aircraft | Spacecraft | Squad | Upgrade
@@ -22,7 +22,7 @@ async function loadBlueprints () {
     for (let bp of blueprintsData) {
         bpLoadDebugger(bp);
         let validLoad = true;
-        switch (bp.model) {
+        switch (bp.buildModel) {
             case ('facility'):
                 bp = new FacilityBlueprint(bp);
                 bp = await bp.save();

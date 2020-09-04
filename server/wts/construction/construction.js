@@ -9,8 +9,7 @@ const { loadBlueprints } = require('../../wts/construction/blueprintLoad');
 //construction function for building Squads, Military(?), and Aircraft
 async function newUnit (name, facility, type, team,){
     await loadBlueprints(); //this can me taken out when you implement the init loadBlueprints
-    
-    
+       
     switch(type){
         case "Fighter":
             let x = await AircraftBlueprint.find();

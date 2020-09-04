@@ -1,6 +1,6 @@
 [
   {
-    "model": "facility",  
+    "buildModel": "facility",  
     "name": "Base Secret",
       "type": "Lab",
       "code": "BS-1",

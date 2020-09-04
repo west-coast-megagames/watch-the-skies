@@ -1,6 +1,6 @@
 [
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Preservation Improvements",
     "code": "KA-1",
     "unitType": "Crisis",
@@ -12,7 +12,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Water Supply Improvements",
     "code": "KA-2",
     "unitType": "Crisis",
@@ -24,7 +24,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Farm Intergration Improvements",
     "code": "KA-3",
     "unitType": "Clivilian",
@@ -36,7 +36,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Food Synthesis: Industrial",
     "code": "KA-4",
     "unitType": "Clivilian",
@@ -48,7 +48,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Terraforming Project",
     "code": "KA-5",
     "unitType": "Crisis",
@@ -60,7 +60,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Food Synthesis: Individual",
     "code": "KA-6",
     "unitType": "Clivilian",
@@ -72,7 +72,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Anti-Radiation Treatment On-Site Clinic",
     "code": "KB-1",
     "unitType": "Crisis",
@@ -84,7 +84,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Scientist Augmentation",
     "code": "KB-2",
     "unitType": "Base",
@@ -96,7 +96,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Robot Nursing Clinic",
     "code": "KB-3",
     "unitType": "Crisis",
@@ -108,7 +108,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Robo-Urgent Care Centers",
     "code": "KB-4",
     "unitType": "Clivilian",
@@ -120,7 +120,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Beginning AI Processing Units",
     "code": "KI-1",
     "unitType": "Base",
@@ -132,7 +132,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Landfill Removers",
     "code": "KI-2",
     "unitType": "Clivilian",
@@ -144,7 +144,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Better AI Processing Units",
     "code": "KI-3",
     "unitType": "Base",
@@ -156,7 +156,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Short Term Weather Redirect",
     "code": "KI-4",
     "unitType": "Crisis",
@@ -168,7 +168,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Holo VR Centers",
     "code": "KI-5",
     "unitType": "Clivilian",
@@ -180,7 +180,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Arc Cities",
     "code": "KI-6",
     "unitType": "MegaProject",
@@ -192,7 +192,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Towers of Bable",
     "code": "KI-7",
     "unitType": "MegaProject",
@@ -204,7 +204,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Space-Ground Docks",
     "code": "KI-8",
     "unitType": "MegaProject",
@@ -216,7 +216,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Greg, the Super Computer Scientist",
     "code": "KI-9",
     "unitType": "Base",
@@ -228,7 +228,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "TeleCircle",
     "code": "KI-8",
     "unitType": "MegaProject",
@@ -240,7 +240,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Auto-Vehicles Networking",
     "code": "KM-1",
     "unitType": "Civilian",
@@ -252,7 +252,7 @@
     "stats": {}
 },
 {   
-    "model": "upgrade",
+    "buildModel": "upgrade",
     "name": "Workforce: Droid",
     "code": "KM-2",
     "unitType": "Civilian",

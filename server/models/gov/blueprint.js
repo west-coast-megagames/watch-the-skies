@@ -5,7 +5,7 @@ const Joi = require("joi");
 const ObjectId = mongoose.ObjectId;
 
 const BlueprintSchema = new Schema({
-  model: { type: String, required: true, default: "Blueprint" },
+  buildModel: { type: String, required: true, default: "Blueprint" },
   name: { type: String, required: true, min: 2, maxlength: 50 },
   code: { type: String, minlength: 2, maxlength: 20, required: true, },  
   cost: { type: Number, required: true, default: 0 },
