@@ -2,9 +2,10 @@ const { Aircraft } = require('../../models/ops/aircraft');
 const { Facility } = require('../../models/gov/facility/facility');
 const { Squad } = require('../../models/ops/squad');
 const { Military } = require('../../models/ops/military/military');
-const { FacilityBlueprint, AircraftBlueprint, Blueprint } = require('../../models/gov/blueprint');
+const { FacilityBlueprint, AircraftBlueprint, UpgradeBlueprint, Blueprint } = require('../../models/gov/blueprint');
 
 const { loadBlueprints } = require('../../wts/construction/blueprintLoad');
+const { Upgrade } = require('../../models/gov/upgrade/upgrade');
 
 //construction function for building Squads, Military(?), and Aircraft
 async function newUnit (name, facility, type, team,){
@@ -12,7 +13,6 @@ async function newUnit (name, facility, type, team,){
        
     switch(type){
         case "Fighter":
-            let x = await AircraftBlueprint.find();
             let blue = await AircraftBlueprint.findOne({ type: type});
             let fighter = new Aircraft(blue);
             fighter.name = name;
@@ -31,8 +31,16 @@ async function newUnit (name, facility, type, team,){
 }
 
 //construction function for making a new upgrade
-async function newUpgrade (blueprint){
+async function newUpgrade (code, team, facility ){
+    await loadBlueprints(); //this can me taken out when you implement the init loadBlueprints
+ 
+    let x = await UpgradeBlueprint.find();
+    let blue = await UpgradeBlueprint.findOne({ code: code});
+    let upgrade = new Upgrade(blue);
+    upgrade.team = team;
+    upgrade.facility = facility;
 
+    return upgrade;
 }
 
 async function newFacility (name, site, team){

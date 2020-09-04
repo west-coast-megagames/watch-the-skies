@@ -7,9 +7,11 @@
     "cost": 2,
     "buildTime": 1,
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
-    "effects": [{"type": "terror", "effect": -5 }],
+
     "prereq": [{ "type": "Technology", "code": "Agr2A"}],
-    "stats": {}
+    "facilityStats": {
+        "effects": [{"type": "terror", "effect": -5 }]        
+    }
 },
 {   
     "buildModel": "upgrade",
@@ -230,7 +232,7 @@
 {   
     "buildModel": "upgrade",
     "name": "TeleCircle",
-    "code": "KI-8",
+    "code": "KI-10",
     "unitType": "MegaProject",
     "cost": 100,
     "buildTime": 3,

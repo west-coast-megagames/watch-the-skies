@@ -14,6 +14,7 @@ const { Squad } = require('../../models/ops/squad');
 
 // Game Systems - Used to run Game functions
 const banking = require('../../wts/banking/banking');
+const { newUpgrade } = require('../../wts/construction/construction');
 
 
 // Report Classes - Used to log game interactions
@@ -164,4 +165,21 @@ router.put('/rename', async function (req, res) {
   }
 res.status(200).send(`Renamed '${originalName}' to '${target.name}'`);
 });
+
+router.post("/upgrade/build", async function (req, res) {
+  let { code, team, facility } = req.body; //please give me these things
+
+  try {
+    let upgrade = await newUpgrade(code, team, facility );//just the facility ID 
+    upgrade = await upgrade.save();
+
+    res.status(200).json(upgrade);
+  }
+  catch(err){
+    res.status(404).send(err);//This returns a really weird json... watch out for that
+  }
+});
+
+
+
   module.exports = router

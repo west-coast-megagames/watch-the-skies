@@ -6,6 +6,7 @@ const Joi = require("joi");
 const UpgradeSchema = new Schema({
   model: { type: String, default: "Upgrade" },
   name: { type: String, required: true, min: 2, maxlength: 50 },
+  code: { type: String },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
   unitType: { type: String },
   manufacturer: { type: Schema.Types.ObjectId, ref: "Team" },
@@ -42,7 +43,6 @@ const UpgradeSchema = new Schema({
     },
   },
   facilityStats: {
-    code: { type: String },
     stats: { 
       sciRate: { type: Number },
       sciBonus: { type: Number },

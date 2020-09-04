@@ -38,7 +38,8 @@ async function loadBlueprints () {
                 squadCount++
                 break;
             case ('upgrade'):
-                bp = await new UpgradeBlueprint(bp)
+                bp = await new UpgradeBlueprint(bp);
+                bp = await bp.save();
                 upgradeCount++
                 break;
             default:
