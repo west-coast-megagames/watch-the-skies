@@ -1,0 +1,90 @@
+[
+  {
+    "loadType": "zone",
+    "name": "Low Earth Orbit",
+    "code": "LE",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Space"
+  },
+  {
+    "loadType": "zone",
+    "name": "Mid Earth Orbit",
+    "code": "ME",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Space"
+  },
+  {
+    "loadType": "zone",
+    "name": "High Earth Orbit",
+    "code": "HE",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Space"
+  },
+  {
+    "loadType": "zone",
+    "name": "Lunar Orbit",
+    "code": "LO",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Space"
+  },
+  {
+    "loadType": "zone",
+    "name": "North America",
+    "code": "NA",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "South America",
+    "code": "SA",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "Europe",
+    "code": "EU",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "Africa",
+    "code": "AF",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "Austr-Asia",
+    "code": "AU",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "Antarctica",
+    "code": "AN",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  },
+  {
+    "loadType": "zone",
+    "name": "Arabstan",
+    "code": "AS",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+  }
+]

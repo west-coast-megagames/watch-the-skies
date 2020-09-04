@@ -1,6 +1,7 @@
-const runLoad = require("../dataInit/initRefLoad");
+const runZoneLoad = require("../dataInit/zoneLoad");
 const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
+const runCountryTeamSet = require("../dataInit/countryTeamSet");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
 const runUserLoad = require("../dataInit/userLoad");
 const runBaseFacilityLoad = require("../dataInit/baseFacilityLoad");
@@ -25,26 +26,34 @@ async function fullInit(selStr) {
       }
 
     case "All":
-    case "RefData":
-      let initDone = await runLoad(true); // load simple reference tables/documents from refdata.json
-      //console.log("Ref Init Done:", initDone);
-      logger.debug(`Ref Init Done: ${initDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "Team":
-      let teamDone = await runTeamLoad(true); // load expanded team fields beyond simple reference from initTeams.json
-      logger.debug(`Team Load Done: ${teamDone}`);
+    case "Zone":
+      let zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
+      //console.log("Zone Init Done:", zoneDone);
+      logger.debug(`Zone Init Done: ${zoneDone}`);
       if (selStr != "All") {
         break;
       }
 
     case "All":
     case "Country":
-      let countryDone = await runCountryLoad(true); // load expanded Country fields beyond simple reference from initCountry.json
+      let countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
       logger.debug(`Country Load Done: ${countryDone}`);
+      if (selStr != "All") {
+        break;
+      }
+
+    case "All":
+    case "Team":
+      let teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
+      logger.debug(`Team Load Done: ${teamDone}`);
+      if (selStr != "All") {
+        break;
+      }
+
+    case "All":
+    case "CountryTeam":
+      let countryTeamDone = await runCountryTeamSet(true); // Set Team fields In Country
+      logger.debug(`Country Team Set Done: ${countryTeamDone}`);
       if (selStr != "All") {
         break;
       }

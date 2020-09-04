@@ -10,7 +10,7 @@ require("winston-mongodb");
 const supportsColor = require("supports-color");
 
 // type are Terrestrial(earth) and Alien (T or A)
-const typeVals = ["T", "A"];
+const typeVals = ["Ground", "Space"];
 
 function inArray(array, value) {
   for (var i = 0; i < array.length; i++) {
@@ -42,6 +42,30 @@ async function chkCountry(runFlag) {
         logger.error(
           `Invalid type ${country.type} for Country ${country.code} ${country._id}`
         );
+      } else {
+        if (country.type === "Ground") {
+          if (!country.hasOwnProperty("coastal")) {
+            logger.error(
+              `coastal missing for Country ${country.code} ${country._id}`
+            );
+          }
+
+          if (!country.hasOwnProperty("borderedBy")) {
+            logger.error(
+              `borderedBy missing for Country ${country.code} ${country._id}`
+            );
+          } else {
+            let currentCode = country.code;
+            let currentCountryIdString = country._id.toHexString();
+
+            await checkBorderedByList(
+              country.borderedBy,
+              currentCode,
+              currentCountryIdString,
+              country.name
+            );
+          }
+        }
       }
     }
 
@@ -156,28 +180,6 @@ async function chkCountry(runFlag) {
       }
     }
 
-    if (!country.hasOwnProperty("coastal")) {
-      logger.error(
-        `coastal missing for Country ${country.code} ${country._id}`
-      );
-    }
-
-    if (!country.hasOwnProperty("borderedBy")) {
-      logger.error(
-        `borderedBy missing for Country ${country.code} ${country._id}`
-      );
-    } else {
-      let currentCode = country.code;
-      let currentCountryIdString = country._id.toHexString();
-
-      await checkBorderedByList(
-        country.borderedBy,
-        currentCode,
-        currentCountryIdString,
-        country.name
-      );
-    }
-
     if (!country.hasOwnProperty("milAlliance")) {
       logger.error(
         `milAlliance missing for Country ${country.code} ${country._id}`
@@ -288,23 +290,23 @@ async function chkCountry(runFlag) {
       }
 
       // only need 1
-      if (country.type === "T" && cityCount > 0) {
+      if (country.type === "Ground" && cityCount > 0) {
         break siteLoop;
-      } else if (country.type === "A" && spacecraftCount > 0) {
+      } else if (country.type === "Space" && spacecraftCount > 0) {
         break siteLoop;
       }
     }
 
-    if (country.type === "T") {
+    if (country.type === "Ground") {
       if (cityCount < 1) {
         logger.error(
-          `No Cities Found In Country ${country.code} ${country.name}`
+          `No Cities Found In Ground Country ${country.code} ${country.name}`
         );
       }
-    } else if (country.type === "A") {
+    } else if (country.type === "Space") {
       if (spacecraftCount < 1) {
         logger.error(
-          `No Spacecraft Found In Country ${country.code} ${country.name}`
+          `No Spacecraft Found In Space Country ${country.code} ${country.name}`
         );
       }
     }

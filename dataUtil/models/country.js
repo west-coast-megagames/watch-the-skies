@@ -6,13 +6,6 @@ const countryDebugger = require("debug")("app:country");
 // type are Terrestrial(earth) and Alien
 const CountrySchema = new Schema({
   model: { type: String, default: "Country" },
-  type: {
-    type: String,
-    minlength: 1,
-    maxlength: 1,
-    enum: ["T", "A"],
-    default: "T",
-  },
   zone: { type: Schema.Types.ObjectId, ref: "Zone" },
   loadZoneCode: { type: String, maxlength: 2, uppercase: true },
   team: { type: Schema.Types.ObjectId, ref: "Team" },
@@ -40,11 +33,6 @@ const CountrySchema = new Schema({
     max: 250,
     default: 0,
   },
-  coastal: {
-    type: Boolean,
-    default: false,
-  },
-  borderedBy: [{ type: Schema.Types.ObjectId, ref: "Country" }],
   milAlliance: [{ type: Schema.Types.ObjectId, ref: "Team" }],
   sciAlliance: [{ type: Schema.Types.ObjectId, ref: "Team" }],
   stats: {
@@ -78,4 +66,50 @@ function validateCountry(country) {
   return Joi.validate(country, schema, { allowUnknown: true });
 }
 
-module.exports = { Country, validateCountry };
+const GroundCountry = Country.discriminator(
+  "GroundCountry",
+  new Schema({
+    type: { type: String, default: "Ground" },
+    coastal: {
+      type: Boolean,
+      default: false,
+    },
+    borderedBy: [{ type: Schema.Types.ObjectId, ref: "Country" }],
+  })
+);
+
+function validateGroundCountry(country) {
+  const schema = {
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    name: Joi.string().min(3).max(75).required(),
+    unrest: Joi.number().min(0).max(250),
+  };
+
+  return Joi.validate(country, schema, { allowUnknown: true });
+}
+
+const SpaceCountry = Country.discriminator(
+  "SpaceCountry",
+  new Schema({
+    type: { type: String, default: "Space" },
+  })
+);
+
+function validateSpaceCountry(country) {
+  const schema = {
+    code: Joi.string().min(2).max(2).required().uppercase(),
+    name: Joi.string().min(3).max(75).required(),
+    unrest: Joi.number().min(0).max(250),
+  };
+
+  return Joi.validate(country, schema, { allowUnknown: true });
+}
+
+module.exports = {
+  Country,
+  validateCountry,
+  GroundCountry,
+  validateGroundCountry,
+  SpaceCountry,
+  validateSpaceCountry,
+};

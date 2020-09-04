@@ -38,12 +38,6 @@ const { Country } = require("../models/country");
 
 const app = express();
 
-/*
-Team.watch().on('change', data => {
-  teamLoadDebugger(data);
-});
-*/
-
 // Bodyparser Middleware
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -69,7 +63,7 @@ async function initLoad(doLoad) {
   for await (let data of teamDataIn) {
     if (data.loadType == "team") {
       // delete old data
-      //await deleteTeam(data);   will cause previously loaded team record id's to change
+      await deleteTeam(data);
 
       if (data.loadFlag == "true") {
         ++recReadCount;

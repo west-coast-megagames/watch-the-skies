@@ -18,12 +18,19 @@ require("winston-mongodb");
 async function fullInitCheck(selStr) {
   switch (selStr) {
     case "All":
-    case "RefData":
+    case "Zone":
       let zoneCheckDone = await runZoneCheck(true); // check zone records
       logger.info(`Zone Check Done: ${zoneCheckDone}`);
 
+      if (selStr != "All") {
+        break;
+      }
+
+    case "All":
+    case "Country":
       let countryCheckDone = await runCountryCheck(true); // check country records
       logger.info(`Country Check Done: ${countryCheckDone}`);
+
       if (selStr != "All") {
         break;
       }
