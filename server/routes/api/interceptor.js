@@ -145,9 +145,7 @@ router.post('/build', async (req, res) => {
   let { name, facility, type, team } = req.body; //please give me these things
   try {
     let AIRCRAFT = await newUnit(name, facility, type, team);//just the facility ID 
-    AIRCRAFT = await AIRCRAFT.save();
-
-    res.status(200).json(AIRCRAFT);
+    res.status(200).send(AIRCRAFT);
   }
   catch(err){
     res.status(404).send(err);//This returns a really weird json... watch out for that

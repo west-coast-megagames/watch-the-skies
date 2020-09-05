@@ -13,14 +13,25 @@ async function newUnit (name, facility, type, team,){
        
     switch(type){
         case "Fighter":
-            let blue = await AircraftBlueprint.findOne({ type: type});
-            let fighter = new Aircraft(blue);
-            fighter.name = name;
-            fighter.site = facility;//maybe I don't need this? I dunno I'm just a pipe layer
-            fighter.origin = facility;
-            fighter.ready = false;
-            fighter.building = true;
-            fighter.team = team;
+            let blue = await AircraftBlueprint.findOne({ type: type }); // Find BP by ID in the future.
+            let base = await Facility.findById(facility).populate('site');
+
+            let fighter = new Aircraft({
+                name,
+                team,
+                zone: base.site.zone._id,
+                country: base.site.country._id,
+                site: base.site._id,
+                origin: facility,
+                mission: 'Under Construction',
+                stats: blue.stats,
+                type: blue.type,
+            });
+            
+            fighter.status.ready = false;
+            fighter.status.building = true;
+
+            fighter = await fighter.save();
 
             return fighter;
         default:
