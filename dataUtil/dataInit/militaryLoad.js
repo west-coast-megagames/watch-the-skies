@@ -24,14 +24,13 @@ const bodyParser = require("body-parser");
 const {
   Military,
   validateMilitary,
-  updateStats,
   Fleet,
   Corps,
 } = require("../models/ops/military/military");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
-const { Gear } = require("../models/gov/upgrade/upgrade");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const {
   loadMilGears,
   gears,
@@ -51,7 +50,7 @@ async function runMilitaryLoad(runFlag) {
     //militaryLoadDebugger("Jeff in runMilitaryLoad", runFlag);
     if (!runFlag) return false;
     if (runFlag) {
-      await loadMilGears(); // load wts/json/upgrade/milGear.json data into array 
+      await loadMilGears(); // load wts/json/upgrade/milGear.json data into array
 
       await deleteAllMilitarys(runFlag);
       await initLoad(runFlag);
@@ -146,7 +145,7 @@ async function deleteAllMilitarys(doLoad) {
         // remove associated gears records
         for (let j = 0; j < military.gear.length; ++j) {
           gerId = military.gear[j];
-          let gearDel = await Gear.findByIdAndRemove(gerId);
+          let gearDel = await Upgrade.findByIdAndRemove(gerId);
           if ((gearDel = null)) {
             militaryLoadDebugger(
               `The Military Gear with the ID ${gerId} was not found!`
@@ -263,7 +262,7 @@ async function createFleet(iData, rCounts) {
       if (gerRef) {
         if (validUnitType(gerRef.unitType, fleet.type)) {
           gearError = false;
-          newGear = await new Gear(gerRef);
+          newGear = await new Upgrade(gerRef);
           newGear.team = fleet.team;
           newGear.manufacturer = fleet.team;
           newGear.status.building = false;
@@ -310,7 +309,6 @@ async function createFleet(iData, rCounts) {
 
       ++rCounts.loadCount;
       logger.debug(`${fleetSave.name} add saved to military collection.`);
-      updateStats(fleetSave._id);
     } catch (err) {
       delGear(fleet.gear);
       ++rCounts.loadErrCount;
@@ -409,7 +407,7 @@ async function createCorps(iData, rCounts) {
       if (gerRef) {
         if (validUnitType(gerRef.unitType, corps.type)) {
           gearError = false;
-          newGear = await new Gear(gerRef);
+          newGear = await new Upgrade(gerRef);
           newGear.team = corps.team;
           newGear.manufacturer = corps.team;
           newGear.status.building = false;
@@ -454,7 +452,6 @@ async function createCorps(iData, rCounts) {
 
       ++rCounts.loadCount;
       logger.debug(`${corpsSave.name} add saved to military collection.`);
-      updateStats(corpsSave._id);
     } catch (err) {
       delGear(corps.gear);
       ++rCounts.loadErrCount;
@@ -553,7 +550,7 @@ async function updateFleet(iData, rCounts) {
       if (gerRef) {
         if (validUnitType(gerRef.unitType, fleet.type)) {
           gearError = false;
-          newGear = await new Gear(gerRef);
+          newGear = await new Upgrade(gerRef);
           newGear.team = fleet.team;
           newGear.manufacturer = fleet.team;
           newGear.status.building = false;
@@ -601,7 +598,6 @@ async function updateFleet(iData, rCounts) {
       let fleetSave = await fleet.save();
       ++rCounts.updCount;
       logger.debug(`${fleetSave.name} add saved to military collection.`);
-      updateStats(fleetSave._id);
       return;
     } catch (err) {
       delGear(fleet.gear);
@@ -702,7 +698,7 @@ async function updateCorps(iData, rCounts) {
       if (gerRef) {
         if (validUnitType(gerRef.unitType, corps.type)) {
           gearError = false;
-          newGear = await new Gear(gerRef);
+          newGear = await new Upgrade(gerRef);
           newGear.team = corps.team;
           newGear.manufacturer = corps.team;
           newGear.status.building = false;
@@ -748,7 +744,6 @@ async function updateCorps(iData, rCounts) {
 
       ++rCounts.updCount;
       logger.debug(`${corpsSave.name} add saved to military collection.`);
-      updateStats(corpsSave._id);
     } catch (err) {
       delGear(corps.gear);
       ++rCounts.loadErrCount;

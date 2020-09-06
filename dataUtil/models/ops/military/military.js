@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app: Military Model");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
+const { logger } = require("../../../middleware/winston"); // Import of winston for error logging
+require("winston-mongodb");
 
 const MilitarySchema = new Schema({
   model: { type: String, default: "Military" },
@@ -95,6 +97,9 @@ MilitarySchema.methods.deploy = async (unit, country) => {
     return unit;
   } catch (err) {
     modelDebugger("Error:", err.message);
+    logger.error(`Catch Military Model deploy Error: ${err.message}`, {
+      meta: err,
+    });
   }
 };
 
@@ -116,25 +121,4 @@ function validateMilitary(military) {
   return Joi.validate(military, schema, { allowUnknown: true });
 }
 
-async function updateStats(id) {
-  let military = await Military.findById(id).populate("gear");
-  let { stats } = military;
-  for (let gear of military.gear) {
-    for (let [key, value] of Object.entries(gear.stats)) {
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value;
-      }
-    }
-    console.log(`${gear.name} loaded into ${military.type}...`);
-  }
-  console.log(`All gear for ${military.type} ${military.name} loaded...`);
-  military.stats = stats;
-  military.markModified("stats");
-  military = await military.save();
-  console.log(military.stats);
-
-  return;
-}
-
-module.exports = { Military, validateMilitary, updateStats, Fleet, Corps };
+module.exports = { Military, validateMilitary, Fleet, Corps };
