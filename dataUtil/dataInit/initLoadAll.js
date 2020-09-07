@@ -1,3 +1,4 @@
+const runBluePrintLoad = require("../dataInit/blueprintLoad");
 const runZoneLoad = require("../dataInit/zoneLoad");
 const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
@@ -21,6 +22,15 @@ async function fullInit(selStr) {
     case "DropAll":
       let dropAllDone = await runDropAll(true); // drop all tables
       logger.debug(`Drop All Done: ${dropAllDone}`);
+      if (selStr != "All") {
+        break;
+      }
+
+    case "All":
+    case "BluePrint":
+      let blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
+      //console.log("BluePrint Init Done:", blueprintDone);
+      logger.debug(`BluePrint Init Done: ${blueprintDone}`);
       if (selStr != "All") {
         break;
       }

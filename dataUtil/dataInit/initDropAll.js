@@ -1,3 +1,4 @@
+const { Blueprint } = require("../models/gov/blueprint");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
@@ -19,6 +20,7 @@ async function dropAll(doDrop) {
   if (!doDrop) return;
 
   // drop all tables
+  await Blueprint.deleteMany();
   await Zone.deleteMany();
   await Country.deleteMany();
   await Team.deleteMany();
