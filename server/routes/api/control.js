@@ -3,9 +3,11 @@ const router = express.Router();
 const nexusEvent = require("../../startup/events");
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft, updateStats, validateAircraft } = require("../../models/ops/aircraft");
+const { Aircraft, validateAircraft } = require("../../models/ops/aircraft");
 const { System } = require("../../models/gov/upgrade/upgrade");
-const { validUnitType } = require("../../wts/util/construction/validateUnitType");
+const {
+  validUnitType,
+} = require("../../wts/util/construction/validateUnitType");
 const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
@@ -194,7 +196,6 @@ router.post("/build", async function (req, res) {
       .populate("zone", "name")
       .populate("country", "name")
       .populate("base", "baseName");
-    await updateStats(newAircraft._id);
 
     //console.log(newAircraft);
 
@@ -213,7 +214,6 @@ router.post("/build", async function (req, res) {
 router.patch("/updateAircraft", async function (req, res) {
   count = 0;
   for (let aircraft of await Aircraft.find().populate("systems")) {
-    await updateStats(aircraft._id);
     count++;
   }
 

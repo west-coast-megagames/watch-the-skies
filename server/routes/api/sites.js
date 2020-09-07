@@ -311,7 +311,6 @@ router.post("/spacecraft/", async function (req, res) {
       routeDebugger(
         newSpacecraft.name + " add saved to Spacecraft collection."
       );
-      //updateStats(newSpacecraft._id);
 
       res.status(200).json(newSpacecraft);
     });
@@ -498,7 +497,6 @@ router.post("/base/", async function (req, res) {
         return res.status(404).send(`New Base Save Error ${siteCode} ${err}`);
       }
       routeDebugger(`${newBaseSite.name} add saved to Base collection.`);
-      //updateStats(newBaseSite._id);
 
       res.status(200).json(newBaseSite);
     });
@@ -670,7 +668,6 @@ router.post("/city/", async function (req, res) {
         return res.status(404).send(`New City Save Error ${siteCode} ${err}`);
       }
       routeDebugger(newCitySite.name + " add saved to City collection.");
-      //updateStats(newCitySite._id);
 
       res.status(200).json(newCitySite);
     });
@@ -902,7 +899,6 @@ router.post("/crash/", async function (req, res) {
           .send(`New Crash Site Save Error ${siteCode} ${err}`);
       }
       //routeDebugger(newCrashSite.name + " add saved to City collection.");
-      //updateStats(newCrashSite._id);
 
       res.status(200).json(newCrashSite);
     });

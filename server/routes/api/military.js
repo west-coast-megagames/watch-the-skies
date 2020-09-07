@@ -6,7 +6,10 @@ const auth = require("../../middleware/auth");
 const validateObjectId = require("../../middleware/validateObjectId");
 
 // Military Model - Using Mongoose Model
-const { Military, updateStats, validateMilitary } = require("../../models/ops/military/military");
+const {
+  Military,
+  validateMilitary,
+} = require("../../models/ops/military/military");
 const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");

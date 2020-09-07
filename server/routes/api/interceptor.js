@@ -6,14 +6,16 @@ const auth = require("../../middleware/auth");
 const validateObjectId = require("../../middleware/validateObjectId");
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft, validateAircraft, updateStats } = require("../../models/ops/aircraft");
+const { Aircraft, validateAircraft } = require("../../models/ops/aircraft");
 const { Country } = require("../../models/country");
 const { Zone } = require("../../models/zone");
 const { Team } = require("../../models/team/team");
 const { BaseSite } = require("../../models/sites/site");
 const { System } = require("../../models/gov/upgrade/upgrade");
-const { validUnitType } = require("../../wts/util/construction/validateUnitType");
-const { newUnit } = require('../../wts/construction/construction');
+const {
+  validUnitType,
+} = require("../../wts/util/construction/validateUnitType");
+const { newUnit } = require("../../wts/construction/construction");
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts
@@ -141,14 +143,13 @@ router.patch("/restore", async function (req, res) {
 // @route   POST api/aircraft/build
 // @Desc    Takes in blueprint and name and facility(?) and starts construction on a new aircraft
 // @access  Public
-router.post('/build', async (req, res) => {
+router.post("/build", async (req, res) => {
   let { name, facility, type, team } = req.body; //please give me these things
   try {
-    let AIRCRAFT = await newUnit(name, facility, type, team);//just the facility ID 
+    let AIRCRAFT = await newUnit(name, facility, type, team); //just the facility ID
     res.status(200).send(AIRCRAFT);
-  }
-  catch(err){
-    res.status(404).send(err);//This returns a really weird json... watch out for that
+  } catch (err) {
+    res.status(404).send(err); //This returns a really weird json... watch out for that
   }
 });
 module.exports = router;

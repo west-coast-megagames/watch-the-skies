@@ -184,7 +184,7 @@ async function loadSpacecraft(iData, rCounts) {
           spacecraftDebugger(
             `${spacecraftSave.name} add saved to spacecraft collection.`
           );
-          //updateStats(spacecraftSave._id);
+
           return;
         } catch (err) {
           ++rCounts.loadErrCount;
@@ -291,7 +291,7 @@ async function loadSpacecraft(iData, rCounts) {
             `${spacecraftSave.name}  add saved to spacecraft collection.`
           );
           ++rCounts.updCount;
-          //updateStats(spacecraftSave._id);
+
           return;
         } catch (err) {
           logger.error(

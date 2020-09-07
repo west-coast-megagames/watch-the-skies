@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app:aircraftModel");
-
 const Schema = mongoose.Schema;
 const Joi = require("joi");
 
@@ -10,7 +9,7 @@ const AircraftSchema = new Schema({
     type: String,
     min: 2,
     maxlength: 50,
-    enum: ["Recon", "Transport", "Decoy", "Fighter", "Interceptor", "UFO"],
+    enum: ["Recon", "Transport", "Decoy", "Fighter"],
     default: "Fighter",
   },
   name: { type: String, required: true, min: 2, maxlength: 50 },
@@ -25,12 +24,11 @@ const AircraftSchema = new Schema({
     deployed: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
     ready: { type: Boolean, default: true },
-    upgrade: { type: Boolean, default: false },//???
+    upgrade: { type: Boolean, default: false },
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
-    building: { type: Boolean, default: false }
   },
-  upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
+  systems: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   newSystems: {
     cockpit: {
       active: { type: Boolean, default: false },
@@ -75,6 +73,7 @@ const AircraftSchema = new Schema({
     passiveRolls: [Number],
     activeRolls: [Number],
   },
+  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],
 });
 
@@ -111,20 +110,18 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
   }
 };
 
-AircraftSchema.methods.returnToBase = async (aircraft) =>  {
-  const { Facility } = require("../gov/facility/facility");
-
-  let origin = await Facility.findById(aircraft.origin._id).populate('site')
-  modelDebugger(`${aircraft.name} returning to ${origin.name} in ${origin.site.name}`);
+AircraftSchema.methods.returnToBase = async (aircraft) => {
+  modelDebugger(`Returning ${aircraft.name} to ${origin.name}...`);
   aircraft.mission = "Docked";
   aircraft.status.ready = true;
   aircraft.status.deployed = false;
-  aircraft.country = origin.site.country._id;
-  aircraft.site = origin.site._id;
-  aircraft.zone = origin.site.zone._id;
-  await aircraft.save();
+  aircraft.country = update.origin.country;
+  aircraft.site = update.origin._id;
+  aircraft.zone = update.origin.zone;
 
-  return `${aircraft.name} succesfully returned to ${origin.name}!`;
+  aircraft = await aircraft.save();
+
+  return aircraft;
 };
 
 AircraftSchema.methods.validateAircraft = function (aircraft) {
@@ -161,25 +158,4 @@ async function getAircrafts() {
   return aircrafts;
 }
 
-async function updateStats(id) {
-  let aircraft = await Aircraft.findById(id).populate("systems");
-  let { stats } = aircraft;
-  for (let system of aircraft.systems) {
-    for (let [key, value] of Object.entries(system.stats)) {
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value;
-      }
-    }
-    console.log(`${system.name} loaded into ${aircraft.type}...`);
-  }
-  console.log(`All systems for ${aircraft.type} ${aircraft.name} loaded...`);
-  aircraft.stats = stats;
-  aircraft.markModified("stats");
-  aircraft = await aircraft.save();
-  console.log(aircraft.stats);
-
-  return;
-}
-
-module.exports = { Aircraft, validateAircraft, getAircrafts, updateStats };
+module.exports = { Aircraft, validateAircraft, getAircrafts };

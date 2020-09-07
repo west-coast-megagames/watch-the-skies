@@ -158,25 +158,4 @@ async function getAircrafts() {
   return aircrafts;
 }
 
-async function updateStats(id) {
-  let aircraft = await Aircraft.findById(id).populate("systems");
-  let { stats } = aircraft;
-  for (let system of aircraft.systems) {
-    for (let [key, value] of Object.entries(system.stats)) {
-      if (typeof value === typeof 0) {
-        console.log(`${key}: ${value}`);
-        stats[key] = value;
-      }
-    }
-    console.log(`${system.name} loaded into ${aircraft.type}...`);
-  }
-  console.log(`All systems for ${aircraft.type} ${aircraft.name} loaded...`);
-  aircraft.stats = stats;
-  aircraft.markModified("stats");
-  aircraft = await aircraft.save();
-  console.log(aircraft.stats);
-
-  return;
-}
-
-module.exports = { Aircraft, validateAircraft, getAircrafts, updateStats };
+module.exports = { Aircraft, validateAircraft, getAircrafts };

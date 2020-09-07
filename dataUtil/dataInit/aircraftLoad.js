@@ -20,15 +20,11 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Aircraft Model - Using Mongoose Model
-const {
-  Aircraft,
-  validateAircraft,
-  updateStats,
-} = require("../models/ops/aircraft");
+const { Aircraft, validateAircraft } = require("../models/ops/aircraft");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const { Team } = require("../models/team/team");
-const { System } = require("../models/gov/upgrade/upgrade");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { loadSystems, systems } = require("../wts/construction/systems/systems");
 const { validUnitType } = require("../wts/util/construction/validateUnitType");
 const { Site } = require("../models/sites/site");
@@ -93,8 +89,6 @@ async function loadAircraft(iData, rCounts) {
         mission: iData.mission,
       });
 
-      aircraft.stats = iData.stats;
-      aircraft.status = iData.status;
       aircraft.serviceRecord = [];
       aircraft.gameState = [];
 
@@ -123,7 +117,7 @@ async function loadAircraft(iData, rCounts) {
           if (sysRef) {
             if (validUnitType(sysRef.unitType, aircraft.type)) {
               systemsError = false;
-              newSystem = await new System(sysRef);
+              newSystem = await new Upgrade(sysRef);
               newSystem.team = aircraft.team;
               newSystem.manufacturer = aircraft.team;
               newSystem.status.building = false;
@@ -241,7 +235,6 @@ async function loadAircraft(iData, rCounts) {
           logger.debug(
             `${aircraftSave.name} add saved to aircraft collection.`
           );
-          updateStats(aircraftSave._id);
           return;
         } catch (err) {
           delSystems(aircraft.systems);
@@ -258,8 +251,6 @@ async function loadAircraft(iData, rCounts) {
 
       aircraft.name = iData.name;
       aircraft.type = iData.type;
-      aircraft.status = iData.status;
-      aircraft.stats = iData.stats;
       aircraft.mission = iData.mission;
 
       if (iData.team != "") {
@@ -284,7 +275,7 @@ async function loadAircraft(iData, rCounts) {
             let sysRef =
               systems[systems.findIndex((system) => system.code === sys)];
             if (validUnitType(sysRef.unitType, aircraft.type)) {
-              newSystem = await new System(sysRef);
+              newSystem = await new Upgrade(sysRef);
               newSystem.team = aircraft.team;
               newSystem.manufacturer = aircraft.team;
               newSystem.status.building = false;
@@ -392,7 +383,6 @@ async function loadAircraft(iData, rCounts) {
           logger.info(
             `${aircraftSave.name} update saved to aircraft collection.`
           );
-          updateStats(aircraftSave._id);
           return;
         } catch (err) {
           delSystems(aircraft.systems);
