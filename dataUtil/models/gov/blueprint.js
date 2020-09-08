@@ -39,6 +39,7 @@ const FacilityBlueprint = Blueprint.discriminator(
   "FacilityBlueprint",
   new Schema({
     buildModel: { type: String, required: true, default: "facility" },
+    type: { type: Schema.Types.String },
     site: { type: ObjectId, ref: "Site" },
     upgrades: [Schema.Types.Mixed],
     capability: { type: Schema.Types.Mixed },

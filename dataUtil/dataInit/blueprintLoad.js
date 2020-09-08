@@ -107,7 +107,7 @@ async function loadBlueprint(bpData, rCounts) {
 
       switch (bpData.buildModel) {
         case "facility":
-          await updFaclity(bpData, bpId, rCounts);
+          await updFacility(bpData, bpId, rCounts);
           break;
         case "aircraft":
           await updAircraft(bpData, bpId, rCounts);
@@ -203,7 +203,7 @@ async function newAircraft(bpData, rCounts) {
   }
 }
 
-async function updAircraft(bdData, bpId, rCounts) {
+async function updAircraft(bpData, bpId, rCounts) {
   // Existing Aircraft Team here ... update
   let loadError = false;
   let loadErrorMsg = "";
@@ -219,7 +219,6 @@ async function updAircraft(bdData, bpId, rCounts) {
   }
 
   loadName = bpData.name;
-
   aircraftBlueprint = bpData;
 
   const { error } = validateAircraftBlueprint(aircraftBlueprint);
@@ -246,6 +245,93 @@ async function updAircraft(bdData, bpId, rCounts) {
   } else {
     logger.error(
       `Aircraft Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
+    );
+    ++rCounts.loadErrCount;
+    return;
+  }
+}
+
+async function newFaclity(bpData, rCounts) {
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
+  // New Facility Blueprint here
+  let bpFacility = await new FacilityBlueprint(bpData);
+  loadName = bpData.name;
+  let { error } = validateFacilityBlueprint(bpFacility);
+  if (error) {
+    loadError = true;
+    loadErrorMsg = `New Facility Bluepritn Validate Error, ${bpData.code}  ${error.message}`;
+  }
+
+  if (!loadError) {
+    try {
+      let bpFacilitySave = await bpFacility.save();
+      ++rCounts.loadCount;
+      logger.debug(
+        `${bpFacilitySave.name} add saved to blueprint collection. code: ${bpFacilitySave.code}`
+      );
+      return;
+    } catch (err) {
+      ++rCounts.loadErrCount;
+      logger.error(`New Facility Blueprint Save Error: ${err.message}`, {
+        meta: err,
+      });
+      return;
+    }
+  } else {
+    logger.error(
+      `Facility Blueprint skipped due to errors: ${loadName} ${loadErrorMsg}`
+    );
+    ++rCounts.loadErrCount;
+    return;
+  }
+}
+
+async function updFacility(bpData, bpId, rCounts) {
+  // Existing Facility Team here ... update
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
+  let facilityBlueprint = await FacilityBlueprint.findById(bpId);
+  if (!facilityBlueprint) {
+    ++rCounts.loadErrCount;
+    logger.error(
+      `Facility Blueprint ${bpData.name} not available for Facility Blueprint collection update`
+    );
+    return;
+  }
+
+  loadName = bpData.name;
+
+  facilityBlueprint = bpData;
+
+  const { error } = validateFacilityBlueprint(facilityBlueprint);
+  if (error) {
+    loadError = true;
+    loadErrorMsg = `Facility Blueprint Update Validate Error, ${bpData.code}  ${error.message}`;
+  }
+
+  if (!loadError) {
+    try {
+      let facilityBlueprintSave = await facilityBlueprint.save();
+      ++rCounts.updCount;
+      logger.debug(
+        `${facilityBlueprintSave.name} update saved to Blueprint collection Facility Buildtype`
+      );
+      return;
+    } catch (err) {
+      ++rCounts.loadErrCount;
+      logger.error(`Facility Blueprint Update Save Error: ${err.message}`, {
+        meta: err,
+      });
+      return;
+    }
+  } else {
+    logger.error(
+      `Facility Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
     );
     ++rCounts.loadErrCount;
     return;
