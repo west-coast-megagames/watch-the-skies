@@ -7,7 +7,8 @@ const { logger } = require('../middleware/winston');
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
 const { Facility } = require('../models/gov/facility/facility');
-const { Aircraft } = require('../models/ops/aircraft')
+const { Aircraft } = require('../models/ops/aircraft');
+const { upgradeValue } = require('../wts/upgrades/upgrades');
 
 const { rand } = require('../util/systems/dice');
 const { resolveMissions } = require('../wts/intercept/missions');
@@ -83,6 +84,12 @@ router.patch("/returnAircraft", async function (req, res) {
     }
     res.status(200).send(`${count} aircrafts succesfully returned!`);
     nexusEvent.emit("updateAircrafts");
+});
+
+router.get('/doSomething', async function (req, res){
+    let z = await upgradeValue(req.body.upgrades, req.body.desiredStat);
+    res.status(200).send(`The result is: ${z}`);
+
 });
 
 module.exports = router

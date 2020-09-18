@@ -13,6 +13,7 @@ const MilitarySchema = new Schema({
   country: { type: Schema.Types.ObjectId, ref: "Country" },
   site: { type: Schema.Types.ObjectId, ref: "Site" },
   origin: { type: Schema.Types.ObjectId, ref: "Facility" },
+  upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   status: {
     damaged: { type: Boolean, default: false },
     deployed: { type: Boolean, default: false },
