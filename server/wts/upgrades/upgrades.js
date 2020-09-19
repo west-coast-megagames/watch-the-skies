@@ -2,7 +2,10 @@ const routeDebugger = require('debug')('app:routes');
 
 const upgrade = require('../../models/gov/upgrade/upgrade');
 const { Upgrade } = require('../../models/gov/upgrade/upgrade');
-
+const { Military } = require('../../models/ops/military/military');
+const { Squad } = require('../../models/ops/squad');
+const { Aircraft } = require('../../models/ops/aircraft');
+const { Facility } = require('../../models/gov/facility/facility');
 
 
 /*
@@ -25,7 +28,25 @@ async function upgradeValue(upgradeArray, desiredStat){
 
 //pass me the full unit 
 async function addUpgrade(upgrade, unit){
-	unit
+	//upgrade = await Upgrade.findById
+	switch(unit.model){
+		case "Military":
+			unit = await Military.findById(unit._id);
+			break;
+		case "Squad":
+			unit = await Squad.findById(unit._id);
+			break;
+		case "Aircraft":
+			unit = await Aircraft.findById(unit._id);
+			break;
+		case "Facility":
+			unit = await Facility.findById(unit._id)
+			break;
+	}
+
+	unit.upgrades.push(upgrade);
+	unit = await unit.save();
+	return unit;
 }
 
-module.exports = { upgradeValue } 
+module.exports = { upgradeValue, addUpgrade } 

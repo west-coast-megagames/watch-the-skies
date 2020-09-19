@@ -25,7 +25,8 @@ const sites = require('../routes/api/sites');
 const team = require('../routes/api/team');
 const tableau = require('../routes/api/tableau');
 const trade = require('../routes/api/trade')
-const treaty = require('../routes/api/treaty')
+const treaty = require('../routes/api/treaty');
+const upgrade = require('../routes/api/upgrade')
 const zones = require('../routes/api/zones');
 
 const debug = require('../routes/debugRoute');
@@ -75,6 +76,7 @@ module.exports = function(app) {
     app.use('/api/trade', trade); //
     app.use('/api/treaty', treaty); //treaties
     //app.use('/api/initData', initData); // Route for Init Data functions
+    app.use('/api/upgrades', upgrade); //Route for upgrades
 
     app.use('/api/control', control)
 
