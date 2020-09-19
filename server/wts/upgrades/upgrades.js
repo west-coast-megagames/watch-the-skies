@@ -28,7 +28,11 @@ async function upgradeValue(upgradeArray, desiredStat){
 
 //pass me the full unit 
 async function addUpgrade(upgrade, unit){
-	//upgrade = await Upgrade.findById
+	upgrade = await Upgrade.findById(upgrade._id);
+
+	if (upgrade.status.storage)
+		return `This Upgrade is already in use somewhere!`;
+		
 	switch(unit.model){
 		case "Military":
 			unit = await Military.findById(unit._id);
@@ -42,11 +46,58 @@ async function addUpgrade(upgrade, unit){
 		case "Facility":
 			unit = await Facility.findById(unit._id)
 			break;
+		default:
+			return "UwU could not find the right Unit for addUpgrade! someone made an oopsie-woopsie!";
+	
+	}
+	try{
+		unit.upgrades.push(upgrade);
+		upgrade.status.storage = false;
+		upgrade = await upgrade.save();
+		unit = await unit.save();
+		return unit;
+	}
+	catch(err){
+		return `ERROR IN addUpgrade: ${err}`;
 	}
 
-	unit.upgrades.push(upgrade);
-	unit = await unit.save();
-	return unit;
 }
 
-module.exports = { upgradeValue, addUpgrade } 
+async function removeUpgrade(upgrade, unit){
+	upgrade = await Upgrade.findById(upgrade._id);
+	switch(unit.model){
+		case "Military":
+			unit = await Military.findById(unit._id);
+			break;
+		case "Squad":
+			unit = await Squad.findById(unit._id);
+			break;
+		case "Aircraft":
+			unit = await Aircraft.findById(unit._id);
+			break;
+		case "Facility":
+			unit = await Facility.findById(unit._id)
+			break;
+		default:
+			return "UwU could not find the right Unit for removeUpgrade! someone made an oopsie-woopsie!";
+	}
+	let response = "Could not find desired Upgrade to remove from unit";
+	const index = unit.upgrades.indexOf(upgrade._id);
+	if (index > -1) {
+		unit.upgrades.splice(index, 1);
+		response = `Removed "${upgrade.name}" from unit "${unit.name}"`
+	}
+	try{
+		unit = await unit.save();
+		upgrade.status.storage= true;
+		upgrade = await upgrade.save();
+
+		return response;		
+	}
+	catch(err){
+		return `ERROR IN removeUpgrade: ${err}`;
+	}
+
+}
+
+module.exports = { upgradeValue, addUpgrade, removeUpgrade } 
