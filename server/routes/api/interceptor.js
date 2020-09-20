@@ -16,6 +16,7 @@ const {
   validUnitType,
 } = require("../../wts/util/construction/validateUnitType");
 const { newUnit } = require("../../wts/construction/construction");
+const { Facility } = require("../../models/gov/facility/facility");
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts
@@ -152,4 +153,30 @@ router.post("/build", async (req, res) => {
     res.status(404).send(err); //This returns a really weird json... watch out for that
   }
 });
+
+// @route   POST api/aircraft/transfer
+// @Desc    
+// @access  Public
+router.put("/transfer", async (req, res) => {
+  let { aircraft, facility } = req.body; //please give me these things
+  try {
+    let target = await Facility.findById(facility).populate('site');
+    aircraft = await Aircraft.findById(aircraft);
+
+    aircraft.status.deployed = true;
+    aircraft.status.ready = false;
+    aircraft.site = target._id;
+
+    let mission = "Transfer";
+    aircraft.mission = mission;
+    aircraft = await aircraft.save();
+    await airMission.start(aircraft, target, mission);
+
+    res.status(200).send(`Transfer of ${aircraft.name} to ${target.name} initiated...`);
+  } catch (err) {
+    res.status(404).send(err);
+  }
+});
+
+
 module.exports = router;
