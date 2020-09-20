@@ -21,6 +21,7 @@ let patrolMissions = []; // Attempted Patrol missions for the round
 let transportMissions = []; // Attempted Transport missions for the round
 let reconMissions = []; // Attempted Recon missions for the round
 let diversionMissions = []; // Attempted Diversion missions for the round
+let transferMissions = []; // Attempted Transfer missions for the round
 
 let count = 0; // Mission Counter.
 let totalCount = 0;
@@ -31,7 +32,7 @@ async function start(aircraft, target, mission) {
   let origin = await Facility.findById(aircraft.origin).populate('site'); // Populate home facility for the aircraft
 
   let targetGeo = undefined // Initiate targets Geo position placeholder
-  target.model === 'Aircraft' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
+  target.model === 'Aircraft' || 'Facility' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
   let { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
   
   aircraft = aircraft._id; // Saves just the _ID of the aircraft
@@ -69,6 +70,10 @@ async function start(aircraft, target, mission) {
       diversionMissions = [...diversionMissions, ...newMission]; // Adds Recon to be resolved
       missionDebugger(diversionMissions);
       break;
+    case mission === "Transfer":
+      transferMissions.push(newMission);
+      missionDebugger(transferMissions);
+      break;
     default:
       result = `${result} This is not an acceptable mission type.`;
       logger.error(`Invalid Air Mission: ${mission} is not a valid mission type.`)
@@ -88,6 +93,7 @@ async function resolveMissions() {
   await runTransports();
   await runRecon();
   await runDiversions();
+  await resolveTransfers();
   await clearMissions();
 
   missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
@@ -360,6 +366,35 @@ async function checkEscort(target, atkReport, attacker) {
   return { target, atkReport, defReport, stance: 'defensive' }; // Returns to mission function that called it
 }
 
+async function resolveTransfers() {
+  for await (let transfer of transportMissions.sort((a,b) => a.distance - b.distance)) {
+    count++; // Count iteration for each mission
+    missionDebugger(`Mission #${count} - Transfer Mission`);
+    
+    let report = new TransportReport();
+    let aircraft = await Aircraft.findById(transfer.aircraft).populate("country", "name").populate("systems");
+
+    if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+      console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
+      continue;
+    }
+
+    let target = await Facility.findById(transfer.target); // Loading Site that the aircraft is heading to.
+    missionDebugger(`${aircraft.name} transferring to ${target.name}`);
+    aircraft.origin = target
+
+
+    report.team = aircraft.team._id;
+    report.unit = aircraft._id;
+    report.site = aircraft.site;
+    report.country = aircraft.country;
+    report.zone = aircraft.zone;
+    await report.save();    
+  }
+
+  return;
+}
+
 async function clearMissions() {
   for (let aircraft of await Aircraft.find()) {
     await aircraft.returnToBase(aircraft);
@@ -370,6 +405,7 @@ async function clearMissions() {
   transportMissions = []; // Attempted Transport missions for the round
   reconMissions = []; // Attempted Recon missions for the round
   diversionMissions = []; // Attempted Diversion missions for the round
+  transferMissions = [];
 
   return 0;
 }
