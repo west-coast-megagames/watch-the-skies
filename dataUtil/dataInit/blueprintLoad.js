@@ -338,4 +338,91 @@ async function updFacility(bpData, bpId, rCounts) {
   }
 }
 
+async function newUpgrade(bpData, rCounts) {
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
+  // New Upgrade Blueprint here
+  let bpUpgrade = await new UpgradeBlueprint(bpData);
+  loadName = bpData.name;
+  let { error } = validateUpgradeBlueprint(bpUpgrade);
+  if (error) {
+    loadError = true;
+    loadErrorMsg = `New Upgrade Bluepritn Validate Error, ${bpData.code}  ${error.message}`;
+  }
+
+  if (!loadError) {
+    try {
+      let bpUpgradeSave = await bpUpgrade.save();
+      ++rCounts.loadCount;
+      logger.debug(
+        `${bpUpgradeSave.name} add saved to blueprint collection. code: ${bpUpgradeSave.code}`
+      );
+      return;
+    } catch (err) {
+      ++rCounts.loadErrCount;
+      logger.error(`New Upgrade Blueprint Save Error: ${err.message}`, {
+        meta: err,
+      });
+      return;
+    }
+  } else {
+    logger.error(
+      `Upgrade Blueprint skipped due to errors: ${loadName} ${loadErrorMsg}`
+    );
+    ++rCounts.loadErrCount;
+    return;
+  }
+}
+
+async function updUpgrade(bpData, bpId, rCounts) {
+  // Existing Upgrade Team here ... update
+  let loadError = false;
+  let loadErrorMsg = "";
+  let loadName = "";
+
+  let facilityBlueprint = await UpgradeBlueprint.findById(bpId);
+  if (!facilityBlueprint) {
+    ++rCounts.loadErrCount;
+    logger.error(
+      `Upgrade Blueprint ${bpData.name} not available for Upgrade Blueprint collection update`
+    );
+    return;
+  }
+
+  loadName = bpData.name;
+
+  facilityBlueprint = bpData;
+
+  const { error } = validateUpgradeBlueprint(facilityBlueprint);
+  if (error) {
+    loadError = true;
+    loadErrorMsg = `Upgrade Blueprint Update Validate Error, ${bpData.code}  ${error.message}`;
+  }
+
+  if (!loadError) {
+    try {
+      let facilityBlueprintSave = await facilityBlueprint.save();
+      ++rCounts.updCount;
+      logger.debug(
+        `${facilityBlueprintSave.name} update saved to Blueprint collection Upgrade Buildtype`
+      );
+      return;
+    } catch (err) {
+      ++rCounts.loadErrCount;
+      logger.error(`Upgrade Blueprint Update Save Error: ${err.message}`, {
+        meta: err,
+      });
+      return;
+    }
+  } else {
+    logger.error(
+      `Upgrade Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
+    );
+    ++rCounts.loadErrCount;
+    return;
+  }
+}
+
 module.exports = runBlueprintLoad;
