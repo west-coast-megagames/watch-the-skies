@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const validateObjectId = require('../middleware/validateObjectId');
+const validateObjectId = require('../middleware/util/validateObjectId');
 
 const TransferSchema = new Schema({
 	to: { type: String },

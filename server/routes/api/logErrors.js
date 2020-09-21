@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);

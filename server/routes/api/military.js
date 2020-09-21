@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 // Military Model - Using Mongoose Model
 const { Military } = require('../../models/military');

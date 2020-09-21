@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Research Models - Using Mongoose Model
 const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/research');
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 require ('winston-mongodb');

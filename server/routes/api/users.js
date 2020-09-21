@@ -3,7 +3,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 
 const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/auth');
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 // User Model - Using Mongoose Model
 const { User, validateUser, validateName, validateAddr } = require('../../models/user');

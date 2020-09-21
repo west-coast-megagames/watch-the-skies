@@ -2,7 +2,7 @@ const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
 const articleDebugger = require('debug')('app:article');
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 // Function Import
 const { getTimeRemaining } = require('../../wts/gameClock/gameClock');

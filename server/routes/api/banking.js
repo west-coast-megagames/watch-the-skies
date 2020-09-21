@@ -2,7 +2,7 @@ const routeDebugger = require('debug')('app:routes');
 const nexusEvent = require('../../middleware/events/events');
 const express = require('express');
 const router = express.Router();
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 

@@ -62,7 +62,7 @@ else {
 }
 
 function routeError (err, req, res, next) {
-	logger.error(`${err.message}`, { meta: err });
+	logger.error(`${err.message}`, { meta: err.stack });
 
 	errorDebugger('Error:', err.message);
 	res.status(500).send(`Error: ${err.message}`);

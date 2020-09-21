@@ -20,7 +20,7 @@ const banking = require('../../wts/banking/banking');
 const { newUpgrade } = require('../../wts/construction/construction');
 const { upgradeValue, removeUpgrade } = require('../../wts/upgrades/upgrades');
 const { resolveTrade } = require('../../wts/trades/trade');
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 const science = require('../../wts/research/research');
 
 // Report Classes - Used to log game interactions

@@ -1,7 +1,7 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 const { logger } = require('../../middleware/log/winston');
 

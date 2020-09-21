@@ -1,7 +1,7 @@
 const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 // Interceptor Model - Using Mongoose Model
@@ -20,8 +20,8 @@ router.get('/', async function (req, res) {
 		res.status(200).json(accounts);
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err });
-		res.status(400).send(err.message);
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
 	}
 });
 
@@ -36,7 +36,7 @@ router.get('/:id', validateObjectId, async function (req, res) {
 		res.json(account);
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err });
+		logger.error(err.message, { meta: err.stack });
 		res.status(400).send(err.message);
 	}
 
@@ -46,37 +46,35 @@ router.get('/:id', validateObjectId, async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/', async function (req, res) {
-	const { name, code, balance, deposits, withdrawls, autoTransfers } = req.body;
+	logger.info('POST Route: api/account post made...');
 	const { error } = validateAccount(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
 
 	try {
-		const newAccount = new Account(
-			{ name, code, balance, deposits, withdrawls, autoTransfers }
-		);
-		if (req.body.teamCode != '') {
-			const team = await Team.findOne({ teamCode: req.body.teamCode });
-			if (!team) {
-				throw `Account Post Team Error, New Account: ${req.body.name} Code: ${req.body.code} Team: ${req.body.teamCode}`;
-			}
-			else {
-				newAccount.team = team._id;
-			}
-		}
+		let newAccount = new Account(req.body);
+		newAccount.validate();
+		const docs = await Account.find({ name: req.body.name, team: req.body.team });
 
-		const docs = await Account.find({ name });
-		if (!docs.length) {
-			const account = await newAccount.save();
-			res.json(account);
-			logger.info(`The ${name} account created for ...`);
+		if (docs.length < 1) {
+			newAccount = await newAccount.save();
+			await Team.populate(newAccount, { path: 'team', model: 'Team', select: 'name' });
+			logger.info(`${newAccount.name} account created for ${newAccount.team.name} ...`);
+			res.status(200).json(newAccount);
 		}
 		else {
-			throw `${name} account already exists!`;
+			let err = new Error(`${newAccount.name} account already exists!`);
+			err.type = 'User Error';
+			throw err;
 		}
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err });
-		res.status(400).send(err.message);
+		logger.error(err.message, { meta: err.stack });
+		if (err.type === 'User Error') {
+			res.status(400).send(`Bad request: ${err.message}`);
+		}
+		else {
+			res.status(500).send(`Server error: ${err.message}`);
+		}
 	}
 });
 
@@ -85,13 +83,24 @@ router.post('/', async function (req, res) {
 // @access  Public
 router.delete('/:id', validateObjectId, async function (req, res) {
 	const id = req.params.id;
-	const account = await Account.findByIdAndRemove(id);
-	if (account != null) {
-		logger.info(`${account.name} with the id ${id} was deleted!`);
-		res.status(200).send(`${account.name} with the id ${id} was deleted!`);
+	try {
+		const account = await Account.findByIdAndRemove(id);
+		if (account != null) {
+			logger.info(`${account.name} with the id ${id} was deleted!`);
+			res.status(200).send(`${account.name} with the id ${id} was deleted!`);
+		}
+		else {
+			throw { type: 'User Error', message: `No account with the id ${id} exists!` }
+		}
 	}
-	else {
-		res.status(400).send(`No account with the id ${id} exists!`);
+	catch (err) {
+		logger.error(err.message, { meta: err });
+		if (err.type === 'User Error') {
+			res.status(400).send(`Bad request: ${err.message}`);
+		}
+		else {
+			res.status(500).send(`Server error: ${err.message}`);
+		}
 	}
 });
 

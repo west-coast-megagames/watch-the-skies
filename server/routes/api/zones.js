@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const zoneDebugger = require('debug')('app:zone');
-const validateObjectId = require('../../middleware/validateObjectId');
+const validateObjectId = require('../../middleware/util/validateObjectId');
 
 const { Zone, validateZone } = require('../../models/zone');
 
