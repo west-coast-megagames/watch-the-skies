@@ -1,32 +1,48 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const nexusEvent = require("../../startup/events");
-const routeDebugger = require("debug")("app:routes:interceptor");
+const validateObjectId = require('../../middleware/validateObjectId');
+const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 const { Upgrade } = require('../../models/gov/upgrade/upgrade');
-const { upgradeValue, addUpgrade, removeUpgrade } = require('../../wts/upgrades/upgrades');
+const { addUpgrade } = require('../../wts/upgrades/upgrades');
 
 // @route   GET api/upgrades
 // @Desc    Get all Upgrades
 // @access  Public
-router.get('/', async function (req, res){
-	let aircrafts = await Upgrade.find();
-	res.json(aircrafts);
+router.get('/', async function (req, res) {
+	const upgrades = await Upgrade.find();
+	res.status(200).json(upgrades);
 });
 
-router.get('/stat', async function (req, res){
-	let z = await upgradeValue(req.body.upgrades, req.body.desiredStat);
-	res.status(200).send(`The result is: ${z}`);
+// @route   GET api/upgrades/:id
+// @Desc    Get all Upgrades
+// @access  Public
+router.get(':id', async function (req, res) {
+	const upgrades = await Upgrade.findById({ _id: req.params.id });
+	res.status(200).json(upgrades);
 });
 
-router.put('/add', async function (req, res){
- await addUpgrade(req.body.upgrade, req.body.unit);
- res.status(200).send(`Added "${req.body.upgrade.name}" to unit "${req.body.unit.name}"`);
+// @route   POST api/upgrades/stat
+// @Desc    add an upgrade to a unit
+// @access  Public
+router.post('/', async function (req, res) {
+	await addUpgrade(req.body.upgrade, req.body.unit);
+	res.status(200).send(`Added "${req.body.upgrade.name}" to unit "${req.body.unit.name}"`);
 });
 
-router.put('/remove', async function (req, res){
-	let response = await removeUpgrade(req.body.upgrade, req.body.unit);
-	res.status(200).send(response);
- });
+// @route   DELETE api/upgrades/:id
+// @Desc    Delete a upgrades
+// @access  Public
+router.delete('/:id', validateObjectId, async function (req, res) {// Scott has not tested this. Bad Scott
+	const id = req.params.id;
+	const upgrade = await Upgrade.findByIdAndRemove(id);
+	if (upgrade != null) {
+		logger.info(`${upgrade.name} with the id ${id} was deleted!`);
+		res.status(200).send(`${upgrade.name} with the id ${id} was deleted!`);
+	}
+	else {
+		res.status(404).send(`No upgrade with the id ${id} exists!`);
+	}
+});
 
 module.exports = router;

@@ -70,8 +70,8 @@ class SubNews extends React.Component {
   handlePreview = (value) => { this.setState({preview: value})};
 
   getLocation = () => {
-    if (typeof(this.state.article.location) === 'object') return this.state.article.location._id;
-    if (typeof(this.state.article.location) === 'string') return this.state.article.location
+    if (typeof(this.state.article.location) === 'object') return this.state.article.location;
+    if (typeof(this.state.article.location) === 'string') return this.state.article.location;
   };
 
   render() {
@@ -154,8 +154,8 @@ class SubNews extends React.Component {
           </Form> }
           { preview && <span>
             <p><b>Author:</b> {this.props.user} | <b>Publisher:</b> {this.props.team.name}</p>
-            { typeof(location) === 'object' && <p>{this.props.sites.find(el => el._id === location._id).dateline} - Turn</p> }
-            { typeof(location) === 'string' && location !== undefined && <p>{this.props.sites.find(el => el === location).dateline} - Turn</p> }
+            { typeof(location) === 'object' && <p>{location.dateline} - Turn</p> }
+            { typeof(location) === 'string' && location !== undefined && <p>{this.props.sites.find(el => el._id === location).dateline} - Turn</p> }
             <Divider />
             <p>{articleBody}</p>
           </span> }

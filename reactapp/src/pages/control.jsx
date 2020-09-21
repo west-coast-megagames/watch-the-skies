@@ -179,7 +179,7 @@ class Control extends Component {
 
     loadTech = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load/tech`)
+            const response = await axios.patch(`${gameServer}game/admin/load/tech`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Technology Loaded', body: response.data})
         } catch (err) {
@@ -209,7 +209,7 @@ class Control extends Component {
 
     loadKnowledge = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load/knowledge`)
+            const response = await axios.patch(`${gameServer}game/admin/load/knowledge`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Knowledge Loaded', body: response.data})
         } catch (err) {
@@ -219,7 +219,7 @@ class Control extends Component {
 
     seedKnowledge = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load/knowledge/seed`)
+            const response = await axios.patch(`${gameServer}game/admin/load/knowledge/seed`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Knowledge Seeded', body: response.data})
         } catch (err) {
@@ -229,7 +229,7 @@ class Control extends Component {
 
     seedTechnology = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/research/load/tech/seed`)
+            const response = await axios.patch(`${gameServer}game/admin/load/tech/seed`)
             console.log(response);
             this.props.alert({type: 'success', title: 'Initial Tech Seeded', body: response.data})
         } catch (err) {
