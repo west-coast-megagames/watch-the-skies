@@ -28,6 +28,8 @@ const {
   validateUpgradeBlueprint,
 } = require("../models/gov/blueprint");
 
+const { Site } = require("../models/sites/site");
+
 const app = express();
 
 // Bodyparser Middleware
@@ -173,6 +175,7 @@ async function newAircraft(bpData, rCounts) {
   // New Aircraft Blueprint here
   let bpAircraft = await new AircraftBlueprint(bpData);
   loadName = bpData.name;
+
   let { error } = validateAircraftBlueprint(bpAircraft);
   if (error) {
     loadError = true;
@@ -257,8 +260,25 @@ async function newFaclity(bpData, rCounts) {
   let loadName = "";
 
   // New Facility Blueprint here
+  if (
+    bpData.site != "" &&
+    bpData.site != "undefined" &&
+    bpData.site != undefined
+  ) {
+    let site = await Site.findOne({ siteCode: bpData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + bpData.site;
+    } else {
+      bpData.site = site._id;
+    }
+  } else {
+    bpData.site = undefined;
+  }
+
   let bpFacility = await new FacilityBlueprint(bpData);
   loadName = bpData.name;
+
   let { error } = validateFacilityBlueprint(bpFacility);
   if (error) {
     loadError = true;
@@ -305,6 +325,22 @@ async function updFacility(bpData, bpId, rCounts) {
   }
 
   loadName = bpData.name;
+
+  if (
+    bpData.site != "" &&
+    bpData.site != "undefined" &&
+    bpData.site != undefined
+  ) {
+    let site = await Site.findOne({ siteCode: bpData.site });
+    if (!site) {
+      loadError = true;
+      loadErrorMsg = "Site Not Found: " + bpData.site;
+    } else {
+      bpData.site = site._id;
+    }
+  } else {
+    bpData.site = undefined;
+  }
 
   facilityBlueprint = bpData;
 

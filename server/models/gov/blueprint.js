@@ -42,7 +42,12 @@ const FacilityBlueprint = Blueprint.discriminator(
     type: { type: Schema.Types.String },
     site: { type: ObjectId, ref: "Site" },
     upgrades: [Schema.Types.Mixed],
-    capability: { type: Schema.Types.Mixed },
+    capacity: { type: Number, default: 0 },
+    status: { type: Schema.Types.Mixed },
+    unitType: [{ type: String, min: 2, maxlength: 50 }],
+    funding: [Number],
+    sciRate: { type: Number, default: 0 },
+    sciBonus: { type: Number, default: 0 },
   })
 );
 
@@ -105,6 +110,8 @@ const UpgradeBlueprint = Blueprint.discriminator(
   new Schema({
     buildModel: { type: String, required: true, default: "upgrade" },
     unitType: { type: String, min: 2, maxlength: 50 },
+    effects: [],
+    stats: { type: Schema.Types.Mixed },
   })
 );
 
