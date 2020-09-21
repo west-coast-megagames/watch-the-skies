@@ -10,7 +10,7 @@ const { Account } = require('../../models/account');
 const { Article } = require('../../models/article');
 const { Research } = require('../../models/sci/research');
 const { Facility } = require('../../models/facility');
-const { Military } = require('../../models/ops/military/military');
+const { Military } = require('../../models/military');
 const { Log } = require('../../models/logs/log');
 
 module.exports = function (io) {

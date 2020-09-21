@@ -4,7 +4,7 @@ const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
 // Military Model - Using Mongoose Model
-const { Military } = require('../../models/ops/military/military');
+const { Military } = require('../../models/military');
 const { Gear } = require('../../models/upgrade');
 
 // @route   GET api/military

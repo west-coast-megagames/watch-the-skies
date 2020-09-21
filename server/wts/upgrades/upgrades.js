@@ -2,7 +2,7 @@ const routeDebugger = require('debug')('app:routes');
 
 const upgrade = require('../../models/upgrade');
 const { Upgrade } = require('../../models/upgrade');
-const { Military } = require('../../models/ops/military/military');
+const { Military } = require('../../models/military');
 const { Squad } = require('../../models/ops/squad');
 const { Aircraft } = require('../../models/ops/aircraft');
 const { Facility } = require('../../models/facility');

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const modelDebugger = require('debug')('app: Military Model');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const { logger } = require('../../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../middleware/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
 const MilitarySchema = new Schema({
