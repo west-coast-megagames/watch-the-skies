@@ -4,7 +4,7 @@ const knowledgeData = JSON.parse(file);
 const knowledgeDebugger = require('debug')('app:knowledge');
 
 const { Team } = require('../../models/team'); // Team Model
-const { Research, KnowledgeResearch } = require('../../models/sci/research'); // Research model and Knowledge Discriminator
+const { Research, KnowledgeResearch } = require('../../models/research'); // Research model and Knowledge Discriminator
 
 // Science Game State
 const { techTree } = require('./techTree'); // Import of the tech tree array from techTree.js

@@ -10,7 +10,7 @@ const placeholderData = JSON.parse(fs.readFileSync(require.resolve('../json/tech
 const techData = [...militaryData, ...infrastructureData, ...medicalData, ...agricultureData, ...analysisData];
 
 const { Technology } = require('./technology');
-const { Research, TechResearch } = require('../../models/sci/research');
+const { Research, TechResearch } = require('../../models/research');
 const { Team } = require('../../models/team');
 const { Facility } = require('../../models/facility');
 

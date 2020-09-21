@@ -2,7 +2,7 @@ const researchDebugger = require('debug')('app:research');
 const nexusEvent = require('../../startup/events');
 const { logger } = require('../../middleware/winston');
 
-const { Research } = require('../../models/sci/research'); // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
+const { Research } = require('../../models/research'); // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
 
 const { techCost, fundingCost, multiplier } = require('./sciState');
