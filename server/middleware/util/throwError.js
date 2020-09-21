@@ -1,6 +1,6 @@
-function nexusError (type, message) {
+function nexusError (message, status) {
 	const error = new Error(message);
-	error.type = type;
+	error.status = status;
 	throw error;
 }
 
