@@ -1,5 +1,5 @@
 const researchDebugger = require('debug')('app:research');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/winston');
 
 const { Research } = require('../../models/research'); // Imports the Research object which is the base Model for Technology, Knowledge and Analysis

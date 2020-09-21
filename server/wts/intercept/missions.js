@@ -1,5 +1,5 @@
 const missionDebugger = require('debug')('app:missions - air');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const { intercept } = require('./intercept');
 const { d6 } = require('../../util/systems/dice');
 const terror = require('../terror/terror');

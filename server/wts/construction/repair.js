@@ -1,6 +1,6 @@
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const { RepairReport } = require('../reports/reportClasses');
 const Debugger = require('debug')('app:construction:repair');
 

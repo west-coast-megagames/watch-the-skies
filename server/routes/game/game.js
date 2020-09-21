@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const routeDebugger = require('debug')('app:routes:game');
 
 // Mongoose Models - Used to save and validate objects into MongoDB

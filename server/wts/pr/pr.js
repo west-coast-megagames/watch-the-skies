@@ -1,6 +1,6 @@
 const { d8 } = require('../../util/systems/dice');
 const prDebugging = require('debug')('app:prSystem');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const { deposit } = require('../banking/banking');
 
 async function updatePR () {

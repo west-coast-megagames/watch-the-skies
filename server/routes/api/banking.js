@@ -1,5 +1,5 @@
 const routeDebugger = require('debug')('app:routes');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
