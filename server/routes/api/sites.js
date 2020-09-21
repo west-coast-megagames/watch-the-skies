@@ -5,32 +5,13 @@ const validateObjectId = require('../../middleware/validateObjectId');
 
 const { logger } = require('../../middleware/winston');
 
-const {
-	Site,
-	validateSite,
-	BaseSite,
-	validateBase,
-	CitySite,
-	validateCity,
-	CrashSite,
-	validateCrash,
-	Spacecraft,
-	validateSpacecraft
-} = require('../../models/sites/site');
+const { Site, validateSite, BaseSite, validateBase, CitySite, validateCity, CrashSite, validateCrash, Spacecraft, validateSpacecraft } = require('../../models/sites/site');
 const { Country } = require('../../models/country');
-const { Zone } = require('../../models/zone');
-const { Team } = require('../../models/team/team');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Team } = require('../../models/team');
 const { convertToDms } = require('../../util/systems/geo');
 
-const {
-	validUnitType
-} = require('../../wts/util/construction/validateUnitType');
-const {
-	delFacilities
-} = require('../../wts/util/construction/deleteFacilities');
-const { delSystems } = require('../../wts/util/construction/deleteSystems');
-const { genSiteCode } = require('../../wts/util/construction/genSiteCode');
+const { validUnitType } = require('../../wts/util/construction/validateUnitType');
+const { delFacilities } = require('../../wts/util/construction/deleteFacilities');
 
 // @route   GET api/sites
 // @Desc    Get all sites
@@ -60,7 +41,8 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 		.sort({ team: 1 });
 	if (site != null) {
 		res.json(site);
-	} else {
+	}
+	else {
 		res.status(404).send(`The Site with the ID ${id} was not found!`);
 	}
 });
@@ -181,7 +163,8 @@ router.post('/spacecraft/', async function (req, res) {
 					.send(
 						`Spacecraft Post Team Error, New Spacecraft: ${name} Team Code ${teamCode}`
 					);
-			} else {
+			}
+			else {
 				newSpacecraft.team = team._id;
 				// routeDebugger("Spacecraft Post Team Found, Spacecraft:", name, " Team: ", teamCode, "Team ID:", team._id);
 			}
@@ -212,17 +195,20 @@ router.post('/spacecraft/', async function (req, res) {
 				return res
 					.status(404)
 					.send(`New Spacecraft Country Code Error ${siteCode} ${countryCode}`);
-			} else {
+			}
+			else {
 				newSpacecraft.country = country._id;
 				newSpacecraft.zone = country.zone;
 				// routeDebugger("Spacecraft Post Country Found, New Spacecraft:", name, " Country: ", countryCode, "Country ID:", country._id);
 			}
-		} else {
+		}
+		else {
 			const country = await Country.findById({ country });
 			if (!country) {
 				// routeDebugger("Spacecraft Post Country Error, New Spacecraft:", name, " Country: ", country);
 				logger.error(`New Spacecraft Country ID Error ${siteCode} ${country}`);
-			} else {
+			}
+			else {
 				newSpacecraft.country = country._id;
 				newSpacecraft.zone = country.zone;
 				// routeDebugger("Spacecraft Post Country Found, New Spacecraft:", name, " Country: ", country.code, "Country ID:", country._id);
@@ -246,35 +232,42 @@ router.post('/spacecraft/', async function (req, res) {
 					if (facType == 'Factory') {
 						newFacility = await new Factory(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Lab') {
+					}
+					else if (facType == 'Lab') {
 						newFacility = await new Lab(facRef);
 						facId = newFacility._id;
 						newFacility.sciRate = facRef.sciRate;
 						newFacility.bonus = facRef.bonus;
 						newFacility.funding = facRef.funding;
-					} else if (facType == 'Hanger') {
+					}
+					else if (facType == 'Hanger') {
 						newFacility = await new Hanger(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Crisis') {
+					}
+					else if (facType == 'Crisis') {
 						newFacility = await new Crisis(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Civilian') {
+					}
+					else if (facType == 'Civilian') {
 						newFacility = await new Civilian(facRef);
 						facId = newFacility._id;
-					} else {
+					}
+					else {
 						logger.error(
 							'Invalid Facility Type In spacecraft Post:',
 							facRef.type
 						);
 						facError = true;
 					}
-				} else {
+				}
+				else {
 					logger.debug(
 						`Error in creation of facility ${fac} for  ${NewSpacraft.name} - wrong unitType`
 					);
 					facError = true;
 				}
-			} else {
+			}
+			else {
 				logger.debug(
 					`Error in creation of facility ${fac} for  ${newSpacecraft.name}`
 				);
@@ -314,7 +307,8 @@ router.post('/spacecraft/', async function (req, res) {
 
 			res.status(200).json(newSpacecraft);
 		});
-	} else {
+	}
+	else {
 		logger.info(`Spacecraft already exists: ${siteCode}`);
 		res.status(400).send(`Spacecraft ${siteCode} already exists!`);
 	}
@@ -371,7 +365,8 @@ router.post('/base/', async function (req, res) {
 					.send(
 						`Base Post Team Error, New Base: ${name} Team Code ${teamCode}`
 					);
-			} else {
+			}
+			else {
 				newBaseSite.team = team._id;
 				// routeDebugger("Base Post Team Found, Base:", name, " Team: ", teamCode, "Team ID:", team._id);
 			}
@@ -398,12 +393,14 @@ router.post('/base/', async function (req, res) {
 				return res
 					.status(404)
 					.send(`New Base Country Code Error ${siteCode} ${countryCode}`);
-			} else {
+			}
+			else {
 				newBaseSite.country = country._id;
 				newBaseSite.zone = country.zone;
 				// routeDebugger("Base Post Country Found, New Base:", name, " Country: ", countryCode, "Country ID:", country._id);
 			}
-		} else {
+		}
+		else {
 			const country = await Country.findById({ country });
 			if (!country) {
 				// routeDebugger("Base Post Country Error, New Base:", name, " Country: ", country);
@@ -411,7 +408,8 @@ router.post('/base/', async function (req, res) {
 				return res
 					.status(404)
 					.send(`New Base Country ID Error ${siteCode} ${country}`);
-			} else {
+			}
+			else {
 				newBaseSite.country = country._id;
 				newBaseSite.zone = country.zone;
 				// routeDebugger("Base Post Country Found, New Base:", name, " Country: ", country.code, "Country ID:", country._id);
@@ -436,32 +434,39 @@ router.post('/base/', async function (req, res) {
 					if (facType == 'Factory') {
 						newFacility = await new Factory(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Lab') {
+					}
+					else if (facType == 'Lab') {
 						newFacility = await new Lab(facRef);
 						facId = newFacility._id;
 						newFacility.sciRate = facRef.sciRate;
 						newFacility.bonus = facRef.bonus;
 						newFacility.funding = facRef.funding;
-					} else if (facType == 'Hanger') {
+					}
+					else if (facType == 'Hanger') {
 						newFacility = await new Hanger(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Crisis') {
+					}
+					else if (facType == 'Crisis') {
 						newFacility = await new Crisis(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Civilian') {
+					}
+					else if (facType == 'Civilian') {
 						newFacility = await new Civilian(facRef);
 						facId = newFacility._id;
-					} else {
+					}
+					else {
 						logger.error(`Invalid Facility Type In Base Post: ${facRef.type}`);
 						facError = true;
 					}
-				} else {
+				}
+				else {
 					logger.debug(
 						`Error in creation of facility ${fac} for  ${baseSite.name} - wrong unitType`
 					);
 					facError = true;
 				}
-			} else {
+			}
+			else {
 				logger.debug(
 					`Error in creation of facility ${fac} for ${newBaseSite.name}`
 				);
@@ -483,7 +488,8 @@ router.post('/base/', async function (req, res) {
 
 				if (!facError) {
 					newBaseSite.facilities.push(facId);
-				} else {
+				}
+				else {
 					logger.error(`New Base Facility Save Error ${siteCode} ${err}`);
 				}
 			}
@@ -500,7 +506,8 @@ router.post('/base/', async function (req, res) {
 
 			res.status(200).json(newBaseSite);
 		});
-	} else {
+	}
+	else {
 		logger.info(`Base already exists: ${siteCode}`);
 		return res.status(400).send(`Base ${siteCode} already exists!`);
 	}
@@ -554,7 +561,8 @@ router.post('/city/', async function (req, res) {
 				logger.error(
 					`City Post Team Error, New City: ${name} Team Code ${teamCode}`
 				);
-			} else {
+			}
+			else {
 				newCitySite.team = team._id;
 				// routeDebugger("City Post Team Found, City:", name, " Team: ", teamCode, "Team ID:", team._id);
 			}
@@ -576,17 +584,20 @@ router.post('/city/', async function (req, res) {
 			if (!country) {
 				// routeDebugger("City Post Country Error, New City:", name, " Country: ", countryCode);
 				logger.error(`New City Country Code Error ${siteCode} ${countryCode}`);
-			} else {
+			}
+			else {
 				newCitySite.country = country._id;
 				newCitySite.zone = country.zone;
 				// routeDebugger("City Post Country Found, New City:", name, " Country: ", countryCode, "Country ID:", country._id);
 			}
-		} else {
+		}
+		else {
 			const country = await Country.findById({ country });
 			if (!country) {
 				// routeDebugger("City Post Country Error, New City:", name, " Country: ", country);
 				logger.error(`New City Country ID Error ${siteCode} ${country}`);
-			} else {
+			}
+			else {
 				newCitySite.country = country._id;
 				newCitySite.zone = country.zone;
 				// routeDebugger("City Post Country Found, New City:", name, " Country: ", country.code, "Country ID:", country._id);
@@ -610,32 +621,39 @@ router.post('/city/', async function (req, res) {
 					if (facType == 'Factory') {
 						newFacility = await new Factory(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Lab') {
+					}
+					else if (facType == 'Lab') {
 						newFacility = await new Lab(facRef);
 						facId = newFacility._id;
 						newFacility.sciRate = facRef.sciRate;
 						newFacility.bonus = facRef.bonus;
 						newFacility.funding = facRef.funding;
-					} else if (facType == 'Hanger') {
+					}
+					else if (facType == 'Hanger') {
 						newFacility = await new Hanger(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Crisis') {
+					}
+					else if (facType == 'Crisis') {
 						newFacility = await new Crisis(facRef);
 						facId = newFacility._id;
-					} else if (facType == 'Civilian') {
+					}
+					else if (facType == 'Civilian') {
 						newFacility = await new Civilian(facRef);
 						facId = newFacility._id;
-					} else {
+					}
+					else {
 						logger.error(`Invalid Facility Type In City Post: ${facRef.type}`);
 						facError = true;
 					}
-				} else {
+				}
+				else {
 					logger.error(
 						`Error in creation of facility ${fac} for  ${newCitySite.name} - wrong unitType`
 					);
 					facError = true;
 				}
-			} else {
+			}
+			else {
 				logger.error(
 					`Error in creation of facility ${fac} for  ${newCitySite.name}`
 				);
@@ -671,7 +689,8 @@ router.post('/city/', async function (req, res) {
 
 			res.status(200).json(newCitySite);
 		});
-	} else {
+	}
+	else {
 		logger.info(`City already exists: ${siteCode}`);
 		res.status(400).send(`City ${siteCode} already exists!`);
 	}

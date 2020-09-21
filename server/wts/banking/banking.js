@@ -7,7 +7,7 @@ const transactionLog = require('../../models/logs/transactionLog'); // WTS Game 
 // OUT: Modified Accounts Object - From the Team Object
 // PROCESS: Takes the Transfer object and initiates the correct Deposit and withdrawal
 async function transfer (to, from, amount, note) {
-	const { Account } = require('../../models/gov/account');
+	const { Account } = require('../../models/account');
 
 	let depositAccount = await Account.findOne({ _id: to });
 	console.log(`The account: ${depositAccount}`);
@@ -21,7 +21,7 @@ async function transfer (to, from, amount, note) {
 
 	bankDebugging(`${withdrawalAccount.owner}s transfer completed!`);
 	return;
-};
+}
 
 async function deposit (account, amount, note) {
 	bankDebugging(`Attempting to deposit into ${account.name}.`);
@@ -31,12 +31,12 @@ async function deposit (account, amount, note) {
 	bankDebugging(`${amount} deposited into ${account.owner}'s ${account.name}.`);
 	bankDebugging(`Reason: ${note}`);
 
-	let { getTimeRemaining } = require('../gameClock/gameClock');
-	let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
+	const { getTimeRemaining } = require('../gameClock/gameClock');
+	const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
 	account = trackTransaction(account, amount, 'deposit');
 
-	let log = new transactionLog({
+	const log = new transactionLog({
 		date: Date.now(),
 		timestamp: {
 			turn,
@@ -56,7 +56,7 @@ async function deposit (account, amount, note) {
 
 	bankDebugging('Deposit log created...');
 	return account;
-};
+}
 
 async function withdrawal (account, amount, note) {
 	bankDebugging(`Attempting to withdrawal from ${account.name}.`);
@@ -68,11 +68,11 @@ async function withdrawal (account, amount, note) {
 	bankDebugging(`Reason: ${note}`);
 
 	const { getTimeRemaining } = require('../gameClock/gameClock');
-	let { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
+	const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
 
 	account = trackTransaction(account, amount, 'withdrawal');
 
-	let log = new transactionLog({
+	const log = new transactionLog({
 		date: Date.now(),
 		timestamp: {
 			turn,
@@ -93,13 +93,13 @@ async function withdrawal (account, amount, note) {
 	bankDebugging('withdrawal log created...');
 
 	return account;
-};
+}
 
 async function setAutoTransfer (to, from, amount, note) {
-	const { Account } = require('../../models/gov/account');
+	const { Account } = require('../../models/account');
 
-	let account = await Account.findOne({ _id: from });
-	let transfer = { to, from, amount, note };
+	const account = await Account.findOne({ _id: from });
+	const transfer = { to, from, amount, note };
 
 	bankDebugging(`${account.owner} is setting up an automatic payment!`);
 
@@ -108,17 +108,17 @@ async function setAutoTransfer (to, from, amount, note) {
 	await account.save();
 	console.log(`${account.owner} has set up an auto-transfer for ${account.name}`);
 	return `New autotransfer created`;
-};
+}
 
 async function automaticTransfer() {
-	const { Account } = require('../../models/gov/account');
+	const { Account } = require('../../models/account');
 
 	for (let account of await Account.find()) {
 		if (account.autoTransfers.length > 0) {
 			let withdrawalAccount = account;
-			for (let transfer of account.autoTransfers) {
+			for (const transfer of account.autoTransfers) {
 				if (transfer !== null) {
-					let { to, from, amount, note } = transfer;
+					const { to, from, amount, note } = transfer;
 
 					let depositAccount = await Account.findOne({ _id: to });
 					withdrawalAccount = await Account.findOne({ _id: from });
@@ -136,11 +136,11 @@ async function automaticTransfer() {
 			account = await withdrawalAccount.save();
 		}
 	}
-};
+}
 
 function trackTransaction(account, amount, type) {
-	let { getTimeRemaining } = require('../gameClock/gameClock');
-	let { turnNum } = getTimeRemaining();
+	const { getTimeRemaining } = require('../gameClock/gameClock');
+	const { turnNum } = getTimeRemaining();
 	amount = parseInt(amount);
 	if (type === 'deposit') {
 		account.deposits[turnNum] += amount;

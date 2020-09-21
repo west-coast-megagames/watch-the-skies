@@ -3,7 +3,7 @@ const file = fs.readFileSync(require.resolve('../json/knowledge.json'));
 const knowledgeData = JSON.parse(file);
 const knowledgeDebugger = require('debug')('app:knowledge');
 
-const { Team } = require('../../models/team/team'); // Team Model
+const { Team } = require('../../models/team'); // Team Model
 const { Research, KnowledgeResearch } = require('../../models/sci/research'); // Research model and Knowledge Discriminator
 
 // Science Game State

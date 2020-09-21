@@ -1,4 +1,3 @@
-/* eslint-disable quotes */
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
@@ -7,7 +6,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 const { logger } = require('../../middleware/winston');
 
 // Mongoose Model Import
-const { Team, validateTeam, validateRoles } = require('../../models/team/team');
+const { Team, validateTeam, validateRoles } = require('../../models/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams

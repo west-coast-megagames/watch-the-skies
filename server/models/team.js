@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const gameClock = require('../../wts/gameClock/gameClock');
-const modelDebugger = require('debug')('app:teamModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
 
@@ -57,7 +55,7 @@ TeamSchema.methods.validateTeam = function (team) {
 	return Joi.validate(team, schema, { allowUnknown: true });
 };
 
-let Team = mongoose.model('Team', TeamSchema);
+const Team = mongoose.model('Team', TeamSchema);
 
 const National = Team.discriminator(
 	'National',
@@ -203,34 +201,10 @@ async function getTeam (team_id) {
 	return team;
 }
 
-async function getPR (team_id) {
-	modelDebugger(`Trying to find PR for ${team_id}`);
-	try {
-		let prLevel = await Team.findOne({ _id: team_id }).select('prLevel');
-		return prLevel.prLevel;
-	}
-	catch (err) {
-		modelDebugger(`Error: ${err.message}`);
-	}
-}
-
-async function getSciRate (team_id) {
-	modelDebugger(`Trying to find SCI Rate for ${team_id}`);
-	try {
-		let sciRate = await Team.findOne({ _id: team_id }).select('sciRate');
-		return sciRate.sciRate;
-	}
-	catch (err) {
-		modelDebugger(`Error: ${err.message}`);
-	}
-}
-
 module.exports = {
 	Team,
 	validateTeam,
 	getTeam,
-	getPR,
-	getSciRate,
 	National,
 	validateNational,
 	Alien,

@@ -8,9 +8,8 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 
 // Article Model - Using Mongoose Model
-const { Article, validateArticle } = require('../../models/news/article');
-const { Team } = require('../../models/team/team');
-const { Site } = require('../../models/sites/site');
+const { Article } = require('../../models/news/article');
+const { Team } = require('../../models/team');
 
 // @route   GET api/news/gnn
 // @Desc    Get all Articles from GNN

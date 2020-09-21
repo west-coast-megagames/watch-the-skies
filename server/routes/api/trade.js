@@ -6,8 +6,8 @@ const router = express.Router();
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
 // Trade Models - Using Mongoose Model
-const { Team } = require('../../models/team/team');
-const { Trade } = require('../../models/dip/trade');
+const { Team } = require('../../models/team');
+const { Trade } = require('../../models/trade');
 
 // @route   GET api/trade
 // @Desc    Get all trades

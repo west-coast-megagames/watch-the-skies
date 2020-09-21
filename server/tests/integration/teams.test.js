@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { Team, getPR }  = require('../../models/team/team');
+const { Team, getPR }  = require('../../models/team');
 const mongoose = require('mongoose');
 
 let server;

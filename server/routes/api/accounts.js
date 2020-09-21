@@ -1,12 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
 const validateObjectId = require('../../middleware/validateObjectId');
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/winston'); // Import of winston for error/info logging
 
 // Interceptor Model - Using Mongoose Model
-const { Account, validateAccount } = require('../../models/gov/account');
-const { Team } = require('../../models/team/team');
+const { Account, validateAccount } = require('../../models/account'); // Financial Account Model
+const { Team } = require('../../models/team'); // Team Model
 
 // @route   GET api/account
 // @Desc    Get all Accounts

@@ -4,16 +4,16 @@ const nexusEvent = require('../../startup/events');
 const routeDebugger = require('debug')('app:routes:game');
 
 // Mongoose Models - Used to save and validate objects into MongoDB
-const { Account } = require('../../models/gov/account');
-const { Aircraft, validateAircraft, validateRoles } = require('../../models/ops/aircraft');
+const { Account } = require('../../models/account');
+const { Aircraft, validateRoles } = require('../../models/ops/aircraft');
 const { Country } = require('../../models/country');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/ops/military/military');
 const { Site } = require('../../models/sites/site');
 const { Squad } = require('../../models/ops/squad');
-const { Team, validateTeam } = require('../../models/team/team');
-const { Trade } = require('../../models/dip/trade');
-const { Treaty } = require('../../models/dip/treaty');
+const { Team, validateTeam } = require('../../models/team');
+const { Trade } = require('../../models/trade');
+const { Treaty } = require('../../models/treaty');
 
 // Game Systems - Used to run Game functions
 const airMission = require('../../wts/intercept/missions');
@@ -37,6 +37,8 @@ const { logger } = require('../../middleware/winston'); // Import of winston for
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~CONTROL~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~COUNTRY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~FACILITIES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~HOME~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INTERCEPT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~INTERCEPTOR~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -457,15 +459,16 @@ router.put('/military/deploy', async function (req, res) {
 					cost - account.balance
 				} more money teams operations account to deploy these units.`
 			);
-	} else {
+	}
+	else {
 		console.log(destination);
-		let siteObj = await Site.findById(destination)
+		const siteObj = await Site.findById(destination)
 			.populate('country')
 			.populate('zone');
-		let unitArray = [];
+		const unitArray = [];
 
-		for await (let unit of units) {
-			let update = await Military.findById(unit);
+		for await (const unit of units) {
+			const update = await Military.findById(unit);
 			update.site = siteObj._id;
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
@@ -511,7 +514,7 @@ router.put('/military/deploy', async function (req, res) {
 // @desc    Update aircraft to max health
 // @access  Public
 router.put('/repairAircraft', async function (req, res) {
-	let aircraft = await Aircraft.findById(req.body._id);
+	const aircraft = await Aircraft.findById(req.body._id);
 	console.log(req.body);
 	console.log(aircraft);
 	let account = await Account.findOne({
@@ -525,7 +528,8 @@ router.put('/repairAircraft', async function (req, res) {
 			.send(
 				`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`
 			);
-	} else {
+	}
+	else {
 		account = await banking.withdrawal(
 			account,
 			2,
@@ -550,7 +554,7 @@ router.put('/repairAircraft', async function (req, res) {
 // @access  Public
 router.put('/research', async function (req, res) {
 	routeDebugger('Updating facility...');
-	let update = req.body;
+	const update = req.body;
 	console.log(update);
 	try {
 		let facility = await Facility.findById(update._id);
@@ -559,7 +563,8 @@ router.put('/research', async function (req, res) {
 			res
 				.status(404)
 				.send(`The facility with the ID ${update._id} was not found!`);
-		} else {
+		}
+		else {
 			if (facility.capability.research.active) {
 				routeDebugger(
 					`${facility.name} lab 0${update.index + 1} is being updated...`
@@ -584,7 +589,8 @@ router.put('/research', async function (req, res) {
 				);
 			nexusEvent.emit('updateFacilities');
 		}
-	} catch (err) {
+	}
+	catch (err) {
 		console.log(err);
 		res.status(400).send(err.message);
 	}
@@ -626,14 +632,15 @@ router.put('/rename', async function (req, res) {
 });
 
 router.post('/upgrade/build', async function (req, res) {
-	let { code, team, facility } = req.body; // please give me these things
+	const { code, team, facility } = req.body; // please give me these things
 
 	try {
 		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
 		upgrade = await upgrade.save();
 
 		res.status(200).json(upgrade);
-	} catch (err) {
+	}
+	catch (err) {
 		res.status(404).send(err); // This returns a really weird json... watch out for that
 	}
 });

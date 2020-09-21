@@ -2,9 +2,9 @@ const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
 
-const { Treaty } = require('../../models/dip/treaty');
+const { Treaty } = require('../../models/treaty');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-const { Team } = require('../../models/team/team');
+const { Team } = require('../../models/team');
 
 // @route   GET api/treaties
 // @Desc    Get all Treaties

@@ -5,11 +5,10 @@ const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-require ('winston-mongodb');
 
 // Interceptor Model - Using Mongoose Model
-const { Account, validateAccount } = require('../../models/gov/account');
-const { Team } = require('../../models/team/team');
+const { Account, validateAccount } = require('../../models/account');
+const { Team } = require('../../models/team');
 const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts

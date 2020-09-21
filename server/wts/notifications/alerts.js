@@ -23,7 +23,7 @@ function alerts (io) {
 };
 
 async function setAlert({ team_id, title, body }) {
-    const { Team } = require ('../../models/team/team')
+    const { Team } = require ('../../models/team')
 
     let team = await Team.findOne({ _id: team_id });
     let { getTimeRemaining } = require('../gameClock/gameClock')

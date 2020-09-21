@@ -7,25 +7,25 @@ const { d6 } = require('../../util/systems/dice'); // Import of the dice randomi
 
 const { techCost, fundingCost, multiplier } = require('./sciState');
 
-const { Facility } = require('../../models/gov/facility/facility');
-const { Team } = require('../../models/team/team');
+const { Facility } = require('../../models/facility');
+const { Team } = require('../../models/team');
 const { ResearchReport } = require('../reports/reportClasses');
 const { techTree } = require('./techTree');
 const { knowledgeTree } = require('./knowledge');
 
 async function startResearch () {
 	researchDebugger('Research system triggered...');
-	let placeholder = await Research.findOne({ name: "Empty Lab" });
+	const placeholder = await Research.findOne({ name: 'Empty Lab' });
 
 	try {
-		for await (let facility of await Facility.find({ 'capability.research.active': true })) {
-			let research = facility.capability.research;
+		for await (const facility of await Facility.find({ 'capability.research.active': true })) {
+			const research = facility.capability.research;
 
 			for (let i = 0; i < research.capacity; i++) {
-				let lab = {
+				const lab = {
 					_id: facility._id,
 					team: facility.team,
-					name: `${facility.name} - 0${i+1}`,
+					name: `${facility.name} - 0${i + 1}`,
 					index: i,
 					project: research.projects[i],
 					funding: research.funding[i],
@@ -38,17 +38,18 @@ async function startResearch () {
 
 				if (lab.project.toHexString() === placeholder._id.toHexString()) {
 					researchDebugger(`${lab.name} labs have no research to conduct...`);
-					let projects = await Research.find({ team: facility.team, 'status.completed': false, type: 'Technology' });
-					let rand = Math.floor(Math.random() * (projects.length - 1));
+					const projects = await Research.find({ team: facility.team, 'status.completed': false, type: 'Technology' });
+					const rand = Math.floor(Math.random() * (projects.length - 1));
 
 					if (projects.length > 0) {
-						let project = projects[rand];
+						const project = projects[rand];
 						researchDebugger(`${facility.name} labs have independently choosen to work on ${project.name}...`);
 						lab.project = project._id;
 						lab.funding = 0;
 						await conductResearch(lab);
 					}
-				} else {
+				}
+				else {
 					researchDebugger(`${lab.name} has research to conduct`);
 					await conductResearch(lab);
 				}
@@ -56,13 +57,14 @@ async function startResearch () {
 		}
 		nexusEvent.emit('updateResearch');
 		nexusEvent.emit('updateFacilities');
-	} catch (err) {
-		logger.error(`Research System Error: ${err.message}`, { meta: err, });
+	}
+	catch (err) {
+		logger.error(`Research System Error: ${err.message}`, { meta: err });
 	}
 }
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
-async function conductResearch(lab) {
+async function conductResearch (lab) {
 	researchDebugger(`${lab.name} has begun conducting research.`);
 	let report = new ResearchReport;
 
@@ -72,38 +74,40 @@ async function conductResearch(lab) {
 			researchDebugger(`Current Progress: ${tech.progress}`);
 			report.progress.startingProgress = tech.progress; // Tracks progress in the Research Report
 			// researchDebugger(tech)
-			let team = await Team.findById(lab.team); // Finds the owner of the Lab
+			const team = await Team.findById(lab.team); // Finds the owner of the Lab
 			report.project = tech._id; // Records the research being worked on
 			report.lab = lab._id; // Records the lab working on the project
 			researchDebugger(`Team Sci Rate: ${team.sciRate} - type: ${typeof team.sciRate}`);
 			researchDebugger(`Lab Sci Rate: ${lab.sciRate} - type: ${typeof lab.sciRate}`);
-			let sciRate = team.sciRate + lab.sciRate;
-			let sciBonus = lab.sciBonus;
+			const sciRate = team.sciRate + lab.sciRate;
+			const sciBonus = lab.sciBonus;
 			researchDebugger(`Science Rate: ${sciRate}`);
-			let progressInfo = await calculateProgress(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
+			const progressInfo = await calculateProgress(sciRate, lab.funding, sciBonus); // Calculates progress by getting the teams sciRate, the funding level, and any relevant multiplery bonus
 
 			if (tech.type === 'Knowledge') {
 				tech.progress += progressInfo.progress; // Adds progress to the current Knowledge
-				let index = tech.teamProgress.findIndex(el => el.team.name === team.name);
+				const index = tech.teamProgress.findIndex(el => el.team.name === team.name);
 				tech.teamProgress[index].progress += progressInfo.progress;
-			} else {
+			}
+			else {
 				tech.progress += progressInfo.progress; // Adds progress to the current Research
 			}
 
 			if (tech.progress >= techCost[tech.level] && tech.type !== 'Knowledge') tech.status.completed = true;
 			if (tech.progress >= techCost[tech.level * 5] && tech.type === 'Knowledge') tech.status.pending = true; // Checks for compleation of current research
 
-			let facility = await Facility.findById(lab._id);
+			const facility = await Facility.findById(lab._id);
 			facility.capability.research.funding.set(lab.index, 0);
 			facility.capability.research.status.pending.set(lab.index, false);
 
 			if (tech.status.completed === true) {
 				researchDebugger(`${tech.name} completed!`);
-				let placeholder = await Research.findOne({ name: 'Empty Lab' });
+				const placeholder = await Research.findOne({ name: 'Empty Lab' });
 				facility.capability.research.projects.set(lab.index, placeholder._id);
 
 				tech = await completeResearch(tech);
-			} else {
+			}
+			else {
 				researchDebugger(`${tech.progress} progress towards ${tech.name}...`);
 			}
 
@@ -135,22 +139,23 @@ async function conductResearch(lab) {
 			}
 			return;
 		}
-	} catch (err) {
+	}
+	catch (err) {
 		logger.error(err);
 		researchDebugger(`Research Error: ${err.message}`, { meta: err });
 		return;
 	}
-};
+}
 
 // Calculates the multiplier for the current research project and returns the progress
-function calculateProgress(sciRate, funding, sciBonus) {
+function calculateProgress (sciRate, funding, sciBonus) {
 	let finalMultiplier = 1 + sciBonus; // Gives the base multiplier calculated as 1 + any sciBonus the team or lab have
-	let rolls = [];
-	let outcomes = [];
+	const rolls = [];
+	const outcomes = [];
 	let breakthroughs = 0;
 	// For loop that rolls a d6 per funding level, and either adds or subtracts from the base multiplier
 	for (let i = 0; i < funding + 1; i++) {
-		let roll = d6(); // Roll of a d6
+		const roll = d6(); // Roll of a d6
 		rolls.push(roll);
 
 		researchDebugger(roll);
@@ -181,16 +186,16 @@ function calculateProgress(sciRate, funding, sciBonus) {
 		default:
 			researchDebugger('Got to default...'); // This should never happen, if it does we have a coding error....
 		}
-	};
+	}
 
 	researchDebugger(`Research finalMultiplier: ${finalMultiplier}`);
-	let progress = Math.floor(sciRate * finalMultiplier); // Final calculation of progress on the technology
+	const progress = Math.floor(sciRate * finalMultiplier); // Final calculation of progress on the technology
 	researchDebugger(`Progress: ${progress}...`);
 	return { progress, finalMultiplier, rolls, outcomes, breakthroughs }; // Returns progress to the Calculate Progress function.
-};
+}
 
 // FUNCTION for finalizing a completed tech
-async function completeResearch(research) {
+async function completeResearch (research) {
 	researchDebugger(`Enough progress has been made to complete ${research.name}...`);
 	research.status.available = false;
 
@@ -198,21 +203,21 @@ async function completeResearch(research) {
 		research.status.pending = false;
 		research.status.completed = true;
 		if (research.level < 5) {
-			let nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
-			let check = await Research.find({ name: nextKnowledge.name });
+			const nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
+			const check = await Research.find({ name: nextKnowledge.name });
 			if (check.length === 0) await nextKnowledge.unlock();
 			researchDebugger(`UNLOCKING: ${research.type} - ${nextKnowledge.name}`);
-		};
+		}
 	}
 
 	if (research.type === 'Technology') {
-		for await (let item of research.unlocks) {
+		for await (const item of research.unlocks) {
 			if (item.type === 'Technology') {
 				research.status.completed = true;
-				let team = await Team.findById({ _id: research.team._id });
-				let newTech = techTree.find(el => el.code === item.code);
+				const team = await Team.findById({ _id: research.team._id });
+				const newTech = techTree.find(el => el.code === item.code);
 				researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
-				await newTech.unlock(team); //changed 'lab' to 'team'
+				await newTech.unlock(team); // changed 'lab' to 'team'
 			}
 		}
 	}
@@ -220,17 +225,17 @@ async function completeResearch(research) {
 	research = await research.save();
 
 	return research;
-};
+}
 
-async function advanceKnowledge(research, lab) {
-	for (let knowledge of research.knowledge) {
-		let project = await Research.findOne({
+async function advanceKnowledge (research, lab) {
+	for (const knowledge of research.knowledge) {
+		const project = await Research.findOne({
 			type: 'Knowledge',
 			field: knowledge.field,
 			'status.available': true,
 			'status.completed': false
 		});
-		if (project !== null){
+		if (project !== null) {
 			lab.project = project._id;
 			lab.funding = knowledge.rolls;
 			researchDebugger(`Progressing Human Knowledge: ${project.type} - ${project.name}`);
@@ -240,9 +245,9 @@ async function advanceKnowledge(research, lab) {
 	return;
 }
 
-async function produceBreakthrough(research, lab, count) {
-	let options = [...research.breakthrough, ...research.unlocks];
-	let team = await Team.findById(lab.team);
+async function produceBreakthrough (research, lab, count) {
+	const options = [...research.breakthrough, ...research.unlocks];
+	const team = await Team.findById(lab.team);
 	for (let i = 0; i < count; i++) {
 		let breakthrough = false;
 		for (let tech of options) {
@@ -264,19 +269,19 @@ async function produceBreakthrough(research, lab, count) {
 }
 
 // Assigns credit for all pending knowledge fields
-async function assignKnowledgeCredit() {
+async function assignKnowledgeCredit () {
 	try {
-		let research = await Research.find({ 'status.pending': true, type: 'Knowledge' }); //Gets all pending knowledge from the DB
+		const research = await Research.find({ 'status.pending': true, type: 'Knowledge' }); // Gets all pending knowledge from the DB
 		researchDebugger(`${research.length} research to give credit for!`);
 
 		// For loop that looks through each field that is pending
-		for (let field of research) {
+		for (const field of research) {
 			let credit = undefined; // Temp assignment of who gets credit for this research
 			let creditName = undefined;
 			let highProgress = 0; // Current highest progress
 
 			// For loop that looks through each teams progress towards the knowledge field
-			for (let country of field.teamProgress) {
+			for (const country of field.teamProgress) {
 				if (country.progress > highProgress) {
 					highProgress = country.progress; // Assigns the current progress to highProgress if the team has more
 					credit = country.team._id; // Assigns the current country to credit if the team has more
@@ -286,13 +291,14 @@ async function assignKnowledgeCredit() {
 
 			researchDebugger(`${creditName} has been credited with advancing ${field.name}`);
 			field.credit = credit; // Gives credit to whatever team has the most at the end of the loop
-			let knowledge = await field.save();
+			const knowledge = await field.save();
 			await completeResearch(knowledge);
 		}
 
 		nexusEvent.emit('updateResearch');
 		researchDebugger('Giving credit for research completed!');
-	} catch (err) {
+	}
+	catch (err) {
 		logger.error(`Knowledge Credit Error: ${err.message}`, { meta: err });
 	}
 }

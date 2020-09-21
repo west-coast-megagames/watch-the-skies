@@ -2,7 +2,7 @@ const request = require("supertest");
 const { Zone } = require("../../../../models/zone");
 const { Country } = require("../../../../models/country");
 const { Site, CitySite } = require("../../../../models/sites/site");
-const { Team, National } = require("../../../../models/team/team");
+const { Team, National } = require("../../../../models/team");
 const mongoose = require("mongoose");
 
 const {

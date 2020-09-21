@@ -5,11 +5,11 @@ const routeDebugger = require('debug')('app:routes:admin');
 
 // Mongoose Models - Database models
 const { Aircraft, validateAircraft } = require('../../models/ops/aircraft');
-const { Account } = require('../../models/gov/account');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Account } = require('../../models/account');
+const { Facility } = require('../../models/facility');
 const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone');
-const { Team } = require('../../models/team/team');
+const { Team } = require('../../models/team');
 const { BaseSite } = require('../../models/sites/site');
 
 const { loadTech, techSeed } = require('../../wts/research/techTree');
