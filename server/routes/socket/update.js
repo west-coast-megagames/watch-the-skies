@@ -1,7 +1,7 @@
 const SocketServer = require('../../util/systems/socketServer'); // Client Tracking Object
 const nexusEvent = require('../../middleware/events/events'); // Local event triggers
 const socketDebugger = require('debug')('app:sockets:update');
-const { logger } = require('../../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 // Mongoose Object Models & Methods
 const { getTeam } = require('../../models/team');

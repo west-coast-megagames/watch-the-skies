@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser');
 
 // Error handling and Logging
-const { routeError, logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const cors = require('cors');
 
 // Routes - Using Express
@@ -23,7 +23,7 @@ const news = require('../routes/api/news');
 const research = require('../routes/api/research');
 const sites = require('../routes/api/sites');
 const team = require('../routes/api/team');
-const trade = require('../routes/api/trade')
+const trade = require('../routes/api/trade');
 const treaty = require('../routes/api/treaty');
 const upgrade = require('../routes/api/upgrade');
 const zones = require('../routes/api/zones');
@@ -38,8 +38,8 @@ const users = require('../routes/users');
 // const initData = require('../routes/api/initData');
 
 
-module.exports = function(app) {
-	logger.info('Opening routes...')
+module.exports = function (app) {
+	logger.info('Opening routes...');
 
 	// Bodyparser Middleware
 	app.use(bodyParser.json());
@@ -78,4 +78,4 @@ module.exports = function(app) {
 
 	app.use('/api/control', control);
 	app.use(routeError);
-}
+};

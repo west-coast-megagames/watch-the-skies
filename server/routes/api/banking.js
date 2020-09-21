@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
 // Interceptor Model - Using Mongoose Model
 const { Account, validateAccount } = require('../../models/account');

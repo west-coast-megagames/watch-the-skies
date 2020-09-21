@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/log/winston');
 
 const { Site, BaseSite, validateBase, CitySite, validateCity, CrashSite, validateCrash, Spacecraft, validateSpacecraft } = require('../../models/site');
 const { Country } = require('../../models/country');

@@ -3,10 +3,10 @@ const express = require('express');
 const router = express.Router();
 
 // Research Models - Using Mongoose Model
-const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research');
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/research');
 const validateObjectId = require('../../middleware/validateObjectId');
 
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 require ('winston-mongodb');
 
 // @route   GET api/research/

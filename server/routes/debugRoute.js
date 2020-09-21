@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const nexusEvent = require('../startup/events');
+const nexusEvent = require('../middleware/events/events');
 const routeDebugger = require('debug')('app:routes:debug');
-const { logger } = require('../middleware/winston');
+const { logger } = require('../middleware/log/winston');
 
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 

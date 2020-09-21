@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const routeDebugger = require('debug')('app:routes');
 const airMission = require('../../wts/intercept/missions');
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft');
-const { Site } = require('../../models/sites/site');
+const { Site } = require('../../models/site');
 
 // @route   PUT api/intercept   ... update
 // @Desc    Find Attacker/Defender and activate intercept

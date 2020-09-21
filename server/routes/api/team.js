@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/log/winston');
 
 // Mongoose Model Import
 const { Team, validateTeam, validateRoles } = require('../../models/team');

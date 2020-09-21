@@ -12,7 +12,7 @@ const { ReconReport, TransportReport } = require('../reports/reportClasses');
 const { getDistance } = require('../../util/systems/geo');
 const { makeAfterActionReport } = require('./report');
 const dynReport = require('./battleDetails');
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/log/winston');
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round

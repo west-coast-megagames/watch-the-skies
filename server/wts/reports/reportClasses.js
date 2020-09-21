@@ -7,7 +7,7 @@ const TheoryLog = require('../../models/logs/theoryLog');
 const TradeLog = require('../../models/logs/tradeLog');
 const RepairLog = require('../../models/logs/repairLog');
 const { TerrorLog } = require('../../models/logs/log');
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const { makeTimestamp } = require('../gameClock/gameClock')
 
 function createServiceRecord() {

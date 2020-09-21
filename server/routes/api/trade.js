@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 // const nexusEvent = require('../../startup/events');
 
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
 // Trade Models - Using Mongoose Model
 const { Team } = require('../../models/team');

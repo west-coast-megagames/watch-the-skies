@@ -1,6 +1,6 @@
 const express = require('express'); // Import of EXPRESS to create routing app
 const http = require('http'); // Import of the NODE HTTP module to create the http server
-const { logger } = require('./middleware/winston'); // Import of winston for error logging
+const { logger } = require('./middleware/log/winston'); // Import of winston for error logging
 
 logger.info('Starting boot-up for WTS Game server...');
 
@@ -12,7 +12,7 @@ const app = express(); // Init for express
 logger.info('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
 logger.info('HTTP server created...');
-require('./startup/logging')(); // Bootup for error handling
+require('./middleware/log/logging')(); // Bootup for error handling
 require('./startup/sockets')(server); // Starts websocket
 require('./startup/routes')(app); // Bootup for Express routes
 require('./startup/db')(); // Bootup of MongoDB through Mongoose

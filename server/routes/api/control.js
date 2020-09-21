@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const nexusEvent = require('../../startup/events');
+const nexusEvent = require('../../middleware/events/events');
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft');

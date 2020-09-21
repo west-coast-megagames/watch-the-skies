@@ -1,5 +1,5 @@
 /* eslint-disable no-trailing-spaces */
-const { logger } = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 module.exports = function (server) {
 	logger.info('Activating Sockets...');

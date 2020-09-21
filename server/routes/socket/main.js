@@ -1,7 +1,7 @@
-const SocketServer = require('../../util/systems/socketServer') // Client Tracking Object
-const nexusEvent = require('../../startup/events'); // Local event triggers
+const SocketServer = require('../../util/systems/socketServer'); // Client Tracking Object
+const nexusEvent = require('../../middleware/events/events'); // Local event triggers
 const socketDebugger = require('debug')('app:sockets:main');
-const { logger } = require('../../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 // Watch the Skies game functions
 const gameClock = require('../../wts/gameClock/gameClock');

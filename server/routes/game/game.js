@@ -26,7 +26,7 @@ const science = require('../../wts/research/research');
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const { func } = require('joi');
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ACCOUNTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//

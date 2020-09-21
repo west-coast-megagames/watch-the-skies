@@ -7,7 +7,7 @@ const { startResearch, assignKnowledgeCredit } = require('../research/research')
 const { techCheck } = require('../../wts/research/technology');
 const repairSequence = require('../construction/repair');
 
-const { logger } = require('../../middleware/winston'); // IMPORT - Winston error logging
+const { logger } = require('../../middleware/log/winston'); // IMPORT - Winston error logging
 
 /* This file handles all the events triggered on phase change.
     Each phase has a function that handles that phase. */
