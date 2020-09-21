@@ -1,3 +1,4 @@
+const runBluePrintCheck = require("../dataCheck/blueprintCheck");
 const runZoneCheck = require("../dataCheck/zoneCheck");
 const runCountryCheck = require("../dataCheck/countryCheck");
 const runFacilityCheck = require("../dataCheck/facilityCheck");
@@ -17,6 +18,15 @@ require("winston-mongodb");
 
 async function fullInitCheck(selStr) {
   switch (selStr) {
+    case "All":
+    case "BluePrint":
+      let blueprintCheckDone = await runBluePrintCheck(true); // check blueprint records
+      logger.info(`Blueprint Check Done: ${blueprintCheckDone}`);
+
+      if (selStr != "All") {
+        break;
+      }
+
     case "All":
     case "Zone":
       let zoneCheckDone = await runZoneCheck(true); // check zone records
