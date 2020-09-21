@@ -1,9 +1,8 @@
-const {LogError, validateLogError} = require('../../models/loggers/logError');
+const {LogError} = require('../../models/loggers/logError');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const logErrorDebugger = require('debug')('app:logError');
-const supportsColor = require('supports-color');
+
 const validateObjectId = require('../../middleware/validateObjectId');
 
 mongoose.set('useNewUrlParser', true);
@@ -14,8 +13,8 @@ mongoose.set('useCreateIndex', true);
 // @Desc    Get all logError
 // @access  Public
 router.get('/', async (req, res) => {
-  let logErrors = await LogError.find()
-                                .sort('timestamp');
+  const logErrors = await LogError.find().sort('timestamp');
+                                
   res.json(logErrors);
 });
 
@@ -23,9 +22,9 @@ router.get('/', async (req, res) => {
 // @Desc    Get logErrors by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
-  let id = req.params.id;
-  const logError = await LogError.findById(id)
-                                     .sort('timestamp');
+  const id = req.params.id;
+  const logError = await LogError.findById(id).sort('timestamp');
+                                     
   if (logError != null) {
     res.json(logError);
   } else {
@@ -39,9 +38,9 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
     for await (const logError of LogError.find()) {    
-      let id = logError.id;
+      const id = logError.id;
       try {
-        logErrorDel = await LogError.findByIdAndRemove(id);
+        const logErrorDel = await LogError.findByIdAndRemove(id);
         if (logErrorDel = null) {
           res.status(404).send(`The LogError with the ID ${id} was not found!`);
         }

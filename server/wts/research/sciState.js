@@ -10,13 +10,14 @@ const multiplier = { setBack: 0.5, normal: 0.25, fast: 0.6, breakthrough: 0.2 };
 
 initScience()
 
+// Loads all server side science informaiton
 async function initScience() {
-    logger.info('Loading Global Science variables...')
-    await loadGlobalVariables();
-    logger.info('Loading knowledge')
-    await loadKnowledge(); // Loads the knowledge tree with current knowledge
-    logger.info('Loading Tech into Tech Tree...')
-    await loadTech() // Loads the tech-tree with the curren science
+	logger.info('Loading Global Science variables...');
+	await loadGlobalVariables(); // Initializes variables for the game
+	logger.info('Loading knowledge');
+	await loadKnowledge(); // Loads the knowledge tree with current knowledge
+	logger.info('Loading Tech into Tech Tree...');
+	await loadTech(); // Loads the tech-tree with the curren science
 }
 
 module.exports = { techCost, fundingCost, multiplier }

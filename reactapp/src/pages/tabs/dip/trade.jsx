@@ -265,7 +265,7 @@ class Trade extends Component {
           else    
               tradePartner.modified = true;
 
-          let response = await axios.put(`${gameServer}api/trade/modify`, this.state.trade);    
+          let response = await axios.put(`${gameServer}game/trade/modify`, this.state.trade);    
         //   Alert.success(response.data.comment[0].body);
           this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
         } catch (err) {
