@@ -46,7 +46,8 @@ router.post('/account', async function (req, res) {
 		const account = await newAccount.save();
 		res.json(account);
 		logger.info(`${name} account created...`);
-	} else {
+	}
+	else {
 		logger.info(`${name} account already exists for this team...`);
 		res.send(`${name} account already exists for this team...`);
 	}
@@ -74,14 +75,15 @@ router.post('/accounts', async function (req, res) {
 			continue;
 		}
 		newAccount.owner = team.shortName;
-		newAccount.team  = team._id;
+		newAccount.team = team._id;
 
 		const docs = await Account.find({ name: newAccount.name, team: newAccount.team });
 		if (!docs.length) {
 			await newAccount.save();
 			logger.info(`${newAccount.owner} created ${newAccount.name} account...`);
 			++recCount;
-		} else {
+		}
+		else {
 			logger.info(`${newAccount.name} account already exists for this team... `);
 		}
 	}
@@ -102,14 +104,15 @@ router.get('/accounts/:id', validateObjectId, async function (req, res) {
 // @desc    Update all teams to base income and PR
 // @access  Public
 router.patch('/accounts', async function (req, res) {
-	for await (const account of Account.find()) { {
-		account.balance = 0;
-		account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-	}
+	for await (const account of Account.find()) {
+		{
+			account.balance = 0;
+			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		}
 
-	await account.save();
-	logger.info(`${account.owner}'s ${account.name} reset...`);
+		await account.save();
+		logger.info(`${account.owner}'s ${account.name} reset...`);
 	}
 	res.send('Accounts succesfully reset!');
 

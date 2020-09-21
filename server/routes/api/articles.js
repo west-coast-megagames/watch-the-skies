@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
+
 const articleDebugger = require('debug')('app:article');
 const validateObjectId = require('../../middleware/validateObjectId');
 
@@ -7,15 +8,14 @@ const validateObjectId = require('../../middleware/validateObjectId');
 const { getTimeRemaining } = require('../../wts/gameClock/gameClock');
 
 // Mongoose Model Import
-const { Article, validateArticle } = require('../../models/news/article');
-const { Team } = require('../../models/team/team');
+const { Article } = require('../../models/news/article');
+const { Team } = require('../../models/team');
 const { Site } = require('../../models/sites/site');
 
 // @route   GET api/articles
 // @Desc    Get all articles
 // @access  Public
 router.get('/', async (req, res) => {
-	
 	const articles = await Article.find()
 		.populate('publisher', 'name shortName')
 		.populate('location', 'name dateline')

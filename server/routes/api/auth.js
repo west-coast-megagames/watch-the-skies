@@ -9,28 +9,28 @@ const { User } = require('../../models/user');
 // @Desc    Post a new User
 // @access  Public
 router.post('/', async function (req, res) {
-    let { password, login } = req.body;
-    console.log(`${login} is attempting to log in...`)
-    
-    let user = await User.findOne({ email: login }).populate('team',);
-    if (!user) user = await User.findOne({ username: login }).populate('team');
-    if (!user) return res.status(400).send('Invalid login or password');
-    
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid login or password');
+	const { password, login } = req.body;
+	console.log(`${login} is attempting to log in...`);
 
-    const token = user.generateAuthToken();
-    res.status(200).send(token);
+	let user = await User.findOne({ email: login }).populate('team');
+	if (!user) user = await User.findOne({ username: login }).populate('team');
+	if (!user) return res.status(400).send('Invalid login or password');
+
+	const validPassword = await bcrypt.compare(password, user.password);
+	if (!validPassword) return res.status(400).send('Invalid login or password');
+
+	const token = user.generateAuthToken();
+	res.status(200).send(token);
 });
 
-function validate(req) {
-    const schema = {
-      username: Joi.string().min(5).max(15).required(),
-      email: Joi.string().min(5).max(255).required().email(),
-      password: Joi.string().min(5).max(1024).required()
-    }
-  
-    return Joi.validate(user, schema, { "allowUnknown": true });
-  }
+function validate (req) {
+	const schema = {
+		username: Joi.string().min(5).max(15).required(),
+		email: Joi.string().min(5).max(255).required().email(),
+		password: Joi.string().min(5).max(1024).required()
+	};
 
-  module.exports = router;
+	return Joi.validate(user, schema, { 'allowUnknown': true });
+}
+
+module.exports = router;
