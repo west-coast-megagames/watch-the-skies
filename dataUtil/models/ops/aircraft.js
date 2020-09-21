@@ -28,37 +28,31 @@ const AircraftSchema = new Schema({
     repair: { type: Boolean, default: false },
     secret: { type: Boolean, default: false },
   },
-  systems: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
+  upgrades: [{ type: Schema.Types.ObjectId, ref: "Upgrade" }],
   newSystems: {
     cockpit: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     engine: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     weapon: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     sensor: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     armor: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
     utility: {
       active: { type: Boolean, default: false },
       damaged: { type: Boolean, default: false },
-      upgrade: { type: Schema.Types.ObjectId, ref: "Upgrade" },
     },
   },
   stats: {

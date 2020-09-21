@@ -5,7 +5,7 @@ const {
   validateName,
   validateAddr,
 } = require("../models/ops/aircraft");
-const { System } = require("../models/gov/upgrade/upgrade");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { Team } = require("../models/team/team");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
@@ -211,24 +211,122 @@ async function chkAircraft(runFlag) {
       }
     }
 
-    if (!aircraft.hasOwnProperty("systems")) {
+    if (!aircraft.hasOwnProperty("upgrades")) {
       logger.error(
-        `systems missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        `upgrades missing for Aircraft ${aircraft.name} ${aircraft._id}`
       );
     } else {
-      //has at least one system
-      if (aircraft.systems.length < 1) {
-        logger.error(`No Systems Assigned to ${aircraft.name} ${aircraft._id}`);
+      for (let i = 0; i < aircraft.upgrades.length; ++i) {
+        let uFind = await Upgrade.findById(aircraft.upgrades[i]);
+        if (!uFind) {
+          logger.error(
+            `Aircraft ${aircraft.name} ${aircraft._id} has an invalid upgrades reference ${i}: ${aircraft.upgrades[i]}`
+          );
+        }
+      }
+    }
+
+    if (!aircraft.hasOwnProperty("newSystems")) {
+      logger.error(
+        `newSystems missing for Aircraft ${aircraft.name} ${aircraft._id}`
+      );
+    } else {
+      if (!aircraft.newSystems.hasOwnProperty("cockpit")) {
+        logger.error(
+          `newSystems.cockpit missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
       } else {
-        //aircraftCheckDebugger(`Aircraft ${aircraft.name} ${aircraft._id} Check of Systems ${aircraft.systems.length}`);
-        for (let i = 0; i < aircraft.systems.length; ++i) {
-          //aircraftCheckDebugger(`Aircraft ${aircraft.name} ${aircraft._id} about to find systems for ID ${aircraft.systems[i]}`);
-          let sFind = await System.findById(aircraft.systems[i]);
-          if (!sFind) {
-            logger.error(
-              `Aircraft ${aircraft.name} ${aircraft._id} has an invalid systems reference ${i}: ${aircraft.systems[i]}`
-            );
-          }
+        if (!aircraft.newSystems.cockpit.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.cockpit.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.cockpit.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.cockpit.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+      }
+      if (!aircraft.newSystems.hasOwnProperty("engine")) {
+        logger.error(
+          `newSystems.engine missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
+      } else {
+        if (!aircraft.newSystems.engine.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.engine.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.engine.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.engine.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+      }
+
+      if (!aircraft.newSystems.hasOwnProperty("weapon")) {
+        logger.error(
+          `newSystems.weapon missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
+      } else {
+        if (!aircraft.newSystems.weapon.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.weapon.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.weapon.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.weapon.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+      }
+      if (!aircraft.newSystems.hasOwnProperty("sensor")) {
+        logger.error(
+          `newSystems.sensor missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
+      } else {
+        if (!aircraft.newSystems.sensor.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.sensor.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.sensor.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.sensor.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+      }
+      if (!aircraft.newSystems.hasOwnProperty("armor")) {
+        logger.error(
+          `newSystems.armor missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
+      } else {
+        if (!aircraft.newSystems.armor.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.armor.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.armor.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.armor.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+      }
+
+      if (!aircraft.newSystems.hasOwnProperty("utility")) {
+        logger.error(
+          `newSystems.utility missing for Aircraft ${aircraft.name} ${aircraft._id}`
+        );
+      } else {
+        if (!aircraft.newSystems.utility.hasOwnProperty("active")) {
+          logger.error(
+            `newSystems.utility.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
+        }
+        if (!aircraft.newSystems.utility.hasOwnProperty("damaged")) {
+          logger.error(
+            `newSystems.utility.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
+          );
         }
       }
     }

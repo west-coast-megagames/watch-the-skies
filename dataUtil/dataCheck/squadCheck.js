@@ -1,6 +1,6 @@
 // Squad Model - Using Mongoose Model
 const { Squad, validateSquad } = require("../models/ops/squad");
-const { Gear } = require("../models/gov/upgrade/upgrade");
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { Site } = require("../models/sites/site");
 const { Country, validateCountry } = require("../models/country");
 const { Team } = require("../models/team/team");
@@ -37,21 +37,6 @@ async function chkSquad(runFlag) {
 
     if (!squad.hasOwnProperty("gameState")) {
       logger.error(`gameState missing for Squad ${squad.name} ${squad._id}`);
-    }
-
-    if (!squad.hasOwnProperty("serviceRecord")) {
-      logger.error(
-        `serviceRecord missing for Squad ${squad.name} ${squad._id}`
-      );
-    } else {
-      for (let i = 0; i < squad.serviceRecord.length; ++i) {
-        let lFind = await Log.findById(squad.serviceRecord[i]);
-        if (!lFind) {
-          logger.error(
-            `Squad ${squad.name} ${squad._id} has an invalid serviceRecord reference ${i}: ${squad.serviceRecord[i]}`
-          );
-        }
-      }
     }
 
     if (!squad.hasOwnProperty("zone")) {
@@ -197,6 +182,29 @@ async function chkSquad(runFlag) {
         logger.error(
           `Invalid type ${squad.type} for Squad ${squad.name} ${squad._id}`
         );
+      }
+    }
+
+    if (!squad.hasOwnProperty("rollBonus")) {
+      logger.error(`rollBonus missing for squad ${squad.name} ${squad._id}`);
+    } else {
+      if (isNaN(squad.rollBonus)) {
+        logger.error(
+          `Squad ${squad.name} ${squad._id} rollBonus is not a number ${squad.rollBonus}`
+        );
+      }
+    }
+
+    if (!squad.hasOwnProperty("upgrades")) {
+      logger.error(`upgrades missing for squad ${squad.name} ${squad._id}`);
+    } else {
+      for (let i = 0; i < squad.upgrades.length; ++i) {
+        let uFind = await Upgrade.findById(squad.upgrades[i]);
+        if (!uFind) {
+          logger.error(
+            `Squad ${squad.name} ${squad._id} has an invalid upgrades reference ${i}: ${squad.upgrades[i]}`
+          );
+        }
       }
     }
 

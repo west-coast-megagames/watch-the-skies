@@ -50,21 +50,6 @@ async function chkFacility(runFlag) {
       );
     }
 
-    if (!facility.hasOwnProperty("serviceRecord")) {
-      logger.error(
-        `serviceRecord missing for Facility ${facility.name} ${facility._id}`
-      );
-    } else {
-      for (let i = 0; i < facility.serviceRecord.length; ++i) {
-        let lFind = await Log.findById(facility.serviceRecord[i]);
-        if (!lFind) {
-          logger.error(
-            `Facility ${facility.name} ${facility._id} has an invalid serviceRecord reference ${i}: ${facility.serviceRecord[i]}`
-          );
-        }
-      }
-    }
-
     if (!facility.hasOwnProperty("name")) {
       logger.error(`name missing for Facility ${facility._id}`);
     } else {
@@ -324,41 +309,6 @@ async function chkFacility(runFlag) {
         } else {
           storageActive = facility.capability.storage.active;
         }
-
-        if (!facility.capability.storage.hasOwnProperty("upgrade")) {
-          logger.error(
-            `storage upgrade missing for Facility ${facility.name} ${facility._id}`
-          );
-        } else {
-          if (facility.capability.storage.upgrade.length > storageCapacity) {
-            logger.error(
-              `storage upgrade entries exceeds capacity for Facility ${facility.name} ${facility._id}`
-            );
-          }
-
-          if (
-            facility.capability.storage.upgrade.length > 0 &&
-            !storageActive
-          ) {
-            logger.error(
-              `upgrade entries for in-active storage for Facility ${facility.name} ${facility._id}`
-            );
-          }
-          for (
-            let i = 0;
-            i < facility.capability.storage.upgrade.length;
-            ++i
-          ) {
-            let eFind = await upgrade.findById(
-              facility.capability.storage.upgrade[i]
-            );
-            if (!eFind) {
-              logger.error(
-                `Facility ${facility.name} ${facility._id} has an invalid storage upgrade reference ${i}: ${facility.capability.storage.upgrade[i]}`
-              );
-            }
-          }
-        }
       }
     }
 
@@ -389,44 +339,6 @@ async function chkFacility(runFlag) {
         );
       } else {
         manufacturingActive = facility.capability.manufacturing.active;
-      }
-
-      if (!facility.capability.manufacturing.hasOwnProperty("upgrade")) {
-        logger.error(
-          `manufacturing upgrade missing for Facility ${facility.name} ${facility._id}`
-        );
-      } else {
-        if (
-          facility.capability.manufacturing.upgrade.length >
-          manufacturingCapacity
-        ) {
-          logger.error(
-            `manufacturing upgrade entries exceeds capacity for Facility ${facility.name} ${facility._id}`
-          );
-        }
-
-        if (
-          facility.capability.manufacturing.upgrade.length > 0 &&
-          !manufacturingActive
-        ) {
-          logger.error(
-            `upgrade entries for in-active manufacturing for Facility ${facility.name} ${facility._id}`
-          );
-        }
-        for (
-          let i = 0;
-          i < facility.capability.manufacturing.upgrade.length;
-          ++i
-        ) {
-          let eFind = await Upgrade.findById(
-            facility.capability.manufacturing.upgrade[i]
-          );
-          if (!eFind) {
-            logger.error(
-              `Facility ${facility.name} ${facility._id} has an invalid manufacturing upgrade reference ${i}: ${facility.capability.manufacturing.upgrade[i]}`
-            );
-          }
-        }
       }
     }
 

@@ -63,9 +63,7 @@ async function chkUpgrade(runFlag) {
     }
 
     if (!upgrade.hasOwnProperty("model")) {
-      logger.error(
-        `model missing for Upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`model missing for Upgrade ${upgrade.name} ${upgrade._id}`);
     }
 
     if (!upgrade.hasOwnProperty("gameState")) {
@@ -90,9 +88,7 @@ async function chkUpgrade(runFlag) {
     }
 
     if (!upgrade.hasOwnProperty("name")) {
-      logger.error(
-        `name missing for Upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`name missing for Upgrade ${upgrade.name} ${upgrade._id}`);
     } else {
       if (
         upgrade.name === "" ||
@@ -105,6 +101,20 @@ async function chkUpgrade(runFlag) {
       }
     }
 
+    if (!upgrade.hasOwnProperty("code")) {
+      logger.error(`code missing for Upgrade ${upgrade.name} ${upgrade._id}`);
+    } else {
+      if (
+        upgrade.code === "" ||
+        upgrade.code == undefined ||
+        upgrade.code == null
+      ) {
+        logger.error(
+          `code is blank for Upgrade ${upgrade.name} ${upgrade._id}`
+        );
+      }
+    }
+
     if (!upgrade.hasOwnProperty("unitType")) {
       logger.error(
         `unitType missing for Upgrade ${upgrade.name} ${upgrade._id}`
@@ -112,9 +122,7 @@ async function chkUpgrade(runFlag) {
     }
 
     if (!upgrade.hasOwnProperty("cost")) {
-      logger.error(
-        `cost missing for Upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`cost missing for Upgrade ${upgrade.name} ${upgrade._id}`);
     } else {
       if (isNaN(upgrade.cost)) {
         logger.error(
@@ -148,15 +156,11 @@ async function chkUpgrade(runFlag) {
     }
 
     if (!upgrade.hasOwnProperty("desc")) {
-      logger.error(
-        `desc missing for upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`desc missing for upgrade ${upgrade.name} ${upgrade._id}`);
     }
 
     if (!upgrade.hasOwnProperty("prereq")) {
-      logger.error(
-        `prereq missing for upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`prereq missing for upgrade ${upgrade.name} ${upgrade._id}`);
     } else {
       for (let j = 0; j < upgrade.prereq.length; ++j) {
         if (!upgrade.prereq[j].hasOwnProperty("type")) {
@@ -173,9 +177,7 @@ async function chkUpgrade(runFlag) {
     }
 
     if (!upgrade.hasOwnProperty("status")) {
-      logger.error(
-        `status missing for upgrade ${upgrade.name} ${upgrade._id}`
-      );
+      logger.error(`status missing for upgrade ${upgrade.name} ${upgrade._id}`);
     } else {
       if (!upgrade.status.hasOwnProperty("building")) {
         logger.error(
@@ -198,6 +200,12 @@ async function chkUpgrade(runFlag) {
         );
       }
 
+      if (!upgrade.status.hasOwnProperty("storage")) {
+        logger.error(
+          `status.storage missing for upgrade ${upgrade.name} ${upgrade._id}`
+        );
+      }
+
       if (upgrade.status.building) {
         logger.info(
           `upgrade Status Is Building For ${upgrade.name} ${upgrade._id}`
@@ -205,86 +213,31 @@ async function chkUpgrade(runFlag) {
       }
     }
 
-    if (!upgrade.hasOwnProperty("type")) {
+    /* not yet (???)
+    if (!upgrade.hasOwnProperty("militaryStats")) {
       logger.error(
-        `type missing for upgrade ${upgrade.name} ${upgrade._id}`
+        `militaryStats missing for upgrade ${upgrade.name} ${upgrade._id}`
       );
     } else {
-      if (upgrade.type === "Gear") {
-        if (!upgrade.hasOwnProperty("category")) {
-          logger.error(
-            `category missing for Gear upgrade ${upgrade.name} ${upgrade._id}`
-          );
-        } else {
-          if (!inArray(gearCategories, upgrade.category)) {
-            logger.error(
-              `Invalid category ${upgrade.category} for Gear ${upgrade.name} ${upgrade._id}`
-            );
-          }
-        }
-
-        if (upgrade.category != "Training") {
-          if (!upgrade.hasOwnProperty("stats")) {
-            logger.error(
-              `stats missing for Gear upgrade ${upgrade.name} ${upgrade._id}`
-            );
-          } else {
-            //don't take it down to stats fields as they are only present if value assigned (no defaults)
-          }
-        }
-      }
-
-      if (upgrade.type === "Kits") {
-        if (!upgrade.hasOwnProperty("code")) {
-          logger.error(
-            `code missing for Kits upgrade ${upgrade.name} ${upgrade._id}`
-          );
-        }
-
-        if (!upgrade.hasOwnProperty("stats")) {
-          logger.error(
-            `stats missing for Kits upgrade ${upgrade.name} ${upgrade._id}`
-          );
-        } else {
-          //don't take it down to stats fields as they are only present if value assigned (no defaults)
-        }
-
-        if (!upgrade.hasOwnProperty("effects")) {
-          logger.error(
-            `effects missing for Kits upgrade ${upgrade.name} ${upgrade._id}`
-          );
-        } else {
-          //don't take it down to effects fields as they are only present if value assigned (no defaults)
-        }
-      }
-
-      if (upgrade.type === "System") {
-        if (!upgrade.hasOwnProperty("category")) {
-          logger.error(
-            `category missing for System upgrade ${upgrade.name} ${upgrade._id}`
-          );
-        } else {
-          if (!inArray(systemCategories, upgrade.category)) {
-            logger.error(
-              `Invalid category ${upgrade.category} for System ${upgrade.name} ${upgrade._id}`
-            );
-          }
-        }
-
-        if (!upgrade.hasOwnProperty("stats")) {
-          if (upgrade.hasOwnProperty("name")) {
-            if (upgrade.name != "Targeting CPU") {
-              //targeting CPU does not add any stats
-              logger.error(
-                `stats missing for System upgrade ${upgrade.name} ${upgrade._id}`
-              );
-            }
-          }
-        } else {
-          //don't take it down to stats fields as they are only present if value assigned (no defaults)
-        }
-      }
+      //don't take it down to stats fields as they are only present if value assigned (no defaults)
     }
+
+    if (!upgrade.hasOwnProperty("facilityStats")) {
+      logger.error(
+        `facilityStats missing for upgrade ${upgrade.name} ${upgrade._id}`
+      );
+    } else {
+      //don't take it down to stats fields as they are only present if value assigned (no defaults)
+    }
+
+    if (!upgrade.hasOwnProperty("aircraftStats")) {
+      logger.error(
+        `aircraftStats missing for upgrade ${upgrade.name} ${upgrade._id}`
+      );
+    } else {
+      //don't take it down to stats fields as they are only present if value assigned (no defaults)
+		}
+		jeff */
 
     try {
       let { error } = validateUpgrade(upgrade);
@@ -299,6 +252,7 @@ async function chkUpgrade(runFlag) {
       );
     }
   }
+
   return true;
 }
 

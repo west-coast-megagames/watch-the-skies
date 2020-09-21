@@ -25,6 +25,7 @@ const UpgradeSchema = new Schema({
     salvage: { type: Boolean, default: false },
     damaged: { type: Boolean, default: false },
     destroyed: { type: Boolean, default: false },
+    storage: { type: Boolean, default: true },
   },
   serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
   gameState: [],

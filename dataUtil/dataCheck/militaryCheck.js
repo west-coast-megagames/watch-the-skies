@@ -5,7 +5,8 @@ const {
   Fleet,
   Corps,
 } = require("../models/ops/military/military");
-const { Gear } = require("../models/gov/upgrade/upgrade");
+
+const { Upgrade } = require("../models/gov/upgrade/upgrade");
 const { Site } = require("../models/sites/site");
 const { Team } = require("../models/team/team");
 const { Country } = require("../models/country");
@@ -199,10 +200,25 @@ async function chkMilitary(runFlag) {
       //militaryCheckDebugger(`Military ${military.name} ${military._id} Check of Gear ${military.gear.length}`);
       for (let i = 0; i < military.gear.length; ++i) {
         //militaryCheckDebugger(`Military ${military.name} ${military._id} about to find gear for ID ${military.gear[i]}`);
-        let gFind = await Gear.findById(military.gear[i]);
+        let gFind = await Upgrade.findById(military.gear[i]);
         if (!gFind) {
           logger.error(
             `Military ${military.name} ${military._id} has an invalid gear reference ${i}: ${military.gear[i]}`
+          );
+        }
+      }
+    }
+
+    if (!military.hasOwnProperty("upgrades")) {
+      logger.error(
+        `upgrades missing for military ${military.name} ${military._id}`
+      );
+    } else {
+      for (let i = 0; i < military.upgrades.length; ++i) {
+        let uFind = await Upgrade.findById(military.upgrades[i]);
+        if (!uFind) {
+          logger.error(
+            `Squad ${military.name} ${military._id} has an invalid upgrades reference ${i}: ${military.upgrades[i]}`
           );
         }
       }
