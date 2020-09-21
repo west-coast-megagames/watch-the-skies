@@ -4,7 +4,7 @@ const nexusEvent = require('../../startup/events');
 const routeDebugger = require('debug')('app:routes:admin');
 
 // Mongoose Models - Database models
-const { Aircraft, validateAircraft } = require('../../models/ops/aircraft');
+const { Aircraft, validateAircraft } = require('../../models/aircraft');
 const { Account } = require('../../models/account');
 const { Facility } = require('../../models/facility');
 const { Country } = require('../../models/country');

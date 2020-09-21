@@ -5,8 +5,7 @@ const routeDebugger = require('debug')('app:routes:game');
 
 // Mongoose Models - Used to save and validate objects into MongoDB
 const { Account } = require('../../models/account');
-const { Aircraft, validateRoles } = require('../../models/ops/aircraft');
-const { Country } = require('../../models/country');
+const { Aircraft, validateRoles } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/military');
 const { Site } = require('../../models/sites/site');
@@ -90,7 +89,6 @@ router.put('/repair', async function (req, res) {
 			`Repairs for ${aircraft.name}`
 		);
 		await account.save();
-		modelDebugger(account);
 
 		aircraft.status.repair = true;
 		aircraft.ready = false;

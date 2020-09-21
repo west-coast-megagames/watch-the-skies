@@ -72,8 +72,8 @@ const AircraftSchema = new Schema({
 });
 
 AircraftSchema.methods.launch = async (aircraft, mission) => {
-	const banking = require('../../wts/banking/banking');
-	const { Account } = require('../account');
+	const banking = require('../wts/banking/banking');
+	const { Account } = require('./account');
 
 	try {
 		modelDebugger(`Attempting to launch ${aircraft.name}`);

@@ -1,7 +1,7 @@
 const routeDebugger = require('debug')('app:routes');
 
 const { Account } = require('../../models/account');
-const { Aircraft } = require ('../../models/ops/aircraft');
+const { Aircraft } = require ('../../models/aircraft');
 const { Upgrade } = require ('../../models/upgrade');
 const { deposit, withdrawal } = require ('../../wts/banking/banking');
 const { TradeReport } = require ('../../wts/reports/reportClasses');

@@ -4,7 +4,7 @@ const { intercept } = require('./intercept');
 const { d6 } = require('../../util/systems/dice');
 const terror = require('../terror/terror');
 
-const { Aircraft } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Site } = require('../../models/sites/site');
 

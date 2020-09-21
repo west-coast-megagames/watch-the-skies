@@ -5,7 +5,7 @@ const { logger } = require('../../middleware/winston'); // middleware/error.js w
 
 // Mongoose Object Models & Methods
 const { getTeam } = require('../../models/team');
-const { Aircraft } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { Account } = require('../../models/account');
 const { Article } = require('../../models/article');
 const { Research } = require('../../models/sci/research');
@@ -14,7 +14,7 @@ const { Military } = require('../../models/military');
 const { Log } = require('../../models/logs/log');
 
 module.exports = function (io) {
-	let UpdateClients = new SocketServer();
+	const UpdateClients = new SocketServer();
 
 	const updateSocket = io.of('/update').on('connection', (client) => {
 		logger.info(`New client subscribing to update socket... ${client.id}`);
@@ -35,7 +35,7 @@ module.exports = function (io) {
 			client.broadcast.emit('updateUsers', UpdateClients.getUsers());
 			updateSocket.to(client.id).emit('login', {
 				me: { ...data, id: client.id },
-				userList: UpdateClients.getUsers(),
+				userList: UpdateClients.getUsers()
 			});
 			socketDebugger('New users sent!');
 		});
@@ -49,7 +49,7 @@ module.exports = function (io) {
 	});
 
 	nexusEvent.on('updateAccounts', async () => {
-		let accounts = await Account.find()
+		const accounts = await Account.find()
 			.sort({ team: 1 })
 			.populate('team', 'name shortName');
 		socketDebugger('Updating financial accounts...');
@@ -58,7 +58,7 @@ module.exports = function (io) {
 
 	nexusEvent.on('updateAircrafts', async () => {
 		socketDebugger('Updating aircraft socket event!');
-		let aircrafts = await Aircraft.find()
+		const aircrafts = await Aircraft.find()
 			.sort({ team: 1 })
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
@@ -73,19 +73,19 @@ module.exports = function (io) {
 
 	nexusEvent.on('updateTeam', async (team_id) => {
 		socketDebugger('Event: Team update needed...');
-		let team = await getTeam(team_id);
+		const team = await getTeam(team_id);
 		updateSocket.emit('teamUpdate', team);
 	});
 
 	nexusEvent.on('updateResearch', async () => {
 		socketDebugger('Event: Updating research...');
-		let research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
+		const research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
 		updateSocket.emit('updateResearch', research);
 	});
 
 	nexusEvent.on('updateFacilities', async () => {
 		socketDebugger('Event: Updating facilities...');
-		let facilities = await Facility.find()
+		const facilities = await Facility.find()
 			.populate('site', 'name type')
 			.populate('team', 'shortName name')
 			.populate('research')
@@ -95,7 +95,7 @@ module.exports = function (io) {
 
 	nexusEvent.on('updateMilitary', async () => {
 		socketDebugger('Event: Updating Military...');
-		let military = await Military.find()
+		const military = await Military.find()
 			.sort({ team: 1 })
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
@@ -108,7 +108,7 @@ module.exports = function (io) {
 
 	nexusEvent.on('updateLogs', async () => {
 		socketDebugger('Event: Updating logs...');
-		let logs = await Log.find()
+		const logs = await Log.find()
 			.populate('team')
 			.populate('country', 'name')
 			.populate('zone')
@@ -122,13 +122,14 @@ module.exports = function (io) {
 
 	nexusEvent.on('newsAlert', async (article) => {
 		try {
-			let newArticle = await Article.findById(article._id)
+			const newArticle = await Article.findById(article._id)
 				.populate('publisher', 'name shortName')
 				.populate('location', 'name dateline')
 				.sort('date: 1');
 			updateSocket.emit('newsAlert', newArticle);
 			socketDebugger(`News alert sent: ${article.headline}`);
-		} catch (error) {
+		}
+		catch (error) {
 			socketDebugger(`Error: ${error.message}`);
 		}
 	});

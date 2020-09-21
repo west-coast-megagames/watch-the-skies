@@ -1,4 +1,4 @@
-const { Aircraft } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Squad } = require('../../models/ops/squad');
 const { Military } = require('../../models/military');
