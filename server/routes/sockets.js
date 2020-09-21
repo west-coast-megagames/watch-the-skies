@@ -5,8 +5,8 @@ module.exports = function (server) {
 	logger.info('Activating Sockets...');
 	const io = require('socket.io')(server); // Creation of websocket Server
   
-	require('../routes/socket/clock')(io);
-	require('../routes/socket/update')(io);
-	require('../routes/socket/main')(io);
+	require('./socket/clock')(io);
+	require('./socket/update')(io);
+	require('./socket/main')(io);
 	logger.info('Sockets Open...');
 };

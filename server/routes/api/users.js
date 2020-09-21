@@ -2,12 +2,12 @@ const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
 const bcrypt = require('bcryptjs');
-const auth = require('../middleware/auth');
-const validateObjectId = require('../middleware/validateObjectId');
+const auth = require('../../middleware/auth');
+const validateObjectId = require('../../middleware/validateObjectId');
 
 // User Model - Using Mongoose Model
-const { User, validateUser, validateName, validateAddr } = require('../models/user');
-const { Team } = require('../models/team');
+const { User, validateUser, validateName, validateAddr } = require('../../models/user');
+const { Team } = require('../../models/team');
 
 // @route   POST /user
 // @Desc    Post a new User

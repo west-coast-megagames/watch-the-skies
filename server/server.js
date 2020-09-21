@@ -13,11 +13,11 @@ logger.info('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
 logger.info('HTTP server created...');
 require('./middleware/log/logging')(); // Bootup for error handling
-require('./startup/sockets')(server); // Starts websocket
-require('./startup/routes')(app); // Bootup for Express routes
+require('./routes/sockets')(server); // Starts websocket
+require('./routes/routes')(app); // Bootup for Express routes
 require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
-require('./startup/config')(); // Bootup for special configurations
-require('./startup/prod')(app); // Production compression and middleware
+require('./config/config')(); // Bootup for special configurations
+require('./middleware/production/prod')(app); // Production compression and middleware
 
 app.use(express.static('public'));
 

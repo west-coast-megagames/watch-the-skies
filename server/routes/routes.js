@@ -5,35 +5,35 @@ const { routeError, logger } = require('../middleware/log/winston'); // middlewa
 const cors = require('cors');
 
 // Routes - Using Express
-const article = require('../routes/api/articles');
-const auth = require('../routes/api/auth');
-const account = require('../routes/api/accounts');
-const banking = require('../routes/api/banking');
-const control = require('../routes/api/control');
-const country = require('../routes/api/country');
-const facilities = require('../routes/api/facilities');
-const home = require('../routes/api/home');
-const interceptor = require('../routes/api/interceptor');
-const intercept = require('../routes/api/intercept');
-const logs = require('../routes/api/log');
-const logError = require('../routes/api/logErrors');
-const logInfo = require('../routes/api/logInfo');
-const military = require('../routes/api/military');
-const news = require('../routes/api/news');
-const research = require('../routes/api/research');
-const sites = require('../routes/api/sites');
-const team = require('../routes/api/team');
-const trade = require('../routes/api/trade');
-const treaty = require('../routes/api/treaty');
-const upgrade = require('../routes/api/upgrade');
-const zones = require('../routes/api/zones');
+const article = require('./api/articles');
+const auth = require('./api/auth');
+const account = require('./api/accounts');
+const banking = require('./api/banking');
+const control = require('./api/control');
+const country = require('./api/country');
+const facilities = require('./api/facilities');
+const home = require('./api/home');
+const interceptor = require('./api/interceptor');
+const intercept = require('./api/intercept');
+const logs = require('./api/log');
+const logError = require('./api/logErrors');
+const logInfo = require('./api/logInfo');
+const military = require('./api/military');
+const news = require('./api/news');
+const research = require('./api/research');
+const sites = require('./api/sites');
+const team = require('./api/team');
+const trade = require('./api/trade');
+const treaty = require('./api/treaty');
+const upgrade = require('./api/upgrade');
+const zones = require('./api/zones');
 
-const debug = require('../routes/debugRoute');
-const game = require('../routes/game/game');
-const admin = require('../routes/game/admin');
-const del = require('../routes/game/delete');
+const debug = require('./debugRoute');
+const game = require('./game/game');
+const admin = require('./game/admin');
+const del = require('./game/delete');
 
-const users = require('../routes/users');
+const users = require('./api/users');
 
 // const initData = require('../routes/api/initData');
 
@@ -62,7 +62,7 @@ module.exports = function (app) {
 	app.use('/api/facilities', facilities); // Route for inputing countries
 	app.use('/api/sites', sites); // Route for sites
 	app.use('/api/accounts', account); // Route for inputing accounts
-	app.use('/user', users); // Route for dealing with Users
+	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/news', news); // Route for the news desks
 	app.use('/api/logs', logs); // Route for logs
 	app.use('/api/banking', banking); // Route for banking functions
