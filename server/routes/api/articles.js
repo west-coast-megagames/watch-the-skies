@@ -10,7 +10,7 @@ const { getTimeRemaining } = require('../../wts/gameClock/gameClock');
 // Mongoose Model Import
 const { Article } = require('../../models/article');
 const { Team } = require('../../models/team');
-const { Site } = require('../../models/sites/site');
+const { Site } = require('../../models/site');
 
 // @route   GET api/articles
 // @Desc    Get all articles

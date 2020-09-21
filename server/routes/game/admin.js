@@ -10,7 +10,7 @@ const { Facility } = require('../../models/facility');
 const { Country } = require('../../models/country');
 const { Zone } = require('../../models/zone');
 const { Team } = require('../../models/team');
-const { BaseSite } = require('../../models/sites/site');
+const { BaseSite } = require('../../models/site');
 
 const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');

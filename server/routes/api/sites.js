@@ -5,7 +5,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 
 const { logger } = require('../../middleware/winston');
 
-const { Site, validateSite, BaseSite, validateBase, CitySite, validateCity, CrashSite, validateCrash, Spacecraft, validateSpacecraft } = require('../../models/sites/site');
+const { Site, BaseSite, validateBase, CitySite, validateCity, CrashSite, validateCrash, Spacecraft, validateSpacecraft } = require('../../models/site');
 const { Country } = require('../../models/country');
 const { Team } = require('../../models/team');
 const { convertToDms } = require('../../util/systems/geo');

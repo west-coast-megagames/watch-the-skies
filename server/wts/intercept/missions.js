@@ -6,7 +6,7 @@ const terror = require('../terror/terror');
 
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
-const { Site } = require('../../models/sites/site');
+const { Site } = require('../../models/site');
 
 const { ReconReport, TransportReport } = require('../reports/reportClasses');
 const { getDistance } = require('../../util/systems/geo');
