@@ -8,7 +8,7 @@ const { startResearch, assignKnowledgeCredit } = require('../wts/research/resear
 
 const { Upgrade } = require('../models/upgrade');
 const { Facility } = require('../models/facility');
-const { Aircraft } = require('../models/ops/aircraft');
+const { Aircraft } = require('../models/aircraft');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
 
 const { rand } = require('../util/systems/dice');

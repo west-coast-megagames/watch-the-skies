@@ -3,7 +3,7 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { System } = require('../../models/upgrade');
 
 // @route   PATCH api/control/alien/deploy

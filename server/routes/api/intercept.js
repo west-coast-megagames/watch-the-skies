@@ -5,7 +5,7 @@ const airMission = require('../../wts/intercept/missions');
 const nexusEvent = require('../../startup/events');
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft } = require('../../models/ops/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/sites/site');
 
 // @route   PUT api/intercept   ... update
