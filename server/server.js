@@ -15,7 +15,7 @@ logger.info('HTTP server created...');
 require('./middleware/log/logging')(); // Bootup for error handling
 require('./startup/sockets')(server); // Starts websocket
 require('./startup/routes')(app); // Bootup for Express routes
-require('./startup/db')(); // Bootup of MongoDB through Mongoose
+require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
 require('./startup/config')(); // Bootup for special configurations
 require('./startup/prod')(app); // Production compression and middleware
 

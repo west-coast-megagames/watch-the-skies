@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-const { logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { logger } = require('../log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const config = require('config');
 
 // DB Config | Saved in the config folder | Mogoose Key
-const dbURI = require('../config/keys').mongoURI;
+const dbURI = require('../../config/keys').mongoURI;
 const mongoOptions = {
 	dbName: config.get('dbName'),
 	useFindAndModify: false,
