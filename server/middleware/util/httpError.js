@@ -3,6 +3,7 @@ const { logger } = require('../log/winston');
 function httpErrorHandler (res, err) {
 	logger.error(err.message, { meta: err.stack });
 	let type = 'Server Error';
+
 	switch (err.status) {
 	case (400):
 		type = 'Bad Request';
