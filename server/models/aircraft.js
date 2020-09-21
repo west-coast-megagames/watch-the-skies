@@ -18,6 +18,8 @@ const AircraftSchema = new Schema({
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
+	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
+	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	mission: { type: String },
 	status: {
 		damaged: { type: Boolean, default: false },
@@ -108,13 +110,16 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 AircraftSchema.methods.returnToBase = async () => {
 	logger.info(`Returning ${this.name} to ${origin.name}...`);
 
-	const { origin } = this;
-	await Facility.populate(this, { path: 'origin', model: 'Facility' });
+	let { origin } = this;
+	origin = await Facility.findById(origin)
+		.populate('site');
 
 	this.mission = 'Docked';
 	this.status.ready = true;
 	this.status.deployed = false;
 	this.site = origin.site;
+	this.country = origin.site.country;
+	this.zone = origin.site.zone;
 
 	const aircraft = await this.save();
 
