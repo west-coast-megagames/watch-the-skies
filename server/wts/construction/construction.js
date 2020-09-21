@@ -1,11 +1,11 @@
 const { Aircraft } = require('../../models/ops/aircraft');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility } = require('../../models/facility');
 const { Squad } = require('../../models/ops/squad');
 const { Military } = require('../../models/ops/military/military');
 const { FacilityBlueprint, AircraftBlueprint, UpgradeBlueprint, Blueprint } = require('../../models/gov/blueprint');
 
 const { loadBlueprints } = require('../../wts/construction/blueprintLoad');
-const { Upgrade } = require('../../models/gov/upgrade/upgrade');
+const { Upgrade } = require('../../models/upgrade');
 
 //construction function for building Squads, Military(?), and Aircraft
 async function newUnit (name, facility, type, team,){

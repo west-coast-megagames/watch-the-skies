@@ -1,11 +1,11 @@
 const routeDebugger = require('debug')('app:routes');
 
-const upgrade = require('../../models/gov/upgrade/upgrade');
-const { Upgrade } = require('../../models/gov/upgrade/upgrade');
+const upgrade = require('../../models/upgrade');
+const { Upgrade } = require('../../models/upgrade');
 const { Military } = require('../../models/ops/military/military');
 const { Squad } = require('../../models/ops/squad');
 const { Aircraft } = require('../../models/ops/aircraft');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility } = require('../../models/facility');
 
 
 /*

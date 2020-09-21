@@ -6,8 +6,8 @@ const { logger } = require('../middleware/winston');
 
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
-const { Upgrade } = require('../models/gov/upgrade/upgrade');
-const { Facility } = require('../models/gov/facility/facility');
+const { Upgrade } = require('../models/upgrade');
+const { Facility } = require('../models/facility');
 const { Aircraft } = require('../models/ops/aircraft');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
 

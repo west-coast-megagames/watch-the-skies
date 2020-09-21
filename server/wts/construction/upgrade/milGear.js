@@ -8,7 +8,7 @@ upgradeDebugger = require('debug')('app:upgrade');
 
 const gears = []
 
-const { Gear } = require('../../../models/gov/upgrade/upgrade');
+const { Gear } = require('../../../models/upgrade');
 
 // Load function to load all upgrade.
 async function loadMilGears () {

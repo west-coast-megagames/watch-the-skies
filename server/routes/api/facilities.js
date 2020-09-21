@@ -6,7 +6,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 const { newFacility } = require('../../wts/construction/construction');
 
 // Facility Model - Using Mongoose Model
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility } = require('../../models/facility');
 
 // @route   GET api/facilities
 // @Desc    Get all facilities

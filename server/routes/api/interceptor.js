@@ -4,7 +4,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/ops/aircraft');
-const { Upgrade } = require('../../models/gov/upgrade/upgrade');
+const { Upgrade } = require('../../models/upgrade');
 const { newUnit } = require('../../wts/construction/construction');
 
 // @route   GET api/aircraft

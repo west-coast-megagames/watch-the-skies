@@ -3,7 +3,7 @@ const router = express.Router();
 const validateObjectId = require('../../middleware/validateObjectId');
 const { logger } = require('../../middleware/winston'); // Import of winston for error logging
 
-const { Upgrade } = require('../../models/gov/upgrade/upgrade');
+const { Upgrade } = require('../../models/upgrade');
 const { addUpgrade } = require('../../wts/upgrades/upgrades');
 
 // @route   GET api/upgrades

@@ -4,12 +4,12 @@ const socketDebugger = require('debug')('app:sockets:update');
 const { logger } = require('../../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 // Mongoose Object Models & Methods
-const { getTeam } = require('../../models/team/team');
+const { getTeam } = require('../../models/team');
 const { Aircraft } = require('../../models/ops/aircraft');
-const { Account } = require('../../models/gov/account');
+const { Account } = require('../../models/account');
 const { Article } = require('../../models/news/article');
 const { Research } = require('../../models/sci/research');
-const { Facility } = require('../../models/gov/facility/facility');
+const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/ops/military/military');
 const { Log } = require('../../models/logs/log');
 
