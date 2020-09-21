@@ -1,7 +1,5 @@
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
-const { Squad } = require('../../models/ops/squad');
-const { Military } = require('../../models/military');
 const { FacilityBlueprint, AircraftBlueprint, UpgradeBlueprint, Blueprint } = require('../../models/blueprint');
 
 const { loadBlueprints } = require('../../wts/construction/blueprintLoad');

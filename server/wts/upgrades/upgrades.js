@@ -1,6 +1,6 @@
 const { Upgrade } = require('../../models/upgrade');
 const { Military } = require('../../models/military');
-const { Squad } = require('../../models/ops/squad');
+const { Squad } = require('../../models/squad');
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 
