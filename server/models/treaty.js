@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Gameclock = require('../../wts/gameClock/gameClock');
+const Gameclock = require('../wts/gameClock/gameClock');
 
 const ActivitySchema = new Schema({
 	header: { type: String, default: 'Treaty Event' },
