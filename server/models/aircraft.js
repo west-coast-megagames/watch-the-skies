@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const modelDebugger = require('debug')('app:aircraftModel');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
+const { Facility } = require('./facility');
+const { logger } = require('../middleware/log/winston');
 
 const AircraftSchema = new Schema({
 	model: { type: String, default: 'Aircraft' },
@@ -14,8 +16,6 @@ const AircraftSchema = new Schema({
 	},
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
-	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
 	mission: { type: String },
@@ -99,21 +99,24 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 		modelDebugger(`Aircraft ${aircraft.name} deployed...`);
 
 		return aircraft;
-	} catch (err) {
+	}
+	catch (err) {
 		modelDebugger('Error:', err.message);
 	}
 };
 
-AircraftSchema.methods.returnToBase = async (aircraft) => {
-	modelDebugger(`Returning ${aircraft.name} to ${origin.name}...`);
-	aircraft.mission = 'Docked';
-	aircraft.status.ready = true;
-	aircraft.status.deployed = false;
-	aircraft.country = update.origin.country;
-	aircraft.site = update.origin._id;
-	aircraft.zone = update.origin.zone;
+AircraftSchema.methods.returnToBase = async () => {
+	logger.info(`Returning ${this.name} to ${origin.name}...`);
 
-	aircraft = await aircraft.save();
+	const { origin } = this;
+	await Facility.populate(this, { path: 'origin', model: 'Facility' });
+
+	this.mission = 'Docked';
+	this.status.ready = true;
+	this.status.deployed = false;
+	this.site = origin.site;
+
+	const aircraft = await this.save();
 
 	return aircraft;
 };
@@ -129,8 +132,8 @@ AircraftSchema.methods.validateAircraft = function (aircraft) {
 
 let Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
-function validateAircraft(aircraft) {
-	//modelDebugger(`Validating ${aircraft.name}...`);
+function validateAircraft (aircraft) {
+	// modelDebugger(`Validating ${aircraft.name}...`);
 
 	const schema = {
 		name: Joi.string().min(2).max(50).required(),
@@ -140,7 +143,7 @@ function validateAircraft(aircraft) {
 	return Joi.validate(aircraft, schema, { allowUnknown: true });
 }
 
-async function getAircrafts() {
+async function getAircrafts () {
 	modelDebugger('Retriving all aircraft documents...');
 	let aircrafts = await Aircraft.find()
 		.sort({ team: 1 })

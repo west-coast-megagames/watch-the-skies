@@ -193,7 +193,7 @@ async function runTransports () {
 
 			// Schedule a ground mission.
 
-			await aircraft.returnToBase(aircraft);
+			await aircraft.returnToBase();
 		}
 	}
 
@@ -246,7 +246,7 @@ async function runRecon () {
 
 				MissionReport.saveReport();
 
-				await aircraft.returnToBase(aircraft);
+				await aircraft.returnToBase();
 				return;
 			}
 			else {
@@ -280,7 +280,7 @@ async function runRecon () {
 
 				MissionReport.saveReport();
 
-				await aircraft.returnToBase(aircraft);
+				await aircraft.returnToBase();
 				return;
 			}
 		}
@@ -299,7 +299,7 @@ async function runDiversions () {
 
 		// Diversion mission log
 
-		await aircraft.returnToBase(aircraft);
+		await aircraft.returnToBase();
 	}
 }
 
@@ -392,7 +392,7 @@ async function resolveTransfers () {
 
 async function clearMissions () {
 	for (const aircraft of await Aircraft.find()) {
-		await aircraft.returnToBase(aircraft);
+		await aircraft.returnToBase();
 	}
 	interceptionMissions = []; // Attempted Interception missions for the round
 	escortMissions = []; // Attempted Escort missions for the round
