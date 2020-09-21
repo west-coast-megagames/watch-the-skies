@@ -8,7 +8,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
 const { getTimeRemaining } = require('../../wts/gameClock/gameClock');
 
 // Mongoose Model Import
-const { Article } = require('../../models/news/article');
+const { Article } = require('../../models/article');
 const { Team } = require('../../models/team');
 const { Site } = require('../../models/sites/site');
 

@@ -8,7 +8,7 @@ const router = express.Router();
 const nexusEvent = require('../../startup/events');
 
 // Article Model - Using Mongoose Model
-const { Article } = require('../../models/news/article');
+const { Article } = require('../../models/article');
 const { Team } = require('../../models/team');
 
 // @route   GET api/news/gnn
