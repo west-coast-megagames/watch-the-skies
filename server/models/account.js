@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const validateObjectId = require('../middleware/util/validateObjectId');
+
+const nexusError = require('../middleware/util/throwError');
+const { Team } = require('./team');
 
 const TransferSchema = new Schema({
 	to: { type: String },
@@ -23,29 +25,22 @@ const AccountSchema = new Schema({
 	gameState: []
 });
 
-AccountSchema.methods.validate = function () {
-	if (this.team === undefined) throw new Error('No team ID given!')
-	if (!mongoose.Types.ObjectId.isValid(this.team)) throw { type: 'User Error', message: `${this.team} is not a valid id!`}
-
+AccountSchema.methods.validateAccount = async function () {
 	const schema = {
 		name: Joi.string().min(2).max(50).required(),
 		code: Joi.string().min(3).max(3).required().uppercase()
 	};
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
-	if (error != undefined) throw { type: 'User Error', message: `${error}` };
+	if (error != undefined) nexusError(`${error}`, 400);
 
-	
+	if (this.team === undefined) nexusError('No team ID...', 400);
+	if (!mongoose.Types.ObjectId.isValid(this.team)) nexusError('Invalid Team ID...', 400);
+
+	const team = await Team.findById(this.team);
+	if (team.length < 1) nexusError(`No team exists with the ID: ${this.team}`, 400);
 };
 
 const Account = mongoose.model('account', AccountSchema);
 
-function validateAccount (account) {
-	const schema = {
-		code: Joi.string().min(3).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required()
-	};
-	return Joi.validate(account, schema, { allowUnknown: true });
-}
-
-module.exports = { Account, validateAccount };
+module.exports = { Account };

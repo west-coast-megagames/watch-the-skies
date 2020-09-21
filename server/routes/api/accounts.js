@@ -5,8 +5,10 @@ const validateObjectId = require('../../middleware/util/validateObjectId');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 // Interceptor Model - Using Mongoose Model
-const { Account, validateAccount } = require('../../models/account'); // Financial Account Model
-const { Team } = require('../../models/team'); // Team Model
+const { Account } = require('../../models/account'); // Financial Account Model
+const { Team } = require('../../models/team'); // WTS Team Model
+const nexusError = require('../../middleware/util/throwError'); // Costom Error handling for Nexus
+const httpErrorHandler = require('../../middleware/util/httpError');
 
 // @route   GET api/account
 // @Desc    Get all Accounts
@@ -36,8 +38,7 @@ router.get('/:id', validateObjectId, async function (req, res) {
 		res.json(account);
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err.stack });
-		res.status(400).send(err.message);
+		httpErrorHandler(res, err);
 	}
 
 });
@@ -47,12 +48,10 @@ router.get('/:id', validateObjectId, async function (req, res) {
 // @access  Public
 router.post('/', async function (req, res) {
 	logger.info('POST Route: api/account post made...');
-	const { error } = validateAccount(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
 
 	try {
 		let newAccount = new Account(req.body);
-		newAccount.validate();
+		await newAccount.validateAccount();
 		const docs = await Account.find({ name: req.body.name, team: req.body.team });
 
 		if (docs.length < 1) {
@@ -62,19 +61,11 @@ router.post('/', async function (req, res) {
 			res.status(200).json(newAccount);
 		}
 		else {
-			let err = new Error(`${newAccount.name} account already exists!`);
-			err.type = 'User Error';
-			throw err;
+			nexusError(`${newAccount.name} account already exists!`, 400);
 		}
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err.stack });
-		if (err.type === 'User Error') {
-			res.status(400).send(`Bad request: ${err.message}`);
-		}
-		else {
-			res.status(500).send(`Server error: ${err.message}`);
-		}
+		httpErrorHandler(res, err);
 	}
 });
 
@@ -90,17 +81,11 @@ router.delete('/:id', validateObjectId, async function (req, res) {
 			res.status(200).send(`${account.name} with the id ${id} was deleted!`);
 		}
 		else {
-			throw { type: 'User Error', message: `No account with the id ${id} exists!` }
+			nexusError(`No account with the id ${id} exists!`, 400);
 		}
 	}
 	catch (err) {
-		logger.error(err.message, { meta: err });
-		if (err.type === 'User Error') {
-			res.status(400).send(`Bad request: ${err.message}`);
-		}
-		else {
-			res.status(500).send(`Server error: ${err.message}`);
-		}
+		httpErrorHandler(res, err);
 	}
 });
 
