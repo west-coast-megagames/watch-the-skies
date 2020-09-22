@@ -30,18 +30,27 @@ let totalCount = 0;
 async function start (aircraft, target, mission) {
 	let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`;
 	const origin = await Facility.findById(aircraft.origin).populate('site'); // Populate home facility for the aircraft
-
+	let distance;
 	let targetGeo = undefined; // Initiate targets Geo position placeholder
-	target.model === 'Aircraft' || target.model === 'Facility' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
-	const { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
 
-	aircraft = aircraft._id; // Saves just the _ID of the aircraft
-	target = target._id; // Saves just the _ID of the target
+	if (mission === 'Transfer') {
+		targetGeo = target.site.geoDecimal;
+		distance = 999;
+	}
+	else {
+		target.model === 'Aircraft' || target.model === 'Facility' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
 
-	missionDebugger(targetGeo);
-	missionDebugger(origin.site.geoDecimal);
-	const distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
-	missionDebugger(`Mission distance ${distance}km`);
+		const { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
+
+		aircraft = aircraft._id; // Saves just the _ID of the aircraft
+		target = target._id; // Saves just the _ID of the target
+
+		missionDebugger(targetGeo);
+		missionDebugger(origin.site.geoDecimal);
+		distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
+		missionDebugger(`Mission distance ${distance}km`);
+	
+	}
 
 	// SWITCH Sorts the mission into the correct mission
 	const newMission = [{ aircraft, target, distance, origin }]; // Saves the mission combination
@@ -391,7 +400,7 @@ async function resolveTransfers () {
 }
 
 async function clearMissions () {
-	for (const aircraft of await Aircraft.find()) {
+	for (aircraft of await Aircraft.find()) {
 		await aircraft.returnToBase();
 	}
 	interceptionMissions = []; // Attempted Interception missions for the round

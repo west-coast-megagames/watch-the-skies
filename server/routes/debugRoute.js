@@ -10,6 +10,7 @@ const { Upgrade } = require('../models/upgrade');
 const { Facility } = require('../models/facility');
 const { Aircraft } = require('../models/aircraft');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
+const badwordsArray = require('../middleware/badWords');
 
 const { rand } = require('../util/systems/dice');
 const { resolveMissions } = require('../wts/intercept/missions');
@@ -87,5 +88,14 @@ router.patch('/returnAircraft', async function (req, res) {
 	nexusEvent.emit('updateAircrafts');
 });
 
+router.get('/badword', async function (req, res){
+	let { word } = req.body;
+	if (badwordsArray.includes(word)){
+		res.send(`${word} is a bad word!`);
+	}
+	else {
+		res.send(`''${word}'' might not be a bad word!`);
+	}
+});
 
 module.exports = router;

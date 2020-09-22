@@ -38,14 +38,6 @@ const logger = createLogger({
       collection: "logerrors",
       options: { useUnifiedTopology: true },
     }),
-    // Info / Warnings / Errors combined
-    new transports.MongoDB({
-      db: dbURI,
-      level: "info",
-      metaKey: "meta",
-      collection: "loginfos",
-      options: { useUnifiedTopology: true },
-    }),
   ],
 });
 

@@ -27,6 +27,7 @@ const science = require('../../wts/research/research');
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const { func } = require('joi');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
+const nexusError = require('../../middleware/util/throwError');
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ACCOUNTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -49,6 +50,9 @@ router.put('/transfer', async (req, res) => {// work in progress, still broken
 	try {
 		const target = await Facility.findById(facility).populate('site');
 		aircraft = await Aircraft.findById(aircraft);
+		if (!aircraft || aircraft == null) {
+			nexusError(`Could not find aircraft!`, 404);
+		}
 
 		aircraft.status.deployed = true;
 		aircraft.status.ready = false;
@@ -56,13 +60,16 @@ router.put('/transfer', async (req, res) => {// work in progress, still broken
 
 		const mission = 'Transfer';
 		aircraft.mission = mission;
+		aircraft.origin = facility._id;
+
+		
 		aircraft = await aircraft.save();
 		await airMission.start(aircraft, target, mission);
 
 		res.status(200).send(`Transfer of ${aircraft.name} to ${target.name} initiated...`);
 	}
 	catch (err) {
-		res.status(404).send(err);
+		res.status(400).send(`Error in transfer route: ${err}`);
 	}
 });
 // @route   PUT game/aircraft/repair
