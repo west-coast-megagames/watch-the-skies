@@ -2,7 +2,7 @@ const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
 const validateObjectId = require('../../middleware/util/validateObjectId');
-const { logger } = require('../../middleware/log/winston');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft'); // Aircraft Model

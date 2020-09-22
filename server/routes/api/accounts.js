@@ -87,7 +87,7 @@ router.delete('/:id', validateObjectId, async function (req, res) {
 			res.status(200).send(`${account.name} with the id ${id} was deleted!`);
 		}
 		else {
-			nexusError(`No account with the id ${id} exists!`, 400);
+			nexusError(`No account with the id ${id} exists!`, 404);
 		}
 	}
 	catch (err) {
