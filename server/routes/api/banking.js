@@ -35,6 +35,7 @@ router.post('/account', async function (req, res) {
 	owner = team.shortName;
 
 	const newAccount = new Account(
+		// eslint-disable-next-line no-undef
 		{ team: teamId, name, code, balance, deposits, withdrawals, autoTransfers, owner }
 	);
 	const { error } = validateAccount(newAccount);
