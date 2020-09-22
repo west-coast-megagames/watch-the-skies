@@ -7,11 +7,13 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const banking = require('../wts/banking/banking'); // WTS Banking system
 const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
+const { Country } = require('./country'); // Import of Country model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
-const { Team } = require('./team'); // Import of Team model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
-const { Zone } = require('./zone');
-const nexusEvent = require('../middleware/events/events');
+const { Team } = require('./team'); // Import of Team model [Mongoose]
+const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
+const { Zone } = require('./zone'); // Import of Zone model [Mongoose]
+
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -103,35 +105,37 @@ AircraftSchema.methods.validateAircraft = async function () {
 	if (this.team === undefined) nexusError('No team ID given...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.team)) nexusError('Invalid Team ID given...', 400);
 	const team = await Team.findById(this.team);
-	if (team.length < 1) nexusError(`No team exists with the ID: ${this.team}`, 400);
+	if (team == null) nexusError(`No team exists with the ID: ${this.team}`, 400);
 
 	if (this.origin === undefined) nexusError('No facility ID given for origin...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.origin)) nexusError('Invalid facility ID given for origin...', 400);
 	const facility = await Facility.findById(this.origin);
-	if (facility.length < 1) nexusError(`No facility exists with the ID: ${this.origin}`, 400);
+	if (facility == null) nexusError(`No facility exists with the ID: ${this.origin}`, 400);
 
 	if (this.site === undefined) nexusError('No site ID given...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.site)) nexusError('Invalid site ID given...', 400);
 	const site = await Site.findById(this.site);
-	if (site.length < 1) nexusError(`No site exists with the ID: ${this.site}`, 400);
+	if (site == null) nexusError(`No site exists with the ID: ${this.site}`, 400);
 
 	if (this.zone === undefined) nexusError('No zone ID given...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.zone)) nexusError('Invalid zone ID given...', 400);
 	const zone = await Zone.findById(this.zone);
-	if (zone.length < 1) nexusError(`No zone exists with the ID: ${this.zone}`, 400);
+	if (zone == null) nexusError(`No zone exists with the ID: ${this.zone}`, 400);
 
 	if (this.country === undefined) nexusError('No country ID given...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.country)) nexusError('Invalid country ID given...', 400);
-	const country = await country.findById(this.country);
-	if (country.length < 1) nexusError(`No country exists with the ID: ${this.country}`, 400);
+	const country = await Country.findById(this.country);
+	if (country == null) nexusError(`No country exists with the ID: ${this.country}`, 400);
 };
 
-AircraftSchema.methods.launch = async (mission) => {
+// Launch Method - Changes the status of the craft and pays for the launch.
+AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);
 
 	try {
 		this.status.deployed = true;
 		this.status.ready = false;
+		this.mission = mission;
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
 		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
@@ -144,14 +148,16 @@ AircraftSchema.methods.launch = async (mission) => {
 		if (err.status !== undefined) {
 			nexusError(err.message, err.status);
 		}
-		else { 
+		else {
 			nexusError(err.message, 500);
 		}
 	}
 };
 
-AircraftSchema.methods.recall = async () => {
-	logger.info(`Recalling ${this.name} to base...` );
+
+// Recall method - Returns the craft to origin
+AircraftSchema.methods.recall = async function () {
+	logger.info(`Recalling ${this.name} to base...`);
 
 	try {
 		const { origin } = this;
@@ -173,6 +179,28 @@ AircraftSchema.methods.recall = async () => {
 	catch (err) {
 		nexusError(`${err.message}`, 500);
 	}
+};
+
+// stripUpgrades method - Removes all upgrades from a craft
+AircraftSchema.methods.stripUpgrades = async function () {
+	if (this.upgrades.length < 1) {
+		logger.info(`${this.name} has no upgrades...`);
+		return this;
+	}
+	logger.info(`Stripping ${this.name} of ${this.upgrade.length} upgrades...`);
+	for (let upgrade of this.upgrades) {
+		try {
+			upgrade = await Upgrade.findById(upgrade);
+			upgrade.status.storage = true;
+			await upgrade.save();
+		}
+		catch (err) {
+			nexusError(`${err.message}`, 500);
+		}
+	}
+	this.upgrades = [];
+	const aircraft = await this.save();
+	return aircraft;
 };
 
 const Aircraft = mongoose.model('Aircraft', AircraftSchema);
