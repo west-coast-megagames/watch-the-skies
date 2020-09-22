@@ -4,14 +4,14 @@ const {
   validateAircraft,
   validateName,
   validateAddr,
-} = require("../models/ops/aircraft");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
-const { Team } = require("../models/team/team");
+} = require("../models/aircraft");
+const { Upgrade } = require("../models/upgrade");
+const { Team } = require("../models/team");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 const { Log } = require("../models/logs/log");
-const { Facility } = require("../models/gov/facility/facility");
+const { Facility } = require("../models/facility");
 
 const aircraftCheckDebugger = require("debug")("app:aircraftCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

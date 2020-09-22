@@ -5,7 +5,7 @@ const {
   validateName,
   validateAddr,
 } = require("../models/user");
-const { Team } = require("../models/team/team");
+const { Team } = require("../models/team");
 
 const userCheckDebugger = require("debug")("app:userCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

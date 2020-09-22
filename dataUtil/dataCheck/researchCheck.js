@@ -1,14 +1,9 @@
 // Research Model - Using Mongoose Model
-const { Research } = require("../models/sci/research");
-const { Team } = require("../models/team/team");
-const {
-  Upgrade,
-  Gear,
-  Kit,
-  System,
-} = require("../models/gov/upgrade/upgrade");
-const { Site } = require("../models/sites/site");
-const { Facility } = require("../models/gov/facility/facility");
+const { Research } = require("../models/research");
+const { Team } = require("../models/team");
+const { Upgrade, Gear, Kit, System } = require("../models/upgrade");
+const { Site } = require("../models/site");
+const { Facility } = require("../models/facility");
 
 const researchCheckDebugger = require("debug")("app:researchCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
@@ -383,9 +378,7 @@ async function chkResearch(runFlag) {
                   `salvage.system missing for Analysis Research ${i} ${research.name} ${research._id}`
                 );
               } else {
-                upgrade = await Upgrade.findById(
-                  research.salvage[i].system
-                );
+                upgrade = await Upgrade.findById(research.salvage[i].system);
                 if (!upgrade) {
                   logger.error(
                     `Analysis Research salvage ${i} has invalid system Ref ${research.name} ${research._id}`

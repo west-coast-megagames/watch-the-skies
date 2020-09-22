@@ -21,10 +21,9 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // City Model - Using Mongoose Model
-const { GroundSite, validateGround } = require("../models/sites/site");
+const { GroundSite, validateGround } = require("../models/site");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { isDate } = require("util");
+const { Team } = require("../models/team");
 
 const app = express();
 

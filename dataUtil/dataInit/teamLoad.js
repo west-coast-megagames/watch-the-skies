@@ -33,7 +33,7 @@ const {
   validateNpc,
   Media,
   validateMedia,
-} = require("../models/team/team");
+} = require("../models/team");
 const { Country } = require("../models/country");
 
 const app = express();

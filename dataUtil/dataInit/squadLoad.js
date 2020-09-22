@@ -20,11 +20,11 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Squad Model - Using Mongoose Model
-const { Squad, validateSquad } = require("../models/ops/squad");
+const { Squad, validateSquad } = require("../models/squad");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
-const { Facility } = require("../models/gov/facility/facility");
+const { Team } = require("../models/team");
+const { Site } = require("../models/site");
+const { Facility } = require("../models/facility");
 const app = express();
 
 // Bodyparser Middleware

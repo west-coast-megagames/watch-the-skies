@@ -20,16 +20,16 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft, validateAircraft } = require("../models/ops/aircraft");
+const { Aircraft, validateAircraft } = require("../models/aircraft");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
+const { Team } = require("../models/team");
+const { Upgrade } = require("../models/upgrade");
 const { loadSystems, systems } = require("../wts/construction/systems/systems");
 const { validUnitType } = require("../wts/util/construction/validateUnitType");
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 const { delSystems } = require("../wts/util/construction/deleteSystems");
-const { Facility } = require("../models/gov/facility/facility");
+const { Facility } = require("../models/facility");
 const app = express();
 
 // Bodyparser Middleware

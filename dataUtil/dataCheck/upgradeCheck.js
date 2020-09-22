@@ -5,8 +5,8 @@ const {
   Gear,
   Kit,
   System,
-} = require("../models/gov/upgrade/upgrade");
-const { Team } = require("../models/team/team");
+} = require("../models/upgrade");
+const { Team } = require("../models/team");
 
 const upgradeCheckDebugger = require("debug")("app:upgradeCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

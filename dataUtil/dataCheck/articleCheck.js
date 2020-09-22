@@ -3,9 +3,9 @@ const {
   Article,
   validateArticle,
   validateTimestamp,
-} = require("../models/news/article");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
+} = require("../models/article");
+const { Team } = require("../models/team");
+const { Site } = require("../models/site");
 
 const articleCheckDebugger = require("debug")("app:articleCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

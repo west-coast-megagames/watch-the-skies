@@ -3,7 +3,7 @@ const { generateSalvage } = require("./salvage");
 const { d6, rand } = require("../../systems/dice");
 
 //Intercepter Model
-const { Aircraft } = require("../../models/ops/aircraft");
+const { Aircraft } = require("../../models/aircraft");
 
 async function interceptDmg(attacker, defender, atkResult, defResult) {
   interceptDebugger("Prepearing damage report...");

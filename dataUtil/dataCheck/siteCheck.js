@@ -6,10 +6,10 @@ const {
   validateGround,
   SpaceSite,
   validateSpace,
-} = require("../models/sites/site");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");//don't think this is used
-const { Facility } = require("../models/gov/facility/facility");
-const { Team } = require("../models/team/team");
+} = require("../models/site");
+const { Upgrade } = require("../models/upgrade"); //don't think this is used
+const { Facility } = require("../models/facility");
+const { Team } = require("../models/team");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
 const siteCheckDebugger = require("debug")("app:siteCheck");

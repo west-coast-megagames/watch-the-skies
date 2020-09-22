@@ -1,5 +1,5 @@
 // Team Model - Using Mongoose Model
-//const { Team, validateTeam } = require('../models/team/team');
+
 const {
   Team,
   validateTeam,
@@ -14,12 +14,12 @@ const {
   Media,
   validateMedia,
   validateRoles,
-} = require("../models/team/team");
+} = require("../models/team");
 const { Country } = require("../models/country");
-const { Account } = require("../models/gov/account");
+const { Account } = require("../models/account");
 const { Log } = require("../models/logs/log");
-const { Treaty } = require("../models/dip/treaty");
-const { Trade } = require("../models/dip/trade");
+const { Treaty } = require("../models/treaty");
+const { Trade } = require("../models/trade");
 
 const teamCheckDebugger = require("debug")("app:teamCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

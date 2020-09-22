@@ -1,7 +1,7 @@
 // Account Model - Using Mongoose Model
-const { Account, validateAccount } = require("../models/gov/account");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
+const { Account, validateAccount } = require("../models/account");
+const { Team } = require("../models/team");
+const { Site } = require("../models/site");
 
 const accountCheckDebugger = require("debug")("app:accountCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

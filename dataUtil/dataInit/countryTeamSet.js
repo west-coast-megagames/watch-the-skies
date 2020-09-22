@@ -12,7 +12,7 @@ const bodyParser = require("body-parser");
 
 // Country Model - Using Mongoose Model
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
+const { Team } = require("../models/team");
 
 const app = express();
 

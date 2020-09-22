@@ -21,12 +21,12 @@ const bodyParser = require("body-parser");
 //mongoose.set('useCreateIndex', true);
 
 // Spacecraft Model - Using Mongoose Model
-const { SpaceSite, validateSpace } = require("../models/sites/site");
+const { SpaceSite, validateSpace } = require("../models/site");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Facility } = require("../models/gov/facility/facility");
+const { Team } = require("../models/team");
+const { Facility } = require("../models/facility");
 const { Zone } = require("../models/zone");
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 const {
   loadFacilitys,
   facilitys,

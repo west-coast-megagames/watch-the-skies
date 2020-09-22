@@ -8,7 +8,7 @@ const {
   validateSpaceZone,
 } = require("../models/zone");
 const { Country } = require("../models/country");
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 
 const zoneCheckDebugger = require("debug")("app:zoneCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

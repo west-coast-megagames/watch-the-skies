@@ -17,13 +17,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 // Base Facility Model - Using Mongoose Model
-const {
-  Facility,
-  validateFacility,
-} = require("../models/gov/facility/facility");
+const { Facility, validateFacility } = require("../models/facility");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
+const { Team } = require("../models/team");
+const { Site } = require("../models/site");
 const app = express();
 
 // Bodyparser Middleware

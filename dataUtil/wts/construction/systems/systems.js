@@ -1,49 +1,51 @@
-const fs = require('fs')
-const config = require('config');
+const fs = require("fs");
+const config = require("config");
 
-const file = fs.readFileSync(require.resolve(config.get('initPathWTS') + 'json/upgrade/systems.json'));
+const file = fs.readFileSync(
+  require.resolve(config.get("initPathWTS") + "json/upgrade/systems.json")
+);
 const systemData = JSON.parse(file);
 
-systemsDebugger = require('debug')('app:systems');
+systemsDebugger = require("debug")("app:systems");
 
-const systems = []
+const systems = [];
 
-const { System } = require('../../../models/gov/upgrade/upgrade');
+const { System } = require("../../../models/upgrade");
 
 // Load function to load all systems.
-async function loadSystems () {
-    let count = 0;
+async function loadSystems() {
+  let count = 0;
 
-    await systemData.forEach(system => {
-        systemsDebugger(system);
-        systems[count] = new Sys(system);
-        count++;
-    });
+  await systemData.forEach((system) => {
+    systemsDebugger(system);
+    systems[count] = new Sys(system);
+    count++;
+  });
 
-    return `${count} systems available in WTS...`
-};
+  return `${count} systems available in WTS...`;
+}
 
 // Knowledge Constructor Function
 function Sys(system) {
-    this.name = system.name;
-    this.cost = system.cost;
-    this.prereq = system.prereq;
-    this.desc = system.desc;
-    this.category = system.category;
-    this.stats = system.stats;
-    this.code  = system.code;
-    this.unitType = system.unitType;
-    this.buildTime = system.buildTime;
+  this.name = system.name;
+  this.cost = system.cost;
+  this.prereq = system.prereq;
+  this.desc = system.desc;
+  this.category = system.category;
+  this.stats = system.stats;
+  this.code = system.code;
+  this.unitType = system.unitType;
+  this.buildTime = system.buildTime;
 
-    this.build = async function() {
-        let newSystem = new System(this)
+  this.build = async function () {
+    let newSystem = new System(this);
 
-        await newSystem.save();
+    await newSystem.save();
 
-        console.log(`${newSystem.name} has been built...`)
+    console.log(`${newSystem.name} has been built...`);
 
-        return newSystem;
-    }
+    return newSystem;
+  };
 }
 
 module.exports = { loadSystems, systems };

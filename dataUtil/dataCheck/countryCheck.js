@@ -1,7 +1,7 @@
 // Country Model - Using Mongoose Model
 const { Country, validateCountry } = require("../models/country");
-const { Site } = require("../models/sites/site");
-const { Team } = require("../models/team/team");
+const { Site } = require("../models/site");
+const { Team } = require("../models/team");
 const { Zone } = require("../models/zone");
 const countryCheckDebugger = require("debug")("app:countryLoad");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging
