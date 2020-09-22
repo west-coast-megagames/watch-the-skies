@@ -4,15 +4,15 @@ const {
   validateMilitary,
   Fleet,
   Corps,
-} = require("../models/ops/military/military");
+} = require("../models/military");
 
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
-const { Site } = require("../models/sites/site");
-const { Team } = require("../models/team/team");
+const { Upgrade } = require("../models/upgrade");
+const { Site } = require("../models/site");
+const { Team } = require("../models/team");
 const { Country } = require("../models/country");
 const { Zone } = require("../models/zone");
 const { Log } = require("../models/logs/log");
-const { Facility } = require("../models/gov/facility/facility");
+const { Facility } = require("../models/facility");
 
 const militaryCheckDebugger = require("debug")("app:militaryCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

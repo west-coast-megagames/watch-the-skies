@@ -28,7 +28,7 @@ const {
   SpaceCountry,
   validateSpaceCountry,
 } = require("../models/country");
-const { Team } = require("../models/team/team");
+const { Team } = require("../models/team");
 const { Zone } = require("../models/zone");
 
 const app = express();

@@ -1,16 +1,18 @@
-[   
-{   
+[
+  {
+    "buildModel": "upgrade",
     "name": "Cutting Laser",
     "code": "W-CL1",
     "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 2,
-    "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers"}],
+    "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers" }],
     "category": "Weapon",
     "desc": "Laser designed to cut through material and do damage to systems",
     "stats": { "attack": 1, "penetration": 1 }
-},
-{   
+  },
+  {
+    "buildModel": "upgrade",
     "name": "BS Railgun Mk. I",
     "code": "W-RG1",
     "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
@@ -19,10 +21,10 @@
     "prereq": [],
     "category": "Weapon",
     "desc": "Basic terrestrial mounted railgun",
-    "unlocks": "",
     "stats": { "attack": 1 }
-},
-{   
+  },
+  {
+    "buildModel": "upgrade",
     "name": "High Orbital Sensor Suite",
     "code": "S-HO1",
     "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
@@ -32,8 +34,9 @@
     "category": "Sensor",
     "desc": "Basic terrestrial sensor system",
     "stats": { "evade": 0 }
-},
-{   
+  },
+  {
+    "buildModel": "upgrade",
     "name": "Standard Cockpit",
     "code": "C-S1",
     "unitType": ["Any"],
@@ -43,19 +46,21 @@
     "category": "Compartment",
     "desc": "Basic single seater cock-pit",
     "stats": { "cargo": 0 }
-},
-{   
+  },
+  {
+    "buildModel": "upgrade",
     "name": "High Volacity Thrusters",
     "code": "E-HVT1",
-    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport" ],
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
     "buildtime": 1,
     "cost": 0,
     "prereq": [],
     "category": "Engine",
     "desc": "Basic terrestrial sensor system",
     "stats": { "range": 3000, "evade": 1 }
-},
-{   
+  },
+  {
+    "buildModel": "upgrade",
     "name": "Targeting CPU",
     "code": "U-TC1",
     "unitType": ["Interceptor", "Decoy", "Transport"],
@@ -64,9 +69,10 @@
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": { }
-},
-{   
+    "stats": {}
+  },
+  {
+    "buildModel": "upgrade",
     "name": "Fighter Targeting CPU",
     "code": "U-FTC1",
     "unitType": ["Fighter"],
@@ -76,6 +82,5 @@
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
     "stats": { "penetration": 1 }
-}
-
+  }
 ]

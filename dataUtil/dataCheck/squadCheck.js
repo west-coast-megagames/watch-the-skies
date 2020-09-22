@@ -1,11 +1,11 @@
 // Squad Model - Using Mongoose Model
-const { Squad, validateSquad } = require("../models/ops/squad");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
-const { Site } = require("../models/sites/site");
+const { Squad, validateSquad } = require("../models/squad");
+const { Upgrade } = require("../models/upgrade");
+const { Site } = require("../models/site");
 const { Country, validateCountry } = require("../models/country");
-const { Team } = require("../models/team/team");
+const { Team } = require("../models/team");
 const { Zone } = require("../models/zone");
-const { Facility } = require("../models/gov/facility/facility");
+const { Facility } = require("../models/facility");
 
 const squadCheckDebugger = require("debug")("app:squadCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

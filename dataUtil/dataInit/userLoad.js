@@ -27,7 +27,7 @@ const {
   validateName,
   validateAddr,
 } = require("../models/user");
-const { Team, validateTeam } = require("../models/team/team");
+const { Team, validateTeam } = require("../models/team");
 
 const app = express();
 

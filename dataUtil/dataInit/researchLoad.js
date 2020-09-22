@@ -25,8 +25,8 @@ const {
   KnowledgeResearch,
   AnalysisResearch,
   TechResearch,
-} = require("../models/sci/research");
-const { Team } = require("../models/team/team");
+} = require("../models/research");
+const { Team } = require("../models/team");
 
 const app = express();
 

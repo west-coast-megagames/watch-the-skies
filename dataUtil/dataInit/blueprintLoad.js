@@ -26,9 +26,9 @@ const {
   validateSquadBlueprint,
   UpgradeBlueprint,
   validateUpgradeBlueprint,
-} = require("../models/gov/blueprint");
+} = require("../models/blueprint");
 
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 
 const app = express();
 

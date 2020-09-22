@@ -55,7 +55,9 @@
     "unitType": ["City"],
     "desc": "Civilian Improvment Facility",
     "capacity": 2,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -75,7 +77,9 @@
     "unitType": ["City"],
     "desc": "Civilian Improvment Facility",
     "capacity": 2,
-    "effect": [{ "type": "pr", "effect": 1 }],
+    "facilityStats": {
+      "effect": [{ "type": "pr", "effect": 1 }]
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -95,7 +99,9 @@
     "unitType": ["Crisis"],
     "desc": "Mobile Crisis Control Facility",
     "capacity": 2,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -115,7 +121,9 @@
     "unitType": ["Base"],
     "desc": "Standard Base Lab Facility",
     "capacity": 1,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -138,7 +146,9 @@
     "unitType": ["Base"],
     "desc": "Standard Base Hanger Facility",
     "capacity": 5,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -157,7 +167,9 @@
     "unitType": ["Base"],
     "desc": "Secret Base Lab Facility",
     "capacity": 1,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -179,7 +191,9 @@
     "unitType": ["Base"],
     "desc": "Base Factory Facility",
     "capacity": 1,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -198,7 +212,9 @@
     "unitType": ["Spacecraft"],
     "desc": "Standard Spacecraft Lab Facility",
     "capacity": 1,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -220,7 +236,9 @@
     "unitType": ["Spacecraft"],
     "desc": "Standard Spacecraft Hanger Facility",
     "capacity": 3,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -239,7 +257,9 @@
     "unitType": ["Crash"],
     "desc": "Mobile Research Lab Facility",
     "capacity": 1,
-    "effect": [],
+    "facilityStats": {
+      "effect": []
+    },
     "prereq": [],
     "status": {
       "secret": false
@@ -255,7 +275,7 @@
     "buildModel": "upgrade",
     "name": "Preservation Improvements",
     "code": "KA-1",
-    "unitType": "Crisis",
+    "unitType": ["Crisis"],
     "cost": 2,
     "buildTime": 1,
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
@@ -268,7 +288,7 @@
     "buildModel": "upgrade",
     "name": "Water Supply Improvements",
     "code": "KA-2",
-    "unitType": "Crisis",
+    "unitType": ["Crisis"],
     "cost": 3,
     "buildTime": 1,
     "desc": "Better water supply techniques have been implemented, so water is more readily available than in the past.",
@@ -282,7 +302,7 @@
     "buildModel": "upgrade",
     "name": "Farm Intergration Improvements",
     "code": "KA-3",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 2,
     "buildTime": 1,
     "desc": "Farming techinques have been come easier to track and implement.",
@@ -296,7 +316,7 @@
     "buildModel": "upgrade",
     "name": "Food Synthesis: Industrial",
     "code": "KA-4",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 8,
     "buildTime": 2,
     "desc": "Large food synthesizers to help feed this nation. Food insecurity has been greatly reduce as there are many of them around your nation.",
@@ -324,7 +344,7 @@
     "buildModel": "upgrade",
     "name": "Food Synthesis: Individual",
     "code": "KA-6",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 25,
     "buildTime": 2,
     "desc": "Individualized food synthesizers to help feed every citizen. Food insecurity is nearly a thing of the past in this nation.",
@@ -352,7 +372,7 @@
     "buildModel": "upgrade",
     "name": "Scientist Augmentation",
     "code": "KB-2",
-    "unitType": "Base",
+    "unitType": ["Base"],
     "cost": 25,
     "buildTime": 2,
     "desc": "Neuro-upgrades for your secret labs' scientists.",
@@ -366,7 +386,7 @@
     "buildModel": "upgrade",
     "name": "Robot Nursing Clinic",
     "code": "KB-3",
-    "unitType": "Crisis",
+    "unitType": ["Crisis"],
     "cost": 25,
     "buildTime": 1,
     "desc": "Robot nurses are sent into crisis. This allows for safer, easier, and quicker response, distributing medical care.",
@@ -380,7 +400,7 @@
     "buildModel": "upgrade",
     "name": "Robo-Urgent Care Centers",
     "code": "KB-4",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 30,
     "buildTime": 2,
     "desc": "Stable, always available Urgent Care centers have opened nation-wide, equipped with amazing robotic doctors with Baymax levels of diagnosing.",
@@ -394,7 +414,7 @@
     "buildModel": "upgrade",
     "name": "Beginning AI Processing Units",
     "code": "KI-1",
-    "unitType": "Base",
+    "unitType": ["Base"],
     "cost": 25,
     "buildTime": 2,
     "desc": "AI computers increase computation speed.",
@@ -408,7 +428,7 @@
     "buildModel": "upgrade",
     "name": "Landfill Removers",
     "code": "KI-2",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 10,
     "buildTime": 2,
     "desc": "Materials deconstructed eats away at landfills.",
@@ -425,7 +445,7 @@
     "buildModel": "upgrade",
     "name": "Better AI Processing Units",
     "code": "KI-3",
-    "unitType": "Base",
+    "unitType": ["Base"],
     "cost": 25,
     "buildTime": 2,
     "desc": "AI computers increase computation speed.",
@@ -439,7 +459,7 @@
     "buildModel": "upgrade",
     "name": "Short Term Weather Redirect",
     "code": "KI-4",
-    "unitType": "Crisis",
+    "unitType": ["Crisis"],
     "cost": 25,
     "buildTime": 1,
     "desc": "Local weather patterns change in your favor. Unknown global effects.",
@@ -456,7 +476,7 @@
     "buildModel": "upgrade",
     "name": "Holo VR Centers",
     "code": "KI-5",
-    "unitType": "Clivilian",
+    "unitType": ["Clivilian"],
     "cost": 10,
     "buildTime": 2,
     "desc": "Like the early Holodeck, these centers allow for life like interactions with digital enities. They also allow for those seperated by distance to have in-person interactions.",
@@ -473,7 +493,7 @@
     "buildModel": "upgrade",
     "name": "Arc Cities",
     "code": "KI-6",
-    "unitType": "MegaProject",
+    "unitType": ["MegaProject"],
     "cost": 30,
     "buildTime": 3,
     "desc": "ARC-like cities, these structures hold entire large communities with every small ecological and physical footprint.",
@@ -490,7 +510,7 @@
     "buildModel": "upgrade",
     "name": "Towers of Bable",
     "code": "KI-7",
-    "unitType": "MegaProject",
+    "unitType": ["MegaProject"],
     "cost": 40,
     "buildTime": 3,
     "desc": "Monolithic structures that can hold many more things than we can think of.",
@@ -507,7 +527,7 @@
     "buildModel": "upgrade",
     "name": "Space-Ground Docks",
     "code": "KI-8",
-    "unitType": "MegaProject",
+    "unitType": ["MegaProject"],
     "cost": 70,
     "buildTime": 3,
     "desc": "Monolithic structures which attempt to bridge Space to the very Earth.",
@@ -524,7 +544,7 @@
     "buildModel": "upgrade",
     "name": "Greg, the Super Computer Scientist",
     "code": "KI-9",
-    "unitType": "Base",
+    "unitType": ["Base"],
     "cost": 30,
     "buildTime": 2,
     "desc": "Greg, your friendly neighborhood scientist, has signed up to work in your lab",
@@ -555,7 +575,7 @@
     "buildModel": "upgrade",
     "name": "Auto-Vehicles Networking",
     "code": "KM-1",
-    "unitType": "Civilian",
+    "unitType": ["Civilian"],
     "cost": 10,
     "buildTime": 2,
     "desc": "You are slowly helping make the world a safer place, a place free from communter nightmares and far fewer crashes.",
@@ -569,7 +589,7 @@
     "buildModel": "upgrade",
     "name": "Workforce: Droid",
     "code": "KM-2",
-    "unitType": "Civilian",
+    "unitType": ["Civilian"],
     "cost": 15,
     "buildTime": 2,
     "desc": "Robots programmed reminiscent of the 3 Laws are now integrated and optimized into your workforce.",
@@ -579,5 +599,103 @@
     ],
     "prereq": [{ "type": "Technology", "code": "Mil3E" }],
     "stats": {}
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "Cutting Laser",
+    "code": "W-CL1",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
+    "buildtime": 1,
+    "cost": 2,
+    "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers" }],
+    "category": "Weapon",
+    "desc": "Laser designed to cut through material and do damage to systems",
+    "stats": { "attack": 1, "penetration": 1 }
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "BS Railgun Mk. I",
+    "code": "W-RG1",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Weapon",
+    "desc": "Basic terrestrial mounted railgun",
+    "stats": { "attack": 1 }
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "High Orbital Sensor Suite",
+    "code": "S-HO1",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Sensor",
+    "desc": "Basic terrestrial sensor system",
+    "stats": { "evade": 0 }
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "Standard Cockpit",
+    "code": "C-S1",
+    "unitType": ["Any"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Compartment",
+    "desc": "Basic single seater cock-pit",
+    "stats": { "cargo": 0 }
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "High Volacity Thrusters",
+    "code": "E-HVT1",
+    "unitType": ["Interceptor", "Fighter", "Decoy", "Transport"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Engine",
+    "desc": "Basic terrestrial sensor system",
+    "stats": { "range": 3000, "evade": 1 }
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "Targeting CPU",
+    "code": "U-TC1",
+    "unitType": ["Interceptor", "Decoy", "Transport"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Util",
+    "desc": "Basic terrestrial sensor system",
+    "stats": {}
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "upgrade",
+    "name": "Fighter Targeting CPU",
+    "code": "U-FTC1",
+    "unitType": ["Fighter"],
+    "buildtime": 1,
+    "cost": 0,
+    "prereq": [],
+    "category": "Util",
+    "desc": "Basic terrestrial sensor system",
+    "stats": { "penetration": 1 }
   }
 ]

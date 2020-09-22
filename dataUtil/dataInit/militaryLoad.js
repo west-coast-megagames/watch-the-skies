@@ -26,18 +26,18 @@ const {
   validateMilitary,
   Fleet,
   Corps,
-} = require("../models/ops/military/military");
+} = require("../models/military");
 const { Zone } = require("../models/zone");
 const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
+const { Team } = require("../models/team");
+const { Upgrade } = require("../models/upgrade");
 const {
   loadMilGears,
   gears,
   validUnitType,
 } = require("../wts/construction/upgrade/milGear");
-const { Site } = require("../models/sites/site");
-const { Facility } = require("../models/gov/facility/facility");
+const { Site } = require("../models/site");
+const { Facility } = require("../models/facility");
 const app = express();
 
 // Bodyparser Middleware

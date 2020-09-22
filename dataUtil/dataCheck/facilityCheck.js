@@ -1,13 +1,10 @@
-const {
-  Facility,
-  validateFacility,
-} = require("../models/gov/facility/facility");
-const { Upgrade } = require("../models/gov/upgrade/upgrade");
-const { Research } = require("../models/sci/research");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
-const { Aircraft } = require("../models/ops/aircraft");
-const { Military } = require("../models/ops/military/military");
+const { Facility, validateFacility } = require("../models/facility");
+const { Upgrade } = require("../models/upgrade");
+const { Research } = require("../models/research");
+const { Team } = require("../models/team");
+const { Site } = require("../models/site");
+const { Aircraft } = require("../models/aircraft");
+const { Military } = require("../models/military");
 
 const facilityCheckDebugger = require("debug")("app:facilityCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

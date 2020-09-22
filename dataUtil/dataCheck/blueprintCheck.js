@@ -10,9 +10,9 @@ const {
   validateSquadBlueprint,
   UpgradeBlueprint,
   validateUpgradeBlueprint,
-} = require("../models/gov/blueprint");
+} = require("../models/blueprint");
 
-const { Site } = require("../models/sites/site");
+const { Site } = require("../models/site");
 
 const blueprintCheckDebugger = require("debug")("app:blueprintCheck");
 const { logger } = require("../middleware/winston"); // Import of winston for error logging

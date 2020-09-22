@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const modelDebugger = require("debug")("app: Military Model");
 const Schema = mongoose.Schema;
 const Joi = require("joi");
-const { logger } = require("../../../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const MilitarySchema = new Schema({
@@ -63,7 +63,7 @@ const Corps = Military.discriminator(
 
 MilitarySchema.methods.deploy = async (unit, country) => {
   const banking = require("../../../wts/banking/banking");
-  const { Account } = require("../../gov/account");
+  const { Account } = require("../../account");
 
   try {
     modelDebugger(
