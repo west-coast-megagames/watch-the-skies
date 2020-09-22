@@ -33,7 +33,7 @@ router.put('/', async (req, res) => {
 	aircraft.zone = target.zone;
 	aircraft.mission = mission;
 
-	aircraft = await aircraft.launch(aircraft, mission); // Changes attacker status
+	aircraft = await aircraft.launch(mission); // Changes attacker status
 	result = `${result} ${aircraft.name} en route to attempt ${mission.toLowerCase()}.`;
 
 	await airMission.start(aircraft, target, mission);

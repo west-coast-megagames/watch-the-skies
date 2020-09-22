@@ -6,6 +6,7 @@ const cors = require('cors');
 
 // Routes - Using Express
 const article = require('./api/articles');
+const aircraft = require('./api/aircrafts');
 const auth = require('./api/auth');
 const account = require('./api/accounts');
 const banking = require('./api/banking');
@@ -13,7 +14,6 @@ const control = require('./api/control');
 const country = require('./api/country');
 const facilities = require('./api/facilities');
 const home = require('./api/home');
-const interceptor = require('./api/interceptor');
 const intercept = require('./api/intercept');
 const logs = require('./api/log');
 const logError = require('./api/logErrors');
@@ -54,7 +54,7 @@ module.exports = function (app) {
 	app.use('/game/admin', admin);
 	app.use('/game/delete', del);
 	app.use('/api/auth', auth);
-	app.use('/api/interceptor', interceptor); // Route for manipulating interceptors
+	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
 	app.use('/api/team', team); // Route for Teams
 	app.use('/api/intercept', intercept); // Route for triggering an interception
 	app.use('/api/zones', zones); // Route for inputing zones
