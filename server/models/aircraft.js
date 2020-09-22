@@ -108,12 +108,11 @@ AircraftSchema.methods.launch = async (aircraft, mission) => {
 };
 
 AircraftSchema.methods.returnToBase = async () => {
-	logger.info(`Returning ${this.name} to ${origin.name}...`);
-
 	let { origin } = this;
 	origin = await Facility.findById(origin)
 		.populate('site');
-
+		
+	logger.info(`Returning ${this.name} to ${origin.name}...`);
 	this.mission = 'Docked';
 	this.status.ready = true;
 	this.status.deployed = false;
