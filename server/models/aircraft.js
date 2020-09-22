@@ -7,12 +7,9 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const banking = require('../wts/banking/banking'); // WTS Banking system
 const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
-const { Country } = require('./country'); // Import of Country model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
-const { Site } = require('./site'); // Import of Site model [Mongoose]
-const { Team } = require('./team'); // Import of Team model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
-const { Zone } = require('./zone'); // Import of Zone model [Mongoose]
+const docCheck = require('../middleware/util/validateDocument');
 
 
 // Aircraft Schema
@@ -26,11 +23,11 @@ const AircraftSchema = new Schema({
 		default: 'Fighter'
 	},
 	name: { type: String, required: true, min: 2, maxlength: 50 },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site' },
-	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
-	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
+	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
+	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
+	country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
 	mission: { type: String, default: 'Docked' },
 	status: {
 		damaged: { type: Boolean, default: false },
@@ -102,30 +99,11 @@ AircraftSchema.methods.validateAircraft = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	if (this.team === undefined) nexusError('No team ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.team)) nexusError('Invalid Team ID given...', 400);
-	const team = await Team.findById(this.team);
-	if (team == null) nexusError(`No team exists with the ID: ${this.team}`, 400);
-
-	if (this.origin === undefined) nexusError('No facility ID given for origin...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.origin)) nexusError('Invalid facility ID given for origin...', 400);
-	const facility = await Facility.findById(this.origin);
-	if (facility == null) nexusError(`No facility exists with the ID: ${this.origin}`, 400);
-
-	if (this.site === undefined) nexusError('No site ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.site)) nexusError('Invalid site ID given...', 400);
-	const site = await Site.findById(this.site);
-	if (site == null) nexusError(`No site exists with the ID: ${this.site}`, 400);
-
-	if (this.zone === undefined) nexusError('No zone ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.zone)) nexusError('Invalid zone ID given...', 400);
-	const zone = await Zone.findById(this.zone);
-	if (zone == null) nexusError(`No zone exists with the ID: ${this.zone}`, 400);
-
-	if (this.country === undefined) nexusError('No country ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.country)) nexusError('Invalid country ID given...', 400);
-	const country = await Country.findById(this.country);
-	if (country == null) nexusError(`No country exists with the ID: ${this.country}`, 400);
+	docCheck.validTeam(this.team);
+	docCheck.validFacility(this.origin);
+	docCheck.validSite(this.site);
+	docCheck.validZone(this.zone);
+	docCheck.validCountry(this.country);
 };
 
 // Launch Method - Changes the status of the craft and pays for the launch.

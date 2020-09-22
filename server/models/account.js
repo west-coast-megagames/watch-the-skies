@@ -2,10 +2,10 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const docCheck = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
-const { Team } = require('./team'); // Import of Team model [Mongoose]
 
 // Transfer sub-schema
 const TransferSchema = new Schema({
@@ -18,9 +18,9 @@ const TransferSchema = new Schema({
 // Account Schema
 const AccountSchema = new Schema({
 	model: { type: String, default: 'Account' },
-	team: { type: Schema.Types.ObjectId, ref: 'Team', require },
+	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	owner: { type: String },
-	name: { type: String, require },
+	name: { type: String, required: true },
 	code: { type: String },
 	balance: { type: Number, default: 0 },
 	deposits: [Number],
@@ -40,10 +40,7 @@ AccountSchema.methods.validateAccount = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	if (this.team === undefined) nexusError('No team ID...', 400);
-	if (!mongoose.Types.ObjectId.isValid(this.team)) nexusError('Invalid Team ID...', 400);
-	const team = await Team.findById(this.team);
-	if (team.length < 1) nexusError(`No team exists with the ID: ${this.team}`, 400);
+	docCheck.validTeam(this.team);
 };
 
 const Account = mongoose.model('account', AccountSchema); // Creation of Account Model

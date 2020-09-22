@@ -1,5 +1,5 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
-const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const nexusError = require('../../middleware/util/throwError'); // Costom error handler util
 
 // Global Constants
 const { Account } = require('../../models/account'); // Import of Account model [Mongoose]
