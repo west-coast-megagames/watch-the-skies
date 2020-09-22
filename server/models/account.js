@@ -42,7 +42,6 @@ AccountSchema.methods.validateAccount = async function () {
 
 	if (this.team === undefined) nexusError('No team ID...', 400);
 	if (!mongoose.Types.ObjectId.isValid(this.team)) nexusError('Invalid Team ID...', 400);
-
 	const team = await Team.findById(this.team);
 	if (team.length < 1) nexusError(`No team exists with the ID: ${this.team}`, 400);
 };
