@@ -2,9 +2,9 @@ const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
-const validateObjectId = require('../../middleware/util/validateObjectId');
-const httpErrorHandler = require('../../middleware/util/httpError');
-const nexusError = require('../../middleware/util/throwError');
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Function Import
 const { makeTimestamp } = require('../../wts/gameClock/gameClock');
@@ -52,7 +52,6 @@ router.get('/:id', validateObjectId, async (req, res) => {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
-
 });
 
 // @route   POST api/articles

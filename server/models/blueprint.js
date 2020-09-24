@@ -9,16 +9,11 @@ const ObjectId = mongoose.ObjectId;
 
 const BlueprintSchema = new Schema({
 	model: { type: String, default: 'Blueprint' },
-	name: { type: String, min: 2, maxlength: 50, required: true },
-	code: { type: String, minlength: 2, maxlength: 20, required: true },
+	name: { type: String, min: 2, maxlength: 50, required: true, unique: true },
+	code: { type: String, minlength: 2, maxlength: 20, required: true, unique: true },
 	cost: { type: Number, default: 0 },
 	buildTime: { type: Number, default: 0 },
-	desc: {
-		type: String,
-		min: 1,
-		maxlength: 255,
-		default: 'Blueprint'
-	},
+	desc: { type: String, min: 1, maxlength: 255, default: 'Blueprint' },
 	prereq: [],
 	hidden: { type: Boolean, default: false }
 });
@@ -37,6 +32,12 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
+
+	let doc = await Blueprint.findOne({ code: this.code });
+	if (doc != null) nexusError(`A blueprint with code ${this.code} exists. code must be unique.`, 400);
+
+	doc = await Blueprint.findOne({ name: this.name });
+	if (doc != null) nexusError(`A blueprint with name ${this.name} exists. name must be unique.`, 400);
 };
 
 const Blueprint = mongoose.model('Blueprint', BlueprintSchema);
