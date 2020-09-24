@@ -1,49 +1,57 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Joi = require('joi');
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const docCheck = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
 
 const ArticleSchema = new Schema({
 	model: { type: String, default: 'Article' },
 	publisher: { type: Schema.Types.ObjectId, ref: 'Team' },
-	date: { type: Date },
+	date: { type: Date, required: true },
 	timestamp: {
 		turn: { type: String },
 		phase: { type: String },
 		turnNum: { type: Number },
 		clock: { type: String }
 	},
-	location: { type: Schema.Types.ObjectId, ref: 'Site' },
+	location: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	dateline: { type: String },
 	headline: { type: String, required: true, minlength: 1, maxlength: 100 },
-	articleBody: { type: String, minlength: 1, maxlength: 1000 },
+	body: { type: String, minlength: 1, maxlength: 1000 },
 	likes: { type: Number, default: 0 },
 	tags: [{ type: String }],
 	imageSrc: { type: String },
-	agency: { type: String },
 	gameState: [],
 	hidden: { type: Boolean, default: false }
 });
 
-const Article = mongoose.model('article', ArticleSchema);
-
-function validateArticle (article) {
-	const schema = {
-		headline: Joi.string().min(1).max(100).required(),
-		articleBody: Joi.string().min(1).max(1000)
-	};
-
-	return Joi.validate(article, schema, { allowUnknown: true });
-}
-
-function validateTimestamp (timestamp) {
-	const schema = {
+// validateArticle method
+ArticleSchema.methods.validateArticle = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.headline}...`);
+	const timeStampSchema = {
 		turn: Joi.string().min(1),
 		phase: Joi.string().min(1),
 		clock: Joi.string().min(1),
 		turnNum: Joi.number().min(0)
 	};
 
-	return Joi.validate(timestamp, schema, { allowUnknown: true });
-}
+	const schema = {
+		date: Joi.date().less('now'),
+		headline: Joi.string().min(1).max(100).required(),
+		body: Joi.string().min(1).max(1000),
+		timestamp: Joi.object(timeStampSchema)
+	};
 
-module.exports = { Article, validateArticle, validateTimestamp };
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	docCheck.validTeam(this.publisher);
+	docCheck.validSite(this.location);
+};
+
+const Article = mongoose.model('article', ArticleSchema);
+
+module.exports = { Article };
