@@ -1,4 +1,4 @@
-const {LogInfo } = require('../../models/loggers/logInfo');
+const { LogInfo } = require('../../models/log/logInfo');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -12,7 +12,7 @@ mongoose.set('useCreateIndex', true);
 // @route   GET api/logInfo
 // @Desc    Get all logInfo
 // @access  Public
-router.get('/', async (req, res) => { 
+router.get('/', async (req, res) => {
 	const logInfo = await LogInfo.find().sort('timestamp');
 	res.json(logInfo);
 });
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
 // @Desc    Get logInfo by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
-	let id = req.params.id;
+	const id = req.params.id;
 	const logInfo = await LogInfo.findById(id).sort('timestamp');
 
 	if (logInfo != null) {
@@ -41,10 +41,11 @@ router.patch('/deleteAll', async function (req, res) {
 		const id = logInfo.id;
 		try {
 			const logInfoDel = await LogInfo.findByIdAndRemove(id);
-			if (logInfoDel = null) {
+			if (logInfoDel === null) {
 				res.status(404).send(`The LogInfo with the ID ${id} was not found!`);
 			}
-		} catch (err) {
+		}
+		catch (err) {
 			console.log('Error:', err.message);
 			res.status(400).send(err.message);
 		}

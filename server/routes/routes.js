@@ -4,20 +4,23 @@ const bodyParser = require('body-parser');
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const cors = require('cors');
 
-// Routes - Using Express
+const auth = require('./api/auth');
+
+// Public Routes - Using Express
+// Desc - Public Routes host HTML information for people visiting
+const home = require('./public/home');
+
+// API Routes - Using Express
+// Desc - API routes are the raw HTTP GET/POST/DEL access to our models
 const article = require('./api/articles');
 const aircraft = require('./api/aircrafts');
-const auth = require('./api/auth');
 const account = require('./api/accounts');
-const banking = require('./game/banking');
-const control = require('./game/control');
 const country = require('./api/country');
 const facilities = require('./api/facilities');
-const home = require('./api/home');
 const intercept = require('./api/intercept');
 const logs = require('./api/log');
-const logError = require('./api/logErrors');
-const logInfo = require('./api/logInfo');
+const logError = require('./log/logErrors');
+const logInfo = require('./log/logInfo');
 const military = require('./api/military');
 const news = require('./api/news');
 const research = require('./api/research');
@@ -28,10 +31,14 @@ const treaty = require('./api/treaty');
 const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 
+// Game Routes - Using Express
+// Desc - Game routes serve as the HTTP access point to game functions
 const debug = require('./debugRoute');
 const game = require('./game/game');
 const admin = require('./game/admin');
 const del = require('./game/delete');
+const banking = require('./game/banking');
+const control = require('./game/control');
 
 const users = require('./api/users');
 
