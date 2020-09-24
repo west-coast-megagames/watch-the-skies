@@ -60,7 +60,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
 	logger.info('POST Route: api/articles call made...');
-	const newArticle = new Article(req.body);
+	let newArticle = new Article(req.body);
 
 	try {
 		newArticle.date = new Date();
