@@ -7,8 +7,8 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 // Interceptor Model - Using Mongoose Model
 const { Account } = require('../../models/account'); // Financial Account Model
 const { Team } = require('../../models/team'); // WTS Team Model
-const nexusError = require('../../middleware/util/throwError'); // Costom Error handling for Nexus
-const httpErrorHandler = require('../../middleware/util/httpError');
+const nexusError = require('../../middleware/util/throwError'); // Custom Error handling for Nexus
+const httpErrorHandler = require('../../middleware/util/httpError'); // Custom HTTP error sending for Nexus
 
 // @route   GET api/account
 // @Desc    Get all Accounts
@@ -28,26 +28,30 @@ router.get('/', async function (req, res) {
 });
 
 // @route   GET api/account/:id
-// @Desc    Get all single account
+// @Desc    Get a single account by ID
 // @access  Public
 router.get('/:id', validateObjectId, async function (req, res) {
 	logger.info('GET Route: api/account/:id requested...');
 	try {
 		const account = await Account.findById({ _id: req.params.id })
 			.populate('team', 'name shortName');
-		res.json(account);
+		if (account != null) {
+			res.status(200).json(account);
+		}
+		else {
+			nexusError(`There is no account with the ID ${req.params.id}`, 400);
+		}
 	}
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
-
 });
 
 // @route   POST api/account
 // @Desc    Post a new account
 // @access  Public
 router.post('/', async function (req, res) {
-	logger.info('POST Route: api/account post made...');
+	logger.info('POST Route: api/account call made...');
 
 	try {
 		let newAccount = new Account(req.body);
@@ -73,7 +77,9 @@ router.post('/', async function (req, res) {
 // @Desc    Delete a account
 // @access  Public
 router.delete('/:id', validateObjectId, async function (req, res) {
+	logger.info('DEL Route: api/account/:id call made...');
 	const id = req.params.id;
+
 	try {
 		const account = await Account.findByIdAndRemove(id);
 		if (account != null) {
@@ -81,7 +87,7 @@ router.delete('/:id', validateObjectId, async function (req, res) {
 			res.status(200).send(`${account.name} with the id ${id} was deleted!`);
 		}
 		else {
-			nexusError(`No account with the id ${id} exists!`, 400);
+			nexusError(`No account with the id ${id} exists!`, 404);
 		}
 	}
 	catch (err) {

@@ -1,46 +1,87 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
+
 const validateObjectId = require('../../middleware/util/validateObjectId');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 // Aircraft Model - Using Mongoose Model
-const { Aircraft } = require('../../models/aircraft');
-const { Upgrade } = require('../../models/upgrade');
-const { newUnit } = require('../../wts/construction/construction');
+const { Aircraft } = require('../../models/aircraft'); // Aircraft Model
+const { Team } = require('../../models/team'); // WTS Team Model
+const httpErrorHandler = require('../../middleware/util/httpError');
+const nexusError = require('../../middleware/util/throwError');
 
 // @route   GET api/aircraft
 // @Desc    Get all Aircrafts
 // @access  Public
 router.get('/', async function (req, res) {
-	// console.log('Sending aircrafts somewhere...');
-	const aircrafts = await Aircraft.find()
-		.sort({ team: 1 })
-		.populate('team', 'name shortName')
-		.populate('zone', 'name')
-		.populate('country', 'name')
-		.populate('systems', 'name category')
-		.populate('site', 'name')
-		.populate('origin', 'name');
-	res.status(200).json(aircrafts);
+	logger.info('GET Route: api/aircraft requested...');
+	try {
+		const aircrafts = await Aircraft.find()
+			.sort({ team: 1 })
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('systems', 'name category')
+			.populate('site', 'name')
+			.populate('origin', 'name');
+		res.status(200).json(aircrafts);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/aircraft
-// @Desc    Get Aircrafts by ID
+// @route   GET api/aircraft/:id
+// @Desc    Get a single aircraft by ID
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/aircraft/:id requested...');
 	const id = req.params.id;
-	const aircraft = await Aircraft.findById(id)
-		.sort({ team: 1 })
-		.populate('team', 'name shortName')
-		.populate('zone', 'name')
-		.populate('country', 'name')
-		.populate('systems', 'name category')
-		.populate('site', 'name')
-		.populate('base', 'name');
-	if (aircraft != null) {
-		res.status(200).json(aircraft);
+	try {
+		const aircraft = await Aircraft.findById(id)
+			.sort({ team: 1 })
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('systems', 'name category')
+			.populate('site', 'name')
+			.populate('base', 'name');
+		if (aircraft != null) {
+			res.status(200).json(aircraft);
+		}
+		else {
+			res.status(404).send(`The Aircraft with the ID ${id} was not found!`);
+		}
 	}
-	else {
-		res.status(404).send(`The Aircraft with the ID ${id} was not found!`);
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   POST api/aircraft
+// @Desc    Post a new aircraft
+// @access  Public
+router.post('/', async function (req, res) {
+	logger.info('POST Route: api/aircraft call made...');
+
+	try {
+		let newAircraft = new Aircraft(req.body);
+		await newAircraft.validateAircraft();
+		const docs = await Aircraft.find({ name: req.body.name, team: req.body.team });
+
+		if (docs.length < 1) {
+			newAircraft = await newAircraft.save();
+			await Team.populate(newAircraft, { path: 'team', model: 'Team', select: 'name' });
+			logger.info(`${newAircraft.name} aircraft created for ${newAircraft.team.name} ...`);
+			res.status(200).json(newAircraft);
+		}
+		else {
+			nexusError(`A aircraft named ${newAircraft.name} already exists for this team!`, 400);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 
@@ -48,40 +89,22 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 // @Desc    Delete an aircraft
 // @access  Public
 router.delete('/:id', async function (req, res) {
-	const id = req.params.id;
-	const aircraft = await Aircraft.findByIdAndRemove(id);
-	if (aircraft != null) {
-		// remove associated systems records
-		for (let j = 0; j < aircraft.systems.length; ++j) {
-			const upgId = aircraft.upgrades[j]; // changed systems removed to Upgrades.
-			try{
-				let removedUP = await Upgrade.findById(upgId);
-				removedUP.status.storage = true;
-				removedUP = await removedUP.save();
-			}
-			catch{
-				console.log(`The Upgrade with the ID ${upgId} was not found! when deleting unit ${aircraft.name}`);
-			}
-		}
-		console.log(`${aircraft.name} with the id ${id} was deleted!`);
-		res.status(200).send(`${aircraft.name} with the id ${id} was deleted!`);
-	}
-	else {
-		res.status(400).send(`No aircraft with the id ${id} exists!`);
-	}
-});
-
-// @route   POST api/aircraft/build
-// @Desc    Takes in blueprint and name and facility(?) and starts construction on a new aircraft
-// @access  Public
-router.post('/build', async (req, res) => {
-	const { name, facility, type, team } = req.body; // please give me these things
+	logger.info('DEL Route: api/aircraft:id call made...');
 	try {
-		const aircraft = await newUnit(name, facility, type, team); // just the facility ID
-		res.status(200).send(aircraft);
+		const id = req.params.id;
+		let aircraft = await Aircraft.findById(id);
+		if (aircraft != null) {
+			await aircraft.stripUpgrades();
+			aircraft = await Aircraft.findByIdAndDelete(id);
+			logger.info(`${aircraft.name} with the id ${id} was deleted!`);
+			res.status(200).send(`${aircraft.name} with the id ${id} was deleted!`);
+		}
+		else {
+			nexusError(`No aircraft with the id ${id} exists!`, 400);
+		}
 	}
 	catch (err) {
-		res.status(404).send(err); // This returns a really weird json... watch out for that
+		httpErrorHandler(res, err);
 	}
 });
 
