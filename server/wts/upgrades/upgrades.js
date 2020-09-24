@@ -22,7 +22,7 @@ async function upgradeValue (upgradeArray, desiredStat) {
 
 // pass me the full unit
 async function addUpgrade (upgrade, unit) {
-	upgrade = await Upgrade.findById(upgrade._id);
+	upgrade = await Upgrade.findById(upgrade);
 
 	if (upgrade.status.storage) return 'This Upgrade is already in use somewhere!';
 
