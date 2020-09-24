@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const cors = require('cors');
 
-const auth = require('./api/auth');
+const auth = require('./auth');
 
 // Public Routes - Using Express
 // Desc - Public Routes host HTML information for people visiting
