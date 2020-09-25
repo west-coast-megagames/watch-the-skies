@@ -9,6 +9,7 @@ const { Site } = require('../../models/site'); // Import of Site model [Mongoose
 const { Team } = require('../../models/team'); // Import of Team model [Mongoose]
 const { Upgrade } = require('../../models/upgrade'); // Import of Upgrade model [Mongoose]
 const { Zone } = require('../../models/zone'); // Import of Zone model [Mongoose]
+const { ServiceRecord } = require('../../models/logs/log'); // Import of log (ServiceRecord) model [Mongoose]
 
 async function validAccount (account) {
 	if (account === undefined) nexusError('No account ID given...', 400);
@@ -52,4 +53,18 @@ async function validZone (zone) {
 	if (document == null) nexusError(`No zone exists with the ID: ${zone}`, 400);
 }
 
-module.exports = { validAccount, validCountry, validFacility, validSite, validTeam, validZone };
+async function validServiceRecord (serviceRecord) {
+	if (serviceRecord === undefined) nexusError('No serviceRecord ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(serviceRecord)) nexusError('Invalid serviceRecord ID given...', 400);
+	const document = await ServiceRecord.findById(serviceRecord);
+	if (document == null) nexusError(`No serviceRecord exists with the ID: ${serviceRecord}`, 400);
+}
+
+async function validUpgrade (upgrade) {
+	if (upgrade === undefined) nexusError('No upgrade ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(upgrade)) nexusError('Invalid serviceRecord ID given...', 400);
+	const document = await Upgrade.findById(upgrade);
+	if (document == null) nexusError(`No upgrade exists with the ID: ${upgrade}`, 400);
+}
+
+module.exports = { validAccount, validCountry, validFacility, validSite, validTeam, validZone, validServiceRecord, validUpgrade };

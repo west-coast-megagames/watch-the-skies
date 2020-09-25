@@ -46,6 +46,27 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 	}
 });
 
+// @route   GET api/zones/code/:code
+// @Desc    Get zones by code
+// @access  Public
+router.get('/code/:code', async (req, res) => {
+	logger.info('GET Route: api/zones/code/:code requested...');
+	const code = req.params.code;
+
+	try {
+		const zone = await Zone.findOne({ code: code });
+		if (zone != null) {
+			res.status(200).json(zone);
+		}
+		else {
+			res.status(404).send(`The Zone with the Code ${code} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 // @route   POST api/zones
 // @Desc    Create New Zone
 // @access  Public
@@ -77,6 +98,27 @@ router.post('/', async (req, res) => {
 		httpErrorHandler(res, err);
 	}
 });
+
+// @route   put api/zones/:id
+// @Desc    put zones by id
+// @access  Public
+router.put('/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const zone = await Zone.findByIdAndUpdate(id);
+		if (zone != null) {
+			res.status(200).json(zone);
+		}
+		else {
+			res.status(404).send(`The Zone with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 
 // @route   DELETE api/zones/:id
 // @Desc    Delete zone by ID

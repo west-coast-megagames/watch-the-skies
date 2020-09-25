@@ -54,7 +54,7 @@ app.get("/chk", async (req, res) => {
 });
 
 // Server entry point - Node Server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 server.listen(port, () =>
   logger.info(`WTS INIT Server started on port ${port}...`)
 );

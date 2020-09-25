@@ -4,26 +4,15 @@ const file = fs.readFileSync(
 	config.get('initPath') + 'init-json/initZone.json',
 	'utf8'
 );
+
+const gameServer = require('../config/config').gameServer;
 const zoneDataIn = JSON.parse(file);
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
+const axios = require('axios');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-
-// mongoose.set('useNewUrlParser', true);
-// mongoose.set('useFindAndModify', false);
-// mongoose.set('useCreateIndex', true);
-
-// Zone Model - Using Mongoose Model
-const {
-	Zone,
-	validateZone,
-	GroundZone,
-	validateGroundZone,
-	SpaceZone,
-	validateSpaceZone
-} = require('../models/zone');
 
 const app = express();
 
@@ -33,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 async function runZoneLoad (runFlag) {
+	logger.info(`gameServer is ${gameServer}`);
 	if (!runFlag) return false;
 	if (runFlag) await initLoad(runFlag);
 	return true;
@@ -73,138 +63,91 @@ async function initLoad (doLoad) {
 }
 
 async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
-	let loadError = false;
-	let loadErrorMsg = '';
 	let loadName = '';
 
 	try {
 		const randomTerror = Math.floor(Math.random() * 251);
-		let zone = await Zone.findOne({ code: zCode });
+		logger.info(`load terror value ${zTerror} replaced by random value for testing ${randomTerror} for zone ${zName}`);
 
+		const zone = await axios.get(`${gameServer}api/zones/code/${zCode}`);
 		loadName = zName;
 
 		if (!zone) {
 			// New Zone here
 			if (zLoadFlg === 'false') return; // don't load if not true
 
-			if (zType === 'Space') {
-				zone = new SpaceZone({
-					code: zCode,
-					name: zName
-				});
-
-				zone.serviceRecord = [];
-				zone.gameState = [];
-				const { error } = validateSpaceZone(zone);
-				if (error) {
-					loadError = true;
-					loadErrorMsg = `New Space Zone Validate Error: ${zone.code} ${error.message}`;
-				}
-
-				if (!loadError) {
-					try {
-						const zoneSave = await zone.save();
-						++rCounts.loadCount;
-						logger.debug(`${zoneSave.name} add saved to zones collection.`);
-						return;
-					}
-					catch (err) {
-						++rCounts.loadErrCount;
-						logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
-						return;
-					}
-				}
-				else {
-					logger.error(
-						`Zone skipped due to errors: ${loadName} ${loadErrorMsg}`
-					);
-					++rCounts.loadErrCount;
-					return;
-				}
-			}
-			else {
-				zone = new GroundZone({
+			let SpaceZone = {};
+			let GroundZone = {};
+			switch (zType) {
+			case 'Space':
+				SpaceZone = {
 					code: zCode,
 					name: zName,
-					terror: randomTerror // zTerror
-				});
-				zone.serviceRecord = [];
-				zone.gameState = [];
-				const { error } = validateGroundZone(zone);
-				if (error) {
-					loadError = true;
-					loadErrorMsg = `New Ground Zone Validate Error: ${zone.code} ${error.message}`;
-				}
+					serviceRecord: [],
+					gameState: []
+				};
 
-				if (!loadError) {
-					try {
-						const zoneSave = await zone.save();
-						++rCounts.loadCount;
-						logger.debug(`${zoneSave.name} add saved to zones collection.`);
-						return;
-					}
-					catch (err) {
-						++rCounts.loadErrCount;
-						logger.error(`New Zone Save Error: ${err.message}`, { meta: err });
-						return;
-					}
+				try {
+					const response = await axios.post(`${gameServer}api/zones`, SpaceZone);
+					logger.info(`resonse from post of Spacezone ${response}`);
+					++rCounts.loadCount;
+					logger.debug(`${SpaceZone.name} add saved to Space zones collection.`);
 				}
-				else {
-					logger.error(
-						`Zone skipped due to errors: ${loadName} ${loadErrorMsg}`
-					);
+				catch (err) {
 					++rCounts.loadErrCount;
-					return;
+					logger.error(`New Space Zone Save Error: ${err.message}`, { meta: err });
 				}
+				break;
+
+			case 'Ground':
+				GroundZone = {
+					code: zCode,
+					name: zName,
+					terror: randomTerror, // zTerror
+					serviceRecord: [],
+					gameState: []
+				};
+				try {
+					const response = await axios.post(`${gameServer}api/zones`, GroundZone);
+					logger.info(`resonse from post of Groundzone ${response}`);
+					++rCounts.loadCount;
+					logger.debug(`${GroundZone.name} add saved to Ground zones collection.`);
+				}
+				catch (err) {
+					++rCounts.loadErrCount;
+					logger.error(`New Ground Zone Save Error: ${err.message}`, { meta: err });
+				}
+				break;
+
+			default:
+				logger.error(
+					`Zone skipped due to invalid Type: ${loadName} ${zType}`
+				);
+				++rCounts.loadErrCount;
 			}
+			return;
 		}
 		else {
 			// Existing Zone here ... update
 
 			zone.name = zName;
 			zone.code = zCode;
-			if (zone.type === 'Space') {
-				const { error } = validateSpaceZone(zone);
-				if (error) {
-					loadError = true;
-					loadErrorMsg = `Zone Update Validate Error: ${zCode} ${zName} ${error.message}`;
-				}
-			}
-			else {
-				zone.terror = randomTerror; // zTerror;
-				const { error } = validateGroundZone(zone);
-				if (error) {
-					loadError = true;
-					loadErrorMsg = `Zone Update Validate Error: ${zCode} ${zName} ${error.message}`;
-				}
+			zone.type = zType;
+			if (zType === 'Ground') {
+				zone.terror = randomTerror; // zTerror
 			}
 
-			const { error } = validateZone(zone);
-			if (error) {
-				loadError = true;
-				loadErrorMsg = `Zone Update Validate Error: ${zCode} ${zName} ${error.message}`;
+			try {
+				const response = await axios.put(`${gameServer}api/zones/${zone._id}`, zone);
+				logger.info(`resonse from post of Groundzone ${response}`);
+				++rCounts.loadCount;
+				logger.debug(`${zone.name} update saved to Ground zones collection.`);
 			}
-
-			if (!loadError) {
-				try {
-					const zoneSave = await zone.save();
-					++rCounts.updCount;
-					logger.debug(`${zoneSave.name} update saved to zones collection.`);
-					return;
-				}
-				catch (err) {
-					++rCounts.loadErrCount;
-					logger.error(`Zone Update Save Error: ${err.message}`, { meta: err });
-					return;
-				}
-			}
-			else {
-				logger.error(
-					`Zone update skipped due to errors: ${loadName} ${loadErrorMsg}`
-				);
+			catch (err) {
 				++rCounts.loadErrCount;
-				return;
+				logger.error(`Update Zone Save Error: ${err.message}`, { meta: err });
 			}
+
 		}
 	}
 	catch (err) {
@@ -217,20 +160,26 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 async function deleteZone (zName, zCode) {
 	try {
 		let delErrorFlag = false;
-		for await (const zone of Zone.find({ code: zCode })) {
-			try {
-				const delId = zone._id;
-				const zoneDel = await Zone.findByIdAndRemove(delId);
-				if ((zoneDel == null)) {
-					logger.error(`deleteZone: Zone with the ID ${delId} was not found!`);
-					delErrorFlag = true;
-				}
+
+		try {
+			const zone = await axios.get(`${gameServer}api/zones/code/${zCode}`);
+			const delId = zone._id;
+			if ((delId == null)) {
+				logger.error(`deleteZone: Zone ${zName} with the code ${zCode} was not found!`);
+				delErrorFlag = true;
 			}
-			catch (err) {
-				logger.error(`Catch deleteZone Error 1: ${err.message}`, { meta: err });
+
+			const zoneDel = await axios.delete(`${gameServer}api/zones/delete/${delId}`);
+			if ((zoneDel == null)) {
+				logger.error(`deleteZone: Zone with the ID ${delId} was not found!`);
 				delErrorFlag = true;
 			}
 		}
+		catch (err) {
+			logger.error(`Catch deleteZone Error 1: ${err.message}`, { meta: err });
+			delErrorFlag = true;
+		}
+
 		if (!delErrorFlag) {
 			logger.debug(`All Zones succesfully deleted for Code: ${zCode}`);
 		}

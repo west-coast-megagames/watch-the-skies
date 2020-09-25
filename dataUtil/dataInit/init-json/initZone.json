@@ -86,5 +86,45 @@
     "loadFlag": "true",
     "terror": 0,
     "type": "Ground"
+	},
+	{
+    "loadType": "zone",
+    "name": "Test 1 duplicate code",
+    "code": "SA",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+	},
+	{
+    "loadType": "zone",
+    "name": "Test 2 3-char code",
+    "code": "T12",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+	},
+	{
+    "loadType": "zone",
+    "name": "Test 3 invalid type",
+    "code": "T3",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Test"
+	},
+	{
+    "loadType": "zone",
+    "name": "",
+    "code": "T4",
+    "loadFlag": "true",
+    "terror": 0,
+    "type": "Ground"
+	},
+	{
+    "loadType": "zone",
+    "name": "Excessive Terror",
+    "code": "T5",
+    "loadFlag": "true",
+    "terror": 500,
+    "type": "Ground"
   }
 ]
