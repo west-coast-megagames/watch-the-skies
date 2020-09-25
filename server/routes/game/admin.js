@@ -1,26 +1,20 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
+
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+
 const nexusEvent = require('../../middleware/events/events');
-const routeDebugger = require('debug')('app:routes:admin');
 
 // Mongoose Models - Database models
-const { Aircraft, validateAircraft } = require('../../models/aircraft');
+const { Aircraft } = require('../../models/aircraft');
 const { Account } = require('../../models/account');
 const { Facility } = require('../../models/facility');
-const { Country } = require('../../models/country');
-const { Zone } = require('../../models/zone');
 const { Team } = require('../../models/team');
-const { BaseSite } = require('../../models/site');
 
 const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
 
 // Game State - Server side template items
-const {
-	validUnitType,
-} = require('../../wts/util/construction/validateUnitType');
-
-const banking = require('../../wts/banking/banking');
 
 // MUST BUILD - Initiation
 router.get('/initialteGame', async (req, res) => {
@@ -32,11 +26,11 @@ router.get('/initialteGame', async (req, res) => {
 		// Load Facilities
 		// Log Game state
 		res.status(200).send('Successful Initiation...');
-	} catch (err) {
+	}
+	catch (err) {
 		res.send(err);
 	}
 });
-
 
 
 // @route   PATCH game/admin/restore
@@ -75,9 +69,9 @@ router.patch('/resethull', async function (req, res) {
 // @access  Public
 router.patch('/resetLabs', async function (req, res) {
 	for await (const lab of Facility.find({ type: 'Lab' })) {
-		routeDebugger(`${lab.name} has ${lab.research.length} projects`);
+		logger.info(`${lab.name} has ${lab.research.length} projects`);
 		lab.research = [];
-		routeDebugger(`${lab.name} now has ${lab.research.length} projects`);
+		logger.info(`${lab.name} now has ${lab.research.length} projects`);
 		await lab.save();
 	}
 	res.status(200).send('Labs succesfully reset!');
@@ -99,7 +93,7 @@ router.patch('/pr', async function (req, res) {
 
 		await team.save();
 		console.log(`${name}s accounts reset...`);
-	};
+	}
 	res.send('Accounts succesfully reset!');
 });
 
@@ -110,6 +104,25 @@ router.patch('/load/tech', async function (req, res) {
 	const response = await loadTech();
 	nexusEvent.emit('updateResearch');
 	return res.status(200).send(response);
+});
+
+// @route   PATCH game/admin/accounts/reset
+// @desc    Update all teams to base income and PR
+// @access  Public
+router.patch('/accounts/reset', async function (req, res) {
+	for await (const account of Account.find()) {
+		{
+			account.balance = 0;
+			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		}
+
+		await account.save();
+		logger.info(`${account.owner}'s ${account.name} reset...`);
+	}
+	res.send('Accounts succesfully reset!');
+
+	nexusEvent.emit('updateAccounts');
 });
 
 // @route   PATCH game/admin/load/knowledge

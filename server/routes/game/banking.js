@@ -1,4 +1,3 @@
-const routeDebugger = require('debug')('app:routes');
 const nexusEvent = require('../../middleware/events/events');
 const express = require('express');
 const router = express.Router();
@@ -15,7 +14,7 @@ const banking = require('../../wts/banking/banking');
 // @Desc    Get all Accounts
 // @access  Public
 router.get('/accounts', async function (req, res) {
-	routeDebugger('Looking up accounts...');
+	logger.info('Looking up accounts...');
 	const accounts = await Account.find()
 		.populate('team', 'name shortName')
 		.sort({ team: 1 });
@@ -32,7 +31,7 @@ router.post('/account', async function (req, res) {
 	if (!team) {
 		return res.status(400).send(`Team not found for teamId ${teamId}`);
 	}
-	owner = team.shortName;
+	const owner = team.shortName;
 
 	const newAccount = new Account(
 		// eslint-disable-next-line no-undef
@@ -69,7 +68,7 @@ router.post('/accounts', async function (req, res) {
 			continue;
 		}
 
-		teamId = account.teamId;
+		const teamId = account.teamId;
 		const team = await Team.findById({ _id: teamId });
 		if (!team) {
 			logger.info(`Team not found for teamId ${account.teamId}`);
@@ -95,7 +94,7 @@ router.post('/accounts', async function (req, res) {
 // @Desc    Get a single account by id
 // @access  Public
 router.get('/accounts/:id', validateObjectId, async function (req, res) {
-	routeDebugger('Looking up an account...');
+	logger.info('Looking up an account...');
 	const account = await Account.findById({ _id: req.params.id })
 		.populate('team', 'name shortName');
 	res.json(account);
@@ -122,21 +121,21 @@ router.patch('/accounts', async function (req, res) {
 
 router.put('/accounts', async function (req, res) {
 	const { team } = req.body;
-	routeDebugger('Looking up accounts...');
+	logger.info('Looking up accounts...');
 	const accounts = await Account.find({ team });
 	res.json(accounts);
 });
 
 router.patch('/delAutoTransfer', async function (req, res) {
-	routeDebugger('Attempting to delete auto transaction...');
-	routeDebugger(`${req.body}`);
+	logger.info('Attempting to delete auto transaction...');
+	logger.info(`${req.body}`);
 	const { account_id, transfer_id } = req.body;
 	const account = await Account.findOne({ _id: account_id });
-	routeDebugger(`${account.autoTransfers}`);
+	logger.info(`${account.autoTransfers}`);
 	const indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
-	routeDebugger(`${indexOf}`);
+	logger.info(`${indexOf}`);
 	account.autoTransfers.splice(indexOf, 1);
-	routeDebugger(`${account.autoTransfers.length}`);
+	logger.info(`${account.autoTransfers.length}`);
 
 	account.markModified('autoTransfers');
 	await account.save();

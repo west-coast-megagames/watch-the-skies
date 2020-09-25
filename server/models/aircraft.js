@@ -11,7 +11,6 @@ const { Facility } = require('./facility'); // Import of Facility model [Mongoos
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 const docCheck = require('../middleware/util/validateDocument');
 
-
 // Aircraft Schema
 const AircraftSchema = new Schema({
 	model: { type: String, default: 'Aircraft' },

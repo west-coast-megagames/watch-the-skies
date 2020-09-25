@@ -1,9 +1,8 @@
 const bcrypt = require('bcryptjs');
-const Joi = require('joi');
 const express = require('express');
 const router = express.Router();
 
-const { User } = require('../../models/user');
+const { User } = require('../models/user');
 
 // @route   POST /user
 // @Desc    Post a new User
@@ -22,15 +21,5 @@ router.post('/', async function (req, res) {
 	const token = user.generateAuthToken();
 	res.status(200).send(token);
 });
-
-function validate (req) {
-	const schema = {
-		username: Joi.string().min(5).max(15).required(),
-		email: Joi.string().min(5).max(255).required().email(),
-		password: Joi.string().min(5).max(1024).required()
-	};
-
-	return Joi.validate(user, schema, { 'allowUnknown': true });
-}
 
 module.exports = router;

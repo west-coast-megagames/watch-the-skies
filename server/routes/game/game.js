@@ -18,7 +18,7 @@ const { Treaty } = require('../../models/treaty');
 const airMission = require('../../wts/intercept/missions');
 const banking = require('../../wts/banking/banking');
 const { newUpgrade } = require('../../wts/construction/construction');
-const { upgradeValue, removeUpgrade } = require('../../wts/upgrades/upgrades');
+const { upgradeValue, removeUpgrade, addUpgrade } = require('../../wts/upgrades/upgrades');
 const { resolveTrade } = require('../../wts/trades/trade');
 const validateObjectId = require('../../middleware/util/validateObjectId');
 const science = require('../../wts/research/research');
@@ -28,6 +28,7 @@ const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const { func } = require('joi');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const nexusError = require('../../middleware/util/throwError');
+const { Upgrade } = require('../../models/upgrade');
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ACCOUNTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -124,6 +125,52 @@ router.put('/repair', async function (req, res) {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~LOGERRORS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~LOGINFO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~MILITARY~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
+/*
+ok scott's logic in battle:
+1) calculate total attack value of attackers
+2) calculate total defense value of attackers
+3) roll both sides and save results
+4) assign casualties to defenders
+   4.1) for every hit, randomly pick a unit from the defender
+   4.2) compile an array made up of unit's HP and upgrades
+   4.3) pick one element from that array
+   4.4) if it is a "HP" result, unit takes a hit. 
+   4.5) if it is a "Upgrade" result, the upgrade is damaged, removed from the unit, and "dropped" onto the battlefield
+5) assign casualties to attackers
+   5.1) for every hit, randomly pick a unit from the attacker
+   5.2) compile an array made up of unit's HP and upgrades
+   5.3) pick one element from that array
+   5.4) if it is a "HP" result, unit takes a hit. 
+   5.5) if it is a "Upgrade" result, the upgrade is damaged, removed from the unit, and "dropped" onto the battlefield
+6) inform both generals of causalities
+7) ask both generals if they would like to proceed
+8) if both generals continue, repeat to step 1
+9) if one side backs out while they other continues, that side "wins"
+    9.1) control of site goes to victor
+    9.2) all damaged upgrades go to victor
+step 10) if both sides back down, no one gets control, create new site w/ scrap of all upgrades
+*/
+
+
+router.patch('/battle', async function (req, res){
+	let { attackers, defenders } = req.body;
+	let attackerTotal = 0;
+	let defenderTotal = 0;
+	
+
+	// calculate total attack value of attackers
+	for (unit of attackers){
+		unit = await Military.findById(unit).populate('upgrades');
+		attackerTotal = attackerTotal + await upgradeValue(unit.upgrades, 'attack');
+		attackerTotal = attackerTotal + unit.stats.attack;
+	}
+
+	// 2) calculate total defense value of attackers
+	res.status(200).send(`The result is: ${attackerTotal}`);
+});
+
+
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~NEWS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~RESEARCH~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
@@ -438,19 +485,41 @@ router.put('/status', async function (req, res) {
 // @route   GET game/upgrade/stat
 // @Desc    get the total stat contribution of a specific stat from an upgrade array
 // @access  Public
-router.get('/stat', async function (req, res) {
+router.get('/upgrades/stat', async function (req, res) {
 	const z = await upgradeValue(req.body.upgrades, req.body.desiredStat);
 	res.status(200).send(`The result is: ${z}`);
 });
 
+
+router.put('/upgrade/add', async function (req, res){
+	let { upgrade, unit } = req.body;
+	upgrade = await Upgrade.findById(upgrade);
+	unit = await Military.findById(unit);
+	await addUpgrade(upgrade, unit);
+	res.status(200).send(`Added "${upgrade.name}" to unit "${unit.name}"`);
+ });
+
 // @route   POST game/upgrade/stat
 // @Desc    remove an upgrade from a unit
 // @access  Public
-router.put('/remove', async function (req, res) {
+router.put('/upgrade/remove', async function (req, res) {
 	const response = await removeUpgrade(req.body.upgrade, req.body.unit);
 	res.status(200).send(response);
 });
 
+router.post('/upgrade/build', async function (req, res) {
+	const { code, team, facility } = req.body; // please give me these things
+
+	try {
+		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		upgrade = await upgrade.save();
+
+		res.status(200).json(upgrade);
+	}
+	catch (err) {
+		res.status(404).send(err); // This returns a really weird json... watch out for that
+	}
+});
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ZONES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~The Rest~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
@@ -649,20 +718,6 @@ router.put('/rename', async function (req, res) {
 			.send('Unable to determine the type of Object you want to rename');
 	}
 	res.status(200).send(`Renamed '${originalName}' to '${target.name}'`);
-});
-
-router.post('/upgrade/build', async function (req, res) {
-	const { code, team, facility } = req.body; // please give me these things
-
-	try {
-		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
-		upgrade = await upgrade.save();
-
-		res.status(200).json(upgrade);
-	}
-	catch (err) {
-		res.status(404).send(err); // This returns a really weird json... watch out for that
-	}
 });
 
 module.exports = router;
