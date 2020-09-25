@@ -47,7 +47,7 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "api/country";
+const url = "api/countries";
 
 // Country Loader into state
 export const loadcountries = () => (dispatch, getState) => {

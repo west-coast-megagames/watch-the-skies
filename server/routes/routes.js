@@ -69,7 +69,7 @@ module.exports = function (app) {
 	app.use('/api/team', team); // Route for Teams
 	app.use('/api/intercept', intercept); // Route for triggering an interception
 	app.use('/api/zones', zones); // Route for inputing zones
-	app.use('/api/country', country); // Route for inputing countries
+	app.use('/api/countries', country); // Route for inputing countries
 	app.use('/api/facilities', facilities); // Route for inputing countries
 	app.use('/api/sites', sites); // Route for sites
 	app.use('/api/accounts', account); // Route for inputing accounts

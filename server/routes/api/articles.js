@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// @route   GET api/articles/id
+// @route   GET api/articles/:id
 // @Desc    Get articles by id
 // @access  Public
 router.get('/:id', validateObjectId, async (req, res) => {

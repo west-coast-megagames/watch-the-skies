@@ -1,58 +1,37 @@
 const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 
-const validateObjectId = require('../../middleware/util/validateObjectId');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// Country Model - Using Mongoose Model
+// Mongoose Model Import
 const { Country, validateCountry } = require('../../models/country');
-const { Zone } = require('../../models/zone');
-const { Team } = require('../../models/team');
 
-const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
-require('winston-mongodb');
-
-// @route   GET api/country
-// @Desc    Get all ACTIVE countries
+// @route   GET api/counties
+// @Desc    Get all countries
 // @access  Public
-// Only Active
 router.get('/', async (req, res) => {
-	try {
-		const countrys = await Country.find()
-			.sort('code: 1')
-			.populate('team', 'name shortName')
-			.populate('zone', 'name')
-			.populate('borderedBy', 'name');
-		res.json(countrys);
-	}
-	catch (err) {
-		logger.error(`Get Country Catch Error ${err.message}`, { meta: err });
-		res.status(400).send(err.message);
-	}
-});
-
-// @route   GET api/country
-// @Desc    Get all ACTIVE countries
-// @access  Public
-// Only Active
-router.get('/byZones', async (req, res) => {
+	logger.info('GET Route: api/countries requested...');
 	try {
 		const countries = await Country.find()
-			.sort({ code: 1 })
-			.populate('zone', 'code name terror -_id')
-			.select('code name -_id');
-
-		res.json(countries);
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('borderedBy', 'name')
+			.sort('code: 1');
+		res.status(200).json(countries);
 	}
 	catch (err) {
-		logger.error(`Get Country byZones Catch Error ${err.message}`, { meta: err });
-		res.status(400).send(err.message);
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
 	}
 });
 
-// @route   GET api/country/id
+// @route   GET api/countries/:id
 // @Desc    Get countries by id
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
 	const id = req.params.id;
 	try {
 		const country = await Country.findById(id)
@@ -60,221 +39,77 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 			.populate('zone', 'name')
 			.populate('borderedBy', 'name');
 		if (country != null) {
-			res.json(country);
+			res.status(200).json(country);
 		}
 		else {
-			res.status(404).send(`The Country with the ID ${id} was not found!`);
+			res.status(404).send(`The country with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
-		logger.error(`Get Country by ID Catch Error ${err.message}`, { meta: err });
-		res.status(400).send(err.message);
+		httpErrorHandler(res, err);
 	}
 });
 
-// @route   GET api/country/code
-// @Desc    Get countries by Country Code
-// @access  Public
-router.get('/code/:code', async (req, res) => {
-	const code = req.params.code;
-	try {
-		const country = await Country.find({ code })
-			.populate('team', 'name shortName')
-			.populate('zone', 'name')
-			.populate('borderedBy', 'name');
-		if (country.length) {
-			res.json(country);
-		}
-		else {
-			res.status(404).send(`The Country with the code ${code} was not found!`);
-		}
-	}
-	catch (err) {
-		logger.error(`Get Country by Code Catch Error ${err.message}`, {
-			meta: err
-		});
-		res.status(400).send(`Error: ${err.message}`);
-	}
-});
+// TODO: Add GET route that allows for getting by discriminator
 
-// @route   POST api/country
+// @route   POST api/countries
 // @Desc    Create New Country
 // @access  Public
 router.post('/', async (req, res) => {
-	const { code, name, zoneCode, unrest } = req.body;
-	const newCountry = new Country({
-		code,
-		name,
-		unrest,
-		loadZoneCode: zoneCode,
-		loadTeamCode: req.body.teamCode
-	});
-	const docs = await Country.find({ code });
-	if (!docs.length) {
-		if (code != '') {
-			const zone = await Zone.findOne({ code: zoneCode });
-			if (!zone) {
-				console.log(
-					'Country Post Zone Error, New Country:',
-					req.body.name,
-					' Zone: ',
-					zoneCode
-				);
-			}
-			else {
-				newCountry.zone = zone._id;
-			}
-		}
+	logger.info('POST Route: api/countries call made...');
+	const newCountry = new Country(req.body);
+	const { code } = req.body;
 
-		if (req.body.teamCode != '') {
-			const team = await Team.findOne({ teamCode: req.body.teamCode });
-			if (!team) {
-				console.log(
-					'Country Post Team Error, New Country:',
-					req.body.name,
-					' Team: ',
-					req.body.teamCode
-				);
-			}
-			else {
-				newCountry.team = team._id;
-			}
-		}
-
-		const { error } = validateCountry(req.body);
-		if (error) return res.status(400).send(error.details[0].message);
-
-		const country = await newCountry.save();
-		res.json(country);
-		logger.info(`New Country ${req.body.code} created...`);
-	}
-	else {
-		logger.error(`Country Code already exists: ${code}`);
-		res.status(400).send(`Country Code ${code} already exists!`);
-	}
-});
-
-// @route   PUT api/country/id
-// @Desc    Update Existing Country
-// @access  Public
-router.put('/:id', validateObjectId, async (req, res) => {
-	const id = req.params.id;
-	const { zoneCode, teamCode } = req.body;
-	let newZone_id;
-	let newTeam_id;
 	try {
-		const oldCountry = await Country.findById({ _id: req.params.id });
-		if (oldCountry != null) {
-			newZone_id = oldCountry.zone;
-			newTeam_id = oldCountry.team;
-		}
+		await newCountry.validateArticle();
+		const docs = await Country.find({ code });
+		if (docs.length < 1) {
+			const { error } = validateCountry(req.body);
+			if (error) return res.status(400).send(error.details[0].message);
 
-		if (zoneCode != '') {
-			const zone = await Zone.findOne({ code: zoneCode });
-			if (!zone) {
-				logger.error(
-					'Country Put Zone Error, Update Country:',
-					req.body.name,
-					' Zone: ',
-					zoneCode
-				);
-			}
-			else {
-				newZone_id = zone._id;
-			}
-		}
-		else {
-			newZone_id = undefined;
-		}
-		if (teamCode != '') {
-			const team = await Team.findOne({ teamCode: teamCode });
-			if (!team) {
-				logger.error(
-					'Country Put Team Error, Update Country:',
-					req.body.name,
-					' Team: ',
-					teamCode
-				);
-			}
-			else {
-				newTeam_id = team._id;
-			}
-		}
-		else {
-			newTeam_id = undefined;
-		}
-
-		const country = await Country.findByIdAndUpdate(
-			{ _id: req.params.id },
-			{
-				name: req.body.name,
-				code: req.body.code,
-				unrest: req.body.unrest,
-				zone: newZone_id,
-				team: newTeam_id
-			},
-			{ new: true, omitUndefined: true }
-		);
-
-		if (country != null) {
-			const { error } = country.validateCountry(req.body);
-			if (error) {
-				logger.error(`Country Update Validate Error ${error.message}`, { meta: error });
-				return res.status(400).send(error.details[0].message);
-			}
+			const country = await newCountry.save();
 			res.json(country);
+			logger.info(`New Country ${code} created...`);
 		}
 		else {
-			res.status(404).send(`The Country with the ID ${id} was not found!`);
+			logger.error(`Country Code already exists: ${code}`);
+			res.status(400).send(`Country Code ${code} already exists!`);
 		}
 	}
 	catch (err) {
-		logger.error(`Country Put Catch Error ${err.message}`, { meta: err });
-		res.status(400).send(`Country Put Error: ${err.message}`);
+		httpErrorHandler(res, err);
 	}
 });
 
-// @route   DELETE api/country/id
+// @route   DELETE api/countries/:id
 // @Desc    Update Existing Country
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
+	logger.info('DEL Route: api/contries/:id call made...');
 	const id = req.params.id;
+
 	try {
-		const country = await Country.findByIdAndRemove(req.params.id);
+		const country = await Country.findByIdAndRemove(id);
 
 		if (country != null) {
-			res.json(country);
+			logger.info(`The country ${country.name} with the id ${id} was deleted!`);
+			res.status(200).json(country);
 		}
 		else {
-			res.status(404).send(`The Country with the ID ${id} was not found!`);
+			nexusError(`The Country with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
-		console.log(`Error: ${err.message}`);
-		res.status(400).send(`Error: ${err.message}`);
+		httpErrorHandler(res, err);
 	}
 });
 
-// @route   PATCH api/country/deleteAll
+// @route   PATCH api/countries/deleteAll
 // @desc    Delete All Countrys
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
 	try {
 		await Country.deleteMany();
-		/*
-      for await (const country of Country.find()) {
-        let id = country.id;
-        try {
-          let countryDel = await Country.findByIdAndRemove(id);
-          if (countryDel = null) {
-            res.status(404).send(`The Country with the ID ${id} was not found!`);
-          }
-        } catch (err) {
-          console.log(`Error: ${err.message}`);
-          res.status(400).send(`Error: ${err.message}`);
-        }
-      }
-    */
 		res.status(200).send('All Countrys succesfully deleted!');
 	}
 	catch (err) {

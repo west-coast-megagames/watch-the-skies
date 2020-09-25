@@ -27,7 +27,7 @@ const MilitarySchema = new Schema({
 	gameState: []
 });
 
-let Military = mongoose.model('Military', MilitarySchema);
+const Military = mongoose.model('Military', MilitarySchema);
 
 const Fleet = Military.discriminator(
 	'Fleet',
@@ -73,7 +73,8 @@ MilitarySchema.methods.deploy = async (unit, country) => {
 		if (unit.zone !== country.zone) {
 			cost = unit.status.localDeploy;
 			unit.status.deployed = true;
-		} else if (unit.zone === country.zone) {
+		}
+		else if (unit.zone === country.zone) {
 			cost = unit.status.globalDeploy;
 			unit.status.deployed = true;
 		}
@@ -92,11 +93,12 @@ MilitarySchema.methods.deploy = async (unit, country) => {
 
 		modelDebugger(account);
 		await account.save();
-		await military.save();
+		await unit.save();
 		modelDebugger(`${unit.name} deployed...`);
 
 		return unit;
-	} catch (err) {
+	}
+	catch (err) {
 		modelDebugger('Error:', err.message);
 		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
 			meta: err
@@ -112,8 +114,8 @@ MilitarySchema.methods.validateMilitary = function (military) {
 	return Joi.validate(military, schema, { allowUnknown: true });
 };
 
-function validateMilitary(military) {
-	//modelDebugger(`Validating ${military.name}...`);
+function validateMilitary (military) {
+	// modelDebugger(`Validating ${military.name}...`);
 
 	const schema = {
 		name: Joi.string().min(2).max(50).required()

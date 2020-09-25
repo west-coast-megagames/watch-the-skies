@@ -86,7 +86,7 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		const zone = await Zone.findByIdAndRemove(req.params.id);
+		const zone = await Zone.findByIdAndRemove(id);
 
 		if (zone != null) {
 			logger.info(`The ${zone.name} zone with the id ${id} was deleted!`);

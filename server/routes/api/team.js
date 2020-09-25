@@ -1,84 +1,69 @@
-const routeDebugger = require('debug')('app:routes');
-const express = require('express');
-const router = express.Router();
-const validateObjectId = require('../../middleware/util/validateObjectId');
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-const { logger } = require('../../middleware/log/winston');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Team, validateTeam, validateRoles } = require('../../models/team');
+const { Team } = require('../../models/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams
 // @access  Public
 router.get('/', async function (req, res) {
-	routeDebugger('Looking up teams...');
-	const teams = await Team.find().sort({ team: 1 });
-	res.json(teams);
+	logger.info('GET Route: api/teams requested...');
+
+	try {
+		const teams = await Team.find()
+			.sort({ team: 1 });
+		res.status(200).json(teams);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/team/id/:id
+// @route   GET api/team/:id
 // @Desc    Get all single team
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/team/:id requested...');
 	const id = req.params.id;
-	const team = await Team.findById(id);
-	if (team != null) {
-		res.json(team);
+
+	try {
+		const team = await Team.findById(id);
+		if (team != null) {
+			res.status(200).json(team);
+		}
+		else {
+			nexusError(`The Team with the ID ${id} was not found!`, 404);
+		}
 	}
-	else {
-		res.status(404).send(`The Team with the ID ${id} was not found!`);
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 
-// @route   GET api/team/code
-// @Desc    Get Team by Team Code
-// @access  Public
-router.get('/code/:teamCode', async (req, res) => {
-	const teamCode = req.params.teamCode;
-	const team = await Team.find({ teamCode });
-	if (team.length) {
-		res.json(team);
-	}
-	else {
-		res.status(404).send(`The Team with the Team Code ${teamCode} was not found!`);
-	}
-});
+// TODO: Add GET route that allows for getting by discriminator
 
 // @route   POST api/team
 // @Desc    Post a new team
 // @access  Public
 router.post('/', async (req, res) => {
-	const { name, roles, prTrack, prLevel, sciRate, shortName, teamCode, teamType } = req.body;
-	const { error } = validateTeam(req.body);
-	if (error) return res.status(400).send(error.details[0].message);
+	logger.info('POST Route: api/team call made...');
+	let newTeam = new Team(req.body);
 
-	if (roles) {
-		if (roles.length > 0) {
-			try {
-				for (const currRole of roles) {
-					const test2 = validateRoles(currRole);
-					if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
-				}
-			}
-			catch (err) {
-				return res.status(400).send(`Team Val Roles Error: ${err.message}`);
-			}
-		}
+	try {
+		await newTeam.validatBlueprint();
+		newTeam = await newTeam.save();
+		logger.info(`Team ${newTeam.name} created...`);
+		res.status(200).json(newTeam);
 	}
-
-	const newTeam = new Team(
-		{ name, roles, prTrack, prLevel, sciRate, shortName, teamCode, teamType }
-	);
-	const docs = await Team.find({ name });
-	if (!docs.length) {
-		const team = await newTeam.save();
-		res.status(200).json(team);
-		routeDebugger(`The ${name} team created...`);
-	}
-	else {
-		console.log(`${name} team already exists!`);
-		res.status(400).send(`${name} team already exists!`);
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 
@@ -86,14 +71,22 @@ router.post('/', async (req, res) => {
 // @Desc    Delete a team
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
+	logger.info('DEL Route: api/team/:id call made...');
 	const id = req.params.id;
-	const team = await Team.findByIdAndRemove(id);
-	if (team != null) {
-		logger.info(`${team.name} with the id ${id} was deleted!`);
-		res.json(team).send(`${team.name} with the id ${id} was deleted!`);
+
+	try {
+		const team = await Team.findByIdAndRemove(id);
+
+		if (team != null) {
+			logger.info(`Team ${team.name} with the id ${id} was deleted!`);
+			res.status(200).json(team).send(`Team ${team.name} with the id ${id} was deleted!`);
+		}
+		else {
+			nexusError(`No team with the id ${id} exists!`, 404);
+		}
 	}
-	else {
-		res.status(404).send(`No team with the id ${id} exists!`);
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 

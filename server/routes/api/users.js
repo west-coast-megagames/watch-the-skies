@@ -1,196 +1,120 @@
 const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
-
 const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
-const validateObjectId = require('../../middleware/util/validateObjectId');
 
-// User Model - Using Mongoose Model
-const { User, validateUser, validateName, validateAddr } = require('../../models/user');
-const { Team } = require('../../models/team');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// @route   POST /user
-// @Desc    Post a new User
-// @access  Public
-router.post('/', async function (req, res) {
-	console.log('Someone is trying to make a user...', req.body);
-	const userIn = req.body;
-	const { username, email } = req.body;
-
-	const test1 = validateUser(req.body);
-	if (test1.error) return res.status(400).send(`User Val Error: ${test1.error.details[0].message}`);
-
-	try {
-		const test2 = validateName(req.body);
-		if (test2.error) return res.status(400).send(`User Val Name Error: ${test2.error.details[0].message}`);
-	}
-	catch (err) {
-		return res.status(400).send(`User Val Name Error: ${err.message}`);
-	}
-
-	try {
-		const test3 = validateAddr(req.body);
-		if (test3.error) return res.status(400).send(`User Val Addr Error: ${test3.error.details[0].message}`);
-	}
-	catch (err) {
-		return res.status(400).send(`User Val Addr Error: ${err.message}`);
-	}
-
-	let user = await User.findOne({ email });
-	if (user) {
-		console.log(`User with the email: ${email} already registered...`);
-		return res.status(400).send(`User with the email: ${email} already registered...`);
-	}
-	else {
-		user = new User(userIn);
-
-		const salt = await bcrypt.genSalt(10);
-		user.password = await bcrypt.hash(user.password, salt);
-
-		const token = user.generateAuthToken();
-
-		if (req.body.teamCode != '') {
-			const team = await Team.findOne({ teamCode: req.body.teamCode });
-			if (!team) {
-				console.log('User Post Team Error, New User:', req.body.username, ' Team: ', req.body.teamCode);
-			}
-			else {
-				user.team = team._id;
-			}
-		}
-
-		user = await user.save();
-		const sendUser = {
-			_id: user._id,
-			email: user.email,
-			name: `${user.name.first} ${user.name.last}`,
-			username
-		};
-
-		console.log(`User ${username} created...`);
-		return res
-			.status(200)
-			.header('x-auth-token', token)
-			.header('access-control-expose-headers', 'x-auth-token')
-			.json(sendUser);
-	}
-});
-
-// @route   GET /user
-// @Desc    Get all Users
-// @access  Public
-router.get('/me', auth, async function (req, res) {
-	const user = await User.findById(req.user._id).select('username email name')
-		.populate('team', 'name shortName');
-	if (user != null) {
-		console.log(`Verifying ${user.username}`);
-		res.json(user);
-	}
-	else {
-		res.status(404).send(`The User with the ID ${req.user._id} was not found!`);
-	}
-});
+// Mongoose Model Import
+const { User } = require('../../models/user');
 
 // @route   GET /user
 // @Desc    Get all Users
 // @access  Public
 router.get('/', async function (req, res) {
-	console.log('Getting the users...');
-	const users = await User.find()
-		.populate('team', 'name shortName');
-	res.json(users);
+	logger.info('GET Route: api/user requested...');
+
+	try {
+		const users = await User.find()
+			.populate('team', 'name shortName');
+		res.status(200).json(users);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET /user/id
+// @route   GET /user/:id
 // @Desc    Get users by id
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
-
+router.get('/:id', validateObjectId, async function (req, res) {
+	logger.info('GET Route: api/user/:id requested...');
 	const id = req.params.id;
 
-	const users = await User.findById(id)
-		.populate('team', 'name shortName');
-	if (users != null) {
-		res.json(users);
-	}
-	else {
-		res.status(404).send(`The User with the ID ${id} was not found!`);
-	}
-});
+	try {
+		const user = await User.findById(req.user._id).select('username email name')
+			.populate('team', 'name shortName');
 
-// @route   PUT users/id
-// @Desc    Update Existing User
-// @access  Public
-router.put('/:id', validateObjectId, async (req, res) => {
-	const { teamCode } = req.body;
-	let newTeam_id;
-	const oldUser = await User.findById({ _id: req.params.id });
-	if (oldUser !== null) {
-		newTeam_id = oldUser.team;
-	}
-
-	if (teamCode != '') {
-		const team = await Team.findOne({ teamCode: teamCode });
-		if (!team) {
-			console.log('User Put Team Error, Update Country:', req.body.name, ' Team: ', teamCode);
+		if (user != null) {
+			logger.info(`Verifying ${user.username}`);
+			res.status(200).json(user);
 		}
 		else {
-			newTeam_id = team._id;
+			nexusError(`The user with the ID ${id} was not found!`, 404);
 		}
 	}
-	else {
-		newTeam_id = undefined;
-	}
-
-	try {
-		const test1 = validateUser(req.body);
-		if (test1.error) return res.status(400).send(`User Put Val Error: ${test1.error.details[0].message}`);
-	}
 	catch (err) {
-		return res.status(400).send(`User Put Val Error: ${err.message}`);
+		httpErrorHandler(res, err);
 	}
-
-	try {
-		const test2 = validateName(req.body);
-		if (test2.error) return res.status(400).send(`User Put Val Name Error: ${test2.error.details[0].message}`);
-	}
-	catch (err) {
-		return res.status(400).send(`User Put Val Name Error: ${err.message}`);
-	}
-
-	try {
-		const test3 = validateAddr(req.body);
-		if (test3.error) return res.status(400).send(`User Put Val Addr Error: ${test3.error.details[0].message}`);
-	}
-	catch (err) {
-		return res.status(400).send(`User Put Val Addr Error: ${err.message}`);
-	}
-
-	const user = await User.findByIdAndUpdate(req.params.id,
-		{ username: req.body.username,
-			email: req.body.email,
-			phone: req.body.phone,
-			gender: req.body.gender,
-			dob: new Date(req.body.dob),
-			discord: req.body.discord,
-			team: newTeam_id
-		},
-		{
-			new: true,
-			omitUndefined: true
-		});
-
-	if (!user) return res.status(404).send('The user with the given ID was not found.');
-
-	res.send(user);
 });
 
+// @route   POST /user
+// @Desc    Post a new User
+// @access  Public
+router.post('/', async function (req, res) {
+	logger.info('POST Route: api/user call made...');
+	let newUser = new User(req.body);
+	const { email, username } = req.body;
+
+	try {
+		await newUser.validateUser();
+
+		const docs = await User.find({ email });
+
+		if (docs.length < 1) {
+			const salt = await bcrypt.genSalt(10);
+			newUser.password = await bcrypt.hash(newUser.password, salt);
+
+			const token = newUser.generateAuthToken();
+			newUser = await newUser.save();
+
+			logger.info(`User ${username} created...`);
+
+			const sendUser = {
+				_id: newUser._id,
+				email: newUser.email,
+				name: `${newUser.name.first} ${newUser.name.last}`,
+				username
+			};
+			res.status(200)
+				.header('x-auth-token', token)
+				.header('access-control-expose-headers', 'x-auth-token')
+				.json(sendUser);
+		}
+		else {
+			logger.info(`User with the email: ${email} already registered...`);
+			nexusError(`User with the email: ${email} already registered...`, 400);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   DELETE api/user/:id
+// @Desc    Delete one user
+// @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
-	const user = await User.findByIdAndRemove(req.params.id);
+	logger.info('DEL Route: api/user/:id call made...');
+	const id = req.params.id;
 
-	if (!user) return res.status(404).send('The user with the given ID was not found.');
+	try {
+		const user = await User.findByIdAndRemove(id);
 
-	res.send(user);
+		if (user != null) {
+			logger.info(`The user with the id ${id} was deleted!`);
+			res.status(200).json(user);
+		}
+		else {
+			nexusError(`The user with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
 // @route   PATCH /users/deleteAll
@@ -206,7 +130,7 @@ router.patch('/deleteAll', async function (req, res) {
 			}
 		}
 		catch (err) {
-			console.log('DeleteAll User Error:', err.message);
+			logger.info('DeleteAll User Error:', err.message);
 			res.status(400).send(err.message);
 		}
 	}

@@ -1,57 +1,97 @@
-const routeDebugger = require('debug')('app:routes:facilities');
-const express = require('express');
-const router = express.Router();
-const validateObjectId = require('../../middleware/util/validateObjectId');
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-const { newFacility } = require('../../wts/construction/construction');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// Facility Model - Using Mongoose Model
+// Mongoose Model Import
 const { Facility } = require('../../models/facility');
 
 // @route   GET api/facilities
 // @Desc    Get all facilities
 // @access  Public
 router.get('/', async function (req, res) {
-	routeDebugger('Looking up all facilities...');
-	const facilities = await Facility.find()
-		.populate('site', 'name type')
-		.populate('team', 'shortName name sciRate')
-		.populate('research')
-		.populate('upgrade');
-
-	res.status(200).json(facilities);
+	logger.info('GET Route: api/facilities requested...');
+	try {
+		const facilities = await Facility.find()
+			.populate('site', 'name type')
+			.populate('team', 'shortName name sciRate')
+			.populate('research')
+			.populate('upgrade');
+		res.status(200).json(facilities);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/facility
+// @route   GET api/facilities/:id
 // @Desc    Get Facilities by ID
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/facilities/:id requested...');
 	const id = req.params.id;
-	const facility = await Facility.findById(id)
-		.sort({ team: 1 })
-		.populate('team', 'name shortName')
-		.populate('site', 'name')
-		.populate('research')
-		.populate('upgrade');	
-	if (facility != null) {
-		res.json(facility);
-	} else {
-		res.status(404).send(`The facility with the ID ${id} was not found!`);
+	try {
+		const facility = await Facility.findById(id)
+			.populate('team', 'name shortName')
+			.populate('site', 'name')
+			.populate('research')
+			.populate('upgrade')
+			.sort({ team: 1 });
+
+		if (facility != null) {
+			res.status(200).json(facility);
+		}
+		else {
+			nexusError(`The facility with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 
-// @route   POST api/facility
-// @Desc    Takes in blueprint and name and site and starts construction on a new Facility
+// @route   POST api/facilities/
+// @Desc    Create New facility
 // @access  Public
-router.post('/build', async (req, res) => {
-	const { name, site, team } = req.body; // please give me these things
+router.post('/facilities', async (req, res) => {
+	logger.info('POST Route: api/facilities call made...');
+	let newFacility = new Facility(req.body);
+
 	try {
-		let facility = await newFacility(name, site, team);
-		facility = await facility.save();
-		res.status(200).json(facility);
+		await newFacility.validateFacility();
+		newFacility = await newFacility.save();
+		res.status(200).json(newFacility);
 	}
 	catch(err) {
-		res.status(404).send(err);// This returns a really weird json... watch out for that
+		httpErrorHandler(res, err);
 	}
 });
+
+// @route   DELETE api/facilities/:id
+// @Desc    Delete one facilities
+// @access  Public
+router.delete('/:id', validateObjectId, async (req, res) => {
+	logger.info('DEL Route: api/facilities/:id call made...');
+	const id = req.params.id;
+
+	try {
+		const facility = await Facility.findByIdAndRemove(id);
+
+		if (facility != null) {
+			logger.info(`The facility ${facility.name} with the id ${id} was deleted!`);
+			res.status(200).json(facility);
+		}
+		else {
+			nexusError(`The facility with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;

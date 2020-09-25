@@ -51,7 +51,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 			res.status(200).json(aircraft);
 		}
 		else {
-			res.status(404).send(`The Aircraft with the ID ${id} was not found!`);
+			nexusError(`The Aircraft with the ID ${id} was not found!`, 404);
 		}
 	}
 	catch (err) {

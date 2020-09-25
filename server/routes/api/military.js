@@ -1,69 +1,103 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-const validateObjectId = require('../../middleware/util/validateObjectId');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// Military Model - Using Mongoose Model
+// Mongoose Model Import
 const { Military } = require('../../models/military');
-const { Gear } = require('../../models/upgrade');
 
 // @route   GET api/military
-// @Desc    Get all Militarys
+// @Desc    Get all Militaries
 // @access  Public
 router.get('/', async function (req, res) {
-	// console.log('Sending militarys somewhere...');
-	const militarys = await Military.find()
-		.sort({ team: 1 })
-		.populate('team', 'name shortName')
-		.populate('zone', 'name')
-		.populate('country', 'name')
-		.populate('gear', 'name category')
-		.populate('site', 'name')
-		.populate('origin');
-	res.json(militarys);
+	logger.info('GET Route: api/militaries requested...');
+
+	try {
+		const military = await Military.find()
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('site', 'name')
+			.populate('origin')
+			.sort({ team: 1 });
+		res.status(200).json(military);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+
 });
 
-// @route   GET api/military
-// @Desc    Get Militarys by ID
+// @route   GET api/military/:id
+// @Desc    Get Military by ID
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/military/:id requested...');
 	const id = req.params.id;
-	const military = await Military.findById(id)
-		.sort({ team: 1 })
-		.populate('team', 'name shortName')
-		.populate('zone', 'name')
-		.populate('country', 'name')
-		.populate('gear', 'name category')
-		.populate('site', 'name')
-		.populate('origin', 'name');
-	if (military != null) {
-		res.json(military);
+
+	try {
+		const military = await Military.findById(id)
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('gear', 'name category')
+			.populate('site', 'name')
+			.populate('origin', 'name')
+			.sort({ team: 1 });
+		if (military != null) {
+			res.status(200).json(military);
+		}
+		else {
+			nexusError(`The Military with the ID ${id} was not found!`, 404);
+		}
 	}
-	else {
-		res.status(404).send(`The Military with the ID ${id} was not found!`);
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   POST api/military
+// @Desc    Create New military unit
+// @access  Public
+router.post('/', async (req, res) => {
+	logger.info('POST Route: api/military call made...');
+	let newMilitary = new Military(req.body);
+
+	try {
+		await newMilitary.validatMilitary();
+		newMilitary = await newMilitary.save();
+		logger.info(`Unit ${newMilitary.name} created...`);
+		res.status(200).json(newMilitary);
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 
 // @route   DELETE api/military/:id
-// @Desc    Delete an military
+// @Desc    Delete an military unit
 // @access  Public
 router.delete('/:id', async function (req, res) {
+	logger.info('DEL Route: api/military/:id call made...');
 	const id = req.params.id;
-	const military = await Military.findByIdAndRemove(id);
-	if (military != null) {
-		// remove associated gear records
-		for (let j = 0; j < military.gear.length; ++j) {
-			gerId = military.gear[j];
-			const gearDel = await Gear.findByIdAndRemove(gerId);
-			if ((gearDel === null)) {
-				console.log(`The Military Gear with the ID ${gerId} was not found!`);
-			}
+
+	try {
+		const military = await Military.findByIdAndRemove(id);
+
+		if (military != null) {
+			logger.info(`The unit ${military.name} with the id ${id} was deleted!`);
+			res.status(200).send(military);
 		}
-		console.log(`${military.name} with the id ${id} was deleted!`);
-		res.status(200).send(`${military.name} with the id ${id} was deleted!`);
+		else {
+			nexusError(`No military with the id ${id} exists!`, 404);
+		}
 	}
-	else {
-		res.status(400).send(`No military with the id ${id} exists!`);
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 

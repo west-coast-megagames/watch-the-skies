@@ -14,6 +14,7 @@ const { Blueprint } = require('../../models/blueprint');
 // @access  Public
 router.get('/', async (req, res) => {
 	logger.info('GET Route: api/blueprints requested...');
+
 	try {
 		const blueprints = await Blueprint.find()
 			.sort('buildModel: 1');
@@ -37,7 +38,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 			res.status(200).json(blueprint);
 		}
 		else {
-			res.status(404).send(`The blueprint with the ID ${id} was not found!`);
+			nexusError(`The blueprint with the ID ${id} was not found!`, 404);
 		}
 	}
 	catch (err) {
@@ -45,7 +46,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
-// TODO: Add GET route that allows for sorting by discriminator
+// TODO: Add GET route that allows for getting by discriminator
 
 // @route   POST api/blueprints
 // @Desc    Create New blueprint
@@ -73,7 +74,7 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		const blueprint = await Blueprint.findByIdAndRemove(req.params.id);
+		const blueprint = await Blueprint.findByIdAndRemove(id);
 
 		if (blueprint != null) {
 			logger.info(`The ${blueprint.headline} blueprint with the id ${id} was deleted!`);

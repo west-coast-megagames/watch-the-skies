@@ -9,17 +9,17 @@ const { Log } = require('../../models/logs/log');
 // @Desc    Get all logs
 // @access  Public
 router.get('/', async function (req, res) {
-    routeDebugger('Sending the logs!');
-    const logs = await Log.find()
-			.populate('team')
-			.populate('country', 'name')
-			.populate('zone')
-			.populate('project')
-			.populate('lab')
-			.populate('theory')
-			.populate('units')
-			.sort({date: 1});
-    res.status(200).json(logs);
+	routeDebugger('Sending the logs!');
+	const logs = await Log.find()
+		.populate('team')
+		.populate('country', 'name')
+		.populate('zone')
+		.populate('project')
+		.populate('lab')
+		.populate('theory')
+		.populate('units')
+		.sort({ date: 1 });
+	res.status(200).json(logs);
 });
 
 module.exports = router;
