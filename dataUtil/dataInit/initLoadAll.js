@@ -1,5 +1,6 @@
-const runBluePrintLoad = require("../dataInit/blueprintLoad");
-const runZoneLoad = require("../dataInit/zoneLoad");
+// const runBluePrintLoad = require("../dataInit/blueprintLoad");
+const runZoneLoad = require('../dataInit/zoneLoad');
+/*
 const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
 const runCountryTeamSet = require("../dataInit/countryTeamSet");
@@ -14,10 +15,14 @@ const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
 const runResearchLoad = require("../dataInit/researchLoad");
 const runDropAll = require("../dataInit/initDropAll");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+*/
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
-async function fullInit(selStr) {
-  switch (selStr) {
+async function fullInit (selStr) {
+	let zoneDone = false;
+	switch (selStr) {
+
+	/*
     case "All":
     case "DropAll":
       let dropAllDone = await runDropAll(true); // drop all tables
@@ -34,16 +39,18 @@ async function fullInit(selStr) {
       if (selStr != "All") {
         break;
       }
+*/
 
-    case "All":
-    case "Zone":
-      let zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
-      //console.log("Zone Init Done:", zoneDone);
-      logger.debug(`Zone Init Done: ${zoneDone}`);
-      if (selStr != "All") {
-        break;
-      }
+	case 'All':
+	case 'Zone':
+		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
+		// console.log("Zone Init Done:", zoneDone);
+		logger.debug(`Zone Init Done: ${zoneDone}`);
+		if (selStr != 'All') {
+			break;
+		}
 
+		/*
     case "All":
     case "Country":
       let countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
@@ -148,14 +155,16 @@ async function fullInit(selStr) {
         break;
       }
 
-      if ((selStr = "All")) break;
+			*/
 
-    default:
-      logger.error(`Invalid Init Load Selection: ${selStr}`);
-  }
+		break;
 
-  logger.info("initLoadAll Done");
-  return true;
+	default:
+		logger.error(`Invalid Init Load Selection: ${selStr}`);
+	}
+
+	logger.info('initLoadAll Done');
+	return true;
 }
 
 module.exports = fullInit;

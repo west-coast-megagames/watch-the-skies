@@ -9,7 +9,7 @@ const {
 const { Team } = require("../models/team");
 
 const upgradeCheckDebugger = require("debug")("app:upgradeCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

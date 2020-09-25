@@ -1,5 +1,6 @@
-const runBluePrintCheck = require("../dataCheck/blueprintCheck");
-const runZoneCheck = require("../dataCheck/zoneCheck");
+// const runBluePrintCheck = require("../dataCheck/blueprintCheck");
+const runZoneCheck = require('../dataCheck/zoneCheck');
+/*
 const runCountryCheck = require("../dataCheck/countryCheck");
 const runFacilityCheck = require("../dataCheck/facilityCheck");
 const runSiteCheck = require("../dataCheck/siteCheck");
@@ -12,12 +13,15 @@ const runTeamCheck = require("../dataCheck/teamCheck");
 const runArticleCheck = require("../dataCheck/articleCheck");
 const runResearchCheck = require("../dataCheck/researchCheck");
 const runAccountsCheck = require("../dataCheck/accountsCheck");
+*/
 
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
-require("winston-mongodb");
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
+require('winston-mongodb');
 
-async function fullInitCheck(selStr) {
-  switch (selStr) {
+async function fullInitCheck (selStr) {
+	let zoneCheckDone = false;
+	switch (selStr) {
+	/*
     case "All":
     case "BluePrint":
       let blueprintCheckDone = await runBluePrintCheck(true); // check blueprint records
@@ -26,16 +30,18 @@ async function fullInitCheck(selStr) {
       if (selStr != "All") {
         break;
       }
+    */
 
-    case "All":
-    case "Zone":
-      let zoneCheckDone = await runZoneCheck(true); // check zone records
-      logger.info(`Zone Check Done: ${zoneCheckDone}`);
+	case 'All':
+	case 'Zone':
+		zoneCheckDone = await runZoneCheck(true); // check zone records
+		logger.info(`Zone Check Done: ${zoneCheckDone}`);
 
-      if (selStr != "All") {
-        break;
-      }
+		if (selStr != 'All') {
+			break;
+		}
 
+		/*
     case "All":
     case "Country":
       let countryCheckDone = await runCountryCheck(true); // check country records
@@ -145,15 +151,16 @@ async function fullInitCheck(selStr) {
       if (selStr != "All") {
         break;
       }
+     */
 
-      if ((selStr = "All")) break;
+		break;
 
-    default:
-      logger.error(`Invalid Init Check Selection:  ${selStr}`);
-  }
+	default:
+		logger.error(`Invalid Init Check Selection:  ${selStr}`);
+	}
 
-  logger.info("initCheckAll Done");
-  return true;
+	logger.info('initCheckAll Done');
+	return true;
 }
 
 module.exports = fullInitCheck;

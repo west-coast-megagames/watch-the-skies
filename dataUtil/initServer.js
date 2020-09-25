@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dbDebugger = require("debug")("app:db");
-const { logger } = require("./middleware/winston"); // Import of winston for error logging
+const { logger } = require("./middleware/log/winston"); // Import of winston for error logging
 const supportsColor = require("supports-color");
 //const connect = require('../config/sockets');
 const http = require("http");

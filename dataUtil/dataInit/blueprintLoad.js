@@ -5,7 +5,7 @@ const file = fs.readFileSync(
   "utf8"
 );
 const blueprintDataIn = JSON.parse(file);
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const blueprintInitDebugger = require("debug")("app:blueprintInit");

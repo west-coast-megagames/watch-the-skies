@@ -111,13 +111,8 @@ function validateUpgradeBlueprint(blueprint) {
 
 module.exports = {
   Blueprint,
-  validateBlueprint,
   FacilityBlueprint,
-  validateFacilityBlueprint,
   AircraftBlueprint,
-  validateAircraftBlueprint,
   SquadBlueprint,
-  validateSquadBlueprint,
-  UpgradeBlueprint,
-  validateUpgradeBlueprint,
+  UpgradeBlueprint
 };

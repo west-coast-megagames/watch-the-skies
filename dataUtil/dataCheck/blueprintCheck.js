@@ -15,7 +15,7 @@ const {
 const { Site } = require("../models/site");
 
 const blueprintCheckDebugger = require("debug")("app:blueprintCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

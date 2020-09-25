@@ -1,8 +1,9 @@
-const Joi = require("joi");
-const mongoose = require("mongoose");
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+
 const Schema = mongoose.Schema;
-const zoneDebugger = require("debug")("app:zone");
-const supportsColor = require("supports-color");
 
 const ZoneSchema = new Schema({
   model: { type: String, default: "Zone" },
@@ -20,18 +21,33 @@ const ZoneSchema = new Schema({
   gameState: [],
 });
 
-ZoneSchema.methods.validateZone = function (zone) {
-  //zoneDebugger("In methods validateZone", zone.name, zone.code);
-  const schema = {
-    name: Joi.string().min(3).max(50).required(),
-    code: Joi.string().min(2).max(2).required().uppercase(),
-  };
+// validateZone Method
+ZoneSchema.methods.validateZone = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
-  return Joi.validate(zone, schema, { allowUnknown: true });
-  //return Joi.schema.validate(zone, { "allowUnknown": true });
+	let schema;
+	if (this.type === 'Ground') {
+		schema = {
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			name: Joi.string().min(3).max(50).required(),
+			terror: Joi.number().min(0).max(250)
+		};
+	}
+
+	if (this.type === 'Space') {
+		schema = {
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			name: Joi.string().min(3).max(50).required()
+		};
+	}
+
+	nexusError(`No ${this.type} exists for zone!`, 400);
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
 };
 
-let Zone = mongoose.model("Zone", ZoneSchema);
+const Zone = mongoose.model("Zone", ZoneSchema);
 
 function validateZone(zone) {
   //zoneDebugger("In function validateZone", zone.name);

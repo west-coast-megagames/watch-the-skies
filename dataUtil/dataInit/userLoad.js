@@ -9,7 +9,7 @@ const userDataIn = JSON.parse(file);
 const userLoadDebugger = require("debug")("app:userLoad");
 
 const supportsColor = require("supports-color");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const express = require("express");

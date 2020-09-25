@@ -5,7 +5,7 @@ const DeployLog = require('../../models/logs/deployLog');
 const CrashLog = require('../../models/logs/crashLog');
 const TheoryLog = require('../../models/logs/theoryLog');
 const { TerrorLog } = require('../../models/logs/log');
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
 // Function that makes a timestamp for log files
 function makeTimestamp() {

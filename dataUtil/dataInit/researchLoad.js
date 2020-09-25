@@ -7,7 +7,7 @@ const file = fs.readFileSync(
 const researchDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const researchLoadDebugger = require("debug")("app:researchLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");
