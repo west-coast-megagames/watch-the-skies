@@ -1,4 +1,4 @@
-const { logger } = require("../../middleware/winston"); // IMPORT - Server logger
+const { logger } = require("../../middleware/log/winston"); // IMPORT - Server logger
 const { teamPhase, actionPhase, freePhase } = require("./phaseChange"); // IMPORT - Phase change functions
 const clockDebugger = require("debug")("app:gameClock"); // Debug console logger
 

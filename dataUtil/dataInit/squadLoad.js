@@ -7,7 +7,7 @@ const file = fs.readFileSync(
 const squadDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const squadLoadDebugger = require("debug")("app:squadLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

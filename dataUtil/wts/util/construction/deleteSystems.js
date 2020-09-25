@@ -1,4 +1,4 @@
-const { logger } = require("../../../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../../../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const { System } = require("../../../models/upgrade");

@@ -3,7 +3,7 @@ const { d6 } = require("../../systems/dice");
 const { Zone } = require("../../models/zone");
 const { Country } = require("../../models/country");
 const { Site } = require("../../models/site");
-const { logger } = require("../../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../../middleware/log/winston"); // Import of winston for error logging
 const { TerrorReport } = require("../reports/reportClasses");
 
 require("winston-mongodb");

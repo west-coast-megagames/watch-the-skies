@@ -11,7 +11,7 @@ const { Country } = require("../models/country");
 const { Site } = require("../models/site");
 
 const zoneCheckDebugger = require("debug")("app:zoneCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

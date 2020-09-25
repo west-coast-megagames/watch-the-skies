@@ -8,7 +8,7 @@ const cityDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const citySiteLoadDebugger = require("debug")("app:citySiteLoad");
 const { convertToDms } = require("../systems/geo");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

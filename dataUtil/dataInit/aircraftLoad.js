@@ -7,7 +7,7 @@ const file = fs.readFileSync(
 const aircraftDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const aircrafLoadDebugger = require("debug")("app:aircraftLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

@@ -7,7 +7,7 @@ const file = fs.readFileSync(
 const spacecraftDataIn = JSON.parse(file);
 //const mongoose = require('mongoose');
 const spacecraftDebugger = require("debug")("app:spacecraftLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 const { convertToDms } = require("../systems/geo");
 

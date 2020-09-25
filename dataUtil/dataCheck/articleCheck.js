@@ -8,7 +8,7 @@ const { Team } = require("../models/team");
 const { Site } = require("../models/site");
 
 const articleCheckDebugger = require("debug")("app:articleCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

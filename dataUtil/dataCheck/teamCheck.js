@@ -22,7 +22,7 @@ const { Treaty } = require("../models/treaty");
 const { Trade } = require("../models/trade");
 
 const teamCheckDebugger = require("debug")("app:teamCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

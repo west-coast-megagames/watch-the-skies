@@ -14,7 +14,7 @@ const { Log } = require("../models/logs/log");
 const { Facility } = require("../models/facility");
 
 const aircraftCheckDebugger = require("debug")("app:aircraftCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");

@@ -9,7 +9,7 @@ const repairSequence = require('../construction/repair');
 
 const nexusEvent = require('../../startup/events');
 
-const { logger } = require('../../middleware/winston'); // IMPORT - Winston error logging
+const { logger } = require('../../middleware/log/winston'); // IMPORT - Winston error logging
 
 /* This file handles all the events triggered on phase change.
     Each phase has a function that handles that phase. */

@@ -8,7 +8,7 @@ const militaryDataIn = JSON.parse(file);
 const { delGear } = require("../wts/util/construction/deleteGear");
 //const mongoose = require('mongoose');
 const militaryLoadDebugger = require("debug")("app:militaryLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
+const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
 require("winston-mongodb");
 
 const supportsColor = require("supports-color");
