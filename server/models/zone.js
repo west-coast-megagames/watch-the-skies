@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const docCheck = require('../middleware/util/validateDocument');
 
 const Schema = mongoose.Schema;
 
@@ -49,8 +48,6 @@ ZoneSchema.methods.validateZone = async function () {
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
-
-	docCheck.validServiceRecord(this.serviceRecord);
 
 };
 

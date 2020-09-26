@@ -30,16 +30,17 @@ async function runZoneLoad (runFlag) {
 async function initLoad (doLoad) {
 	if (!doLoad) return;
 
+	// delete all records every time
+
+	// Delete now regardless of loadFlag
+	await deleteAllZones();
+
 	let zoneRecReadCount = 0;
 	const zoneRecCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
 	for await (const data of zoneDataIn) {
 		// for (let i = 0; i < refDataIn.length; ++i ) {
-
 		if (data.loadType == 'zone') {
-			// Delete now regardless of loadFlag
-			await deleteZone(data.name, data.code);
-
 			if (data.loadFlag === 'true') {
 				++zoneRecReadCount;
 				await loadZone(
@@ -137,26 +138,11 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 			return;
 		}
 		else {
-			// Existing Zone here ... update
-			const zone = data;
-			zone.name = zName;
-			zone.code = zCode;
-			zone.type = zType;
-			if (zType === 'Ground') {
-				zone.terror = randomTerror; // zTerror
-			}
-
-			try {
-				const response = await axios.put(`${gameServer}api/zones/${zone._id}`, zone);
-				logger.info(`resonse from post of Groundzone ${response}`);
-				++rCounts.loadCount;
-				logger.debug(`${zone.name} update saved to Ground zones collection.`);
-			}
-			catch (err) {
-				++rCounts.loadErrCount;
-				logger.error(`Update Zone Save Error: ${err.message}`, { meta: err });
-			}
-
+			// Existing Zone here ... no longer doing updates so this is now counted as an error
+			logger.error(
+				`Zone skipped as code already exists in database: ${loadName} ${zCode}`
+			);
+			++rCounts.loadErrCount;
 		}
 	}
 	catch (err) {
@@ -166,37 +152,28 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 	}
 }
 
-async function deleteZone (zName, zCode) {
+async function deleteAllZones () {
 	try {
 		let delErrorFlag = false;
 
 		try {
-			const { data } = await axios.get(`${gameServer}api/zones/code/${zCode}`);
-			if (data.type) {
-				const delId = data._id;
-				const response = await axios.delete(`${gameServer}api/zones/${delId}`);
-				logger.info(`Delete of zone ${zName} done. ${response}`);
-			}
+			const res = await axios.patch(`${gameServer}api/zones/deleteAll`);
+			logger.info(`Delete of All zones done. ${res}`);
 		}
 		catch (err) {
-			if (err.response.status == 404) {
-				logger.info(`deleteZone: Zone ${zName} with the code ${zCode} was not found!`);
-			}
-			else {
-				logger.error(`Catch deleteZone Error 1: ${err.message}`, { meta: err.stack });
-			}
+			logger.error(`Catch deleteAllZones Error 1: ${err.message}`, { meta: err.stack });
 			delErrorFlag = true;
 		}
 
 		if (!delErrorFlag) {
-			logger.debug(`All Zones succesfully deleted for Code: ${zCode}`);
+			logger.debug('All Zones succesfully deleted.');
 		}
 		else {
-			logger.error(`Some Error In Zones delete for Code: ${zCode}`);
+			logger.error('Some Error In Zones delete all');
 		}
 	}
 	catch (err) {
-		logger.error(`Catch deleteZone Error 2: ${err.message}`, { meta: err });
+		logger.error(`Catch deleteAllZones Error 2: ${err.message}`, { meta: err });
 	}
 }
 
