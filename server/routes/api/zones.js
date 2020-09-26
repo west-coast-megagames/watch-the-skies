@@ -13,7 +13,7 @@ const { Zone, SpaceZone, GroundZone } = require('../../models/zone');
 // @Desc    Get all zones
 // @access  Public
 router.get('/', async (req, res) => {
-	logger.info('GET Route: api/zones requested...');
+	// logger.info('GET Route: api/zones requested...');
 	try {
 		const zones = await Zone.find()
 			.sort('code: 1');
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 // @Desc    Get zones by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
-	logger.info('GET Route: api/zones/:id requested...');
+	// logger.info('GET Route: api/zones/:id requested...');
 	const id = req.params.id;
 
 	try {
@@ -59,7 +59,7 @@ router.get('/code/:code', async (req, res) => {
 			res.status(200).json(zone);
 		}
 		else {
-			res.status(404).send(`The Zone with the Code ${code} was not found!`);
+			res.status(200).json({ type: false });
 		}
 	}
 	catch (err) {
@@ -124,7 +124,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
 // @Desc    Delete zone by ID
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
-	logger.info('DEL Route: api/zones/:id call made...');
+	// logger.info('DEL Route: api/zones/:id call made...');
 	const id = req.params.id;
 
 	try {
