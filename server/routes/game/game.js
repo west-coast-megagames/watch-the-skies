@@ -450,7 +450,7 @@ router.delete('/id', async function (req, res) {
 9) "violition": replaces treaty's cost with whatever "violition" is paired with
 10) "status": NOT HERE making it's own thing
 */
-router.put('/modify', async function (req, res) {
+router.put('/treaties/modify', async function (req, res) {
 	let { treaty, changes, modifier } = req.body;
 	if (treaty.status.draft === false) {
 		res.status(400).send('Cannot modify a treaty that is in the proposal state');
@@ -536,13 +536,13 @@ router.put('/modify', async function (req, res) {
 	}// catch
 });
 
-// @route   PUT game/ratify
+// @route   PUT game/treaties/ratify
 // @Desc    Ratify a treaty for your team
 // @access  Public
 // EXPECTATIONS: "treaty": {<Treaty Object>}, "ratifier": "<ID>"
 // I am assuming that the person ratifying this treaty has access to it through witnessing, and am not handling any logic whether they
 // are allowed to sign treaty (through the 'excluded' array property of the Treaty Obj)
-router.put('/ratify', async function (req, res) {
+router.put('/treaties/ratify', async function (req, res) {
 	try {
 		let { treaty, ratifier } = req.body;
 		treaty = await Treaty.findById({ _id: treaty._id });// populate treaty
@@ -566,7 +566,7 @@ router.put('/ratify', async function (req, res) {
 // @Desc    changes a status of a treaty to wither draft or proposal.... no idea if this is needed anymore?
 // @access  Public
 // EXPECTATIONS: "treaty": {<Treaty Object>}, "modifier": "<ID>", "status"
-router.put('/status', async function (req, res) {
+router.put('/treaties/status', async function (req, res) {
 	let { treaty } = req.body;
 	const { modifier, status } = req.body;
 	try{
