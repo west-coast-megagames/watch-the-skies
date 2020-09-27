@@ -25,6 +25,22 @@ router.get('/', async (req, res) => {
 	}
 });
 
+// @route   GET api/zones/lean
+// @Desc    Get all zones/lean
+// @access  Public
+router.get('/lean', async (req, res) => {
+	// logger.info('GET lean Route: api/zones requested...');
+	try {
+		const zones = await Zone.find().lean()
+			.sort('code: 1');
+		res.status(200).json(zones);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET api/zones/:id
 // @Desc    Get zones by id
 // @access  Public

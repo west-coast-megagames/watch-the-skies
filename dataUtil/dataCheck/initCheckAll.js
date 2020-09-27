@@ -20,26 +20,18 @@ require('winston-mongodb');
 
 async function fullInitCheck (selStr) {
 	let zoneCheckDone = false;
+
+	// only one case ALL now to work with eslint no fallthrough and no duplicate case
+	// not as pretty
 	switch (selStr) {
-	/*
-    case "All":
-    case "BluePrint":
-      let blueprintCheckDone = await runBluePrintCheck(true); // check blueprint records
-      logger.info(`Blueprint Check Done: ${blueprintCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-    */
-
 	case 'All':
-	case 'Zone':
+		/*
+		let blueprintCheckDone = await runBluePrintCheck(true); // check blueprint records
+			logger.info(`Blueprint Check Done: ${blueprintCheckDone}`);
+		*/
+
 		zoneCheckDone = await runZoneCheck(true); // check zone records
 		logger.info(`Zone Check Done: ${zoneCheckDone}`);
-
-		if (selStr != 'All') {
-			break;
-		}
 
 		/*
     case "All":
@@ -154,6 +146,14 @@ async function fullInitCheck (selStr) {
      */
 
 		break;
+		// end of case All
+
+	case 'Zone':
+		zoneCheckDone = await runZoneCheck(true); // check zone records
+		logger.info(`Zone Check Done: ${zoneCheckDone}`);
+
+		break;
+
 
 	default:
 		logger.error(`Invalid Init Check Selection:  ${selStr}`);

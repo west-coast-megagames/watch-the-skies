@@ -77,7 +77,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 		}
 
 		const { data } = await axios.get(`${gameServer}api/zones/code/${zCode}`);
-		console.log(data);
+		// console.log(data);
 		loadName = zName;
 
 		if (!data.type) {
@@ -97,8 +97,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 				};
 
 				try {
-					const response = await axios.post(`${gameServer}api/zones`, SpaceZone);
-					logger.info(`resonse from post of Spacezone ${response.data}`);
+					await axios.post(`${gameServer}api/zones`, SpaceZone);
 					++rCounts.loadCount;
 					logger.debug(`${SpaceZone.name} add saved to Space zones collection.`);
 				}
@@ -118,8 +117,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 					type: 'Ground'
 				};
 				try {
-					const response = await axios.post(`${gameServer}api/zones`, GroundZone);
-					logger.info(`resonse from post of Groundzone ${response}`);
+					await axios.post(`${gameServer}api/zones`, GroundZone);
 					++rCounts.loadCount;
 					logger.debug(`${GroundZone.name} add saved to Ground zones collection.`);
 				}
@@ -157,8 +155,8 @@ async function deleteAllZones () {
 		let delErrorFlag = false;
 
 		try {
-			const res = await axios.patch(`${gameServer}api/zones/deleteAll`);
-			logger.info(`Delete of All zones done. ${res}`);
+			await axios.patch(`${gameServer}api/zones/deleteAll`);
+			// logger.info('Delete of All zones done. (zoneLoad)');
 		}
 		catch (err) {
 			logger.error(`Catch deleteAllZones Error 1: ${err.message}`, { meta: err.stack });
@@ -166,10 +164,10 @@ async function deleteAllZones () {
 		}
 
 		if (!delErrorFlag) {
-			logger.debug('All Zones succesfully deleted.');
+			logger.debug('All Zones succesfully deleted. (zoneLoad');
 		}
 		else {
-			logger.error('Some Error In Zones delete all');
+			logger.error('Some Error In Zones delete all (zoneLoad');
 		}
 	}
 	catch (err) {

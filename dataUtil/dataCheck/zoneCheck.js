@@ -1,15 +1,34 @@
 // Zone Model - Using Mongoose Model
 
-const { Country } = require('../models/country');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
+
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
 async function chkZone (runFlag) {
+	let cFinds = [];
+	let zFinds = [];
 	// get countries once
-	const cFinds = await Country.find();
-	// zoneCheckDebugger(`jeff here length of cFinds ${cFinds.length}`);
-	/*
-	for (const zone of await Zone.find().lean()) {
+	try {
+		const { data } = await axios.get(`${gameServer}api/countries`);
+		cFinds = data;
+		logger.info(`jeff here length of cFinds ${cFinds.length}`);
+	}
+	catch(err) {
+		logger.error(`Country Get Error (zoneCheck): ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		const { data } = await axios.get(`${gameServer}api/zones/lean`);
+		zFinds = data;
+		logger.info(`jeff here length of zFinds ${zFinds.length}`);
+	}
+	catch(err) {
+		logger.error(`Zone Get Lean Error (zoneCheck): ${err.message}`, { meta: err.stack });
+	}
+
+	for (const zone of zFinds) {
 		// do not need toObject with .lean()
 		// let testPropertys = zone.toObject();
 
@@ -40,20 +59,31 @@ async function chkZone (runFlag) {
 		}
 		else {
 			for (let i = 0; i < zone.serviceRecord.length; ++i) {
+				/*
 				const lFind = await Log.findById(zone.serviceRecord[i]);
 				if (!lFind) {
 					logger.error(
 						`Zone ${zone.name} ${zone._id} has an invalid serviceRecord reference ${i}: ${zone.serviceRecord[i]}`
 					);
 				}
+				*/
 			}
+		}
+
+		if (!Object.prototype.hasOwnProperty.call(zone, 'type')) {
+			logger.error(`type missing for zone ${zone.name} ${zone._id}`);
+		}
+		else if (zone.type === '' || zone.type == undefined || zone.type == null) {
+			logger.error(`type is blank for Zone ${zone.name} ${zone._id}`);
 		}
 
 		// should be at least one country in the zone
 		let countryCount = 0;
-		const zoneId = zone._id.toHexString();
+		// .toHexString();
+		const zoneId = zone._id;
 		countryLoop: for (let j = 0; j < cFinds.length; ++j) {
-			const cZoneId = cFinds[j].zone.toHexString();
+			// .toHexString();
+			const cZoneId = cFinds[j].zone;
 			if (cZoneId === zoneId) {
 				++countryCount;
 			}
@@ -65,12 +95,14 @@ async function chkZone (runFlag) {
 
 		if (zone.type === 'Space') {
 			try {
+				/*
 				const { error } = await validateSpaceZone(zone);
 				if (error) {
 					logger.error(
 						`Zone Space Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
 					);
 				}
+				*/
 			}
 			catch (err) {
 				logger.error(
@@ -89,19 +121,22 @@ async function chkZone (runFlag) {
 			}
 
 			try {
+				/*
 				const { error } = await validateGroundZone(zone);
 				if (error) {
 					logger.error(
 						`Zone Ground Validation Error For ${zone.code} ${zone.name} Error: ${error.details[0].message}`
 					);
 				}
+				*/
 			}
 			catch (err) {
 				logger.error(
 					`Zone Ground Validation Error For ${zone.code} ${zone.name} Error: ${err.details[0].message}`
 				);
 			}
-	*/
+		}
+	}
 
 	runFlag = true;
 	return runFlag;

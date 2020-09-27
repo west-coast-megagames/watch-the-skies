@@ -1,5 +1,6 @@
 // const runBluePrintLoad = require("../dataInit/blueprintLoad");
 const runZoneLoad = require('../dataInit/zoneLoad');
+const runDropAll = require('../dataInit/initDropAll');
 /*
 const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
@@ -14,23 +15,28 @@ const runMilitaryLoad = require("../dataInit/militaryLoad");
 const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
 const runResearchLoad = require("../dataInit/researchLoad");
-const runDropAll = require("../dataInit/initDropAll");
+
 */
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
 async function fullInit (selStr) {
+	let dropAllDone = false;
 	let zoneDone = false;
 	switch (selStr) {
 
-	/*
-    case "All":
-    case "DropAll":
-      let dropAllDone = await runDropAll(true); // drop all tables
-      logger.debug(`Drop All Done: ${dropAllDone}`);
-      if (selStr != "All") {
-        break;
-      }
 
+	// only one case ALL now to work with eslint no fallthrough and no duplicate case
+	// not as pretty
+	case 'All':
+		dropAllDone = await runDropAll(true); // drop all tables
+		logger.debug(`Drop All Done: ${dropAllDone}`);
+
+		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
+		logger.debug(`Zone Init Done: ${zoneDone}`);
+
+		break;
+
+		/*
     case "All":
     case "BluePrint":
       let blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
@@ -39,18 +45,7 @@ async function fullInit (selStr) {
       if (selStr != "All") {
         break;
       }
-*/
 
-	case 'All':
-	case 'Zone':
-		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
-		// console.log("Zone Init Done:", zoneDone);
-		logger.debug(`Zone Init Done: ${zoneDone}`);
-		if (selStr != 'All') {
-			break;
-		}
-
-		/*
     case "All":
     case "Country":
       let countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
@@ -156,6 +151,16 @@ async function fullInit (selStr) {
       }
 
 			*/
+
+	case 'DropAll':
+		dropAllDone = await runDropAll(true); // drop all tables
+		logger.debug(`Drop All Done: ${dropAllDone}`);
+
+		break;
+
+	case 'Zone':
+		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
+		logger.debug(`Zone Init Done: ${zoneDone}`);
 
 		break;
 

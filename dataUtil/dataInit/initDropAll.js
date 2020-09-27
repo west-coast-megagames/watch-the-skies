@@ -1,25 +1,12 @@
-const { Blueprint } = require("../models/blueprint");
-const { Zone } = require("../models/zone");
-const { Country } = require("../models/country");
-const { Team } = require("../models/team");
-const { Research } = require("../models/research");
-const { Log } = require("../models/logs/log");
-const { Site } = require("../models/site");
-const { Aircraft } = require("../models/aircraft");
-const { Account } = require("../models/account");
-const { Upgrade } = require("../models/upgrade");
-const { Facility } = require("../models/facility");
-const { Military } = require("../models/military");
-const { Squad } = require("../models/squad");
-const { User } = require("../models/user");
-const { Article } = require("../models/article");
-const { LogError } = require("../models/loggers/logError");
-const { LogInfo } = require("../models/loggers/logInfo");
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
-async function dropAll(doDrop) {
-  if (!doDrop) return;
+async function dropAll (doDrop) {
+	if (!doDrop) return;
 
-  // drop all tables
+	// drop all tables
+	/*
   await Blueprint.deleteMany();
   await Zone.deleteMany();
   await Country.deleteMany();
@@ -36,9 +23,17 @@ async function dropAll(doDrop) {
   await User.deleteMany();
   await Article.deleteMany();
   await LogError.deleteMany();
-  await LogInfo.deleteMany();
+	await LogInfo.deleteMany();
+	*/
+	try {
+		await axios.patch(`${gameServer}api/zones/deleteAll`);
+		logger.info('Delete of All zones done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Zones in initDropAll: ${err.message}`, { meta: err.stack });
+	}
 
-  return true;
+	return true;
 }
 
 module.exports = dropAll;
