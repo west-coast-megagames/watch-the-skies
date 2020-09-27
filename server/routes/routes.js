@@ -23,7 +23,6 @@ const account = require('./api/accounts');
 const blueprint = require('./api/blueprints');
 const country = require('./api/countries');
 const facilities = require('./api/facilities');
-const intercept = require('./game/intercept');
 const logs = require('./api/log');
 const military = require('./api/military');
 const research = require('./api/research');
@@ -38,13 +37,18 @@ const users = require('./api/users');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
-const debug = require('./debugRoute');
-const game = require('./game/game');
 const admin = require('./game/admin');
-const del = require('./game/delete');
 const banking = require('./game/banking');
 const control = require('./game/control');
+const del = require('./game/delete');
+const diplomacy = require('./game/diplomacy');
+const game = require('./game/game');
+const interceptors = require('./game/interceptors');
+const milGame = require('./game/milGame');
 const news = require('./game/news');
+const shared = require('./game/shared');
+
+const debug = require('./debugRoute');
 
 module.exports = function (app) {
 	logger.info('Opening routes...');
@@ -58,34 +62,39 @@ module.exports = function (app) {
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
 
-	app.use('/debug', debug); // Route for debug triggering
-	app.use('/game', game);
+	// app.use('/game', game); //think this is not needed.... -S
 	app.use('/game/admin', admin);
+	app.use('/game/banking', banking); // Route for banking functions
+	app.use('/game/control', control);
 	app.use('/game/delete', del);
-	app.use('/api/auth', auth);
+	app.use('/game/diplomacy', diplomacy);
+	app.use('/game/game', game);
+	app.use('/game/interceptors', interceptors);
+	app.use('/game/milGame', milGame);
+	app.use('/game/news', news); // Route for the news desks
+	app.use('/game/shared', shared);
 
+	app.use('/debug', debug); // Route for debug triggering
+
+	app.use('/api/accounts', account); // Route for inputing accounts
 	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
+	app.use('/api/articles', article); // Route for manipulating articles
 	app.use('/api/blueprints', blueprint);
-	app.use('/api/team', team); // Route for Teams
-	app.use('/api/intercept', intercept); // Route for triggering an interception
-	app.use('/api/zones', zones); // Route for inputing zones
 	app.use('/api/countries', country); // Route for inputing countries
 	app.use('/api/facilities', facilities); // Route for inputing countries
-	app.use('/api/sites', sites); // Route for sites
-	app.use('/api/accounts', account); // Route for inputing accounts
-	app.use('/api/user', users); // Route for dealing with Users
-	app.use('/api/news', news); // Route for the news desks
 	app.use('/api/logs', logs); // Route for logs
-	app.use('/api/banking', banking); // Route for banking functions
-	app.use('/api/research', research); // Route for research functions
 	app.use('/api/military', military); // Route for manipulating militarys
-	app.use('/api/articles', article); // Route for manipulating articles
-	app.use('/api/logErrors', logError); // Route for manipulating logError
-	app.use('/api/logInfo', logInfo); // Route for manipulating logInfo
+	app.use('/api/research', research); // Route for research functions
+	app.use('/api/sites', sites); // Route for sites
+	app.use('/api/team', team); // Route for Teams
 	app.use('/api/trade', trade); //
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
+	app.use('/api/user', users); // Route for dealing with Users
+	app.use('/api/zones', zones); // Route for inputing zones
 
-	app.use('/api/control', control);
+	app.use('/log/logErrors', logError); // Route for manipulating logError
+	app.use('/log/logInfo', logInfo); // Route for manipulating logInfo
+
 	app.use(routeError);
 };
