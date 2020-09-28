@@ -1,5 +1,12 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const Gameclock = require('../wts/gameClock/gameClock');
 
 const ActivitySchema = new Schema({
@@ -11,30 +18,30 @@ const ActivitySchema = new Schema({
 
 const TradeSchema = new Schema({
 	initiator: {
-		team: { type: Schema.Types.ObjectId, ref: 'Team' },
+		team: { type: ObjectId, ref: 'Team' },
 		ratified: { type: Boolean, default: false },
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: Schema.Types.ObjectId, ref: 'Aircraft' }],
-			// intel here
-			research: [{ type: Schema.Types.ObjectId, ref: 'Research' }],
-			// sites here
-			upgrade: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
+			aircraft: [{ type: ObjectId, ref: 'Aircraft' }],
+			// TODO: Add intel here
+			research: [{ type: ObjectId, ref: 'Research' }],
+			// TODO: Add sites here
+			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
 			comments: []
 		} // initiator
 	},
 	tradePartner: {
-		team: { type: Schema.Types.ObjectId, ref: 'Team' },
+		team: { type: ObjectId, ref: 'Team' },
 		ratified: { type: Boolean, default: false },
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: Schema.Types.ObjectId, ref: 'Aircraft' }],
-			// intel here
-			research: [{ type: Schema.Types.ObjectId, ref: 'Research' }],
-			// sites here
-			upgrade: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
+			aircraft: [{ type: ObjectId, ref: 'Aircraft' }],
+			// TODO: Add intel here
+			research: [{ type: ObjectId, ref: 'Research' }],
+			// TODO: Add sites here
+			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
 			comments: []
 		} // tradePartner
 	},
@@ -49,6 +56,20 @@ const TradeSchema = new Schema({
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() }
 });// const TradeSchema
+
+// validateTrade method
+TradeSchema.methods.validateTrade = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	const schema = {
+		// TODO: Add trade rules to Joi validation schema
+	};
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validTeam(this.initiator.team);
+	await validTeam(this.tradePartner.team);
+};
 
 TradeSchema.methods.saveActivity = async (trade, incHeader) => {
 	const activity = {

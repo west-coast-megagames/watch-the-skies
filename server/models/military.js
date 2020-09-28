@@ -1,19 +1,22 @@
-const mongoose = require('mongoose');
-const modelDebugger = require('debug')('app: Military Model');
-const Schema = mongoose.Schema;
-const Joi = require('joi');
-const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
-require('winston-mongodb');
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam, validZone, validCountry, validSite, validFacility } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' },
-	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site' },
-	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
-	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
+	team: { type: ObjectId, ref: 'Team' },
+	zone: { type: ObjectId, ref: 'Zone' },
+	country: { type: ObjectId, ref: 'Country' },
+	site: { type: ObjectId, ref: 'Site' },
+	origin: { type: ObjectId, ref: 'Facility' },
+	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	status: {
 		damaged: { type: Boolean, default: false },
 		deployed: { type: Boolean, default: false },
@@ -22,10 +25,71 @@ const MilitarySchema = new Schema({
 		secret: { type: Boolean, default: false }
 	},
 	hidden: { type: Boolean, default: false },
-	gear: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
+	gear: [{ type: ObjectId, ref: 'Upgrade' }],
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: []
 });
+
+MilitarySchema.methods.validateMilitary = async function () {
+	const schema = {
+		name: Joi.string().min(2).max(50).required()
+	};
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validSite(this.site);
+	await validTeam(this.team);
+	await validZone(this.zone);
+	await validFacility(this.facility);
+	await validCountry(this.country);
+};
+
+
+MilitarySchema.methods.deploy = async (unit, country) => {
+	const banking = require('../../../wts/banking/banking');
+	const { Account } = require('../../account');
+
+	try {
+		logger.info(
+			`Deploying ${unit.name} to ${country.name} in the ${country.zone.name} zone`
+		);
+		let cost = 0;
+		if (unit.zone !== country.zone) {
+			cost = unit.status.localDeploy;
+			unit.status.deployed = true;
+		}
+		else if (unit.zone === country.zone) {
+			cost = unit.status.globalDeploy;
+			unit.status.deployed = true;
+		}
+
+		let account = await Account.findOne({
+			name: 'Operations',
+			team: unit.team
+		});
+		account = await banking.withdrawal(
+			account,
+			cost,
+			`Deploying ${
+				unit.name
+			} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`
+		);
+
+		logger.info(account);
+		await account.save();
+		await unit.save();
+		logger.info(`${unit.name} deployed...`);
+
+		return unit;
+	}
+	catch (err) {
+		logger.info('Error:', err.message);
+		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
+			meta: err
+		});
+	}
+};
 
 const Military = mongoose.model('Military', MilitarySchema);
 
@@ -61,67 +125,4 @@ const Corps = Military.discriminator(
 	})
 );
 
-MilitarySchema.methods.deploy = async (unit, country) => {
-	const banking = require('../../../wts/banking/banking');
-	const { Account } = require('../../account');
-
-	try {
-		modelDebugger(
-			`Deploying ${unit.name} to ${country.name} in the ${country.zone.name} zone`
-		);
-		let cost = 0;
-		if (unit.zone !== country.zone) {
-			cost = unit.status.localDeploy;
-			unit.status.deployed = true;
-		}
-		else if (unit.zone === country.zone) {
-			cost = unit.status.globalDeploy;
-			unit.status.deployed = true;
-		}
-
-		let account = await Account.findOne({
-			name: 'Operations',
-			team: unit.team
-		});
-		account = await banking.withdrawal(
-			account,
-			cost,
-			`Deploying ${
-				unit.name
-			} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`
-		);
-
-		modelDebugger(account);
-		await account.save();
-		await unit.save();
-		modelDebugger(`${unit.name} deployed...`);
-
-		return unit;
-	}
-	catch (err) {
-		modelDebugger('Error:', err.message);
-		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
-			meta: err
-		});
-	}
-};
-
-MilitarySchema.methods.validateMilitary = function (military) {
-	const schema = {
-		name: Joi.string().min(2).max(50).required()
-	};
-
-	return Joi.validate(military, schema, { allowUnknown: true });
-};
-
-function validateMilitary (military) {
-	// modelDebugger(`Validating ${military.name}...`);
-
-	const schema = {
-		name: Joi.string().min(2).max(50).required()
-	};
-
-	return Joi.validate(military, schema, { allowUnknown: true });
-}
-
-module.exports = { Military, validateMilitary, Fleet, Corps };
+module.exports = { Military, Fleet, Corps };

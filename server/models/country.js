@@ -1,6 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Joi = require('joi');
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam, validZone } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
 
 // type are Terrestrial(earth) and Alien
 const CountrySchema = new Schema({
@@ -43,14 +48,19 @@ const CountrySchema = new Schema({
 	gameState: []
 });
 
-CountrySchema.methods.validateCountry = function () {
+CountrySchema.methods.validateCountry = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
 		name: Joi.string().min(3).max(75).required(),
 		code: Joi.string().min(2).max(2).required().uppercase(),
 		unrest: Joi.number().min(0).max(250)
 	};
 
-	return Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validZone(this.zone);
+	await validTeam(this.team);
 };
 
 const Country = mongoose.model('Country', CountrySchema);

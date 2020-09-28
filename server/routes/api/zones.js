@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 });
 
 // @route   GET api/zone/:key/:value
-// @Desc    Get by property
+// @Desc    Get by query property
 // @access  Public
 router.get('/:key/:value', async (req, res) => {
 	logger.info('GET Route: api/zones requested...');

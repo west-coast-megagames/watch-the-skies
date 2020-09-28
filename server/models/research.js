@@ -1,5 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const UnlockSchema = new Schema({
 	code: { type: String },
@@ -26,7 +32,7 @@ const fields = [
 
 const ProgressSchema = new Schema({
 	team: {
-		_id: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+		_id: { type: ObjectId, ref: 'Team', required: true },
 		name: { type: String, required: true }
 	},
 	progress: { type: Number, default: 0, required: true },
@@ -45,8 +51,23 @@ const ResearchSchema = new Schema({
 	unlocks: [UnlockSchema],
 	breakthrough: [BreakthroughSchema],
 	gameState: [],
-	researchHistory: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
+	researchHistory: [{ type: ObjectId, ref: 'Log' }]
 });
+
+// validateResearch method
+ResearchSchema.methods.validateResearch = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	const schema = {
+		name: Joi.string().min(2).max(50).required()
+		// TODO: Add code rules to Joi validation schema
+	};
+
+	// TODO: add discriminator validation schemas
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+};
 
 const Research = mongoose.model('Research', ResearchSchema, 'research');
 
@@ -55,7 +76,7 @@ const KnowledgeResearch = Research.discriminator(
 	new Schema({
 		type: { type: String, default: 'Knowledge' },
 		field: { type: String, enum: fields },
-		credit: { type: Schema.Types.ObjectId, ref: 'Team' },
+		credit: { type: ObjectId, ref: 'Team' },
 		status: {
 			pending: { type: Boolean, default: false },
 			available: { type: Boolean, default: true },
@@ -70,14 +91,14 @@ const AnalysisResearch = Research.discriminator(
 	'AnalysisResearch',
 	new Schema({
 		type: { type: String, default: 'Analysis' },
-		team: { type: Schema.Types.ObjectId, ref: 'Team' },
+		team: { type: ObjectId, ref: 'Team' },
 		salvage: [
 			{
-				gear: { type: Schema.Types.ObjectId, ref: 'Upgrade' },
-				system: { type: Schema.Types.ObjectId, ref: 'Upgrade' },
-				infrastructure: { type: Schema.Types.ObjectId, ref: 'Upgrade' },
-				facility: { type: Schema.Types.ObjectId, ref: 'Facility' },
-				site: { type: Schema.Types.ObjectId, ref: 'Site' },
+				gear: { type: ObjectId, ref: 'Upgrade' },
+				system: { type: ObjectId, ref: 'Upgrade' },
+				infrastructure: { type: ObjectId, ref: 'Upgrade' },
+				facility: { type: ObjectId, ref: 'Facility' },
+				site: { type: ObjectId, ref: 'Site' },
 				outcome: { type: String, enum: ['Destroy', 'Damage', 'Kill', 'Preserve'] }
 			}
 		],
@@ -111,7 +132,7 @@ const TechResearch = Research.discriminator(
 			type: String,
 			enum: [ 'Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis', 'Placeholder' ]
 		},
-		team: { type: Schema.Types.ObjectId, ref: 'Team' },
+		team: { type: ObjectId, ref: 'Team' },
 		funding: { type: Number, default: 0 },
 		status: {
 			visible: { type: Boolean, default: true },

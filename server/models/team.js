@@ -1,6 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Joi = require('joi');
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const RoleSchema = new Schema({
 	role: { type: String },
@@ -8,7 +13,7 @@ const RoleSchema = new Schema({
 		type: String,
 		enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']
 	},
-	user: { type: Schema.Types.ObjectId, ref: 'User' }
+	user: { type: ObjectId, ref: 'User' }
 });
 
 // teamType is (N)ational, (A)lien, (M)edia, (C)ontrol, non-(P)layer-character
@@ -22,14 +27,14 @@ const TeamSchema = new Schema({
 		maxlength: 50
 	},
 	shortName: { type: String, minlength: 2, maxlength: 30 },
-	teamCode: {
+	code: {
 		type: String,
 		required: true,
 		unique: true,
 		minlength: 2,
 		maxlength: 3
 	},
-	teamType: {
+	type: {
 		type: String,
 		required: true,
 		minlength: 1,
@@ -37,22 +42,29 @@ const TeamSchema = new Schema({
 		default: 'N',
 		enum: ['N', 'A', 'M', 'C', 'P']
 	},
-	homeCountry: { type: Schema.Types.ObjectId, ref: 'Country' },
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
+	homeCountry: { type: ObjectId, ref: 'Country' },
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: [],
-	trades: [{ type: Schema.Types.ObjectId, ref: 'Trades' }],
-	treaties: [{ type: Schema.Types.ObjectId, ref: 'Treaties' }]
+	trades: [{ type: ObjectId, ref: 'Trades' }],
+	treaties: [{ type: ObjectId, ref: 'Treaties' }]
 });
 
-TeamSchema.methods.validateTeam = function (team) {
+TeamSchema.methods.validateTeam = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+
 	const schema = {
 		name: Joi.string().min(2).max(50).required(),
 		shortName: Joi.string().min(2).max(30),
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		teamType: Joi.string().min(1).max(1).uppercase()
+		code: Joi.string().min(2).max(3).required().uppercase(),
+		type: Joi.string().min(1).max(1).uppercase()
 	};
 
-	return Joi.validate(team, schema, { allowUnknown: true });
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	// TODO: Add discriminator switch to validation
+	// TODO: Add document check validation errors
+	// TODO: Add sub-document validation checks
 };
 
 const Team = mongoose.model('Team', TeamSchema);
@@ -69,33 +81,6 @@ const National = Team.discriminator(
 	})
 );
 
-function validateNational (national) {
-	// modelDebugger(`Validating ${national.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(national, schema, { allowUnknown: true });
-}
-
-function validateRoles (roles) {
-	const schema = Joi.object().keys({
-		type: Joi.string().valid(
-			'Head of State',
-			'Diplomat',
-			'Ambassador',
-			'Scientist',
-			'Military'
-		)
-	});
-
-	return Joi.validate(roles, schema, { allowUnknown: true });
-}
-
 const Alien = Team.discriminator(
 	'Alien',
 	new Schema({
@@ -107,19 +92,6 @@ const Alien = Team.discriminator(
 	})
 );
 
-function validateAlien (alien) {
-	// modelDebugger(`Validating ${alien.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(alien, schema, { allowUnknown: true });
-}
-
 const Control = Team.discriminator(
 	'Control',
 	new Schema({
@@ -129,19 +101,6 @@ const Control = Team.discriminator(
 	})
 );
 
-function validateControl (control) {
-	// modelDebugger(`Validating ${control.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(control, schema, { allowUnknown: true });
-}
-
 const Media = Team.discriminator(
 	'Media',
 	new Schema({
@@ -150,19 +109,6 @@ const Media = Team.discriminator(
 	})
 );
 
-function validateMedia (media) {
-	// modelDebugger(`Validating ${media.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(media, schema, { allowUnknown: true });
-}
-
 const Npc = Team.discriminator(
 	'Npc',
 	new Schema({
@@ -170,50 +116,9 @@ const Npc = Team.discriminator(
 	})
 );
 
-function validateNpc (npc) {
-	// modelDebugger(`Validating ${npc.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(npc, schema, { allowUnknown: true });
-}
-
-function validateTeam (team) {
-	// modelDebugger(`Validating ${team.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(team, schema, { allowUnknown: true });
-}
-
 async function getTeam (team_id) {
 	const team = await Team.findOne({ _id: team_id });
 	return team;
 }
 
-module.exports = {
-	Team,
-	validateTeam,
-	getTeam,
-	National,
-	validateNational,
-	Alien,
-	validateAlien,
-	Control,
-	validateControl,
-	Media,
-	validateMedia,
-	Npc,
-	validateNpc,
-	validateRoles
-};
+module.exports = { Team, getTeam, National, Alien, Control, Media, Npc };

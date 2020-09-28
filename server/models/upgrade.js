@@ -1,14 +1,20 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const Joi = require('joi');
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const UpgradeSchema = new Schema({
 	model: { type: String, default: 'Upgrade' },
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	code: { type: String },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	team: { type: ObjectId, ref: 'Team' },
 	unitType: { type: String },
-	manufacturer: { type: Schema.Types.ObjectId, ref: 'Team' },
+	manufacturer: { type: ObjectId, ref: 'Team' },
 	cost: { type: Number },
 	buildTime: { type: Number, default: 0 },
 	buildCount: { type: Number, default: 0 },
@@ -26,7 +32,7 @@ const UpgradeSchema = new Schema({
 		destroyed: { type: Boolean, default: false },
 		storage: { type: Boolean, default: true }
 	},
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: [],
 	militaryStats: {
 		category: {
@@ -73,12 +79,19 @@ const UpgradeSchema = new Schema({
 	}
 });
 
-UpgradeSchema.methods.validateUpgrade = function () {
+// validateUpgrade method
+UpgradeSchema.methods.validateUpgrade = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+
 	const schema = {
 		name: Joi.string().min(2).max(50).required()
 	};
 
-	return Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validTeam(this.team);
+	await validTeam(this.manufacturer);
 };
 
 const Upgrade = mongoose.model('Upgrade', UpgradeSchema);

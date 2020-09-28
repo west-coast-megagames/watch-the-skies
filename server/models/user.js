@@ -1,9 +1,14 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const Joi = require('joi');
-const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
 const UserSchema = new Schema({
 	model: { type: String, default: 'User' },
@@ -31,11 +36,44 @@ const UserSchema = new Schema({
 	dob: { type: Date },
 	gender: { type: String, enum: ['Male', 'Female', 'Non-Binary'] },
 	discord: { type: String },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	team: { type: ObjectId, ref: 'Team' },
 	roles: [{ type: String, enum: ['Player', 'Control', 'Admin'] }],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
 	gameState: []
 });
+
+// validate User method
+UserSchema.methods.validateUser = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	const nameSchema = {
+		first: Joi.string().min(1).max(25),
+		last: Joi.string().min(1).max(50)
+	};
+
+	const addressSchema = {
+		street1: Joi.string().min(1).max(75),
+		street2: Joi.string().empty(''),
+		city: Joi.string().min(1).max(50),
+		state: Joi.string().min(2).max(3),
+		zipcode: Joi.string().min(5).max(10)
+	};
+
+	const schema = {
+		name: Joi.object(nameSchema),
+		address: Joi.object(addressSchema),
+		username: Joi.string().min(5).max(15).required(),
+		email: Joi.string().min(5).max(255).required().email(),
+		phone: Joi.string().min(10).max(14),
+		password: Joi.string().min(5).max(1024).required(),
+		gender: Joi.string(),
+		discord: Joi.string()
+	};
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validTeam(this.team);
+};
 
 UserSchema.methods.generateAuthToken = function () {
 	const token = jwt.sign(
@@ -52,42 +90,6 @@ UserSchema.methods.generateAuthToken = function () {
 	return token;
 };
 
-UserSchema.methods.validateUser = async function () {
-	const schema = {
-		username: Joi.string().min(5).max(15).required(),
-		email: Joi.string().min(5).max(255).required().email(),
-		phone: Joi.string().min(10).max(14),
-		password: Joi.string().min(5).max(1024).required(),
-		gender: Joi.string(),
-		discord: Joi.string()
-	};
-
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
-	if (error != undefined) nexusError(`${error}`, 400);
-
-};
-
 const User = mongoose.model('user', UserSchema);
 
-function validateName (name) {
-	const schema = {
-		first: Joi.string().min(1).max(25),
-		last: Joi.string().min(1).max(50)
-	};
-
-	return Joi.validate(name, schema, { allowUnknown: true });
-}
-
-function validateAddr (address) {
-	const schema = {
-		street1: Joi.string().min(1).max(75),
-		street2: Joi.string().empty(''),
-		city: Joi.string().min(1).max(50),
-		state: Joi.string().min(2).max(3),
-		zipcode: Joi.string().min(5).max(10)
-	};
-
-	return Joi.validate(address, schema, { allowUnknown: true });
-}
-
-module.exports = { User, validateName, validateAddr };
+module.exports = { User };

@@ -37,7 +37,6 @@ router.post('/', async function (req, res) {
 		});
 		res.status(400).send(`Error creating treaty: ${err}`);
 	}// catch
-
 });
 
 // @route   DELETE api/treaties

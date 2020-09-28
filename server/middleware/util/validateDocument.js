@@ -13,7 +13,7 @@ const { Log } = require('../../models/logs/log'); // Import of log (ServiceRecor
 
 async function validAccount (account) {
 	if (account === undefined) nexusError('No account ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(account)) nexusError('Invalid Account ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(account)) return nexusError('Invalid Account ID given...', 400);
 	const document = await Account.findById(account);
 	if (document == null) nexusError(`No account exists with the ID: ${account}`, 400);
 }
@@ -41,7 +41,7 @@ async function validSite (site) {
 
 async function validTeam (team) {
 	if (team === undefined) nexusError('No team ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(team)) nexusError('Invalid Team ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(team)) return nexusError('Invalid Team ID given...', 400);
 	const document = await Team.findById(team);
 	if (document == null) nexusError(`No team exists with the ID: ${team}`, 400);
 }

@@ -25,21 +25,19 @@ const ZoneSchema = new Schema({
 ZoneSchema.methods.validateZone = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
-	let schema;
+	const schema = {
+		code: Joi.string().min(2).max(2).required().uppercase(),
+		name: Joi.string().min(3).max(50).required()
+	};
+
+	// Descrininator Validation Schema switch
 	switch (this.type) {
 	case 'Ground':
-		schema = {
-			code: Joi.string().min(2).max(2).required().uppercase(),
-			name: Joi.string().min(3).max(50).required(),
-			terror: Joi.number().min(0).max(250)
-		};
+		schema.terror = Joi.number().min(0).max(250);
 		break;
 
 	case 'Space':
-		schema = {
-			code: Joi.string().min(2).max(2).required().uppercase(),
-			name: Joi.string().min(3).max(50).required()
-		};
+		// TODO: Add any space specific fields to the descrininator
 		break;
 
 	default:

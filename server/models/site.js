@@ -1,7 +1,12 @@
-const mongoose = require('mongoose');
-const Joi = require('joi');
-const ObjectId = mongoose.Schema.Types.ObjectId;
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { validTeam, validSite, validCountry, validZone } = require('../middleware/util/validateDocument');
+
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const SiteSchema = new Schema({
 	model: { type: String, default: 'Site' },
@@ -9,7 +14,7 @@ const SiteSchema = new Schema({
 	team: { type: ObjectId, ref: 'Team' },
 	country: { type: ObjectId, ref: 'Country' },
 	zone: { type: ObjectId, ref: 'Zone' },
-	siteCode: {
+	code: {
 		type: String,
 		minlength: 2,
 		maxlength: 20,
@@ -22,27 +27,24 @@ const SiteSchema = new Schema({
 	gameState: []
 });
 
-const Site = mongoose.model('Site', SiteSchema);
-
-SiteSchema.methods.validateSite = function (site) {
+// validateSite method
+SiteSchema.methods.validateSite = async function () {
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		siteCode: Joi.string().min(2).max(20).required()
+		name: Joi.string().min(2).max(50).required()
+		// TODO: Add code rules to Joi validation schema
 	};
 
-	return Joi.validate(baseSite, schema, { allowUnknown: true });
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validSite(this.site);
+	await validTeam(this.team);
+	await validCountry(this.team);
+	await validZone(this.zone);
 };
 
-function validateSite (site) {
-	// modelDebugger(`Validating ${site.siteCode}...`);
-
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		siteCode: Joi.string().min(2).max(20).required()
-	};
-
-	return Joi.validate(site, schema, { allowUnknown: true });
-}
+const Site = mongoose.model('Site', SiteSchema);
 
 const GroundSite = Site.discriminator(
 	'GroundSite',
@@ -70,15 +72,6 @@ const GroundSite = Site.discriminator(
 	})
 );
 
-function validateGround (groundSite) {
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		siteCode: Joi.string().min(2).max(20).required()
-	};
-
-	return Joi.validate(groundSite, schema, { allowUnknown: true });
-}
-
 const SpaceSite = Site.discriminator(
 	'SpaceSite',
 	new Schema({
@@ -100,20 +93,4 @@ const SpaceSite = Site.discriminator(
 	})
 );
 
-function validateSpace (spaceSite) {
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		siteCode: Joi.string().min(2).max(20).required()
-	};
-
-	return Joi.validate(spaceSite, schema, { allowUnknown: true });
-}
-
-module.exports = {
-	Site,
-	validateSite,
-	GroundSite,
-	validateGround,
-	SpaceSite,
-	validateSpace
-};
+module.exports = { Site, GroundSite, SpaceSite };

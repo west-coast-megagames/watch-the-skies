@@ -9,7 +9,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
-const docCheck = require('../middleware/util/validateDocument');
+const { validTeam, validFacility, validSite, validZone, validCountry } = require('../middleware/util/validateDocument');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -98,11 +98,11 @@ AircraftSchema.methods.validateAircraft = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	docCheck.validTeam(this.team);
-	docCheck.validFacility(this.origin);
-	docCheck.validSite(this.site);
-	docCheck.validZone(this.zone);
-	docCheck.validCountry(this.country);
+	await validTeam(this.team);
+	await validFacility(this.origin);
+	await validSite(this.site);
+	await validZone(this.zone);
+	await validCountry(this.country);
 };
 
 // Launch Method - Changes the status of the craft and pays for the launch.

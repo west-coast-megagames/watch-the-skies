@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const docCheck = require('../middleware/util/validateDocument');
+const { validTeam } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -40,7 +40,7 @@ AccountSchema.methods.validateAccount = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	docCheck.validTeam(this.team);
+	await validTeam(this.team);
 };
 
 const Account = mongoose.model('account', AccountSchema); // Creation of Account Model

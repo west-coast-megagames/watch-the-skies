@@ -86,22 +86,10 @@ const UpgradeBlueprint = Blueprint.discriminator(
 	})
 );
 
-function validateUpgradeBlueprint(blueprint) {
-  const schema = {
-    code: Joi.string().min(2).max(20).required().uppercase(),
-    name: Joi.string().min(2).max(50).required(),
-    cost: Joi.number().min(0).required(),
-    buildTime: Joi.number().min(0).required(),
-    desc: Joi.string().min(1).max(255).required(),
-  };
-
-  return Joi.validate(blueprint, schema, { allowUnknown: true });
-}
-
 module.exports = {
-  Blueprint,
-  FacilityBlueprint,
-  AircraftBlueprint,
-  SquadBlueprint,
-  UpgradeBlueprint
+	Blueprint,
+	FacilityBlueprint,
+	AircraftBlueprint,
+	SquadBlueprint,
+	UpgradeBlueprint
 };
