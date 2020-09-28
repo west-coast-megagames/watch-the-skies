@@ -93,19 +93,16 @@ module.exports = function (app) {
 	app.use('/api/trade', trade); //
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
-<<<<<<< HEAD
 	app.use('/init/initZones', initZones); // Route for init/check of zones
 	app.use('/init/initUsers', initUsers); // Route for init/check of Users
 	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
 
-=======
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones
 
 	app.use('/log/logErrors', logError); // Route for manipulating logError
 	app.use('/log/logInfo', logInfo); // Route for manipulating logInfo
 	app.use('/auth', auth);
->>>>>>> 7e6c6886939ca455c6e5628a51fe6a0d5e99ed83
 
 	app.use(routeError);
 };
