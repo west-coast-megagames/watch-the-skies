@@ -28,6 +28,28 @@ router.get('/', async (req, res) => {
 	}
 });
 
+// @route   GET api/counties/:key/:value
+// @Desc    Get by property
+// @access  Public
+router.get('/:key/:value', async (req, res) => {
+	logger.info('GET Route: api/countries requested...');
+	const query = {};
+	query[req.params.key] = req.params.value;
+
+	try {
+		const countries = await Country.find(query)
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('borderedBy', 'name')
+			.sort('code: 1');
+		res.status(200).json(countries);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET api/countries/:id
 // @Desc    Get countries by id
 // @access  Public

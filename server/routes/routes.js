@@ -34,7 +34,10 @@ const treaty = require('./api/treaty');
 const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 const users = require('./api/users');
-
+// data init and check routes
+const initZones = require('./init/initZones');
+const initUsers = require('./init/initUsers');
+const initTeams = require('./init/initTeams');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
@@ -85,6 +88,10 @@ module.exports = function (app) {
 	app.use('/api/trade', trade); //
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
+	app.use('/init/initZones', initZones); // Route for init/check of zones
+	app.use('/init/initUsers', initUsers); // Route for init/check of Users
+	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
+
 
 	app.use('/api/control', control);
 	app.use(routeError);

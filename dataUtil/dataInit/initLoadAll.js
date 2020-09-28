@@ -1,12 +1,12 @@
 // const runBluePrintLoad = require("../dataInit/blueprintLoad");
 const runZoneLoad = require('../dataInit/zoneLoad');
 const runDropAll = require('../dataInit/initDropAll');
+const runUserLoad = require('../dataInit/userLoad');
 /*
 const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
 const runCountryTeamSet = require("../dataInit/countryTeamSet");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
-const runUserLoad = require("../dataInit/userLoad");
 const runBaseFacilityLoad = require("../dataInit/baseFacilityLoad");
 const runCitySiteLoad = require("../dataInit/citySiteLoad");
 const runSpacecraftLoad = require("../dataInit/spacecraftLoad");
@@ -22,6 +22,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 async function fullInit (selStr) {
 	let dropAllDone = false;
 	let zoneDone = false;
+	let userDone = false;
 	switch (selStr) {
 
 
@@ -33,6 +34,9 @@ async function fullInit (selStr) {
 
 		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
 		logger.debug(`Zone Init Done: ${zoneDone}`);
+
+		userDone = await runUserLoad(true); // load expanded User fields
+		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
@@ -163,6 +167,13 @@ async function fullInit (selStr) {
 		logger.debug(`Zone Init Done: ${zoneDone}`);
 
 		break;
+
+	case 'User':
+		userDone = await runUserLoad(true); // load expanded User fields
+		logger.debug(`User Load Done: ${userDone}`);
+
+		break;
+
 
 	default:
 		logger.error(`Invalid Init Load Selection: ${selStr}`);

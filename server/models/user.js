@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const Joi = require('joi');
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
 const UserSchema = new Schema({
 	model: { type: String, default: 'User' },
@@ -51,9 +52,7 @@ UserSchema.methods.generateAuthToken = function () {
 	return token;
 };
 
-const User = mongoose.model('user', UserSchema);
-
-function validateUser (user) {
+UserSchema.methods.validateUser = async function () {
 	const schema = {
 		username: Joi.string().min(5).max(15).required(),
 		email: Joi.string().min(5).max(255).required().email(),
@@ -63,8 +62,12 @@ function validateUser (user) {
 		discord: Joi.string()
 	};
 
-	return Joi.validate(user, schema, { allowUnknown: true });
-}
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+};
+
+const User = mongoose.model('user', UserSchema);
 
 function validateName (name) {
 	const schema = {
@@ -87,4 +90,4 @@ function validateAddr (address) {
 	return Joi.validate(address, schema, { allowUnknown: true });
 }
 
-module.exports = { User, validateUser, validateName, validateAddr };
+module.exports = { User, validateName, validateAddr };

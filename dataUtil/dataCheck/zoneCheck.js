@@ -7,30 +7,18 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 
 async function chkZone (runFlag) {
-	let cFinds = [];
 	let zFinds = [];
-	// get countries once
 	try {
-		const { data } = await axios.get(`${gameServer}api/countries`);
-		cFinds = data;
-		logger.info(`jeff here length of cFinds ${cFinds.length}`);
-	}
-	catch(err) {
-		logger.error(`Country Get Error (zoneCheck): ${err.message}`, { meta: err.stack });
-	}
-
-	try {
-		const { data } = await axios.get(`${gameServer}api/zones/lean`);
+		const { data } = await axios.get(`${gameServer}init/initZones/lean`);
 		zFinds = data;
-		logger.info(`jeff here length of zFinds ${zFinds.length}`);
 	}
 	catch(err) {
 		logger.error(`Zone Get Lean Error (zoneCheck): ${err.message}`, { meta: err.stack });
 	}
 
+	logger.info(`jeff here length of zFinds ${zFinds.length}`);
+
 	for (const zone of zFinds) {
-		// do not need toObject with .lean()
-		// let testPropertys = zone.toObject();
 
 		if (!Object.prototype.hasOwnProperty.call(zone, 'code')) {
 			logger.error(`code missing for zone ${zone.name} ${zone._id}`);
@@ -75,22 +63,6 @@ async function chkZone (runFlag) {
 		}
 		else if (zone.type === '' || zone.type == undefined || zone.type == null) {
 			logger.error(`type is blank for Zone ${zone.name} ${zone._id}`);
-		}
-
-		// should be at least one country in the zone
-		let countryCount = 0;
-		// .toHexString();
-		const zoneId = zone._id;
-		countryLoop: for (let j = 0; j < cFinds.length; ++j) {
-			// .toHexString();
-			const cZoneId = cFinds[j].zone;
-			if (cZoneId === zoneId) {
-				++countryCount;
-			}
-			// only need one
-			if (countryCount > 0) {
-				break countryLoop;
-			}
 		}
 
 		if (zone.type === 'Space') {

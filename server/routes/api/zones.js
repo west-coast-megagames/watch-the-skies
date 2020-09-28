@@ -25,61 +25,22 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// @route   GET api/zones/lean
-// @Desc    Get all zones/lean
+// @route   GET api/zone/:key/:value
+// @Desc    Get by property
 // @access  Public
-router.get('/lean', async (req, res) => {
-	// logger.info('GET lean Route: api/zones requested...');
+router.get('/:key/:value', async (req, res) => {
+	logger.info('GET Route: api/zones requested...');
+	const query = {};
+	query[req.params.key] = req.params.value;
+
 	try {
-		const zones = await Zone.find().lean()
+		const zones = await Zone.find(query)
 			.sort('code: 1');
 		res.status(200).json(zones);
 	}
 	catch (err) {
 		logger.error(err.message, { meta: err.stack });
 		res.status(500).send(err.message);
-	}
-});
-
-// @route   GET api/zones/:id
-// @Desc    Get zones by id
-// @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
-	// logger.info('GET Route: api/zones/:id requested...');
-	const id = req.params.id;
-
-	try {
-		const zone = await Zone.findById(id);
-		if (zone != null) {
-			res.status(200).json(zone);
-		}
-		else {
-			res.status(404).send(`The Zone with the ID ${id} was not found!`);
-		}
-	}
-	catch (err) {
-		httpErrorHandler(res, err);
-	}
-});
-
-// @route   GET api/zones/code/:code
-// @Desc    Get zones by code
-// @access  Public
-router.get('/code/:code', async (req, res) => {
-	logger.info('GET Route: api/zones/code/:code requested...');
-	const code = req.params.code;
-
-	try {
-		const zone = await Zone.findOne({ code: code });
-		if (zone != null) {
-			res.status(200).json(zone);
-		}
-		else {
-			res.status(200).json({ type: false });
-		}
-	}
-	catch (err) {
-		httpErrorHandler(res, err);
 	}
 });
 
@@ -134,7 +95,6 @@ router.put('/:id', validateObjectId, async (req, res) => {
 		httpErrorHandler(res, err);
 	}
 });
-
 
 // @route   DELETE api/zones/:id
 // @Desc    Delete zone by ID

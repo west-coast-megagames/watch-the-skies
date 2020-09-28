@@ -76,7 +76,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 			randomTerror = zTerror;
 		}
 
-		const { data } = await axios.get(`${gameServer}api/zones/code/${zCode}`);
+		const { data } = await axios.get(`${gameServer}init/initZones/code/${zCode}`);
 		// console.log(data);
 		loadName = zName;
 
