@@ -46,7 +46,7 @@ router.get('/username/:username', async (req, res) => {
 			res.status(200).json(user);
 		}
 		else {
-			res.status(200).json({ type: false });
+			res.status(200).json({ username: false });
 		}
 	}
 	catch (err) {
