@@ -64,7 +64,7 @@ async function loadUser (iData, rCounts) {
 		loadName = iData.name;
 		loadCode = iData.username;
 
-		if (!data.type) {
+		if (!data.username) {
 			// New User here
 			const convDate = new Date(iData.dob);
 			const user = {
@@ -87,7 +87,8 @@ async function loadUser (iData, rCounts) {
 
 			if (iData.teamCode != '') {
 
-				const team = await axios.get(`${gameServer}init/initTeams/teamCode/${iData.teamCode}`);
+				const tData = await axios.get(`${gameServer}init/initTeams/teamCode/${iData.teamCode}`);
+				const team = tData.data;
 				if (!team) {
 					loadError = true;
 					loadErrorMsg = `User Load Team Error, New User: ${iData.username} Team: ${iData.username} `;
@@ -101,7 +102,7 @@ async function loadUser (iData, rCounts) {
 			// userLoadDebugger("Before Save ... New user.name", user.name.first, "address street1", user.address.street1, user.dob);
 			if (!loadError) {
 				try {
-					await axios.post(`${gameServer}api/users`, user);
+					await axios.post(`${gameServer}api/user`, user);
 					++rCounts.loadCount;
 					logger.debug(`${user.username} saved to user collection.`);
 					return;

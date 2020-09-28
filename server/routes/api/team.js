@@ -7,7 +7,12 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Team } = require('../../models/team');
+const { Team,
+	National,
+	Alien,
+	Control,
+	Media,
+	Npc } = require('../../models/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams
@@ -54,10 +59,39 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
 	logger.info('POST Route: api/team call made...');
-	let newTeam = new Team(req.body);
 
 	try {
-		await newTeam.validatBlueprint();
+
+		let newTeam;
+		switch(req.body.teamType) {
+
+		case('N'):
+			newTeam = new National(req.body);
+			break;
+
+		case('A'):
+			newTeam = new Alien(req.body);
+			break;
+
+		case('C'):
+			newTeam = new Control(req.body);
+			break;
+
+		case('M'):
+			newTeam = new Media(req.body);
+			break;
+
+		case('P'):
+			newTeam = new Npc(req.body);
+			break;
+
+		default:
+			logger.info(`Team ${req.body.name} has invalid teamType ${req.body.teamType}`);
+			res.status(500).json(newTeam);
+
+		}
+
+		await newTeam.validateTeam();
 		newTeam = await newTeam.save();
 		logger.info(`Team ${newTeam.name} created...`);
 		res.status(200).json(newTeam);
@@ -88,6 +122,15 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
+});
+
+// @route   PATCH api/team/deleteAll
+// @desc    Delete All Teams
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Team.deleteMany();
+	// console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Teams!`);
 });
 
 module.exports = router;
