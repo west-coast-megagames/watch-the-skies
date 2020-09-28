@@ -95,6 +95,7 @@ module.exports = function (app) {
 
 	app.use('/log/logErrors', logError); // Route for manipulating logError
 	app.use('/log/logInfo', logInfo); // Route for manipulating logInfo
+	app.use('/auth', auth);
 
 	app.use(routeError);
 };
