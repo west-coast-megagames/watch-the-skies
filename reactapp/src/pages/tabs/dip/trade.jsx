@@ -247,7 +247,7 @@ class Trade extends Component {
         };
         try {
           console.log(trade)
-          let response = await axios.post(`${gameServer}api/trade`, trade);    
+          let response = await axios.post(`${gameServer}game/trade`, trade);    
         //   Alert.success(response.data.comment[0].body);
           this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
         } catch (err) {

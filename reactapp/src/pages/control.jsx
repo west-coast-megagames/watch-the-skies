@@ -161,7 +161,7 @@ class Control extends Component {
 
     restoreAircraft = async () => {
         try {
-            const response = await axios.patch(`${gameServer}api/interceptor/restore`)
+            const response = await axios.patch(`${gameServer}game/admin/restore`)
             this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
         } catch (err) {
             this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
