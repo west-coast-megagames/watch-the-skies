@@ -1,9 +1,9 @@
+const runDropAll = require('../dataInit/initDropAll');
 // const runBluePrintLoad = require("../dataInit/blueprintLoad");
 const runZoneLoad = require('../dataInit/zoneLoad');
-const runDropAll = require('../dataInit/initDropAll');
 const runUserLoad = require('../dataInit/userLoad');
+const runTeamLoad = require('../dataInit/teamLoad');
 /*
-const runTeamLoad = require("../dataInit/teamLoad");
 const runCountryLoad = require("../dataInit/countryLoad");
 const runCountryTeamSet = require("../dataInit/countryTeamSet");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
@@ -23,6 +23,7 @@ async function fullInit (selStr) {
 	let dropAllDone = false;
 	let zoneDone = false;
 	let userDone = false;
+	let teamDone = false;
 	switch (selStr) {
 
 
@@ -34,6 +35,9 @@ async function fullInit (selStr) {
 
 		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
 		logger.debug(`Zone Init Done: ${zoneDone}`);
+
+		teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
+		logger.debug(`Team Load Done: ${teamDone}`);
 
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
@@ -54,14 +58,6 @@ async function fullInit (selStr) {
     case "Country":
       let countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
       logger.debug(`Country Load Done: ${countryDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "Team":
-      let teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
-      logger.debug(`Team Load Done: ${teamDone}`);
       if (selStr != "All") {
         break;
       }
@@ -102,14 +98,6 @@ async function fullInit (selStr) {
     case "Aircraft":
       let aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
       logger.debug(`Aircraft Load Done: ${aircraftDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "User":
-      let userDone = await runUserLoad(true); // load expanded User fields
-      logger.debug(`User Load Done: ${userDone}`);
       if (selStr != "All") {
         break;
       }
@@ -174,6 +162,11 @@ async function fullInit (selStr) {
 
 		break;
 
+	case 'Team':
+		teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
+		logger.debug(`Team Load Done: ${teamDone}`);
+
+		break;
 
 	default:
 		logger.error(`Invalid Init Load Selection: ${selStr}`);

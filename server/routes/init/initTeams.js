@@ -45,7 +45,7 @@ router.get('/teamCode/:teamCode', async (req, res) => {
 			res.status(200).json(team);
 		}
 		else {
-			res.status(200).json({ teamCode: false });
+			res.status(200).json({ teamType: false });
 		}
 	}
 	catch (err) {

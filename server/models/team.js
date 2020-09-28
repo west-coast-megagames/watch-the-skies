@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
 const RoleSchema = new Schema({
 	role: { type: String },
@@ -37,14 +38,13 @@ const TeamSchema = new Schema({
 		default: 'N',
 		enum: ['N', 'A', 'M', 'C', 'P']
 	},
-	homeCountry: { type: Schema.Types.ObjectId, ref: 'Country' },
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
 	gameState: [],
 	trades: [{ type: Schema.Types.ObjectId, ref: 'Trades' }],
 	treaties: [{ type: Schema.Types.ObjectId, ref: 'Treaties' }]
 });
 
-TeamSchema.methods.validateTeam = function (team) {
+TeamSchema.methods.validateTeam = async function () {
 	const schema = {
 		name: Joi.string().min(2).max(50).required(),
 		shortName: Joi.string().min(2).max(30),
@@ -52,7 +52,8 @@ TeamSchema.methods.validateTeam = function (team) {
 		teamType: Joi.string().min(1).max(1).uppercase()
 	};
 
-	return Joi.validate(team, schema, { allowUnknown: true });
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
 };
 
 const Team = mongoose.model('Team', TeamSchema);
@@ -183,19 +184,6 @@ function validateNpc (npc) {
 	return Joi.validate(npc, schema, { allowUnknown: true });
 }
 
-function validateTeam (team) {
-	// modelDebugger(`Validating ${team.name}...`);
-
-	const schema = {
-		teamCode: Joi.string().min(2).max(3).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		teamType: Joi.string().min(1).max(1).uppercase()
-	};
-
-	return Joi.validate(team, schema, { allowUnknown: true });
-}
-
 async function getTeam (team_id) {
 	const team = await Team.findOne({ _id: team_id });
 	return team;
@@ -203,7 +191,6 @@ async function getTeam (team_id) {
 
 module.exports = {
 	Team,
-	validateTeam,
 	getTeam,
 	National,
 	validateNational,
