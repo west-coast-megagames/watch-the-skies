@@ -3,8 +3,8 @@ const runDropAll = require('../dataInit/initDropAll');
 const runZoneLoad = require('../dataInit/zoneLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
+const runCountryLoad = require('../dataInit/countryLoad');
 /*
-const runCountryLoad = require("../dataInit/countryLoad");
 const runCountryTeamSet = require("../dataInit/countryTeamSet");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
 const runBaseFacilityLoad = require("../dataInit/baseFacilityLoad");
@@ -24,6 +24,7 @@ async function fullInit (selStr) {
 	let zoneDone = false;
 	let userDone = false;
 	let teamDone = false;
+	let countryDone = false;
 	switch (selStr) {
 
 
@@ -39,6 +40,9 @@ async function fullInit (selStr) {
 		teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
 		logger.debug(`Team Load Done: ${teamDone}`);
 
+		countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
+		logger.debug(`Country Load Done: ${countryDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
@@ -50,14 +54,6 @@ async function fullInit (selStr) {
       let blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
       //console.log("BluePrint Init Done:", blueprintDone);
       logger.debug(`BluePrint Init Done: ${blueprintDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "Country":
-      let countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
-      logger.debug(`Country Load Done: ${countryDone}`);
       if (selStr != "All") {
         break;
       }
@@ -156,15 +152,21 @@ async function fullInit (selStr) {
 
 		break;
 
-	case 'User':
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
-
-		break;
-
 	case 'Team':
 		teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
 		logger.debug(`Team Load Done: ${teamDone}`);
+
+		break;
+
+	case 'Country':
+		countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
+		logger.debug(`Country Load Done: ${countryDone}`);
+
+		break;
+
+	case 'User':
+		userDone = await runUserLoad(true); // load expanded User fields
+		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 

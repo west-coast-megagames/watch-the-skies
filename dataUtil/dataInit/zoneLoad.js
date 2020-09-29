@@ -171,7 +171,7 @@ async function deleteAllZones () {
 		}
 	}
 	catch (err) {
-		logger.error(`Catch deleteAllZones Error 2: ${err.message}`, { meta: err });
+		logger.error(`Catch deleteAllZones Error 2: ${err.message}`, { meta: err.stack });
 	}
 }
 

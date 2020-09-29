@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validZone } = require('../middleware/util/validateDocument');
+const { validTeam, validZone, validLog, validCountry } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -11,9 +11,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const CountrySchema = new Schema({
 	model: { type: String, default: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	loadZoneCode: { type: String, maxlength: 2, uppercase: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
-	loadTeamCode: { type: String, maxlength: 3 },
 	code: {
 		type: String,
 		required: true,
@@ -56,11 +54,33 @@ CountrySchema.methods.validateCountry = async function () {
 		unrest: Joi.number().min(0).max(250)
 	};
 
+	// Descrininator Validation Schema switch
+	switch (this.type) {
+	case 'Ground':
+		for await (const bBy of this.borderedBy) {
+			await validCountry(bBy);
+		}
+		break;
+	case 'Space':
+		// nothing specific to test beyond type
+		break;
+	default:
+		nexusError(`Invalid Type ${this.type} for country!`, 400);
+	}
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validZone(this.zone);
 	await validTeam(this.team);
+	for await (const milAll of this.milAlliance) {
+		await validTeam(milAll);
+	}
+	for await (const sciAll of this.milAlliance) {
+		await validTeam(sciAll);
+	}
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
 };
 
 const Country = mongoose.model('Country', CountrySchema);
