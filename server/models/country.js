@@ -75,7 +75,7 @@ CountrySchema.methods.validateCountry = async function () {
 	for await (const milAll of this.milAlliance) {
 		await validTeam(milAll);
 	}
-	for await (const sciAll of this.milAlliance) {
+	for await (const sciAll of this.sciAlliance) {
 		await validTeam(sciAll);
 	}
 	for await (const servRec of this.serviceRecord) {
