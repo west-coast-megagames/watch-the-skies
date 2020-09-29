@@ -5,7 +5,7 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
-const ObjectId = mongoose.ObjectId;
+const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const BlueprintSchema = new Schema({
 	model: { type: String, default: 'Blueprint' },
@@ -40,7 +40,7 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 	if (doc != null) nexusError(`A blueprint with name ${this.name} exists. name must be unique.`, 400);
 };
 
-const Blueprint = mongoose.model('Blueprint', BlueprintSchema);
+const Blueprint = mongoose.model('Blueprint', BlueprintSchema); // Creation of Blueprint Model
 
 const FacilityBlueprint = Blueprint.discriminator(
 	'FacilityBlueprint',
@@ -86,10 +86,4 @@ const UpgradeBlueprint = Blueprint.discriminator(
 	})
 );
 
-module.exports = {
-	Blueprint,
-	FacilityBlueprint,
-	AircraftBlueprint,
-	SquadBlueprint,
-	UpgradeBlueprint
-};
+module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint };

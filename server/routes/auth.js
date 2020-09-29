@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const express = require('express');
+const { logger } = require('../middleware/log/winston');
 const router = express.Router();
 
 const { User } = require('../models/user');
@@ -13,10 +14,16 @@ router.post('/', async function (req, res) {
 
 	let user = await User.findOne({ email: login }).populate('team');
 	if (!user) user = await User.findOne({ username: login }).populate('team');
-	if (!user) return res.status(400).send('Invalid login or password');
+	if (!user) {
+		logger.info(`User ${login} doesn't exist in DB...`);
+		return res.status(400).send('Invalid login or password');
+	}
 
 	const validPassword = await bcrypt.compare(password, user.password);
-	if (!validPassword) return res.status(400).send('Invalid login or password');
+	if (!validPassword) {
+		logger.info(`${login} used an invalid password...`);
+		return res.status(400).send('Invalid login or password');
+	}
 
 	const token = user.generateAuthToken();
 	res.status(200).send(token);

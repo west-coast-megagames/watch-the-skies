@@ -46,7 +46,6 @@ ZoneSchema.methods.validateZone = async function () {
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
-
 };
 
 const Zone = mongoose.model('Zone', ZoneSchema);
