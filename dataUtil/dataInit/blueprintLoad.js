@@ -1,34 +1,17 @@
-const fs = require("fs");
-const config = require("config");
+const fs = require('fs');
+const config = require('config');
 const file = fs.readFileSync(
-  config.get("initPath") + "init-json/initBlueprint.json",
-  "utf8"
+	config.get('initPath') + 'init-json/initBlueprint.json',
+	'utf8'
 );
 const blueprintDataIn = JSON.parse(file);
-const { logger } = require("../middleware/log/winston"); // Import of winston for error logging
-require("winston-mongodb");
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
+require('winston-mongodb');
 
-const blueprintInitDebugger = require("debug")("app:blueprintInit");
-const supportsColor = require("supports-color");
-
-const express = require("express");
-const bodyParser = require("body-parser");
-
-// Blueprint Model - Using Mongoose Model
-const {
-  Blueprint,
-  validateBlueprint,
-  FacilityBlueprint,
-  validateFacilityBlueprint,
-  AircraftBlueprint,
-  validateAircraftBlueprint,
-  SquadBlueprint,
-  validateSquadBlueprint,
-  UpgradeBlueprint,
-  validateUpgradeBlueprint,
-} = require("../models/blueprint");
-
-const { Site } = require("../models/site");
+const express = require('express');
+const bodyParser = require('body-parser');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
 
 const app = express();
 
@@ -37,428 +20,192 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-async function runBlueprintLoad(runFlag) {
-  if (!runFlag) return false;
-  if (runFlag) await initLoad(runFlag);
-  return true;
+async function runBlueprintLoad (runFlag) {
+	if (!runFlag) return false;
+	if (runFlag) await initLoad(runFlag);
+	return true;
 }
 
-async function initLoad(doLoad) {
-  if (!doLoad) return;
+async function initLoad (doLoad) {
+	if (!doLoad) return;
 
-  let blueprintRecReadCount = 0;
-  let blueprintRecCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
+	// Delete now regardless of loadFlag
+	await deleteAllBlueprints();
 
-  for await (let data of blueprintDataIn) {
-    if (data.loadType == "blueprint") {
-      //Delete now regardless of loadFlag
-      await deleteBlueprint(data.name, data.code, data.loadFlag);
+	let blueprintRecReadCount = 0;
+	const blueprintRecCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
-      if (data.loadFlag === "true") {
-        ++blueprintRecReadCount;
-        await loadBlueprint(data, blueprintRecCounts);
-      }
-    }
-  }
+	for await (const data of blueprintDataIn) {
+		if (data.loadType == 'blueprint') {
 
-  logger.info(
-    `Blueprint Load Counts Read: ${blueprintRecReadCount} Errors: ${blueprintRecCounts.loadErrCount} Saved: ${blueprintRecCounts.loadCount} Updated: ${blueprintRecCounts.updCount}`
-  );
 
-  return;
+			if (data.loadFlag === 'true') {
+				++blueprintRecReadCount;
+				await loadBlueprint(data, blueprintRecCounts);
+			}
+		}
+	}
+
+	logger.info(
+		`Blueprint Load Counts Read: ${blueprintRecReadCount} Errors: ${blueprintRecCounts.loadErrCount} Saved: ${blueprintRecCounts.loadCount} Updated: ${blueprintRecCounts.updCount}`
+	);
+
+	return;
 }
 
-async function loadBlueprint(bpData, rCounts) {
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
+async function loadBlueprint (bpData, rCounts) {
 
-  try {
-    if (bpData.loadFlag === "false") return; // don't load if not true
+	if (bpData.loadFlag === 'false') return; // don't load if not true
 
-    let blueprint = await Blueprint.findOne({ code: bpData.code });
+	try {
 
-    loadName = bpData.name;
+		const { data } = await axios.get(`${gameServer}init/initBlueprints/code/${bpData.code}`);
 
-    if (!blueprint) {
-      // New Blueprint here
+		if (!data.desc) {
+			// New Blueprint here
 
-      switch (bpData.buildModel) {
-        case "facility":
-          await newFaclity(bpData, rCounts);
-          break;
-        case "aircraft":
-          await newAircraft(bpData, rCounts);
-          break;
-        case "squad":
-          await newSquad(bpData, rCounts);
-          break;
-        case "upgrade":
-          await newUpgrade(bpData, rCounts);
-          break;
+			switch (bpData.buildModel) {
+			case 'facility':
+				await newFaclity(bpData, rCounts);
+				break;
+			case 'aircraft':
+				await newAircraft(bpData, rCounts);
+				break;
+			case 'squad':
+				await newSquad(bpData, rCounts);
+				break;
+			case 'upgrade':
+				await newUpgrade(bpData, rCounts);
+				break;
 
-        default:
-          logger.error(
-            `Invalid New Blueprint BuildModel: ${bpData.buildModel}`
-          );
-          ++rCounts.loadErrCount;
-      }
-    } else {
-      // Existing Blueprint here ... update
-      let bpId = blueprint._id;
-
-      switch (bpData.buildModel) {
-        case "facility":
-          await updFacility(bpData, bpId, rCounts);
-          break;
-        case "aircraft":
-          await updAircraft(bpData, bpId, rCounts);
-          break;
-        case "squad":
-          await updSquad(bpData, bpId, rCounts);
-          break;
-        case "upgrade":
-          await updUpgrade(bpData, bpId, rCounts);
-          break;
-
-        default:
-          logger.error(
-            `Invalid Update Blueprint BuildModel: ${bpData.buildModel}`
-          );
-          ++rCounts.loadErrCount;
-      }
-    }
-  } catch (err) {
-    logger.error(`Catch Blueprint Error: ${err.message}`, { meta: err });
-    ++rCounts.loadErrCount;
-    return;
-  }
+			default:
+				logger.error(
+					`Invalid New Blueprint BuildModel: ${bpData.buildModel}`
+				);
+				++rCounts.loadErrCount;
+			}
+		}
+		else {
+			// Existing Blueprint here ... nolonger doing updates so this is now counted as an error
+			logger.error(
+				`Blueprint skipped as code already exists in database: ${bpData.name} ${bpData.code}`
+			);
+			++rCounts.loadErrCount;
+		}
+	}
+	catch (err) {
+		logger.error(`Catch Blueprint Error: ${err.message}`, { meta: err });
+		++rCounts.loadErrCount;
+		return;
+	}
 }
 
-async function deleteBlueprint(bpName, bpCode, bpLoadFlg) {
-  try {
-    let delErrorFlag = false;
-    for await (let blueprint of Blueprint.find({ code: bpCode })) {
-      try {
-        let delId = blueprint._id;
-        let blueprintDel = await Blueprint.findByIdAndRemove(delId);
-        if ((blueprintDel = null)) {
-          logger.error(
-            `deleteBlueprint: Blueprint with the ID ${delId} was not found!`
-          );
-          delErrorFlag = true;
-        }
-      } catch (err) {
-        logger.error(`Catch deleteBlueprint Error 1: ${err.message}`, {
-          meta: err,
-        });
-        delErrorFlag = true;
-      }
-    }
-    if (!delErrorFlag) {
-      logger.debug(`All Blueprints succesfully deleted for Code: ${bpCode}`);
-    } else {
-      logger.error(`Some Error In Blueprints delete for Code: ${bpCode}`);
-    }
-  } catch (err) {
-    logger.error(`Catch deleteBlueprint Error 2: ${err.message}`, {
-      meta: err,
-    });
-  }
+async function deleteAllBlueprints () {
+	try {
+		let delErrorFlag = false;
+
+		try {
+			await axios.patch(`${gameServer}api/blueprints/deleteAll`);
+		}
+		catch (err) {
+			logger.error(`Catch deleteAllBlueprints Error 1: ${err.message}`, { meta: err.stack });
+			delErrorFlag = true;
+		}
+
+		if (!delErrorFlag) {
+			logger.debug('All Blueprints succesfully deleted. (blueprintLoad');
+		}
+		else {
+			logger.error('Some Error In Blueprints delete all (blueprintLoad)');
+		}
+	}
+	catch (err) {
+		logger.error(`deleteAllBlueprints Error 2: ${err.message}`, { meta: err.stack });
+	}
 }
 
-async function newAircraft(bpData, rCounts) {
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
+async function newAircraft (bpData, rCounts) {
 
-  // New Aircraft Blueprint here
-  let bpAircraft = await new AircraftBlueprint(bpData);
-  loadName = bpData.name;
+	// New Aircraft Blueprint here
+	const bpAircraft = bpData;
+	try {
+		await axios.post(`${gameServer}api/blueprints`, bpAircraft);
+		++rCounts.loadCount;
+		logger.debug(`${bpAircraft.name} add saved to Aircraft Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Aircraft Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
 
-  let { error } = validateAircraftBlueprint(bpAircraft);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `New Aircraft Bluepritn Validate Error, ${bpData.code}  ${error.message}`;
-  }
-
-  if (!loadError) {
-    try {
-      let bpAircraftSave = await bpAircraft.save();
-      ++rCounts.loadCount;
-      logger.debug(
-        `${bpAircraftSave.name} add saved to blueprint collection. code: ${bpAircraftSave.code}`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`New Aircraft Blueprint Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Aircraft Blueprint skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
 }
 
-async function updAircraft(bpData, bpId, rCounts) {
-  // Existing Aircraft Team here ... update
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
+async function newFaclity (bpData, rCounts) {
 
-  let aircraftBlueprint = await AircraftBlueprint.findById(bpId);
-  if (!aircraftBlueprint) {
-    ++rCounts.loadErrCount;
-    logger.error(
-      `Aircraft Blueprint ${bpData.name} not available for Aircraft Blueprint collection update`
-    );
-    return;
-  }
+	// New Facility Blueprint here
+	const bpFacility = bpData;
+	try {
 
-  loadName = bpData.name;
-  aircraftBlueprint = bpData;
+		if (
+			bpData.site != '' &&
+			bpData.site != 'undefined' &&
+			bpData.site != undefined
+		) {
+			const site = await axios.get(`${gameServer}init/initSites/code/${bpData.site}`);
+			const sData = site.data;
 
-  const { error } = validateAircraftBlueprint(aircraftBlueprint);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `Aircraft Blueprint Update Validate Error, ${bpData.code}  ${error.message}`;
-  }
+			if (!sData.type) {
 
-  if (!loadError) {
-    try {
-      let aircraftBlueprintSave = await aircraftBlueprint.save();
-      ++rCounts.updCount;
-      logger.debug(
-        `${aircraftBlueprintSave.name} update saved to Blueprint collection Aircraft Buildtype`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`Aircraft Blueprint Update Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Aircraft Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
+				++rCounts.loadErrCount;
+				logger.error(`New Facility Blueprint has Invalid Site: ${sData.name} ${sData.site}`);
+				return;
+			}
+			else {
+				bpFacility.site = sData._id;
+			}
+		}
+		else {
+			bpFacility.site = undefined;
+		}
+
+		await axios.post(`${gameServer}api/blueprints`, bpFacility);
+		++rCounts.loadCount;
+		logger.debug(`${bpFacility.name} add saved to Facility Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Facility Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
 }
 
-async function newFaclity(bpData, rCounts) {
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
+async function newSquad (bpData, rCounts) {
 
-  // New Facility Blueprint here
-  if (
-    bpData.site != "" &&
-    bpData.site != "undefined" &&
-    bpData.site != undefined
-  ) {
-    let site = await Site.findOne({ siteCode: bpData.site });
-    if (!site) {
-      loadError = true;
-      loadErrorMsg = "Site Not Found: " + bpData.site;
-    } else {
-      bpData.site = site._id;
-    }
-  } else {
-    bpData.site = undefined;
-  }
+	// New Squad Blueprint here
+	const bpSquad = bpData;
+	try {
+		await axios.post(`${gameServer}api/blueprints`, bpSquad);
+		++rCounts.loadCount;
+		logger.debug(`${bpSquad.name} add saved to Squad Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Squad Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
 
-  let bpFacility = await new FacilityBlueprint(bpData);
-  loadName = bpData.name;
-
-  let { error } = validateFacilityBlueprint(bpFacility);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `New Facility Bluepritn Validate Error, ${bpData.code}  ${error.message}`;
-  }
-
-  if (!loadError) {
-    try {
-      let bpFacilitySave = await bpFacility.save();
-      ++rCounts.loadCount;
-      logger.debug(
-        `${bpFacilitySave.name} add saved to blueprint collection. code: ${bpFacilitySave.code}`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`New Facility Blueprint Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Facility Blueprint skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
 }
 
-async function updFacility(bpData, bpId, rCounts) {
-  // Existing Facility Team here ... update
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
-
-  let facilityBlueprint = await FacilityBlueprint.findById(bpId);
-  if (!facilityBlueprint) {
-    ++rCounts.loadErrCount;
-    logger.error(
-      `Facility Blueprint ${bpData.name} not available for Facility Blueprint collection update`
-    );
-    return;
-  }
-
-  loadName = bpData.name;
-
-  if (
-    bpData.site != "" &&
-    bpData.site != "undefined" &&
-    bpData.site != undefined
-  ) {
-    let site = await Site.findOne({ siteCode: bpData.site });
-    if (!site) {
-      loadError = true;
-      loadErrorMsg = "Site Not Found: " + bpData.site;
-    } else {
-      bpData.site = site._id;
-    }
-  } else {
-    bpData.site = undefined;
-  }
-
-  facilityBlueprint = bpData;
-
-  const { error } = validateFacilityBlueprint(facilityBlueprint);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `Facility Blueprint Update Validate Error, ${bpData.code}  ${error.message}`;
-  }
-
-  if (!loadError) {
-    try {
-      let facilityBlueprintSave = await facilityBlueprint.save();
-      ++rCounts.updCount;
-      logger.debug(
-        `${facilityBlueprintSave.name} update saved to Blueprint collection Facility Buildtype`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`Facility Blueprint Update Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Facility Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
-}
-
-async function newUpgrade(bpData, rCounts) {
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
-
-  // New Upgrade Blueprint here
-  let bpUpgrade = await new UpgradeBlueprint(bpData);
-  loadName = bpData.name;
-  let { error } = validateUpgradeBlueprint(bpUpgrade);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `New Upgrade Bluepritn Validate Error, ${bpData.code}  ${error.message}`;
-  }
-
-  if (!loadError) {
-    try {
-      let bpUpgradeSave = await bpUpgrade.save();
-      ++rCounts.loadCount;
-      logger.debug(
-        `${bpUpgradeSave.name} add saved to blueprint collection. code: ${bpUpgradeSave.code}`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`New Upgrade Blueprint Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Upgrade Blueprint skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
-}
-
-async function updUpgrade(bpData, bpId, rCounts) {
-  // Existing Upgrade Team here ... update
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
-
-  let facilityBlueprint = await UpgradeBlueprint.findById(bpId);
-  if (!facilityBlueprint) {
-    ++rCounts.loadErrCount;
-    logger.error(
-      `Upgrade Blueprint ${bpData.name} not available for Upgrade Blueprint collection update`
-    );
-    return;
-  }
-
-  loadName = bpData.name;
-
-  facilityBlueprint = bpData;
-
-  const { error } = validateUpgradeBlueprint(facilityBlueprint);
-  if (error) {
-    loadError = true;
-    loadErrorMsg = `Upgrade Blueprint Update Validate Error, ${bpData.code}  ${error.message}`;
-  }
-
-  if (!loadError) {
-    try {
-      let facilityBlueprintSave = await facilityBlueprint.save();
-      ++rCounts.updCount;
-      logger.debug(
-        `${facilityBlueprintSave.name} update saved to Blueprint collection Upgrade Buildtype`
-      );
-      return;
-    } catch (err) {
-      ++rCounts.loadErrCount;
-      logger.error(`Upgrade Blueprint Update Save Error: ${err.message}`, {
-        meta: err,
-      });
-      return;
-    }
-  } else {
-    logger.error(
-      `Upgrade Blueprint Update skipped due to errors: ${loadName} ${loadErrorMsg}`
-    );
-    ++rCounts.loadErrCount;
-    return;
-  }
+async function newUpgrade (bpData, rCounts) {
+	// New Upgrade Blueprint here
+	const bpUpgrade = bpData;
+	try {
+		await axios.post(`${gameServer}api/blueprints`, bpUpgrade);
+		++rCounts.loadCount;
+		logger.debug(`${bpUpgrade.name} add saved to Upgrade Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Upgrade Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
 }
 
 module.exports = runBlueprintLoad;

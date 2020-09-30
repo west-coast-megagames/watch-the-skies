@@ -1,5 +1,5 @@
 const runDropAll = require('../dataInit/initDropAll');
-// const runBluePrintLoad = require("../dataInit/blueprintLoad");
+const runBluePrintLoad = require('../dataInit/blueprintLoad');
 const runZoneLoad = require('../dataInit/zoneLoad');
 const runUserLoad = require('../dataInit/userLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
@@ -21,6 +21,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 
 async function fullInit (selStr) {
 	let dropAllDone = false;
+	let blueprintDone = false;
 	let zoneDone = false;
 	let userDone = false;
 	let teamDone = false;
@@ -33,6 +34,9 @@ async function fullInit (selStr) {
 	case 'All':
 		dropAllDone = await runDropAll(true); // drop all tables
 		logger.debug(`Drop All Done: ${dropAllDone}`);
+
+		blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
+		logger.debug(`BluePrint Init Done: ${blueprintDone}`);
 
 		zoneDone = await runZoneLoad(true); // load Zone fields from initZone.json
 		logger.debug(`Zone Init Done: ${zoneDone}`);
@@ -49,23 +53,6 @@ async function fullInit (selStr) {
 		break;
 
 		/*
-    case "All":
-    case "BluePrint":
-      let blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
-      //console.log("BluePrint Init Done:", blueprintDone);
-      logger.debug(`BluePrint Init Done: ${blueprintDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "CountryTeam":
-      let countryTeamDone = await runCountryTeamSet(true); // Set Team fields In Country
-      logger.debug(`Country Team Set Done: ${countryTeamDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "CitySite":
       let citySiteDone = await runCitySiteLoad(true); // load expanded City Sites fields
@@ -143,6 +130,12 @@ async function fullInit (selStr) {
 	case 'DropAll':
 		dropAllDone = await runDropAll(true); // drop all tables
 		logger.debug(`Drop All Done: ${dropAllDone}`);
+
+		break;
+
+	case 'BluePrint':
+		blueprintDone = await runBluePrintLoad(true); // load BluePrint fields from json
+		logger.debug(`BluePrint Init Done: ${blueprintDone}`);
 
 		break;
 

@@ -20,6 +20,7 @@ const BlueprintSchema = new Schema({
 
 // validateArticle method
 BlueprintSchema.methods.validateBlueprint = async function () {
+	const { validSite } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
 	const schema = {
@@ -32,6 +33,8 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validSite(this.site);
 
 	let doc = await Blueprint.findOne({ code: this.code });
 	if (doc != null) nexusError(`A blueprint with code ${this.code} exists. code must be unique.`, 400);

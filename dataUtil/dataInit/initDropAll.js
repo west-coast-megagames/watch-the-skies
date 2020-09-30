@@ -7,10 +7,6 @@ async function dropAll (doDrop) {
 
 	// drop all tables
 	/*
-  await Blueprint.deleteMany();
-  await Zone.deleteMany();
-  await Country.deleteMany();
-  await Team.deleteMany();
   await Site.deleteMany();
   await Account.deleteMany();
   await Aircraft.deleteMany();
@@ -25,6 +21,15 @@ async function dropAll (doDrop) {
   await LogError.deleteMany();
 	await LogInfo.deleteMany();
 	*/
+
+	try {
+		await axios.patch(`${gameServer}api/blueprints/deleteAll`);
+		logger.info('Delete of All blueprints done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll blueprints in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
 	try {
 		await axios.patch(`${gameServer}api/zones/deleteAll`);
 		logger.info('Delete of All zones done (initDropAll).');

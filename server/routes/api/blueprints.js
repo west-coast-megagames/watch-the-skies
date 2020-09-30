@@ -89,4 +89,13 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
+// @route   PATCH api/blueprints/deleteAll
+// @desc    Delete All Blueprints
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Blueprint.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Blueprints!`);
+});
+
 module.exports = router;
