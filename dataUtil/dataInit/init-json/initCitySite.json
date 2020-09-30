@@ -2634,8 +2634,8 @@
   {
     "loadType": "citySite",
     "subType": "City",
-    "name": "Volgogard",
-    "dateline": "VOLGOGARD, Russia",
+    "name": "Volgograd",
+    "dateline": "VOLGOGRAD, Russia",
     "code": "RU VOL",
     "latDMS": "48 42 41.03 N",
     "longDMS": "44 30 50.41 E",

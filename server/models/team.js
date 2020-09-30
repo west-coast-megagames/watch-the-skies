@@ -16,7 +16,7 @@ const RoleSchema = new Schema({
 	user: { type: ObjectId, ref: 'User' }
 });
 
-// teamType is (N)ational, (A)lien, (M)edia, (C)ontrol, non-(P)layer-character
+// Team type is (N)ational, (A)lien, (M)edia, (C)ontrol, non-(P)layer-character
 const TeamSchema = new Schema({
 	model: { type: String, default: 'Team' },
 	name: {

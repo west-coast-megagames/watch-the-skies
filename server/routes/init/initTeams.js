@@ -17,10 +17,10 @@ router.get('/:id', validateObjectId, async function (req, res) {
 	const id = req.params.id;
 
 	try {
-		const team = await Team.findById(req.team._id).select('teamCode email name');
+		const team = await Team.findById(req.team._id).select('code email name');
 
 		if (team != null) {
-			logger.info(`Verifying ${team.teamCode}`);
+			logger.info(`Verifying ${team.code}`);
 			res.status(200).json(team);
 		}
 		else {
@@ -32,20 +32,20 @@ router.get('/:id', validateObjectId, async function (req, res) {
 	}
 });
 
-// @route   GET init/initTeams/teamCode/:teamCode
-// @Desc    Get Team by teamCode
+// @route   GET init/initTeams/code/:code
+// @Desc    Get Team by code
 // @access  Public
-router.get('/teamCode/:teamCode', async (req, res) => {
-	logger.info('GET Route: init/initTeams/teamCode/:teamCode requested...');
-	const teamCode = req.params.teamCode;
+router.get('/code/:code', async (req, res) => {
+	logger.info('GET Route: init/initTeams/code/:code requested...');
+	const code = req.params.code;
 
 	try {
-		const team = await Team.findOne({ teamCode: teamCode });
+		const team = await Team.findOne({ code: code });
 		if (team != null) {
 			res.status(200).json(team);
 		}
 		else {
-			res.status(200).json({ teamType: false });
+			res.status(200).json({ type: false });
 		}
 	}
 	catch (err) {

@@ -13,7 +13,7 @@ require('winston-mongodb');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -58,7 +58,9 @@ async function loadUser (iData, rCounts) {
 	let loadErrorMsg = '';
 
 	try {
-		const salt = await bcrypt.genSalt(10);
+		// handled on axios call now
+		// const salt = await bcrypt.genSalt(10);
+		// password: await bcrypt.hash(iData.password, salt),
 
 		const { data } = await axios.get(`${gameServer}init/initUsers/username/${iData.username}`);
 		loadName = iData.name;
@@ -75,7 +77,7 @@ async function loadUser (iData, rCounts) {
 				discord: iData.discord,
 				address: iData.address,
 				dob: convDate,
-				password: await bcrypt.hash(iData.password, salt),
+				password: iData.password,
 				name: {
 					first: iData.name.first,
 					last: iData.name.last
@@ -87,7 +89,7 @@ async function loadUser (iData, rCounts) {
 
 			if (iData.teamCode != '') {
 
-				const tData = await axios.get(`${gameServer}init/initTeams/teamCode/${iData.teamCode}`);
+				const tData = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);
 				const team = tData.data;
 				if (!team) {
 					loadError = true;
