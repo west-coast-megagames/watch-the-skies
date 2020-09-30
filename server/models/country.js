@@ -35,6 +35,12 @@ const CountrySchema = new Schema({
 		max: 250,
 		default: 0
 	},
+	type: { type: String, default: 'Ground' },
+	coastal: {
+		type: Boolean,
+		default: false
+	},
+	borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }],
 	milAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	sciAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	stats: {
@@ -85,23 +91,4 @@ CountrySchema.methods.validateCountry = async function () {
 
 const Country = mongoose.model('Country', CountrySchema);
 
-const GroundCountry = Country.discriminator(
-	'GroundCountry',
-	new Schema({
-		type: { type: String, default: 'Ground' },
-		coastal: {
-			type: Boolean,
-			default: false
-		},
-		borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }]
-	})
-);
-
-const SpaceCountry = Country.discriminator(
-	'SpaceCountry',
-	new Schema({
-		type: { type: String, default: 'Space' }
-	})
-);
-
-module.exports = { Country, GroundCountry, SpaceCountry };
+module.exports = { Country };
