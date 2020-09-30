@@ -25,7 +25,7 @@
     "loadType": "blueprint",
     "loadFlag": "true",
     "buildModel": "aircraft",
-    "name": "Generic Fighter",
+    "name": "Generic UFO Fighter",
     "type": "UFO",
     "code": "UFO-13",
     "cost": 2,

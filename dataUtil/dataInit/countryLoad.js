@@ -185,8 +185,6 @@ async function deleteAllCountry () {
 
 async function setBorderedBy (cData, rCounts) {
 	// don't load if flag is not true
-	if (cData.loadFlag === 'false') return;
-
 	/*
   logger.debug(
     `jeff 1 in setBorderedBy ... country code ${cData.code} ... borderedBy ${cData.borderedBy}`
@@ -204,6 +202,18 @@ async function setBorderedBy (cData, rCounts) {
 
 		if (data.type === 'Space') {
 			logger.info(`Space Country Skipped in borderedBy set ${cData.code}`);
+			++rCounts.skipCount;
+			return;
+		}
+
+		if (cData.borderedBy.length < 1) {
+			logger.info(`Country Skipped in borderedBy set array is empty ${cData.code}`);
+			++rCounts.skipCount;
+			return;
+		}
+
+		if (cData.loadFlag === 'false') {
+			logger.info(`Country Skipped in borderedBy set loadFlag False ${cData.code}`);
 			++rCounts.skipCount;
 			return;
 		}

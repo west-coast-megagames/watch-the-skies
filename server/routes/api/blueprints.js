@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Blueprint } = require('../../models/blueprint');
+const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint } = require('../../models/blueprint');
 
 // @route   GET api/blueprints
 // @Desc    Get all blueprints
@@ -53,10 +53,34 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
 	logger.info('POST Route: api/blueprints call made...');
-	let newBlueprint = new Blueprint(req.body);
 
 	try {
-		await newBlueprint.validatBlueprint();
+		let newBlueprint;
+		switch (req.body.buildModel) {
+
+		case('aircraft'):
+			newBlueprint = new AircraftBlueprint(req.body);
+			break;
+
+		case('facility'):
+			newBlueprint = new FacilityBlueprint(req.body);
+			break;
+
+		case('squad'):
+			newBlueprint = new SquadBlueprint(req.body);
+			break;
+
+		case('upgrade'):
+			newBlueprint = new UpgradeBlueprint(req.body);
+			break;
+
+		default:
+			logger.info(`Blueprint ${req.body.name} has invalid buildModel ${req.body.buildModel}`);
+			res.status(500).json(newBlueprint);
+
+
+		}
+		await newBlueprint.validateBlueprint();
 		newBlueprint = await newBlueprint.save();
 		logger.info(` Blueprint ${newBlueprint.code} - ${newBlueprint.name} created...`);
 		res.status(200).json(newBlueprint);

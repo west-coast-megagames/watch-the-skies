@@ -47,7 +47,7 @@ async function dropAll (doDrop) {
 	}
 
 	try {
-		await axios.patch(`${gameServer}api/country/deleteAll`);
+		await axios.patch(`${gameServer}api/countries/deleteAll`);
 		logger.info('Delete of All Country done (initDropAll).');
 	}
 	catch (err) {
