@@ -79,23 +79,20 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
 	logger.info('POST Route: api/countries call made...');
-	const newCountry = new Country(req.body);
 	const { code } = req.body;
 
 	try {
-		await newCountry.validateArticle();
+		let newCountry = new Country(req.body);
+		await newCountry.validateCountry();
 		const docs = await Country.find({ code });
-		if (docs.length < 1) {
-			const { error } = validateCountry(req.body);
-			if (error) return res.status(400).send(error.details[0].message);
 
-			const country = await newCountry.save();
-			res.json(country);
-			logger.info(`New Country ${code} created...`);
+		if (docs.length < 1) {
+			newCountry = await newCountry.save();
+			res.status(200).json(newCountry);
+			logger.info(`The country ${newCountry.name} created...`);
 		}
 		else {
-			logger.error(`Country Code already exists: ${code}`);
-			res.status(400).send(`Country Code ${code} already exists!`);
+			nexusError(`A country with the code ${newCountry.code} already exists!`, 400);
 		}
 	}
 	catch (err) {
