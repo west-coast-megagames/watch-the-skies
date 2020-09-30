@@ -28,7 +28,7 @@ LogSchema.methods.createTimestamp = (log) => {
 const Log = mongoose.model('Log', LogSchema);
 
 function validateLog (log) {
-	// modelDebugger(`Validating ${site.siteCode}...`);
+	// modelDebugger(`Validating ${site.code}...`);
 
 	const schema = {
 		model: Joi.string().min(1).max(3)
