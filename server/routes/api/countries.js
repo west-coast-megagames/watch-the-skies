@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Country, validateCountry } = require('../../models/country');
+const { Country } = require('../../models/country');
 
 // @route   GET api/counties
 // @Desc    Get all countries

@@ -83,22 +83,64 @@ async function loadCountry (cData, rCounts) {
 		const { data } = await axios.get(`${gameServer}init/initCountries/code/${cData.code}`);
 
 		if (!data.type) {
-			// New Country here
-			switch (cData.type) {
-			case 'Ground':
-				await newGround(cData, rCounts);
-				break;
+			const NewCountry = {
+				type: cData.type,
+				code: cData.code,
+				name: cData.name,
+				unrest: cData.unrest,
+				coastal: cData.coastal,
+				formalName: cData.formalName,
+				stats: cData.stats,
+				gameState: [],
+				serviceRecord: [],
+				borderedBy_Ids: []
+			};
 
-			case 'Space':
-				await newSpace(cData, rCounts);
-				break;
+			if (cData.formalName === '') {
+				NewCountry.formalName = NewCountry.name;
+			}
 
-			default:
-				logger.error(
-					`Country save skipped due to invalid type: ${loadName} ${cData.type}`
-				);
+			// make sure space settings are correct
+			if (NewCountry.type === 'Space') {
+				NewCountry.coastal = false;
+				NewCountry.borderedBy = [];
+			}
+
+			const zone = await axios.get(`${gameServer}init/initZones/code/${cData.zone}`);
+			const zData = zone.data;
+
+			if (!zData.type) {
+
 				++rCounts.loadErrCount;
-				break;
+				logger.error(`New Country Invalid Zone: ${cData.name} ${cData.zone}`);
+				return;
+			}
+			else {
+				NewCountry.zone = zData._id;
+			}
+
+			const team = await axios.get(`${gameServer}init/initTeams/code/${cData.teamCode}`);
+			const tData = team.data;
+
+			if (!tData.type) {
+
+				++rCounts.loadErrCount;
+				logger.error(`New Country Invalid Team: ${cData.name} ${cData.teamCode}`);
+				return;
+			}
+			else {
+				NewCountry.team = tData._id;
+			}
+
+			try {
+				await axios.post(`${gameServer}api/countries`, NewCountry);
+				++rCounts.loadCount;
+				logger.debug(`${NewCountry.name} add saved to Country collection.`);
+
+			}
+			catch (err) {
+				++rCounts.loadErrCount;
+				logger.error(`Country Save Error: ${err.message}`, { meta: err.stack });
 			}
 
 			return;
@@ -138,115 +180,6 @@ async function deleteAllCountry () {
 	}
 	catch (err) {
 		logger.error(`Catch deleteAllCountry Error 2: ${err.message}`, { meta: err.stack });
-	}
-}
-
-async function newGround (cData, rCounts) {
-
-	const GroundCountry = {
-		type: cData.type,
-		code: cData.code,
-		name: cData.name,
-		unrest: cData.unrest,
-		coastal: cData.coastal,
-		formalName: cData.formalName,
-		stats: cData.stats,
-		gameState: [],
-		serviceRecord: [],
-		borderedBy_Ids: []
-	};
-
-	if (cData.formalName === '') {
-		GroundCountry.formalName = GroundCountry.name;
-	}
-
-	let { data } = await axios.get(`${gameServer}init/initZones/code/${cData.zone}`);
-
-	if (!data.type) {
-
-		++rCounts.loadErrCount;
-		logger.error(`New Ground Country Invalid Zone: ${cData.name} ${cData.zone}`);
-		return;
-	}
-	else {
-		GroundCountry.zone = data._id;
-	}
-
-	const team = await axios.get(`${gameServer}init/initTeams/teamCode/${cData.teamCode}`);
-	data = team.data;
-
-	if (!data.teamType) {
-
-		++rCounts.loadErrCount;
-		logger.error(`New Ground Country Invalid Team: ${cData.name} ${cData.teamCode}`);
-		return;
-	}
-	else {
-		GroundCountry.team = data._id;
-	}
-
-	try {
-		await axios.post(`${gameServer}api/countries`, GroundCountry);
-		++rCounts.loadCount;
-		logger.debug(`${GroundCountry.name} add saved to Ground Country collection.`);
-
-	}
-	catch (err) {
-		++rCounts.loadErrCount;
-		logger.error(`Ground Country Save Error: ${err.message}`, { meta: err.stack });
-	}
-}
-
-async function newSpace (cData, rCounts) {
-	const SpaceCountry = {
-		type: cData.type,
-		code: cData.code,
-		name: cData.name,
-		unrest: cData.unrest,
-		formalName: cData.formalName,
-		stats: cData.stats,
-		gameState: [],
-		serviceRecord: []
-	};
-
-	if (cData.formalName === '') {
-		SpaceCountry.formalName = SpaceCountry.name;
-	}
-
-	let { data } = await axios.get(`${gameServer}init/initZones/code/${cData.zone}`);
-
-	if (!data.type) {
-
-		++rCounts.loadErrCount;
-		logger.error(`New Ground Country Invalid Zone: ${cData.name} ${cData.zone}`);
-		return;
-	}
-	else {
-		SpaceCountry.zone = data._id;
-	}
-
-	const team = await axios.get(`${gameServer}init/initTeams/teamCode/${cData.teamCode}`);
-	data = team.data;
-
-	if (!data.teamType) {
-
-		++rCounts.loadErrCount;
-		logger.error(`New Space Country Invalid Team: ${cData.name} ${cData.teamCode}`);
-		return;
-	}
-	else {
-		SpaceCountry.team = data._id;
-	}
-
-	try {
-		await axios.post(`${gameServer}api/countries`, SpaceCountry);
-		++rCounts.loadCount;
-		logger.debug(`${SpaceCountry.name} add saved to Space Country collection.`);
-
-	}
-	catch (err) {
-		++rCounts.loadErrCount;
-		logger.error(`Space Country Save Error: ${err.message}`, { meta: err.stack });
 	}
 }
 

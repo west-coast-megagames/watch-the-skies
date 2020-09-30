@@ -24,6 +24,27 @@ router.get('/lean', async (req, res) => {
 	}
 });
 
+// @route   GET init/initCountries/code/:code
+// @Desc    Get Country by code
+// @access  Public
+router.get('/code/:code', async (req, res) => {
+	logger.info('GET Route: init/initCountries/code/:code requested...');
+	const code = req.params.code;
+
+	try {
+		const country = await Country.findOne({ code: code });
+		if (country != null) {
+			res.status(200).json(country);
+		}
+		else {
+			res.status(200).json({ type: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 // @route   GET init/countries/:id
 // @Desc    Get countrys by id
 // @access  Public
