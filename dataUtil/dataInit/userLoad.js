@@ -89,7 +89,7 @@ async function loadUser (iData, rCounts) {
 
 			if (iData.teamCode != '') {
 
-				const tData = await axios.get(`${gameServer}init/initTeams/teamCode/${iData.teamCode}`);
+				const tData = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);
 				const team = tData.data;
 				if (!team) {
 					loadError = true;
