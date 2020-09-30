@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
 	try {
 
 		let newTeam;
-		switch(req.body.teamType) {
+		switch(req.body.type) {
 
 		case('N'):
 			newTeam = new National(req.body);
@@ -86,7 +86,7 @@ router.post('/', async (req, res) => {
 			break;
 
 		default:
-			logger.info(`Team ${req.body.name} has invalid teamType ${req.body.teamType}`);
+			logger.info(`Team ${req.body.name} has invalid type ${req.body.type}`);
 			res.status(500).json(newTeam);
 
 		}

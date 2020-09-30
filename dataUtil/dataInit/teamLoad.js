@@ -60,10 +60,10 @@ async function initLoad (doLoad) {
 async function loadTeam (tData, rCounts) {
 	try {
 
-		const { data } = await axios.get(`${gameServer}init/initTeams/teamCode/${tData.code}`);
+		const { data } = await axios.get(`${gameServer}init/initTeams/code/${tData.code}`);
 
-		if (!data.teamType) {
-			switch (tData.teamType) {
+		if (!data.type) {
+			switch (tData.type) {
 			case 'N':
 				await newNational(tData, rCounts);
 				break;
@@ -80,7 +80,7 @@ async function loadTeam (tData, rCounts) {
 				await newMedia(tData, rCounts);
 				break;
 			default:
-				logger.error(`Invalid Team Type In : ${tData.teamType}`);
+				logger.error(`Invalid Team Type In : ${tData.type}`);
 				++rCounts.loadErrCount;
 			}
 		}
@@ -128,10 +128,10 @@ async function newNational (tData, rCounts) {
 
 	// New National Team here
 	const NationalTeam = {
-		teamCode: tData.code,
+		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		teamType: tData.teamType,
+		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -156,10 +156,10 @@ async function newNational (tData, rCounts) {
 async function newAlien (tData, rCounts) {
 
 	const AlienTeam = {
-		teamCode: tData.code,
+		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		teamType: tData.teamType,
+		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -183,10 +183,10 @@ async function newAlien (tData, rCounts) {
 
 async function newMedia (tData, rCounts) {
 	const MediaTeam = {
-		teamCode: tData.code,
+		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		teamType: tData.teamType,
+		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -210,10 +210,10 @@ async function newMedia (tData, rCounts) {
 
 async function newControl (tData, rCounts) {
 	const ControlTeam = {
-		teamCode: tData.code,
+		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		teamType: tData.teamType,
+		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -237,10 +237,10 @@ async function newControl (tData, rCounts) {
 
 async function newNPC (tData, rCounts) {
 	const NpcTeam = {
-		teamCode: tData.code,
+		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		teamType: tData.teamType,
+		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
