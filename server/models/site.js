@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validSite, validCountry, validZone } = require('../middleware/util/validateDocument');
+const { validTeam, validCountry, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -38,10 +38,18 @@ SiteSchema.methods.validateSite = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	await validSite(this.site);
 	await validTeam(this.team);
-	await validCountry(this.team);
+	await validCountry(this.country);
 	await validZone(this.zone);
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
+	for await (const fac of this.facilities) {
+		await validFacility(fac);
+	}
+	for await (const salv of this.salvage) {
+		await validUpgrade(salv);
+	}
 };
 
 const Site = mongoose.model('Site', SiteSchema);
@@ -64,7 +72,7 @@ const GroundSite = Site.discriminator(
 			default: false
 		},
 		dateline: { type: String, default: 'Dateline' },
-		salvage: [{ type: ObjectId, ref: 'System' }],
+		salvage: [{ type: ObjectId, ref: 'Upgrade' }],
 		status: {
 			public: { type: Boolean, default: false },
 			secret: { type: Boolean, default: false }

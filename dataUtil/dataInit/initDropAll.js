@@ -55,6 +55,14 @@ async function dropAll (doDrop) {
 	}
 
 	try {
+		await axios.patch(`${gameServer}api/sites/deleteAll`);
+		logger.info('Delete of All Sites done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Sites in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
 		await axios.patch(`${gameServer}api/user/deleteAll`);
 		logger.info('Delete of All users done (initDropAll).');
 	}

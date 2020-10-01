@@ -192,6 +192,12 @@ async function setBorderedBy (cData, rCounts) {
   */
 
 	try {
+		if (cData.loadFlag === 'false') {
+			logger.info(`Country Skipped in borderedBy set loadFlag False ${cData.code}`);
+			++rCounts.skipCount;
+			return;
+		}
+
 		const { data } = await axios.get(`${gameServer}init/initCountries/code/${cData.code}`);
 
 		if (!data.type) {
@@ -208,12 +214,6 @@ async function setBorderedBy (cData, rCounts) {
 
 		if (cData.borderedBy.length < 1) {
 			logger.info(`Country Skipped in borderedBy set array is empty ${cData.code}`);
-			++rCounts.skipCount;
-			return;
-		}
-
-		if (cData.loadFlag === 'false') {
-			logger.info(`Country Skipped in borderedBy set loadFlag False ${cData.code}`);
 			++rCounts.skipCount;
 			return;
 		}
