@@ -7,16 +7,14 @@ async function dropAll (doDrop) {
 
 	// drop all tables
 	/*
-  await Site.deleteMany();
+
   await Account.deleteMany();
   await Aircraft.deleteMany();
   await Upgrade.deleteMany();
-  await Facility.deleteMany();
   await Military.deleteMany();
   await Research.deleteMany();
   await Log.deleteMany();
   await Squad.deleteMany();
-  await User.deleteMany();
   await Article.deleteMany();
   await LogError.deleteMany();
 	await LogInfo.deleteMany();
@@ -60,6 +58,14 @@ async function dropAll (doDrop) {
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Sites in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		await axios.patch(`${gameServer}api/facilities/deleteAll`);
+		logger.info('Delete of All Facilities done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Facilities in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {

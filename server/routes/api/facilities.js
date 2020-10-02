@@ -94,4 +94,13 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
+// @route   PATCH api/facilities/deleteAll
+// @desc    Delete All Facilities
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Facility.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Facilities!`);
+});
+
 module.exports = router;

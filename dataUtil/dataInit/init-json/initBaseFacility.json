@@ -4,46 +4,7 @@
     "type": "Base",
     "name": "USA Base Alpha",
     "code": "USBA",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
+    "bpCode": "",
     "countryCode": "US",
     "teamCode": "USA",
     "coastal": false,

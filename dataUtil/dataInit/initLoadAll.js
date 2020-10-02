@@ -5,10 +5,11 @@ const runUserLoad = require('../dataInit/userLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
+const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
+
 /*
-const runCountryTeamSet = require("../dataInit/countryTeamSet");
 const runAircraftLoad = require("../dataInit/aircraftLoad");
-const runBaseFacilityLoad = require("../dataInit/baseFacilityLoad");
+
 const runSpacecraftLoad = require("../dataInit/spacecraftLoad");
 const runAccountLoad = require("../dataInit/accountLoad");
 const runMilitaryLoad = require("../dataInit/militaryLoad");
@@ -27,6 +28,7 @@ async function fullInit (selStr) {
 	let teamDone = false;
 	let countryDone = false;
 	let citySiteDone = false;
+	let baseFacilityDone = false;
 	switch (selStr) {
 
 
@@ -51,20 +53,15 @@ async function fullInit (selStr) {
 		citySiteDone = await runCitySiteLoad(true); // load expanded City Sites fields
 		logger.debug(`City Sites Load Done: ${citySiteDone}`);
 
+		baseFacilityDone = await runBaseFacilityLoad(true); // load expanded Base Facility fields
+		logger.debug(`Base Facility Load Done: ${baseFacilityDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
 		/*
-    case "All":
-    case "BaseFacility":
-      let baseFacilityDone = await runBaseFacilityLoad(true); // load expanded Base Facility fields
-      logger.debug(`Base Facility Load Done: ${baseFacilityDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Spacecraft":
       let spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
@@ -156,6 +153,12 @@ async function fullInit (selStr) {
 	case 'CitySite':
 		citySiteDone = await runCitySiteLoad(true); // load expanded City Sites fields
 		logger.debug(`City Sites Load Done: ${citySiteDone}`);
+
+		break;
+
+	case 'BaseFacility':
+		baseFacilityDone = await runBaseFacilityLoad(true); // load expanded Base Facility fields
+		logger.debug(`Base Facility Load Done: ${baseFacilityDone}`);
 
 		break;
 

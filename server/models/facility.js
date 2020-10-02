@@ -8,6 +8,7 @@ const { validTeam, validSite } = require('../middleware/util/validateDocument');
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
+// type can be: "Civilian", "Crises", "Hanger", "Research", "Base" currently
 const FacilitySchema = new Schema({
 	model: { type: String, default: 'Facility' },
 	type: { type: String, min: 2, maxlength: 50 },

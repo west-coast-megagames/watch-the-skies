@@ -40,6 +40,7 @@ const initTeams = require('./init/initTeams');
 const initCountries = require('./init/initCountries');
 const initBlueprints = require('./init/initBlueprints');
 const initSites = require('./init/initSites');
+const initFacilities = require('./init/initFacilities');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
@@ -102,6 +103,7 @@ module.exports = function (app) {
 	app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
 	app.use('/init/initBlueprints', initBlueprints); // Route for init/check of Blueprints
 	app.use('/init/initSites', initSites); // Route for init/check of Sites
+	app.use('/init/initFacilites', initFacilities); // Route for init/check of Facilities
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones
