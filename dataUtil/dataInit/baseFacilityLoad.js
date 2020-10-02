@@ -61,77 +61,23 @@ async function loadBase (iData, rCounts) {
 	let loadName = '';
 
 	try {
-		const facility = await Facility.findOne({ code: iData.code });
 
 		loadName = iData.name;
-		loadCode = iData.code;
+		const { data } = await axios.get(`${gameServer}init/initFacilities/code/${iData.code}`);
 
-		if (!facility) {
+		if (!data.type) {
 			// New Base here
-			const facility = new Facility({
+			const newFacility = {
 				name: iData.name,
 				code: iData.code,
-				siteCode: iData.siteCode,
 				coastal: iData.coastal,
-				type: iData.type
-			});
-
-			facility.serviceRecord = [];
-			facility.gameState = [];
-
-			const { error } = validateFacility(facility);
-			if (error) {
-				// logger.debug("New Facility Validate Error", iData.name, error.message);
-				loadError = true;
-				loadErrorMsg = 'Validation Error: ' + error.message;
-				// return;
-			}
-			facility.baseDefenses = iData.baseDefenses;
-			facility.public = iData.public;
-
-			if (iData.teamCode != '') {
-				const team = await Team.findOne({ teamCode: iData.teamCode });
-				if (!team) {
-					// logger.debug("Facility Load Team Error, New Base:", iData.name, " Team: ", iData.teamCode);
-					loadError = true;
-					loadErrorMsg = 'Team Not Found: ' + iData.teamCode;
-				}
-				else {
-					facility.team = team._id;
-					// logger.debug("Facility Load Team Found, Base:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
-				}
-			}
-
-			if (iData.countryCode != '') {
-				const country = await Country.findOne({ code: iData.countryCode });
-				if (!country) {
-					// logger.debug("Facility Load Country Error, New Base:", iData.name, " Country: ", iData.countryCode);
-					loadError = true;
-					loadErrorMsg = 'Country Not Found: ' + iData.countryCode;
-				}
-				else {
-					facility.country = country._id;
-					facility.zone = country.zone;
-					// logger.debug("Facility Load Country Found, New Base:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
-				}
-			}
-
-			if (iData.siteCode != '') {
-				const site = await Site.findOne({ siteCode: iData.siteCode });
-				if (!site) {
-					// logger.debug("Spacecraft Load Site Error, New Spacecraft:", iData.name, " Site: ", iData.siteCode);
-					loadError = true;
-					loadErrorMsg = 'Site Not Found: ' + iData.siteCode;
-				}
-				else {
-					facility.site = site._id;
-					facility.zone = site.zone;
-					// logger.debug("Spacecraft Load Site Found, New Spacecraft:", iData.name, " Site: ", iData.siteCode, "Site ID:", site._id);
-				}
-			}
-
-			facility.capability = {};
-			facility.capability = iData.capability;
+				type: iData.type,
+				serviceRecord: [],
+				gameState: [],
+				baseDefenses: iData.baseDefenses,
+				public: iData.public,
+				capability: iData.capability
+			};
 
 			// John's additional settings
 			const {
@@ -141,18 +87,17 @@ async function loadBase (iData, rCounts) {
 				manufacturing,
 				naval,
 				ground
-			} = facility.capability;
+			} = newFacility.capability;
 
 			research.status.damage = [];
 			research.status.pending = [];
 			research.funding = [];
 			if (research.capacity > 0) {
 				for (let i = 0; i < research.capacity; i++) {
-					research.status.damage.set(i, false);
+					research.status.damage.push(false);
+					research.funding.push(0);
 
-					research.funding.set(i, 0);
-
-					research.status.pending.set(i, false);
+					research.status.pending.push(false);
 				}
 
 				research.active = true;
@@ -221,25 +166,46 @@ async function loadBase (iData, rCounts) {
 
 			// end of John's additional settings
 
-			if (loadError) {
-				logger.error(
-					`Base skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
-				);
-				++rCounts.loadErrCount;
-				return;
+
+			if (iData.teamCode != '') {
+				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);
+				const tData = team.data;
+
+				if (!tData.type) {
+
+					++rCounts.loadErrCount;
+					logger.error(`New Base Facility Invalid Team: ${iData.name} ${iData.teamCode}`);
+					return;
+				}
+				else {
+					newFacility.team = tData._id;
+				}
 			}
-			else {
+
+			if (iData.siteCode != '') {
+				const site = await axios.get(`${gameServer}init/initSites/code/${iData.siteCode}`);
+				const sData = site.data;
+
+				if (!sData.type) {
+
+					++rCounts.loadErrCount;
+					logger.error(`New Base Facility has Invalid Site: ${iData.name} ${iData.siteCode}`);
+					return;
+				}
+				else {
+					newFacility.site = sData._id;
+				}
+
 				try {
-					const facilitySave = await facility.save();
+					await axios.post(`${gameServer}api/facilities`, newFacility);
 					++rCounts.loadCount;
-					logger.debug(
-						`${facilitySave.name} add saved to facility collection.`
-					);
+					logger.debug(`${newFacility.name} add saved to Base Facility collection.`);
+
 					return;
 				}
 				catch (err) {
 					logger.error(`New Facility Save Error: ${err.message}`, {
-						meta: err
+						meta: err.stack
 					});
 
 					++rCounts.loadErrCount;
@@ -248,92 +214,11 @@ async function loadBase (iData, rCounts) {
 			}
 		}
 		else {
-			// Existing Base here ... update
-			const id = facility._id;
-
-			facility.name = iData.name;
-			facility.code = iData.code;
-			facility.siteCode = iData.siteCode;
-			facility.baseDefenses = iData.baseDefenses;
-			facility.public = iData.public;
-			facility.coastal = iData.coastal;
-			facility.type = iData.type;
-
-			if (iData.teamCode != '') {
-				const team = await Team.findOne({ teamCode: iData.teamCode });
-				if (!team) {
-					// logger.debug("Facility Load Team Error, Update Base:", iData.name, " Team: ", iData.teamCode);
-					loadError = true;
-					loadErrorMsg = 'Team Not Found: ' + iData.teamCode;
-				}
-				else {
-					facility.team = team._id;
-					// logger.debug("Facility Load Update Team Found, Base:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
-				}
-			}
-
-			if (iData.countryCode != '') {
-				const country = await Country.findOne({ code: iData.countryCode });
-				if (!country) {
-					// logger.debug("Facility Load Country Error, Update Base:", iData.name, " Country: ", iData.countryCode);
-					loadError = true;
-					loadErrorMsg = 'Country Not Found: ' + iData.countryCode;
-				}
-				else {
-					facility.country = country._id;
-					facility.zone = country.zone;
-					// logger.debug("Facility Load Country Found, Update Base:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
-				}
-			}
-
-			if (iData.siteCode != '') {
-				const site = await Site.findOne({ siteCode: iData.siteCode });
-				if (!site) {
-					// logger.debug("Spacecraft Load Site Error, New Spacecraft:", iData.name, " Site: ", iData.siteCode);
-					loadError = true;
-					loadErrorMsg = 'Site Not Found: ' + iData.siteCode;
-				}
-				else {
-					facility.site = site._id;
-					facility.zone = site.zone;
-					// logger.debug("Spacecraft Load Site Found, New Spacecraft:", iData.name, " Site: ", iData.siteCode, "Site ID:", site._id);
-				}
-			}
-
-			const { error } = validateFacility(facility);
-			if (error) {
-				// logger.debug("Facility Update Validate Error", iData.name, error.message);
-				loadError = true;
-				loadErrorMsg = 'Validation Error: ' + error.message;
-				// return
-			}
-
-			facility.capability = {};
-			facility.capability = iData.capability;
-			if (loadError) {
-				logger.error(
-					`Base Site skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
-				);
-				++rCounts.loadErrCount;
-				return;
-			}
-			else {
-				try {
-					const facilitySave = await facility.save();
-					++rCounts.updCount;
-					logger.debug(
-						`${facilitySave.name} update saved to facility collection.`
-					);
-					return;
-				}
-				catch (err) {
-					logger.error(`Update Facility Save Error: ${err.message}`, {
-						meta: err
-					});
-					++rCounts.loadErrCount;
-					return;
-				}
-			}
+			// Existing Base Facility here ... no longer doing updates so this is now counted as an error
+			logger.error(
+				`Base Facility skipped as code already exists in database: ${loadName} ${iData.code}`
+			);
+			++rCounts.loadErrCount;
 		}
 	}
 	catch (err) {
@@ -351,6 +236,7 @@ async function deleteAllBases () {
 		let delErrorFlag = false;
 		try {
 			// all facilities not just bases
+			// TODO: limit to just base type (?)
 			await axios.patch(`${gameServer}api/facilities/deleteAll`);
 		}
 		catch (err) {

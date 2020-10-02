@@ -3,8 +3,48 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "USA Base Alpha",
-    "code": "USBA",
-    "bpCode": "",
+		"code": "USBA",
+		"bpCode": "",
+		"baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 8,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": [],
+        "active": true,
+        "damage": []
+      }
+    },
     "countryCode": "US",
     "teamCode": "USA",
     "coastal": false,
@@ -14,7 +54,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "USA SFO Base Alpha",
-    "code": "USSFO",
+		"code": "USSFO",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -70,7 +111,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "USA Base Beta",
-    "code": "USBB",
+		"code": "USBB",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -114,7 +156,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "TUK Base Alpha",
-    "code": "GBBA",
+		"code": "GBBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -164,7 +207,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "RSA Base Alpha",
-    "code": "ZABA",
+		"code": "ZABA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -214,7 +258,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "RFD Base Alpha",
-    "code": "RUBA",
+		"code": "RUBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -258,7 +303,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "RFD Naval Base Alpha",
-    "code": "RUNBA",
+		"code": "RUNBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -308,7 +354,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "JPN Base Alpha",
-    "code": "JPBA",
+		"code": "JPBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -358,7 +405,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "IRN Base Alpha",
-    "code": "IRBA",
+		"code": "IRBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -408,7 +456,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "IND Base Alpha",
-    "code": "INBA",
+		"code": "INBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -458,7 +507,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "TFR Base Alpha",
-    "code": "FRBA",
+		"code": "FRBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -508,7 +558,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "EPT Base Alpha",
-    "code": "EGBA",
+		"code": "EGBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -558,7 +609,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "PRC Base Alpha",
-    "code": "CNBA",
+		"code": "CNBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -608,7 +660,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "BRZ Base Alpha",
-    "code": "BRBA",
+		"code": "BRBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -658,7 +711,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "AUS Base Alpha",
-    "code": "AUBA",
+		"code": "AUBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -708,7 +762,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "FFG Base Alpha",
-    "code": "FFGBA",
+		"code": "FFGBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {
@@ -752,7 +807,8 @@
     "loadType": "baseFacility",
     "type": "Base",
     "name": "TCN Base Alpha",
-    "code": "TCNBA",
+		"code": "TCNBA",
+		"bpCode": "",
     "baseDefenses": false,
     "public": false,
     "capability": {

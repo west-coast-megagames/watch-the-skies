@@ -157,7 +157,7 @@ async function newFaclity (bpData, rCounts) {
 			if (!sData.type) {
 
 				++rCounts.loadErrCount;
-				logger.error(`New Facility Blueprint has Invalid Site: ${sData.name} ${sData.site}`);
+				logger.error(`New Facility Blueprint has Invalid Site: ${bpData.name} ${bpData.site}`);
 				return;
 			}
 			else {

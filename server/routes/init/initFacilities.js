@@ -8,7 +8,7 @@ const httpErrorHandler = require('../../middleware/util/httpError');
 // Mongoose Model Import
 const { Facility } = require('../../models/facility');
 
-// @route   GET init/facilities/lean
+// @route   GET init/initFacilities/lean
 // @Desc    Get all facilitys/lean
 // @access  Public
 router.get('/lean', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/lean', async (req, res) => {
 	}
 });
 
-// @route   GET init/facilities/:id
+// @route   GET init/initFacilities/:id
 // @Desc    Get facilitys by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
@@ -44,11 +44,11 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 	}
 });
 
-// @route   GET init/facilities/code/:code
+// @route   GET init/initFacilities/code/:code
 // @Desc    Get facilitys by code
 // @access  Public
 router.get('/code/:code', async (req, res) => {
-	logger.info('GET Route: init/facilities/code/:code requested...');
+	logger.info('GET Route: init/initFacilities/code/:code requested...');
 	const code = req.params.code;
 
 	try {
