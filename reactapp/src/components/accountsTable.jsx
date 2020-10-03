@@ -1,46 +1,43 @@
 import React, { Component } from 'react';
-import { Table } from 'rsuite';
+import { Table, Loader } from 'rsuite';
 const { Column, HeaderCell, Cell } = Table;
 class AccountsTable extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          data: this.props.accounts
-        };
-      }
+	constructor(props) {
+		super(props);
+		this.state = {
+			data: this.props.accounts
+		};
+	}
 
-    render() {
-        let total = 0;
-        this.state.data.forEach(account => {
-            total += account.balance;
-        });
-        if (!this.props.accounts) {
-            return(
-                <div>
-                    <p>No accounts</p>
-                </div>
-            );
-        };
+	render() {
+		let total = 0;
+		this.state.data.forEach(account => { total += account.balance; });
 
-        return (
-            <Table
-                width={180}
-                hover={true}
-                autoHeight={true}
-                data={this.props.accounts}
-                defaultSortType="desc"
-            >
-                <Column sortable={true} width={100}>
-                    <HeaderCell>Account</HeaderCell>
-                    <Cell dataKey="name" />
-                </Column>
-                <Column align="center" width={60}>
-                    <HeaderCell title="Total" summary={total}>Total</HeaderCell>
-                    <Cell dataKey="balance" />
-                </Column>
-            </Table>
-        );
-    }
+		if (!this.props.accounts) {
+			return(
+				<Loader backdrop content="No accounts Loaded..." vertical />
+				);
+		};
+
+		return (
+			<Table
+				width={180}
+				hover={true}
+				autoHeight={true}
+				data={this.props.accounts}
+				defaultSortType="desc"
+			>
+				<Column sortable={true} width={100}>
+						<HeaderCell>Account</HeaderCell>
+						<Cell dataKey="name" />
+				</Column>
+				<Column align="center" width={60}>
+						<HeaderCell title="Total" summary={total}>Total</HeaderCell>
+						<Cell dataKey="balance" />
+				</Column>
+			</Table>
+		);
+	}
 }
- 
+
 export default AccountsTable;
