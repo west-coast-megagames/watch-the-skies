@@ -75,7 +75,7 @@ module.exports = function (app) {
 	app.use('/game/control', control);
 	app.use('/game/delete', del);
 	app.use('/game/diplomacy', diplomacy);
-	app.use('/game/game', game);
+	app.use('/game', game);
 	app.use('/game/interceptors', interceptors);
 	app.use('/game/milGame', milGame);
 	app.use('/game/news', news); // Route for the news desks

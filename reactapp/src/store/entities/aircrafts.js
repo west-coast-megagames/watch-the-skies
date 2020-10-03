@@ -56,7 +56,7 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "api/interceptor";
+const url = "api/aircrafts";
 
 // aircraft Loader into state
 export const loadaircrafts = () => (dispatch, getState) => {
