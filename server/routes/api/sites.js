@@ -154,4 +154,13 @@ router.patch('/deleteAllCity/', async function (req, res) {
 	return res.status(200).send(`We wiped out ${data.deletedCount} City Sites!`);
 });
 
+// @route   PATCH api/sites/deleteAllSpacecraft
+// @desc    Delete All Spacecraft Sites
+// @access  Public
+router.patch('/deleteAllSpacecraft/', async function (req, res) {
+	const data = await Site.deleteMany({ type: 'Space' });
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Spacecraft Sites!`);
+});
+
 module.exports = router;

@@ -47,8 +47,10 @@ SiteSchema.methods.validateSite = async function () {
 	for await (const fac of this.facilities) {
 		await validFacility(fac);
 	}
-	for await (const salv of this.salvage) {
-		await validUpgrade(salv);
+	if (this.type === 'Ground') {
+		for await (const salv of this.salvage) {
+			await validUpgrade(salv);
+		}
 	}
 };
 
