@@ -16,7 +16,7 @@ const TransactionLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d4efdf, #fff)"
         }}
-        header={`${log.transaction} - ${log.team.teamCode} | ${
+        header={`${log.transaction} - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -73,7 +73,7 @@ const ResearchLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d6eaf8, #fff)"
         }}
-        header={`${logType} - ${team.teamCode} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`${logType} - ${team.code} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
        <FlexboxGrid>
@@ -140,7 +140,7 @@ const InterceptLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
         }}
-        header={`After Action Report - ${log.team.teamCode} | ${
+        header={`After Action Report - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -175,7 +175,7 @@ const ConstructionLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #fae5d3, #fff)"
         }}
-        header={`Placeholder Construction - ${log.team.teamCode} | ${
+        header={`Placeholder Construction - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -207,7 +207,7 @@ const DeployLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #fcf3cf, #fff)"
         }}
-        header={`Placeholder Deployment - ${log.team.teamCode} | ${
+        header={`Placeholder Deployment - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -242,7 +242,7 @@ const CrisisLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #fcf3cf, #fadbd8)"
         }}
-        header={`Placeholder Crisis - ${log.team.teamCode} | ${
+        header={`Placeholder Crisis - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -274,7 +274,7 @@ const TerrorLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #fadbd8, #fff)"
         }}
-        header={`Placeholder Terror - ${log.team.teamCode} | ${
+        header={`Placeholder Terror - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -306,7 +306,7 @@ const TreatyLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #fff, #f8f9f9)"
         }}
-        header={`Placeholder Treaty - ${log.team.teamCode} | ${
+        header={`Placeholder Treaty - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -338,7 +338,7 @@ const TradeLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #eaeded, #fff)"
         }}
-        header={`Placeholder Trade - ${log.team.teamCode} | ${
+        header={`Placeholder Trade - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -369,7 +369,7 @@ const RepairLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
         }}
-        header={`Aircraft Repaired - ${log.team.teamCode} | ${
+        header={`Aircraft Repaired - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
@@ -397,7 +397,7 @@ const ReconLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
         }}
-        header={`Recon Report - ${log.team.teamCode} | ${
+        header={`Recon Report - ${log.team.code} | ${
           log.timestamp.turn
         } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible

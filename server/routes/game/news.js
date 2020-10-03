@@ -45,7 +45,7 @@ router.get('/articles', async function (req, res) {
 // @Desc    Post a new article
 // @access  Public
 router.post('/', async function (req, res) {
-	const { publisher, location, headline, articleBody, tags, imageSrc } = req.body; // REQ Destructure
+	const { publisher, location, headline, body, tags, imageSrc } = req.body; // REQ Destructure
 	// const { error } = validateArticle(req.body);
 	// if (error) return res.status(400).send(error.details[0].message);
 
@@ -65,11 +65,11 @@ router.post('/', async function (req, res) {
 
 	let article = new Article({
 		publisher,
-		agency: team.teamCode,
+		agency: team.code,
 		timestamp,
 		location,
 		headline,
-		articleBody,
+		body,
 		date: Date.now(),
 		tags,
 		imageSrc

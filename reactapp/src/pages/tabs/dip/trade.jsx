@@ -63,7 +63,7 @@ const TradeOffer = (props) => { //trade object
 
     return(
         <div className='trade' style={{padding: '8px'}}>
-            <h3><TeamAvatar size='md' teamCode={props.team.teamCode} />{props.team.name}</h3>
+            <h3><TeamAvatar size='md' code={props.team.code} />{props.team.name}</h3>
             <Form fluid formValue={formValue} onChange={formValue => setFormValue(formValue)}>
 
                 {!disabled ? <FormGroup>

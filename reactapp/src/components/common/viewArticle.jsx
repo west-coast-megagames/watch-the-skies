@@ -8,7 +8,7 @@ const ViewArticle = (props) => {
         <React.Fragment>
           <Modal.Header>
             <Modal.Title>
-              <TeamAvatar size={"sm"} teamCode={article.agency} /><span style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</span>
+              <TeamAvatar size={"sm"} code={article.agency} /><span style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</span>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

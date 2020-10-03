@@ -115,7 +115,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
 
 		const team = await Team.findByIdAndUpdate(req.params.id,
 			{ name: req.body.name,
-				teamCode: req.body.teamCode,
+				code: req.body.code,
 				shortName: req.body.shortName,
 				teamType: req.body.teamType,
 				roles: req.body.roles,

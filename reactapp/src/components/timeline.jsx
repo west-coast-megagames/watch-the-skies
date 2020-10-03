@@ -15,7 +15,7 @@ class GameTimeline extends Component {
     componentDidMount() {
         this.getLogs();
         if (this.props.team.teamType !== 'C') {
-            let teamFilter = [this.props.team.teamCode]
+            let teamFilter = [this.props.team.code]
             this.setState({teamFilter});
         }
     }
@@ -35,7 +35,7 @@ class GameTimeline extends Component {
                 <CheckPicker
                     sticky
                     data={this.props.teams}
-                    valueKey='teamCode'
+                    valueKey='code'
                     labelKey='name'
                     value={ this.state.teamFilter }
                     onChange={value => this.handleTeamFilter(value) }
@@ -83,7 +83,7 @@ class GameTimeline extends Component {
         let logs = this.props.logs;
         let postTeams = [];
         for (let team of teamFilter) {
-            let teamLogs = logs.filter(el => el.team.teamCode === team);
+            let teamLogs = logs.filter(el => el.team.code === team);
             postTeams = [...postTeams,...teamLogs];
             console.log(postTeams);
         }
