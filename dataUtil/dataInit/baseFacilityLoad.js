@@ -89,79 +89,91 @@ async function loadBase (iData, rCounts) {
 				ground
 			} = newFacility.capability;
 
-			research.status.damage = [];
-			research.status.pending = [];
-			research.funding = [];
-			if (research.capacity > 0) {
-				for (let i = 0; i < research.capacity; i++) {
-					research.status.damage.push(false);
-					research.funding.push(0);
+			if (research) {
+				research.status.damage = [];
+				research.status.pending = [];
+				research.funding = [];
+				if (research.capacity > 0) {
+					for (let i = 0; i < research.capacity; i++) {
+						research.status.damage.push(false);
+						research.funding.push(0);
 
-					research.status.pending.push(false);
+						research.status.pending.push(false);
+					}
+
+					research.active = true;
+
+					research.sciRate = Math.floor(Math.random() * 26);
+
+					research.sciBonus = 0;
 				}
-
-				research.active = true;
-
-				research.sciRate = Math.floor(Math.random() * 26);
-
-				research.sciBonus = 0;
-			}
-			else {
-				research.capacity = 0;
-				research.active = false;
-				research.sciBonus = 0;
-				research.sciRate = 0;
-				research.projects = [];
+				else {
+					research.capacity = 0;
+					research.active = false;
+					research.sciBonus = 0;
+					research.sciRate = 0;
+					research.projects = [];
+				}
 			}
 
-			if (airMission.capacity > 0) {
-				airMission.active = true;
-			}
-			else {
-				airMission.active = false;
-				airMission.capacity = 0;
-				airMission.aircraft = [];
-				airMission.damage = [];
-			}
-
-			if (storage.capacity > 0) {
-				storage.active = true;
-			}
-			else {
-				storage.active = false;
-				storage.capacity = 0;
-				storage.equipment = [];
-				storage.damage = [];
+			if (airMission) {
+				if (airMission.capacity > 0) {
+					airMission.active = true;
+				}
+				else {
+					airMission.active = false;
+					airMission.capacity = 0;
+					airMission.aircraft = [];
+					airMission.damage = [];
+				}
 			}
 
-			if (manufacturing.capacity > 0) {
-				manufacturing.active = true;
-			}
-			else {
-				manufacturing.active = false;
-				manufacturing.capacity = 0;
-				manufacturing.equipment = [];
-				manufacturing.damage = [];
-			}
-
-			if (naval.capacity > 0) {
-				naval.active = true;
-			}
-			else {
-				naval.active = false;
-				naval.capacity = 0;
-				naval.fleet = [];
-				naval.damage = [];
+			if (storage) {
+				if (storage.capacity > 0) {
+					storage.active = true;
+				}
+				else {
+					storage.active = false;
+					storage.capacity = 0;
+					storage.equipment = [];
+					storage.damage = [];
+				}
 			}
 
-			if (ground.capacity > 0) {
-				ground.active = true;
+			if (manufacturing) {
+				if (manufacturing.capacity > 0) {
+					manufacturing.active = true;
+				}
+				else {
+					manufacturing.active = false;
+					manufacturing.capacity = 0;
+					manufacturing.equipment = [];
+					manufacturing.damage = [];
+				}
 			}
-			else {
-				ground.active = false;
-				ground.capacity = 0;
-				ground.corps = [];
-				ground.damage = [];
+
+			if (naval) {
+				if (naval.capacity > 0) {
+					naval.active = true;
+				}
+				else {
+					naval.active = false;
+					naval.capacity = 0;
+					naval.fleet = [];
+					naval.damage = [];
+				}
+			}
+
+			if (ground) {
+				if (ground.capacity > 0) {
+					ground.active = true;
+				}
+				else {
+					ground.active = false;
+					ground.capacity = 0;
+					ground.corps = [];
+					ground.damage = [];
+				}
 			}
 
 			// end of John's additional settings

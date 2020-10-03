@@ -57,7 +57,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @route   POST api/facilities/
 // @Desc    Create New facility
 // @access  Public
-router.post('/facilities', async (req, res) => {
+router.post('/', async (req, res) => {
 	logger.info('POST Route: api/facilities call made...');
 	let newFacility = new Facility(req.body);
 
