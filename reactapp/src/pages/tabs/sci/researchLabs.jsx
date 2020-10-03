@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
+import { Progress, Table, InputNumber, Loader, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { lookupPct } from './../../../scripts/labs';
@@ -187,7 +187,13 @@ class ResearchLabs extends Component {
 		}
 	}
 	
-	render() { 
+	render() {
+		if (!this.props.account) {
+			return(
+				<Loader center content="No accounts Loaded..." vertical />
+			);
+		};
+
 		let props = this.props;
 		let research = this.state.research;
 		let sendLabUpdate = this.handleUpdate;
