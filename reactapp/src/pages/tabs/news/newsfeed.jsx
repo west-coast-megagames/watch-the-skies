@@ -33,7 +33,7 @@ class NewsFeed extends Component {
       agency: this.props.team.code,
       location: '',
       headline: '',
-      articleBody: '',
+      body: '',
       tags: [],
       imageSrc: ''
     }
@@ -48,7 +48,7 @@ class NewsFeed extends Component {
                 key={article._id}
                 header={
                   <span>
-                    <TeamAvatar size={"sm"} teamCode={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5>
+                    <TeamAvatar size={"sm"} code={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5>
                     <ButtonToolbar style={{float: 'right'}}>
                       <ButtonGroup>
                         {article.publisher.name === this.props.team.name ? <IconButton icon={<Icon icon="edit" />} onClick={() => this.setState({editor: true, edit: true, article })} /> : null}

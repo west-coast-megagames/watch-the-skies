@@ -25,6 +25,7 @@ const ArticleSchema = new Schema({
 	tags: [{ type: String }],
 	imageSrc: { type: String },
 	gameState: [],
+	agency: { type: String },
 	hidden: { type: Boolean, default: false }
 });
 

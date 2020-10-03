@@ -47,9 +47,9 @@ class SubNews extends React.Component {
     let resArticle = this.state.article;
     try {
       if (edit) {
-        resArticle = await axios.put(`${gameServer}api/news/${this.state.article._id}`, this.state.article);
+        resArticle = await axios.put(`${gameServer}game/news/${this.state.article._id}`, this.state.article);
       } else if (!edit) {
-        resArticle = await axios.post(`${gameServer}api/news`, this.state.article);
+        resArticle = await axios.post(`${gameServer}game/news`, this.state.article);
       }
       Alert.success(`News article submitted: ${resArticle.data.headline}`);
       this.setState({article: {
@@ -57,7 +57,7 @@ class SubNews extends React.Component {
         agency: this.props.team.code,
         location: '',
         headline: '',
-        articleBody: '',
+        body: '',
         tags: [],
         imageSrc: ''
       }})
@@ -75,16 +75,16 @@ class SubNews extends React.Component {
   };
 
   render() {
-    const { articleBody, headline, imageSrc  } = this.state.article;
+    const { body, headline, imageSrc  } = this.state.article;
     const location = this.getLocation() 
     let preview = this.state.preview;
-    let disabled = articleBody.length > 50 && headline.length > 10 && this.state.article.location !== '' ? false : true;
+    let disabled = body.length > 50 && headline.length > 10 && this.state.article.location !== '' ? false : true;
 
     return (
       <React.Fragment>
-         <Modal.Header>
+        <Modal.Header>
           <Modal.Title>
-            <TeamAvatar size={"sm"} teamCode={this.props.team.teamCode} />
+            <TeamAvatar size={"sm"} code={this.props.team.code} />
             { !preview && <span style={{verticalAlign: 'super'}}> Submit {this.props.team.teamType === 'N' && 'Press Release'}{this.props.team.teamType === 'M' && 'Article'}</span> }
             { preview && <span style={{verticalAlign: 'super'}}> {headline}</span> }
           </Modal.Title>
@@ -126,13 +126,13 @@ class SubNews extends React.Component {
             </FormGroup>
             <FormGroup>
             <FormControl
-              id="articleBody"
+              id="body"
               componentClass="textarea"
               placeholder="Write your article..."
               rows={10}
-              name="articleBody"
-              value={articleBody}
-              onChange={value => this.handleInput(value, "articleBody")}
+              name="body"
+              value={body}
+              onChange={value => this.handleInput(value, "body")}
             />
           </FormGroup>
           <FormGroup>
@@ -157,7 +157,7 @@ class SubNews extends React.Component {
             { typeof(location) === 'object' && <p>{location.dateline} - Turn</p> }
             { typeof(location) === 'string' && location !== undefined && <p>{this.props.sites.find(el => el._id === location).dateline} - Turn</p> }
             <Divider />
-            <p>{articleBody}</p>
+            <p>{body}</p>
           </span> }
         </Modal.Body>
         <Modal.Footer>
