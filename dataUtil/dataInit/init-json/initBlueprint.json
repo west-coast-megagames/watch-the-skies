@@ -26,7 +26,7 @@
     "loadFlag": "true",
     "buildModel": "aircraft",
     "name": "Generic UFO Fighter",
-    "type": "UFO",
+    "type": "Fighter",
     "code": "UFO-13",
     "cost": 2,
     "buildTime": 1,

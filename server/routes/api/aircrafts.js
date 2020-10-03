@@ -108,4 +108,13 @@ router.delete('/:id', async function (req, res) {
 	}
 });
 
+// @route   PATCH api/aircrafts/deleteAll
+// @desc    Delete All Aircraft
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Aircraft.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Aircraft!`);
+});
+
 module.exports = router;

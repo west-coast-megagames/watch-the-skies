@@ -7,15 +7,14 @@ const runCountryLoad = require('../dataInit/countryLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
+const runAircraftLoad = require('../dataInit/aircraftLoad');
 
 /*
-const runAircraftLoad = require("../dataInit/aircraftLoad");
 const runAccountLoad = require("../dataInit/accountLoad");
 const runMilitaryLoad = require("../dataInit/militaryLoad");
 const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
-const runResearchLoad = require("../dataInit/researchLoad");
-
+const runResearchLoad = require("../dataInit/researchLoad")
 */
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
@@ -29,6 +28,7 @@ async function fullInit (selStr) {
 	let citySiteDone = false;
 	let baseFacilityDone = false;
 	let spacecraftDone = false;
+	let aircraftDone = false;
 	switch (selStr) {
 
 
@@ -56,23 +56,18 @@ async function fullInit (selStr) {
 		baseFacilityDone = await runBaseFacilityLoad(true); // load expanded Base Facility fields
 		logger.debug(`Base Facility Load Done: ${baseFacilityDone}`);
 
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
-
 		spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
 		logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
+
+		aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
+		logger.debug(`Aircraft Load Done: ${aircraftDone}`);
+
+		userDone = await runUserLoad(true); // load expanded User fields
+		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
 		/*
-    case "All":
-    case "Aircraft":
-      let aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
-      logger.debug(`Aircraft Load Done: ${aircraftDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Accounts":
       let accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
@@ -160,6 +155,12 @@ async function fullInit (selStr) {
 	case 'Spacecraft':
 		spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
 		logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
+
+		break;
+
+	case 'Aircraft':
+		aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
+		logger.debug(`Aircraft Load Done: ${aircraftDone}`);
 
 		break;
 
