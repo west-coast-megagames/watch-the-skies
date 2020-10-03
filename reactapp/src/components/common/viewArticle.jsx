@@ -15,7 +15,7 @@ const ViewArticle = (props) => {
             <p><b>Author:</b> Some Bloke | <b>Publisher:</b> {article.publisher.name}</p>
             <p>{article.location.dateline} - {article.timestamp.turn}</p>
             <Divider />
-            <p>{article.articleBody}</p>
+            <p>{article.body}</p>
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar style={{float: 'right'}}>
