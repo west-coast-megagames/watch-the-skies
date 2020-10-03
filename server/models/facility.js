@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validSite } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -77,6 +76,8 @@ const FacilitySchema = new Schema({
 });
 
 FacilitySchema.methods.validateFacility = async function () {
+	const { validTeam, validSite } = require('../middleware/util/validateDocument');
+
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
 		name: Joi.string().min(2).max(50).required()
@@ -85,8 +86,13 @@ FacilitySchema.methods.validateFacility = async function () {
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	await validSite(this.site);
-	await validTeam(this.team);
+	if (this.site) {
+		await validSite(this.site);
+	}
+
+	if (this.team) {
+		await validTeam(this.team);
+	}
 };
 
 const Facility = mongoose.model('Facility', FacilitySchema);
