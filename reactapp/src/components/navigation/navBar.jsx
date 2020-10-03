@@ -15,7 +15,7 @@ class NavBar extends Component {
         phase: 'Test Phase',
         turn:  'Test Turn',
         turnNum: 0
-     }
+    }
 
     componentDidMount() {
         playTrack('bootup');
