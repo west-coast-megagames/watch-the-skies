@@ -25,6 +25,7 @@ const country = require('./api/countries');
 const facilities = require('./api/facilities');
 const logs = require('./api/log');
 const military = require('./api/military');
+const squad = require('./api/squad');
 const research = require('./api/research');
 const sites = require('./api/sites');
 const team = require('./api/team');
@@ -44,6 +45,7 @@ const initFacilities = require('./init/initFacilities');
 const initAircrafts = require('./init/initAircrafts');
 const initAccounts = require('./init/initAccounts');
 const initMilitaries = require('./init/initMilitaries');
+const initSquads = require('./init/initSquads');
 const initUpgrades = require('./init/initUpgrades');
 
 // Game Routes - Using Express.js
@@ -84,9 +86,7 @@ module.exports = function (app) {
 	app.use('/game/milGame', milGame);
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);
-
 	app.use('/debug', debug); // Route for debug triggering
-
 	app.use('/api/accounts', account); // Route for inputing accounts
 	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
 	app.use('/api/articles', article); // Route for manipulating articles
@@ -95,6 +95,7 @@ module.exports = function (app) {
 	app.use('/api/facilities', facilities); // Route for inputing countries
 	app.use('/api/logs', logs); // Route for logs
 	app.use('/api/military', military); // Route for manipulating militarys
+	app.use('/api/squad', squad); // Route for manipulating squad
 	app.use('/api/research', research); // Route for research functions
 	app.use('/api/sites', sites); // Route for sites
 	app.use('/api/team', team); // Route for Teams
@@ -112,6 +113,7 @@ module.exports = function (app) {
 	app.use('/init/initAccounts', initAccounts); // Route for init/check of Accounts
 	app.use('/init/initMilitaries', initMilitaries); // Route for init/check of Military
 	app.use('/init/initUpgrades', initUpgrades); // Route for init/check of Upgrades
+	app.use('/init/initSquads', initSquads); // Route for init/check of Squad
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones

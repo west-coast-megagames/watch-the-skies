@@ -265,13 +265,13 @@ async function createCorps (iData, rCounts) {
 			logger.error(`New Corps Military Invalid Base: ${iData.name} ${iData.origin}`);
 			return;
 		}
-		else if (bData.capability.naval.capacity > 0) {
+		else if (bData.capability.ground.capacity > 0) {
 			newCorps.origin = bData._id;
 			newCorps.site = bData.site;
 		}
 		else {
 			++rCounts.loadErrCount;
-			logger.error(`New Corps Military Base does not have positive naval capacity: ${iData.name} ${iData.origin}`);
+			logger.error(`New Corps Military Base does not have positive ground capacity: ${iData.name} ${iData.origin}`);
 			return;
 		}
 	}

@@ -10,9 +10,9 @@ const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
+const runSquadLoad = require('../dataInit/squadLoad');
 
 /*
-const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
 const runResearchLoad = require("../dataInit/researchLoad")
 */
@@ -31,6 +31,7 @@ async function fullInit (selStr) {
 	let aircraftDone = false;
 	let accountsDone = false;
 	let militaryDone = false;
+	let squadDone = false;
 	switch (selStr) {
 
 
@@ -70,20 +71,15 @@ async function fullInit (selStr) {
 		militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
 		logger.debug(`Military Load Done: ${militaryDone}`);
 
+		squadDone = await runSquadLoad(true); // load expanded Squad fields initSquad.json with gear
+		logger.debug(`Squad Load Done: ${squadDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
 		/*
-    case "All":
-    case "Squad":
-      let squadDone = await runSquadLoad(true); // load expanded Squad fields initSquad.json with gear
-      logger.debug(`Squad Load Done: ${squadDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Article":
       let articleDone = await runArticleLoad(true); // load expanded Article fields initArticle.json
@@ -165,6 +161,12 @@ async function fullInit (selStr) {
 	case 'Military':
 		militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
 		logger.debug(`Military Load Done: ${militaryDone}`);
+
+		break;
+
+	case 'Squad':
+		squadDone = await runSquadLoad(true); // load expanded Squad fields initSquad.json with gear
+		logger.debug(`Squad Load Done: ${squadDone}`);
 
 		break;
 

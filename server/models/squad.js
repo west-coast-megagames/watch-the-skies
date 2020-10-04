@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validSite, validFacility, validCountry, validZone } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -35,6 +34,7 @@ const SquadSchema = new Schema({
 
 // validateSquad Method
 SquadSchema.methods.validateSquad = async function () {
+	const { validTeam, validSite, validFacility, validCountry, validZone, validUpgrade } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
 		name: Joi.string().min(2).max(50).required()
@@ -46,9 +46,12 @@ SquadSchema.methods.validateSquad = async function () {
 
 	await validSite(this.site);
 	await validTeam(this.team);
-	await validCountry(this.team);
+	await validCountry(this.country);
 	await validZone(this.zone);
 	await validFacility(this.origin);
+	for (const upg1 of this.upgrades) {
+		await validUpgrade(upg1);
+	}
 };
 
 const Squad = mongoose.model('Squad', SquadSchema);
