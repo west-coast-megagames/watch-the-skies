@@ -72,8 +72,10 @@ router.post('/', async (req, res) => {
 
 		if (docs.length < 1) {
 			newArticle = await newArticle.save();
+			/* this is not working as it is currently written   TODO: fix populate (???)
 			await Team.populate(newArticle, { path: 'publsher', model: 'Team', select: 'name' });
 			logger.info(`${newArticle.headline} article created for ${newArticle.team.name} ...`);
+			*/
 			res.status(200).json(newArticle);
 		}
 		else {
@@ -106,6 +108,15 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
+});
+
+// @route   PATCH api/articles/deleteAll
+// @desc    Delete All Articles
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Article.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Articles!`);
 });
 
 module.exports = router;

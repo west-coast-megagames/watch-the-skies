@@ -9,7 +9,6 @@ async function dropAll (doDrop) {
 	/*
   await Research.deleteMany();
   await Log.deleteMany();
-  await Article.deleteMany();
   await LogError.deleteMany();
 	await LogInfo.deleteMany();
 	*/
@@ -100,6 +99,14 @@ async function dropAll (doDrop) {
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Squad in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		await axios.patch(`${gameServer}api/articles/deleteAll`);
+		logger.info('Delete of All Articles done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Articles in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {
