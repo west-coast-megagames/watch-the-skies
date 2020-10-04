@@ -8,9 +8,9 @@ const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAircraftLoad = require('../dataInit/aircraftLoad');
+const runAccountLoad = require('../dataInit/accountLoad');
 
 /*
-const runAccountLoad = require("../dataInit/accountLoad");
 const runMilitaryLoad = require("../dataInit/militaryLoad");
 const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
@@ -29,6 +29,7 @@ async function fullInit (selStr) {
 	let baseFacilityDone = false;
 	let spacecraftDone = false;
 	let aircraftDone = false;
+	let accountsDone = false;
 	switch (selStr) {
 
 
@@ -62,20 +63,15 @@ async function fullInit (selStr) {
 		aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
 		logger.debug(`Aircraft Load Done: ${aircraftDone}`);
 
+		accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
+		logger.debug(`Accounts Load Done: ${accountsDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
 		/*
-    case "All":
-    case "Accounts":
-      let accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
-      logger.debug(`Accounts Load Done: ${accountsDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Military":
       let militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
@@ -161,6 +157,12 @@ async function fullInit (selStr) {
 	case 'Aircraft':
 		aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
 		logger.debug(`Aircraft Load Done: ${aircraftDone}`);
+
+		break;
+
+	case 'Accounts':
+		accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
+		logger.debug(`Accounts Load Done: ${accountsDone}`);
 
 		break;
 

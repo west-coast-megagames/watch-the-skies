@@ -95,4 +95,13 @@ router.delete('/:id', validateObjectId, async function (req, res) {
 	}
 });
 
+// @route   PATCH api/accounts/deleteAll
+// @desc    Delete All Accounts
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Account.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Accounts!`);
+});
+
 module.exports = router;

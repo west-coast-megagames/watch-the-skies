@@ -7,8 +7,6 @@ async function dropAll (doDrop) {
 
 	// drop all tables
 	/*
-
-  await Account.deleteMany();
   await Upgrade.deleteMany();
   await Military.deleteMany();
   await Research.deleteMany();
@@ -73,6 +71,14 @@ async function dropAll (doDrop) {
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Aircraft in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		await axios.patch(`${gameServer}api/accounts/deleteAll`);
+		logger.info('Delete of All Accounts done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Accounts in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {
