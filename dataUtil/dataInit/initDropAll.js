@@ -7,10 +7,10 @@ async function dropAll (doDrop) {
 
 	// drop all tables
 	/*
-  await Research.deleteMany();
+
   await Log.deleteMany();
   await LogError.deleteMany();
-	await LogInfo.deleteMany();
+
 	*/
 
 	try {
@@ -110,12 +110,21 @@ async function dropAll (doDrop) {
 	}
 
 	try {
+		await axios.patch(`${gameServer}api/research/deleteAll`);
+		logger.info('Delete of All Research done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Research in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
 		await axios.patch(`${gameServer}api/user/deleteAll`);
 		logger.info('Delete of All users done (initDropAll).');
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Users in initDropAll: ${err.message}`, { meta: err.stack });
 	}
+
 
 	return true;
 }

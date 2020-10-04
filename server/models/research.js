@@ -42,8 +42,17 @@ const ProgressSchema = new Schema({
 
 const ResearchSchema = new Schema({
 	model: { type: String, default: 'Research' },
-	name: { type: String },
-	code: { type: String },
+	name: { type: String,
+		required: true,
+		index: true,
+		minlength: 2,
+		maxlength: 50 },
+	code: { type: String,
+		required: true,
+		index: true,
+		trim: true,
+		minlength: 1,
+		maxlength: 40 },
 	level: { type: Number },
 	progress: { type: Number, default: 0 },
 	prereq: [UnlockSchema],
@@ -56,16 +65,50 @@ const ResearchSchema = new Schema({
 
 // validateResearch method
 ResearchSchema.methods.validateResearch = async function () {
+	const { validTeam, validLog, validUpgrade, validFacility, validSite } = require('../middleware/util/validateDocument');
+
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
-		name: Joi.string().min(2).max(50).required()
-		// TODO: Add code rules to Joi validation schema
+		name: Joi.string().min(2).max(50).required(),
+		code: Joi.string().min(1).max(40).required()
 	};
-
-	// TODO: add discriminator validation schemas
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
+
+	for await (const rHist of this.researchHistory) {
+		await validLog(rHist);
+	}
+
+	// Descrininator Validation Schema switch
+	switch (this.type) {
+	case 'Knowledge':
+		await validTeam(this.credit);
+		for await (const tProg of this.teamProgress) {
+			await validTeam(tProg._id);
+		}
+
+		break;
+
+	case 'Analysis':
+		await validTeam(this.team);
+		for await (const salv of this.salvage) {
+			await validUpgrade(salv.gear);
+			await validUpgrade(salv.system);
+			await validUpgrade(salv.infrastructure);
+			await validFacility(salv.facility);
+			await validSite(salv.site);
+		}
+
+		break;
+
+	case 'TechResearch':
+		await validTeam(this.team);
+		break;
+
+	default:
+		nexusError(`Invalid Type ${this.type} for research!`, 400);
+	}
 
 };
 

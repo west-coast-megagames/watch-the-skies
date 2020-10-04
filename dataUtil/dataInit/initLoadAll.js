@@ -12,10 +12,8 @@ const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
 const runSquadLoad = require('../dataInit/squadLoad');
 const runArticleLoad = require('../dataInit/articleLoad');
+const runResearchLoad = require('../dataInit/researchLoad');
 
-/*
-const runResearchLoad = require("../dataInit/researchLoad")
-*/
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
 async function fullInit (selStr) {
@@ -33,6 +31,7 @@ async function fullInit (selStr) {
 	let militaryDone = false;
 	let squadDone = false;
 	let articleDone = false;
+	let researchDone = false;
 	switch (selStr) {
 
 
@@ -78,21 +77,13 @@ async function fullInit (selStr) {
 		articleDone = await runArticleLoad(true); // load expanded Article fields initArticle.json
 		logger.debug(`Artilce Load Done: ${articleDone}`);
 
+		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
+		logger.debug(`Research Load Done: ${researchDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
-
-		/*
-    case "All":
-    case "Research":
-      let researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
-      logger.debug(`Research Load Done: ${researchDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
-			*/
 
 	case 'DropAll':
 		dropAllDone = await runDropAll(true); // drop all tables
@@ -169,6 +160,12 @@ async function fullInit (selStr) {
 	case 'Article':
 		articleDone = await runArticleLoad(true); // load expanded Article fields initArticle.json
 		logger.debug(`Artilce Load Done: ${articleDone}`);
+
+		break;
+
+	case 'Research':
+		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
+		logger.debug(`Research Load Done: ${researchDone}`);
 
 		break;
 

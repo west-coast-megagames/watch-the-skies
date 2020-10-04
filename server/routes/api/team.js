@@ -31,6 +31,24 @@ router.get('/', async function (req, res) {
 	}
 });
 
+// @route   GET api/team/:key/:value
+// @Desc    Get by property
+// @access  Public
+router.get('/:key/:value', async (req, res) => {
+	logger.info('GET Route: api/team key value requested...');
+	const query = {};
+	query[req.params.key] = req.params.value;
+
+	try {
+		const team = await Team.find(query).sort({ team: 1 });
+		res.status(200).json(team);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET api/team/:id
 // @Desc    Get all single team
 // @access  Public

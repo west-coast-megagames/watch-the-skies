@@ -48,6 +48,7 @@ const initMilitaries = require('./init/initMilitaries');
 const initSquads = require('./init/initSquads');
 const initUpgrades = require('./init/initUpgrades');
 const initArticles = require('./init/initArticles');
+const initResearch = require('./init/initResearch');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
@@ -116,6 +117,7 @@ module.exports = function (app) {
 	app.use('/init/initUpgrades', initUpgrades); // Route for init/check of Upgrades
 	app.use('/init/initSquads', initSquads); // Route for init/check of Squad
 	app.use('/init/initArticles', initArticles); // Route for init/check of Squad
+	app.use('/init/initResearch', initResearch); // Route for init/check of Squad
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones

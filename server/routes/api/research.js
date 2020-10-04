@@ -103,13 +103,13 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
-// @route   DEL api/research/delete
-// @Desc    Load all research in the database
+// @route   DEL api/research/deleteAll
+// @Desc    Delete All Research
 // @access  Public
-router.delete('/', async function (req, res) {
+router.patch('/deleteAll', async function (req, res) {
 	const data = await Research.deleteMany();
 	console.log(data);
-	return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`);
+	return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Collection!`);
 });
 
 
