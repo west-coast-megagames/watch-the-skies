@@ -68,7 +68,7 @@ router.post('/', async (req, res) => {
 	let newMilitary = new Military(req.body);
 
 	try {
-		await newMilitary.validatMilitary();
+		await newMilitary.validateMilitary();
 		newMilitary = await newMilitary.save();
 		logger.info(`Unit ${newMilitary.name} created...`);
 		res.status(200).json(newMilitary);
@@ -99,6 +99,15 @@ router.delete('/:id', async function (req, res) {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
+});
+
+// @route   PATCH api/military/deleteAll
+// @desc    Delete All Military
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Military.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Military!`);
 });
 
 module.exports = router;

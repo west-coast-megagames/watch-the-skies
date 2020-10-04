@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validZone, validCountry, validSite, validFacility } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -31,6 +30,7 @@ const MilitarySchema = new Schema({
 });
 
 MilitarySchema.methods.validateMilitary = async function () {
+	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
 	const schema = {
 		name: Joi.string().min(2).max(50).required()
 	};
@@ -41,8 +41,14 @@ MilitarySchema.methods.validateMilitary = async function () {
 	await validSite(this.site);
 	await validTeam(this.team);
 	await validZone(this.zone);
-	await validFacility(this.facility);
 	await validCountry(this.country);
+	await validFacility(this.origin);
+	for (const upg1 of this.upgrades) {
+		await validUpgrade(upg1);
+	}
+	for (const upg2 of this.upgrades) {
+		await validUpgrade(upg2);
+	}
 };
 
 

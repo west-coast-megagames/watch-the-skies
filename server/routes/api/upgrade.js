@@ -45,4 +45,13 @@ router.delete('/:id', validateObjectId, async function (req, res) {// Scott has 
 	}
 });
 
+// @route   PATCH api/upgrades/deleteAll
+// @desc    Delete All Upgrades
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Upgrade.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Upgrades!`);
+});
+
 module.exports = router;

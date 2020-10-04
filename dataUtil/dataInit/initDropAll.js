@@ -7,8 +7,6 @@ async function dropAll (doDrop) {
 
 	// drop all tables
 	/*
-  await Upgrade.deleteMany();
-  await Military.deleteMany();
   await Research.deleteMany();
   await Log.deleteMany();
   await Squad.deleteMany();
@@ -16,6 +14,14 @@ async function dropAll (doDrop) {
   await LogError.deleteMany();
 	await LogInfo.deleteMany();
 	*/
+
+	try {
+		await axios.patch(`${gameServer}api/upgrades/deleteAll`);
+		logger.info('Delete of All upgrades done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll upgrades in initDropAll: ${err.message}`, { meta: err.stack });
+	}
 
 	try {
 		await axios.patch(`${gameServer}api/blueprints/deleteAll`);
@@ -79,6 +85,14 @@ async function dropAll (doDrop) {
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Accounts in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		await axios.patch(`${gameServer}api/military/deleteAll`);
+		logger.info('Delete of All Military done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Military in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {

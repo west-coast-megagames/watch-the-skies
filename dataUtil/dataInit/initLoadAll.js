@@ -9,9 +9,9 @@ const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
 const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
+const runMilitaryLoad = require('../dataInit/militaryLoad');
 
 /*
-const runMilitaryLoad = require("../dataInit/militaryLoad");
 const runSquadLoad = require("../dataInit/squadLoad");
 const runArticleLoad = require("../dataInit/articleLoad");
 const runResearchLoad = require("../dataInit/researchLoad")
@@ -30,6 +30,7 @@ async function fullInit (selStr) {
 	let spacecraftDone = false;
 	let aircraftDone = false;
 	let accountsDone = false;
+	let militaryDone = false;
 	switch (selStr) {
 
 
@@ -66,20 +67,15 @@ async function fullInit (selStr) {
 		accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
 		logger.debug(`Accounts Load Done: ${accountsDone}`);
 
+		militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
+		logger.debug(`Military Load Done: ${militaryDone}`);
+
 		userDone = await runUserLoad(true); // load expanded User fields
 		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
 		/*
-    case "All":
-    case "Military":
-      let militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
-      logger.debug(`Military Load Done: ${militaryDone}`);
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Squad":
       let squadDone = await runSquadLoad(true); // load expanded Squad fields initSquad.json with gear
@@ -163,6 +159,12 @@ async function fullInit (selStr) {
 	case 'Accounts':
 		accountsDone = await runAccountLoad(true); // load expanded team accounts fields beyond simple reference from initAccounts.json
 		logger.debug(`Accounts Load Done: ${accountsDone}`);
+
+		break;
+
+	case 'Military':
+		militaryDone = await runMilitaryLoad(true); // load expanded military fields initMilitary.json with gear
+		logger.debug(`Military Load Done: ${militaryDone}`);
 
 		break;
 
