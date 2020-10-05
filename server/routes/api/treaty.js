@@ -81,4 +81,13 @@ router.delete('/id', async function (req, res) {
 	}// catch
 });
 
+// @route   PATCH api/treaties/deleteAll
+// @desc    Delete All Treaties
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Treaty.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Treaties!`);
+});
+
 module.exports = router;

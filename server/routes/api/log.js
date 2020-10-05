@@ -22,4 +22,13 @@ router.get('/', async function (req, res) {
 	res.status(200).json(logs);
 });
 
+// @route   PATCH api/log/deleteAll
+// @desc    Delete All Logs
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Log.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Logs!`);
+});
+
 module.exports = router;

@@ -34,6 +34,7 @@ const treaty = require('./api/treaty');
 const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 const users = require('./api/users');
+const logerrors = require('./api/logerrors');
 // data init and check routes
 const initZones = require('./init/initZones');
 const initUsers = require('./init/initUsers');
@@ -49,6 +50,8 @@ const initSquads = require('./init/initSquads');
 const initUpgrades = require('./init/initUpgrades');
 const initArticles = require('./init/initArticles');
 const initResearch = require('./init/initResearch');
+const initTrades = require('./init/initTrades');
+const initTreaties = require('./init/initTreaties');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
@@ -104,6 +107,7 @@ module.exports = function (app) {
 	app.use('/api/trade', trade); //
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
+	app.use('/api/logerrors', logerrors); // Route for logerrors
 	app.use('/init/initZones', initZones); // Route for init/check of zones
 	app.use('/init/initUsers', initUsers); // Route for init/check of Users
 	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
@@ -116,8 +120,10 @@ module.exports = function (app) {
 	app.use('/init/initMilitaries', initMilitaries); // Route for init/check of Military
 	app.use('/init/initUpgrades', initUpgrades); // Route for init/check of Upgrades
 	app.use('/init/initSquads', initSquads); // Route for init/check of Squad
-	app.use('/init/initArticles', initArticles); // Route for init/check of Squad
-	app.use('/init/initResearch', initResearch); // Route for init/check of Squad
+	app.use('/init/initArticles', initArticles); // Route for init/check of Articles
+	app.use('/init/initResearch', initResearch); // Route for init/check of Research
+	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
+	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones

@@ -5,13 +5,22 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 async function dropAll (doDrop) {
 	if (!doDrop) return;
 
-	// drop all tables
-	/*
+	// tables/collections not loaded cleared on full init
+	try {
+		await axios.patch(`${gameServer}api/logs/deleteAll`);
+		logger.info('Delete of All logs done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll Logs in initDropAll: ${err.message}`, { meta: err.stack });
+	}
 
-  await Log.deleteMany();
-  await LogError.deleteMany();
-
-	*/
+	try {
+		await axios.patch(`${gameServer}api/logErrors/deleteAll`);
+		logger.info('Delete of All logErrors done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll logErrors in initDropAll: ${err.message}`, { meta: err.stack });
+	}
 
 	try {
 		await axios.patch(`${gameServer}api/upgrades/deleteAll`);
@@ -21,6 +30,23 @@ async function dropAll (doDrop) {
 		logger.error(`Catch deleteAll upgrades in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
+	try {
+		await axios.patch(`${gameServer}api/trade/deleteAll`);
+		logger.info('Delete of All trades done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll trades in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	try {
+		await axios.patch(`${gameServer}api/treaty/deleteAll`);
+		logger.info('Delete of All treaties done (initDropAll).');
+	}
+	catch (err) {
+		logger.error(`Catch deleteAll treaties in initDropAll: ${err.message}`, { meta: err.stack });
+	}
+
+	// tables/collections loaded on full init
 	try {
 		await axios.patch(`${gameServer}api/blueprints/deleteAll`);
 		logger.info('Delete of All blueprints done (initDropAll).');

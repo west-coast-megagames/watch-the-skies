@@ -64,7 +64,7 @@ router.post('/', async function (req, res) {
 	}
 });
 
-// @route   DELETE api/trade/:id
+// @route   DELETE api/trades/:id
 // @Desc    Delete one blueprint
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
@@ -85,6 +85,15 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
+});
+
+// @route   PATCH api/trades/deleteAll
+// @desc    Delete All LogErrors
+// @access  Public
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Trade.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Trades!`);
 });
 
 module.exports = router;
