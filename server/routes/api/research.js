@@ -71,7 +71,7 @@ router.post('/', async function (req, res) {
 			nexusError(`Research type ${req.body.type} is not valid!`, 404);
 		}
 
-		await newResearch.validateZone();
+		await newResearch.validateResearch();
 		newResearch = await newResearch.save();
 		res.status(200).json(newResearch);
 	}

@@ -85,7 +85,7 @@ ResearchSchema.methods.validateResearch = async function () {
 	case 'Knowledge':
 		await validTeam(this.credit);
 		for await (const tProg of this.teamProgress) {
-			await validTeam(tProg._id);
+			await validTeam(tProg.team._id);
 		}
 
 		break;
@@ -102,7 +102,7 @@ ResearchSchema.methods.validateResearch = async function () {
 
 		break;
 
-	case 'TechResearch':
+	case 'Technology':
 		await validTeam(this.team);
 		break;
 
