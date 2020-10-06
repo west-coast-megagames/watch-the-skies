@@ -65,4 +65,30 @@ router.get('/code/:code', async (req, res) => {
 	}
 });
 
+// @route   GET init/zones/:id
+// @Desc    Get zones by id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const zone = await Zone.findById(id);
+		if (zone != null) {
+			try {
+				await zone.validateZone();
+				res.status(200).json(zone);
+			}
+			catch(err) {
+				res.status(200).send(`The Zone validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`The Zone with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;
