@@ -58,9 +58,6 @@ class Control extends Component {
 										<Button color="info" size="sm" onClick={ () => this.updateAircraft() }>
 											Update Aircraft
 										</Button>
-										<Button color="info" size="sm" onClick={ () => this.restoreAircraft() }>
-											Restore Location
-										</Button>
 									</ButtonGroup>
 								</div>
 								<hr />
@@ -157,15 +154,6 @@ class Control extends Component {
 		};
 	}
 
-	restoreAircraft = async () => {
-		try {
-			const response = await axios.patch(`${gameServer}game/admin/restore`)
-			this.props.alert({type: 'success', title: 'Reset all ships hulls', body: response.data })
-		} catch (err) {
-			this.props.alert({type: 'error', title: 'Failed to reset ships hulls', body: `${err.response.data} - ${err.message}` })
-		};
-	}
-
 	resetAccounts = async () => {
 		try {
 				const response = await axios.patch(`${gameServer}api/banking/accounts`)
@@ -237,7 +225,7 @@ class Control extends Component {
 
 	loadSystems = async () => {
 		try {
-			const response = await axios.patch(`${gameServer}api/control/loadSystems`)
+			const response = await axios.patch(`${gameServer}game/control/loadSystems`)
 			console.log(response);
 			this.props.alert({type: 'success', title: 'System options loaded', body: response.data})
 		} catch (err) {
@@ -247,7 +235,7 @@ class Control extends Component {
 
 	updateAircraft = async () => {
 		try {
-			const response = await axios.patch(`${gameServer}api/control/updateAircraft`)
+			const response = await axios.patch(`${gameServer}game/control/updateAircraft`)
 			console.log(response);
 			this.props.alert({type: 'success', title: 'Aircrafts updated...', body: response.data})
 		} catch (err) {

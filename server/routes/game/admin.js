@@ -32,23 +32,6 @@ router.get('/initialteGame', async (req, res) => {
 	}
 });
 
-
-// @route   PATCH game/admin/restore
-// @desc    Update all aircrafts to be deployed
-// @access  Public
-router.patch('/restore', async function (req, res) {
-	let count = 0;
-	for await (const aircraft of Aircraft.find().populate('origin')) {
-		aircraft.country = aircraft.origin.country;
-		aircraft.site = aircraft.origin._id;
-		aircraft.zone = aircraft.origin.zone;
-		await aircraft.save();
-		count++;
-	}
-	res.send(`Restored ${count} aircraft`);
-	nexusEvent.emit('updateAircrafts');
-});
-
 // @route   PATCH game/admin/resethull
 // @desc    Update all aircrafts to max health
 // @access  Public
