@@ -5,7 +5,7 @@ const nexusEvent = require('../../middleware/events/events');
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft');
 
-// @route   PATCH api/control/alien/deploy
+// @route   PATCH game/control/alien/deploy
 // @desc    Update all alien crafts to be deployed
 // @access  Public
 router.patch('/alien/deploy', async function (req, res) {
