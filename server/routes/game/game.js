@@ -14,7 +14,7 @@ const science = require('../../wts/research/research');
 // @route   GET api/research/sciStats
 // @Desc    Get global science state
 // @access  Public
-router.get('/sciState', async function (req, res) {
+router.get('/research/sciState', async function (req, res) {
 	routeDebugger('Sending server science state...');
 	const state = {
 		fundingCost: science.fundingCost,
