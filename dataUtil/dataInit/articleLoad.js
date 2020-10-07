@@ -62,7 +62,8 @@ async function loadArticle (iData, rCounts) {
 			likes: iData.likes,
 			tags: iData.tags,
 			imageSrc: iData.imageSrc,
-			date: Date.now()
+			date: Date.now(),
+			agency: iData.publisher
 		};
 		newArticle.gameState = [];
 
