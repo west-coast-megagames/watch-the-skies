@@ -21,7 +21,6 @@ router.get('/', async function (req, res) {
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
 			.populate('country', 'name')
-			.populate('systems', 'name category')
 			.populate('site', 'name')
 			.populate('origin', 'name');
 		res.status(200).json(aircrafts);
