@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Military } = require('../../models/military');
+const { Military, Corps, Fleet } = require('../../models/military');
 
 // @route   GET api/military
 // @Desc    Get all Militaries
@@ -65,7 +65,23 @@ router.get('/:id', validateObjectId, async (req, res) => {
 // @access  Public
 router.post('/', async (req, res) => {
 	logger.info('POST Route: api/military call made...');
-	let newMilitary = new Military(req.body);
+
+	let newMilitary;
+	switch(req.body.type) {
+
+	case('Corps'):
+		newMilitary = new Corps(req.body);
+		break;
+
+	case('Fleet'):
+		newMilitary = new Fleet(req.body);
+		break;
+
+	default:
+		logger.info(`Team ${req.body.name} has invalid type ${req.body.type}`);
+		res.status(500).json(newMilitary);
+
+	}
 
 	try {
 		await newMilitary.validateMilitary();
