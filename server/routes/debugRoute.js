@@ -33,8 +33,8 @@ router.patch('/knowledge', async function (req, res) {
 
 router.patch('/fixFacilities', async function (req, res) {
 	let count = 0;
-	for await (let facility of Facility.find()) {
-		let { research, airMission, storage, manufacturing, naval, ground } = facility.capability;
+	for await (const facility of Facility.find()) {
+		const { research, airMission, storage, manufacturing, naval, ground } = facility.capability;
 		if (research.capacity > 0) {
 			research.status.damage = [];
 			research.status.pending = [];
@@ -73,14 +73,37 @@ router.patch('/missions', async function (req, res) {
 	resolveMissions();
 });
 
-// @route   PATCH debug/returnAircraft
+// @route   PATCH debug/return/aliens
+// @desc    Update all aircrafts to be not be deployed
+// @access  Public
+router.patch('/return/aliens', async function (req, res) {
+	let count = 0;
+	let aircrafts = await Aircraft.find().populate('team');
+	aircrafts = aircrafts.filter((i) => i.team.type === 'A');
+	for await (const aircraft of aircrafts) {
+		if (aircraft.status.deployed === true) {
+			count++;
+			aircraft.status.deployed = false;
+			await aircraft.save();
+		}
+	}
+	if (count === 0) {
+		res.status(200).send('No alien crafts available to return to base...');
+	}
+	else {
+		res.status(200).send(`${count} alien crafts have returned to base...`);
+	}
+	nexusEvent.emit('updateAircrafts');
+});
+
+// @route   PATCH debug/return/aircraft
 // @desc    Update all aircrafts to return to base
 // @access  Public
-router.patch('/returnAircraft', async function (req, res) {
+router.patch('/return/aircrafts', async function (req, res) {
 	routeDebugger('Returning all aircraft to base!');
 	let count = 0;
 	for (const aircraft of await Aircraft.find()) {
-		let response = await aircraft.returnToBase(aircraft);
+		const response = await aircraft.recall();
 		routeDebugger(response);
 		count++;
 	}
@@ -88,9 +111,9 @@ router.patch('/returnAircraft', async function (req, res) {
 	nexusEvent.emit('updateAircrafts');
 });
 
-router.get('/badword', async function (req, res){
-	let { word } = req.body;
-	if (badwordsArray.includes(word)){
+router.get('/badword', async function (req, res) {
+	const { word } = req.body;
+	if (badwordsArray.includes(word)) {
 		res.send(`${word} is a bad word!`);
 	}
 	else {

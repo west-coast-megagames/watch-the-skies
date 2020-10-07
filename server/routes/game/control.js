@@ -30,27 +30,4 @@ router.patch('/alien/deploy', async function (req, res) {
 	nexusEvent.emit('updateAircrafts');
 });
 
-// @route   PATCH api/control/alien/return
-// @desc    Update all aircrafts to be not be deployed
-// @access  Public
-router.patch('/alien/return', async function (req, res) {
-	let count = 0;
-	let aircrafts = await Aircraft.find().populate('team');
-	aircrafts = aircrafts.filter((i) => i.team.type === 'A');
-	for await (const aircraft of aircrafts) {
-		if (aircraft.status.deployed === true) {
-			count++;
-			aircraft.status.deployed = false;
-			await aircraft.save();
-		}
-	}
-	if (count === 0) {
-		res.status(200).send('No alien crafts available to return to base...');
-	}
-	else {
-		res.status(200).send(`${count} alien crafts have returned to base...`);
-	}
-	nexusEvent.emit('updateAircrafts');
-});
-
 module.exports = router;

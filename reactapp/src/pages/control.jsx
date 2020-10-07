@@ -132,7 +132,7 @@ class Control extends Component {
 
 	returnAliens = async () => {
 		try {
-			const response = await axios.patch(`${gameServer}api/control/alien/return`)
+			const response = await axios.patch(`${gameServer}debug/return/aliens`)
 			this.props.alert({type: 'success', title: 'Aliens Returned to Base', body: response.data })
 			} catch (err) {
 			this.props.alert({type: 'error', title: 'Aliens failed to return to Base', body: `${err.response.data} - ${err.message}` })
@@ -141,7 +141,7 @@ class Control extends Component {
 
 	returnAll = async () => {
 		try {
-			const response = await axios.patch(`${gameServer}debug/returnAircraft`)
+			const response = await axios.patch(`${gameServer}debug/return/aircrafts`)
 			this.props.alert({type: 'success', title: 'Interceptors returned to Base', body: response.data })
 		} catch (err) {
 			this.props.alert({type: 'error', title: 'Interceptors failed to return to Base', body: `${err.response.data} - ${err.message}` })
