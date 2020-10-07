@@ -144,12 +144,12 @@ AircraftSchema.methods.recall = async function () {
 		this.mission = 'Docked';
 		this.status.ready = true;
 		this.status.deployed = false;
-		this.site = this.origin.site;
+		this.site = this.origin;
 		this.country = home.site.country;
 		this.zone = home.site.zone;
 
 		const aircraft = await this.save();
-		logger.info(`${this.name} returned to ${origin.name}...`);
+		logger.info(`${this.name} returned to ${home.name}...`);
 
 		return aircraft;
 	}
