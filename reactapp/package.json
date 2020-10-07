@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.0",
     "echarts": "^4.8.0",
     "font-awesome": "^4.7.0",
+    "google-maps-react": "^2.0.6",
     "joi-browser": "^13.4.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.27.0",
