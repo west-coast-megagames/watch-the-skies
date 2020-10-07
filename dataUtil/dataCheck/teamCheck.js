@@ -125,12 +125,12 @@ async function chkTeam (runFlag) {
 			logger.error(`teamCode is blank for Team ${team.name} ${team._id}`);
 		}
 
-		if (!team.hasOwnProperty('teamType')) {
-			logger.error(`teamType missing for team ${team.name} ${team._id}`);
+		if (!team.hasOwnProperty('type')) {
+			logger.error(`type missing for team ${team.name} ${team._id}`);
 		}
-		else if (!inArray(teamTypeVals, team.teamType)) {
+		else if (!inArray(teamTypeVals, team.type)) {
 			logger.error(
-				`Invalid type ${team.teamType} for Team ${team.name} ${team._id}`
+				`Invalid type ${team.type} for Team ${team.name} ${team._id}`
 			);
 		}
 

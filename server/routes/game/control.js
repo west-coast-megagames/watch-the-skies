@@ -11,7 +11,7 @@ const { Aircraft } = require('../../models/aircraft');
 router.patch('/alien/deploy', async function (req, res) {
 	let count = 0;
 	let aircrafts = await Aircraft.find().populate('team');
-	aircrafts = aircrafts.filter((i) => i.team.teamType === 'A');
+	aircrafts = aircrafts.filter((i) => i.team.type === 'A');
 	for await (const aircraft of aircrafts) {
 		console.log(aircraft);
 		if (aircraft.status.deployed === false) {
@@ -36,7 +36,7 @@ router.patch('/alien/deploy', async function (req, res) {
 router.patch('/alien/return', async function (req, res) {
 	let count = 0;
 	let aircrafts = await Aircraft.find().populate('team');
-	aircrafts = aircrafts.filter((i) => i.team.teamType === 'A');
+	aircrafts = aircrafts.filter((i) => i.team.type === 'A');
 	for await (const aircraft of aircrafts) {
 		if (aircraft.status.deployed === true) {
 			count++;

@@ -32,7 +32,7 @@ async function chkAircraft(runFlag) {
   for (const aircraft of await Aircraft.find()
     // does not work with .lean
     /*
-                               .populate("team", "name teamType")
+                               .populate("team", "name type")
                                .populate("zone", "name")
                                .populate("origin", "name")
                                .populate("country", "name")

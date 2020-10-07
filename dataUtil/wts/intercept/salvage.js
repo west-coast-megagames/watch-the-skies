@@ -8,7 +8,7 @@ const count = 0;
 async function generateSalvage (system, status) {
 	const { Team } = require('../../models/team');
 	if (status === 'Wreckage' || system.status.damaged === true) {
-		const team = await Team.findOne({ teamType: 'C' });
+		const team = await Team.findOne({ type: 'C' });
 		system.status.salvage = true;
 		system.status.team = team._id;
 		salvageDebugger(`${system.name} has been turned into wreckage...`);

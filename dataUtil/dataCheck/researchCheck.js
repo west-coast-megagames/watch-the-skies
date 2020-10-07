@@ -42,8 +42,8 @@ function inArray(array, value) {
 
 async function chkResearch(runFlag) {
   for (const research of await Research.find()
-    //.populate("team", "name teamType")         does not work with .lean()
-    //.populate("credit", "name teamType")       does not work with .lean()
+    //.populate("team", "name type")         does not work with .lean()
+    //.populate("credit", "name type")       does not work with .lean()
     .lean()) {
     // does not work with .lean()
     //let testPropertys = research.toObject();

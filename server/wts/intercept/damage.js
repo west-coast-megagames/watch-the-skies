@@ -157,7 +157,7 @@ async function applyDmg(unit) {
     .populate("team")
     .populate("origin");
 
-  if (update.team.teamType === "A") {
+  if (update.team.type === "A") {
     return 0;
   }
   // interceptDebugger(unit);

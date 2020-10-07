@@ -15,7 +15,7 @@ const supportsColor = require("supports-color");
 
 async function chkArticle(runFlag) {
   for (const article of await Article.find()
-    //.populate("publisher", "name teamType")  does not work with .lean()
+    //.populate("publisher", "name type")  does not work with .lean()
     //.populate("location", "name dateline")   does not work with .lean()
     .lean()) {
     //does not work with .lean()

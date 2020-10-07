@@ -12,7 +12,7 @@ async function updatePR () {
 	prDebugging(`Assingning turn ${turnNum} income!`);
 	try {
 		for await (let team of Team.find()) {   
-			if (team.teamType === 'N') {
+			if (team.type === 'N') {
 				let { _id, prTrack, prLevel } = team;
 				prDebugging(`${team.name.toUpperCase()}`)
 				// prDebugging(team)

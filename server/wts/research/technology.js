@@ -19,7 +19,7 @@ function Technology (tech) {
 
 	// Async Method to check if this technology is available for each team
 	this.checkAvailable = async function () {
-		for await (const team of await Team.find({ teamType: 'N' }, '_id name')) {
+		for await (const team of await Team.find({ type: 'N' }, '_id name')) {
 			const currentTech = await Research.findOne({ name: this.name, team: team._id }); // Checks if team has the research already!!
 			techDebugger(`${this.name}: Checking ${team.name}'s eligibility to research this tech...`);
 
@@ -80,7 +80,7 @@ function Technology (tech) {
 					});
 
 					const theories = [];
-					for await (const item of newTech.techs) {
+					for await (const item of newTech.unlocks) {
 						if (item.type === 'Technology') {
 							const { techTree } = require('./techTree');
 							const theory = techTree.find(el => el.code === item.code);

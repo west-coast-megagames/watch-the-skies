@@ -273,7 +273,7 @@ describe('wts terrror', () => {
 				name: 'Test Team 1',
 				shortName: 'TT 1',
 				teamCode: 'TT1',
-				teamType: 'N'
+				type: 'N'
 			});
 			await team.save();
 			const citySite = new CitySite({
@@ -331,7 +331,7 @@ describe('wts terrror', () => {
 				name: 'Test Team 2',
 				shortName: 'TT 2',
 				teamCode: 'TT2',
-				teamType: 'N'
+				type: 'N'
 			});
 			await team.save();
 			const citySite = new CitySite({
@@ -581,7 +581,7 @@ describe('wts terrror', () => {
 				name: 'Test Team K1',
 				shortName: 'TT K1',
 				teamCode: 'TK1',
-				teamType: 'N'
+				type: 'N'
 			});
 			await team.save();
 			const citySite = new CitySite({

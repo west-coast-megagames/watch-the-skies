@@ -14,7 +14,7 @@ class GameTimeline extends Component {
 
     componentDidMount() {
         this.getLogs();
-        if (this.props.team.teamType !== 'C') {
+        if (this.props.team.type !== 'C') {
             let teamFilter = [this.props.team.code]
             this.setState({teamFilter});
         }
@@ -31,7 +31,7 @@ class GameTimeline extends Component {
 
         return (
              <React.Fragment>
-                {this.props.team.teamType === 'C' &&
+                {this.props.team.type === 'C' &&
                 <CheckPicker
                     sticky
                     data={this.props.teams}

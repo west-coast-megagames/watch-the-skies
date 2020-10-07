@@ -28,8 +28,8 @@ function inArray(array, value) {
 
 async function chkUpgrade(runFlag) {
   for (const upgrade of await Upgrade.find()
-    //.populate("team", "name teamType")             does not work with .lean
-    //.populate("manufacturer", "name teamType")     does not work with .lean()
+    //.populate("team", "name type")             does not work with .lean
+    //.populate("manufacturer", "name type")     does not work with .lean()
     .lean()) {
     /* does not work with .lean()                             
     if (!upgrade.populated("team")) {  

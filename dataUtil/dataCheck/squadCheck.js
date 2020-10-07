@@ -25,7 +25,7 @@ function inArray(array, value) {
 async function chkSquad(runFlag) {
   for (const squad of await Squad.find()
     /* does not work with .lean()
-                               .populate("team", "name teamType")
+                               .populate("team", "name type")
                                .populate("country", "name type")
                                .populate("zone", "name")
                                .populate("origin", "name")

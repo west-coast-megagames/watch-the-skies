@@ -117,7 +117,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
 			{ name: req.body.name,
 				code: req.body.code,
 				shortName: req.body.shortName,
-				teamType: req.body.teamType,
+				type: req.body.type,
 				roles: req.body.roles,
 				prTrack: req.body.prTrack,
 				prLevel: req.body.prLevel,
