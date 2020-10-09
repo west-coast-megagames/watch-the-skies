@@ -1,7 +1,7 @@
 // const runBluePrintCheck = require("../dataCheck/blueprintCheck");
 const runZoneCheck = require('../dataCheck/zoneCheck');
+const runCountryCheck = require('../dataCheck/countryCheck');
 /*
-const runCountryCheck = require("../dataCheck/countryCheck");
 const runFacilityCheck = require("../dataCheck/facilityCheck");
 const runSiteCheck = require("../dataCheck/siteCheck");
 const runUserCheck = require("../dataCheck/userCheck");
@@ -20,6 +20,7 @@ require('winston-mongodb');
 
 async function fullInitCheck (selStr) {
 	let zoneCheckDone = false;
+	let countryCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -33,16 +34,12 @@ async function fullInitCheck (selStr) {
 		zoneCheckDone = await runZoneCheck(true); // check zone records
 		logger.info(`Zone Check Done: ${zoneCheckDone}`);
 
+
+		countryCheckDone = await runCountryCheck(true); // check country records
+		logger.info(`Country Check Done: ${countryCheckDone}`);
+
+
 		/*
-    case "All":
-    case "Country":
-      let countryCheckDone = await runCountryCheck(true); // check country records
-      logger.info(`Country Check Done: ${countryCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Team":
       let teamCheckDone = await runTeamCheck(true); // check team records
@@ -154,6 +151,11 @@ async function fullInitCheck (selStr) {
 
 		break;
 
+	case 'Country':
+		countryCheckDone = await runCountryCheck(true); // check country records
+		logger.info(`Country Check Done: ${countryCheckDone}`);
+
+		break;
 
 	default:
 		logger.error(`Invalid Init Check Selection:  ${selStr}`);
