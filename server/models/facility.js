@@ -76,7 +76,7 @@ const FacilitySchema = new Schema({
 });
 
 FacilitySchema.methods.validateFacility = async function () {
-	const { validTeam, validSite } = require('../middleware/util/validateDocument');
+	const { validTeam, validSite, validUpgrade, validResearch, validAircraft, validMilitary } = require('../middleware/util/validateDocument');
 
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = {
@@ -92,6 +92,25 @@ FacilitySchema.methods.validateFacility = async function () {
 
 	if (this.team) {
 		await validTeam(this.team);
+	}
+
+	for (const upg of this.upgrade) {
+		await validUpgrade(upg);
+	}
+	for (const rsrch of this.capability.research.projects) {
+		await validResearch(rsrch);
+	}
+
+	for (const aircrft of this.capability.airMission.aircraft) {
+		await validAircraft(aircrft);
+	}
+
+	for (const nav of this.capability.naval.fleet) {
+		await validMilitary(nav);
+	}
+
+	for (const cor of this.capability.ground.corps) {
+		await validMilitary(cor);
 	}
 };
 

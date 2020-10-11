@@ -65,4 +65,30 @@ router.get('/code/:code', async (req, res) => {
 	}
 });
 
+// @route   GET init/facilities/validate/:id
+// @Desc    Validate facility with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const facility = await Facility.findById(id);
+		if (facility != null) {
+			try {
+				await facility.validateFacility();
+				res.status(200).json(facility);
+			}
+			catch(err) {
+				res.status(200).send(`The Facility validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`The Facility with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;
