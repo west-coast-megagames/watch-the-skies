@@ -130,6 +130,14 @@ async function chkTeam (runFlag) {
 							`National Team ${team.name} ${team._id} prTrack first element is not zero ${team.prTrack[0]}`
 						);
 					}
+
+					for (const prTrk of team.prTrack) {
+						if (isNaN(prTrk)) {
+							logger.error(
+								`National Team ${team.name} ${team._id} prTrack is not a number ${prTrk}`
+							);
+						}
+					}
 				}
 
 				if (!Object.prototype.hasOwnProperty.call(team, 'roles')) {

@@ -50,9 +50,6 @@ TeamSchema.methods.validateTeam = async function () {
 		type: Joi.string().min(1).max(10)
 	};
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
-	if (error != undefined) nexusError(`${error}`, 400);
-
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
 	}
@@ -66,10 +63,11 @@ TeamSchema.methods.validateTeam = async function () {
 	switch(this.type) {
 
 	case('National'):
-		schema.prTrack = Joi.array().items(Joi.number().min(1).max(100));
+		schema.prTrack = Joi.array().items(Joi.number().min(0).max(100));
 		schema.agents = Joi.number().min(0);
 		schema.prLevel = Joi.number();
 		schema.sciRate = Joi.number();
+		schema.roles = Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') }));
 		/* not using user roles currently
 		for await (const userId of this.roles.user) {
 			await validUser(userId);
@@ -111,6 +109,9 @@ TeamSchema.methods.validateTeam = async function () {
 		nexusError('Invalid Team Type ${this.type} ', 404);
 
 	}
+
+	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
 
 };
 
