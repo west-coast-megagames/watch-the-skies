@@ -1,34 +1,11 @@
-// Team Model - Using Mongoose Model
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
 
-const {
-	Team,
-	validateTeam,
-	National,
-	validateNational,
-	Alien,
-	validateAlien,
-	Control,
-	validateControl,
-	Npc,
-	validateNpc,
-	Media,
-	validateMedia,
-	validateRoles
-} = require('../models/team');
-const { Country } = require('../models/country');
-const { Account } = require('../models/account');
-const { Log } = require('../models/logs/log');
-const { Treaty } = require('../models/treaty');
-const { Trade } = require('../models/trade');
-
-const teamCheckDebugger = require('debug')('app:teamCheck');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-const supportsColor = require('supports-color');
-
 // National, Alien, Media, Control, ncP
-const teamTypeVals = ['N', 'A', 'M', 'C', 'P'];
+const teamTypeVals = ['National', 'Alien', 'Media', 'Control', 'Npc'];
 
 function inArray (array, value) {
 	for (let i = 0; i < array.length; i++) {
@@ -39,71 +16,56 @@ function inArray (array, value) {
 
 async function chkTeam (runFlag) {
 	// get accounts once
-	const aFinds = await Account.find();
+	let aFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}api/accounts/`);
+		aFinds = data;
+	}
+	catch(err) {
+		logger.error(`Accounts Get Error (teamCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
 
-	for (const team of await Team.find()
-		.lean()) {
-		// do not need toObject with .lean()
-		// let testPropertys = zone.toObject();
+	let tFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}init/initTeams/lean`);
+		tFinds = data;
+	}
+	catch(err) {
+		logger.error(`Team Get Lean Error (teamCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
 
-		if (!team.hasOwnProperty('model')) {
+	for (const team of tFinds) {
+
+		if (!Object.prototype.hasOwnProperty.call(team, 'model')) {
 			logger.error(`model missing for team ${team.name} ${team._id}`);
 		}
 
-		if (!team.hasOwnProperty('gameState')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'gameState')) {
 			logger.error(`gameState missing for team ${team.name} ${team._id}`);
 		}
 
-		if (!team.hasOwnProperty('serviceRecord')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'serviceRecord')) {
 			logger.error(`serviceRecord missing for Team ${team.name} ${team._id}`);
 		}
-		else {
-			for (let i = 0; i < team.serviceRecord.length; ++i) {
-				const lFind = await Log.findById(team.serviceRecord[i]);
-				if (!lFind) {
-					logger.error(
-						`Team ${team.name} ${team._id} has an invalid serviceRecord reference ${i}: ${team.serviceRecord[i]}`
-					);
-				}
-			}
-		}
 
-		if (!team.hasOwnProperty('treaties')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'treaties')) {
 			logger.error(`treaties missing for Team ${team.name} ${team._id}`);
 		}
-		else {
-			for (let i = 0; i < team.treaties.length; ++i) {
-				const tFind = await Treaty.findById(team.treaties[i]);
-				if (!tFind) {
-					logger.error(
-						`Team ${team.name} ${team._id} has an invalid treaties reference ${i}: ${team.treaties[i]}`
-					);
-				}
-			}
-		}
 
-		if (!team.hasOwnProperty('trades')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'trades')) {
 			logger.error(`trades missing for Team ${team.name} ${team._id}`);
 		}
-		else {
-			for (let i = 0; i < team.trades.length; ++i) {
-				const trFind = await Trade.findById(team.trades[i]);
-				if (!trFind) {
-					logger.error(
-						`Team ${team.name} ${team._id} has an invalid trades reference ${i}: ${team.trades[i]}`
-					);
-				}
-			}
-		}
 
-		if (!team.hasOwnProperty('name')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'name')) {
 			logger.error(`name missing for team ${team._id}`);
 		}
 		else if (team.name === '' || team.name == undefined || team.name == null) {
-			logger.error(`name is blank for Team ${team.name} ${team._id}`);
+			logger.error(`name is blank for Team ${team.code} ${team._id}`);
 		}
 
-		if (!team.hasOwnProperty('shortName')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'shortName')) {
 			logger.error(`shortName missing for team ${team.name} ${team._id}`);
 		}
 		else if (
@@ -114,48 +76,44 @@ async function chkTeam (runFlag) {
 			logger.error(`shortName is blank for Team ${team.name} ${team._id}`);
 		}
 
-		if (!team.hasOwnProperty('teamCode')) {
-			logger.error(`teamCode missing for team ${team.name} ${team._id}`);
+		if (!Object.prototype.hasOwnProperty.call(team, 'code')) {
+			logger.error(`code missing for team ${team.name} ${team._id}`);
 		}
 		else if (
-			team.teamCode === '' ||
-        team.teamCode == undefined ||
-        team.teamCode == null
+			team.code === '' ||
+      team.code == undefined ||
+      team.code == null
 		) {
-			logger.error(`teamCode is blank for Team ${team.name} ${team._id}`);
-		}
-
-		if (!team.hasOwnProperty('type')) {
-			logger.error(`type missing for team ${team.name} ${team._id}`);
-		}
-		else if (!inArray(teamTypeVals, team.type)) {
-			logger.error(
-				`Invalid type ${team.type} for Team ${team.name} ${team._id}`
-			);
+			logger.error(`code is blank for Team ${team.name} ${team._id}`);
 		}
 
 		// should be 6 accounts for each team
 		let accountCount = 0;
-		const teamId = team._id.toHexString();
+		const teamId = team._id;
 		for (let j = 0; j < aFinds.length; ++j) {
-			const aTeamId = aFinds[j].team.toHexString();
+			const aTeamId = aFinds[j].team._id;
 			if (aTeamId === teamId) {
 				++accountCount;
 			}
 		}
 
-		// teamCheckDebugger("jeff 1 ... accountCount", accountCount, team.teamCode);
 		if (accountCount != 6) {
-			logger.error(`Not 6 Accounts for team ${team.teamCode} ${team.name}`);
+			logger.error(`Not 6 Accounts for team ${team.code} ${team.name}`);
 		}
 
-		if (!team.hasOwnProperty('type')) {
+		if (!Object.prototype.hasOwnProperty.call(team, 'type')) {
 			logger.error(`type missing for team ${team.name} ${team._id}`);
 		}
 		else {
+			if (!inArray(teamTypeVals, team.type)) {
+				logger.error(
+					`Invalid type ${team.type} for Team ${team.name} ${team._id}`
+				);
+			}
+
 			if (team.type === 'National') {
 
-				if (!team.hasOwnProperty('prTrack')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'prTrack')) {
 					logger.error(
 						`prTrack missing for National Team ${team.name} ${team._id}`
 					);
@@ -174,7 +132,7 @@ async function chkTeam (runFlag) {
 					}
 				}
 
-				if (!team.hasOwnProperty('roles')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'roles')) {
 					logger.error(
 						`roles missing for National Team ${team.name} ${team._id}`
 					);
@@ -184,25 +142,8 @@ async function chkTeam (runFlag) {
 						`No roles assigned for National Team ${team.name} ${team._id}`
 					);
 				}
-				else {
-					try {
-						for (const currRole of team.roles) {
-							const test2 = validateRoles(currRole);
-							if (test2.error) {
-								logger.error(
-									`National Team Val Roles Error: For ${team.name} Error: ${test2.error.details[0].message}`
-								);
-							}
-						}
-					}
-					catch (err) {
-						logger.error(
-							`National Team Roles Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-						);
-					}
-				}
 
-				if (!team.hasOwnProperty('sciRate')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'sciRate')) {
 					logger.error(
 						`sciRate missing for National Team ${team.name} ${team._id}`
 					);
@@ -213,7 +154,7 @@ async function chkTeam (runFlag) {
 					);
 				}
 
-				if (!team.hasOwnProperty('agents')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'agents')) {
 					logger.error(
 						`agents missing for National Team ${team.name} ${team._id}`
 					);
@@ -224,7 +165,7 @@ async function chkTeam (runFlag) {
 					);
 				}
 
-				if (!team.hasOwnProperty('prLevel')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'prLevel')) {
 					logger.error(
 						`prLevel missing for National Team ${team.name} ${team._id}`
 					);
@@ -234,24 +175,10 @@ async function chkTeam (runFlag) {
 						`National Team ${team.name} ${team._id} prLevel is not a number ${team.prLevel}`
 					);
 				}
-
-				try {
-					const { error } = validateNational(team);
-					if (error) {
-						logger.error(
-							`National Team Validation Error For ${team.name} Error: ${error.message}`
-						);
-					}
-				}
-				catch (err) {
-					logger.error(
-						`National Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-					);
-				}
 			}
 
 			if (team.type === 'Alien') {
-				if (!team.hasOwnProperty('roles')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'roles')) {
 					logger.error(`roles missing for Alien Team ${team.name} ${team._id}`);
 				}
 				else if (team.roles.length < 1) {
@@ -259,25 +186,8 @@ async function chkTeam (runFlag) {
 						`No roles assigned for Alien Team ${team.name} ${team._id}`
 					);
 				}
-				else {
-					try {
-						for (const currRole of team.roles) {
-							const test2 = validateRoles(currRole);
-							if (test2.error) {
-								logger.error(
-									`Alien Team Val Roles Error: For ${team.name} Error: ${test2.error.details[0].message}`
-								);
-							}
-						}
-					}
-					catch (err) {
-						logger.error(
-							`Alien Team Roles Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-						);
-					}
-				}
 
-				if (!team.hasOwnProperty('sciRate')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'sciRate')) {
 					logger.error(
 						`sciRate missing for Alien Team ${team.name} ${team._id}`
 					);
@@ -288,7 +198,7 @@ async function chkTeam (runFlag) {
 					);
 				}
 
-				if (!team.hasOwnProperty('agents')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'agents')) {
 					logger.error(
 						`agents missing for Alien Team ${team.name} ${team._id}`
 					);
@@ -299,7 +209,7 @@ async function chkTeam (runFlag) {
 					);
 				}
 
-				if (!team.hasOwnProperty('actionPts')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'actionPts')) {
 					logger.error(
 						`actionPts missing for Alien Team ${team.name} ${team._id}`
 					);
@@ -309,24 +219,10 @@ async function chkTeam (runFlag) {
 						`Alien Team ${team.name} ${team._id} actionPts is not a number ${team.agents}`
 					);
 				}
-
-				try {
-					const { error } = validateAlien(team);
-					if (error) {
-						logger.error(
-							`Alien Team Validation Error For ${team.name} Error: ${error.message}`
-						);
-					}
-				}
-				catch (err) {
-					logger.error(
-						`Alien Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-					);
-				}
 			}
 
 			if (team.type === 'Control') {
-				if (!team.hasOwnProperty('roles')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'roles')) {
 					logger.error(
 						`roles missing for Control Team ${team.name} ${team._id}`
 					);
@@ -336,25 +232,8 @@ async function chkTeam (runFlag) {
 						`No roles assigned for Control Team ${team.name} ${team._id}`
 					);
 				}
-				else {
-					try {
-						for (const currRole of team.roles) {
-							const test2 = validateRoles(currRole);
-							if (test2.error) {
-								logger.error(
-									`Control Team Val Roles Error: For ${team.name} Error: ${test2.error.details[0].message}`
-								);
-							}
-						}
-					}
-					catch (err) {
-						logger.error(
-							`Control Team Roles Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-						);
-					}
-				}
 
-				if (!team.hasOwnProperty('sciRate')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'sciRate')) {
 					logger.error(
 						`sciRate missing for Control Team ${team.name} ${team._id}`
 					);
@@ -364,24 +243,10 @@ async function chkTeam (runFlag) {
 						`Control Team ${team.name} ${team._id} sciRate is not a number ${team.sciRate}`
 					);
 				}
-
-				try {
-					const { error } = validateControl(team);
-					if (error) {
-						logger.error(
-							`Control Team Validation Error For ${team.name} Error: ${error.message}`
-						);
-					}
-				}
-				catch (err) {
-					logger.error(
-						`Control Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-					);
-				}
 			}
 
 			if (team.type === 'Media') {
-				if (!team.hasOwnProperty('agents')) {
+				if (!Object.prototype.hasOwnProperty.call(team, 'agents')) {
 					logger.error(
 						`agents missing for Media Team ${team.name} ${team._id}`
 					);
@@ -391,54 +256,28 @@ async function chkTeam (runFlag) {
 						`Media Team ${team.name} ${team._id} agents is not a number ${team.agents}`
 					);
 				}
-
-				try {
-					const { error } = validateMedia(team);
-					if (error) {
-						logger.error(
-							`Media Team Validation Error For ${team.name} Error: ${error.message}`
-						);
-					}
-				}
-				catch (err) {
-					logger.error(
-						`Media Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-					);
-				}
 			}
 
 			if (team.type === 'Npc') {
-				try {
-					const { error } = validateNpc(team);
-					if (error) {
-						logger.error(
-							`NPC Team Validation Error For ${team.name} Error: ${error.message}`
-						);
-					}
-				}
-				catch (err) {
-					logger.error(
-						`NPC Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
-					);
-				}
+				// nothing to check for NPC
 			}
 		}
 
+		// validate call
 		try {
-			const { error } = validateTeam(team);
-			if (error) {
-				logger.error(
-					`Team Validation Error For ${team.name} Error: ${error.message}`
-				);
+			const valMessage = await axios.get(`${gameServer}init/initTeams/validate/${team._id}`);
+			if (!valMessage.data.type) {
+				logger.error(`Validation Error For ${team.code} ${team.name}: ${valMessage.data}`);
 			}
 		}
 		catch (err) {
 			logger.error(
-				`Team Validation Error For ${team.name} ${team.teamCode} Error: ${err.message}`
+				`Team Validation Error For ${team.code} ${team.name} Error: ${err.message}`
 			);
 		}
 	}
-	return true;
+	runFlag = true;
+	return runFlag;
 }
 
 module.exports = chkTeam;

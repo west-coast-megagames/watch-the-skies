@@ -19,8 +19,7 @@
 "prTrack" : [0, 6, 12, 18, 24, 30, 36, 42, 48],
 "prLevel" : 5,
 "agents" : 5,
-"loadFlag" : "true",
-"homeCountry": "US"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -39,8 +38,7 @@
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
 "agents" : 3,
-"loadFlag" : "true",
-"homeCountry": "GB"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team",
@@ -59,8 +57,7 @@
 "prTrack" : [0, 3, 5, 7, 10, 12, 14, 16, 17],
 "prLevel" : 5,
 "agents" : 2,
-"loadFlag" : "true",
-"homeCountry": "ZA"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -80,8 +77,7 @@
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
 "agents" : 3,
-"loadFlag" : "true",
-"homeCountry": "RU"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -99,8 +95,7 @@
 "prTrack" : [0, 3, 7, 10, 14, 18, 21, 25, 28],
 "prLevel" : 5,
 "agents" : 4,
-"loadFlag" : "true",
-"homeCountry": "JP"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -119,8 +114,7 @@
 "prTrack" : [0, 2, 4, 6, 8, 10, 12, 14, 16],
 "prLevel" : 5,
 "agents" : 1,
-"loadFlag" : "true",
-"homeCountry": "IR"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -139,8 +133,7 @@
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
 "agents" : 4,
-"loadFlag" : "true",
-"homeCountry": "IN"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -159,8 +152,7 @@
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
 "agents" : 3,
-"loadFlag" : "true",
-"homeCountry": "FR"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -179,8 +171,7 @@
 "prTrack" : [0, 2, 4, 6, 8, 10, 11, 12, 13],
 "prLevel" : 5,
 "agents" : 1,
-"loadFlag" : "true",
-"homeCountry": "EG"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -201,8 +192,7 @@
 "prTrack" : [0, 5, 10, 16, 21, 27, 32, 37, 43],
 "prLevel" : 5,
 "agents" : 5,
-"loadFlag" : "true",
-"homeCountry": "CN"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -221,8 +211,7 @@
 "prTrack" : [0, 3, 6, 9, 12, 16, 19, 22, 25],
 "prLevel" : 5,
 "agents" : 3,
-"loadFlag" : "true",
-"homeCountry": "BR"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team", 
@@ -240,8 +229,7 @@
 "prTrack" : [0, 2, 5, 8, 9, 12, 16, 19, 22 ],
 "prLevel" : 5,
 "agents" : 2,
-"loadFlag" : "true",
-"homeCountry": "AU"
+"loadFlag" : "true"
 },
 {
 "loadType" : "team",

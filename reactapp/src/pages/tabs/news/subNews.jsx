@@ -85,7 +85,7 @@ class SubNews extends React.Component {
         <Modal.Header>
           <Modal.Title>
             <TeamAvatar size={"sm"} code={this.props.team.code} />
-            { !preview && <span style={{verticalAlign: 'super'}}> Submit {this.props.team.type === 'N' && 'Press Release'}{this.props.team.type === 'M' && 'Article'}</span> }
+            { !preview && <span style={{verticalAlign: 'super'}}> Submit {this.props.team.type === 'National' && 'Press Release'}{this.props.team.type === 'Media' && 'Article'}</span> }
             { preview && <span style={{verticalAlign: 'super'}}> {headline}</span> }
           </Modal.Title>
         </Modal.Header>
@@ -103,7 +103,7 @@ class SubNews extends React.Component {
               />
             </FormGroup>
             <FormGroup>
-              {this.props.team.type === 'C' && 
+              {this.props.team.type === 'Control' && 
                 <SelectPicker
                   block
                   id="publisher"
@@ -148,7 +148,7 @@ class SubNews extends React.Component {
           </FormGroup>
             <ButtonToolbar>
               <Button disabled={disabled} appearance="primary" onClick={this.handleSubmit}>
-                Submit {this.props.team.type === 'N' && 'Press Release'}{this.props.team.type === 'M' && 'Article'}
+                Submit {this.props.team.type === 'National' && 'Press Release'}{this.props.team.type === 'Media' && 'Article'}
               </Button>
             </ButtonToolbar>
           </Form> }

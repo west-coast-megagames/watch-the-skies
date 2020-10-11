@@ -1,5 +1,6 @@
 // const runBluePrintCheck = require("../dataCheck/blueprintCheck");
 const runZoneCheck = require('../dataCheck/zoneCheck');
+const runTeamCheck = require('../dataCheck/teamCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
 /*
 const runFacilityCheck = require("../dataCheck/facilityCheck");
@@ -9,7 +10,6 @@ const runUpgradeCheck = require("../dataCheck/upgradeCheck");
 const runAircraftCheck = require("../dataCheck/aircraftCheck");
 const runMilitaryCheck = require("../dataCheck/militaryCheck");
 const runSquadCheck = require("../dataCheck/squadCheck");
-const runTeamCheck = require("../dataCheck/teamCheck");
 const runArticleCheck = require("../dataCheck/articleCheck");
 const runResearchCheck = require("../dataCheck/researchCheck");
 const runAccountsCheck = require("../dataCheck/accountsCheck");
@@ -21,6 +21,7 @@ require('winston-mongodb');
 async function fullInitCheck (selStr) {
 	let zoneCheckDone = false;
 	let countryCheckDone = false;
+	let teamCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -34,21 +35,14 @@ async function fullInitCheck (selStr) {
 		zoneCheckDone = await runZoneCheck(true); // check zone records
 		logger.info(`Zone Check Done: ${zoneCheckDone}`);
 
+		teamCheckDone = await runTeamCheck(true); // check team records
+		logger.info(`Team Check Done: ${teamCheckDone}`);
 
 		countryCheckDone = await runCountryCheck(true); // check country records
 		logger.info(`Country Check Done: ${countryCheckDone}`);
 
 
 		/*
-    case "All":
-    case "Team":
-      let teamCheckDone = await runTeamCheck(true); // check team records
-      logger.info(`Team Check Done: ${teamCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Facility":
       let facilityCheckDone = await runFacilityCheck(true); // check facility records
@@ -148,6 +142,12 @@ async function fullInitCheck (selStr) {
 	case 'Zone':
 		zoneCheckDone = await runZoneCheck(true); // check zone records
 		logger.info(`Zone Check Done: ${zoneCheckDone}`);
+
+		break;
+
+	case 'Team':
+		teamCheckDone = await runTeamCheck(true); // check team records
+		logger.info(`Team Check Done: ${teamCheckDone}`);
 
 		break;
 

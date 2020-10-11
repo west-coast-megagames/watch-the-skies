@@ -67,4 +67,29 @@ async function validUpgrade (upgrade) {
 	if (document == null) nexusError(`No upgrade exists with the ID: ${upgrade}`, 400);
 }
 
-module.exports = { validAccount, validCountry, validFacility, validSite, validTeam, validZone, validLog, validUpgrade };
+async function validTrade (trade) {
+	const { Trade } = require('../../models/trade'); // Import of Trade model [Mongoose]
+	if (trade === undefined) nexusError('No trade ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(trade)) nexusError('Invalid trade ID given...', 400);
+	const document = await Trade.findById(trade);
+	if (document == null) nexusError(`No trade exists with the ID: ${trade}`, 400);
+}
+
+async function validTreaty (treaty) {
+	const { Treaty } = require('../../models/treaty'); // Import of Treaty model [Mongoose]
+	if (treaty === undefined) nexusError('No treaty ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(treaty)) nexusError('Invalid treaty ID given...', 400);
+	const document = await Treaty.findById(treaty);
+	if (document == null) nexusError(`No treaty exists with the ID: ${treaty}`, 400);
+}
+
+async function validUser (user) {
+	const { User } = require('../../models/user'); // Import of User model [Mongoose]
+	if (user === undefined) nexusError('No user ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(user)) nexusError('Invalid user ID given...', 400);
+	const document = await User.findById(user);
+	if (document == null) nexusError(`No user exists with the ID: ${user}`, 400);
+}
+
+module.exports = { validAccount, validCountry, validFacility, validSite,
+	validTeam, validZone, validLog, validUpgrade, validTrade, validTreaty, validUser };
