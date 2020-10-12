@@ -9,6 +9,22 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 // Mongoose Model Import
 const { Site } = require('../../models/site');
 
+// @route   GET init/initSite/lean
+// @Desc    Get all sites/lean
+// @access  Public
+router.get('/lean', async (req, res) => {
+	// logger.info('GET lean Route: init/initSites requested...');
+	try {
+		const sites = await Site.find().lean()
+			.sort('code: 1');
+		res.status(200).json(sites);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET init/initSite/:id
 // @Desc    Get sites by id
 // @access  Public
@@ -46,6 +62,32 @@ router.get('/code/:code', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ type: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initSites/validate/:id
+// @Desc    Validate site with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const site = await Site.findById(id);
+		if (site != null) {
+			try {
+				await site.validateSite();
+				res.status(200).json(site);
+			}
+			catch(err) {
+				res.status(200).send(`Site validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Site with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {

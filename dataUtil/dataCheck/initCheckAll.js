@@ -3,8 +3,8 @@ const runZoneCheck = require('../dataCheck/zoneCheck');
 const runTeamCheck = require('../dataCheck/teamCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
+const runSiteCheck = require('../dataCheck/siteCheck');
 /*
-const runSiteCheck = require("../dataCheck/siteCheck");
 const runUserCheck = require("../dataCheck/userCheck");
 const runUpgradeCheck = require("../dataCheck/upgradeCheck");
 const runAircraftCheck = require("../dataCheck/aircraftCheck");
@@ -23,6 +23,7 @@ async function fullInitCheck (selStr) {
 	let countryCheckDone = false;
 	let teamCheckDone = false;
 	let facilityCheckDone = false;
+	let siteCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -46,15 +47,6 @@ async function fullInitCheck (selStr) {
 		logger.info(`Facility Check Done: ${facilityCheckDone}`);
 
 		/*
-    case "All":
-    case "Site":
-      let siteCheckDone = await runSiteCheck(true); // check site records
-      logger.info(`Site Check Done: ${siteCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "User":
       let userCheckDone = await runUserCheck(true); // check user records
@@ -154,6 +146,12 @@ async function fullInitCheck (selStr) {
 	case 'Facility':
 		facilityCheckDone = await runFacilityCheck(true); // check facility records
 		logger.info(`Facility Check Done: ${facilityCheckDone}`);
+
+		break;
+
+	case 'Site':
+		siteCheckDone = await runSiteCheck(true); // check site records
+		logger.info(`Site Check Done: ${siteCheckDone}`);
 
 		break;
 
