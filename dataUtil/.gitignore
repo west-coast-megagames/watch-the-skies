@@ -30,9 +30,3 @@ dataUtil/*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-dataUtil/*.log
-dataUtil/node_modules/*
-dataUtil/prototype-combined.log
-dataUtil/prototype-debug-combined.log
-dataUtil/prototype-error.log
