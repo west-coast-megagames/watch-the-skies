@@ -71,10 +71,12 @@ router.post('/', async (req, res) => {
 			newArticle.timestamp = req.body.timestamp;
 		}
 
-		// logger.info(`new Article time stamp ${newArticle.timestamp}`);
-		await newArticle.validateArticle();
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
 		const location = await Site.findById(newArticle.location);
 		newArticle.dateline = location.dateline;
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
+		await newArticle.validateArticle();
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
 
 		const docs = await Article.find({ headline: newArticle.headline, publisher: newArticle.publisher });
 
