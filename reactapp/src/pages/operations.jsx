@@ -8,7 +8,6 @@ import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import ExcomOps from './tabs/ops/excom';
-import GoogleMap from './tabs/ops/google';
 import PrototypeMap from './tabs/ops/google2'
 
 class Operations extends Component {
@@ -49,7 +48,7 @@ class Operations extends Component {
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
 						<Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item>
 						<Nav.Item eventKey="globe" to={`${url}/globe`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
-						<Nav.Item eventKey='google2' to={`${url}/google2`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Map</Nav.Item>
+						<Nav.Item eventKey='google2' to={`${url}/google`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Map</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>
 				</Header>
