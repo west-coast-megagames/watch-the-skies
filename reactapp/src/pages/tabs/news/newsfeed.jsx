@@ -27,7 +27,7 @@ class NewsFeed extends Component {
   }
     
   render() {
-    const buttonTxt = this.props.team.type === 'M' ? 'Draft new Article' : 'Draft new Press Release';
+    const buttonTxt = this.props.team.type === 'Media' ? 'Draft new Article' : 'Draft new Press Release';
     const dummyArticle = {
       publisher: this.props.team._id,
       agency: this.props.team.code,

@@ -128,10 +128,10 @@ async function newNational (tData, rCounts) {
 
 	// New National Team here
 	const NationalTeam = {
+		type: 'National',
 		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -156,10 +156,10 @@ async function newNational (tData, rCounts) {
 async function newAlien (tData, rCounts) {
 
 	const AlienTeam = {
+		type: 'Alien',
 		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -183,10 +183,10 @@ async function newAlien (tData, rCounts) {
 
 async function newMedia (tData, rCounts) {
 	const MediaTeam = {
+		type: 'Media',
 		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -210,10 +210,10 @@ async function newMedia (tData, rCounts) {
 
 async function newControl (tData, rCounts) {
 	const ControlTeam = {
+		type: 'Control',
 		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],
@@ -237,10 +237,10 @@ async function newControl (tData, rCounts) {
 
 async function newNPC (tData, rCounts) {
 	const NpcTeam = {
+		type: 'Npc',
 		code: tData.code,
 		name: tData.name,
 		shortName: tData.shortName,
-		type: tData.type,
 		gameState: [],
 		serviceRecord: [],
 		trades: [],

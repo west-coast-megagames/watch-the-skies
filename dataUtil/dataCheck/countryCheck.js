@@ -1,13 +1,8 @@
-// Country Model - Using Mongoose Model
-const { Country, validateCountry } = require('../models/country');
-const { Site } = require('../models/site');
-const { Team } = require('../models/team');
-const { Zone } = require('../models/zone');
-const countryCheckDebugger = require('debug')('app:countryLoad');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
+
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
-
-const supportsColor = require('supports-color');
 
 // type are Terrestrial(earth) and Alien (T or A)
 const typeVals = ['Ground', 'Space'];
@@ -21,21 +16,33 @@ function inArray (array, value) {
 
 async function chkCountry (runFlag) {
 	// get sites once
-	const sFinds = await Site.find();
+	let sFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}api/sites/`);
+		sFinds = data;
+	}
+	catch(err) {
+		logger.error(`Sites Get Error (countryCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
 
-	for (const country of await Country.find()
-	// .populate("zone", "name")   does not work with .lean()
-		.lean()) {
-		/* does not work with .lean()
-    if (!country.populated("zone")) {
-      logger.error(`Zone link missing for Country ${country.name}`);
-    }
-    */
-		if (!country.hasOwnProperty('model')) {
+	let cFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}init/initCountries/lean`);
+		cFinds = data;
+	}
+	catch(err) {
+		logger.error(`Country Get Lean Error (countryCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
+
+	for (const country of cFinds) {
+
+		if (!Object.prototype.hasOwnProperty.call(country, 'model')) {
 			logger.error(`model missing for Country ${country.code} ${country._id}`);
 		}
 
-		if (!country.hasOwnProperty('type')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'type')) {
 			logger.error(`type missing for Country ${country.code} ${country._id}`);
 		}
 		else if (!inArray(typeVals, country.type)) {
@@ -44,88 +51,51 @@ async function chkCountry (runFlag) {
 			);
 		}
 		else if (country.type === 'Ground') {
-			if (!country.hasOwnProperty('coastal')) {
+			if (!Object.prototype.hasOwnProperty.call(country, 'coastal')) {
 				logger.error(
 					`coastal missing for Country ${country.code} ${country._id}`
 				);
 			}
 
-			if (!country.hasOwnProperty('borderedBy')) {
+			if (!Object.prototype.hasOwnProperty.call(country, 'borderedBy')) {
 				logger.error(
 					`borderedBy missing for Country ${country.code} ${country._id}`
 				);
 			}
-			else {
-				const currentCode = country.code;
-				const currentCountryIdString = country._id.toHexString();
-
-				await checkBorderedByList(
-					country.borderedBy,
-					currentCode,
-					currentCountryIdString,
-					country.name
-				);
-			}
 		}
 
-		if (!country.hasOwnProperty('gameState')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'gameState')) {
 			logger.error(
 				`gameState missing for Country ${country.code} ${country._id}`
 			);
 		}
 
-		if (!country.hasOwnProperty('serviceRecord')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'serviceRecord')) {
 			logger.error(
 				`serviceRecord missing for Country ${country.code} ${country._id}`
 			);
 		}
-		else {
-			for (let i = 0; i < country.serviceRecord.length; ++i) {
-				const lFind = await Log.findById(country.serviceRecord[i]);
-				if (!lFind) {
-					logger.error(
-						`Country ${country.code} ${country._id} has an invalid serviceRecord reference ${i}: ${country.serviceRecord[i]}`
-					);
-				}
-			}
-		}
 
-		if (!country.hasOwnProperty('zone')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'zone')) {
 			logger.error(`zone missing for Country ${country.code} ${country._id}`);
 		}
-		else {
-			const zone = await Zone.findById({ _id: country.zone });
-			if (!zone) {
-				logger.error(
-					`zone reference is invalid for Country ${country.code} ${country._id}`
-				);
-			}
-		}
 
-		if (!country.hasOwnProperty('team')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'team')) {
 			logger.error(`team missing for Country ${country.code} ${country._id}`);
 		}
-		else {
-			const team = await Team.findById({ _id: country.team });
-			if (!team) {
-				logger.error(
-					`team reference is invalid for Country ${country.code} ${country._id}`
-				);
-			}
-		}
 
-		if (!country.hasOwnProperty('code')) {
-			logger.error(`code missing for Country ${country.code} ${country._id}`);
+		if (!Object.prototype.hasOwnProperty.call(country, 'code')) {
+			logger.error(`code missing for Country ${country.name} ${country._id}`);
 		}
 		else if (
 			country.code === '' ||
         country.code == undefined ||
         country.code == null
 		) {
-			logger.error(`code is blank for Country ${country._id}`);
+			logger.error(`code is blank for Country ${country.name} ${country._id}`);
 		}
 
-		if (!country.hasOwnProperty('name')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'name')) {
 			logger.error(`name missing for Country ${country.code} ${country._id}`);
 		}
 		else if (
@@ -138,7 +108,7 @@ async function chkCountry (runFlag) {
 			);
 		}
 
-		if (!country.hasOwnProperty('unrest')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'unrest')) {
 			logger.error(`unrest missing for Country ${country.code} ${country._id}`);
 		}
 		else if (isNaN(country.unrest)) {
@@ -147,47 +117,23 @@ async function chkCountry (runFlag) {
 			);
 		}
 
-		if (!country.hasOwnProperty('milAlliance')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'milAlliance')) {
 			logger.error(
 				`milAlliance missing for Country ${country.code} ${country._id}`
 			);
 		}
-		else {
-			const currentCode = country.code;
-			const currentCountryIdString = country._id.toHexString();
 
-			await checkAllianceList(
-				country.milAlliance,
-				currentCode,
-				currentCountryIdString,
-				country.name,
-				'Military'
-			);
-		}
-
-		if (!country.hasOwnProperty('sciAlliance')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'sciAlliance')) {
 			logger.error(
 				`sciAlliance missing for Country ${country.code} ${country._id}`
 			);
 		}
-		else {
-			const currentCode = country.code;
-			const currentCountryIdString = country._id.toHexString();
 
-			await checkAllianceList(
-				country.sciAlliance,
-				currentCode,
-				currentCountryIdString,
-				country.name,
-				'Science'
-			);
-		}
-
-		if (!country.hasOwnProperty('stats')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'stats')) {
 			logger.error(`stats missing for Country ${country.code} ${country._id}`);
 		}
 		else {
-			if (!country.stats.hasOwnProperty('sciRate')) {
+			if (!Object.prototype.hasOwnProperty.call(country.stats, 'sciRate')) {
 				logger.error(
 					`stats.sciRate missing for Country ${country.code} ${country._id}`
 				);
@@ -197,7 +143,7 @@ async function chkCountry (runFlag) {
 					`Country ${country.code} ${country._id} stats.sciRate is not a number ${country.stats.sciRate}`
 				);
 			}
-			if (!country.stats.hasOwnProperty('balance')) {
+			if (!Object.prototype.hasOwnProperty.call(country.stats, 'balance')) {
 				logger.error(
 					`stats.balance missing for Country ${country.code} ${country._id}`
 				);
@@ -209,7 +155,7 @@ async function chkCountry (runFlag) {
 			}
 		}
 
-		if (!country.hasOwnProperty('formalName')) {
+		if (!Object.prototype.hasOwnProperty.call(country, 'formalName')) {
 			logger.error(
 				`formalName missing for Country ${country.code} ${country._id}`
 			);
@@ -224,29 +170,28 @@ async function chkCountry (runFlag) {
 			);
 		}
 
+		// validate call
 		try {
-			const { error } = await validateCountry(country);
-			if (error) {
-				logger.error(
-					`Country Validation Error For ${country.code} ${country.name} Error: ${error.details[0].message}`
-				);
+			const valMessage = await axios.get(`${gameServer}init/initCountries/validate/${country._id}`);
+			if (!valMessage.data.type) {
+				logger.error(`Validation Error For ${country.code} ${country.name}: ${valMessage.data}`);
 			}
 		}
 		catch (err) {
 			logger.error(
-				`Country Validation Error For ${country.code} ${country.name} Error: ${err.details[0].message}`
+				`Country Validation Error For ${country.code} ${country.name} Error: ${err.message}`
 			);
 		}
 
 		// if not space, should have at least 1 city site
 		// if space, should have at least 1 spacecraft
-		const countryId = country._id.toHexString();
+		const countryId = country._id;
 		let cityCount = 0;
 		let spacecraftCount = 0;
 
 		siteLoop: for (let j = 0; j < sFinds.length; ++j) {
 			if (sFinds[j].country) {
-				const sCountryId = sFinds[j].country.toHexString();
+				const sCountryId = sFinds[j].country._id;
 
 				if (sCountryId === countryId) {
 					if (sFinds[j].subType === 'City' && sFinds[j].type === 'Ground') {
@@ -282,73 +227,8 @@ async function chkCountry (runFlag) {
 			}
 		}
 	}
-	return true;
-}
-
-async function checkBorderedByList (bBy, curCode, curIdString, curName) {
-	// check borderedBy array of IDs for this country listed (reference back to this country)
-	for (let j = 0; j < bBy.length; ++j) {
-		const b_Id = bBy[j];
-		const testIdString = b_Id.toHexString();
-		// countryCheckDebugger(`jeff 0  ... jindex ${j}  cur string ${curIdString} curCode ${curCode} test string ${testIdString}`);
-
-		if (curIdString === testIdString) {
-			logger.error(
-				`Country ${curCode} ${curName} has itself in its borderedBy list ${j}: ${testIdString}`
-			);
-		}
-		else {
-			const bCountry = await Country.findById(b_Id);
-			if (!bCountry) {
-				logger.error(
-					`Country ${curCode} ${curName} references an invalid borderedBy ${j}: ${b_Id}`
-				);
-			}
-			else {
-				// found a borderedBy country ... does it reference back to this country in its list?
-				let selfCount = 0;
-				for (
-					let k = 0, selfFound = false;
-					k < bCountry.borderedBy.length && selfFound == false;
-					++k
-				) {
-					const c_Id = bCountry.borderedBy[k];
-					// countryCheckDebugger(`Jeff 1 here ... j-index ${j} K-index ${k} c_Id ${c_Id}`);
-					const cCountry = await Country.findById(c_Id);
-					if (cCountry) {
-						const checkCode = cCountry.code;
-						// countryCheckDebugger(`Jeff 2 here ... currentCode ${curCode} j-index ${j} k-index ${k} check code ${checkCode}`);
-						if (curCode === checkCode) {
-							++selfCount;
-							// countryCheckDebugger(`Jeff 3 here ... currentCode ${curCode} j-index ${j} k-index ${k} check code ${checkCode} selfCount ${selfCount}`);
-							selfFound = true; // will exit for loop when found
-						}
-					}
-				}
-				// countryCheckDebugger(`Jeff 4 ${selfCount} currentCode ${curCode} j-index ${j}`);
-				if (selfCount < 1) {
-					logger.error(
-						`Country ${curCode} ${curName} borderedBy ${bCountry.name} does not list it as a borderedBy as well`
-					);
-				}
-			}
-		}
-	}
-}
-
-async function checkAllianceList (aList, curCode, curIdString, curName, aType) {
-	// check alliance (mil or sci) array of IDs for this country
-	for (let j = 0; j < aList.length; ++j) {
-		const t_id = aList[j];
-		// countryCheckDebugger(`jeff 0  ... jindex ${j}  cur string ${curIdString} curCode ${curCode} test string ${testIdString}`);
-
-		const team = await Team.findById(t_id);
-		if (!team) {
-			logger.error(
-				`Country ${curCode} ${curName} references an invalid ${aType} Alliance ${j}: ${t_id}`
-			);
-		}
-	}
+	runFlag = true;
+	return runFlag;
 }
 
 module.exports = chkCountry;

@@ -3,8 +3,6 @@ const { teamPhase, actionPhase, freePhase } = require('./phaseChange'); // IMPOR
 
 let gameActive = false; // Current state of master game clock
 
-const days = 0; // Starting days on master game clock
-let hours = 0; // Starting hours on master game clock
 let minutes = 40; // Starting minutes on master game clock
 let seconds = 0; // Starting seconds on master game clock
 
@@ -79,6 +77,9 @@ function resetClock () {
 // FUNCTION - getTimeRemaining [RENAME] { IN: N/A, OUT: clock Object { seconds, minutes, phase, turn, turnNum } }
 // PROCESS: Gives the current time, phase, turn, and turn number from the game clock
 function getTimeRemaining () {
+	// const days = 0; // Starting days on master game clock
+	// let hours = 0; // Starting hours on master game clock
+
 	if(!gameActive) {
 		currentTime = Date.parse(new Date());
 		deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60));
@@ -87,7 +88,7 @@ function getTimeRemaining () {
 	const t = Date.parse(deadline) - Date.parse(new Date());
 	seconds = Math.floor((t / 1000) % 60);
 	minutes = Math.floor((t / 1000 / 60) % 60);
-	hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+	// hours = Math.floor((t / (1000 * 60 * 60)) % 24);
 	// let days = Math.floor( t/(1000*60*60*24) );
 
 	if (minutes <= 0 && seconds <= 0 && gameActive) {
@@ -108,7 +109,11 @@ function getTimeRemaining () {
 
 // Function that makes a timestamp for log files
 function makeTimestamp () {
-	const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
+	const remTimeStamp = getTimeRemaining();
+	const { turn, phase } = remTimeStamp;
+	turnNum = remTimeStamp.turnNum;
+	minutes = remTimeStamp.minutes;
+	seconds = remTimeStamp.seconds;
 	const timestamp = { turn, phase, turnNum, clock: `${minutes}:${seconds}` };
 	return timestamp;
 }

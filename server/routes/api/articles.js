@@ -63,7 +63,15 @@ router.post('/', async (req, res) => {
 
 	try {
 		newArticle.date = new Date();
-		newArticle.timestamp = makeTimestamp();
+		const retTimestamp = makeTimestamp();
+		if (retTimestamp) {
+			newArticle.timestamp = retTimestamp;
+		}
+		else {
+			newArticle.timestamp = req.body.timestamp;
+		}
+
+		// logger.info(`new Article time stamp ${newArticle.timestamp}`);
 		await newArticle.validateArticle();
 		const location = await Site.findById(newArticle.location);
 		newArticle.dateline = location.dateline;
@@ -72,10 +80,11 @@ router.post('/', async (req, res) => {
 
 		if (docs.length < 1) {
 			newArticle = await newArticle.save();
-			/* this is not working as it is currently written   TODO: fix populate (???)
-			await Team.populate(newArticle, { path: 'publsher', model: 'Team', select: 'name' });
-			logger.info(`${newArticle.headline} article created for ${newArticle.team.name} ...`);
-			*/
+			// TODO: Team.populate is NOT working ... avoiding error on logger.info
+			await Team.populate(newArticle, { path: 'publisher', model: 'Team', select: 'name' });
+			if (newArticle.team) {
+				logger.info(`${newArticle.headline} article created for ${newArticle.team.name} ...`);
+			}
 			res.status(200).json(newArticle);
 		}
 		else {

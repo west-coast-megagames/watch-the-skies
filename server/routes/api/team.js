@@ -83,23 +83,23 @@ router.post('/', async (req, res) => {
 		let newTeam;
 		switch(req.body.type) {
 
-		case('N'):
+		case('National'):
 			newTeam = new National(req.body);
 			break;
 
-		case('A'):
+		case('Alien'):
 			newTeam = new Alien(req.body);
 			break;
 
-		case('C'):
+		case('Control'):
 			newTeam = new Control(req.body);
 			break;
 
-		case('M'):
+		case('Media'):
 			newTeam = new Media(req.body);
 			break;
 
-		case('P'):
+		case('Npc'):
 			newTeam = new Npc(req.body);
 			break;
 

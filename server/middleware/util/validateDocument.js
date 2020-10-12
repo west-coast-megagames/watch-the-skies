@@ -67,4 +67,54 @@ async function validUpgrade (upgrade) {
 	if (document == null) nexusError(`No upgrade exists with the ID: ${upgrade}`, 400);
 }
 
-module.exports = { validAccount, validCountry, validFacility, validSite, validTeam, validZone, validLog, validUpgrade };
+async function validTrade (trade) {
+	const { Trade } = require('../../models/trade'); // Import of Trade model [Mongoose]
+	if (trade === undefined) nexusError('No trade ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(trade)) nexusError('Invalid trade ID given...', 400);
+	const document = await Trade.findById(trade);
+	if (document == null) nexusError(`No trade exists with the ID: ${trade}`, 400);
+}
+
+async function validTreaty (treaty) {
+	const { Treaty } = require('../../models/treaty'); // Import of Treaty model [Mongoose]
+	if (treaty === undefined) nexusError('No treaty ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(treaty)) nexusError('Invalid treaty ID given...', 400);
+	const document = await Treaty.findById(treaty);
+	if (document == null) nexusError(`No treaty exists with the ID: ${treaty}`, 400);
+}
+
+async function validUser (user) {
+	const { User } = require('../../models/user'); // Import of User model [Mongoose]
+	if (user === undefined) nexusError('No user ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(user)) nexusError('Invalid user ID given...', 400);
+	const document = await User.findById(user);
+	if (document == null) nexusError(`No user exists with the ID: ${user}`, 400);
+}
+
+async function validResearch (research) {
+	const { Research } = require('../../models/research'); // Import of Research model [Mongoose]
+	if (research === undefined) nexusError('No research ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(research)) nexusError('Invalid research ID given...', 400);
+	const document = await Research.findById(research);
+	if (document == null) nexusError(`No research exists with the ID: ${research}`, 400);
+}
+
+async function validAircraft (aircraft) {
+	const { Aircraft } = require('../../models/aircraft'); // Import of Aircraft model [Mongoose]
+	if (aircraft === undefined) nexusError('No aircraft ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(aircraft)) nexusError('Invalid aircraft ID given...', 400);
+	const document = await Aircraft.findById(aircraft);
+	if (document == null) nexusError(`No aircraft exists with the ID: ${aircraft}`, 400);
+}
+
+async function validMilitary (military) {
+	const { Military } = require('../../models/military'); // Import of Military model [Mongoose]
+	if (military === undefined) nexusError('No military ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(military)) nexusError('Invalid military ID given...', 400);
+	const document = await Military.findById(military);
+	if (document == null) nexusError(`No military exists with the ID: ${military}`, 400);
+}
+
+module.exports = { validAccount, validCountry, validFacility, validSite,
+	validTeam, validZone, validLog, validUpgrade, validTrade, validTreaty,
+	validUser, validResearch, validAircraft, validMilitary };

@@ -6,7 +6,7 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 
-// type are Terrestrial(earth) and Alien
+// type values are Ground or Space
 const CountrySchema = new Schema({
 	model: { type: String, default: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },

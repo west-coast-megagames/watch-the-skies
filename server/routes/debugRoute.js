@@ -79,7 +79,7 @@ router.patch('/missions', async function (req, res) {
 router.patch('/return/aliens', async function (req, res) {
 	let count = 0;
 	let aircrafts = await Aircraft.find().populate('team');
-	aircrafts = aircrafts.filter((i) => i.team.type === 'A');
+	aircrafts = aircrafts.filter((i) => i.team.type === 'Alien');
 	for await (const aircraft of aircrafts) {
 		if (aircraft.status.deployed === true) {
 			count++;

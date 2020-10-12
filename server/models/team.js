@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
-const { logger } = require('../middleware/log/winston'); // Loging midddleware
+// const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
 // Global Constants
@@ -16,7 +16,6 @@ const RoleSchema = new Schema({
 	user: { type: ObjectId, ref: 'User' }
 });
 
-// Team type is (N)ational, (A)lien, (M)edia, (C)ontrol, non-(P)layer-character
 const TeamSchema = new Schema({
 	model: { type: String, default: 'Team' },
 	name: {
@@ -34,15 +33,6 @@ const TeamSchema = new Schema({
 		minlength: 2,
 		maxlength: 3
 	},
-	type: {
-		type: String,
-		required: true,
-		minlength: 1,
-		maxlength: 1,
-		default: 'N',
-		enum: ['N', 'A', 'M', 'C', 'P']
-	},
-	homeCountry: { type: ObjectId, ref: 'Country' },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: [],
 	trades: [{ type: ObjectId, ref: 'Trades' }],
@@ -50,21 +40,79 @@ const TeamSchema = new Schema({
 });
 
 TeamSchema.methods.validateTeam = async function () {
-	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
+	// validUser   no using yet
 
 	const schema = {
 		name: Joi.string().min(2).max(50).required(),
 		shortName: Joi.string().min(2).max(30),
 		code: Joi.string().min(2).max(3).required().uppercase(),
-		type: Joi.string().min(1).max(1).uppercase()
+		type: Joi.string().min(1).max(10)
 	};
+
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
+	for await (const tradeId of this.trades) {
+		await validTrade(tradeId);
+	}
+	for await (const treatyId of this.treaties) {
+		await validTreaty(treatyId);
+	}
+
+	switch(this.type) {
+
+	case('National'):
+		schema.prTrack = Joi.array().items(Joi.number().min(0).max(100));
+		schema.agents = Joi.number().min(0);
+		schema.prLevel = Joi.number();
+		schema.sciRate = Joi.number();
+		schema.roles = Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') }));
+		/* not using user roles currently
+		for await (const userId of this.roles.user) {
+			await validUser(userId);
+		}
+		*/
+
+		break;
+
+	case('Alien'):
+		schema.actionPts = Joi.number();
+		schema.agents = Joi.number().min(0);
+		schema.sciRate = Joi.number();
+		/* not using user roles currently
+		for await (const userId of this.roles.userId) {
+			await validUser(userId);
+		}
+		*/
+
+		break;
+
+	case('Control'):
+		schema.sciRate = Joi.number();
+		/* not using user roles currently
+		for await (const userId of this.roles.user) {
+			await validUser(userId);
+		}
+		*/
+		break;
+
+	case('Media'):
+		schema.agents = Joi.number().min(0);
+		break;
+
+	case('Npc'):
+		// no further validation for NPC currently
+		break;
+
+	default:
+		nexusError('Invalid Team Type ${this.type} ', 404);
+
+	}
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
-	// TODO: Add discriminator switch to validation
-	// TODO: Add document check validation errors
-	// TODO: Add sub-document validation checks
 };
 
 const Team = mongoose.model('Team', TeamSchema);
@@ -105,7 +153,7 @@ const Media = Team.discriminator(
 	'Media',
 	new Schema({
 		type: { type: String, default: 'Media' },
-		agents: { type: Number }
+		agents: { type: Number, min: 0, default: 0 }
 	})
 );
 

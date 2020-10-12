@@ -32,25 +32,31 @@ const ArticleSchema = new Schema({
 // validateArticle method
 ArticleSchema.methods.validateArticle = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.headline}...`);
+	// logger.info(`timestamp coming in to validateArticle ${this.timestamp}`);
+	/*
 	const timeStampSchema = {
 		turn: Joi.string().min(1),
 		phase: Joi.string().min(1),
 		clock: Joi.string().min(1),
 		turnNum: Joi.number().min(0)
 	};
+	TODO: timestamp is being cleard by Joi ... need to fix
+  timestamp: Joi.object(timeStampSchema)
+	*/
 
 	const schema = {
 		date: Joi.date().less('now'),
 		headline: Joi.string().min(1).max(100).required(),
-		body: Joi.string().min(1).max(1000),
-		timestamp: Joi.object(timeStampSchema)
+		body: Joi.string().min(1).max(1000)
 	};
 
 	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	// logger.info(`timestamp after Joi.validate ${this.timestamp}`);
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validTeam(this.publisher);
 	await validSite(this.location);
+
 };
 
 const Article = mongoose.model('article', ArticleSchema);

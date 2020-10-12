@@ -1,5 +1,3 @@
-// Zone Model - Using Mongoose Model
-
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
@@ -15,9 +13,8 @@ async function chkZone (runFlag) {
 	}
 	catch(err) {
 		logger.error(`Zone Get Lean Error (zoneCheck): ${err.message}`, { meta: err.stack });
+		return false;
 	}
-
-	logger.info(`jeff here length of zFinds ${zFinds.length}`);
 
 	for (const zone of zFinds) {
 
@@ -48,19 +45,6 @@ async function chkZone (runFlag) {
 
 		if (!Object.prototype.hasOwnProperty.call(zone, 'serviceRecord')) {
 			logger.error(`serviceRecord missing for Zone ${zone.name} ${zone._id}`);
-		}
-		else {
-			/* done in the validate call
-			for await (const servRec of this.serviceRecord) {
-				try {
-					await validLog(servRec);
-				}
-				catch(err) {
-					`Zone ${zone.name} ${zone._id} has an invalid serviceRecord reference: ${servRec}`;
-					logger.error(`Zone serviceRecord Error (zoneCheck): ${err.message}`);
-				}
-			}
-			*/
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(zone, 'type')) {

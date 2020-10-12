@@ -9,6 +9,22 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 // Mongoose Model Import
 const { Team } = require('../../models/team');
 
+// @route   GET init/initTeams/lean
+// @Desc    Get all initTeams/lean
+// @access  Public
+router.get('/lean', async (req, res) => {
+	// logger.info('GET lean Route: init/initTeams requested...');
+	try {
+		const teams = await Team.find().lean()
+			.sort('code: 1');
+		res.status(200).json(teams);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET init/initTeam/:id
 // @Desc    Get teams by id
 // @access  Public
@@ -46,6 +62,32 @@ router.get('/code/:code', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ type: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initTeams/validate/:id
+// @Desc    Validate team with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const team = await Team.findById(id);
+		if (team != null) {
+			try {
+				await team.validateTeam();
+				res.status(200).json(team);
+			}
+			catch(err) {
+				res.status(200).send(`Team validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Team validation Error with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {

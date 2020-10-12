@@ -91,4 +91,30 @@ router.patch('/borderedBy/:id', validateObjectId, async (req, res) => {
 	}
 });
 
+// @route   GET init/countries/validate/:id
+// @Desc    Validate country with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const country = await Country.findById(id);
+		if (country != null) {
+			try {
+				await country.validateCountry();
+				res.status(200).json(country);
+			}
+			catch(err) {
+				res.status(200).send(`The Country validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`The Country with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;

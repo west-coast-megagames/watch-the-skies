@@ -10,10 +10,6 @@ require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
-const {
-	validUnitType
-} = require('../wts/util/construction/validateUnitType');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -187,20 +183,6 @@ async function createFleet (iData, rCounts) {
 	}
 
 	newFleet.upgrade = [];
-	newFleet.gear = [];
-	for (const ger of iData.gear) {
-		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${ger}`);
-		const bpData = blueprint.data;
-
-		if (!bpData.desc) {
-			++rCounts.loadErrCount;
-			logger.error(`New Military Invalid Gear Blueprint: ${iData.name} ${ger}`);
-			return;
-		}
-		else if (validUnitType(bpData.unitType, newFleet.type)) {
-			newFleet.stats = bpData.stats;
-		}
-	}
 
 	try {
 		await axios.post(`${gameServer}api/military`, newFleet);
@@ -281,21 +263,6 @@ async function createCorps (iData, rCounts) {
 	}
 
 	newCorps.upgrade = [];
-	newCorps.gear = [];
-	for (const ger of iData.gear) {
-		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${ger}`);
-		const bpData = blueprint.data;
-
-		if (!bpData.desc) {
-			++rCounts.loadErrCount;
-			logger.error(`New Military Invalid Gear Blueprint: ${iData.name} ${ger}`);
-			return;
-		}
-		else if (validUnitType(bpData.unitType, newCorps.type)) {
-			newCorps.stats = bpData.stats;
-		}
-	}
-
 	try {
 		await axios.post(`${gameServer}api/military`, newCorps);
 		++rCounts.loadCount;
