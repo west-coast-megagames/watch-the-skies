@@ -54,26 +54,32 @@ const CountrySchema = new Schema({
 CountrySchema.methods.validateCountry = async function () {
 	const { validTeam, validZone, validLog, validCountry } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(3).max(75).required(),
-		code: Joi.string().min(2).max(2).required().uppercase(),
-		unrest: Joi.number().min(0).max(250)
-	};
-
-	// Descrininator Validation Schema switch
+	let schema = {};
 	switch (this.type) {
 	case 'Ground':
+		schema = Joi.object({
+			name: Joi.string().min(3).max(75).required(),
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			unrest: Joi.number().min(0).max(250)
+		});
 		for await (const bBy of this.borderedBy) {
 			await validCountry(bBy);
 		}
 		break;
+
 	case 'Space':
-		// nothing specific to test beyond type
+		schema = Joi.object({
+			name: Joi.string().min(3).max(75).required(),
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			unrest: Joi.number().min(0).max(250)
+		});
 		break;
+
 	default:
-		nexusError(`Invalid Type ${this.type} for country!`, 400);
+		nexusError(`Invalid Type ${this.type} for zone!`, 400);
 	}
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validZone(this.zone);
@@ -91,4 +97,23 @@ CountrySchema.methods.validateCountry = async function () {
 
 const Country = mongoose.model('Country', CountrySchema);
 
-module.exports = { Country };
+const GroundCountry = Country.discriminator(
+	'GroundCountry',
+	new Schema({
+		type: { type: String, default: 'Ground' },
+		coastal: {
+			type: Boolean,
+			default: false
+		},
+		borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }]
+	})
+);
+
+const SpaceCountry = Country.discriminator(
+	'SpaceCountry',
+	new Schema({
+		type: { type: String, default: 'Space' }
+	})
+);
+
+module.exports = { Country, GroundCountry, SpaceCountry };
