@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Country } = require('../../models/country');
+const { Country, GroundCountry, SpaceCountry } = require('../../models/country');
 
 // @route   GET api/counties
 // @Desc    Get all countries
@@ -82,7 +82,13 @@ router.post('/', async (req, res) => {
 	const { code } = req.body;
 
 	try {
-		let newCountry = new Country(req.body);
+		let newCountry;
+		if (req.body.type === 'Ground') {
+			newCountry = new GroundCountry(req.body);
+		}
+		if (req.body.type === 'Space') {
+			newCountry = new SpaceCountry(req.body);
+		}
 		await newCountry.validateCountry();
 		const docs = await Country.find({ code });
 
