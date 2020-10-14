@@ -280,7 +280,8 @@
     "buildTime": 1,
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
     "prereq": [{ "type": "Technology", "code": "Agr2A" }],
-    "effects": [{ "type": "terror", "effect": -5 }]
+		"effects": [{ "type": "terror", "effect": -5 }],
+		"stats": {}
   },
   {
     "loadType": "blueprint",
@@ -704,6 +705,7 @@
 		"buildModel": "facility",  
     "name": "Base Facility Secret",
 		"code": "BS-1",
+		"type": "Base",
 		"unitType": ["Base"],
 		"buildTime": 1,
 		"cost": 2,

@@ -9,6 +9,22 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 // Mongoose Model Import
 const { Blueprint } = require('../../models/blueprint');
 
+// @route   GET init/initBlueprints/lean
+// @Desc    Get all blueprints/lean
+// @access  Public
+router.get('/lean', async (req, res) => {
+	// logger.info('GET lean Route: init/initBlueprints requested...');
+	try {
+		const blueprints = await Blueprint.find().lean()
+			.sort('code: 1');
+		res.status(200).json(blueprints);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET init/initBlueprint/:id
 // @Desc    Get blueprints by id
 // @access  Public
@@ -46,6 +62,32 @@ router.get('/code/:code', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ desc: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initBlueprints/validate/:id
+// @Desc    Validate blueprint with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const blueprint = await Blueprint.findById(id);
+		if (blueprint != null) {
+			try {
+				await blueprint.validateBlueprint();
+				res.status(200).json(blueprint);
+			}
+			catch(err) {
+				res.status(200).send(`Blueprint validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`The Blueprint with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {

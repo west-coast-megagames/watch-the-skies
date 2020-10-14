@@ -23,26 +23,72 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 	const { validSite } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
-	const schema = {
-		code: Joi.string().min(2).max(20).required().uppercase(),
-		name: Joi.string().min(2).max(50).required(),
-		cost: Joi.number().min(0).required(),
-		buildTime: Joi.number().min(0).required(),
-		desc: Joi.string().min(1).max(255).required()
-	};
+	// Descrininator Validation Schema switch
+	let schema = {};
+	switch (this.buildModel) {
+	case 'aircraft':
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+		schema = Joi.object({
+			code: Joi.string() .min(2) .max(20) .required() .uppercase(),
+			name: Joi.string() .min(2) .max(50) .required(),
+			cost: Joi.number() .min(0) .required(),
+			buildTime: Joi.number() .min(0) .required(),
+			desc: Joi.string() .min(1) .max(255) .required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
+	case 'facility':
+		schema = Joi.object({
+			code: Joi.string().min(2).max(20).required().uppercase(),
+			name: Joi.string().min(2).max(50).required(),
+			cost: Joi.number().min(0).required(),
+			buildTime: Joi.number().min(0).required(),
+			desc: Joi.string().min(1).max(255).required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
+	case 'squad':
+		schema = Joi.object({
+			code: Joi.string().min(2).max(20).required().uppercase(),
+			name: Joi.string().min(2).max(50).required(),
+			cost: Joi.number().min(0).required(),
+			buildTime: Joi.number().min(0).required(),
+			desc: Joi.string().min(1).max(255).required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
+	case 'upgrade':
+		schema = Joi.object({
+			code: Joi.string().min(2).max(20).required().uppercase(),
+			name: Joi.string().min(2).max(50).required(),
+			cost: Joi.number().min(0).required(),
+			buildTime: Joi.number().min(0).required(),
+			desc: Joi.string().min(1).max(255).required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
+	default:
+		nexusError(`Invalid buildModel ${this.buildModel} for Blueprint!`, 400);
+	}
+
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	if (this.site) {
 		await validSite(this.site);
 	}
 
-	let doc = await Blueprint.findOne({ code: this.code });
-	if (doc != null) nexusError(`A blueprint with code ${this.code} exists. code must be unique.`, 400);
+	if (this.isNew) {
+		let doc = await Blueprint.findOne({ code: this.code });
+		if (doc != null) nexusError(`A blueprint with code ${this.code} exists. code must be unique.`, 400);
 
-	doc = await Blueprint.findOne({ name: this.name });
-	if (doc != null) nexusError(`A blueprint with name ${this.name} exists. name must be unique.`, 400);
+		doc = await Blueprint.findOne({ name: this.name });
+		if (doc != null) nexusError(`A blueprint with name ${this.name} exists. name must be unique.`, 400);
+	}
 };
 
 const Blueprint = mongoose.model('Blueprint', BlueprintSchema); // Creation of Blueprint Model
