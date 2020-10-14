@@ -23,29 +23,38 @@ const ZoneSchema = new Schema({
 
 // validateZone Method
 ZoneSchema.methods.validateZone = async function () {
+	const { validLog } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
-	const schema = {
-		code: Joi.string().min(2).max(2).required().uppercase(),
-		name: Joi.string().min(3).max(50).required()
-	};
-
 	// Descrininator Validation Schema switch
+	let schema = {};
 	switch (this.type) {
 	case 'Ground':
-		schema.terror = Joi.number().min(0).max(250);
+		schema = Joi.object({
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			name: Joi.string().min(3).max(50).required(),
+			terror: Joi.number().min(0).max(250)
+		});
+
 		break;
 
 	case 'Space':
-		// TODO: Add any space specific fields to the descrininator
+		schema = Joi.object({
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			name: Joi.string().min(3).max(50).required()
+		});
 		break;
 
 	default:
 		nexusError(`Invalid Type ${this.type} for zone!`, 400);
 	}
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
+
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
 };
 
 const Zone = mongoose.model('Zone', ZoneSchema);
