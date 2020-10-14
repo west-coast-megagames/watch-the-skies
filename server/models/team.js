@@ -43,13 +43,6 @@ TeamSchema.methods.validateTeam = async function () {
 	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
 	// validUser   no using yet
 
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		shortName: Joi.string().min(2).max(30),
-		code: Joi.string().min(2).max(3).required().uppercase(),
-		type: Joi.string().min(1).max(10)
-	};
-
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
 	}
@@ -60,14 +53,21 @@ TeamSchema.methods.validateTeam = async function () {
 		await validTreaty(treatyId);
 	}
 
+	let schema = {};
 	switch(this.type) {
 
 	case('National'):
-		schema.prTrack = Joi.array().items(Joi.number().min(0).max(100));
-		schema.agents = Joi.number().min(0);
-		schema.prLevel = Joi.number();
-		schema.sciRate = Joi.number();
-		schema.roles = Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') }));
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			shortName: Joi.string().min(2).max(30),
+			code: Joi.string().min(2).max(3).required().uppercase(),
+			type: Joi.string().min(1).max(10),
+			prTrack: Joi.array().items(Joi.number().min(0).max(100)),
+			agents: Joi.number().min(0),
+			prLevel: Joi.number(),
+			sciRate: Joi.number(),
+			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') }))
+		});
 		/* not using user roles currently
 		for await (const userId of this.roles.user) {
 			await validUser(userId);
@@ -77,9 +77,15 @@ TeamSchema.methods.validateTeam = async function () {
 		break;
 
 	case('Alien'):
-		schema.actionPts = Joi.number();
-		schema.agents = Joi.number().min(0);
-		schema.sciRate = Joi.number();
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			shortName: Joi.string().min(2).max(30),
+			code: Joi.string().min(2).max(3).required().uppercase(),
+			type: Joi.string().min(1).max(10),
+			actionPts: Joi.number(),
+			agents: Joi.number().min(0),
+			sciRate: Joi.number()
+		});
 		/* not using user roles currently
 		for await (const userId of this.roles.userId) {
 			await validUser(userId);
@@ -89,7 +95,13 @@ TeamSchema.methods.validateTeam = async function () {
 		break;
 
 	case('Control'):
-		schema.sciRate = Joi.number();
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			shortName: Joi.string().min(2).max(30),
+			code: Joi.string().min(2).max(3).required().uppercase(),
+			type: Joi.string().min(1).max(10),
+			sciRate: Joi.number()
+		});
 		/* not using user roles currently
 		for await (const userId of this.roles.user) {
 			await validUser(userId);
@@ -98,10 +110,22 @@ TeamSchema.methods.validateTeam = async function () {
 		break;
 
 	case('Media'):
-		schema.agents = Joi.number().min(0);
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			shortName: Joi.string().min(2).max(30),
+			code: Joi.string().min(2).max(3).required().uppercase(),
+			type: Joi.string().min(1).max(10),
+			agents: Joi.number().min(0)
+		});
 		break;
 
 	case('Npc'):
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			shortName: Joi.string().min(2).max(30),
+			code: Joi.string().min(2).max(3).required().uppercase(),
+			type: Joi.string().min(1).max(10)
+		});
 		// no further validation for NPC currently
 		break;
 
@@ -110,7 +134,7 @@ TeamSchema.methods.validateTeam = async function () {
 
 	}
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 };

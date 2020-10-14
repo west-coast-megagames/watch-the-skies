@@ -91,7 +91,10 @@ async function chkTeam (runFlag) {
 		let accountCount = 0;
 		const teamId = team._id;
 		for (let j = 0; j < aFinds.length; ++j) {
-			const aTeamId = aFinds[j].team._id;
+			let aTeamId = undefined;
+			if (aFinds[j].team) {
+				aTeamId = aFinds[j].team._id;
+			}
 			if (aTeamId === teamId) {
 				++accountCount;
 			}
