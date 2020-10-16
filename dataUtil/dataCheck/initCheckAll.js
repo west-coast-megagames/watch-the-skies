@@ -5,10 +5,11 @@ const runTeamCheck = require('../dataCheck/teamCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
+// const runUpgradeCheck = require('../dataCheck/upgradeCheck');
+const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runUserCheck = require('../dataCheck/userCheck');
+
 /*
-const runUpgradeCheck = require("../dataCheck/upgradeCheck");
-const runAircraftCheck = require("../dataCheck/aircraftCheck");
 const runMilitaryCheck = require("../dataCheck/militaryCheck");
 const runSquadCheck = require("../dataCheck/squadCheck");
 const runArticleCheck = require("../dataCheck/articleCheck");
@@ -26,6 +27,8 @@ async function fullInitCheck (selStr) {
 	let teamCheckDone = false;
 	let facilityCheckDone = false;
 	let siteCheckDone = false;
+	// let upgradeCheckDone = false;
+	let aircraftCheckDone = false;
 	let userCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
@@ -50,28 +53,16 @@ async function fullInitCheck (selStr) {
 		siteCheckDone = await runSiteCheck(true); // check site records
 		logger.info(`Site Check Done: ${siteCheckDone}`);
 
+		// upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
+		// logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
+
+		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
+		logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
+
 		userCheckDone = await runUserCheck(true); // check user records
 		logger.info(`User Check Done: ${userCheckDone}`);
 
 		/*
-    case "All":
-    case "Upgrade":
-      let upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
-      logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
-    case "All":
-    case "Aircraft":
-      let aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
-      logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Military":
       let militaryCheckDone = await runMilitaryCheck(true); // check military records
@@ -156,6 +147,20 @@ async function fullInitCheck (selStr) {
 	case 'Site':
 		siteCheckDone = await runSiteCheck(true); // check site records
 		logger.info(`Site Check Done: ${siteCheckDone}`);
+
+		break;
+
+		/*
+	case 'Upgrade':
+		upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
+		logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
+
+		break;
+	*/
+
+	case 'Aircraft':
+		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
+		logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
 
 		break;
 

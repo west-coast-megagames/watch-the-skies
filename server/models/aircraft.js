@@ -9,7 +9,6 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
-const { validTeam, validFacility, validSite, validZone, validCountry } = require('../middleware/util/validateDocument');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -88,14 +87,16 @@ const AircraftSchema = new Schema({
 
 // validateAircraft Method
 AircraftSchema.methods.validateAircraft = async function () {
-	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		type: Joi.string().min(2).max(50).required(),
-		mission: Joi.string().required()
-	};
+	const { validTeam, validFacility, validSite, validZone, validCountry, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	const schema = Joi.object({
+		name: Joi.string().min(2).max(50).required(),
+		type: Joi.string().min(2).max(50).required().valid('Recon', 'Transport', 'Decoy', 'Fighter'),
+		mission: Joi.string().required()
+	});
+
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validTeam(this.team);
@@ -103,6 +104,12 @@ AircraftSchema.methods.validateAircraft = async function () {
 	await validSite(this.site);
 	await validZone(this.zone);
 	await validCountry(this.country);
+	for (const upg of this.upgrades) {
+		await validUpgrade(upg);
+	}
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
 };
 
 // Launch Method - Changes the status of the craft and pays for the launch.

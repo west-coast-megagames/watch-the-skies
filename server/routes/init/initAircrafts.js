@@ -65,4 +65,30 @@ router.get('/name/:name', async (req, res) => {
 	}
 });
 
+// @route   GET init/initAircrafts/validate/:id
+// @Desc    Validate aircraft with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const aircraft = await Aircraft.findById(id);
+		if (aircraft != null) {
+			try {
+				await aircraft.validateAircraft();
+				res.status(200).json(aircraft);
+			}
+			catch(err) {
+				res.status(200).send(`Aircraft validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Aircraft with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;
