@@ -79,11 +79,13 @@ FacilitySchema.methods.validateFacility = async function () {
 	const { validTeam, validSite, validUpgrade, validResearch, validAircraft, validMilitary } = require('../middleware/util/validateDocument');
 
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(2).max(50).required()
-	};
+	const schema = Joi.object({
+		name: Joi.string().min(2).max(50).required(),
+		type: Joi.string().min(2).max(50).valid('Civilian', 'Crises', 'Hanger', 'Research', 'Base'),
+		code: Joi.string().min(2).max(20).required()
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	if (this.site) {
