@@ -30,13 +30,45 @@ const SiteSchema = new Schema({
 // validateSite method
 SiteSchema.methods.validateSite = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(2).max(50).required()
-		// TODO: Add code rules to Joi validation schema
-	};
+	let schema = {};
+	let geoDMSSchema = {};
+	let geoDecimalSchema = {};
+	switch (this.type) {
+	case 'Ground':
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			code: Joi.string().min(2).max(20).required(),
+			subType: Joi.string().valid('City', 'Crash')
+		});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
-	if (error != undefined) nexusError(`${error}`, 400);
+		geoDMSSchema = Joi.object({
+			latDMS: Joi.string().min(7).max(13),
+			longDMS: Joi.string().min(7).max(14)
+		});
+
+		geoDecimalSchema = Joi.object({
+			latDecimal: Joi.number().min(-90).max(90),
+			longDecimal: Joi.number().min(-180).max(180)
+		});
+
+		break;
+
+	case 'Space':
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			code: Joi.string().min(2).max(20).required(),
+			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station')
+		});
+
+		break;
+
+	default:
+		nexusError(`Invalid Type ${this.type} for zone!`, 400);
+	}
+
+
+	const mainCheck = schema.validate(this, { allowUnknown: true });
+	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
 
 	await validTeam(this.team);
 	await validCountry(this.country);
@@ -48,6 +80,12 @@ SiteSchema.methods.validateSite = async function () {
 		await validFacility(fac);
 	}
 	if (this.type === 'Ground') {
+		const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
+		if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
+
+		const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
+		if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
+
 		for await (const salv of this.salvage) {
 			await validUpgrade(salv);
 		}

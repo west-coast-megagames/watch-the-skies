@@ -281,7 +281,7 @@
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
     "prereq": [{ "type": "Technology", "code": "Agr2A" }],
 		"effects": [{ "type": "terror", "effect": -5 }],
-		"stats": {}
+		"stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -295,7 +295,7 @@
     "desc": "Better water supply techniques have been implemented, so water is more readily available than in the past.",
     "effects": [{ "type": "terror", "effect": -5 }],
     "prereq": [{ "type": "Technology", "code": "Agr2B" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -309,7 +309,7 @@
     "desc": "Farming techinques have been come easier to track and implement.",
     "effects": [{ "type": "terror", "effect": -8 }],
     "prereq": [{ "type": "Technology", "code": "Agr3C" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -323,7 +323,7 @@
     "desc": "Large food synthesizers to help feed this nation. Food insecurity has been greatly reduce as there are many of them around your nation.",
     "effects": [{ "type": "terror", "effect": -10 }],
     "prereq": [{ "type": "Technology", "code": "Agr4C" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -337,7 +337,7 @@
     "desc": "Terraforming a distressed area in order to create a more beneficial environment.",
     "effects": [{ "type": "terror", "effect": -15 }],
     "prereq": [{ "type": "Technology", "code": "Agr5A" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -351,7 +351,7 @@
     "desc": "Individualized food synthesizers to help feed every citizen. Food insecurity is nearly a thing of the past in this nation.",
     "effects": [{ "type": "terror", "effect": -15 }],
     "prereq": [{ "type": "Technology", "code": "Agr5B" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -365,7 +365,7 @@
     "desc": "Major breakthoughs in Anti-Radiation Treatments are now able to be deployed to Crisis.",
     "effects": [{ "type": "terror", "effect": -5 }],
     "prereq": [{ "type": "Technology", "code": "Bio3A" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -379,7 +379,7 @@
     "desc": "Neuro-upgrades for your secret labs' scientists.",
     "effects": [{ "sciRate": 400 }],
     "prereq": [{ "type": "Technology", "code": "Bio4A" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -393,7 +393,7 @@
     "desc": "Robot nurses are sent into crisis. This allows for safer, easier, and quicker response, distributing medical care.",
     "effects": [{ "type": "terror", "effect": -20 }],
     "prereq": [{ "type": "Technology", "code": "Bio5B" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -407,7 +407,7 @@
     "desc": "Stable, always available Urgent Care centers have opened nation-wide, equipped with amazing robotic doctors with Baymax levels of diagnosing.",
     "effects": [{ "type": "terror", "effect": -15 }],
     "prereq": [{ "type": "Technology", "code": "Bio5D" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -421,7 +421,7 @@
     "desc": "AI computers increase computation speed.",
     "effects": [{ "sciRate": 50 }],
     "prereq": [{ "type": "Technology", "code": "Inf1D" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -438,7 +438,7 @@
       { "type": "$M", "effect": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf2F" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -452,7 +452,7 @@
     "desc": "AI computers increase computation speed.",
     "effects": [{ "sciRate": 50 }],
     "prereq": [{ "type": "Technology", "code": "Inf3D" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -469,7 +469,7 @@
       { "type": "pr", "effect": -2 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4B" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -486,7 +486,7 @@
       { "type": "$M", "effect": -1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4D" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -503,7 +503,7 @@
       { "type": "pr", "effect": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4F" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -520,7 +520,7 @@
       { "type": "pr", "effect": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -537,7 +537,7 @@
       { "type": "pr", "effect": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -551,7 +551,7 @@
     "desc": "Greg, your friendly neighborhood scientist, has signed up to work in your lab",
     "effects": [{ "sciRate": 60 }],
     "prereq": [{ "type": "Technology", "code": "Inf5B" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -568,7 +568,7 @@
       { "type": "pr", "effect": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -582,7 +582,7 @@
     "desc": "You are slowly helping make the world a safer place, a place free from communter nightmares and far fewer crashes.",
     "effects": [{ "type": "terror", "effect": -10 }],
     "prereq": [{ "type": "Technology", "code": "Mil2E" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -599,7 +599,7 @@
       { "type": "$M", "effect": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Mil3E" }],
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -683,7 +683,7 @@
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": {}
+    "stats": { "dummy": 0 }
   },
   {
     "loadType": "blueprint",
@@ -711,7 +711,7 @@
 		"cost": 2,
     "prereq": [],
     "desc": "Standard Base Facility",
-		"stats": {},
+		"stats": { "dummy": 0 },
 		"facilityStats": {
       "effect": []
     },

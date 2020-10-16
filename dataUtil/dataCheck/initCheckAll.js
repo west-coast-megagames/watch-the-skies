@@ -47,6 +47,9 @@ async function fullInitCheck (selStr) {
 		facilityCheckDone = await runFacilityCheck(true); // check facility records
 		logger.info(`Facility Check Done: ${facilityCheckDone}`);
 
+		siteCheckDone = await runSiteCheck(true); // check site records
+		logger.info(`Site Check Done: ${siteCheckDone}`);
+
 		userCheckDone = await runUserCheck(true); // check user records
 		logger.info(`User Check Done: ${userCheckDone}`);
 
