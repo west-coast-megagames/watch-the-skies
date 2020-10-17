@@ -8,13 +8,13 @@ const runSiteCheck = require('../dataCheck/siteCheck');
 // const runUpgradeCheck = require('../dataCheck/upgradeCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runUserCheck = require('../dataCheck/userCheck');
+const runAccountsCheck = require('../dataCheck/accountsCheck');
 
 /*
 const runMilitaryCheck = require("../dataCheck/militaryCheck");
 const runSquadCheck = require("../dataCheck/squadCheck");
 const runArticleCheck = require("../dataCheck/articleCheck");
 const runResearchCheck = require("../dataCheck/researchCheck");
-const runAccountsCheck = require("../dataCheck/accountsCheck");
 */
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
@@ -30,6 +30,7 @@ async function fullInitCheck (selStr) {
 	// let upgradeCheckDone = false;
 	let aircraftCheckDone = false;
 	let userCheckDone = false;
+	let accountsCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -58,6 +59,9 @@ async function fullInitCheck (selStr) {
 
 		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
 		logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
+
+		accountsCheckDone = await runAccountsCheck(true); // check accounts records
+		logger.info(`Accounts Check Done: ${accountsCheckDone}`);
 
 		userCheckDone = await runUserCheck(true); // check user records
 		logger.info(`User Check Done: ${userCheckDone}`);
@@ -100,16 +104,7 @@ async function fullInitCheck (selStr) {
       }
 
       if ((selStr = "All")) break;
-
-    case "All":
-    case "Accounts":
-      let accountsCheckDone = await runAccountsCheck(true); // check accounts records
-      logger.info(`Accounts Check Done: ${accountsCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-     */
+*/
 
 		break;
 		// end of case All
@@ -161,6 +156,12 @@ async function fullInitCheck (selStr) {
 	case 'Aircraft':
 		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
 		logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
+
+		break;
+
+	case 'Accounts':
+		accountsCheckDone = await runAccountsCheck(true); // check accounts records
+		logger.info(`Accounts Check Done: ${accountsCheckDone}`);
 
 		break;
 

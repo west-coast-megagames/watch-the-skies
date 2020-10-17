@@ -57,7 +57,7 @@ router.get('/code/:code', async (req, res) => {
 			res.status(200).json(account);
 		}
 		else {
-			res.status(200).json({ type: false });
+			res.status(200).json({ owner: false });
 		}
 	}
 	catch (err) {
@@ -80,6 +80,32 @@ router.get('/teamacct/:teamId/:code', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ owner: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initAccounts/validate/:id
+// @Desc    Validate account with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const account = await Account.findById(id);
+		if (account != null) {
+			try {
+				await account.validateAccount();
+				res.status(200).json(account);
+			}
+			catch(err) {
+				res.status(200).send(`Account validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Account with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {

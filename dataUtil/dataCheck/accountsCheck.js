@@ -1,6 +1,6 @@
-// Account Model - Using Mongoose Model
-const { Account, validateAccount } = require('../models/account');
-const { Team } = require('../models/team');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
+
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
@@ -24,9 +24,12 @@ async function chkAccount (runFlag) {
 	const teamCounts = [];
 	let tCnt = {};
 	// load teams
-	for (const team of await Team.find()) {
+	const { data: tData } = await axios.get(`${gameServer}api/team/`);
+
+	for await (const team of tData) {
 		tCnt = {
-			hexId: team._id.toHexString(),
+			_id: team._id,
+			// hexId: team._id.toHexString(),
 			owner: team.shortName,
 			acctsCount: 0,
 			unsCount: 0,
@@ -38,12 +41,17 @@ async function chkAccount (runFlag) {
 		};
 		teamCounts.push(tCnt);
 	}
+	let aFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}init/initAccounts/lean`);
+		aFinds = data;
+	}
+	catch(err) {
+		logger.error(`Account Get Lean Error (accountCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
 
-	for (const account of await Account.find()
-		// .populate('team', 'name shortName')    does not work with .lean
-		.lean()) {
-		// do not need toObject with .lean()
-		// let testPropertys = account.toObject();
+	for (const account of aFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(account, 'model')) {
 			logger.error(
@@ -146,22 +154,20 @@ async function chkAccount (runFlag) {
 			);
 		}
 
+		// validate call
 		try {
-			const { error } = validateAccount(account);
-			if (error) {
-				logger.error(
-					`Account Validation Error For ${account.name} ${account.owner} Error: ${error.details[0].message}`
-				);
+			const valMessage = await axios.get(`${gameServer}init/initAccounts/validate/${account._id}`);
+			if (!valMessage.data.owner) {
+				logger.error(`Account Validation Error: ${valMessage.data.message}`);
 			}
 		}
 		catch (err) {
 			logger.error(
-				`Account Validation Error For ${account.name} ${account.owner} Error: ${err.details[0].message}`
+				`Account Validation Error For ${account.code} ${account.name} Error: ${err.message}`
 			);
 		}
 
 		let countRef = -1;
-		let teamHex = undefined;
 		let teamOwner = undefined;
 
 		if (Object.prototype.hasOwnProperty.call(account, 'owner')) {
@@ -174,17 +180,8 @@ async function chkAccount (runFlag) {
 			);
 		}
 		else {
-			const team = await Team.findById({ _id: account.team });
-			if (!team) {
-				logger.error(
-					`team reference is invalid for Account ${account.name} ${account.owner} ${account._id}`
-				);
-				countRef = teamCounts.findIndex((tc) => tc.owner == teamOwner);
-			}
-			else {
-				teamHex = account.team._id.toHexString();
-				countRef = teamCounts.findIndex((tc) => tc.hexId == teamHex);
-			}
+			// teamHex = account.team._id.toHexString();
+			countRef = teamCounts.findIndex((tc) => tc._id == account.team);
 		}
 
 		if (countRef >= 0) {
@@ -222,7 +219,7 @@ async function chkAccount (runFlag) {
 		}
 		else {
 			logger.error(
-				`Account Failed to Find Team in Count Array: ${teamOwner} ${teamHex} ${account.code} ${account.name} ${account.owner} ${account._id}`
+				`Account Failed to Find Team in Count Array: ${teamOwner} ${account.code} ${account.name} ${account.owner} ${account._id}`
 			);
 		}
 	}
@@ -231,37 +228,37 @@ async function chkAccount (runFlag) {
 	for (tCnt of teamCounts) {
 		if (tCnt.acctsCount != 6) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 6 accounts: : ${tCnt.acctsCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 6 accounts: : ${tCnt.acctsCount}`
 			);
 		}
 		if (tCnt.unsCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 UNSC account: ${tCnt.unsCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 UNSC account: ${tCnt.unsCount}`
 			);
 		}
 		if (tCnt.treCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 Treasury account: ${tCnt.treCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 Treasury account: ${tCnt.treCount}`
 			);
 		}
 		if (tCnt.govCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 Governance account: ${tCnt.govCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 Governance account: ${tCnt.govCount}`
 			);
 		}
 		if (tCnt.opsCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 Operations account: ${tCnt.opsCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 Operations account: ${tCnt.opsCount}`
 			);
 		}
 		if (tCnt.sciCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 Science account: ${tCnt.sciCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 Science account: ${tCnt.sciCount}`
 			);
 		}
 		if (tCnt.polCount != 1) {
 			logger.error(
-				`Team Owner ${tCnt.owner} ${tCnt.hexId} does not have 1 Political account: ${tCnt.polCount}`
+				`Team Owner ${tCnt.owner} ${tCnt._id} does not have 1 Political account: ${tCnt.polCount}`
 			);
 		}
 	}
