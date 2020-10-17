@@ -37,21 +37,17 @@ ArticleSchema.methods.validateArticle = async function () {
 	const schema = Joi.object({
 		date: Joi.date().less('now'),
 		headline: Joi.string().min(1).max(100).required(),
-		body: Joi.string().min(1).max(1000)
+		body: Joi.string().min(1).max(1000),
+		timestamp: Joi.object({
+			turn: Joi.string().min(1),
+			phase: Joi.string().min(1),
+			clock: Joi.string().min(1),
+			turnNum: Joi.number().min(0)
+		})
 	});
 
-	const mainCheck = schema.validate(this, { allowUnknown: true });
-	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
-
-	const timestampSchma = Joi.object({
-		turn: Joi.string().min(1),
-		phase: Joi.string().min(1),
-		clock: Joi.string().min(1),
-		turnNum: Joi.number().min(0)
-	});
-
-	const timestampCheck = timestampSchma.validate(this, { allowUnknown: true });
-	if (timestampCheck.error != undefined) nexusError(`${timestampCheck.error}`, 400);
+	const check = schema.validate(this, { allowUnknown: true });
+	if (check.error != undefined) nexusError(`${check.error}`, 400);
 
 	await validTeam(this.publisher);
 	await validSite(this.location);
