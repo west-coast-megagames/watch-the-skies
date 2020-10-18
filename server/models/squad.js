@@ -36,12 +36,12 @@ const SquadSchema = new Schema({
 SquadSchema.methods.validateSquad = async function () {
 	const { validTeam, validSite, validFacility, validCountry, validZone, validUpgrade } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(2).max(50).required()
-		// TODO: Add code rules to Joi validation schema
-	};
+	const schema = Joi.object({
+		name: Joi.string().min(2).max(50).required(),
+		type: Joi.string().valid('Raid', 'Assault', 'Infiltration', 'Envoy', 'Science')
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validSite(this.site);
@@ -49,8 +49,8 @@ SquadSchema.methods.validateSquad = async function () {
 	await validCountry(this.country);
 	await validZone(this.zone);
 	await validFacility(this.origin);
-	for (const upg1 of this.upgrades) {
-		await validUpgrade(upg1);
+	for (const upg of this.upgrades) {
+		await validUpgrade(upg);
 	}
 };
 

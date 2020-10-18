@@ -15,7 +15,7 @@ router.get('/lean', async (req, res) => {
 	// logger.info('GET lean Route: api/squads requested...');
 	try {
 		const squads = await Squad.find().lean()
-			.sort('code: 1');
+			.sort('name: 1');
 		res.status(200).json(squads);
 	}
 	catch (err) {
@@ -58,6 +58,32 @@ router.get('/name/:name', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ type: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initSquads/validate/:id
+// @Desc    Validate squad with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const squad = await Squad.findById(id);
+		if (squad != null) {
+			try {
+				await squad.validateSquad();
+				res.status(200).json(squad);
+			}
+			catch(err) {
+				res.status(200).send(`Squad validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Squad with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
