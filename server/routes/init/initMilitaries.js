@@ -65,4 +65,30 @@ router.get('/name/:name', async (req, res) => {
 	}
 });
 
+// @route   GET init/initMilitaries/validate/:id
+// @Desc    Validate military with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const military = await Military.findById(id);
+		if (military != null) {
+			try {
+				await military.validateMilitary();
+				res.status(200).json(military);
+			}
+			catch(err) {
+				res.status(200).send(`Military validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Military with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;

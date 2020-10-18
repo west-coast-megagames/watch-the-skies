@@ -29,12 +29,12 @@ const MilitarySchema = new Schema({
 });
 
 MilitarySchema.methods.validateMilitary = async function () {
-	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
-	const schema = {
+	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
+	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required()
-	};
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validSite(this.site);
@@ -42,11 +42,11 @@ MilitarySchema.methods.validateMilitary = async function () {
 	await validZone(this.zone);
 	await validCountry(this.country);
 	await validFacility(this.origin);
-	for (const upg1 of this.upgrades) {
-		await validUpgrade(upg1);
+	for (const upg of this.upgrades) {
+		await validUpgrade(upg);
 	}
-	for (const upg2 of this.upgrades) {
-		await validUpgrade(upg2);
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
 	}
 };
 

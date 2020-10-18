@@ -9,9 +9,10 @@ const runSiteCheck = require('../dataCheck/siteCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runUserCheck = require('../dataCheck/userCheck');
 const runAccountsCheck = require('../dataCheck/accountsCheck');
+const runMilitaryCheck = require('../dataCheck/militaryCheck');
 
 /*
-const runMilitaryCheck = require("../dataCheck/militaryCheck");
+
 const runSquadCheck = require("../dataCheck/squadCheck");
 const runArticleCheck = require("../dataCheck/articleCheck");
 const runResearchCheck = require("../dataCheck/researchCheck");
@@ -31,6 +32,7 @@ async function fullInitCheck (selStr) {
 	let aircraftCheckDone = false;
 	let userCheckDone = false;
 	let accountsCheckDone = false;
+	let militaryCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -63,18 +65,13 @@ async function fullInitCheck (selStr) {
 		accountsCheckDone = await runAccountsCheck(true); // check accounts records
 		logger.info(`Accounts Check Done: ${accountsCheckDone}`);
 
+		militaryCheckDone = await runMilitaryCheck(true); // check military records
+		logger.info(`Military Check Done: ${militaryCheckDone}`);
+
 		userCheckDone = await runUserCheck(true); // check user records
 		logger.info(`User Check Done: ${userCheckDone}`);
 
 		/*
-    case "All":
-    case "Military":
-      let militaryCheckDone = await runMilitaryCheck(true); // check military records
-      logger.info(`Military Check Done: ${militaryCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
 
     case "All":
     case "Squad":
@@ -162,6 +159,12 @@ async function fullInitCheck (selStr) {
 	case 'Accounts':
 		accountsCheckDone = await runAccountsCheck(true); // check accounts records
 		logger.info(`Accounts Check Done: ${accountsCheckDone}`);
+
+		break;
+
+	case 'Military':
+		militaryCheckDone = await runMilitaryCheck(true); // check military records
+		logger.info(`Military Check Done: ${militaryCheckDone}`);
 
 		break;
 
