@@ -36,7 +36,6 @@ async function runArticleLoad (runFlag) {
 }
 
 async function initLoad (doLoad) {
-	// articleLoadDebugger("Jeff in initLoad", doLoad, articleDataIn.length);
 	if (!doLoad) return;
 
 	let recReadCount = 0;

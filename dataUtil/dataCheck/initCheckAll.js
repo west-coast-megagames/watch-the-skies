@@ -11,9 +11,9 @@ const runUserCheck = require('../dataCheck/userCheck');
 const runAccountsCheck = require('../dataCheck/accountsCheck');
 const runMilitaryCheck = require('../dataCheck/militaryCheck');
 const runSquadCheck = require('../dataCheck/squadCheck');
+const runArticleCheck = require('../dataCheck/articleCheck');
 
 /*
-const runArticleCheck = require("../dataCheck/articleCheck");
 const runResearchCheck = require("../dataCheck/researchCheck");
 */
 
@@ -33,6 +33,7 @@ async function fullInitCheck (selStr) {
 	let accountsCheckDone = false;
 	let militaryCheckDone = false;
 	let squadCheckDone = false;
+	let articleCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -68,22 +69,16 @@ async function fullInitCheck (selStr) {
 		militaryCheckDone = await runMilitaryCheck(true); // check military records
 		logger.info(`Military Check Done: ${militaryCheckDone}`);
 
-		userCheckDone = await runUserCheck(true); // check user records
-		logger.info(`User Check Done: ${userCheckDone}`);
-
 		squadCheckDone = await runSquadCheck(true); // check squad records
 		logger.info(`Squad Check Done: ${squadCheckDone}`);
 
+		articleCheckDone = await runArticleCheck(true); // check article records
+		logger.info(`Article Check Done: ${articleCheckDone}`);
+
+		userCheckDone = await runUserCheck(true); // check user records
+		logger.info(`User Check Done: ${userCheckDone}`);
+
 		/*
-    case "All":
-    case "Article":
-      let articleCheckDone = await runArticleCheck(true); // check article records
-      logger.info(`Article Check Done: ${articleCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
     case "All":
     case "Research":
       let researchCheckDone = await runResearchCheck(true); // check research records
@@ -164,6 +159,12 @@ async function fullInitCheck (selStr) {
 	case 'Squad':
 		squadCheckDone = await runSquadCheck(true); // check squad records
 		logger.info(`Squad Check Done: ${squadCheckDone}`);
+
+		break;
+
+	case 'Article':
+		articleCheckDone = await runArticleCheck(true); // check article records
+		logger.info(`Article Check Done: ${articleCheckDone}`);
 
 		break;
 

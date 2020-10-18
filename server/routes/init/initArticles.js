@@ -44,4 +44,30 @@ router.get('/id/:id', validateObjectId, async (req, res) => {
 	}
 });
 
+// @route   GET init/initArticles/validate/:id
+// @Desc    Validate article with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const article = await Article.findById(id);
+		if (article != null) {
+			try {
+				await article.validateArticle();
+				res.status(200).json(article);
+			}
+			catch(err) {
+				res.status(200).send(`Article validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Article with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;
