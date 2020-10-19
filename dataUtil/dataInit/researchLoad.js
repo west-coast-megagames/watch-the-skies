@@ -41,7 +41,7 @@ async function runResearchLoad (runFlag) {
 }
 
 async function loadTeams () {
-	const team = await axios.get(`${gameServer}api/team/type/N`);
+	const team = await axios.get(`${gameServer}api/team/type/National`);
 	const tData = team.data;
 
 	for await (const teams of tData) {

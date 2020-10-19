@@ -12,10 +12,7 @@ const runAccountsCheck = require('../dataCheck/accountsCheck');
 const runMilitaryCheck = require('../dataCheck/militaryCheck');
 const runSquadCheck = require('../dataCheck/squadCheck');
 const runArticleCheck = require('../dataCheck/articleCheck');
-
-/*
-const runResearchCheck = require("../dataCheck/researchCheck");
-*/
+const runResearchCheck = require('../dataCheck/researchCheck');
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
@@ -34,6 +31,7 @@ async function fullInitCheck (selStr) {
 	let militaryCheckDone = false;
 	let squadCheckDone = false;
 	let articleCheckDone = false;
+	let researchCheckDone = false;
 
 	// only one case ALL now to work with eslint no fallthrough and no duplicate case
 	// not as pretty
@@ -75,21 +73,11 @@ async function fullInitCheck (selStr) {
 		articleCheckDone = await runArticleCheck(true); // check article records
 		logger.info(`Article Check Done: ${articleCheckDone}`);
 
+		researchCheckDone = await runResearchCheck(true); // check research records
+		logger.info(`Research Check Done: ${researchCheckDone}`);
+
 		userCheckDone = await runUserCheck(true); // check user records
 		logger.info(`User Check Done: ${userCheckDone}`);
-
-		/*
-    case "All":
-    case "Research":
-      let researchCheckDone = await runResearchCheck(true); // check research records
-      logger.info(`Research Check Done: ${researchCheckDone}`);
-
-      if (selStr != "All") {
-        break;
-      }
-
-      if ((selStr = "All")) break;
-*/
 
 		break;
 		// end of case All
@@ -165,6 +153,12 @@ async function fullInitCheck (selStr) {
 	case 'Article':
 		articleCheckDone = await runArticleCheck(true); // check article records
 		logger.info(`Article Check Done: ${articleCheckDone}`);
+
+		break;
+
+	case 'Research':
+		researchCheckDone = await runResearchCheck(true); // check research records
+		logger.info(`Research Check Done: ${researchCheckDone}`);
 
 		break;
 

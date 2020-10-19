@@ -65,4 +65,30 @@ router.get('/code/:code', async (req, res) => {
 	}
 });
 
+// @route   GET init/initResearch/validate/:id
+// @Desc    Validate research with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const research = await Research.findById(id);
+		if (research != null) {
+			try {
+				await research.validateResearch();
+				res.status(200).json(research);
+			}
+			catch(err) {
+				res.status(200).send(`Research validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Research with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;

@@ -17,19 +17,6 @@ const BreakthroughSchema = new Schema({
 	type: { type: String }
 });
 
-const fields = [
-	'Biology',
-	'Computer Science',
-	'Electronics',
-	'Engineering',
-	'Genetics',
-	'Material Science',
-	'Physics',
-	'Psychology',
-	'Social Science',
-	'Quantum Mechanics'
-];
-
 const ProgressSchema = new Schema({
 	team: {
 		_id: { type: ObjectId, ref: 'Team', required: true },
@@ -68,13 +55,54 @@ ResearchSchema.methods.validateResearch = async function () {
 	const { validTeam, validLog, validUpgrade, validFacility, validSite } = require('../middleware/util/validateDocument');
 
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
-		name: Joi.string().min(2).max(50).required(),
-		code: Joi.string().min(1).max(40).required()
-	};
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
-	if (error != undefined) nexusError(`${error}`, 400);
+	let schema = {};
+	switch (this.type) {
+	case 'Knowledge':
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			code: Joi.string().min(1).max(40).required(),
+			field: Joi.string().valid('Biology',
+				'Computer Science',
+				'Electronics',
+				'Engineering',
+				'Genetics',
+				'Material Science',
+				'Physics',
+				'Psychology',
+				'Social Science',
+				'Quantum Mechanics'),
+			teamProgress: Joi.array().items(Joi.object({ 	progress: Joi.number().required(),
+				funding: Joi.number().required(),
+				totalFunding:	Joi.number().required() }))
+		});
+
+		break;
+
+	case 'Analysis':
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			code: Joi.string().min(1).max(40).required(),
+			salvage: Joi.array().items(Joi.object({ outcome: Joi.string().valid('Destroy', 'Damage', 'Kill', 'Preserve') }))
+		});
+		break;
+
+	case 'Technology':
+		schema = Joi.object({
+			name: Joi.string().min(2).max(50).required(),
+			code: Joi.string().min(1).max(40).required(),
+			field: Joi.string().valid('Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis', 'Placeholder')
+		});
+		break;
+
+	default:
+		nexusError(`Invalid Type ${this.type} for research!`, 400);
+
+	}
+
+	// used by all types/descriminators
+	const mainCheck = schema.validate(this, { allowUnknown: true });
+	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
 
 	for await (const rHist of this.researchHistory) {
 		await validLog(rHist);
@@ -83,6 +111,9 @@ ResearchSchema.methods.validateResearch = async function () {
 	// Descrininator Validation Schema switch
 	switch (this.type) {
 	case 'Knowledge':
+
+		if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
+
 		await validTeam(this.credit);
 		for await (const tProg of this.teamProgress) {
 			await validTeam(tProg.team._id);
@@ -118,7 +149,16 @@ const KnowledgeResearch = Research.discriminator(
 	'KnowledgeResearch',
 	new Schema({
 		type: { type: String, default: 'Knowledge' },
-		field: { type: String, enum: fields },
+		field: { type: String, enum: ['Biology',
+			'Computer Science',
+			'Electronics',
+			'Engineering',
+			'Genetics',
+			'Material Science',
+			'Physics',
+			'Psychology',
+			'Social Science',
+			'Quantum Mechanics'] },
 		credit: { type: ObjectId, ref: 'Team' },
 		status: {
 			pending: { type: Boolean, default: false },
