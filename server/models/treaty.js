@@ -17,7 +17,7 @@ const ActivitySchema = new Schema({
 
 const TreatySchema = new Schema({
 	model: { type: String, default: 'Treaty' },
-	name: { type: String, default: 'Treaty Event' },
+	name: { type: String, default: 'Treaty Event', minlength: 2, maxlength: 50, required: true },
 	cost: { type: Number, default: 0 },
 	creator: { type: ObjectId, ref: 'Team' },
 	authors: [{ type: ObjectId, ref: 'Team' }], // teams that have the ability to edit
@@ -42,14 +42,30 @@ const TreatySchema = new Schema({
 
 // validateTreaty method
 TreatySchema.methods.validateTreaty = async function () {
+	const { validTeam } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
+	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required()
 		// TODO: Add code rules to Joi validation schema
-	};
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validTeam(this.creator);
+	for await (const auths of this.authors) {
+		await validTeam(auths);
+	}
+	for await (const wits of this.witness) {
+		await validTeam(wits);
+	}
+	for await (const excl of this.excluded) {
+		await validTeam(excl);
+	}
+	for await (const sigs of this.signatories) {
+		await validTeam(sigs);
+	}
+
 };
 
 TreatySchema.methods.saveActivity = async (treaty, incHeader) => {

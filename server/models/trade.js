@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -59,16 +58,37 @@ const TradeSchema = new Schema({
 
 // validateTrade method
 TradeSchema.methods.validateTrade = async function () {
+	const { validTeam, validAircraft, validUpgrade, validResearch } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
-	const schema = {
+	const schema = Joi.object({
 		// TODO: Add trade rules to Joi validation schema
-	};
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validTeam(this.initiator.team);
 	await validTeam(this.tradePartner.team);
+
+	for await (const aircrft of this.tradePartner.offer.aircraft) {
+		await validAircraft(aircrft);
+	}
+	for await (const aircrft2 of this.initiator.offer.aircraft) {
+		await validAircraft(aircrft2);
+	}
+	for await (const upg1 of this.tradePartner.offer.upgrade) {
+		await validUpgrade(upg1);
+	}
+	for await (const rsrch1 of this.tradePartner.offer.research) {
+		await validResearch(rsrch1);
+	}
+	for await (const upg2 of this.initiator.offer.upgrade) {
+		await validUpgrade(upg2);
+	}
+	for await (const rsrch2 of this.initiator.offer.research) {
+		await validResearch(rsrch2);
+	}
+
 };
 
 TradeSchema.methods.saveActivity = async (trade, incHeader) => {

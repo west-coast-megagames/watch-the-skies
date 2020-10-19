@@ -2,7 +2,6 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -81,17 +80,22 @@ const UpgradeSchema = new Schema({
 
 // validateUpgrade method
 UpgradeSchema.methods.validateUpgrade = async function () {
+	const { validTeam, validLog } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
-	const schema = {
+	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required()
-	};
+	});
 
-	const { error } = Joi.validate(this, schema, { allowUnknown: true });
+	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validTeam(this.team);
 	await validTeam(this.manufacturer);
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
+
 };
 
 const Upgrade = mongoose.model('Upgrade', UpgradeSchema);
