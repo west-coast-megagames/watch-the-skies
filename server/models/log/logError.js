@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const nexusError = require('../../middleware/util/throwError'); // Costom error handler util
 
 const LogErrorSchema = new Schema({
 	timestamp: { type: Date },

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
-const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const nexusError = require('../../middleware/util/throwError'); // Costom error handler util
 
 const Schema = mongoose.Schema;
 

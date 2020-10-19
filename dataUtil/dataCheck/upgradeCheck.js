@@ -1,19 +1,10 @@
-// Upgrade Model - Using Mongoose Model
-const {
-	Upgrade,
-	validateUpgrade,
-	Gear,
-	Kit,
-	System
-} = require('../models/upgrade');
-const { Team } = require('../models/team');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
 
-const upgradeCheckDebugger = require('debug')('app:upgradeCheck');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-const supportsColor = require('supports-color');
-
+/* not yet
 const systemCategories = ['Weapon', 'Engine', 'Sensor', 'Compartment', 'Util'];
 const gearCategories = ['Weapons', 'Vehicles', 'Transport', 'Training'];
 // do not have kit Category yet
@@ -25,72 +16,50 @@ function inArray (array, value) {
 	}
 	return false;
 }
+*/
 
 async function chkUpgrade (runFlag) {
-	for await (const upgrade of await Upgrade.find()
-	// .populate("team", "name type")             does not work with .lean
-	// .populate("manufacturer", "name type")     does not work with .lean()
-		.lean()) {
-		/* does not work with .lean()
-    if (!upgrade.populated("team")) {
-      logger.error(`Team link missing for Upgrade ${upgrade.name} ${upgrade._id}`);
-    }
-    */
-		if (!upgrade.hasOwnProperty('team')) {
+	let uFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}init/initUpgrades/lean`);
+		uFinds = data;
+	}
+	catch(err) {
+		logger.error(`Upgrade Get Lean Error (upgradeCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
+
+	for await (const upgrade of uFinds) {
+
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'team')) {
 			logger.error(
 				`team link missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
-		else {
-			const team = await Team.findById({ _id: upgrade.team });
-			if (!team) {
-				logger.error(
-					`team reference is invalid for Upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-		}
 
-		if (!upgrade.hasOwnProperty('manufacturer')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'manufacturer')) {
 			logger.error(
 				`Manufacturer link missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
-		else {
-			const team = await Team.findById({ _id: upgrade.manufacturer });
-			if (!team) {
-				logger.error(
-					`manufacturer/team reference is invalid for Upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-		}
 
-		if (!upgrade.hasOwnProperty('model')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'model')) {
 			logger.error(`model missing for Upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 
-		if (!upgrade.hasOwnProperty('gameState')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'gameState')) {
 			logger.error(
 				`gameState missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('serviceRecord')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'serviceRecord')) {
 			logger.error(
 				`serviceRecord missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
-		else {
-			for (let i = 0; i < upgrade.serviceRecord.length; ++i) {
-				const lFind = await Log.findById(upgrade.serviceRecord[i]);
-				if (!lFind) {
-					logger.error(
-						`Upgrade ${upgrade.name} ${upgrade._id} has an invalid serviceRecord reference ${i}: ${upgrade.serviceRecord[i]}`
-					);
-				}
-			}
-		}
 
-		if (!upgrade.hasOwnProperty('name')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'name')) {
 			logger.error(`name missing for Upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 		else if (
@@ -103,7 +72,7 @@ async function chkUpgrade (runFlag) {
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('code')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'code')) {
 			logger.error(`code missing for Upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 		else if (
@@ -116,13 +85,13 @@ async function chkUpgrade (runFlag) {
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('unitType')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'unitType')) {
 			logger.error(
 				`unitType missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('cost')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'cost')) {
 			logger.error(`cost missing for Upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 		else if (isNaN(upgrade.cost)) {
@@ -131,7 +100,7 @@ async function chkUpgrade (runFlag) {
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('buildTime')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'buildTime')) {
 			logger.error(
 				`buildTime missing for upgrade ${upgrade.name} ${upgrade._id}`
 			);
@@ -142,7 +111,7 @@ async function chkUpgrade (runFlag) {
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('buildCount')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'buildCount')) {
 			logger.error(
 				`buildCount missing for upgrade ${upgrade.name} ${upgrade._id}`
 			);
@@ -153,21 +122,21 @@ async function chkUpgrade (runFlag) {
 			);
 		}
 
-		if (!upgrade.hasOwnProperty('desc')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'desc')) {
 			logger.error(`desc missing for upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 
-		if (!upgrade.hasOwnProperty('prereq')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'prereq')) {
 			logger.error(`prereq missing for upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 		else {
 			for (let j = 0; j < upgrade.prereq.length; ++j) {
-				if (!upgrade.prereq[j].hasOwnProperty('type')) {
+				if (!Object.prototype.hasOwnProperty.call(upgrade.prereq[j], 'type')) {
 					logger.error(
 						`prereq.type ${j} missing for upgrade ${upgrade.name} ${upgrade._id}`
 					);
 				}
-				if (!upgrade.prereq[j].hasOwnProperty('code')) {
+				if (!Object.prototype.hasOwnProperty.call(upgrade.prereq[j], 'code')) {
 					logger.error(
 						`prereq.code ${j} missing for upgrade ${upgrade.name} ${upgrade._id}`
 					);
@@ -175,32 +144,32 @@ async function chkUpgrade (runFlag) {
 			}
 		}
 
-		if (!upgrade.hasOwnProperty('status')) {
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'status')) {
 			logger.error(`status missing for upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 		else {
-			if (!upgrade.status.hasOwnProperty('building')) {
+			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'building')) {
 				logger.error(
 					`status.building missing for upgrade ${upgrade.name} ${upgrade._id}`
 				);
 			}
-			if (!upgrade.status.hasOwnProperty('salvage')) {
+			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'salvage')) {
 				logger.error(
 					`status.salvage missing for upgrade ${upgrade.name} ${upgrade._id}`
 				);
 			}
-			if (!upgrade.status.hasOwnProperty('damaged')) {
+			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'damaged')) {
 				logger.error(
 					`status.damaged missing for upgrade ${upgrade.name} ${upgrade._id}`
 				);
 			}
-			if (!upgrade.status.hasOwnProperty('destroyed')) {
+			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'destroyed')) {
 				logger.error(
 					`status.destroyed missing for upgrade ${upgrade.name} ${upgrade._id}`
 				);
 			}
 
-			if (!upgrade.status.hasOwnProperty('storage')) {
+			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'storage')) {
 				logger.error(
 					`status.storage missing for upgrade ${upgrade.name} ${upgrade._id}`
 				);
@@ -214,7 +183,7 @@ async function chkUpgrade (runFlag) {
 		}
 
 		/* not yet (???)
-    if (!upgrade.hasOwnProperty("militaryStats")) {
+    if (!Object.prototype.hasOwnProperty.call(upgrade, "militaryStats")) {
       logger.error(
         `militaryStats missing for upgrade ${upgrade.name} ${upgrade._id}`
       );
@@ -222,7 +191,7 @@ async function chkUpgrade (runFlag) {
       //don't take it down to stats fields as they are only present if value assigned (no defaults)
     }
 
-    if (!upgrade.hasOwnProperty("facilityStats")) {
+    if (!Object.prototype.hasOwnProperty.call(upgrade, "facilityStats")) {
       logger.error(
         `facilityStats missing for upgrade ${upgrade.name} ${upgrade._id}`
       );
@@ -230,7 +199,7 @@ async function chkUpgrade (runFlag) {
       //don't take it down to stats fields as they are only present if value assigned (no defaults)
     }
 
-    if (!upgrade.hasOwnProperty("aircraftStats")) {
+    if (!Object.prototype.hasOwnProperty.call(upgrade, "aircraftStats")) {
       logger.error(
         `aircraftStats missing for upgrade ${upgrade.name} ${upgrade._id}`
       );
@@ -239,22 +208,23 @@ async function chkUpgrade (runFlag) {
 		}
 		jeff */
 
+		// validate call
 		try {
-			const { error } = validateUpgrade(upgrade);
-			if (error) {
-				logger.error(
-					`upgrade Validation Error For ${upgrade.name} ${upgrade._id} Error: ${error.details[0].message}`
-				);
+			const valMessage = await axios.get(`${gameServer}init/initUpgrades/validate/${upgrade._id}`);
+			if (!valMessage.data.unitType) {
+				logger.error(`Validation Error: ${valMessage.data}`);
 			}
 		}
 		catch (err) {
 			logger.error(
-				`upgrade Validation Error For ${upgrade.name} ${upgrade._id} Error: ${err.details[0].message}`
+				`Upgrade Validation Error For ${upgrade.code} ${upgrade.name} Error: ${err.message}`
 			);
 		}
+
 	}
 
-	return true;
+	runFlag = true;
+	return runFlag;
 }
 
 module.exports = chkUpgrade;

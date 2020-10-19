@@ -65,4 +65,30 @@ router.get('/code/:code', async (req, res) => {
 	}
 });
 
+// @route   GET init/initUpgrades/validate/:id
+// @Desc    Validate upgrade with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const upgrade = await Upgrade.findById(id);
+		if (upgrade != null) {
+			try {
+				await upgrade.validateUpgrade();
+				res.status(200).json(upgrade);
+			}
+			catch(err) {
+				res.status(200).send(`Upgrade validation Error! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`Upgrade with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
 module.exports = router;

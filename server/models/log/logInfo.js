@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Joi = require('joi');
-const nexusError = require('../middleware/util/throwError');
+const nexusError = require('../../middleware/util/throwError');
 
 const logInfoSchema = new Schema({
 	timestamp: { type: Date },

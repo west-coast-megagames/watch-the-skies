@@ -5,7 +5,7 @@ const runTeamCheck = require('../dataCheck/teamCheck');
 const runCountryCheck = require('../dataCheck/countryCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
-// const runUpgradeCheck = require('../dataCheck/upgradeCheck');
+const runUpgradeCheck = require('../dataCheck/upgradeCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
 const runUserCheck = require('../dataCheck/userCheck');
 const runAccountsCheck = require('../dataCheck/accountsCheck');
@@ -24,7 +24,7 @@ async function fullInitCheck (selStr) {
 	let teamCheckDone = false;
 	let facilityCheckDone = false;
 	let siteCheckDone = false;
-	// let upgradeCheckDone = false;
+	let upgradeCheckDone = false;
 	let aircraftCheckDone = false;
 	let userCheckDone = false;
 	let accountsCheckDone = false;
@@ -55,8 +55,8 @@ async function fullInitCheck (selStr) {
 		siteCheckDone = await runSiteCheck(true); // check site records
 		logger.info(`Site Check Done: ${siteCheckDone}`);
 
-		// upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
-		// logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
+		upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
+		logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
 
 		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
 		logger.info(`Aircraft Check Done: ${aircraftCheckDone}`);
@@ -118,13 +118,11 @@ async function fullInitCheck (selStr) {
 
 		break;
 
-		/*
 	case 'Upgrade':
 		upgradeCheckDone = await runUpgradeCheck(true); // check upgrade records
 		logger.info(`Upgrade Check Done: ${upgradeCheckDone}`);
 
 		break;
-	*/
 
 	case 'Aircraft':
 		aircraftCheckDone = await runAircraftCheck(true); // check aircraft records
