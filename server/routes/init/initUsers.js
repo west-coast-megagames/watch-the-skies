@@ -9,6 +9,22 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 // Mongoose Model Import
 const { User } = require('../../models/user');
 
+// @route   GET init/initUsers/lean
+// @Desc    Get all users/lean
+// @access  Public
+router.get('/lean', async (req, res) => {
+	// logger.info('GET lean Route: init/initUsers requested...');
+	try {
+		const users = await User.find().lean()
+			.sort('username: 1');
+		res.status(200).json(users);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
 // @route   GET init/initUser/:id
 // @Desc    Get users by id
 // @access  Public
@@ -47,6 +63,33 @@ router.get('/username/:username', async (req, res) => {
 		}
 		else {
 			res.status(200).json({ username: false });
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+});
+
+// @route   GET init/initUsers/validate/:id
+// @Desc    Validate user with id
+// @access  Public
+router.get('/validate/:id', validateObjectId, async (req, res) => {
+	const id = req.params.id;
+
+	try {
+		const user = await User.findById(id);
+		if (user != null) {
+			try {
+				await user.validateUser();
+
+				res.status(200).json(user);
+			}
+			catch(err) {
+				res.status(200).send(`User validation Error (initUsers/validate)! ${err.message}`);
+			}
+		}
+		else {
+			res.status(404).send(`The User with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
