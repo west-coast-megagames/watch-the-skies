@@ -107,7 +107,7 @@ async function dmgCalc (unit, report) {
 		}
 	}
 
-	for (const system of unit.systems) {
+	for await (const system of unit.systems) {
 		interceptDebugger(`${system.category}`);
 		if (system.category === 'Engine') hasEngine = true;
 		if (system.category === 'Compartment') hasCockpit = true;

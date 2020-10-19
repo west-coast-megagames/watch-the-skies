@@ -36,7 +36,7 @@ async function chkCountry (runFlag) {
 		return false;
 	}
 
-	for (const country of cFinds) {
+	for await (const country of cFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(country, 'model')) {
 			logger.error(`model missing for Country ${country.code} ${country._id}`);

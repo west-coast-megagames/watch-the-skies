@@ -14,7 +14,7 @@ async function chkBlueprint (runFlag) {
 		logger.error(`Blueprint Get Lean Error (blueprintCheck): ${err.message}`, { meta: err.stack });
 		return false;
 	}
-	for (const blueprint of bFinds) {
+	for await (const blueprint of bFinds) {
 		// do not need toObject with .lean()
 		// let testPropertys = blueprint.toObject();
 

@@ -25,7 +25,7 @@ async function repairSequence () {
 			await report.saveReport();
 		}
 	}
-	for (const structure of await Facility.find({ 'status.repair': true })) {
+	for await (const structure of await Facility.find({ 'status.repair': true })) {
 		if (structure.status.repair) {
 			structure.status.repair = false;
 			structure.save();

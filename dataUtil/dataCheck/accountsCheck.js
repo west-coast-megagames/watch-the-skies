@@ -51,7 +51,7 @@ async function chkAccount (runFlag) {
 		return false;
 	}
 
-	for (const account of aFinds) {
+	for await (const account of aFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(account, 'model')) {
 			logger.error(

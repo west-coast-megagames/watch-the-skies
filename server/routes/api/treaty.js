@@ -46,7 +46,7 @@ router.delete('/', async function (req, res) {
 
 	const data = await Treaty.deleteMany();
 	const teams = await Team.find();
-	for (const team of teams) {
+	for await (const team of teams) {
 		team.treaties = [];
 		team.save();
 	}

@@ -228,7 +228,7 @@ async function completeResearch (research) {
 }
 
 async function advanceKnowledge (research, lab) {
-	for (const knowledge of research.knowledge) {
+	for await (const knowledge of research.knowledge) {
 		const project = await Research.findOne({
 			type: 'Knowledge',
 			field: knowledge.field,
@@ -275,13 +275,13 @@ async function assignKnowledgeCredit () {
 		researchDebugger(`${research.length} research to give credit for!`);
 
 		// For loop that looks through each field that is pending
-		for (const field of research) {
+		for await (const field of research) {
 			let credit = undefined; // Temp assignment of who gets credit for this research
 			let creditName = undefined;
 			let highProgress = 0; // Current highest progress
 
 			// For loop that looks through each teams progress towards the knowledge field
-			for (const country of field.teamProgress) {
+			for await (const country of field.teamProgress) {
 				if (country.progress > highProgress) {
 					highProgress = country.progress; // Assigns the current progress to highProgress if the team has more
 					credit = country.team._id; // Assigns the current country to credit if the team has more

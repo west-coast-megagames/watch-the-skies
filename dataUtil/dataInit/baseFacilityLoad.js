@@ -44,7 +44,7 @@ async function initLoad (doLoad) {
 	let recReadCount = 0;
 	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
-	for (const data of baseDataIn) {
+	for await (const data of baseDataIn) {
 		if (data.loadType === 'baseFacility') {
 			++recReadCount;
 

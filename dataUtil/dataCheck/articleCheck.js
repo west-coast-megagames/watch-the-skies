@@ -16,7 +16,7 @@ async function chkArticle (runFlag) {
 		return false;
 	}
 
-	for (const article of aFinds) {
+	for await (const article of aFinds) {
 
 
 		if (!Object.prototype.hasOwnProperty.call(article, 'model')) {

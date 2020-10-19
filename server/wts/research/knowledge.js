@@ -20,7 +20,7 @@ async function loadGlobalVariables () {
 	const progress = [];
 	let count = 0;
 	const control = await Team.find({ code: 'TCN' });
-	for (const team of await Team.find({ type: 'N' })) {
+	for await (const team of await Team.find({ type: 'N' })) {
 		const el = { team: { _id: team._id, name: team.name }, progress: 0 };
 		progress.push(el);
 		count++;

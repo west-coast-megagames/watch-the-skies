@@ -96,22 +96,22 @@ FacilitySchema.methods.validateFacility = async function () {
 		await validTeam(this.team);
 	}
 
-	for (const upg of this.upgrade) {
+	for await (const upg of this.upgrade) {
 		await validUpgrade(upg);
 	}
-	for (const rsrch of this.capability.research.projects) {
+	for await (const rsrch of this.capability.research.projects) {
 		await validResearch(rsrch);
 	}
 
-	for (const aircrft of this.capability.airMission.aircraft) {
+	for await (const aircrft of this.capability.airMission.aircraft) {
 		await validAircraft(aircrft);
 	}
 
-	for (const nav of this.capability.naval.fleet) {
+	for await (const nav of this.capability.naval.fleet) {
 		await validMilitary(nav);
 	}
 
-	for (const cor of this.capability.ground.corps) {
+	for await (const cor of this.capability.ground.corps) {
 		await validMilitary(cor);
 	}
 };

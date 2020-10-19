@@ -24,7 +24,7 @@ async function chkFacility (runFlag) {
 		return false;
 	}
 
-	for (const facility of fFinds) {
+	for await (const facility of fFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(facility, 'model')) {
 			logger.error(

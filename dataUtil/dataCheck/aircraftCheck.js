@@ -24,7 +24,7 @@ async function chkAircraft (runFlag) {
 		return false;
 	}
 
-	for (const aircraft of aFinds) {
+	for await (const aircraft of aFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'team')) {
 			logger.error(

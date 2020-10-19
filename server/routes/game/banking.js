@@ -58,7 +58,7 @@ router.post('/account', async function (req, res) {
 // @access  Public
 router.post('/accounts', async function (req, res) {
 	let recCount = 0;
-	for (const account of req.body.accounts) {
+	for await (const account of req.body.accounts) {
 		const newAccount = new Account(
 			account
 		);

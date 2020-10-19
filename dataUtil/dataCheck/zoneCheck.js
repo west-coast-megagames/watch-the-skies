@@ -16,7 +16,7 @@ async function chkZone (runFlag) {
 		return false;
 	}
 
-	for (const zone of zFinds) {
+	for await (const zone of zFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(zone, 'model')) {
 			logger.error(`model missing for zone ${zone.name} ${zone._id}`);

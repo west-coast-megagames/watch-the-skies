@@ -49,7 +49,7 @@ SquadSchema.methods.validateSquad = async function () {
 	await validCountry(this.country);
 	await validZone(this.zone);
 	await validFacility(this.origin);
-	for (const upg of this.upgrades) {
+	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
 	}
 };

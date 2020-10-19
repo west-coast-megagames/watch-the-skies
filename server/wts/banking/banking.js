@@ -107,16 +107,16 @@ async function setAutoTransfer (to, from, amount, note) {
 
 	await account.save();
 	console.log(`${account.owner} has set up an auto-transfer for ${account.name}`);
-	return `New autotransfer created`;
+	return 'New autotransfer created';
 }
 
-async function automaticTransfer() {
+async function automaticTransfer () {
 	const { Account } = require('../../models/account');
 
 	for (let account of await Account.find()) {
 		if (account.autoTransfers.length > 0) {
 			let withdrawalAccount = account;
-			for (const transfer of account.autoTransfers) {
+			for await (const transfer of account.autoTransfers) {
 				if (transfer !== null) {
 					const { to, from, amount, note } = transfer;
 
@@ -138,7 +138,7 @@ async function automaticTransfer() {
 	}
 }
 
-function trackTransaction(account, amount, type) {
+function trackTransaction (account, amount, type) {
 	const { getTimeRemaining } = require('../gameClock/gameClock');
 	const { turnNum } = getTimeRemaining();
 	amount = parseInt(amount);
@@ -146,7 +146,8 @@ function trackTransaction(account, amount, type) {
 		account.deposits[turnNum] += amount;
 		bankDebugging(`Deposit of ${amount} tracked on the ${account.name} account...`);
 		account.markModified('deposits');
-	} else if (type === 'withdrawal') {
+	}
+	else if (type === 'withdrawal') {
 		account.withdrawals[turnNum] += amount;
 		bankDebugging(`Withdrawal of ${amount} tracked on the ${account.name} account...`);
 		account.markModified('withdrawals');

@@ -25,7 +25,7 @@ async function chkUser (runFlag) {
 		return false;
 	}
 
-	for (const user of uFinds) {
+	for await (const user of uFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(user, 'team')) {
 			logger.error(`team missing for User ${user.username} ${user._id}`);

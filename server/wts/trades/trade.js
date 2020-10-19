@@ -42,7 +42,7 @@ async function resolveTrade (req, res) {// I have not tested this much at all wi
 }// resolveTrade
 
 async function exchangeUpgrade (transferred, newOwner) {
-	for (const thing of transferred) {
+	for await (const thing of transferred) {
 		// check what currently has the upgrade
 		try{
 			const target = await Upgrade.findById(thing);
@@ -73,7 +73,7 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	}
 
 	// case "aircraft" :
-	for (const plane of senderOffer.aircraft) {
+	for await (const plane of senderOffer.aircraft) {
 		routeDebugger('Working on Aircraft Transfer');
 		const aircraft = await Aircraft.findById(plane);
 		aircraft.team = opposingTeam; // change the aircraft's team
@@ -82,7 +82,7 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	}// for plane
 
 	// case "research" :
-	for (const item of senderOffer.research) {
+	for await (const item of senderOffer.research) {
 		// 1) get the tech that needs to be copied
 		const tech = await Research.findById(item);
 		const newTech = techTree.find(el => el.code === tech.code);
@@ -97,7 +97,7 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	}// for plane
 
 	// case "Upgrade" :
-	for (const target of senderOffer.upgrade) {
+	for await (const target of senderOffer.upgrade) {
 		exchangeUpgrade(target, opposingTeam);
 	}
 }

@@ -314,7 +314,7 @@ async function runDiversions () {
 
 // Check for all patrol missions for any that are guarding transport target (Site)
 async function checkPatrol (target, atkReport, aircraft) {
-	for (const patrol of patrolMissions) {
+	for await (const patrol of patrolMissions) {
 		missionDebugger('Checking patrol missions...');
 		if (target.toHexString() === patrol.target.toHexString()) {
 			// toHexString allows checking equality for _id
@@ -347,7 +347,7 @@ async function checkPatrol (target, atkReport, aircraft) {
 async function checkEscort (target, atkReport, attacker) {
 
 	// Checks all remaining escort missions sorted by distance
-	for (const escort of escortMissions.sort((a, b) => a.distance - b.distance)) {
+	for await (const escort of escortMissions.sort((a, b) => a.distance - b.distance)) {
 		missionDebugger('Checking escort missions...');
 
 		if (target.toHexString() === escort.target.toHexString()) {

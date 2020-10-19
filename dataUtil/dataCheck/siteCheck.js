@@ -33,7 +33,7 @@ async function chkSite (runFlag) {
 		return false;
 	}
 
-	for (const site of sFinds) {
+	for await (const site of sFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(site, 'model')) {
 			logger.error(`model missing for Site ${site.name} ${site._id}`);

@@ -170,7 +170,7 @@ router.put('/treaties/modify', async function (req, res) {
 		let newWitness;
 		treaty = await Treaty.findById({ _id: treaty._id });// populate treaty
 		modifier = await Team.findById({ _id: modifier });
-		for (const element of changes) {
+		for await (const element of changes) {
 			switch(element.changeType) {
 			case 'name':// change the name of the treaty
 				treaty.name = element.data;

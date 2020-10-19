@@ -104,7 +104,7 @@ AircraftSchema.methods.validateAircraft = async function () {
 	await validSite(this.site);
 	await validZone(this.zone);
 	await validCountry(this.country);
-	for (const upg of this.upgrades) {
+	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
 	}
 	for await (const servRec of this.serviceRecord) {

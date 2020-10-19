@@ -24,7 +24,7 @@ async function chkMilitary (runFlag) {
 		return false;
 	}
 
-	for (const military of mFinds) {
+	for await (const military of mFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'model')) {
 			logger.error(

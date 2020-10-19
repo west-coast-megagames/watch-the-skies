@@ -102,7 +102,7 @@ router.patch('/return/aliens', async function (req, res) {
 router.patch('/return/aircrafts', async function (req, res) {
 	routeDebugger('Returning all aircraft to base!');
 	let count = 0;
-	for (const aircraft of await Aircraft.find()) {
+	for await (const aircraft of await Aircraft.find()) {
 		const response = await aircraft.recall();
 		routeDebugger(response);
 		count++;

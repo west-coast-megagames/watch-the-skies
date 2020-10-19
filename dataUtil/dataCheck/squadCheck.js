@@ -24,7 +24,7 @@ async function chkSquad (runFlag) {
 		return false;
 	}
 
-	for (const squad of sFinds) {
+	for await (const squad of sFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'model')) {
 			logger.error(`model missing for Squad ${squad.name} ${squad._id}`);

@@ -103,7 +103,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
 		const roles = req.body.roles;
 		if (roles) {
 			try {
-				for (const currRole of roles) {
+				for await (const currRole of roles) {
 					const test2 = validateRoles(currRole);
 					if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
 				}

@@ -36,7 +36,7 @@ async function chkTeam (runFlag) {
 		return false;
 	}
 
-	for (const team of tFinds) {
+	for await (const team of tFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(team, 'model')) {
 			logger.error(`model missing for team ${team.name} ${team._id}`);
@@ -134,7 +134,7 @@ async function chkTeam (runFlag) {
 						);
 					}
 
-					for (const prTrk of team.prTrack) {
+					for await (const prTrk of team.prTrack) {
 						if (isNaN(prTrk)) {
 							logger.error(
 								`National Team ${team.name} ${team._id} prTrack is not a number ${prTrk}`

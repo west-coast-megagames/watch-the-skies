@@ -45,7 +45,7 @@ async function chkResearch (runFlag) {
 		return false;
 	}
 
-	for (const research of rFinds) {
+	for await (const research of rFinds) {
 
 		if (!Object.prototype.hasOwnProperty.call(research, 'model')) {
 			logger.error(

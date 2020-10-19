@@ -31,7 +31,7 @@ const accounts = [];
 async function loadAccounts () {
 	let count = 0;
 
-	for (const acct of accountDataIn) {
+	for await (const acct of accountDataIn) {
 
 		const newAccount = {
 			name: acct.name,
