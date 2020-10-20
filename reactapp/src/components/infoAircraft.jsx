@@ -1,20 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Drawer,
-  Button,
-  FlexboxGrid,
-  Icon,
-  IconButton,
-  Badge,
-  Tag,
-  TagGroup,
-  Alert,
-  Panel,
-  Whisper,
-  Popover,
-  SelectPicker,
-} from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, } from "rsuite";
 import axios from "axios";
 import { infoClosed } from "../store/entities/infoPanels";
 
