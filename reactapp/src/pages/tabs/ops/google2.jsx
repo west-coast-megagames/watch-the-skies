@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { GoogleMap, useLoadScript, Marker, InfoWindow } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, InfoWindow, OverlayView } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 
 import { mapKey } from '../../../config';
@@ -8,6 +8,8 @@ import mapStyle from './mapStyles';
 import { Alert } from 'rsuite';
 import { targetAssigned } from '../../../store/entities/infoPanels';
 import { getCities } from '../../../store/entities/sites';
+import OpsMenu from '../../../components/common/menuOps';
+import { current } from '@reduxjs/toolkit';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -35,9 +37,16 @@ function PrototypeMap(props) {
 	});
 
 	const [markers, setMarkers] = React.useState([]);
+	const [menu, setMenu] = React.useState(null);
+	const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
 
 	const onMapClick = React.useCallback((event) => {
+		// setMenu({
+		// 		lat: event.latLng.lat(),
+		// 		lng: event.latLng.lng()
+		// })
+		setMapClick({event: undefined});
 		setMarkers(current => [...current, {
 			lat: event.latLng.lat(),
 			lng: event.latLng.lng(),
@@ -45,8 +54,15 @@ function PrototypeMap(props) {
 		}])
 	}, []);
 
+	const onCloseMenu = () => {
+		console.log('Closing the menu!')
+		setMapClick({event: onMapClick});
+		setMenu(null);
+	}
+
 	const mapRef = React.useRef();
 	const onMapLoad = React.useCallback((map) => {
+		setMapClick({event: onMapClick})
 		mapRef.current = map;
 	}, []);
 	
@@ -58,9 +74,12 @@ function PrototypeMap(props) {
 			zoom={8}
 			center={center}
 			options={options}
-			onClick={onMapClick}
+			onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
+			{menu && <OverlayView position={{lat: menu.geoDecimal.latDecimal, lng: menu.geoDecimal.longDecimal}} mapPaneName='floatPane'>
+				<OpsMenu info={menu} closeMenu={onCloseMenu} />
+			</OverlayView>}
 			{markers.map(marker =>
 				<Marker
 					key={marker.time.toISOString()}
@@ -80,11 +99,11 @@ function PrototypeMap(props) {
 						key={city._id}
 						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
 						onClick={()=> {
-							Alert.error('Target has no timestamp!', 400)
-							props.assignTarget(city)
+							setMenu(city);
+							setMapClick({event: undefined});
 						}}
 					/>)}
-				{ selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
+				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
 					onCloseClick={() => {
