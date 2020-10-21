@@ -128,7 +128,7 @@ class ResearchLabs extends Component {
 					note : txnNote,
 					amount : cost
 				}
-				myAxiosCall = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+				myAxiosCall = await axios.post(`${gameServer}game/banking/withdrawal`, txn);
 				Alert.success(myAxiosCall.data, 6000)
 
 				// Submit the lab update
@@ -140,7 +140,7 @@ class ResearchLabs extends Component {
 						// for lab update, need to provide lab object
 						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, index: updatedLab.index, _id: updatedLab._id, research: updatedLab.research }
 						console.log(newLab);
-						myAxiosCall = await axios.put(`${gameServer}game/research`, newLab);
+						myAxiosCall = await axios.put(`${gameServer}science/research`, newLab);
 						Alert.success(myAxiosCall.data, 4000);
 					}	
 					if (txnType === "Lab Repair") {

@@ -8,9 +8,6 @@ const { Facility } = require('../../models/facility');
 
 const science = require('../../wts/research/research');
 
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~RESEARCH~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
-
 // @route   GET api/research/sciStats
 // @Desc    Get global science state
 // @access  Public
