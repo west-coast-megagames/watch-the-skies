@@ -9,42 +9,45 @@ import LoginLink from '../components/common/loginLink';
 
 
 class News extends Component {
-    state = {
-        tab: 'feed',
-    };
+	state = {
+		tab: 'feed',
+	};
 
-    handleSelect = (activeKey) => {
-        this.setState({ tab: activeKey })
-    }
+	handleSelect = (activeKey) => {
+			this.setState({ tab: activeKey })
+	}
 
-    render() {
-        if (!this.props.login) return <LoginLink />
+	render() {
+		if (!this.props.login) {
+			this.props.history.push('/');
+			return <LoginLink history={this.props.history} />
+		}
 
-        const url = this.props.match.path;
-        const { tab } = this.state; 
+		const url = this.props.match.path;
+		const { tab } = this.state; 
 
-        return (
-        <Container>
-            <Header>
-                <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
-                    <Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> News feed</Nav.Item>
-                </Nav>
-            </Header>
-            <Content className='tabContent' style={{ paddingLeft: 20 }}>
-                <Switch>
-                    <Route path={`${url}/feed`} render={() => (
-                        <NewsFeed 
-                            agency='All' 
-                            articles={ this.props.articles } 
-                            teams={this.props.teams}  
-                        />
-                    )}/>
-                    <Redirect from={`${url}/`} exact to={`${url}/feed`} />
-                </Switch>
-            </Content>
-        </Container>
-        );
-    }
+		return (
+			<Container>
+				<Header>
+					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
+						<Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> News feed</Nav.Item>
+					</Nav>
+				</Header>
+				<Content className='tabContent' style={{ paddingLeft: 20 }}>
+					<Switch>
+						<Route path={`${url}/feed`} render={() => (
+							<NewsFeed 
+								agency='All' 
+								articles={ this.props.articles } 
+								teams={this.props.teams}  
+							/>
+						)}/>
+						<Redirect from={`${url}/`} exact to={`${url}/feed`} />
+					</Switch>
+				</Content>
+			</Container>
+		);
+	}
 }
 
 const mapStateToProps = state => ({

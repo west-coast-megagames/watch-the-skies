@@ -26,26 +26,26 @@ class Diplomacy extends Component {
 	}
 
 	render() {
-			if (!this.props.login) {
-				this.props.history.push('/');
-				return <LoginLink history={this.props.history} />
-			}
-			const url = this.props.match.path;
-			const { tab } = this.state; 
+		if (!this.props.login) {
+			this.props.history.push('/');
+			return <LoginLink history={this.props.history} />
+		}
+		const url = this.props.match.path;
+		const { tab } = this.state; 
 
 		return (
 			<Container>
 				<Header>
 					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10, zIndex: 999 }}>
-					<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
+						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
 						{/* <Nav.Item eventKey="envoys" to={`${url}/envoys`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUserTie} />}> Envoys</Nav.Item> */}
 						<Nav.Item eventKey="trades" to={`${url}/trades`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faHandsHelping} />}> Trades</Nav.Item>
 						{/* <Nav.Item eventKey="treaties" to={`${url}/treaties`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFileContract} />}> Treaties</Nav.Item> */}
 						{/* <Nav.Item eventKey="united-nations" to={`${url}/un`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUniversity} />}> UN Security Council</Nav.Item> */}
 					</Nav>
 				</Header>
-					<Content className='tabContent'>
-						<BalanceHeader title={ this.state.title } account={ this.state.account } />
+				<Content className='tabContent'>
+					<BalanceHeader title={ this.state.title } account={ this.state.account } />
 						<Switch>
 							<Route path={`${url}/dashboard`} render={() => (
 								<h5>No dashboard has been coded for the Diplomacy Module!</h5>
