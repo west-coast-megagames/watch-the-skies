@@ -10,6 +10,7 @@ import { targetAssigned } from '../../../store/entities/infoPanels';
 import { getCities } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { current } from '@reduxjs/toolkit';
+import { getContacts } from '../../../store/entities/aircrafts';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -38,6 +39,7 @@ function PrototypeMap(props) {
 
 	const [markers, setMarkers] = React.useState([]);
 	const [menu, setMenu] = React.useState(null);
+	const [geo, setGeo] = React.useState(null);
 	const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
 
@@ -77,9 +79,26 @@ function PrototypeMap(props) {
 			onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
-			{menu && <OverlayView position={{lat: menu.geoDecimal.latDecimal, lng: menu.geoDecimal.longDecimal}} mapPaneName='floatPane'>
+			{menu && <OverlayView position={{lat: geo.latDecimal + 1 , lng: geo.longDecimal + 1  }} mapPaneName='floatPane'>
 				<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
+			{props.contacts.map(contact =>
+				<Marker
+					key={contact._id}
+					position={{ lat: contact.site.geoDecimal.latDecimal + 1, lng: contact.site.geoDecimal.longDecimal - 1 }}
+					onClick={()=> {
+						setGeo(contact.site.geoDecimal);
+						setMenu(contact);
+						setMapClick({event: undefined});
+					}}
+					icon={{
+						url: 'https://cdn.countryflags.com/thumbs/united-states-of-america/flag-round-250.png',
+						scaledSize: new window.google.maps.Size(20, 20),
+						origin: new window.google.maps.Point(0,0),
+						anchor: new window.google.maps.Point(10, 10)
+					}}
+					
+			/>)}
 			{markers.map(marker =>
 				<Marker
 					key={marker.time.toISOString()}
@@ -99,6 +118,7 @@ function PrototypeMap(props) {
 						key={city._id}
 						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
 						onClick={()=> {
+							setGeo(city.geoDecimal)
 							setMenu(city);
 							setMapClick({event: undefined});
 						}}
@@ -125,6 +145,7 @@ const mapStateToProps = state => ({
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
+	contacts: getContacts(state),
 	cities: getCities(state)
 });
 
