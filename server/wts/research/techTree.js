@@ -28,7 +28,7 @@ async function techSeed () {
 		}
 	}
 
-	const control = await Team.findOne({ type: 'C' });
+	const control = await Team.findOne({ type: 'Control' });
 	const result = await Research.deleteMany({ name: 'Empty Lab' });
 
 	techTreeDebugger(`${result.deletedCount} placeholder deleted!`);

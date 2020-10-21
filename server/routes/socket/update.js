@@ -60,10 +60,10 @@ module.exports = function (io) {
 		socketDebugger('Updating aircraft socket event!');
 		const aircrafts = await Aircraft.find()
 			.sort({ team: 1 })
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
-			.populate('site', 'name')
+			.populate('site', 'name geoDecimal')
 			.populate('origin', 'name');
 		socketDebugger('Updating aircrafts...');
 		updateSocket.emit('currentAircrafts', aircrafts);

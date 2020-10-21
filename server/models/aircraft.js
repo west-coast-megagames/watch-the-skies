@@ -9,6 +9,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
+const randomCords = require('../util/systems/lz');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -22,6 +23,10 @@ const AircraftSchema = new Schema({
 	},
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+	location: {
+		lat: { type: Number },
+		lng: { type: Number }
+	},
 	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
@@ -151,7 +156,8 @@ AircraftSchema.methods.recall = async function () {
 		this.mission = 'Docked';
 		this.status.ready = true;
 		this.status.deployed = false;
-		this.site = this.origin;
+		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+		this.site = home.site;
 		this.country = home.site.country;
 		this.zone = home.site.zone;
 

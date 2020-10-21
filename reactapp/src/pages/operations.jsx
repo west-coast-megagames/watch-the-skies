@@ -37,7 +37,10 @@ class Operations extends Component {
 	}
 
 	render() {
-		if (!this.props.login) return <LoginLink history={this.props.history} />
+		if (!this.props.login) {
+			this.props.history.push('/');
+			return <LoginLink history={this.props.history} />
+		}
 		const url = this.props.match.path;
 		const { tab } = this.state; 
 
@@ -46,8 +49,8 @@ class Operations extends Component {
 				<Header>
 					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
-						<Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item>
-						<Nav.Item eventKey="globe" to={`${url}/globe`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
+						{/* <Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item> */}
+						<Nav.Item eventKey="globe" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
 						<Nav.Item eventKey='google2' to={`${url}/google`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Map</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>
@@ -78,25 +81,25 @@ class Operations extends Component {
 							</div>
 						)}/>
 
-							<Route path={`${url}/excom`} render={() => (
-								<ExcomOps /> 
-							)}/>
+						<Route path={`${url}/excom`} render={() => (
+							<ExcomOps /> 
+						)}/>
 
-							<Route path={`${url}/globe`} render={() => (
-								<GlobalOps />
-							)}/>
+						<Route path={`${url}/globe`} render={() => (
+							<GlobalOps />
+						)}/>
 
-							<Route path={`${url}/google`} render={() => (
-								<PrototypeMap />
-							)}/>
+						<Route path={`${url}/google`} render={() => (
+							<PrototypeMap />
+						)}/>
 
-							<Route path={`${url}/nuclear`} render={() => (
-								<div style={{verticalAlign:'middle', position: 'relative'}}>
-									<Button block size='lg' color='red' onClick={() => playTrack('nuclear')} >DO NOT PRESS!</Button>
-								</div>
-							)}/>
+						<Route path={`${url}/nuclear`} render={() => (
+							<div style={{verticalAlign:'middle', position: 'relative'}}>
+								<Button block size='lg' color='red' onClick={() => playTrack('nuclear')} >DO NOT PRESS!</Button>
+							</div>
+						)}/>
 
-							<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
+						<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
 					</Switch>
 				</Content>
 			</Container>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { GoogleMap, useLoadScript, Marker, InfoWindow, OverlayView } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, MarkerClusterer, InfoWindow, OverlayView } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 
 import { mapKey } from '../../../config';
@@ -10,6 +10,8 @@ import { targetAssigned } from '../../../store/entities/infoPanels';
 import { getCities } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { current } from '@reduxjs/toolkit';
+import { getContacts } from '../../../store/entities/aircrafts';
+import getFlag from '../../../scripts/teamFlags';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -30,6 +32,11 @@ const options = {
 	mapTypeId: 'terrain'
 }
 
+const clusterOptions = {
+  imagePath:
+    'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m', // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
+}
+
 function PrototypeMap(props) {
 	const { isLoaded, loadError } = useLoadScript({
 		googleMapsApiKey: mapKey,
@@ -38,6 +45,7 @@ function PrototypeMap(props) {
 
 	const [markers, setMarkers] = React.useState([]);
 	const [menu, setMenu] = React.useState(null);
+	const [geo, setGeo] = React.useState(null);
 	const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
 
@@ -46,7 +54,6 @@ function PrototypeMap(props) {
 		// 		lat: event.latLng.lat(),
 		// 		lng: event.latLng.lng()
 		// })
-		setMapClick({event: undefined});
 		setMarkers(current => [...current, {
 			lat: event.latLng.lat(),
 			lng: event.latLng.lng(),
@@ -71,15 +78,32 @@ function PrototypeMap(props) {
 	return (
 		<GoogleMap
 			mapContainerStyle={mapContainerStyle}
-			zoom={8}
+			zoom={4}
 			center={center}
 			options={options}
 			onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
-			{menu && <OverlayView position={{lat: menu.geoDecimal.latDecimal, lng: menu.geoDecimal.longDecimal}} mapPaneName='floatPane'>
+			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 				<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
+			{ props.contacts.map(contact =>
+					<Marker
+						key={contact._id}
+						position={contact.location}
+						onClick={()=> {
+							setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng});
+							setMenu(contact);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getFlag(contact.team.code),
+							scaledSize: new window.google.maps.Size(20, 20),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}		
+					/>)
+				}
 			{markers.map(marker =>
 				<Marker
 					key={marker.time.toISOString()}
@@ -94,15 +118,20 @@ function PrototypeMap(props) {
 						anchor: new window.google.maps.Point(10, 10)
 					}}
 				/>)}
-				{props.cities.map(city =>
+			<MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.cities.map(city =>
 					<Marker
 						key={city._id}
+						clusterer={clusterer}
 						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
 						onClick={()=> {
+							setGeo(city.geoDecimal)
 							setMenu(city);
 							setMapClick({event: undefined});
 						}}
-					/>)}
+					/>)
+				}
+			</MarkerClusterer>
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
@@ -125,6 +154,7 @@ const mapStateToProps = state => ({
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
+	contacts: getContacts(state),
 	cities: getCities(state)
 });
 
