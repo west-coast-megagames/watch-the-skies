@@ -10,7 +10,7 @@ const { Team } = require('../../models/team'); // WTS Team Model
 const httpErrorHandler = require('../../middleware/util/httpError');
 const nexusError = require('../../middleware/util/throwError');
 
-// @route   GET api/aircraft
+// @route   GET api/aircrafts
 // @Desc    Get all Aircrafts
 // @access  Public
 router.get('/', async function (req, res) {
@@ -31,7 +31,7 @@ router.get('/', async function (req, res) {
 	}
 });
 
-// @route   GET api/aircraft/:id
+// @route   GET api/aircrafts/:id
 // @Desc    Get a single aircraft by ID
 // @access  Public
 router.get('/:id', validateObjectId, async (req, res) => {
@@ -58,7 +58,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
-// @route   POST api/aircraft
+// @route   POST api/aircrafts
 // @Desc    Post a new aircraft
 // @access  Public
 router.post('/', async function (req, res) {
@@ -84,7 +84,7 @@ router.post('/', async function (req, res) {
 	}
 });
 
-// @route   DELETE api/aircraft/:id
+// @route   DELETE api/aircrafts/:id
 // @Desc    Delete an aircraft
 // @access  Public
 router.delete('/:id', async function (req, res) {

@@ -63,8 +63,6 @@ class InfoAircraft extends Component {
             <br />
             {this.aircraftStats(this.props.aircraft)}
             <br />
-            {aircraftSystems(this.props.aircraft)}
-            <br />
             <ServiceRecord owner={this.props.aircraft} />
           </Drawer.Body>
         ) : (
@@ -176,7 +174,7 @@ class InfoAircraft extends Component {
       );
     } else {
       try {
-        let response = await axios.put(`${gameServer}game/repairAircraft/`, {
+        let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
         console.log(response.data);

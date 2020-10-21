@@ -5,7 +5,7 @@ const validateObjectId = require('../../middleware/util/validateObjectId');
 
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
-// Interceptor Model - Using Mongoose Model
+// Account Model - Using Mongoose Model
 const { Account, validateAccount } = require('../../models/account');
 const { Team } = require('../../models/team');
 const banking = require('../../wts/banking/banking');

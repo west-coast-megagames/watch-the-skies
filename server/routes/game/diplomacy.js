@@ -44,6 +44,7 @@ router.put('/trade/modify', async function (req, res) {
 	const { initiator, tradePartner } = req.body;
 	// console.log(req.body)
 	let trade = await Trade.findById({ _id: req.body._id });
+	if (!trade) res.status(400).send('Could not find this trade');
 	let mName = '';
 
 	if (initiator.modified === true) {// if the initiator modified the trade

@@ -4,7 +4,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 const validateObjectId = require('../../middleware/util/validateObjectId');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
-// Interceptor Model - Using Mongoose Model
+// Account Model - Using Mongoose Model
 const { Account } = require('../../models/account'); // Financial Account Model
 const { Team } = require('../../models/team'); // WTS Team Model
 const nexusError = require('../../middleware/util/throwError'); // Custom Error handling for Nexus

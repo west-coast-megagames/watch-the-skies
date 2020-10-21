@@ -61,7 +61,7 @@ const control = require('./game/control');
 const del = require('./game/delete');
 const diplomacy = require('./game/diplomacy');
 const game = require('./game/game');
-const interceptors = require('./game/interceptors');
+const aircrafts = require('./game/aircrafts');
 const milGame = require('./game/milGame');
 const news = require('./game/news');
 const shared = require('./game/shared');
@@ -87,7 +87,7 @@ module.exports = function (app) {
 	app.use('/game/delete', del);
 	app.use('/game/diplomacy', diplomacy);
 	app.use('/game', game);
-	app.use('/game/interceptors', interceptors);
+	app.use('/game/aircrafts', aircrafts);
 	app.use('/game/milGame', milGame);
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);

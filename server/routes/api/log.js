@@ -2,7 +2,7 @@ const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
 
-// Interceptor Model - Using Mongoose Model
+// Log Model - Using Mongoose Model
 const { Log } = require('../../models/logs/log');
 
 // @route   GET api/log
