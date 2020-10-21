@@ -22,7 +22,7 @@ class InfoAircraft extends Component {
   render() {
     return (
       <Drawer
-        size="md"
+        size="sm"
         show={this.props.show}
         onHide={() => this.props.hideAircraft()}
       >

@@ -15,7 +15,7 @@ class InfoSite extends Component {
     
       return(
         <Drawer
-          size='md'
+          size='sm'
           show={this.props.show}
           onHide={() => this.props.hideSite()}
         >

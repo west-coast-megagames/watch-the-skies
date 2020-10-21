@@ -36,7 +36,7 @@ class InfoMilitary extends Component {
   render() {
     return (
       <Drawer
-        size="md"
+        size="sm"
         show={this.props.show}
         onHide={() => this.props.hideMilitary()}
       >
