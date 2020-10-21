@@ -185,7 +185,7 @@ class Control extends Component {
 
 	delLogs = async () => {
 		try {
-			const response = await axios.delete(`${gameServer}game/delete/logs`)
+			const response = await axios.delete(`${gameServer}api/delete/logs`)
 			console.log(response);
 			this.props.alert({type: 'success', title: 'Deleted all Logs', body: response.data})
 		} catch (err) {

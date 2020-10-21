@@ -210,7 +210,7 @@ class InfoMilitary extends Component {
       );
     } else {
       try {
-        let response = await axios.put(`${gameServer}game/repairAircraft/`, {
+        let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
         console.log(response.data);

@@ -13,7 +13,7 @@ const { Site } = require('../../models/site');
 const { newUnit } = require('../../wts/construction/construction');
 const banking = require('../../wts/banking/banking');
 
-// @route   PUT game/interceptors   ... update
+// @route   PUT game/aircrafts   ... update
 // @Desc    Find Attacker/Defender and activate intercept
 // @access  Public
 router.put('/', async (req, res) => {
@@ -47,9 +47,10 @@ router.put('/', async (req, res) => {
 	nexusEvent.emit('updateAircrafts');
 });
 
-// @route   POST game/interceptors/build
+// @route   POST game/aircrafts/build
 // @Desc    Takes in blueprint and name and facility(?) and starts construction on a new aircraft
 // @access  Public
+// currently not used by frontend
 router.post('/build', async (req, res) => {
 	const { name, facility, type, team } = req.body; // please give me these things
 	try {
@@ -57,13 +58,14 @@ router.post('/build', async (req, res) => {
 		res.status(200).send(aircraft);
 	}
 	catch (err) {
-		res.status(404).send(err); // This returns a really weird json... watch out for that
+		res.status(404).send(err);
 	}
 });
 
-// @route   POST game/interceptors/transfer
+// @route   POST game/aircrafts/transfer
 // @Desc
 // @access  Public
+// currently not used by frontend
 router.put('/transfer', async (req, res) => {// work in progress, still broken
 	let { aircraft } = req.body; // please give me these things
 	const { facility } = req.body;
@@ -92,44 +94,10 @@ router.put('/transfer', async (req, res) => {// work in progress, still broken
 	}
 });
 
-// @route   PUT game/interceptors/repair
+// @route   PUT game/aircrafts/repair
 // @desc    Update aircraft to max health
 // @access  Public
 router.put('/repair', async function (req, res) {
-	const aircraft = await Aircraft.findById(req.body._id);
-	console.log(req.body);
-	let account = await Account.findOne({
-		name: 'Operations',
-		team: aircraft.team
-	});
-	if (account.balance < 2) {
-		res
-			.status(402)
-			.send(
-				`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`
-			);
-	}
-	else {
-		account = await banking.withdrawal(
-			account,
-			2,
-			`Repairs for ${aircraft.name}`
-		);
-		await account.save();
-
-		aircraft.status.repair = true;
-		aircraft.ready = false;
-		await aircraft.save();
-
-		res.status(200).send(`${Aircraft.name} put in for repairs...`);
-		nexusEvent.emit('updateAircrafts');
-	}
-});
-
-// @route   PUT game/repairAircraft
-// @desc    Update aircraft to max health
-// @access  Public
-router.put('/repairAircraft', async function (req, res) {
 	const aircraft = await Aircraft.findById(req.body._id);
 	console.log(req.body);
 	console.log(aircraft);
