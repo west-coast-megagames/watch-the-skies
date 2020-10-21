@@ -12,6 +12,7 @@ const { Site } = require('../../models/site');
 
 const { newUnit } = require('../../wts/construction/construction');
 const banking = require('../../wts/banking/banking');
+const randomCords = require('../../util/systems/lz');
 
 // @route   PUT game/aircrafts   ... update
 // @Desc    Find Attacker/Defender and activate intercept
@@ -27,10 +28,12 @@ router.put('/', async (req, res) => {
 	if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
 		target = await Aircraft.findById(target).populate('systems').populate('site');
 		aircraft.site = target.site._id;
+		aircraft.location = randomCords(target.site.geoDecimal.latDecimal, target.site.geoDecimal.longDecimal);
 	}
 	else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
 		target = await Site.findById(target);
 		aircraft.site = target._id;
+		aircraft.location = randomCords(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal);
 	}
 
 	result = `${aircraft.name} launching...`;

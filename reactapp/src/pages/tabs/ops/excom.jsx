@@ -37,59 +37,6 @@ class ExcomOps extends Component {
       <Container>
         <Content>
           <h5>Global Ex-Com Information</h5>
-          <Table
-            style={{width: '98%'}}
-            isTree
-            defaultExpandAllRows
-            rowKey="_id"
-            autoHeight
-            data={this.state.data}
-            onExpandChange={(isOpen, rowData) => {
-              console.log(isOpen, rowData);
-              return;
-            }}
-            renderTreeToggle={(icon, rowData) => {
-              if (rowData.children && rowData.children.length === 0) {
-                return <Icon icon="spinner" spin />;
-              }
-              return icon;
-            }}
-          >
-            <Column width={200}>
-              <HeaderCell>Name</HeaderCell>
-              <Cell dataKey="name" />
-            </Column>
-
-            <Column flexGrow={2}>
-              <HeaderCell>Type</HeaderCell>
-              <Cell dataKey="type" />
-            </Column>
-
-            <Column flexGrow={4}>
-              <HeaderCell>Information</HeaderCell>
-              <Cell dataKey="info" />
-            </Column>
-
-            <Column flexGrow={2}>
-              <HeaderCell>Projected LZ</HeaderCell>
-              <Cell dataKey="country.name" />
-            </Column>
-            <Column flexGrow={1}>
-              <HeaderCell>Actions</HeaderCell>
-              <Cell style={{padding: '8px'}}>
-                {rowData => {
-                  if (rowData.type !== 'Zone') {
-                    return (<ButtonGroup size='sm'>
-                    <IconButton icon={<Icon icon="info-circle" />} onClick={() => Alert.warning('Contact intel not implemented...', 4000)} color="blue"/>
-                    <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => this.intercept(rowData._id)} color="red" />
-                  </ButtonGroup>)}
-                }}    
-              </Cell>
-            </Column>
-          </Table>
-          <Divider />
-          <h5>Ground Targets</h5>
-            <Contacts />
           <Divider />
           <h5>Air Operations</h5>
           <AircraftTable

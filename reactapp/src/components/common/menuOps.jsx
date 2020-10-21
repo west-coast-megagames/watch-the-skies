@@ -10,6 +10,7 @@ const menu = {
 
 class OpsMenu extends Component {
 	state = {}
+
 	render() { 
 		console.log(this.props.info)
 		return (

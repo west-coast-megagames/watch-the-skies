@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
 	try {
 		const aircrafts = await Aircraft.find()
 			.sort({ team: 1 })
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('site', 'name geoDecimal')
