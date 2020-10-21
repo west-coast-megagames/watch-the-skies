@@ -798,10 +798,55 @@
         "damage": []
       }
     },
-    "countryCode": "AQ",
+    "countryCode": "PE",
     "teamCode": "FFG",
     "coastal": false,
-    "siteCode": "AQ AMS"
+    "siteCode": "PE LIM"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "FFG Base Beta",
+		"code": "FFGBB",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 10,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 8,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 4,
+        "corps": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "MN",
+    "teamCode": "FFG",
+    "coastal": false,
+    "siteCode": "MN ULN"
   },
   {
     "loadType": "baseFacility",

@@ -546,7 +546,7 @@
     "zone": "AN",
     "country": "AQ",
     "site": "",
-		"base": "FFGBA",
+		"base": "FFGBB",
 		"bpCode": "UFO-13"
   },
   {
@@ -557,7 +557,7 @@
     "zone": "AN",
     "country": "AQ",
     "site": "",
-		"base": "FFGBA",
+		"base": "FFGBB",
 		"bpCode": "UFO-13"
   },
   {
@@ -567,7 +567,7 @@
     "zone": "AN",
     "country": "AQ",
     "site": "",
-		"base": "FFGBA",
+		"base": "FFGBB",
 		"bpCode": "UFO-13"
   }
 ]
