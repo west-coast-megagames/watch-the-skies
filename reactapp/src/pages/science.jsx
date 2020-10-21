@@ -57,7 +57,7 @@ class Science extends Component {
       }
       
     render() {
-        if (!this.props.login) return <LoginLink history={this.props.history}/>
+        if (!this.props.login) this.props.history.push('/');
         const url = this.props.match.path;
         const { tab } = this.state;
         
