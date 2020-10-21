@@ -63,7 +63,7 @@ module.exports = function (io) {
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
 			.populate('country', 'name')
-			.populate('site', 'name')
+			.populate('site', 'name geoDecimal')
 			.populate('origin', 'name');
 		socketDebugger('Updating aircrafts...');
 		updateSocket.emit('currentAircrafts', aircrafts);
