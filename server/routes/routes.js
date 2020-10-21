@@ -59,7 +59,7 @@ const admin = require('./game/admin');
 const banking = require('./game/banking');
 const control = require('./game/control');
 const diplomacy = require('./game/diplomacy');
-const game = require('./game/game');
+const science = require('./game/science');
 const aircrafts = require('./game/aircrafts');
 const milGame = require('./game/milGame');
 const news = require('./game/news');
@@ -84,7 +84,7 @@ module.exports = function (app) {
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
 	app.use('/game/diplomacy', diplomacy);
-	app.use('/game', game);
+	app.use('/science', science);
 	app.use('/game/aircrafts', aircrafts);
 	app.use('/game/milGame', milGame);
 	app.use('/game/news', news); // Route for the news desks

@@ -36,7 +36,7 @@ class Science extends Component {
     }
 
     async loadScience() {
-        const { data } = await axios.get(`${gameServer}game/research/sciState`);
+        const { data } = await axios.get(`${gameServer}science/research/sciState`);
         let techCost = data.techCost;
         let fundingCost = data.fundingCost;
         this.setState({ techCost, fundingCost, research: this.props.research });
