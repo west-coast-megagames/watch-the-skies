@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { showSite, targetAssigned } from '../../store/entities/infoPanels';
+import { infoRequested, showSite, targetAssigned } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -34,7 +34,7 @@ class OpsMenu extends Component {
 						style={{...menu, top: '33px', left: '33px'}}
 						onClick={() => this.props.closeMenu()}
 					/>
-					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.props.showSite(this.props.info) : Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)} style={{...menu, top: '1px', left:'30px'}} />
+					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.props.info.model === 'Site' ? this.props.showSite(this.props.info) : this.props.info.model === 'Aircraft' ? this.props.showAircraft(this.props.info) : Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)} style={{...menu, top: '1px', left:'30px'}} />
 					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.props.assignTarget(this.props.info) : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => Alert.warning('Deploying troops is not possible yet..')} style={{...menu, bottom: '1px', left:'30px'}} />
@@ -50,6 +50,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
+	showAircraft: (payload) => dispatch(infoRequested(payload)),
 	assignTarget: (payload) => dispatch(targetAssigned(payload))
 });
 
