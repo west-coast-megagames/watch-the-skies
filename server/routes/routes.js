@@ -58,7 +58,6 @@ const initTreaties = require('./init/initTreaties');
 const admin = require('./game/admin');
 const banking = require('./game/banking');
 const control = require('./game/control');
-const del = require('./game/delete');
 const diplomacy = require('./game/diplomacy');
 const game = require('./game/game');
 const aircrafts = require('./game/aircrafts');
@@ -84,7 +83,6 @@ module.exports = function (app) {
 	app.use('/game/admin', admin);
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
-	app.use('/game/delete', del);
 	app.use('/game/diplomacy', diplomacy);
 	app.use('/game', game);
 	app.use('/game/aircrafts', aircrafts);
