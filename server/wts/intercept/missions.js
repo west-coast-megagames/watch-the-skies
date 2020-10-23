@@ -49,7 +49,6 @@ async function start (aircraft, target, mission) {
 		missionDebugger(origin.site.geoDecimal);
 		distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
 		missionDebugger(`Mission distance ${distance}km`);
-	
 	}
 
 	// SWITCH Sorts the mission into the correct mission
@@ -202,7 +201,7 @@ async function runTransports () {
 
 			// Schedule a ground mission.
 
-			await aircraft.returnToBase();
+			await aircraft.recall();
 		}
 	}
 
@@ -255,7 +254,7 @@ async function runRecon () {
 
 				MissionReport.saveReport();
 
-				await aircraft.returnToBase();
+				await aircraft.recall();
 				return;
 			}
 			else {
@@ -289,7 +288,7 @@ async function runRecon () {
 
 				MissionReport.saveReport();
 
-				await aircraft.returnToBase();
+				await aircraft.recall();
 				return;
 			}
 		}
@@ -304,11 +303,11 @@ async function runDiversions () {
 			.populate('systems')
 			.populate('origin')
 			.populate('team');
-		if (team.type === 'Alien') terror.alienActivity(aircraft.country._id);
+		if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.country._id);
 
 		// Diversion mission log
 
-		await aircraft.returnToBase();
+		await aircraft.recall();
 	}
 }
 
@@ -326,12 +325,12 @@ async function checkPatrol (target, atkReport, aircraft) {
 			let defReport = `${target.name} breaking off from patrol to engage ${aircraft.type}.`;
 			atkReport = `${atkReport} patrol sited over target site, being engaged by ${target.type}.`;
 
-			const escortCheck = checkEscort(aircraft_id, defReport); // Checking to see if the mission ship has a Escort;
+			const escortCheck = await checkEscort(aircraft._id, defReport); // Checking to see if the mission ship has a Escort;
 
-			if (aircraft._id.toHexString() === escortCheck.target.toHexString()) {
+			if (aircraft._id.toHexString() === escortCheck.target._id.toHexString()) {
 				defReport = escortCheck.atkReport;
 				const escortReport = `${atkReport} ${escortCheck.defReport}`;
-				await intercept(escortReport.target, 'aggresive', escortReport, target, 'aggresive', defReport);
+				await intercept(escortCheck.target, 'aggresive', escortReport, target, 'aggresive', defReport);
 				atkReport = `${atkReport} Escort has broken off to engage patrol.`;
 			}
 			else {
@@ -400,8 +399,8 @@ async function resolveTransfers () {
 }
 
 async function clearMissions () {
-	for (aircraft of await Aircraft.find()) {
-		await aircraft.returnToBase();
+	for (const aircraft of await Aircraft.find({ 'status.deployed': true })) {
+		await aircraft.recall();
 	}
 	interceptionMissions = []; // Attempted Interception missions for the round
 	escortMissions = []; // Attempted Escort missions for the round
