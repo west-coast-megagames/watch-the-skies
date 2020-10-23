@@ -72,7 +72,8 @@ const FacilitySchema = new Schema({
 			corps: [{ type: ObjectId, ref: 'Military' }],
 			active: { type: Boolean, default: false }
 		}
-	}
+	},
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
 });
 
 FacilitySchema.methods.validateFacility = async function () {

@@ -5,7 +5,7 @@ const router = express.Router();
 // Log Model - Using Mongoose Model
 const { Log } = require('../../models/logs/log');
 
-// @route   GET api/log
+// @route   GET api/logs
 // @Desc    Get all logs
 // @access  Public
 router.get('/', async function (req, res) {
