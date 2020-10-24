@@ -38,7 +38,8 @@ class Budget extends Component {
 	componentDidUpdate(prevProps) {
 			if (prevProps.lastFetch !== this.props.lastFetch) {
 					let newAccount = this.props.accounts.find(account => account._id === this.state.account_id);
-					this.setState({account: newAccount});
+					let data = formatPickerData(this.props.accounts);
+					this.setState({ account: newAccount, data });
 			}
 	}
 
