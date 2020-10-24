@@ -1,10 +1,9 @@
 const IntercptLog = require('../../models/logs/intereptLog');
 const { Aircraft } = require('../../models/aircraft');
-const Alert = require('../../models/logs/alert');
 const interceptDebugger = require('debug')('app:intercept_report');
 
 function interceptLogging (finalReport, attacker, defender) {
-	let atkLog = {
+	const atkLog = {
 		team: attacker.team,
 		position: 'Offense',
 		country: defender.country,
@@ -30,7 +29,7 @@ function interceptLogging (finalReport, attacker, defender) {
 		salvage: finalReport.salvage
 	};
 
-	let defLog = {
+	const defLog = {
 		team: defender.team,
 		position: 'Defense',
 		country: defender.country,
@@ -56,8 +55,8 @@ function interceptLogging (finalReport, attacker, defender) {
 		salvage: finalReport.salvage
 	};
 
-	atkLog = makeAfterActionReport(atkLog);
-	defLog = makeAfterActionReport(defLog);
+	makeAfterActionReport(atkLog);
+	makeAfterActionReport(defLog);
 }
 
 async function makeAfterActionReport (log) {
