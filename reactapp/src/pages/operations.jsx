@@ -63,20 +63,17 @@ class Operations extends Component {
 									<hr />
 									<u><b>Implemented Features</b></u>
 									<ul>
-										<li>Interceptions [Excom Ops]</li>
+										<li>Aircraft List [Global Ops]</li>
+										<li>Air Missions [Map]</li>
 									</ul>
 									<u><b>Unimplemented Features</b></u>
 									<ul>
-										<li>Nuclear Launches [Nuclear]</li>
+										<li>Nuclear Launch [Nuclear]</li>
 										<li>Ground Military [Global Ops]</li>
 										<li>Satillites</li>
 									</ul>
 									<u><b>Test Features</b></u>
 									<ul>
-										<li>Global Map [Globe Map]</li>
-										<li>Flat Map [SVG map]</li>
-										<li>Ground Military [Global Ops]</li>
-										<li>Satillites</li>
 									</ul>
 							</div>
 						)}/>
