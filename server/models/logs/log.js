@@ -48,4 +48,13 @@ const TerrorLog = Log.discriminator('TerrorLog', new Schema({
 	terrorMessage: { type: String }
 }));
 
-module.exports = { Log, TerrorLog };
+const TransportLog = Log.discriminator('TransportLog', new Schema({
+	logType: { type: String, default: 'Transport' },
+	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
+	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	unit: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
+	report: { type: String, required: true }
+}));
+
+module.exports = { Log, TerrorLog, TransportLog };
