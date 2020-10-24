@@ -74,7 +74,7 @@ class InfoDeploy extends Component {
     
       return(
         <Drawer
-          size='md'
+          size='sm'
           show={this.props.show}
           onHide={() => this.props.hideDeploy()}
         >
@@ -166,7 +166,7 @@ class InfoDeploy extends Component {
     };
     try {
       console.log(stats)
-      let response = await axios.put(`${gameServer}api/intercept`, stats);    
+      let response = await axios.put(`${gameServer}game/aircrafts`, stats);    
       Alert.success(response.data);
       this.setState({mission: null, unit: null});
       this.props.hideDeploy();

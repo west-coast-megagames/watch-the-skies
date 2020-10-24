@@ -49,7 +49,7 @@ class DeployModal extends Component {
             <Drawer.Body>
                 <h6>Select Team</h6>
                 <SelectPicker block placeholder='Select Team'
-                    data={this.props.teams.filter(el => el.teamType === 'N')}
+                    data={this.props.teams.filter(el => el.type === 'N')}
                     labelKey='name'
                     valueKey='name'
                     onChange={this.handleTeam}

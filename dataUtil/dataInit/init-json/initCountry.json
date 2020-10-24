@@ -5,10 +5,13 @@
     "name": "Federation",
     "borderedBy": [],
     "coastal": false,
-    "type": "A",
+    "type": "Space",
     "stats": { "sciRate": 25, "balance": 10 },
     "formalName": "The Great Federation Of Space",
-    "teamCode": "FFG"
+    "teamCode": "FFG",
+    "loadFlag": "true",
+    "zone": "HE",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -23,10 +26,13 @@
       { "code": "CN" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -39,10 +45,13 @@
       { "code": "GR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -57,10 +66,13 @@
       { "code": "NE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -68,10 +80,13 @@
     "name": "Andorra",
     "borderedBy": [{ "code": "FR" }, { "code": "ES" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -85,10 +100,13 @@
       { "code": "CG" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -96,10 +114,13 @@
     "name": "Antarctica",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AN",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -107,10 +128,13 @@
     "name": "Antigua and Barbuda",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -124,11 +148,15 @@
       { "code": "UY" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
+
   {
     "loadType": "country",
     "code": "AM",
@@ -140,10 +168,13 @@
       { "code": "GE" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -151,10 +182,13 @@
     "name": "Australia",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "AUS"
+    "formalName": "Commonwealth of Australia",
+    "teamCode": "AUS",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -171,10 +205,13 @@
       { "code": "CH" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -189,10 +226,13 @@
       { "code": "IQ" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -200,10 +240,13 @@
     "name": "Bahamas",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -211,10 +254,13 @@
     "name": "Bahrain",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -222,10 +268,13 @@
     "name": "Bangladesh",
     "borderedBy": [{ "code": "IN" }, { "code": "MM" }, { "code": "BT" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -233,10 +282,13 @@
     "name": "Barbados",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -250,10 +302,13 @@
       { "code": "LV" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -266,10 +321,13 @@
       { "code": "DE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -277,10 +335,13 @@
     "name": "Belize",
     "borderedBy": [{ "code": "MX" }, { "code": "GT" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -293,10 +354,13 @@
       { "code": "NE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -304,10 +368,13 @@
     "name": "Bermuda",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -320,10 +387,13 @@
       { "code": "BD" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -337,10 +407,13 @@
       { "code": "PE" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -348,10 +421,13 @@
     "name": "Bosnia and Herzegovina",
     "borderedBy": [{ "code": "HR" }, { "code": "ME" }, { "code": "RS" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -365,10 +441,13 @@
       { "code": "ZM" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -387,10 +466,13 @@
       { "code": "GF" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "BRZ"
+    "formalName": "Federative Republic of Brazil",
+    "teamCode": "BRZ",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -398,10 +480,13 @@
     "name": "Brunei",
     "borderedBy": [{ "code": "MY" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -415,10 +500,13 @@
       { "code": "TR" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -434,10 +522,13 @@
       { "code": "TG" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -445,10 +536,13 @@
     "name": "Burundi",
     "borderedBy": [{ "code": "CD" }, { "code": "RW" }, { "code": "TZ" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -456,10 +550,13 @@
     "name": "Cambodia",
     "borderedBy": [{ "code": "VN" }, { "code": "LA" }, { "code": "TH" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -474,10 +571,13 @@
       { "code": "GQ" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -485,10 +585,13 @@
     "name": "Canada",
     "borderedBy": [{ "code": "US" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -496,10 +599,13 @@
     "name": "Cabo Verde",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -514,10 +620,13 @@
       { "code": "CM" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -532,10 +641,13 @@
       { "code": "NG" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -543,10 +655,13 @@
     "name": "Chile",
     "borderedBy": [{ "code": "AR" }, { "code": "BO" }, { "code": "PE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -569,10 +684,13 @@
       { "code": "KG" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "PRC"
+    "formalName": "People's Republic Of China",
+    "teamCode": "PRC",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -586,10 +704,13 @@
       { "code": "VE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -597,10 +718,13 @@
     "name": "Comoros",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -614,10 +738,13 @@
       { "code": "GA" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -635,10 +762,13 @@
       { "code": "ZM" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -646,10 +776,13 @@
     "name": "Costa Rica",
     "borderedBy": [{ "code": "NI" }, { "code": "PA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -663,10 +796,13 @@
       { "code": "GH" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -680,10 +816,13 @@
       { "code": "SI" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -691,10 +830,13 @@
     "name": "Cuba",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -702,10 +844,13 @@
     "name": "Cyprus",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -718,10 +863,13 @@
       { "code": "SK" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -729,10 +877,13 @@
     "name": "Denmark",
     "borderedBy": [{ "code": "DE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -740,10 +891,13 @@
     "name": "Djibouti",
     "borderedBy": [{ "code": "ER" }, { "code": "ET" }, { "code": "SO" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -751,10 +905,13 @@
     "name": "Dominica",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -762,10 +919,13 @@
     "name": "Dominican Republic",
     "borderedBy": [{ "code": "HT" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -773,10 +933,13 @@
     "name": "Ecuador",
     "borderedBy": [{ "code": "CO" }, { "code": "PE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -789,10 +952,13 @@
       { "code": "SD" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "EPT"
+    "formalName": "Arab Republic of Egypt",
+    "teamCode": "EPT",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -800,10 +966,13 @@
     "name": "El Salvador",
     "borderedBy": [{ "code": "GT" }, { "code": "HN" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -811,10 +980,13 @@
     "name": "Equatorial Guinea",
     "borderedBy": [{ "code": "CM" }, { "code": "GA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -822,10 +994,13 @@
     "name": "Eritrea",
     "borderedBy": [{ "code": "SD" }, { "code": "ET" }, { "code": "DJ" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -833,10 +1008,13 @@
     "name": "Estonia",
     "borderedBy": [{ "code": "RU" }, { "code": "LV" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -844,10 +1022,13 @@
     "name": "eSwatini (Swaziland)",
     "borderedBy": [{ "code": "ZA" }, { "code": "MZ" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -862,10 +1043,13 @@
       { "code": "SD" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -873,10 +1057,13 @@
     "name": "Fiji",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -884,10 +1071,13 @@
     "name": "Finland",
     "borderedBy": [{ "code": "NO" }, { "code": "SE" }, { "code": "RU" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -904,10 +1094,13 @@
       { "code": "AD" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TFR"
+    "formalName": "French Republic",
+    "teamCode": "TFR",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -915,10 +1108,13 @@
     "name": "Gabon",
     "borderedBy": [{ "code": "GQ" }, { "code": "CM" }, { "code": "CG" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -926,10 +1122,13 @@
     "name": "Gambia",
     "borderedBy": [{ "code": "SN" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -942,10 +1141,13 @@
       { "code": "TR" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -963,10 +1165,13 @@
       { "code": "CZ" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -974,10 +1179,13 @@
     "name": "Ghana",
     "borderedBy": [{ "code": "CI" }, { "code": "TG" }, { "code": "BF" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -990,10 +1198,13 @@
       { "code": "MK" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1001,10 +1212,13 @@
     "name": "Greenland",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1012,10 +1226,13 @@
     "name": "Grenada",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1028,10 +1245,13 @@
       { "code": "HN" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1046,10 +1266,13 @@
       { "code": "SL" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1057,10 +1280,13 @@
     "name": "Guinea-Bissau",
     "borderedBy": [{ "code": "GN" }, { "code": "SN" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1068,10 +1294,13 @@
     "name": "Guyana",
     "borderedBy": [{ "code": "BR" }, { "code": "SR" }, { "code": "VE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1079,10 +1308,13 @@
     "name": "French Guiana",
     "borderedBy": [{ "code": "SR" }, { "code": "BR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1090,10 +1322,13 @@
     "name": "Haiti",
     "borderedBy": [{ "code": "DO" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1101,10 +1336,13 @@
     "name": "Heard Island and Mcdonald Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1112,10 +1350,13 @@
     "name": "Holy See (Vatican City State)",
     "borderedBy": [{ "code": "IT" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1123,10 +1364,13 @@
     "name": "Honduras",
     "borderedBy": [{ "code": "SV" }, { "code": "GT" }, { "code": "NI" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1134,10 +1378,13 @@
     "name": "Hong Kong",
     "borderedBy": [{ "code": "CN" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1153,10 +1400,13 @@
       { "code": "UA" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1164,10 +1414,13 @@
     "name": "Iceland",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1182,10 +1435,13 @@
       { "code": "PK" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "IND"
+    "formalName": "Republic of India",
+    "teamCode": "IND",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1193,10 +1449,13 @@
     "name": "Indonesia",
     "borderedBy": [{ "code": "MY" }, { "code": "PG" }, { "code": "TL" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1212,10 +1471,13 @@
       { "code": "PK" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "IRN"
+    "formalName": "Islamic Republic Of Iran",
+    "teamCode": "IRN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1231,10 +1493,13 @@
       { "code": "SA" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TCN"
+    "formalName": "Republic of Iraq",
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1242,10 +1507,13 @@
     "name": "Ireland",
     "borderedBy": [{ "code": "GB" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1253,10 +1521,13 @@
     "name": "Isle of Man",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1270,10 +1541,13 @@
       { "code": "PS" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1288,10 +1562,13 @@
       { "code": "CH" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1299,10 +1576,13 @@
     "name": "Jamaica",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1310,10 +1590,13 @@
     "name": "Japan",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "JPN"
+    "teamCode": "JPN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1321,10 +1604,13 @@
     "name": "Jersey",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1338,10 +1624,13 @@
       { "code": "PS" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1356,10 +1645,13 @@
       { "code": "MN" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1373,10 +1665,13 @@
       { "code": "UG" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1384,32 +1679,41 @@
     "name": "Kiribati",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
     "code": "KP",
-    "name": "Korea, North",
+    "name": "North Korea",
     "borderedBy": [{ "code": "CN" }, { "code": "KR" }, { "code": "RU" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
     "code": "KR",
-    "name": "Korea, South",
+    "name": "South Korea",
     "borderedBy": [{ "code": "KP" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1417,10 +1721,13 @@
     "name": "Kuwait",
     "borderedBy": [{ "code": "IQ" }, { "code": "SA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1433,10 +1740,13 @@
       { "code": "UZ" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1451,10 +1761,13 @@
       { "code": "VN" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TCN"
+    "formalName": "Lao People's Democratic Republic",
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1467,10 +1780,13 @@
       { "code": "RU" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1478,10 +1794,13 @@
     "name": "Lebanon",
     "borderedBy": [{ "code": "IL" }, { "code": "SY" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1489,10 +1808,13 @@
     "name": "Lesotho",
     "borderedBy": [{ "code": "ZA" }, { "code": "MZ" }, { "code": "BW" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1500,10 +1822,13 @@
     "name": "Liberia",
     "borderedBy": [{ "code": "CI" }, { "code": "GN" }, { "code": "SL" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1517,11 +1842,14 @@
       { "code": "TD" },
       { "code": "EG" }
     ],
-    "coastal": false,
-    "type": "T",
+    "coastal": true,
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1529,10 +1857,13 @@
     "name": "Liechtenstein",
     "borderedBy": [{ "code": "AT" }, { "code": "CH" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1545,10 +1876,13 @@
       { "code": "RU" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1556,10 +1890,13 @@
     "name": "Luxembourg",
     "borderedBy": [{ "code": "BE" }, { "code": "DE" }, { "code": "FR" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1567,10 +1904,13 @@
     "name": "Macau",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1583,10 +1923,13 @@
       { "code": "GR" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1594,10 +1937,13 @@
     "name": "Madagascar",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1605,10 +1951,13 @@
     "name": "Malawi",
     "borderedBy": [{ "code": "TZ" }, { "code": "ZM" }, { "code": "MZ" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1621,10 +1970,13 @@
       { "code": "BN" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1632,10 +1984,13 @@
     "name": "Maldives",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1648,13 +2003,16 @@
       { "code": "CI" },
       { "code": "GN" },
       { "code": "SN" },
-      { "code": "mr" }
+      { "code": "MR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1662,10 +2020,13 @@
     "name": "Malta",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1673,10 +2034,13 @@
     "name": "Marshall Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1684,10 +2048,13 @@
     "name": "Martinique",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1700,10 +2067,13 @@
       { "code": "DZ" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1711,10 +2081,13 @@
     "name": "Mauritius",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1722,10 +2095,13 @@
     "name": "Mayotte",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1733,10 +2109,13 @@
     "name": "Mexico",
     "borderedBy": [{ "code": "US" }, { "code": "BZ" }, { "code": "GT" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1744,10 +2123,13 @@
     "name": "Micronesia",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TCN"
+    "formalName": "Federated States of Micronesia",
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1755,10 +2137,13 @@
     "name": "Moldova",
     "borderedBy": [{ "code": "UA" }, { "code": "RO" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1766,10 +2151,13 @@
     "name": "Monaco",
     "borderedBy": [{ "code": "FR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1777,10 +2165,13 @@
     "name": "Mongolia",
     "borderedBy": [{ "code": "CN" }, { "code": "RU" }, { "code": "KZ" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1793,10 +2184,13 @@
       { "code": "RS" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1804,10 +2198,13 @@
     "name": "Montserrat",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1815,10 +2212,13 @@
     "name": "Morocco",
     "borderedBy": [{ "code": "DZ" }, { "code": "EH" }, { "code": "ES" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1834,10 +2234,13 @@
       { "code": "ZW" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1851,10 +2254,13 @@
       { "code": "IN" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1868,10 +2274,13 @@
       { "code": "AO" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1879,10 +2288,13 @@
     "name": "Nauru",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1890,10 +2302,13 @@
     "name": "Nepal",
     "borderedBy": [{ "code": "CN" }, { "code": "IN" }, { "code": "BT" }],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1901,10 +2316,13 @@
     "name": "Netherlands",
     "borderedBy": [{ "code": "BE" }, { "code": "DE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1912,10 +2330,13 @@
     "name": "Netherlands Antilles",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1923,10 +2344,13 @@
     "name": "New Caledonia",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1934,10 +2358,13 @@
     "name": "New Zealand",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1945,10 +2372,13 @@
     "name": "Nicaragua",
     "borderedBy": [{ "code": "CR" }, { "code": "HN" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1964,10 +2394,13 @@
       { "code": "TD" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1980,10 +2413,13 @@
       { "code": "TD" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -1991,10 +2427,13 @@
     "name": "Niue",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2002,10 +2441,13 @@
     "name": "Norfolk Island",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2013,10 +2455,13 @@
     "name": "Northern Mariana Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2024,10 +2469,13 @@
     "name": "Norway",
     "borderedBy": [{ "code": "SE" }, { "code": "RU" }, { "code": "FI" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2035,10 +2483,13 @@
     "name": "Oman",
     "borderedBy": [{ "code": "SA" }, { "code": "AE" }, { "code": "YE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2051,10 +2502,13 @@
       { "code": "IR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2062,10 +2516,13 @@
     "name": "Palau",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2073,10 +2530,13 @@
     "name": "Panama",
     "borderedBy": [{ "code": "CR" }, { "code": "CO" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2084,10 +2544,13 @@
     "name": "Papua New Guinea",
     "borderedBy": [{ "code": "ID" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2095,10 +2558,13 @@
     "name": "Paraguay",
     "borderedBy": [{ "code": "BO" }, { "code": "AR" }, { "code": "BR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2113,10 +2579,13 @@
       { "code": "BF" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2124,10 +2593,13 @@
     "name": "Philippines",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2135,10 +2607,13 @@
     "name": "Pitcairn",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2154,10 +2629,13 @@
       { "code": "BY" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2165,10 +2643,13 @@
     "name": "Portugal",
     "borderedBy": [{ "code": "ES" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2176,10 +2657,13 @@
     "name": "Puerto Rico",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2187,10 +2671,13 @@
     "name": "Qatar",
     "borderedBy": [{ "code": "AE" }, { "code": "SA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2198,10 +2685,13 @@
     "name": "Reunion",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2215,15 +2705,18 @@
       { "code": "UA" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
     "code": "RU",
-    "name": "Russian Federation",
+    "name": "Russia",
     "borderedBy": [
       { "code": "AZ" },
       { "code": "BY" },
@@ -2241,10 +2734,13 @@
       { "code": "UA" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "RFD"
+    "formalName": "Russian Federation",
+    "teamCode": "RFD",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2257,10 +2753,13 @@
       { "code": "UG" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2268,10 +2767,13 @@
     "name": "Saint Helena",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2279,10 +2781,13 @@
     "name": "Saint Kitts and Nevis",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2290,10 +2795,13 @@
     "name": "Saint Lucia",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2301,10 +2809,13 @@
     "name": "Saint Pierre and Miquelon",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2312,10 +2823,13 @@
     "name": "Saint Vincent and the Grenadines",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2323,10 +2837,13 @@
     "name": "Samoa and American Samoa",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2334,10 +2851,13 @@
     "name": "American Samoa",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2345,10 +2865,13 @@
     "name": "San Marino",
     "borderedBy": [{ "code": "IT" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2356,10 +2879,13 @@
     "name": "Sao Tome and Principe",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2375,10 +2901,13 @@
       { "code": "YE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2392,10 +2921,13 @@
       { "code": "GM" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2412,10 +2944,13 @@
       { "code": "HU" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2423,10 +2958,13 @@
     "name": "Seychelles",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2434,10 +2972,13 @@
     "name": "Sierra Leone",
     "borderedBy": [{ "code": "LR" }, { "code": "GN" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2445,10 +2986,13 @@
     "name": "Singapore",
     "borderedBy": [{ "code": "MY" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2462,10 +3006,13 @@
       { "code": "UA" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2478,10 +3025,13 @@
       { "code": "HR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2489,10 +3039,13 @@
     "name": "Solomon Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2500,10 +3053,13 @@
     "name": "Somalia",
     "borderedBy": [{ "code": "DJ" }, { "code": "ET" }, { "code": "KE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2518,10 +3074,13 @@
       { "code": "ZW" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "RSA"
+    "formalName": "Republic of South Africa",
+    "teamCode": "RSA",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2536,10 +3095,13 @@
       { "code": "ET" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2547,10 +3109,13 @@
     "name": "South Georgia and the South Sandwich Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2563,10 +3128,13 @@
       { "code": "MA" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2574,10 +3142,13 @@
     "name": "Sri Lanka",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2593,10 +3164,13 @@
       { "code": "ET" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2604,10 +3178,13 @@
     "name": "State of Palestine",
     "borderedBy": [{ "code": "IL" }, { "code": "EG" }, { "code": "JO" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2615,10 +3192,13 @@
     "name": "Suriname",
     "borderedBy": [{ "code": "GF" }, { "code": "GY" }, { "code": "BR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2626,10 +3206,13 @@
     "name": "Svalbard and Jan Mayen",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2637,10 +3220,13 @@
     "name": "Sweden",
     "borderedBy": [{ "code": "NO" }, { "code": "FI" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2654,10 +3240,13 @@
       { "code": "LI" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2671,10 +3260,13 @@
       { "code": "TR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2682,10 +3274,13 @@
     "name": "Taiwan, Province of China",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TCN"
+    "formalName": "Taiwan, Province of China",
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2698,15 +3293,18 @@
       { "code": "CN" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
     "code": "TZ",
-    "name": "Tanzania, United Republic of",
+    "name": "Tanzania",
     "borderedBy": [
       { "code": "BI" },
       { "code": "CD" },
@@ -2718,10 +3316,13 @@
       { "code": "KE" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
-    "formalName": "",
-    "teamCode": "TCN"
+    "formalName": "United Republic of Tanzania",
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2734,10 +3335,13 @@
       { "code": "MY" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2745,10 +3349,13 @@
     "name": "Timor-Leste",
     "borderedBy": [{ "code": "ID" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2756,10 +3363,13 @@
     "name": "Togo",
     "borderedBy": [{ "code": "GH" }, { "code": "BJ" }, { "code": "BF" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2767,10 +3377,13 @@
     "name": "Tokelau",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2778,10 +3391,13 @@
     "name": "Tonga",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2789,10 +3405,13 @@
     "name": "Trinidad and Tobago",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2800,10 +3419,13 @@
     "name": "Tunisia",
     "borderedBy": [{ "code": "DZ" }, { "code": "LY" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2820,10 +3442,13 @@
       { "code": "GR" }
     ],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2836,10 +3461,13 @@
       { "code": "AF" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2847,10 +3475,13 @@
     "name": "Turks and Caicos Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2858,10 +3489,13 @@
     "name": "Tuvalu",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2875,10 +3509,13 @@
       { "code": "TZ" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2894,10 +3531,13 @@
       { "code": "RO" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2905,10 +3545,13 @@
     "name": "United Arab Emirates",
     "borderedBy": [{ "code": "OM" }, { "code": "SA" }, { "code": "QA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2916,10 +3559,13 @@
     "name": "United Kingdom",
     "borderedBy": [{ "code": "IE" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TUK"
+    "teamCode": "TUK",
+    "loadFlag": "true",
+    "zone": "EU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2927,10 +3573,13 @@
     "name": "United States",
     "borderedBy": [{ "code": "MX" }, { "code": "CA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "United States Of America",
-    "teamCode": "USA"
+    "teamCode": "USA",
+    "loadFlag": "true",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2938,10 +3587,13 @@
     "name": "United States Minor Outlying Islands",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2949,10 +3601,13 @@
     "name": "Uruguay",
     "borderedBy": [{ "code": "BR" }, { "code": "AR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2967,10 +3622,13 @@
       { "code": "LA" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2978,10 +3636,13 @@
     "name": "Vanuatu",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -2989,10 +3650,13 @@
     "name": "Venezuela",
     "borderedBy": [{ "code": "CO" }, { "code": "BR" }, { "code": "GY" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "SA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3000,10 +3664,13 @@
     "name": "Viet Nam",
     "borderedBy": [{ "code": "CN" }, { "code": "LA" }, { "code": "KH" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3011,10 +3678,13 @@
     "name": "Virgin Islands, British",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3022,10 +3692,13 @@
     "name": "Virgin Islands, U.S.",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "NA",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3033,10 +3706,13 @@
     "name": "Wallis and Futuna",
     "borderedBy": [],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "false",
+    "zone": "AU",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3044,10 +3720,13 @@
     "name": "Western Sahara",
     "borderedBy": [{ "code": "MA" }, { "code": "MR" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3055,10 +3734,13 @@
     "name": "Yemen",
     "borderedBy": [{ "code": "OM" }, { "code": "SA" }],
     "coastal": true,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AS",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3075,10 +3757,13 @@
       { "code": "TZ" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   },
   {
     "loadType": "country",
@@ -3091,9 +3776,12 @@
       { "code": "NA" }
     ],
     "coastal": false,
-    "type": "T",
+    "type": "Ground",
     "stats": { "sciRate": 25, "balance": 0 },
     "formalName": "",
-    "teamCode": "TCN"
+    "teamCode": "TCN",
+    "loadFlag": "true",
+    "zone": "AF",
+    "unrest": 0
   }
 ]

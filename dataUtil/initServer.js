@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dbDebugger = require("debug")("app:db");
-const { logger } = require("./middleware/winston"); // Import of winston for error logging
+const { logger } = require("./middleware/log/winston"); // Import of winston for error logging
 const supportsColor = require("supports-color");
 //const connect = require('../config/sockets');
 const http = require("http");
@@ -54,7 +54,7 @@ app.get("/chk", async (req, res) => {
 });
 
 // Server entry point - Node Server
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 server.listen(port, () =>
   logger.info(`WTS INIT Server started on port ${port}...`)
 );

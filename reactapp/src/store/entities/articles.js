@@ -56,7 +56,7 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "api/news/articles";
+const url = "game/news/articles";
 
 // article Loader into state
 export const loadarticles = () => (dispatch, getState) => {

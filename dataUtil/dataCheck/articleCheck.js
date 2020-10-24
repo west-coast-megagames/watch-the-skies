@@ -1,204 +1,168 @@
-// Article Model - Using Mongoose Model
-const {
-  Article,
-  validateArticle,
-  validateTimestamp,
-} = require("../models/news/article");
-const { Team } = require("../models/team/team");
-const { Site } = require("../models/sites/site");
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
 
-const articleCheckDebugger = require("debug")("app:articleCheck");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
-require("winston-mongodb");
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
+require('winston-mongodb');
 
-const supportsColor = require("supports-color");
+async function chkArticle (runFlag) {
 
-async function chkArticle(runFlag) {
-  for (const article of await Article.find()
-    //.populate("publisher", "name teamType")  does not work with .lean()
-    //.populate("location", "name dateline")   does not work with .lean()
-    .lean()) {
-    //does not work with .lean()
-    //let testPropertys = article.toObject();
+	let aFinds = [];
+	try {
+		const { data } = await axios.get(`${gameServer}init/initArticles/lean`);
+		aFinds = data;
+	}
+	catch(err) {
+		logger.error(`Article Get Lean Error (articleCheck): ${err.message}`, { meta: err.stack });
+		return false;
+	}
 
-    if (!article.hasOwnProperty("model")) {
-      logger.error(
-        `model missing for Article ${article.headline} ${article._id}`
-      );
-    }
+	for await (const article of aFinds) {
 
-    if (!article.hasOwnProperty("gameState")) {
-      logger.error(
-        `gameState missing for Article ${article.headline} ${article._id}`
-      );
-    }
 
-    if (!article.hasOwnProperty("date")) {
-      logger.error(
-        `date missing for Article ${article.headline} ${article._id}`
-      );
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'model')) {
+			logger.error(
+				`model missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("timestamp")) {
-      logger.error(
-        `timestamp missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      if (!article.timestamp.hasOwnProperty("turn")) {
-        logger.error(
-          `turn timestamp missing for Article ${article.headline} ${article._id}`
-        );
-      }
+		if (!Object.prototype.hasOwnProperty.call(article, 'gameState')) {
+			logger.error(
+				`gameState missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-      if (!article.timestamp.hasOwnProperty("phase")) {
-        logger.error(
-          `phase timestamp missing for Article ${article.headline} ${article._id}`
-        );
-      }
+		if (!Object.prototype.hasOwnProperty.call(article, 'date')) {
+			logger.error(
+				`date missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-      if (!article.timestamp.hasOwnProperty("turnNum")) {
-        logger.error(
-          `turnNum timestamp missing for Article ${article.headline} ${article._id}`
-        );
-      }
-      if (!article.timestamp.hasOwnProperty("clock")) {
-        logger.error(
-          `clock timestamp missing for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'timestamp')) {
+			logger.error(
+				`timestamp missing for Article ${article.headline} ${article._id}`
+			);
+		}
+		else {
+			if (!Object.prototype.hasOwnProperty.call(article.timestamp, 'turn')) {
+				logger.error(
+					`turn timestamp missing for Article ${article.headline} ${article._id}`
+				);
+			}
 
-    if (!article.hasOwnProperty("dateline")) {
-      logger.error(
-        `dateline missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      if (
-        article.dateline === "" ||
+			if (!Object.prototype.hasOwnProperty.call(article.timestamp, 'phase')) {
+				logger.error(
+					`phase timestamp missing for Article ${article.headline} ${article._id}`
+				);
+			}
+
+			if (!Object.prototype.hasOwnProperty.call(article.timestamp, 'turnNum')) {
+				logger.error(
+					`turnNum timestamp missing for Article ${article.headline} ${article._id}`
+				);
+			}
+			if (!Object.prototype.hasOwnProperty.call(article.timestamp, 'clock')) {
+				logger.error(
+					`clock timestamp missing for Article ${article.headline} ${article._id}`
+				);
+			}
+		}
+
+		if (!Object.prototype.hasOwnProperty.call(article, 'dateline')) {
+			logger.error(
+				`dateline missing for Article ${article.headline} ${article._id}`
+			);
+		}
+		else if (
+			article.dateline === '' ||
         article.dateline == undefined ||
         article.dateline == null
-      ) {
-        logger.error(
-          `dateline is blank for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
+		) {
+			logger.error(
+				`dateline is blank for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("headline")) {
-      logger.error(
-        `headline missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      if (
-        article.headline === "" ||
+		if (!Object.prototype.hasOwnProperty.call(article, 'headline')) {
+			logger.error(
+				`headline missing for Article ${article.headline} ${article._id}`
+			);
+		}
+		else if (
+			article.headline === '' ||
         article.headline == undefined ||
         article.headline == null
-      ) {
-        logger.error(
-          `headline is blank for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
+		) {
+			logger.error(
+				`headline is blank for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("articleBody")) {
-      logger.error(
-        `articleBody missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      if (
-        article.articleBody === "" ||
-        article.articleBody == undefined ||
-        article.articleBody == null
-      ) {
-        logger.error(
-          `articleBody is blank for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'body')) {
+			logger.error(
+				`body missing for Article ${article.headline} ${article._id}`
+			);
+		}
+		else if (
+			article.body === '' ||
+        article.body == undefined ||
+        article.body == null
+		) {
+			logger.error(
+				`body is blank for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("likes")) {
-      logger.error(
-        `likes missing for Article ${article.headline} ${article._id}`
-      );
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'likes')) {
+			logger.error(
+				`likes missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("tags")) {
-      logger.error(
-        `tags missing for Article ${article.headline} ${article._id}`
-      );
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'tags')) {
+			logger.error(
+				`tags missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("imageSrc")) {
-      logger.error(
-        `imageSrc missing for Article ${article.headline} ${article._id}`
-      );
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'imageSrc')) {
+			logger.error(
+				`imageSrc missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("agency")) {
-      logger.error(
-        `agency missing for Article ${article.headline} ${article._id}`
-      );
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'agency')) {
+			logger.error(
+				`agency missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("publisher")) {
-      logger.error(
-        `Publisher Field missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      let team = await Team.findById({ _id: article.publisher });
-      if (!team) {
-        logger.error(
-          `team/publisher reference is invalid for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
+		if (!Object.prototype.hasOwnProperty.call(article, 'publisher')) {
+			logger.error(
+				`Publisher Field missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    /* does not work with .lean()
-    if (!article.populated("publisher")) {  
-      logger.error(`Publisher link missing for Article ${article.headline} ${article._id}`);
-    }
-    */
+		if (!Object.prototype.hasOwnProperty.call(article, 'location')) {
+			logger.error(
+				`Location Field missing for Article ${article.headline} ${article._id}`
+			);
+		}
 
-    if (!article.hasOwnProperty("location")) {
-      logger.error(
-        `Location Field missing for Article ${article.headline} ${article._id}`
-      );
-    } else {
-      let site = await Site.findById({ _id: article.location });
-      if (!site) {
-        logger.error(
-          `site/location reference is invalid for Article ${article.headline} ${article._id}`
-        );
-      }
-    }
-
-    try {
-      let { error } = validateArticle(article);
-      if (error) {
-        logger.error(
-          `Article Validation Error For ${article.headline} ${article._id} Error: ${error.details[0].message}`
-        );
-      }
-    } catch (err) {
-      logger.error(
-        `Article Validation Error For ${article.headline} ${article._id} Error: ${err.details[0].message}`
-      );
-    }
-
-    try {
-      let { error } = validateTimestamp(article.timestamp);
-      if (error) {
-        logger.error(
-          `Article timestamp Validation Error For ${article.headline} ${article._id} Error: ${error.details[0].message}`
-        );
-      }
-    } catch (err) {
-      logger.error(
-        `Article timestamp Validation Error For ${article.headline} ${article._id} Error: ${err.details[0].message}`
-      );
-    }
-  }
-  return true;
+		// validate call
+		try {
+			const valMessage = await axios.get(`${gameServer}init/initArticles/validate/${article._id}`);
+			if (!valMessage.data.headline) {
+				logger.error(`Article Validation Error: ${valMessage.data}`);
+			}
+		}
+		catch (err) {
+			logger.error(
+				`Article Validation Error For ${article.headline} ${article.agency} Error: ${err.message}`
+			);
+		}
+	}
+	runFlag = true;
+	return runFlag;
 }
 
 module.exports = chkArticle;

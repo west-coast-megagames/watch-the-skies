@@ -71,7 +71,7 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "api/auth";
+const url = "/auth";
 
 // aircraft Loader into state
 export const loginuser = payload => (dispatch, getState) => {

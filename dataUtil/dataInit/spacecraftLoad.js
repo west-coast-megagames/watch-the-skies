@@ -1,38 +1,18 @@
-const fs = require("fs");
-const config = require("config");
+const fs = require('fs');
+const config = require('config');
 const file = fs.readFileSync(
-  config.get("initPath") + "init-json/initSpacecraft.json",
-  "utf8"
+	config.get('initPath') + 'init-json/initSpacecraft.json',
+	'utf8'
 );
 const spacecraftDataIn = JSON.parse(file);
-//const mongoose = require('mongoose');
-const spacecraftDebugger = require("debug")("app:spacecraftLoad");
-const { logger } = require("../middleware/winston"); // Import of winston for error logging
-require("winston-mongodb");
-const { convertToDms } = require("../systems/geo");
+// const mongoose = require('mongoose');
+const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
+require('winston-mongodb');
+const gameServer = require('../config/config').gameServer;
+const axios = require('axios');
 
-const supportsColor = require("supports-color");
-
-const express = require("express");
-const bodyParser = require("body-parser");
-
-//mongoose.set('useNewUrlParser', true);
-//mongoose.set('useFindAndModify', false);
-//mongoose.set('useCreateIndex', true);
-
-// Spacecraft Model - Using Mongoose Model
-const { SpaceSite, validateSpace } = require("../models/sites/site");
-const { Country } = require("../models/country");
-const { Team } = require("../models/team/team");
-const { Facility } = require("../models/gov/facility/facility");
-const { Zone } = require("../models/zone");
-const { Site } = require("../models/sites/site");
-const {
-  loadFacilitys,
-  facilitys,
-} = require("../wts/construction/facilities/facilities");
-const { delFacilities } = require("../wts/util/construction/deleteFacilities");
-const { validUnitType } = require("../wts/util/construction/validateUnitType");
+const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -41,298 +21,243 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-async function runSpacecraftLoad(runFlag) {
-  try {
-    //spacecraftDebugger("Jeff in runSpacecraftLoad", runFlag);
-    if (!runFlag) return false;
-    if (runFlag) {
-      await loadFacilitys(); // load wts/json/facilities/facilitys.json data into array
+async function runSpacecraftLoad (runFlag) {
+	try {
+		// spacecraftDebugger("Jeff in runSpacecraftLoad", runFlag);
+		if (!runFlag) return false;
+		if (runFlag) {
+			await deleteAllSpacecraft(runFlag);
+			await initLoad(runFlag);
+		}
+		return true;
+	}
+	catch (err) {
+		logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
+			meta: err
+		});
 
-      await deleteAllSpacecraft(runFlag);
-      await initLoad(runFlag);
-    }
-    return true;
-  } catch (err) {
-    logger.error(`Catch runSpacecraftLoad Error: ${err.message}`, {
-      meta: err,
-    });
-
-    return false;
-  }
+		return false;
+	}
 }
 
-async function initLoad(doLoad) {
-  if (!doLoad) return;
-  let recReadCount = 0;
-  let recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
+async function initLoad (doLoad) {
+	if (!doLoad) return;
+	let recReadCount = 0;
+	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
-  for (let data of spacecraftDataIn) {
-    ++recReadCount;
-    await loadSpacecraft(data, recCounts);
-  }
+	for await (const data of spacecraftDataIn) {
+		++recReadCount;
+		await loadSpacecraft(data, recCounts);
+	}
 
-  logger.info(
-    `Spacecraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`
-  );
+	logger.info(
+		`Spacecraft Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`
+	);
 }
 
-async function loadSpacecraft(iData, rCounts) {
-  let loadError = false;
-  let loadErrorMsg = "";
-  let loadName = "";
-  let loadCode = "";
-  try {
-    let spacecraft = await SpaceSite.findOne({ name: iData.name });
+async function loadSpacecraft (iData, rCounts) {
+	try {
+		const { data } = await axios.get(`${gameServer}init/initSites/code/${iData.code}`);
 
-    loadName = iData.name;
-    loadCode = iData.code;
+		if (!data.type) {
+			await newSpacecraft(iData, rCounts);
+		}
+		else {
+			// Existing Spacecraft here ... no longer doing updates so this is now counted as an error
+			logger.error(
+				`Spacecraft skipped as code already exists in database: ${iData.name} ${iData.code}`
+			);
+			++rCounts.loadErrCount;
+		}
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`Catch Spacecraft Error: ${err.message}`, { meta: err });
 
-    if (!spacecraft) {
-      // New Spacecraft here
-      let spacecraft = new SpaceSite({
-        name: iData.name,
-        siteCode: iData.code,
-      });
-      spacecraft.gameState = [];
-      spacecraft.serviceRecord = [];
-
-      if (iData.teamCode != "") {
-        let team = await Team.findOne({ teamCode: iData.teamCode });
-        if (!team) {
-          //spacecraftDebugger("Spacecraft Load Team Error, New Spacecraft:", iData.name, " Team: ", iData.teamCode);
-          loadError = true;
-          loadErrorMsg = "Team Not Found: " + iData.teamCode;
-        } else {
-          spacecraft.team = team._id;
-          //spacecraftDebugger("Spacecraft Load Team Found, Spacecraft:", iData.name, " Team: ", iData.countryCode, "Team ID:", team._id);
-        }
-      }
-
-      let { error } = validateSpace(spacecraft);
-      if (error) {
-        //spacecraftDebugger("New Spacecraft Validate Error", iData.name, error.message);
-        loadError = true;
-        loadErrorMsg = "Validation Error: " + error.message;
-        //return;
-      }
-
-      spacecraft.subType = iData.shipType;
-      spacecraft.status = iData.status;
-      spacecraft.hidden = iData.hidden;
-
-      if (iData.countryCode != "") {
-        let country = await Country.findOne({ code: iData.countryCode });
-        if (!country) {
-          //spacecraftDebugger("Spacecraft Load Country Error, New Spacecraft:", iData.name, " Country: ", iData.countryCode);
-          loadError = true;
-          loadErrorMsg = "Country Not Found: " + iData.countryCode;
-        } else {
-          spacecraft.country = country._id;
-          //spacecraft.zone = country.zone;
-          //spacecraftDebugger("Spacecraft Load Country Found, New Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
-        }
-      }
-
-      useZone = "";
-      if (iData.siteCode != "") {
-        let site = await Site.findOne({ siteCode: iData.siteCode });
-        if (!site) {
-          //spacecraftDebugger("Spacecraft Load Site Error, New Spacecraft:", iData.name, " Site: ", iData.siteCode);
-          loadError = true;
-          loadErrorMsg = "Site Not Found: " + iData.siteCode;
-        } else {
-          spacecraft.site = site._id;
-
-          //set zone based on Type
-          switch (spacecraft.subType) {
-            case "Spacecraft":
-              useZone = "LO";
-              break;
-
-            case "Station":
-              useZone = "LE";
-              break;
-
-            default:
-              useZone = "ME";
-          }
-
-          let zone = await Zone.findOne({ code: useZone });
-          if (!zone) {
-            loadError = true;
-            loadErrorMsg = "Zone Not Found: " + useZone;
-          } else {
-            spacecraft.zone = zone._id;
-          }
-
-          //spacecraftDebugger("Spacecraft Load Site Found, New Spacecraft:", iData.name, " Country: ", iData.siteCode, "Site ID:", site._id);
-        }
-      }
-
-      spacecraft.facilities = [];
-
-      if (loadError) {
-        ++rCounts.loadErrCount;
-        logger.error(
-          `Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
-        );
-        return;
-      } else {
-        try {
-          let spacecraftSave = await spacecraft.save();
-          ++rCounts.loadCount;
-          spacecraftDebugger(
-            `${spacecraftSave.name} add saved to spacecraft collection.`
-          );
-          //updateStats(spacecraftSave._id);
-          return;
-        } catch (err) {
-          ++rCounts.loadErrCount;
-          delFacilities(spacecraft.facilities);
-          logger.error(`New Spacecraft Save Catch Error: ${err.message}`, {
-            meta: err,
-          });
-          return;
-        }
-      }
-    } else {
-      // Existing Spacecraft here ... update
-      let id = spacecraft._id;
-
-      spacecraft.name = iData.name;
-      spacecraft.siteCode = iData.code;
-      spacecraft.baseDefenses = iData.baseDefenses;
-      spacecraft.subType = iData.shipType;
-      spacecraft.status = iData.status;
-      spacecraft.stats = iData.stats;
-      spacecraft.hidden = iData.hidden;
-
-      if (iData.teamCode != "") {
-        let team = await Team.findOne({ teamCode: iData.teamCode });
-        if (!team) {
-          //spacecraftDebugger("Spacecraft Load Team Error, Update Spacecraft:", iData.name, " Team: ", iData.teamCode);
-          loadError = true;
-          loadErrorMsg = "Team Not Found: " + iData.teamCode;
-        } else {
-          spacecraft.team = team._id;
-          //spacecraftDebugger("Spacecraft Load Update Team Found, Spacecraft:", iData.name, " Team: ", iData.teamCode, "Team ID:", team._id);
-        }
-      }
-
-      if (iData.countryCode != "") {
-        let country = await Country.findOne({ code: iData.countryCode });
-        if (!country) {
-          //spacecraftDebugger("Spacecraft Load Country Error, Update Spacecraft:", iData.name, " Country: ", iData.countryCode);
-          loadError = true;
-          loadErrorMsg = "Country Not Found: " + iData.countryCode;
-        } else {
-          spacecraft.country = country._id;
-          //spacecraft.zone = country.zone;
-          //spacecraftDebugger("Spacecraft Load Country Found, Update Spacecraft:", iData.name, " Country: ", iData.countryCode, "Country ID:", country._id);
-        }
-      }
-
-      useZone = "";
-      if (iData.siteCode != "") {
-        let site = await Site.findOne({ siteCode: iData.siteCode });
-        if (!site) {
-          //spacecraftDebugger("Spacecraft Load Site Error, New Spacecraft:", iData.name, " Site: ", iData.siteCode);
-          loadError = true;
-          loadErrorMsg = "Site Not Found: " + iData.siteCode;
-        } else {
-          spacecraft.site = site._id;
-
-          //set zone based on Type
-          switch (spacecraft.subType) {
-            case "Spacecraft":
-              useZone = "LO";
-              break;
-
-            case "Station":
-              useZone = "LE";
-              break;
-
-            default:
-              useZone = "ME";
-          }
-
-          let zone = await Zone.findOne({ code: useZone });
-          if (!zone) {
-            loadError = true;
-            loadErrorMsg = "Zone Not Found: " + useZone;
-          } else {
-            spacecraft.zone = zone._id;
-          }
-
-          //spacecraftDebugger("Spacecraft Load Site Found, New Spacecraft:", iData.name, " Country: ", iData.siteCode, "Site ID:", site._id);
-        }
-      }
-
-      const { error } = validateSpace(spacecraft);
-      if (error) {
-        //spacecraftDebugger("Spacecraft Update Validate Error", iData.name, error.message);
-        loadError = true;
-        loadErrorMsg = "Validation Error: " + error.message;
-        //return
-      }
-
-      spacecraft.facilities = [];
-
-      if (loadError) {
-        logger.error(
-          `Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
-        );
-        ++rCounts.loadErrCount;
-        return;
-      } else {
-        try {
-          let spacecraftSave = await spacecraft.save();
-          spacecraftDebugger(
-            `${spacecraftSave.name}  add saved to spacecraft collection.`
-          );
-          ++rCounts.updCount;
-          //updateStats(spacecraftSave._id);
-          return;
-        } catch (err) {
-          logger.error(
-            `Update Spacecraft Save Error: ${err.message}, { meta: err }`
-          );
-
-          ++rCounts.loadErrCount;
-          return;
-        }
-      }
-    }
-  } catch (err) {
-    ++rCounts.loadErrCount;
-    logger.error(`Catch Spacecraft Error: ${err.message}`, { meta: err });
-    return;
-  }
+		return;
+	}
 }
 
-async function deleteAllSpacecraft(doLoad) {
-  spacecraftDebugger("Jeff in deleteAllSpacecrafts", doLoad);
-  if (!doLoad) return;
+async function deleteAllSpacecraft (doLoad) {
+	// logger.debug('Jeff in deleteAllSpacecrafts');
+	if (!doLoad) return;
 
-  try {
-    for await (const spacecraft of SpaceSite.find({ subType: "Space" })) {
-      let id = spacecraft._id;
-      try {
-        let spacecraftDel = await Spacecraft.findByIdAndRemove(id);
-        if ((spacecraftDel = null)) {
-          spacecraftDebugger(`The Spacecraft with the ID ${id} was not found!`);
-        }
-      } catch (err) {
-        spacecraftDebugger("Spacecraft Delete All Error:", err.message);
-      }
-    }
-    spacecraftDebugger("All Spacecrafts succesfully deleted!");
-  } catch (err) {
-    spacecraftDebugger(`Delete All Spacecrafts Catch Error: ${err.message}`);
-    logger.error(`Delete All Spacecrafts Catch Error: ${err.message}`, {
-      meta: err,
-    });
-  }
+	try {
+		let delErrorFlag = false;
+		try {
+			await axios.patch(`${gameServer}api/sites/deleteAllSpacecraft/`);
+		}
+		catch (err) {
+			logger.error(`Catch deleteAllSpacecraft Error 1: ${err.message}`, { meta: err.stack });
+			delErrorFlag = true;
+		}
+
+		if (!delErrorFlag) {
+			logger.debug('All Spacecraft succesfully deleted. (spacecraftLoad');
+		}
+		else {
+			logger.error('Some Error In Spacecraft delete (deleteAllSpacecraf - spacecraftLoad):');
+		}
+	}
+	catch (err) {
+		logger.error(`Catch deleteAllSpacecraft Error 2: ${err.message}`, { meta: err.stack });
+	}
 }
+
+async function newSpacecraft (sData, rCounts) {
+
+	// New Spacecraft(space) Site here
+
+	const SpaceSite = sData;
+	SpaceSite.type = 'Space';
+	SpaceSite.serviceRecord = [];
+	SpaceSite.gameState = [];
+	SpaceSite.subType = sData.shipType;
+	SpaceSite.status = sData.status;
+	SpaceSite.hidden = sData.hidden;
+	SpaceSite.facilities = [];
+
+	if (sData.teamCode) {
+		const team = await axios.get(`${gameServer}init/initTeams/code/${sData.teamCode}`);
+		const tData = team.data;
+
+		if (!tData.type) {
+
+			++rCounts.loadErrCount;
+			logger.error(`New Spacecraft Site Invalid Team: ${sData.name} ${sData.teamCode}`);
+			return;
+		}
+		else {
+			SpaceSite.team = tData._id;
+		}
+	}
+	else {
+		++rCounts.loadErrCount;
+		logger.error(`New Spacecraft Site Blank Team: ${sData.name} ${sData.teamCode}`);
+		return;
+	}
+
+	if (sData.countryCode) {
+		const country = await axios.get(`${gameServer}init/initCountries/code/${sData.countryCode}`);
+		const countryData = country.data;
+
+		if (!countryData.type) {
+
+			++rCounts.loadErrCount;
+			logger.error(`New Spacecraft Site Invalid Country: ${sData.name} ${sData.countryCode}`);
+			return;
+		}
+		else {
+			SpaceSite.country = countryData._id;
+		}
+	}
+	else {
+		++rCounts.loadErrCount;
+		logger.error(`New Spacecraft Site Blank Country: ${sData.name} ${sData.countryCode}`);
+		return;
+	}
+
+	let useZone = '';
+	if (sData.siteCode) {
+		const site = await axios.get(`${gameServer}init/initSites/code/${sData.siteCode}`);
+		const siteData = site.data;
+
+		if (!siteData.type) {
+
+			++rCounts.loadErrCount;
+			logger.error(`New Spacecraft Site Invalid Site: ${sData.name} ${sData.siteCode}`);
+			return;
+		}
+		else {
+			SpaceSite.site = siteData._id;
+
+			// set zone based on Type
+			switch (SpaceSite.subType) {
+			// Lunar Orbit
+			case 'Cruiser':
+			case 'Battleship':
+			case 'Hauler':
+				useZone = 'LO';
+				break;
+
+			// Low Earth Orbit
+			case 'Station':
+				useZone = 'LE';
+				break;
+
+			// Middle Earth Orbit
+			default:
+				useZone = 'ME';
+			}
+		}
+		if (useZone) {
+			const zone = await axios.get(`${gameServer}init/initZones/code/${useZone}`);
+			const zData = zone.data;
+
+			if (zData.type) {
+				SpaceSite.zone = zData._id;
+			}
+			else {
+				++rCounts.loadErrCount;
+				logger.error(`New Spacecraft Site Zone Assign is Invalid: ${sData.name} ${useZone}`);
+				return;
+			}
+		}
+		else {
+			++rCounts.loadErrCount;
+			logger.error(`New Spacecraft Site Zone Assign is Blank: ${sData.name}`);
+			return;
+		}
+	}
+	else {
+		++rCounts.loadErrCount;
+		logger.error(`New Spacecraft Site Blank Site Code: ${sData.name} ${sData.siteCode}`);
+		return;
+	}
+
+	try {
+		await axios.post(`${gameServer}api/sites`, SpaceSite);
+		++rCounts.loadCount;
+		logger.debug(`${SpaceSite.name} add saved to Spacecraft Site collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Spacecraft Site Save Error: ${err.message}`, { meta: err.stack });
+	}
+}
+
 
 module.exports = runSpacecraftLoad;
+
+/*
+
+
+			spacecraft.facilities = [];
+
+			if (loadError) {
+				++rCounts.loadErrCount;
+				logger.error(
+					`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
+				);
+				return;
+			}
+			else {
+				try {
+					const spacecraftSave = await spacecraft.save();
+					++rCounts.loadCount;
+					spacecraftDebugger(
+						`${spacecraftSave.name} add saved to spacecraft collection.`
+					);
+
+					return;
+				}
+				catch (err) {
+					++rCounts.loadErrCount;
+					delFacilities(spacecraft.facilities);
+					logger.error(`New Spacecraft Save Catch Error: ${err.message}`, {
+						meta: err
+					});
+					return;
+				}
+			}
+			*/

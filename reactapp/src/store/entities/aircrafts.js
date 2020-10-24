@@ -56,7 +56,7 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "api/interceptor";
+const url = "api/aircrafts";
 
 // aircraft Loader into state
 export const loadaircrafts = () => (dispatch, getState) => {
@@ -85,7 +85,7 @@ export const getContacts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   (aircrafts, team) => aircrafts.filter(
-    aircraft => aircraft.status.deployed === true && aircraft.team.name !== team.name && aircraft.status.destroyed === false
+    aircraft => aircraft.status.deployed === true && aircraft.status.destroyed === false
   )
 );
 

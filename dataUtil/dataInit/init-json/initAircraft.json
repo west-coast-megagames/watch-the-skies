@@ -1,1527 +1,553 @@
 [
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 1",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002"    
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air Fighter 1",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-FTC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002" 
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 2",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 3",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 4",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 5",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 6",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBB",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBB",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "USA Air 7",
     "team": "USA",
     "zone": "NA",
     "country": "US",
     "site": "",
-    "base": "USBB",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "USBB",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "UK Air 1",
     "team": "TUK",
     "zone": "EU",
     "country": "GB",
     "site": "",
-    "base": "GBBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "GBBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "UK Air 2",
     "team": "TUK",
     "zone": "EU",
     "country": "GB",
     "site": "",
-    "base": "GBBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "GBBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "UK Air 3",
     "team": "TUK",
     "zone": "EU",
     "country": "GB",
     "site": "",
-    "base": "GBBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "GBBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "UK Air 4",
     "team": "TUK",
     "zone": "EU",
     "country": "GB",
     "site": "",
-    "base": "GBBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "GBBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "S. Africa Air 1",
     "team": "RSA",
     "zone": "AF",
     "country": "ZA",
     "site": "",
-    "base": "ZABA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "ZABA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "S. Africa Air 2",
     "team": "RSA",
     "zone": "AF",
     "country": "ZA",
     "site": "",
     "base": "ZABA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+    "bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Russia Air 1",
     "team": "RFD",
     "zone": "EU",
     "country": "RU",
     "site": "",
-    "base": "RUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "RUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Russia Air 2",
     "team": "RFD",
     "zone": "EU",
     "country": "RU",
     "site": "",
-    "base": "RUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "RUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Russia Air 3",
     "team": "RFD",
     "zone": "EU",
     "country": "RU",
     "site": "",
-    "base": "RUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "RUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Russia Air 4",
     "team": "RFD",
     "zone": "EU",
     "country": "RU",
     "site": "",
-    "base": "RUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "RUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Russia Air 5",
     "team": "RFD",
     "zone": "EU",
     "country": "RU",
     "site": "",
-    "base": "RUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "RUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 1",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 2",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 3",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 4",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 5",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Japan Air 6",
     "team": "JPN",
     "zone": "AU",
     "country": "JP",
     "site": "",
-    "base": "JPBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "JPBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Iran Air 1",
     "team": "IRN",
     "zone": "AS",
     "country": "IR",
     "site": "",
-    "base": "IRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "IRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Iran Air 2",
     "team": "IRN",
     "zone": "AS",
     "country": "IR",
     "site": "",
-    "base": "IRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "IRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "India Air 1",
     "team": "IND",
     "zone": "AU",
     "country": "IN",
     "site": "",
-    "base": "INBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "INBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
-    "name": "India Air 2",
-    "team": "IND",
-    "zone": "AU",
-    "country": "IN",
-    "site": "",
-    "base": "INBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
-  },
-  {
-    "model": "Aircraft",
-    "type": "Fighter",
     "name": "India Air 3",
     "team": "IND",
     "zone": "AU",
     "country": "IN",
     "site": "",
-    "base": "INBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "INBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "India Air 4",
     "team": "IND",
     "zone": "AU",
     "country": "IN",
     "site": "",
-    "base": "INBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "INBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "India Air 5",
     "team": "IND",
     "zone": "AU",
     "country": "IN",
     "site": "",
-    "base": "INBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "INBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "France Air 1",
     "team": "TFR",
     "zone": "EU",
     "country": "FR",
     "site": "",
-    "base": "FRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "France Air 2",
     "team": "TFR",
     "zone": "EU",
     "country": "FR",
     "site": "",
-    "base": "FRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "France Air 3",
     "team": "TFR",
     "zone": "EU",
     "country": "FR",
     "site": "",
-    "base": "FRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "France Air 4",
     "team": "TFR",
     "zone": "EU",
     "country": "FR",
     "site": "",
-    "base": "FRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "EGYPT Air 1",
     "team": "EPT",
     "zone": "AS",
     "country": "EG",
     "site": "",
-    "base": "EGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "EGBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "EGYPT Air 2",
     "team": "EPT",
     "zone": "AS",
     "country": "EG",
     "site": "",
-    "base": "EGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "EGBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "China Air 1",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "China Air 2",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
-    "model": "Aircraft",
-    "type": "Fighter",
+    "model": "Aircraft", 
     "name": "China Air 3",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "China Air 4",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "China Air 5",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "China Air 6",
     "team": "PRC",
     "zone": "AU",
     "country": "CN",
     "site": "",
-    "base": "CNBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "CNBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Brazil Air 1",
     "team": "BRZ",
     "zone": "SA",
     "country": "BR",
     "site": "",
-    "base": "BRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "BRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Brazil Air 2",
     "team": "BRZ",
     "zone": "SA",
     "country": "BR",
     "site": "",
-    "base": "BRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "BRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Brazil Air 3",
     "team": "BRZ",
     "zone": "SA",
     "country": "BR",
     "site": "",
-    "base": "BRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "BRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Brazil Air 4",
     "team": "BRZ",
     "zone": "SA",
     "country": "BR",
     "site": "",
-    "base": "BRBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "BRBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Australia Air 1",
     "team": "AUS",
     "zone": "AU",
     "country": "AU",
     "site": "",
-    "base": "AUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "AUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Australia Air 2",
     "team": "AUS",
     "zone": "AU",
     "country": "AU",
     "site": "",
-    "base": "AUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "AUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Australia Air 3",
     "team": "AUS",
     "zone": "AU",
     "country": "AU",
     "site": "",
-    "base": "AUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "AUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "Australia Air 4",
     "team": "AUS",
     "zone": "AU",
     "country": "AU",
     "site": "",
-    "base": "AUBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 5,
-      "hullMax": 5,
-      "damage": 3,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "AUBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "FFG Prime",
     "team": "FFG",
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBA",
+		"bpCode": "NX-002"
   },
   {
     "model": "Aircraft",
-    "type": "Transport",
     "name": "FFG Pioneer",
     "team": "FFG",
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBA",
+		"bpCode": "UFO-13"
   },
   {
     "model": "Aircraft",
-    "type": "Transport",
     "name": "FFG Civil Technician",
     "team": "FFG",
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBA",
+		"bpCode": "UFO-13"
   },
   {
     "model": "Aircraft",
-    "type": "Fighter",
     "name": "FFG Secundo",
     "team": "FFG",
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBB",
+		"bpCode": "UFO-13"
   },
   {
     "model": "Aircraft",
@@ -1531,56 +557,17 @@
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBB",
+		"bpCode": "UFO-13"
   },
   {
     "model": "Aircraft",
-    "type": "Decoy",
     "name": "FFG Don't Intercept",
     "team": "FFG",
     "zone": "AN",
     "country": "AQ",
     "site": "",
-    "base": "FFGBA",
-    "loadout": ["W-RG1", "S-HO1", "E-HVT1", "U-TC1", "C-S1"],
-    "stats": {
-      "hull": 2,
-      "hullMax": 2,
-      "damage": 1,
-      "passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
-    },
-    "status": {
-      "aggressive": true,
-      "passive": false,
-      "disengage": false,
-      "damaged": false,
-      "deployed": false,
-      "destroyed": false,
-      "ready": true,
-      "upgrade": false,
-      "repair": false
-    },
-    "mission": "Standby"
+		"base": "FFGBB",
+		"bpCode": "UFO-13"
   }
 ]

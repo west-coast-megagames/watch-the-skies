@@ -678,5 +678,43 @@
     "discord": "sensou#6453",
     "teamCode": "PRC",
     "roles": ["Player"]
-  }
+	},
+	{
+		"loadType": "user",
+		"username" : "DEEJAY",
+		 "name" : {"first" : "DARREN", "last" : "GREEN" },
+		 "email" : "deejaygreen@yahoo.co.uk",
+		 "phone" : "+441780789816",
+		 "password" : "N3xusisc00l",
+		 "address" : 
+				 {"street1" : "2 Rackham Close",
+					"street2" : "STREET ADDRESS 2 HERE",
+					"city" : "Cambridge",
+					"state" : "UK",
+					"zipcode" : "CB4 3HX"},
+		 "dob" : "1966-05-19",
+		 "gender" : "Male",
+		 "discord" : "Darren#3155",
+		 "teamCode" : "PRC",
+		 "roles": ["Player"]
+ },
+ {
+	"loadType": "user",
+	"username" : "MelloOU",
+	 "name" : {"first" : "Greg", "last" : "Evans" },
+	 "email" : "gcevans09@gmail.com",
+	 "phone" : "1111111114",
+	 "password" : "Megagame20!",
+	 "address" : 
+			 {"street1" : "STREET ADDRESS 1 HERE",
+				"street2" : "STREET ADDRESS 2 HERE",
+				"city" : "Allen",
+				"state" : "TX",
+				"zipcode" : "75002"},
+	 "dob" : "1985-11-28",
+	 "gender" : "Male",
+	 "discord" : "MelloOU#4699",
+	 "teamCode" : "IND",
+	 "roles": ["Player"]
+}
 ]

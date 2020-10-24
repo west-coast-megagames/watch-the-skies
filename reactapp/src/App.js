@@ -8,7 +8,7 @@ import { updateEvents, gameClock } from './api' // Socket.io event triggers and 
 import notify from './scripts/notify';
 
 // Components
-import NavBar from './components/navBar';
+import NavBar from './components/navigation/navBar';
 import SideNav from './components/navigation/sidenav';
 import Registration from './components/registration';
 import AlertPage from './components/common/alert';

@@ -1,199 +1,133 @@
-const {Article, validateArticle} = require('../../models/news/article');
-const mongoose = require('mongoose');
-const express = require('express');
-const router = express.Router();
-const articleDebugger = require('debug')('app:article');
-const supportsColor = require('supports-color');
-const validateObjectId = require('../../middleware/validateObjectId');
-const {Team} = require('../../models/team/team'); 
-const {Site} = require('../../models/sites/site'); 
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
+
+// Function Import
+const { makeTimestamp } = require('../../wts/gameClock/gameClock');
+
+// Mongoose Model Import
+const { Article } = require('../../models/article');
+const { Team } = require('../../models/team');
+const { Site } = require('../../models/site');
 
 // @route   GET api/articles
 // @Desc    Get all articles
 // @access  Public
 router.get('/', async (req, res) => {
-  let articles = await Article.find()
-    .populate('publisher', 'name shortName')
-    .populate('location', 'name dateline')
-    .sort('date: 1');
-  res.json(articles);
+	logger.info('GET Route: api/articles requested...');
+	try {
+		const articles = await Article.find()
+			.populate('publisher', 'name shortName')
+			.populate('location', 'name dateline')
+			.sort('date: 1');
+		res.status(200).json(articles);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/articles/id
+// @route   GET api/articles/:id
 // @Desc    Get articles by id
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
-  let id = req.params.id;
-  const article = await Article.findById(id)
-    .populate('publisher', 'name shortName')
-    .populate('location', 'name dateline')
-  if (article != null) {
-    res.json(article);
-  } else {
-    res.status(404).send(`The Article with the ID ${id} was not found!`);
-  }
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/articles/:id requested...');
+	const id = req.params.id;
+	try {
+		const article = await Article.findById(id)
+			.populate('publisher', 'name shortName')
+			.populate('location', 'name dateline');
+		if (article != null) {
+			res.status(200).json(article);
+		}
+		else {
+			res.status(404).send(`The Article with the ID ${id} was not found!`);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
 // @route   POST api/articles
 // @Desc    Create New Article
 // @access  Public
 router.post('/', async (req, res) => {
-  let { publisher, location, headline, articleBody, timestamp, likes, tags, imageSrc, agency } = req.body;
-  articleDebugger(`In Article Post, headline ${headline}`);
-  const newArticle = new Article(
-      { publisher, headline, articleBody, timestamp, likes, tags, imageSrc, agency }
-  );
-    
-  let convDate = new Date(req.body.date);
-  newArticle.date = convDate;
-  
-  if (req.body.publisherCode != ""){
-    let teamCode = req.body.publisherCode;
-    let team = await Team.findOne({ teamCode: teamCode });  
-    if (!team) {
-      articleDebugger(`Publisher Not Found: ${teamCode}`);
-    } else {
-      newArticle.publisher = team._id;
-      newArticle.agency    = team.shortName;
-    }
-  } else {
-    let teamId = req.body.publisher;
-    let team = await Team.findById({ teamId });  
-    if (!team) {
-      articleDebugger(`Publisher Not Found: ${teamCode}`);
-    } else {
-      article.agency = team.shortName;
-    }
-  }     
+	logger.info('POST Route: api/articles call made...');
+	let newArticle = new Article(req.body);
 
-  if (req.body.locationCode != ""){
-    let siteCode = req.body.locationCode;
-    let site = await Site.findOne({ siteCode: siteCode});  
-    if (!site) {
-      articleDebugger(`Location Not Found: ${siteCode}`);
-    } else {
-      newArticle.location = site._id;
-      newArticle.dateline = site.dateline;
-    }
-  }
+	try {
+		newArticle.date = new Date();
+		const retTimestamp = makeTimestamp();
+		if (retTimestamp) {
+			newArticle.timestamp = retTimestamp;
+		}
+		else {
+			newArticle.timestamp = req.body.timestamp;
+		}
 
-  /*
-  //no unique key ... just create it    
-  let { error } = validateArticle(req.body); 
-  if (error) return res.status(400).send(error.details[0].message);
-  */
-  
-  let article = await newArticle.save();
-  res.json(article);
-  console.log(`New Article For Headline ${req.body.headline} created...`);
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
+		const location = await Site.findById(newArticle.location);
+		newArticle.dateline = location.dateline;
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
+		await newArticle.validateArticle();
+		logger.info(`new Article time stamp ${newArticle.timestamp}`);
 
-  });
-  
-// @route   PUT api/articles/id
-// @Desc    Update Existing Article
-// @access  Public  
-router.put('/:id', validateObjectId, async (req, res) => {
-  try {
-    let id = req.params.id;
+		const docs = await Article.find({ headline: newArticle.headline, publisher: newArticle.publisher });
 
-    const article = await Article.findByIdAndUpdate( req.params.id,
-      { headline: req.body.headline,
-        publisher: req.body.publisher,
-        articleBody: req.body.articleBody, 
-        location: req.body.location,
-        timestamp: req.body.timestamp,
-        likes: req.body.likes,
-        tags: req.body.tags,
-        imageSrc: req.body.imageSrc,
-        agency: req.body.agency
-      },
-      { new: true, omitUndefined: true }
-    );
-
-    let convDate = new Date(req.body.date);
-    article.date = convDate;
-    
-    if (req.body.publisherCode != ""){
-      let teamCode = req.body.publisherCode;
-      let team = await Team.findOne({ teamCode: teamCode });  
-      if (!team) {
-        articleDebugger(`Publisher Not Found: ${teamCode}`);
-      } else {
-        article.publisher = team._id;
-        article.agency = team.shortName;
-      }
-    } else {
-      let teamId = req.body.publisher;
-      let team = await Team.findById({ teamId });  
-      if (!team) {
-        articleDebugger(`Publisher Not Found: ${teamCode}`);
-      } else {
-        article.agency = team.shortName;
-      }
-    }     
-  
-    if (req.body.locationCode != ""){
-      let siteCode = req.body.locationCode;
-      let site = await Site.findOne({ siteCode: siteCode });  
-      if (!site) {
-        articleDebugger(`Location Not Found: ${siteCode}`);
-      } else {
-        article.location = site._id;
-        article.dateline = site.dateline;
-      }
-    }
-
-    if (article != null) {
-      /*
-      const { error } = article.validateArticle(req.body); 
-      if (error) return res.status(400).send(error.details[0].message);
-      */
-      let updArticle = await article.save();
-      res.json(updArticle);
-    } else {
-        res.status(404).send(`The Article with the ID ${id} was not found!`);
-    }
-  } catch (err) {
-      console.log(`Article Put Error: ${err.message}`);
-      res.status(400).send(`Article Put Error: ${err.message}`);
-    }
+		if (docs.length < 1) {
+			newArticle = await newArticle.save();
+			// TODO: Team.populate is NOT working ... avoiding error on logger.info
+			await Team.populate(newArticle, { path: 'publisher', model: 'Team', select: 'name' });
+			if (newArticle.team) {
+				logger.info(`${newArticle.headline} article created for ${newArticle.team.name} ...`);
+			}
+			res.status(200).json(newArticle);
+		}
+		else {
+			nexusError(`An article with the headline ${newArticle.headline} has already been published!`, 400);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
-  
+
 // @route   DELETE api/articles/id
 // @Desc    Update Existing Article
-// @access  Public   
+// @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
-  let id = req.params.id;
-  const article = await Article.findByIdAndRemove(req.params.id);
+	logger.info('DEL Route: api/articles/:id call made...');
+	const id = req.params.id;
 
-  if (article != null) {
-    res.json(article);
-  } else {
-    res.status(404).send(`The Article with the ID ${id} was not found!`);
-  } 
+	try {
+		const article = await Article.findByIdAndRemove(req.params.id);
+
+		if (article != null) {
+			logger.info(`The ${article.headline} article with the id ${id} was deleted!`);
+			res.status(200).json(article);
+		}
+		else {
+			nexusError(`The Article with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
 // @route   PATCH api/articles/deleteAll
 // @desc    Delete All Articles
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
-  for await (const article of Article.find()) {    
-    let id = article.id;
-    try {
-      articleDel = await Article.findByIdAndRemove(id);
-      if (articleDel = null) {
-        res.status(404).send(`The Article with the ID ${id} was not found!`);
-      }
-    } catch (err) {
-      console.log('Error:', err.message);
-      res.status(400).send(err.message);
-    }
-  }        
-  res.status(200).send("All Articles succesfully deleted!");
+	const data = await Article.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Articles!`);
 });
 
 module.exports = router;

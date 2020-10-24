@@ -1,38 +1,31 @@
 // Random die rolls - Exports d4, d6, d8, d10, d12, and d20.
 
-function d4() {
-    let rand = 1 + Math.floor(Math.random() * 4);
-    return rand;
-};
+function d4 () {
+	return (1 + Math.floor(Math.random() * 4));
+}
 
-function d6() {
-    let rand = 1 + Math.floor(Math.random() * 6);
-    return rand;
-};
+function d6 () {
+	return (1 + Math.floor(Math.random() * 6));
+}
 
-function d8() {
-    let rand = 1 + Math.floor(Math.random() * 8);
-    return rand;
-};
+function d8 () {
+	return (1 + Math.floor(Math.random() * 8));
+}
 
-function d10() {
-    let rand = 1 + Math.floor(Math.random() * 10);
-    return rand;
-};
+function d10 () {
+	return (1 + Math.floor(Math.random() * 10));
+}
 
-function d12() {
-    let rand = 1 + Math.floor(Math.random() * 12);
-    return rand;
-};
+function d12 () {
+	return 1 + Math.floor(Math.random() * 12);
+}
 
-function d20() {
-    let rand = 1 + Math.floor(Math.random() * 20);
-    return rand;
-};
+function d20 () {
+	return 1 + Math.floor(Math.random() * 20);
+}
 
-function rand(num) {
-    let rand = 1 + Math.floor(Math.random() * num);
-    return rand;
-};
+function rand (num) {
+	return 1 + Math.floor(Math.random() * num);
+}
 
 module.exports = { d4, d6, d8, d10, d12, d20, rand };

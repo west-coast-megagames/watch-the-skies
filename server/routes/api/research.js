@@ -1,135 +1,115 @@
-const routeDebugger = require('debug')('app:routes');
-const nexusEvent = require('../../startup/events');
-const express = require('express');
-const router = express.Router();
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-const { loadTech, techSeed } = require('../../wts/research/techTree');
-const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
-const science = require('../../wts/research/research');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// Research Models - Using Mongoose Model
-const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/sci/research');
-const validateObjectId = require('../../middleware/validateObjectId');
+// Mongoose Model Import
+const { Research, KnowledgeResearch, AnalysisResearch, TechResearch } = require('../../models/research');
 
-const { logger } = require('../../middleware/winston'); // Import of winston for error logging
-require ('winston-mongodb');
-
-// @route   GET api/research/
+// @route   GET api/research
 // @Desc    Get all research
 // @access  Public
 router.get('/', async function (req, res) {
-    routeDebugger('Showing all completed research...');
-    let research = await Research.find().sort({ level: 1 }).sort({ field: 1 });
-    res.json(research);
+	logger.info('GET Route: api/research requested...');
+	try {
+		const research = await Research.find()
+			.sort({ level: 1 })
+			.sort({ field: 1 });
+		res.status(200).json(research);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/research/id
-// @Desc    Get countries by id
+// @route   GET api/research/:id
+// @Desc    Get research by id
 // @access  Public
 router.get('/id/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/research/:id requested...');
+	const id = req.params.id;
 
-    let id = req.params.id;
-    try {
-        const research = await Research.findById(id);
-        if (research != null) {
-          res.json(research);
-        } else {
-          res.status(404).send(`The Research with the ID ${id} was not found!`);
-        }
-    } catch (err) {
-        logger.error(`Get Research by ID Catch Error ${err.message}`, {meta: err});
-        res.status(400).send(err.message);
-    }
+	try {
+		const research = await Research.findById(id);
+
+		if (research != null) {
+			res.status(200).json(research);
+		}
+		else {
+			nexusError(`The Research with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
-// @route   GET api/research/sciStats
-// @Desc    Get global science state
+// @route   POST api/research
+// @Desc    Post a research
 // @access  Public
-router.get('/sciState', async function (req, res) {
-    routeDebugger('Sending server science state...');
-    let state = {
-        fundingCost: science.fundingCost,
-        techCost: science.techCost
-    };
-    res.status(200).json(state);
+router.post('/', async function (req, res) {
+	logger.info('POST Route: api/research call made...');
+
+	try {
+		let newResearch;
+
+		switch (true) {
+		case req.body.type === 'Technology':
+			newResearch = new TechResearch(req.body);
+			break;
+		case req.body.type === 'Knowledge':
+			newResearch = new KnowledgeResearch(req.body);
+			break;
+		case req.body.type === 'Analysis':
+			newResearch = new AnalysisResearch(req.body);
+			break;
+		default:
+			nexusError(`Research type ${req.body.type} is not valid!`, 404);
+		}
+
+		await newResearch.validateResearch();
+		newResearch = await newResearch.save();
+		res.status(200).json(newResearch);
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
-// @route   POST api/research/tech
-// @Desc    Post a technology
+// @route   DELETE api/research/:id
+// @Desc    Delete zone by ID
 // @access  Public
-router.post('/tech', async function (req, res) {
-    let tech = new TechResearch(req.body);
+router.delete('/:id', validateObjectId, async (req, res) => {
+	logger.info('DEL Route: api/research/:id call made...');
+	const id = req.params.id;
 
-    tech = await tech.save();
-        console.log(`Technology Created...`);
-        return res.json(tech);            
+	try {
+		const research = await Research.findByIdAndRemove(id);
+
+		if (research != null) {
+			logger.info(`The ${research.name} research with the id ${id} was deleted!`);
+			res.status(200).json(research);
+		}
+		else {
+			nexusError(`The research with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
-// @route   POST api/research/knowledge
-// @Desc    Post a knowledge field
+// @route   DEL api/research/deleteAll
+// @Desc    Delete All Research
 // @access  Public
-router.post('/knowledge', async function (req, res) {
-    let field = new KnowledgeResearch(req.body);
-
-    field = await field.save();
-        console.log(`Knowledge aquired...`);
-        return res.json(field);            
-});
-
-// @route   POST api/research/analysis
-// @Desc    Post a knowledge field
-// @access  Public
-router.post('/analysis', async function (req, res) {
-    let analysis = new AnalysisResearch(req.body);
-
-    analysis = await analysis.save();
-        console.log(`Analysis Completed...`);
-        return res.json(analysis);            
-});
-
-// @route   PATCH api/research/load/tech
-// @Desc    Load all technology from JSON files
-// @access  Public
-router.patch('/load/tech', async function (req, res) {
-    let response = await loadTech();
-    nexusEvent.emit('updateResearch');
-    return res.status(200).send(response);
-});
-
-// @route   PATCH api/research/load/knowledge
-// @Desc    Load all knowledge fields from JSON files
-// @access  Public
-router.patch('/load/knowledge', async function (req, res) {
-    let response = await loadKnowledge(); // Loads all knowledge into the server
-    nexusEvent.emit('updateResearch');
-    return res.status(200).send(response);
-});
-
-// @route   PATCH api/research/load/knowledge/seed
-// @Desc    Load all knowledge fields from JSON files
-// @access  Public
-router.patch('/load/knowledge/seed', async function (req, res) {
-    let response = await knowledgeSeed();
-    nexusEvent.emit('updateResearch');
-    return res.status(200).send('We did it, such a knowledge seed!')
-});
-
-// @route   PATCH api/research/load/tech/seed
-// @Desc    Load all technology from JSON files
-// @access  Public
-router.patch('/load/tech/seed', async function (req, res) {
-    let response = await techSeed();
-    nexusEvent.emit('updateResearch');
-    return res.status(200).send(`We did it, we seeded Technology`);
-});
-
-// @route   DEL api/research/delete
-// @Desc    Load all research in the database
-// @access  Public
-router.delete('/', async function (req, res) {
-    let data = await Research.deleteMany();
-    console.log(data);
-    return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Database!`)
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Research.deleteMany();
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} records in the Reseach Collection!`);
 });
 
 

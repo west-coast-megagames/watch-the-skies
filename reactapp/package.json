@@ -6,10 +6,12 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@fortawesome/react-fontawesome": "^0.1.9",
+    "@react-google-maps/api": "^1.10.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@rsuite/charts": "^3.2.4",
     "axios": "^0.18.1",
     "bootstrap": "^4.5.0",
+    "date-fns": "^2.16.1",
     "echarts": "^4.8.0",
     "font-awesome": "^4.7.0",
     "joi-browser": "^13.4.0",
@@ -22,7 +24,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
-    "rsuite": "^4.4.0",
+    "rsuite": "^4.8.2",
     "socket.io-client": "^2.3.0"
   },
   "devDependencies": {

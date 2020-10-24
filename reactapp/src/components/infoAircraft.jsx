@@ -1,20 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Drawer,
-  Button,
-  FlexboxGrid,
-  Icon,
-  IconButton,
-  Badge,
-  Tag,
-  TagGroup,
-  Alert,
-  Panel,
-  Whisper,
-  Popover,
-  SelectPicker,
-} from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, } from "rsuite";
 import axios from "axios";
 import { infoClosed } from "../store/entities/infoPanels";
 
@@ -36,7 +22,7 @@ class InfoAircraft extends Component {
   render() {
     return (
       <Drawer
-        size="md"
+        size="sm"
         show={this.props.show}
         onHide={() => this.props.hideAircraft()}
       >
@@ -76,8 +62,6 @@ class InfoAircraft extends Component {
             </FlexboxGrid>
             <br />
             {this.aircraftStats(this.props.aircraft)}
-            <br />
-            {aircraftSystems(this.props.aircraft)}
             <br />
             <ServiceRecord owner={this.props.aircraft} />
           </Drawer.Body>
@@ -190,7 +174,7 @@ class InfoAircraft extends Component {
       );
     } else {
       try {
-        let response = await axios.put(`${gameServer}game/repairAircraft/`, {
+        let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
         console.log(response.data);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Progress, Table, InputNumber, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
+import { Progress, Table, InputNumber, Loader, Tag, SelectPicker, Button, Alert, Modal, IconButton, Icon } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../../config';
 import { lookupPct } from './../../../scripts/labs';
@@ -128,7 +128,7 @@ class ResearchLabs extends Component {
 					note : txnNote,
 					amount : cost
 				}
-				myAxiosCall = await axios.post(`${gameServer}api/banking/withdrawal`, txn);
+				myAxiosCall = await axios.post(`${gameServer}game/banking/withdrawal`, txn);
 				Alert.success(myAxiosCall.data, 6000)
 
 				// Submit the lab update
@@ -140,7 +140,7 @@ class ResearchLabs extends Component {
 						// for lab update, need to provide lab object
 						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, index: updatedLab.index, _id: updatedLab._id, research: updatedLab.research }
 						console.log(newLab);
-						myAxiosCall = await axios.put(`${gameServer}game/research`, newLab);
+						myAxiosCall = await axios.put(`${gameServer}science/research`, newLab);
 						Alert.success(myAxiosCall.data, 4000);
 					}	
 					if (txnType === "Lab Repair") {
@@ -187,7 +187,13 @@ class ResearchLabs extends Component {
 		}
 	}
 	
-	render() { 
+	render() {
+		if (!this.props.account) {
+			return(
+				<Loader center content="No accounts Loaded..." vertical />
+			);
+		};
+
 		let props = this.props;
 		let research = this.state.research;
 		let sendLabUpdate = this.handleUpdate;

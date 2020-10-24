@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import InfoAircraft from './infoAircraft';
 import InfoDeploy from './infoDeploy';
 import InfoMilitary from './infoMilitary';
-
+import InfoSite from './infoSite';
 
 class InfoDrawer extends Component {
     render() { 
@@ -12,6 +12,7 @@ class InfoDrawer extends Component {
                 {this.props.login && <InfoAircraft />}
                 {this.props.login && <InfoDeploy />}
                 {this.props.login && <InfoMilitary />}
+								{this.props.login && <InfoSite />}
             </React.Fragment>
         );
     }
@@ -19,7 +20,6 @@ class InfoDrawer extends Component {
 
 const mapStateToProps = state => ({
     login: state.auth.login
-    
   });
   
   const mapDispatchToProps = dispatch => ({});

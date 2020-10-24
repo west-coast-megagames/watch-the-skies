@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { Team, getPR }  = require('../../models/team/team');
+const { Team, getPR }  = require('../../models/team');
 const mongoose = require('mongoose');
 
 let server;
@@ -31,11 +31,11 @@ describe('/teams/', () => {
         { teamCode: 'C1', 
           name: 'Team Test 1',
           shortName: "Test 1",
-          teamType: "N"},
+          type: "N"},
         { teamCode: 'C2', 
           name: 'Team Test 2',
           shortName: "Test 2",
-          teamType: "N"
+          type: "N"
         }
       ])
       const res = await request(server).get('/api/team');
@@ -53,7 +53,7 @@ describe('/teams/', () => {
       { teamCode: 'C3', 
         name: 'Team Test 3',
         shortName: "Test 3",
-        teamType: "N"
+        type: "N"
       });
       //console.log("jeff here in get id test ... teamCode", team.teamCode);
       await team.save();
@@ -78,7 +78,7 @@ describe('/teams/', () => {
       { teamCode: 'C4', 
         name: 'Team Test 4',
         shortName: "Test 4",
-        teamType: "N"
+        type: "N"
       });
       await team.save();
 
@@ -113,7 +113,7 @@ describe('/teams/', () => {
       return await request(server)
       .post('api/team/')
       .send({ teamCode: newCode, name: newName, prLevel: newPrLevel, prTrack: newPrTrack, 
-              shortName: newShortName, teamType: newType, sciRate: newSciRate, roles: newRoles });
+              shortName: newShortName, type: newType, sciRate: newSciRate, roles: newRoles });
     }  
 
     beforeEach(() => {
@@ -130,13 +130,13 @@ describe('/teams/', () => {
     });
 
     it('should return 400 if team teamCode is less than 2 characters', async () => {
-      const res = await request(server).post('/api/team').send({ teamCode: "C", name: 'Test Team Val 1', teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C", name: 'Test Team Val 1', type: "N" });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
     
     it('should return 400 if team teamCode is greater than 3 characters', async () => {
-      const res = await request(server).post('/api/team').send({ teamCode: "C125", name: 'Test Team Val 2', teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C125", name: 'Test Team Val 2', type: "N" });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
@@ -150,18 +150,18 @@ describe('/teams/', () => {
         { teamCode: 'C5', 
           name: 'Team Test 5',
           shortName: "Test 5",
-          teamType: "N"
+          type: "N"
       });
       team.roles = newRoles;
       await team.save();
 
-      const res = await request(server).post('/api/team').send({ teamCode: "C5", name: 'Team Test 6', teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C5", name: 'Team Test 6', type: "N" });
       expect(res.status).toBe(500);
       expect(res.text).toMatch(/duplicate key/);
     });
 
     it('should return 400 if team name is less than 2 characters', async () => {
-      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: '1', teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: '1', type: "N" });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
@@ -169,7 +169,7 @@ describe('/teams/', () => {
     it('should return 400 if team name is more than 50 characters', async () => {
       // generate a string from array number of elements minus 1 ... so 51 chars > 50 in joi validation
       const testName = new Array(52).join('a');
-      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: testName, teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: testName, type: "N" });
       expect(res.status).toBe(400);
     });
 
@@ -178,18 +178,18 @@ describe('/teams/', () => {
         { teamCode: 'C5', 
           name: 'Team Test 5',
           shortName: "Test 5",
-          teamType: "N"
+          type: "N"
       });
       await team.save();
 
-      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: 'Team Test 5', teamType: "N" });
+      const res = await request(server).post('/api/team').send({ teamCode: "C6", name: 'Team Test 5', type: "N" });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/already exists/);
     });
 
     it('should return 400 if team shortName is less than 2 characters', async () => {
       const res = await request(server).post('/api/team')
-        .send({ teamCode: "C7", name: 'Test Team Val 4 ', teamType: "N", shortName: "7" });
+        .send({ teamCode: "C7", name: 'Test Team Val 4 ', type: "N", shortName: "7" });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/length must be/);
     });
@@ -198,19 +198,19 @@ describe('/teams/', () => {
       // generate a string from array number of elements minus 1 ... so 31 chars > 30 in joi validation
       const testName = new Array(32).join('a');
       const res = await request(server).post('/api/team')
-        .send({ teamCode: "C7", name: "Test Team Val 5", teamType: "N", shortName: testName });
+        .send({ teamCode: "C7", name: "Test Team Val 5", type: "N", shortName: testName });
       expect(res.status).toBe(400);
     });
 
-    it('should return 500 if teamType Not in enum list of values', async () => {
-        const res = await request(server).post('/api/team').send({ teamCode: "C8", name: 'Test Team Val 8', teamType: "Q" });
+    it('should return 500 if type Not in enum list of values', async () => {
+        const res = await request(server).post('/api/team').send({ teamCode: "C8", name: 'Test Team Val 8', type: "Q" });
         expect(res.status).toBe(500);
         expect(res.text).toMatch(/not a valid enum value/)
     });
   
     it('should return 500 if role.Type Not in enum list of values', async () => {
       const res = await request(server).post('/api/team')
-         .send({ teamCode: "C8", name: 'Test Team Val 8', teamType: "N",
+         .send({ teamCode: "C8", name: 'Test Team Val 8', type: "N",
          "roles" : [ {"role": "President", "type" : "Head of Testing" } ] });
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/must be one of/)
@@ -219,7 +219,7 @@ describe('/teams/', () => {
     it('should save the team if it is valid', async () => {
 
       const res = await request(server).post('/api/team')
-        .send({ teamCode: "C8", name: 'Test Team Post 8', shortName: "Post 8", teamType: "N" });
+        .send({ teamCode: "C8", name: 'Test Team Post 8', shortName: "Post 8", type: "N" });
 
       const team = await Team.find({ teamCode: 'C8' });
 
@@ -270,7 +270,7 @@ describe('/teams/', () => {
         { teamCode: 'C9', 
           name: 'Team Test 9',
           shortName: "Test 9",
-          teamType: "N"
+          type: "N"
       });
       await team.save();
 
@@ -321,7 +321,7 @@ describe('/teams/', () => {
         { teamCode: 'C9', 
           name: 'Team Test 9',
           shortName: "Test 9",
-          teamType: "N"
+          type: "N"
       });
       await team.save();
 
@@ -398,12 +398,12 @@ describe('/teams/', () => {
     });
 
     /* enum tests do not seem to trigger on PUT ????
-    it('should return 400 if teamType Not in enum list of values', async () => {
+    it('should return 400 if type Not in enum list of values', async () => {
       //create a team 
       team = new Team({ name: 'Test Team Put 3',
                         teamCode: 'T1',
                         shortName: "Test Put 3",
-                        teamType: "N"
+                        type: "N"
       });
       await team.save();
 
@@ -411,7 +411,7 @@ describe('/teams/', () => {
       newType = "Q";
  
       const res = await request(server).put('/api/team/' + id)
-        .send({ teamType: newType, teamCode: team.teamCode, name: team.name });
+        .send({ type: newType, teamCode: team.teamCode, name: team.name });
 
       expect(res.status).toBe(400);
       expect(res.text).toMatch(/not a valid enum value/)
@@ -422,7 +422,7 @@ describe('/teams/', () => {
       team = new Team({ name: 'Test Team Put 3',
                         teamCode: 'T1',
                         shortName: "Test Put 3",
-                        teamType: "N"
+                        type: "N"
       });
       await team.save();
 
@@ -443,7 +443,7 @@ describe('/teams/', () => {
       team = new Team({ name: 'Team Put Test 5',
         teamCode: "T1",
         name: "Test PUT Update 5",
-        teamType: "N",
+        type: "N",
         shortName: "Put Upd 5"
       });
       await team.save();
@@ -466,7 +466,7 @@ describe('/teams/', () => {
       team = new Team({ name: 'Team Put Test 6',
         teamCode: "T6",
         shortName: "Put Test 6",
-        teamType: "N",
+        type: "N",
       });
       await team.save();
   

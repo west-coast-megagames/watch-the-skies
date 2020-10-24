@@ -1,12 +1,12 @@
 [
     {
-        "model": "aircraft",
+        "buildModel": "aircraft",
         "name": "Generic Fighter",
         "type": "Fighter",
         "code": "NX-002",
         "cost": 1,
         "buildTime": 1,
-        "desc": "Generic XCOM Interceptor Bluebprint",
+        "desc": "Generic XCOM Interceptor Blueprint",
         "prereq": [],
         "hidden": false,
         "stats": {
@@ -20,12 +20,13 @@
         }
     },
     {
-        "model": "aircraft",
-        "name": "Generic Fighter",
+        "buildModel": "aircraft",
+        "name": "Generic UFO Fighter",
+        "type": "Fighter",
         "code": "UFO-13",
         "cost": 2,
         "buildTime": 1,
-        "desc": "Generic UFO Bluebprint",
+        "desc": "Generic UFO Blueprint",
         "prereq": [],
         "hidden": false,
         "stats": {

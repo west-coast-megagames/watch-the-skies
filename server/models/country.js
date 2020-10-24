@@ -1,81 +1,119 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const Joi = require("joi");
-const countryDebugger = require("debug")("app:country");
+const mongoose = require('mongoose'); // Mongo DB object modeling module
+const Joi = require('joi'); // Schema description & validation module
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
-// type are Terrestrial(earth) and Alien
+// Global Constants
+const Schema = mongoose.Schema; // Destructure of Schema
+
+// type values are Ground or Space
 const CountrySchema = new Schema({
-  model: { type: String, default: "Country" },
-  type: {
-    type: String,
-    minlength: 1,
-    maxlength: 1,
-    enum: ["T", "A"],
-    default: "T",
-  },
-  zone: { type: Schema.Types.ObjectId, ref: "Zone" },
-  loadZoneCode: { type: String, maxlength: 2, uppercase: true },
-  team: { type: Schema.Types.ObjectId, ref: "Team" },
-  loadTeamCode: { type: String, maxlength: 3 },
-  code: {
-    type: String,
-    required: true,
-    index: true,
-    trim: true,
-    unique: true,
-    minlength: 2,
-    maxlength: 2,
-    uppercase: true,
-  },
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 3,
-    maxlength: 75,
-  },
-  unrest: {
-    type: Number,
-    min: 0,
-    max: 250,
-    default: 0,
-  },
-  coastal: {
-    type: Boolean,
-    default: false,
-  },
-  borderedBy: [{ type: Schema.Types.ObjectId, ref: "Country" }],
-  milAlliance: [{ type: Schema.Types.ObjectId, ref: "Team" }],
-  sciAlliance: [{ type: Schema.Types.ObjectId, ref: "Team" }],
-  stats: {
-    sciRate: { type: Number, default: 25 },
-    balance: { type: Number, default: 0 },
-  },
-  formalName: { type: String },
-  serviceRecord: [{ type: Schema.Types.ObjectId, ref: "Log" }],
-  gameState: [],
+	model: { type: String, default: 'Country' },
+	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
+	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	code: {
+		type: String,
+		required: true,
+		index: true,
+		trim: true,
+		unique: true,
+		minlength: 2,
+		maxlength: 2,
+		uppercase: true
+	},
+	name: {
+		type: String,
+		required: true,
+		trim: true,
+		minlength: 3,
+		maxlength: 75
+	},
+	unrest: {
+		type: Number,
+		min: 0,
+		max: 250,
+		default: 0
+	},
+	type: { type: String, default: 'Ground' },
+	coastal: {
+		type: Boolean,
+		default: false
+	},
+	borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }],
+	milAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
+	sciAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
+	stats: {
+		sciRate: { type: Number, default: 25 },
+		balance: { type: Number, default: 0 }
+	},
+	formalName: { type: String },
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
+	gameState: []
 });
 
-CountrySchema.methods.validateCountry = function (country) {
-  const schema = {
-    name: Joi.string().min(3).max(75).required(),
-    code: Joi.string().min(2).max(2).required().uppercase(),
-    unrest: Joi.number().min(0).max(250),
-  };
+CountrySchema.methods.validateCountry = async function () {
+	const { validTeam, validZone, validLog, validCountry } = require('../middleware/util/validateDocument');
+	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
+	let schema = {};
+	switch (this.type) {
+	case 'Ground':
+		schema = Joi.object({
+			name: Joi.string().min(3).max(75).required(),
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			unrest: Joi.number().min(0).max(250)
+		});
+		for await (const bBy of this.borderedBy) {
+			await validCountry(bBy);
+		}
+		break;
 
-  return Joi.validate(country, schema, { allowUnknown: true });
+	case 'Space':
+		schema = Joi.object({
+			name: Joi.string().min(3).max(75).required(),
+			code: Joi.string().min(2).max(2).required().uppercase(),
+			unrest: Joi.number().min(0).max(250)
+		});
+		break;
+
+	default:
+		nexusError(`Invalid Type ${this.type} for zone!`, 400);
+	}
+
+	const { error } = schema.validate(this, { allowUnknown: true });
+	if (error != undefined) nexusError(`${error}`, 400);
+
+	await validZone(this.zone);
+	await validTeam(this.team);
+	for await (const milAll of this.milAlliance) {
+		await validTeam(milAll);
+	}
+	for await (const sciAll of this.sciAlliance) {
+		await validTeam(sciAll);
+	}
+	for await (const servRec of this.serviceRecord) {
+		await validLog(servRec);
+	}
 };
 
-let Country = mongoose.model("Country", CountrySchema);
+const Country = mongoose.model('Country', CountrySchema);
 
-function validateCountry(country) {
-  const schema = {
-    code: Joi.string().min(2).max(2).required().uppercase(),
-    name: Joi.string().min(3).max(75).required(),
-    unrest: Joi.number().min(0).max(250),
-  };
+const GroundCountry = Country.discriminator(
+	'GroundCountry',
+	new Schema({
+		type: { type: String, default: 'Ground' },
+		coastal: {
+			type: Boolean,
+			default: false
+		},
+		borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }]
+	})
+);
 
-  return Joi.validate(country, schema, { allowUnknown: true });
-}
+const SpaceCountry = Country.discriminator(
+	'SpaceCountry',
+	new Schema({
+		type: { type: String, default: 'Space' }
+	})
+);
 
-module.exports = { Country, validateCountry };
+module.exports = { Country, GroundCountry, SpaceCountry };

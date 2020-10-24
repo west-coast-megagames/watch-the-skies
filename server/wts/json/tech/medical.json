@@ -516,7 +516,7 @@
   "effects": [],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KB-1"
    },
    {
@@ -792,7 +792,7 @@
   "effects": [],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KB-2"
    },
    {
@@ -1009,7 +1009,7 @@
   ],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KB-3"
    },
    {
@@ -1079,7 +1079,7 @@
   ],
   "unlocks": [
    {
-    "type": "Equipment",
+    "type": "Upgrade",
     "code": "KB-4"
    }
   ],

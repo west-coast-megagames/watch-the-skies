@@ -1,6 +1,6 @@
 module.exports = function () {
     // Error handling and Logging
-    const error = require('../middleware/winston'); // middleware/error.js which is running [npm] winston for error handling
+    const error = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
     require('express-async-errors'); // [npm] express-async-errors, used to do try/catch error handling
 
     error.logger.info('Loading Logger Module...')

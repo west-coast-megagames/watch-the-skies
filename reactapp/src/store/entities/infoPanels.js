@@ -24,7 +24,16 @@ const slice = createSlice({
     militaryClosed: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info.showMilitary = false
-    },
+		},
+		showSite: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.Site = action.payload
+      info.showSite = true
+		},
+		siteClosed: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.showSite = false
+		},
     infoRequested: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info[action.payload.model] = action.payload
@@ -48,12 +57,14 @@ const slice = createSlice({
 
 // Action Export
 export const {
-  showMilitary,
-  infoRequested,
-  infoClosed,
-  targetAssigned,
-  deployClosed,
-  militaryClosed
+	showMilitary,
+	militaryClosed,
+	infoRequested,
+	infoClosed,
+	targetAssigned,
+	deployClosed,
+	showSite,
+	siteClosed
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

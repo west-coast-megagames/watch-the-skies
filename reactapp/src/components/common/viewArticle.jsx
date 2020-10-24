@@ -8,14 +8,14 @@ const ViewArticle = (props) => {
         <React.Fragment>
           <Modal.Header>
             <Modal.Title>
-              <TeamAvatar size={"sm"} teamCode={article.agency} /><span style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</span>
+              <TeamAvatar size={"sm"} code={article.agency} /><span style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</span>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <p><b>Author:</b> Some Bloke | <b>Publisher:</b> {article.publisher.name}</p>
             <p>{article.location.dateline} - {article.timestamp.turn}</p>
             <Divider />
-            <p>{article.articleBody}</p>
+            <p>{article.body}</p>
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar style={{float: 'right'}}>

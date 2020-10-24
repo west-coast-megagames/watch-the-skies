@@ -36,7 +36,7 @@ class InfoMilitary extends Component {
   render() {
     return (
       <Drawer
-        size="md"
+        size="sm"
         show={this.props.show}
         onHide={() => this.props.hideMilitary()}
       >
@@ -94,8 +94,6 @@ class InfoMilitary extends Component {
               </FlexboxGrid.Item>
             </FlexboxGrid>
             {this.unitStats(this.props.unit)}
-            <br />
-            {unitGear(this.props.unit)}
             <br />
             <ServiceRecord owner={this.props.unit} />
           </Drawer.Body>
@@ -210,7 +208,7 @@ class InfoMilitary extends Component {
       );
     } else {
       try {
-        let response = await axios.put(`${gameServer}game/repairAircraft/`, {
+        let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
         console.log(response.data);
@@ -223,7 +221,7 @@ class InfoMilitary extends Component {
   };
 }
 
-function unitGear(unit) {
+function unitGear(unit) { // needs to be updated with Upgrades
   let { gear } = unit;
   return (
     <Panel header={`Unit gear - ${gear.length} Components`} collapsible>

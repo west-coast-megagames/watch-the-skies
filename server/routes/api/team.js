@@ -1,186 +1,154 @@
-const routeDebugger = require('debug')('app:routes');
-const express = require('express');
-const router = express.Router();
-const validateObjectId = require('../../middleware/validateObjectId');
-const supportsColor = require('supports-color');
+const express = require('express'); // Import of Express web framework
+const router = express.Router(); // Destructure of HTTP router for server
 
-const { logger } = require('../../middleware/winston');
+const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
+const validateObjectId = require('../../middleware/util/validateObjectId'); // Middleware that validates object ID's in HTTP perameters
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
-// Interceptor Model - Using Mongoose Model
-const { Team, validateTeam, getPR, getTeam, getSciRate, validateRoles } = require('../../models/team/team');
+// Mongoose Model Import
+const { Team,
+	National,
+	Alien,
+	Control,
+	Media,
+	Npc } = require('../../models/team');
 
 // @route   GET api/team
 // @Desc    Get all Teams
 // @access  Public
 router.get('/', async function (req, res) {
-    routeDebugger('Looking up teams...');
-    let teams = await Team.find().sort({team: 1});
-    res.json(teams);
+	logger.info('GET Route: api/teams requested...');
+
+	try {
+		const teams = await Team.find()
+			.sort({ team: 1 });
+		res.status(200).json(teams);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
 });
 
-// @route   GET api/team/id/:id
+// @route   GET api/team/:key/:value
+// @Desc    Get by property
+// @access  Public
+router.get('/:key/:value', async (req, res) => {
+	logger.info('GET Route: api/team key value requested...');
+	const query = {};
+	query[req.params.key] = req.params.value;
+
+	try {
+		const team = await Team.find(query).sort({ team: 1 });
+		res.status(200).json(team);
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+		res.status(500).send(err.message);
+	}
+});
+
+// @route   GET api/team/:id
 // @Desc    Get all single team
 // @access  Public
-router.get('/id/:id', validateObjectId, async (req, res) => {
-  let id = req.params.id;
-  const team = await Team.findById(id);
-  if (team != null) {
-    res.json(team);
-  } else {
-    res.status(404).send(`The Team with the ID ${id} was not found!`);
-  }
+router.get('/:id', validateObjectId, async (req, res) => {
+	logger.info('GET Route: api/team/:id requested...');
+	const id = req.params.id;
+
+	try {
+		const team = await Team.findById(id);
+		if (team != null) {
+			res.status(200).json(team);
+		}
+		else {
+			nexusError(`The Team with the ID ${id} was not found!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
-// @route   GET api/team/code
-// @Desc    Get Team by Team Code
-// @access  Public
-router.get('/code/:teamCode', async (req, res) => {
-    let teamCode = req.params.teamCode;
-    let team = await Team.find({ teamCode });
-    if (team.length) {
-      res.json(team);
-    } else {
-      res.status(404).send(`The Team with the Team Code ${teamCode} was not found!`);
-    }
-});
+// TODO: Add GET route that allows for getting by discriminator
 
 // @route   POST api/team
 // @Desc    Post a new team
 // @access  Public
 router.post('/', async (req, res) => {
-  let { name, roles, prTrack, prLevel, sciRate, shortName, teamCode, teamType } = req.body;
-  const { error } = validateTeam(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+	logger.info('POST Route: api/team call made...');
 
-  if (roles){
-    if (roles.length > 0) {
-      try {
-        for (let currRole of roles ) {
-          let test2 = validateRoles(currRole);
-            if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
-        }
-      } catch ( err ) {
-        return res.status(400).send(`Team Val Roles Error: ${err.message}`);
-      }
-    }
-  }
-  
-  const newTeam = new Team(
-    { name, roles, prTrack, prLevel, sciRate, shortName, teamCode, teamType }
-    );
-  let docs = await Team.find({ name });
-  if (!docs.length) {
-    let team = await newTeam.save();
-    res.json(team);
-    routeDebugger(`The ${name} team created...`);
-  } else {                
-    console.log(`${name} team already exists!`);
-    res.status(400).send(`${name} team already exists!`);
-  }
+	try {
+
+		let newTeam;
+		switch(req.body.type) {
+
+		case('National'):
+			newTeam = new National(req.body);
+			break;
+
+		case('Alien'):
+			newTeam = new Alien(req.body);
+			break;
+
+		case('Control'):
+			newTeam = new Control(req.body);
+			break;
+
+		case('Media'):
+			newTeam = new Media(req.body);
+			break;
+
+		case('Npc'):
+			newTeam = new Npc(req.body);
+			break;
+
+		default:
+			logger.info(`Team ${req.body.name} has invalid type ${req.body.type}`);
+			res.status(500).json(newTeam);
+
+		}
+
+		await newTeam.validateTeam();
+		newTeam = await newTeam.save();
+		logger.info(`Team ${newTeam.name} created...`);
+		res.status(200).json(newTeam);
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
-
-// @route   PUT api/team/roles/:id
-// @Desc    Add a role to a team
-// @access  Public
-router.put('/roles/:id', validateObjectId, async (req, res) => {
-
-    const { error } = validateTeam(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
-
-    let { role } = req.body;
-    try {
-      let test2 = validateRoles(role);
-      if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
-    } catch ( err ) {
-      return res.status(400).send(`Team Val Roles Error: ${err.message}`);
-    }
-
-    let team = await Team.findById({ _id: req.params.id });
-    team.roles.push(role);
-
-    team = await team.save();
-    res.json(team);
-    console.log(`${role.role} added to ${team.name}!`);
-});
-
-// @route   PUT api/team/id
-// @Desc    Update Existing Team
-// @access  Public  
-router.put('/:id', validateObjectId, async (req, res) => {
-  try {
-    let id = req.params.id;
-
-    const { error } = validateTeam(req.body); 
-    if (error) return res.status(400).send(error.details[0].message);
-
-    let roles = req.body.roles;
-    if (roles) {
-      try {
-        for (let currRole of roles ) {
-          let test2 = validateRoles(currRole);
-            if (test2.error) return res.status(400).send(`Team Val Roles Error: ${test2.error.details[0].message}`);
-        }
-      } catch ( err ) {
-        return res.status(400).send(`Team Val Roles Error: ${err.message}`);
-      }
-    }
-
-    const team = await Team.findByIdAndUpdate( req.params.id,
-      { name: req.body.name,
-        teamCode: req.body.teamCode,
-        shortName: req.body.shortName,
-        teamType: req.body.teamType,
-        roles: req.body.roles,
-        prTrack: req.body.prTrack,
-        prLevel: req.body.prLevel,
-        sciRate: req.body.sciRate
-       }, 
-      { new: true, omitUndefined: true }
-    );
-
-    if (team != null) {
-      res.json(team);
-    } else {
-      res.status(404).send(`The Team with the ID ${id} was not found!`);
-    }
-  } catch (err) {
-      console.log(`Team Put Error: ${err.message}`);
-      res.status(400).send(`Team Put Error: ${err.message}`);
-    }
-});
-
 
 // @route   DELETE api/team/:id
 // @Desc    Delete a team
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
-    let id = req.params.id;
-    const team = await Team.findByIdAndRemove(id);
-    if (team != null) {
-        logger.info(`${team.name} with the id ${id} was deleted!`);
-        res.json(team).send(`${team.name} with the id ${id} was deleted!`);
-    } else {
-      res.status(404).send(`No team with the id ${id} exists!`);
-    }
+	logger.info('DEL Route: api/team/:id call made...');
+	const id = req.params.id;
+
+	try {
+		const team = await Team.findByIdAndRemove(id);
+
+		if (team != null) {
+			logger.info(`Team ${team.name} with the id ${id} was deleted!`);
+			res.status(200).json(team).send(`Team ${team.name} with the id ${id} was deleted!`);
+		}
+		else {
+			nexusError(`No team with the id ${id} exists!`, 404);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
-// @route   PATCH api/team/pr
-// @desc    Update all teams to base PR
+// @route   PATCH api/team/deleteAll
+// @desc    Delete All Teams
 // @access  Public
-router.patch('/pr', async function (req, res) {
-    for await (let team of Team.find()) {
-        let { prLevel, name } = team;
-        console.log(`${name} | PR: ${prLevel}`);
-        console.log(`Resetting ${name}s accounts...`);  
-        team.prLevel = 2;
-        console.log(`PR Level set to ${prLevel}`);
-
-        console.log(`${team.name} | PR: ${team.prLevel}`);
-
-        await team.save();
-        console.log(`${name}s accounts reset...`);  
-    };
-    res.send("Accounts succesfully reset!");
+router.patch('/deleteAll', async function (req, res) {
+	const data = await Team.deleteMany();
+	// console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Teams!`);
 });
 
 module.exports = router;
