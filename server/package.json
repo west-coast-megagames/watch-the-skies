@@ -18,7 +18,7 @@
     "test": "jest --detectOpenHandles --coverage"
   },
   "engines": {
-    "node": "10.15.3",
+    "node": "12.x",
     "npm": "6.x"
   },
   "author": "John T. Cleveland",
