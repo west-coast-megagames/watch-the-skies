@@ -4,6 +4,7 @@ const { d6, rand } = require('../../util/systems/dice');
 
 // Intercepter Model
 const { Aircraft } = require('../../models/aircraft');
+const { Site } = require('../../models/site');
 
 async function interceptDmg (attacker, defender, atkResult, defResult) {
 	interceptDebugger('Prepearing damage report...');
@@ -46,7 +47,7 @@ async function interceptDmg (attacker, defender, atkResult, defResult) {
 }
 
 async function dmgCalc (unit, report) {
-	const { evade, damage, sysDmg, hit, performance } = report;
+	const { evade, damage, sysDmg, hit } = report;
 	let { weaponDmg, sysHit } = report;
 	const { name } = unit;
 
@@ -54,8 +55,6 @@ async function dmgCalc (unit, report) {
 	interceptDebugger(report);
 	let battleReport = '';
 	const salvageArray = [];
-	let hasEngine = false;
-	let hasCockpit = false;
 	let crash = false;
 
 	let atkDmg = 0;
@@ -77,48 +76,40 @@ async function dmgCalc (unit, report) {
 	if (sysHit > 0 || sysDmg) {
 		sysDmg === true ? (systemHits = sysHit + 1) : (systemHits = sysHit);
 
+		const systemKeys = Object.keys(unit.systems);
+
 		for (let i = 0; i < systemHits; i++) {
 			const roll = d6();
-			const index = rand(unit.systems.length - 1);
-			let hitSystem = unit.systems[index];
+			const index = rand(systemKeys - 1);
+
+			const sysName = systemKeys[index].charAt(0).toUpperCase() + systemKeys[index].slice(1);
 
 			if (roll <= 3) {
-				interceptDebugger('Damaging System...');
-				interceptDebugger(hitSystem);
-				battleReport = `${battleReport} ${hitSystem.name} damaged.`;
+				interceptDebugger(`Damaging ${sysName}...`);
+				battleReport = `${battleReport} ${sysName} damaged.`;
+				unit.systems[systemKeys[index]].damaged ? unit.systems[systemKeys[index]].destroyed = true : unit.systems[systemKeys[index]].damaged = true;
 				hullDmg += 1;
-				hitSystem = await generateSalvage(hitSystem, 'Damage', unit);
+				// TODO: Check upgrade array for relevant upgrade
 				// save system damage...
-				// CREATE MATERIAL SALVAGE and ADD to salvage array
+				// TODO: CREATE MATERIAL SALVAGE and ADD to salvage array
 			}
 			else if (roll > 3) {
-				interceptDebugger('Destroying System...');
-				interceptDebugger(hitSystem);
-				battleReport = `${battleReport}${hitSystem.name} was lost. `;
+				interceptDebugger(`Destroying ${sysName}...`);
+				battleReport = `${battleReport} ${sysName} destroyed.`;
+				unit.systems[systemKeys[index]].destroyed = true;
 				hullDmg += 1;
-				hitSystem = await generateSalvage(hitSystem, 'Wreckage');
+				// TODO: Check upgrade array for relevant upgrade
+				// TODO: CREATE MATERIAL SALVAGE and ADD to salvage array
 			}
-			unit.systems[index] = hitSystem;
-			if (hitSystem.status.salvage === true) {
-				unit.systems.splice(index, 1);
-				salvageArray.push(hitSystem);
-			}
-			await hitSystem.save();
 		}
 	}
 
-	for await (const system of unit.systems) {
-		interceptDebugger(`${system.category}`);
-		if (system.category === 'Engine') hasEngine = true;
-		if (system.category === 'Compartment') hasCockpit = true;
-	}
-
-	if (hasEngine === false || hasCockpit === false) crash = true;
+	if (unit.systems['engine'].destroyed || unit.systems['cockpit'].destroyed) crash = true;
 
 	unit.stats.hull = unit.stats.hull - hullDmg;
 	battleReport = `${battleReport}${unit.name} took ${hullDmg}pts of damage in the battle. `;
-	if (hasEngine === false) {battleReport = `${battleReport}${unit.name} has lost control due to engine trouble. `;}
-	if (hasCockpit === false) {battleReport = `${battleReport} all contract with pilot lost.`;}
+	if (unit.systems['engine'].destroyed) {battleReport = `${battleReport}${unit.name} has lost control due to engine damage. `;}
+	if (unit.systems['cockpit'].destroyed) {battleReport = `${battleReport} all contract with pilot lost.`;}
 	interceptDebugger(battleReport);
 
 	const dmgReport = {
@@ -138,12 +129,13 @@ async function dmgCalc (unit, report) {
 		(dmgReport.destroyed = true),
 		(dmgReport.aar = `${dmgReport.aar} ${unit.name} shot down in combat...`);
 
-		for (let i = 0; i < unit.systems.length; i++) {
-			const crashSystem = await generateSalvage(unit.systems[i], 'Wreckage');
-			salvageArray.push(crashSystem);
-			await crashSystem.save();
-		}
-		unit.systems = [];
+		// TODO: Create salvage loop for crashes in salvage.js
+		// 	for (let i = 0; i < unit.systems.length; i++) {
+		// 		const crashSystem = await generateSalvage(unit.systems[i], 'Wreckage');
+		// 		salvageArray.push(crashSystem);
+		// 		await crashSystem.save();
+		// 	}
+		// 	unit.systems = [];
 	}
 
 	await applyDmg(unit);
@@ -157,6 +149,8 @@ async function applyDmg (unit) {
 		.populate('team')
 		.populate('origin');
 
+	const origin = await Site.findById(update.origin.site._id);
+
 	if (update.team.type === 'Alien') {
 		return 0;
 	}
@@ -169,9 +163,9 @@ async function applyDmg (unit) {
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;
-	update.country = update.origin.country;
+	update.country = origin.country;
 	update.site = update.origin._id;
-	update.zone = update.origin.zone;
+	update.zone = origin.zone;
 
 	if (unit.stats.hull != unit.stats.hullMax) {
 		update.status.damaged = true;
