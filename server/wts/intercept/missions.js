@@ -101,7 +101,7 @@ async function resolveMissions () {
 	await runTransports();
 	await runRecon();
 	await runDiversions();
-	await resolveTransfers();
+	// await resolveTransfers();
 	await clearMissions();
 
 	missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
@@ -197,7 +197,7 @@ async function runTransports () {
 			report.site = aircraft.site;
 			report.country = aircraft.country;
 			report.zone = aircraft.zone;
-			await report.save();
+			await report.saveReport();
 
 			// Schedule a ground mission.
 
