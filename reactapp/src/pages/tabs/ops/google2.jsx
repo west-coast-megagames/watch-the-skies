@@ -9,7 +9,6 @@ import { Alert } from 'rsuite';
 import { targetAssigned } from '../../../store/entities/infoPanels';
 import { getCities } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
-import { current } from '@reduxjs/toolkit';
 import { getContacts } from '../../../store/entities/aircrafts';
 import getFlag from '../../../scripts/teamFlags';
 

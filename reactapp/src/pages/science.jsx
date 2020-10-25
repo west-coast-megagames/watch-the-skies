@@ -79,7 +79,24 @@ class Science extends Component {
 					<Content className='tabContent' style={{ paddingLeft: 20 }}>
 						<Switch>
 							<Route path={`${url}/dashboard`} render={() => (
-								<h5>No dashboard has been coded for the Science Module!</h5>
+								<div>
+									<h5>No dashboard has been coded for the Science Module!</h5>
+									<hr />
+									<u><b>Implemented Features</b></u>
+									<ul>
+										<li>Research System [Research Labs]</li>
+										<li>Knowledge System [Scientific Knowledge]</li>
+										<li>Tech Tree [Tech List]</li>
+									</ul>
+									<u><b>Unimplemented Features</b></u>
+									<ul>
+										<li>Salvage Analysis</li>
+										<li>Deploying Technologies </li>
+									</ul>
+									<u><b>Test Features</b></u>
+									<ul>
+									</ul>
+								</div>
 							)}/>
 							<Route path={`${url}/research`}  render={() => (
 								<Labs    

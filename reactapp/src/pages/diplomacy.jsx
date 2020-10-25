@@ -48,7 +48,21 @@ class Diplomacy extends Component {
 					<BalanceHeader title={ this.state.title } account={ this.state.account } />
 						<Switch>
 							<Route path={`${url}/dashboard`} render={() => (
+							<div>
 								<h5>No dashboard has been coded for the Diplomacy Module!</h5>
+								<hr />
+								<u><b>Implemented Features</b></u>
+								<ul>
+								</ul>
+								<u><b>Unimplemented Features</b></u>
+								<ul>
+									<li>Trade System [Trade Tab]</li>
+									<li>Treaty System [Treaty Tab]</li>
+								</ul>
+								<u><b>Test Features</b></u>
+								<ul>
+								</ul>
+						</div>
 							)}/>
 							<Route path={`${url}/envoys`} render={() => (
 								<h5>The envoy system for the Diplomacy Module has not been created!</h5>
