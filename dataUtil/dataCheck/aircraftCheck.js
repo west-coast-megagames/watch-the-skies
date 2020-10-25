@@ -279,6 +279,11 @@ async function chkAircraft (runFlag) {
 					`stats.hull missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
+			else if (aircraft.stats.hull <= 0) {
+				logger.error(
+					`stats.hull less than or equal to zero for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
 			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'hullMax')) {
 				logger.error(
 					`stats.hullMax missing for Aircraft ${aircraft.name} ${aircraft._id}`
@@ -319,9 +324,19 @@ async function chkAircraft (runFlag) {
 					`stats.passiveRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
+			else if (aircraft.stats.passiveRolls.length === 0) {
+				logger.error(
+					`stats.passiveRolls length zero for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
 			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'activeRolls')) {
 				logger.error(
 					`stats.activeRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
+			else if (aircraft.stats.activeRolls.length === 0) {
+				logger.error(
+					`stats.activeRolls length zero for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
 		}

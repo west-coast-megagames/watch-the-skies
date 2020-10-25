@@ -10,13 +10,16 @@
         "prereq": [],
         "hidden": false,
         "stats": {
+						"hull": 2,
             "hullMax": 3,
             "attack": 2,
             "penetration": 0,
             "armor": 1,
             "evade": 1,
             "range": 4000,
-            "cargo": 0
+						"cargo": 0,
+						"passiveRolls": [2, 4, 7, 9, 11, 12],
+      			"activeRolls": [3, 5, 8, 10, 12]
         }
     },
     {
