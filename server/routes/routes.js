@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 // Error handling and Logging
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const debugBoot = require('debug')('app:boot');
-const cors = require('cors');
+// const cors = require('cors');
 
 const auth = require('./auth');
 
@@ -36,6 +36,7 @@ const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 const users = require('./api/users');
 const logerrors = require('./api/logerrors');
+
 // data init and check routes
 const initZones = require('./init/initZones');
 const initUsers = require('./init/initUsers');
@@ -76,7 +77,7 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 
 	// Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
-	app.use(cors());
+	// app.use(cors());
 
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
