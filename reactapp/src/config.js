@@ -1,3 +1,4 @@
+require('dotenv').config()
 let gameServer = 'http://localhost:5000/';
 let mapKey = '';
 
