@@ -3,7 +3,7 @@ let mapKey = '';
 
 if (process.env.NODE_ENV === "production") {
 	gameServer = 'https://project-nexus-prototype.herokuapp.com/';
-	mapKey = process.env.mapKey;
+	mapKey = process.env.MAP_KEY;
 }
 
 export { gameServer, mapKey };
