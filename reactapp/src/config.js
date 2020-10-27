@@ -1,5 +1,7 @@
-require('dotenv').config()
-let gameServer = 'http://localhost:5000/';
+import dotenv from 'dotenv'
+dotenv.config()
+
+const gameServer = 'http://localhost:5000/';
 let mapKey = '';
 
 if (process.env.NODE_ENV === "production") {
