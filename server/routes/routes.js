@@ -38,22 +38,22 @@ const users = require('./api/users');
 const logerrors = require('./api/logerrors');
 
 // data init and check routes
-// const initZones = require('./init/initZones');
-// const initUsers = require('./init/initUsers');
-// const initTeams = require('./init/initTeams');
-// const initCountries = require('./init/initCountries');
-// const initBlueprints = require('./init/initBlueprints');
-// const initSites = require('./init/initSites');
-// const initFacilities = require('./init/initFacilities');
-// const initAircrafts = require('./init/initAircrafts');
-// const initAccounts = require('./init/initAccounts');
-// const initMilitaries = require('./init/initMilitaries');
-// const initSquads = require('./init/initSquads');
-// const initUpgrades = require('./init/initUpgrades');
-// const initArticles = require('./init/initArticles');
-// const initResearch = require('./init/initResearch');
-// const initTrades = require('./init/initTrades');
-// const initTreaties = require('./init/initTreaties');
+const initZones = require('./init/initZones');
+const initUsers = require('./init/initUsers');
+const initTeams = require('./init/initTeams');
+const initCountries = require('./init/initCountries');
+const initBlueprints = require('./init/initBlueprints');
+const initSites = require('./init/initSites');
+const initFacilities = require('./init/initFacilities');
+const initAircrafts = require('./init/initAircrafts');
+const initAccounts = require('./init/initAccounts');
+const initMilitaries = require('./init/initMilitaries');
+const initSquads = require('./init/initSquads');
+const initUpgrades = require('./init/initUpgrades');
+const initArticles = require('./init/initArticles');
+const initResearch = require('./init/initResearch');
+const initTrades = require('./init/initTrades');
+const initTreaties = require('./init/initTreaties');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
@@ -109,22 +109,22 @@ module.exports = function (app) {
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
 	app.use('/api/logerrors', logerrors); // Route for logerrors
-	// app.use('/init/initZones', initZones); // Route for init/check of zones
-	// app.use('/init/initUsers', initUsers); // Route for init/check of Users
-	// app.use('/init/initTeams', initTeams); // Route for init/check of Teams
-	// app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
-	// app.use('/init/initBlueprints', initBlueprints); // Route for init/check of Blueprints
-	// app.use('/init/initSites', initSites); // Route for init/check of Sites
-	// app.use('/init/initFacilities', initFacilities); // Route for init/check of Facilities
-	// app.use('/init/initAircrafts', initAircrafts); // Route for init/check of Aircraft
-	// app.use('/init/initAccounts', initAccounts); // Route for init/check of Accounts
-	// app.use('/init/initMilitaries', initMilitaries); // Route for init/check of Military
-	// app.use('/init/initUpgrades', initUpgrades); // Route for init/check of Upgrades
-	// app.use('/init/initSquads', initSquads); // Route for init/check of Squad
-	// app.use('/init/initArticles', initArticles); // Route for init/check of Articles
-	// app.use('/init/initResearch', initResearch); // Route for init/check of Research
-	// app.use('/init/initTrades', initTrades); // Route for init/check of Trades
-	// app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
+	app.use('/init/initZones', initZones); // Route for init/check of zones
+	app.use('/init/initUsers', initUsers); // Route for init/check of Users
+	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
+	app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
+	app.use('/init/initBlueprints', initBlueprints); // Route for init/check of Blueprints
+	app.use('/init/initSites', initSites); // Route for init/check of Sites
+	app.use('/init/initFacilities', initFacilities); // Route for init/check of Facilities
+	app.use('/init/initAircrafts', initAircrafts); // Route for init/check of Aircraft
+	app.use('/init/initAccounts', initAccounts); // Route for init/check of Accounts
+	app.use('/init/initMilitaries', initMilitaries); // Route for init/check of Military
+	app.use('/init/initUpgrades', initUpgrades); // Route for init/check of Upgrades
+	app.use('/init/initSquads', initSquads); // Route for init/check of Squad
+	app.use('/init/initArticles', initArticles); // Route for init/check of Articles
+	app.use('/init/initResearch', initResearch); // Route for init/check of Research
+	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
+	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones
