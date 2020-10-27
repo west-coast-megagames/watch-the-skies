@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from 'rsuite';
 import TxtInput from "./common/txtInput";
 import Joi from "joi-browser";
 import { loginuser } from "../store/entities/auth";
@@ -8,7 +9,8 @@ import notify from "../scripts/notify";
 class LoginForm extends Component {
   state = {
     account: { login: "", password: "" },
-    errors: {},
+		errors: {},
+		isLoading: false
   };
 
   schema = {
@@ -57,10 +59,15 @@ class LoginForm extends Component {
   };
 
   handleSubmit = async (e) => {
-    e.preventDefault();
+		this.setState({ isLoading: true });
+		console.log('Before: ', this.state.isLoading)		
+
+		e.preventDefault();
     // Call the server
     console.log("Submitted");
-    this.props.handleLogin(this.state.account); // Redux login action
+		await this.props.handleLogin(this.state.account); // Redux login action
+		this.setState({ isLoading: false });
+		console.log('After', this.state.isLoading)
   };
 
   handleChange = ({ currentTarget: input }) => {
@@ -75,10 +82,10 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { account, errors } = this.state;
+    const { account, errors, isLoading } = this.state;
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form >
           <TxtInput
             name="login"
             value={account.login}
@@ -95,7 +102,7 @@ class LoginForm extends Component {
             error={errors.password}
             type="password"
           />
-          <button className="btn btn-primary">Login</button>
+          <Button appearance="primary" loading={isLoading} onClick={this.handleSubmit}>{isLoading ? 'Loading' : 'Login'}</Button>
         </form>
       </div>
     );
