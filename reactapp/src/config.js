@@ -1,6 +1,3 @@
-import dotenv from 'dotenv'
-dotenv.config()
-
 let gameServer = 'http://localhost:5000/';
 let mapKey = '';
 
