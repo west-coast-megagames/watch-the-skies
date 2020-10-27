@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 // Error handling and Logging
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const debugBoot = require('debug')('app:boot');
-// const cors = require('cors');
+const cors = require('cors');
 
 const auth = require('./auth');
 
