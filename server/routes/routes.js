@@ -5,12 +5,12 @@ const { routeError, logger } = require('../middleware/log/winston'); // middlewa
 const debugBoot = require('debug')('app:boot');
 // const cors = require('cors');
 
-// const auth = require('./auth');
+const auth = require('./auth');
 
 // Log routes - Using Express.js
 // Desc - Routes for accessing server errors/info stored in DB
-// const logError = require('./log/logErrors');
-// const logInfo = require('./log/logInfo');
+const logError = require('./log/logErrors');
+const logInfo = require('./log/logInfo');
 
 // Public Routes - Using Express.js
 // Desc - Public Routes host HTML information for people visiting
@@ -18,24 +18,24 @@ const home = require('./public/home');
 
 // API Routes - Using Express.js
 // Desc - API routes are the raw HTTP GET/POST/DEL access to our models
-// const article = require('./api/articles');
-// const aircraft = require('./api/aircrafts');
-// const account = require('./api/accounts');
-// const blueprint = require('./api/blueprints');
-// const country = require('./api/countries');
-// const facilities = require('./api/facilities');
-// const logs = require('./api/log');
-// const military = require('./api/military');
-// const squad = require('./api/squad');
-// const research = require('./api/research');
-// const sites = require('./api/sites');
-// const team = require('./api/team');
-// const trade = require('./api/trade');
-// const treaty = require('./api/treaty');
-// const upgrade = require('./api/upgrade');
-// const zones = require('./api/zones');
-// const users = require('./api/users');
-// const logerrors = require('./api/logerrors');
+const article = require('./api/articles');
+const aircraft = require('./api/aircrafts');
+const account = require('./api/accounts');
+const blueprint = require('./api/blueprints');
+const country = require('./api/countries');
+const facilities = require('./api/facilities');
+const logs = require('./api/log');
+const military = require('./api/military');
+const squad = require('./api/squad');
+const research = require('./api/research');
+const sites = require('./api/sites');
+const team = require('./api/team');
+const trade = require('./api/trade');
+const treaty = require('./api/treaty');
+const upgrade = require('./api/upgrade');
+const zones = require('./api/zones');
+const users = require('./api/users');
+const logerrors = require('./api/logerrors');
 
 // data init and check routes
 // const initZones = require('./init/initZones');
@@ -77,7 +77,7 @@ module.exports = function (app) {
 	app.use(bodyParser.json());
 
 	// Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
-	// app.use(cors());
+	app.use(cors());
 
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
@@ -93,22 +93,22 @@ module.exports = function (app) {
 	// app.use('/game/news', news); // Route for the news desks
 	// app.use('/game/shared', shared);
 	// app.use('/debug', debug); // Route for debug triggering
-	// app.use('/api/accounts', account); // Route for inputing accounts
-	// app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
-	// app.use('/api/articles', article); // Route for manipulating articles
-	// app.use('/api/blueprints', blueprint);
-	// app.use('/api/countries', country); // Route for inputing countries
-	// app.use('/api/facilities', facilities); // Route for inputing countries
-	// app.use('/api/logs', logs); // Route for logs
-	// app.use('/api/military', military); // Route for manipulating militarys
-	// app.use('/api/squad', squad); // Route for manipulating squad
-	// app.use('/api/research', research); // Route for research functions
-	// app.use('/api/sites', sites); // Route for sites
-	// app.use('/api/team', team); // Route for Teams
-	// app.use('/api/trade', trade); //
-	// app.use('/api/treaty', treaty); // treaties
-	// app.use('/api/upgrades', upgrade); // Route for upgrades
-	// app.use('/api/logerrors', logerrors); // Route for logerrors
+	app.use('/api/accounts', account); // Route for inputing accounts
+	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
+	app.use('/api/articles', article); // Route for manipulating articles
+	app.use('/api/blueprints', blueprint);
+	app.use('/api/countries', country); // Route for inputing countries
+	app.use('/api/facilities', facilities); // Route for inputing countries
+	app.use('/api/logs', logs); // Route for logs
+	app.use('/api/military', military); // Route for manipulating militarys
+	app.use('/api/squad', squad); // Route for manipulating squad
+	app.use('/api/research', research); // Route for research functions
+	app.use('/api/sites', sites); // Route for sites
+	app.use('/api/team', team); // Route for Teams
+	app.use('/api/trade', trade); //
+	app.use('/api/treaty', treaty); // treaties
+	app.use('/api/upgrades', upgrade); // Route for upgrades
+	app.use('/api/logerrors', logerrors); // Route for logerrors
 	// app.use('/init/initZones', initZones); // Route for init/check of zones
 	// app.use('/init/initUsers', initUsers); // Route for init/check of Users
 	// app.use('/init/initTeams', initTeams); // Route for init/check of Teams
@@ -126,12 +126,12 @@ module.exports = function (app) {
 	// app.use('/init/initTrades', initTrades); // Route for init/check of Trades
 	// app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
 
-	// app.use('/api/user', users); // Route for dealing with Users
-	// app.use('/api/zones', zones); // Route for inputing zones
+	app.use('/api/user', users); // Route for dealing with Users
+	app.use('/api/zones', zones); // Route for inputing zones
 
-	// app.use('/log/logErrors', logError); // Route for manipulating logError
-	// app.use('/log/logInfo', logInfo); // Route for manipulating logInfo
-	// app.use('/auth', auth);
+	app.use('/log/logErrors', logError); // Route for manipulating logError
+	app.use('/log/logInfo', logInfo); // Route for manipulating logInfo
+	app.use('/auth', auth);
 
-	// app.use(routeError);
+	app.use(routeError);
 };
