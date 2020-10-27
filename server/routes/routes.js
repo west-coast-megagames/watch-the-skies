@@ -57,11 +57,11 @@ const initTreaties = require('./init/initTreaties');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
-// const admin = require('./game/admin');
-// const banking = require('./game/banking');
-// const control = require('./game/control');
-// const diplomacy = require('./game/diplomacy');
-// const science = require('./game/science');
+const admin = require('./game/admin');
+const banking = require('./game/banking');
+const control = require('./game/control');
+const diplomacy = require('./game/diplomacy');
+const science = require('./game/science');
 // const aircrafts = require('./game/aircrafts');
 // const milGame = require('./game/milGame');
 // const news = require('./game/news');
@@ -83,11 +83,11 @@ module.exports = function (app) {
 	app.use('/', home);
 
 	// app.use('/game', game); //think this is not needed.... -S
-	// app.use('/game/admin', admin);
-	// app.use('/game/banking', banking); // Route for banking functions
-	// app.use('/game/control', control);
-	// app.use('/game/diplomacy', diplomacy);
-	// app.use('/science', science);
+	app.use('/game/admin', admin);
+	app.use('/game/banking', banking); // Route for banking functions
+	app.use('/game/control', control);
+	app.use('/game/diplomacy', diplomacy);
+	app.use('/science', science);
 	// app.use('/game/aircrafts', aircrafts);
 	// app.use('/game/milGame', milGame);
 	// app.use('/game/news', news); // Route for the news desks
