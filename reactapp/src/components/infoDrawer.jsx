@@ -12,7 +12,7 @@ class InfoDrawer extends Component {
                 {this.props.login && <InfoAircraft />}
                 {this.props.login && <InfoDeploy />}
                 {this.props.login && <InfoMilitary />}
-								{this.props.login && <InfoSite />}
+							  {this.props.login && <InfoSite />}
             </React.Fragment>
         );
     }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button } from 'rsuite';
 import { gameServer } from '../config';
 import axios from 'axios';
@@ -22,9 +23,11 @@ class InvasionModal extends Component {
     handleUnits = (value) => { this.setState({units: value})};
     
     componentWillMount() {
-        this.filterLocations();
+				// this.filterLocations();
+				
     }
 
+		/*
     componentDidUpdate(prevProps, prevState) {
         if (this.state.units.length !== prevState.units.length && this.state.destination !== null) {
             let cost = 0 // Gets the current displayed cost
@@ -37,7 +40,8 @@ class InvasionModal extends Component {
             }
             this.setState({cost})
         }
-    }
+		}
+		*/
 
     render() {
         return (
@@ -135,4 +139,14 @@ class InvasionModal extends Component {
     }   
 }
  
-export default InvasionModal;
+const mapStateToProps = state => ({
+	login: state.auth.login,
+	team: state.auth.team,
+	sites: state.entities.sites.list,
+	military: state.entities.military.list,
+	aircraft: state.entities.aircrafts.list
+	});
+	
+	const mapDispatchToProps = dispatch => ({});
+
+export default connect(mapStateToProps, mapDispatchToProps)(InvasionModal);
