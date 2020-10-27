@@ -81,8 +81,6 @@ module.exports = function (app) {
 
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
-
-	// app.use('/game', game); //think this is not needed.... -S
 	app.use('/game/admin', admin);
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
