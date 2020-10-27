@@ -86,7 +86,7 @@ module.exports = function (app) {
 	app.use('/game/diplomacy', diplomacy);
 	app.use('/science', science);
 	app.use('/game/aircrafts', aircrafts);
-	app.use('/game/milGame', milGame);
+	app.use('/game/military', milGame);
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering
