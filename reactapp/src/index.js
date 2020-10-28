@@ -1,4 +1,5 @@
 import App from './App';
+import './env'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './store/store';

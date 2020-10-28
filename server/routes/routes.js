@@ -2,6 +2,7 @@ const bodyParser = require('body-parser');
 
 // Error handling and Logging
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const debugBoot = require('debug')('app:boot');
 const cors = require('cors');
 
 const auth = require('./auth');
@@ -35,6 +36,7 @@ const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 const users = require('./api/users');
 const logerrors = require('./api/logerrors');
+
 // data init and check routes
 const initZones = require('./init/initZones');
 const initUsers = require('./init/initUsers');
@@ -61,7 +63,7 @@ const control = require('./game/control');
 const diplomacy = require('./game/diplomacy');
 const science = require('./game/science');
 const aircrafts = require('./game/aircrafts');
-const milGame = require('./game/milGame');
+// const milGame = require('./game/milGame');
 const news = require('./game/news');
 const shared = require('./game/shared');
 
@@ -69,6 +71,7 @@ const debug = require('./debugRoute');
 
 module.exports = function (app) {
 	logger.info('Opening routes...');
+	debugBoot('Opening routes...');
 
 	// Bodyparser Middleware
 	app.use(bodyParser.json());
@@ -78,15 +81,13 @@ module.exports = function (app) {
 
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
-
-	// app.use('/game', game); //think this is not needed.... -S
 	app.use('/game/admin', admin);
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
 	app.use('/game/diplomacy', diplomacy);
 	app.use('/science', science);
 	app.use('/game/aircrafts', aircrafts);
-	app.use('/game/military', milGame);
+	// app.use('/game/milGame', milGame);
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering

@@ -4,7 +4,7 @@
     "testEnvironment": "node",
     "verbose": true
   },
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "Server for West Coast Megagames Watch the Skies Prototype.",
   "main": "server.js",
   "directories": {
@@ -18,8 +18,8 @@
     "test": "jest --detectOpenHandles --coverage"
   },
   "engines": {
-    "node": "10.15.3",
-    "npm": "6.x"
+    "node": "12.18.3",
+    "npm": "6.14.6"
   },
   "author": "John T. Cleveland",
   "license": "ISC",
@@ -34,18 +34,18 @@
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "helmet": "^3.23.3",
-    "joi": "^17.*",
+    "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
-    "mongoose": "^5.10.9",
+    "mongoose": "^5.10.10",
     "socket.io": "^2.3.0",
     "supports-color": "^7.2.0",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.5"
   },
   "devDependencies": {
-    "jest": "^26.5.3",
-    "nodemon": "^2.0.4",
+    "jest": "^26.6.1",
+    "nodemon": "^2.0.6",
     "supertest": "^4.0.2"
   }
 }
