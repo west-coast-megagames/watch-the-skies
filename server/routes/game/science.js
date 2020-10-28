@@ -8,7 +8,7 @@ const { Facility } = require('../../models/facility');
 
 const science = require('../../wts/research/research');
 
-// @route   GET api/research/sciStats
+// @route   GET game/research/sciStats
 // @Desc    Get global science state
 // @access  Public
 router.get('/research/sciState', async function (req, res) {

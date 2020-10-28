@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'; // Redux store provider
 import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button } from 'rsuite';
+import { getCities, getBases } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
 
 class DeployModal extends Component {
     state = {
+			/*
         team: null,
         units: [],
         destination: null,
@@ -13,7 +16,8 @@ class DeployModal extends Component {
         citySites: [],
         baseSites: [],
         seaDeploy: false,
-        cost: 0
+				cost: 0
+				*/
     }
 
     handleTeam = (value) => { this.setState({team: value}); this.filterUnits();};
@@ -23,7 +27,7 @@ class DeployModal extends Component {
     
     componentWillMount() {
         this.filterUnits();
-        this.filterLocations();
+      //  this.filterLocations();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -58,7 +62,7 @@ class DeployModal extends Component {
                 <Divider />
                 <h6>Select Destination</h6>
                 <SelectPicker block disabled={this.state.team == null} placeholder='Select Destination'
-                    data={[...this.state.citySites,...this.state.baseSites].sort((el_a, el_b) => (el_a.name > el_b.name) ? 1 : -1)}
+                    data={[...this.props.citySites].sort((el_a, el_b) => (el_a.name > el_b.name) ? 1 : -1)}
                     onChange={this.handleDestination}
                     valueKey='_id'
                     labelKey='info'
@@ -93,7 +97,8 @@ class DeployModal extends Component {
     filterUnits = () => {
         Alert.warning(`Filtering Units!`);
         let data = []
-        let military = this.props.military;
+				let military = this.props.military.map((item) => Object.assign({}, item, {selected:false}));
+
         console.log(military)
         for (let unit of military) {
             unit.checkZone = unit.zone.name;
@@ -135,5 +140,17 @@ class DeployModal extends Component {
         this.props.closeDeploy();
     }   
 }
+
+const mapStateToProps = state => ({
+	login: state.auth.login,
+	team: state.auth.team,
+	sites: state.entities.sites.list,
+	military: state.entities.military.list,
+	aircraft: state.entities.aircrafts.list,
+	citySites: getCities(state),
+	// baseSites: getBases(state)
+	});
+	
+	const mapDispatchToProps = dispatch => ({});
  
-export default DeployModal;
+export default connect(mapStateToProps, mapDispatchToProps)(DeployModal);

@@ -20,7 +20,7 @@ const { DeploymentReport } = require('../../wts/reports/reportClasses');
 // @route   PUT game/military/deploy
 // @Desc    Deploy a group of units for a country
 // @access  Public
-router.put('/military/deploy', async function (req, res) {
+router.put('/deploy', async function (req, res) {
 	const { units, cost, destination, team } = req.body;
 	console.log(req.body);
 	const teamObj = await Team.findOne({ name: team });
@@ -93,7 +93,7 @@ router.put('/military/deploy', async function (req, res) {
 });
 
 
-router.patch('/military/battle', async function (req, res) {
+router.patch('/battle', async function (req, res) {
 	const { attackers, defenders } = req.body;
 	let attackerTotal = 0;
 	let defenderTotal = 0;
@@ -167,8 +167,8 @@ router.patch('/military/battle', async function (req, res) {
 	// 	 9.2) all damaged upgrades go to victor
 	// step 10) if both sides back down, no one gets control, create new site w/ scrap of all upgrades
 
-	res.status(200).send(`Attacker strength: ${attackerTotal}\nAttacker Hits: ${attackerResult}
-	\nDefender strength: ${defenderTotal}\n Defender Hits: ${defenderResult}`);
+	const data = { attackerResult, defenderResult };
+	res.status(200).send(data);
 });
 
 module.exports = router;
