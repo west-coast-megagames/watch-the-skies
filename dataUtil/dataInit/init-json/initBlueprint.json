@@ -12,8 +12,8 @@
     "prereq": [],
     "hidden": false,
     "stats": {
-			"hull": 2,
-      "hullMax": 3,
+			"hull": 5,
+      "hullMax": 5,
       "attack": 2,
       "penetration": 0,
       "armor": 1,
@@ -37,7 +37,7 @@
     "prereq": [],
     "hidden": false,
     "stats": {
-			"hull": 3,
+			"hull": 5,
       "hullMax": 5,
       "attack": 3,
       "penetration": 1,
