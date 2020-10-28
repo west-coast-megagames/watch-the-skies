@@ -1,10 +1,10 @@
 let gameServer = 'http://localhost:5000/';
-let mapKey = '';
+let mapKey = 'AIzaSyA_d1zJREiLhBphyJNWTQutlZ0yqWpgO3Q';
 
 if (process.env.NODE_ENV === "production") {
 	gameServer = 'https://project-nexus-prototype.herokuapp.com/';
 	console.log(process.env)
-	mapKey = process.env.MAP_KEY;
+	mapKey = 'AIzaSyA_d1zJREiLhBphyJNWTQutlZ0yqWpgO3Q';
 }
 
 export { gameServer, mapKey };
