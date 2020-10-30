@@ -132,7 +132,12 @@ const UpgradeBlueprint = Blueprint.discriminator(
 	new Schema({
 		buildModel: { type: String, required: true, default: 'upgrade' },
 		unitType: [{ type: String, min: 2, maxlength: 50 }],
-		effects: [],
+		effects: [
+			{
+				type: { type: String },
+				effect: { type: Number }
+			}
+		],
 		stats: { type: Schema.Types.Mixed }
 	})
 );

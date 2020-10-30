@@ -14,7 +14,8 @@ async function upgradeValue (upgradeArray, desiredStat) {
 	let total = 0;
 	for(const element of upgradeArray) {// for every upgrade in the upgrade array and for every element in the stat object of the upgrade
 		for(const stat in element.stats) {
-			if(stat === desiredStat) total = total + element.stats[stat]; // if the key (stat) is the stat we want add it to total
+			if(stat.type === desiredStat) total = total + element.stats.effect[stat]; // if the key (stat) is the stat we want add it to total
+			// if you are reading this, this has been untested and likely doesn't work cause scott is a terrible programmer oh god
 		}
 	}
 	return total;
@@ -24,7 +25,7 @@ async function upgradeValue (upgradeArray, desiredStat) {
 async function addUpgrade (upgrade, unit) {
 	upgrade = await Upgrade.findById(upgrade);
 
-	if (upgrade.status.storage) return 'This Upgrade is already in use somewhere!';
+	if (!upgrade.status.storage) return 'This Upgrade is already in use somewhere!';
 
 	switch(unit.model) {
 	case 'Military':
@@ -48,7 +49,7 @@ async function addUpgrade (upgrade, unit) {
 		upgrade.status.storage = false;
 		upgrade = await upgrade.save();
 		unit = await unit.save();
-		return unit;
+		return `Added "${upgrade.name}" to unit "${unit.name}"`;
 	}
 	catch(err) {
 		return `ERROR IN addUpgrade: ${err}`;

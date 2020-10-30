@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validateObjectId = require('../../middleware/util/validateObjectId');
+const { newUpgrade } = require('../../wts/construction/construction');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
 const { Upgrade } = require('../../models/upgrade');
@@ -26,8 +27,17 @@ router.get(':id', async function (req, res) {
 // @Desc    add an upgrade to a unit
 // @access  Public
 router.post('/', async function (req, res) {
-	await addUpgrade(req.body.upgrade, req.body.unit);
-	res.status(200).send(`Added "${req.body.upgrade.name}" to unit "${req.body.unit.name}"`);
+	const { code, team, facility } = req.body; // please give me these things
+
+	try {
+		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		upgrade = await upgrade.save();
+
+		res.status(200).json(upgrade);
+	}
+	catch (err) {
+		res.status(404).send(err.message); // This returns a really weird json... watch out for that
+	}
 });
 
 // @route   DELETE api/upgrades/:id
