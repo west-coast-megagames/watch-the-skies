@@ -47,6 +47,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 			.populate('gear', 'name category')
 			.populate('site', 'name')
 			.populate('origin', 'name')
+			.populate('upgrades')
 			.sort({ team: 1 });
 		if (military != null) {
 			res.status(200).json(military);
@@ -92,6 +93,24 @@ router.post('/', async (req, res) => {
 	catch (err) {
 		httpErrorHandler(res, err);
 	}
+});
+
+// @route   PATCH api/military
+// @Desc    Edit an existing military unit
+// @access  Public
+router.patch('/', async (req, res) => {
+	const { editedUnit } = req.body;
+	try{
+		const unit = await Military.findByIdAndUpdate(editedUnit._id, editedUnit, { new: true, overwrite: true });
+		// unit = await unit.save();
+		console.log(unit);
+		res.status(200).send(unit);
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
+
+
 });
 
 // @route   DELETE api/military/:id

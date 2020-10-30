@@ -62,8 +62,8 @@ router.put('/upgrade/add', async function (req, res) {
 	let { upgrade, unit } = req.body;
 	upgrade = await Upgrade.findById(upgrade);
 	unit = await Military.findById(unit);
-	await addUpgrade(upgrade, unit);
-	res.status(200).send(`Added "${upgrade.name}" to unit "${unit.name}"`);
+	const response = await addUpgrade(upgrade, unit);
+	res.status(200).send(response);
 });
 
 // @route   POST game/upgrade/stat
@@ -84,7 +84,7 @@ router.post('/upgrade/build', async function (req, res) {
 		res.status(200).json(upgrade);
 	}
 	catch (err) {
-		res.status(404).send(err); // This returns a really weird json... watch out for that
+		res.status(404).send(err.message); // This returns a really weird json... watch out for that
 	}
 });
 

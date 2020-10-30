@@ -52,9 +52,9 @@ class MilitaryControl extends Component {
 	
 		handleSubmit = async () => {
 			try {
-				let {data} = await axios.patch(`${gameServer}game/military/battle`, {attackers: this.state.atkArray, defenders: this.state.defArray})
+				let {data, report} = await axios.patch(`${gameServer}game/military/battle`, {attackers: this.state.atkArray, defenders: this.state.defArray})
 				this.setState({ attackerResult: data.attackerResult, defenderResult: data.defenderResult })
-				Alert.success(`Battle Simulated`);			
+				Alert.success(`${report}`);			
 			}
 			catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -94,7 +94,7 @@ class MilitaryControl extends Component {
 									<p>Attack Total: { this.state.def.attack } </p>
 									<p>Defense Total: { this.state.def.defence } </p>
 									<div style={{ display: "flex "}}>
-										<Button onClick={this.handleSubmit} style={{ marginLeft: "auto" }} >Submit</Button>		 				
+										<Button color="red" onClick={this.handleSubmit} style={{ marginLeft: "auto" }} >Submit</Button>		 				
 									</div>
 									<hr />
 									<h4>Result: </h4>

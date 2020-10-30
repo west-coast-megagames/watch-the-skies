@@ -53,9 +53,15 @@ async function newUpgrade (code, team, facility) {
 
 	// const x = await UpgradeBlueprint.find();
 	const blue = await UpgradeBlueprint.findOne({ code: code });
-	const upgrade = new Upgrade(blue);
+	if (!blue) return (`Could not find Blueprint of ${code}`);
+	const upgrade = new Upgrade();
 	upgrade.team = team;
 	upgrade.facility = facility;
+	upgrade.name = blue.name;
+	upgrade.cost = blue.cost;
+	upgrade.buildTime = blue.buildTime;
+	upgrade.desc = blue.desc;
+	upgrade. prereq = blue.prereq;
 
 	return upgrade;
 }
