@@ -11,6 +11,10 @@ import facilityReducer from './entities/facilities';
 import countryReducer from './entities/countries';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
+import blueprintReducer from './entities/blueprints';
+// import upgradeReducer from './entities/upgrades';
+
+
 
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
@@ -25,5 +29,7 @@ export default combineReducers({
   facilities: facilityReducer,
   countries: countryReducer,
   research: researchReducer,
-  accounts: accountReducer
+	accounts: accountReducer,
+	blueprints: blueprintReducer,
+	// upgrades: upgradeReducer
 });

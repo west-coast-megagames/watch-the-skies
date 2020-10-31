@@ -137,8 +137,7 @@ const UpgradeBlueprint = Blueprint.discriminator(
 				type: { type: String },
 				effect: { type: Number }
 			}
-		],
-		stats: { type: Schema.Types.Mixed }
+		]
 	})
 );
 
