@@ -66,6 +66,7 @@ const aircrafts = require('./game/aircrafts');
 // const milGame = require('./game/milGame');
 const news = require('./game/news');
 const shared = require('./game/shared');
+const upgrades = require('./game/upgrades');
 
 const debug = require('./debugRoute');
 
@@ -85,6 +86,7 @@ module.exports = function (app) {
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
 	app.use('/game/diplomacy', diplomacy);
+	app.use('/game/upgrades', upgrades);
 	app.use('/science', science);
 	app.use('/game/aircrafts', aircrafts);
 	// app.use('/game/milGame', milGame);
