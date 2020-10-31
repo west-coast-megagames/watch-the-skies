@@ -64,10 +64,6 @@ class UnitControl extends Component {
 		this.setState({ selected });
 	}
 
-	loadUpgrade (data) {
-
-	}
-
 	render() { 
 		return (
 			<Container>
@@ -120,6 +116,7 @@ class UnitControl extends Component {
 			<UpgradeModal show={this.state.showUpgrade}
 				showUpgrade={this.showUpgrade} 
 				closeUpgrade={this.closeUpgrade}
+				unit={this.state.selected}
 			/>
 
 
@@ -135,6 +132,7 @@ const mapStateToProps = state => ({
 	sites: state.entities.sites.list,
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list,
+	blueprints: state.entities.blueprints,
 	// citySites: getCities(state),
 	// baseSites: getBases(state)
 	});
