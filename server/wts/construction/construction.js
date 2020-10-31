@@ -61,7 +61,7 @@ async function newUpgrade (code, team, facility) {
 	upgrade.cost = blue.cost;
 	upgrade.buildTime = blue.buildTime;
 	upgrade.desc = blue.desc;
-	upgrade. prereq = blue.prereq;
+	upgrade.prereq = blue.prereq;
 
 	return upgrade;
 }
