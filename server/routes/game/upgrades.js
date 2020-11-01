@@ -9,12 +9,6 @@ const { upgradeValue, removeUpgrade, addUpgrade } = require('../../wts/upgrades/
 const { Military } = require('../../models/military');
 const { Upgrade } = require('../../models/upgrade');
 
-
-router.get('/', async function (req, res) {
-	res.send(`hi`);
-});
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~UPGRADES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~//
 // @route   GET game/upgrades/stat
 // @Desc    get the total stat contribution of a specific stat from an upgrade array
 // @access  Public

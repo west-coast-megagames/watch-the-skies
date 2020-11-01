@@ -17,7 +17,10 @@ class UnitControl extends Component {
 	 }
 
 	 showUpgrade = () => { this.setState({showUpgrade: true}) };
-	 closeUpgrade = () => { this.setState({showUpgrade: false}) };
+	 closeUpgrade = () => { 
+		 this.setState({showUpgrade: false}) 
+			this.handleSelect(this.state.selected._id)
+		};
 
 	componentDidMount() {
 		this.setState({ units: this.props.military})
@@ -100,6 +103,14 @@ class UnitControl extends Component {
 							<Column flexGrow={1}>
 									<HeaderCell>Id</HeaderCell>
 									<Cell dataKey='_id' />
+							</Column>
+							<Column flexGrow={1}>
+									<HeaderCell>Type</HeaderCell>
+									<Cell dataKey='effects' />
+							</Column>
+							<Column flexGrow={1}>
+									<HeaderCell>ATK</HeaderCell>
+									<Cell dataKey='effect' />
 							</Column>
 					</Table>
 					<div style={{ display: "flex "}}>

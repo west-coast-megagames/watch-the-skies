@@ -31,6 +31,8 @@ class UpgradeModal extends Component {
 		try{
 			let { data } = await axios.post(`${gameServer}game/upgrades/build`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
 			console.log(data);
+			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: data._id, unit: this.props.unit._id })
+			this.props.closeUpgrade()
 		}
 		catch (err) {
 			Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -58,9 +60,14 @@ class UpgradeModal extends Component {
 			</Drawer.Header>
 			{this.state.selected && <Drawer.Body>
 				<FlexboxGrid>
-              <FlexboxGrid.Item colspan={12}>
+						<FlexboxGrid.Item colspan={6}>
                 <p>
                   <b>Desc:</b> {this.state.selected.desc}
+                </p>
+              </FlexboxGrid.Item>
+              <FlexboxGrid.Item colspan={12}>
+                <p>
+                  <b>_id:</b> {this.state.selected._id}
                 </p>
                 <p>
                   <b>Unit Type:</b> {this.state.selected.unitType} 
