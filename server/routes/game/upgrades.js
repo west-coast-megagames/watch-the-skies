@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 // const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
+const nexusEvent = require('../../middleware/events/events');
 
 // const validateObjectId = require('../../middleware/util/validateObjectId');
 const { newUpgrade } = require('../../wts/construction/construction');
@@ -23,14 +24,16 @@ router.put('/add', async function (req, res) {
 	upgrade = await Upgrade.findById(upgrade);
 	unit = await Military.findById(unit);
 	const response = await addUpgrade(upgrade, unit);
+	nexusEvent.emit('updateMilitary');
 	res.status(200).send(response);
 });
 
-// @route   POST game/upgrades/stat
+// @route   POST game/upgrades/remove
 // @Desc    remove an upgrade from a unit
 // @access  Public
 router.put('/remove', async function (req, res) {
 	const response = await removeUpgrade(req.body.upgrade, req.body.unit);
+	nexusEvent.emit('updateMilitary');
 	res.status(200).send(response);
 });
 

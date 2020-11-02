@@ -101,6 +101,7 @@ module.exports = function (io) {
 			.populate('country', 'name')
 			.populate('gear', 'name category')
 			.populate('site', 'name')
+			.populate('upgrade')
 			.populate('origin');
 		updateSocket.emit('updateMilitary', military);
 	});

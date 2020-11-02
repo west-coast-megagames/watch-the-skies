@@ -58,7 +58,7 @@ async function addUpgrade (upgrade, unit) {
 }
 
 async function removeUpgrade (upgrade, unit) {
-	upgrade = await Upgrade.findById(upgrade._id);
+	upgrade = await Upgrade.findById(upgrade);
 	switch(unit.model) {
 	case 'Military':
 		unit = await Military.findById(unit._id);

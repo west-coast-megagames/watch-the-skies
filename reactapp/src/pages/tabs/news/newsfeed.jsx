@@ -22,9 +22,6 @@ class NewsFeed extends Component {
     }
   }
 
-  componentWillUpdate(prevProps) {
-    
-  }
     
   render() {
     const buttonTxt = this.props.team.type === 'Media' ? 'Draft new Article' : 'Draft new Press Release';

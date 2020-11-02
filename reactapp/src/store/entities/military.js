@@ -32,7 +32,13 @@ const slice = createSlice({
     militaryAdded: (military, action) => {
       console.log(`${action.type} Dispatched`)
       military.list.push(action.payload);
-    }
+    },
+    militaryUpdated: (military, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('military updated!', 2000);
+      military.list = action.payload;
+      military.lastFetch = Date.now();
+    },
   }
 });
 
@@ -41,7 +47,8 @@ export const {
   militaryAdded,
   militaryReceived,
   militaryRequested,
-  militaryRequestFailed
+	militaryRequestFailed,
+	militaryUpdated
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

@@ -3,9 +3,9 @@ const router = express.Router();
 const validateObjectId = require('../../middleware/util/validateObjectId');
 const { newUpgrade } = require('../../wts/construction/construction');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
-
 const { Upgrade } = require('../../models/upgrade');
 const { addUpgrade } = require('../../wts/upgrades/upgrades');
+const nexusEvent = require('../../middleware/events/events');
 
 // @route   GET api/upgrades
 // @Desc    Get all Upgrades
@@ -48,6 +48,7 @@ router.delete('/:id', validateObjectId, async function (req, res) {// Scott has 
 	const upgrade = await Upgrade.findByIdAndRemove(id);
 	if (upgrade != null) {
 		logger.info(`${upgrade.name} with the id ${id} was deleted!`);
+		nexusEvent.emit('updateMilitary');
 		res.status(200).send(`${upgrade.name} with the id ${id} was deleted!`);
 	}
 	else {

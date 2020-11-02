@@ -16,15 +16,17 @@ class UnitControl extends Component {
 		showUpgrade: false
 	 }
 
+	 componentDidUpdate(prevProps, prevState) {
+    if (prevProps.lastFetch !== this.props.lastFetch) {
+			this.handleSelect(this.state.selected._id);
+    }
+	}
+	
 	 showUpgrade = () => { this.setState({showUpgrade: true}) };
 	 closeUpgrade = () => { 
 		 this.setState({showUpgrade: false}) 
 			this.handleSelect(this.state.selected._id)
 		};
-
-	componentDidMount() {
-		this.setState({ units: this.props.military})
-	}
 
 	handleSelect = async (unit) => { 
 		if (!unit) {
@@ -65,6 +67,17 @@ class UnitControl extends Component {
 				console.log("uh oh");
 		}
 		this.setState({ selected });
+	}
+
+	handleDelete = async (upgrade) => {
+		try {
+			await axios.put(`${gameServer}game/upgrades/remove`, {upgrade: upgrade._id, unit: this.state.selected});
+			let {data} = await axios.delete(`${gameServer}api/upgrades/${upgrade._id}`);
+			Alert.success(data);		
+		}
+		catch (err) {
+			Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+		}
 	}
 
 	render() { 
@@ -109,8 +122,14 @@ class UnitControl extends Component {
 									<Cell dataKey='effects' />
 							</Column>
 							<Column flexGrow={1}>
-									<HeaderCell>ATK</HeaderCell>
-									<Cell dataKey='effect' />
+									<HeaderCell>Delete</HeaderCell>
+									<Cell>
+										{rowData => {
+											let upgrade = rowData;
+											return(
+												<Button color="red" onClick={() => this.handleDelete(upgrade)}>Delete</Button> 
+											)}}
+									</Cell>
 							</Column>
 					</Table>
 					<div style={{ display: "flex "}}>
@@ -144,7 +163,7 @@ const mapStateToProps = state => ({
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list,
 	blueprints: state.entities.blueprints,
-	// citySites: getCities(state),
+	lastFetch: state.entities.military.lastFetch
 	// baseSites: getBases(state)
 	});
 	
