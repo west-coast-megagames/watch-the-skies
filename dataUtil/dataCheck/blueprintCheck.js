@@ -209,12 +209,6 @@ async function chkBlueprint (runFlag) {
 					);
 				}
 
-				if (!Object.prototype.hasOwnProperty.call(blueprint, 'stats')) {
-					logger.error(
-						`stats missing for upgrade blueprint ${blueprint.name} ${blueprint._id}`
-					);
-				}
-
 				break;
 
 			default:

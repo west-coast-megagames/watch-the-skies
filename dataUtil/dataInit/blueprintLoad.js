@@ -198,9 +198,6 @@ async function newUpgrade (bpData, rCounts) {
 	// New Upgrade Blueprint here
 	const bpUpgrade = bpData;
 	try {
-		if (!bpUpgrade.stats) {
-			bpUpgrade.stats = {};
-		}
 		await axios.post(`${gameServer}api/blueprints`, bpUpgrade);
 		++rCounts.loadCount;
 		logger.debug(`${bpUpgrade.name} add saved to Upgrade Blueprint collection.`);
