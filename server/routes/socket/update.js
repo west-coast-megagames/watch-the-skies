@@ -12,6 +12,7 @@ const { Research } = require('../../models/research');
 const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/military');
 const { Log } = require('../../models/logs/log');
+const { Site } = require('../../models/site');
 
 module.exports = function (io) {
 	const UpdateClients = new SocketServer();
@@ -132,6 +133,17 @@ module.exports = function (io) {
 		catch (error) {
 			socketDebugger(`Error: ${error.message}`);
 		}
+	});
+
+	nexusEvent.on('updateSites', async () => {
+		socketDebugger('Event: Updating Sites...');
+		const sites = await Site.find()
+			.populate('country', 'name')
+			.populate('team', 'shortName name')
+			.populate('facilities', 'name type')
+			.populate('zone', 'model name code')
+			.sort({ name: -1 });
+		updateSocket.emit('updateSites', sites);
 	});
 
 	nexusEvent.on('error', async (err) => {
