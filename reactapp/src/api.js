@@ -82,6 +82,10 @@ function login (cb) {
     updateSocket.on('login', data => cb(null, data));
 };
 
-let updateEvents = { login, updateUsers, updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities, addNews, updateLogs };
+function updateSites (cb) {
+	updateSocket.on('updateSites', data => cb(null, data));
+}
+
+let updateEvents = { login, updateUsers, updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities, addNews, updateLogs, updateSites };
 
 export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };
