@@ -29,7 +29,7 @@ class UpgradeModal extends Component {
 	handleSubmit = async (blueprint) => {
 		// 1) make a new upgrade from blueprint
 		try{
-			let { data } = await axios.post(`${gameServer}game/upgrades/build`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
+			let { data } = await axios.post(`${gameServer}api/upgrades/`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
 			console.log(data);
 			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: data._id, unit: this.props.unit._id })
 			this.props.closeUpgrade()

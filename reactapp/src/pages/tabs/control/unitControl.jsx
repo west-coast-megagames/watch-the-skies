@@ -119,11 +119,11 @@ class UnitControl extends Component {
 							</Column>
 							<Column flexGrow={1}>
 									<HeaderCell>Type</HeaderCell>
-									<Cell dataKey='effects' />
+									<Cell dataKey='type' />
 							</Column>
 							<Column flexGrow={1}>
 									<HeaderCell>Delete</HeaderCell>
-									<Cell>
+									<Cell style={{padding: '8px'}}>
 										{rowData => {
 											let upgrade = rowData;
 											return(
