@@ -5,7 +5,7 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-const groundSubTypeVals = ['City', 'Crash'];
+const groundSubTypeVals = ['City', 'Crash', 'Point of Interest'];
 const typeVals = ['Ground', 'Space'];
 const spaceSubTypeVals = [
 	'Satellite',
@@ -135,14 +135,13 @@ async function chkSite (runFlag) {
 							`citySite Site ${site.name} ${site._id} has missing geoDMS latDMS`
 						);
 					}
-					else if (
-						site.geoDMS.latDMS === '' ||
-              site.geoDMS.latDMS === 'undefined'
-					) {
+					else if (site.geoDMS.latDMS === '' ||
+              site.geoDMS.latDMS === 'undefined') {
 						logger.error(
 							`citySite Site ${site.name} ${site._id} has an invalid or blank geoDMS latDMS ${site.geoDMS.latDMS}`
 						);
 					}
+
 
 					if (!Object.prototype.hasOwnProperty.call(site.geoDMS, 'longDMS')) {
 						logger.error(
@@ -168,26 +167,38 @@ async function chkSite (runFlag) {
 							`citySite Site ${site.name} ${site._id} has missing geoDecimal latDecimal`
 						);
 					}
-					else if (
-						site.geoDecimal.latDecimal < -90 ||
+					else {
+						if (isNaN(site.geoDecimal.latDecimal)) {
+							logger.error(
+								`Site ${site.name} ${site._id} latDecimal is not a number ${site.geoDecimal.latDecimal}`
+							);
+						}
+						if (site.geoDecimal.latDecimal < -90 ||
               site.geoDecimal.latDecimal > 90
-					) {
-						logger.error(
-							`Site ${site.name} ${site._id} has an invalid geoDecimal latDecimal ${site.geoDecimal.latDecimal}`
-						);
+						) {
+							logger.error(
+								`Site ${site.name} ${site._id} has an invalid geoDecimal latDecimal ${site.geoDecimal.latDecimal}`
+							);
+						}
 					}
 					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'longDecimal')) {
 						logger.error(
 							`citySite Site ${site.name} ${site._id} has missing geoDecimal longDecimal`
 						);
 					}
-					else if (
-						site.geoDecimal.longDecimal < -180 ||
+					else {
+						if (isNaN(site.geoDecimal.longDecimal)) {
+							logger.error(
+								`Site ${site.name} ${site._id} longDecimal is not a number ${site.geoDecimal.longDecimal}`
+							);
+						}
+						if (site.geoDecimal.longDecimal < -180 ||
               site.geoDecimal.longDecimal > 180
-					) {
-						logger.error(
-							`Site ${site.name} ${site._id} has an invalid geoDecimal longDecimal ${site.geoDecimal.longDecimal}`
-						);
+						) {
+							logger.error(
+								`Site ${site.name} ${site._id} has an invalid geoDecimal longDecimal ${site.geoDecimal.longDecimal}`
+							);
+						}
 					}
 				}
 

@@ -38,7 +38,7 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('City', 'Crash')
+			subType: Joi.string().valid('City', 'Crash', 'Point of Interest')
 		});
 
 		geoDMSSchema = Joi.object({
