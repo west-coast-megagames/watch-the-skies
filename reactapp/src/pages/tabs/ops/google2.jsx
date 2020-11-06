@@ -10,7 +10,7 @@ import { targetAssigned } from '../../../store/entities/infoPanels';
 import { getCities, getGround } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
-import getFlag from '../../../scripts/teamFlags';
+import getMapIcon from '../../../scripts/mapIcons';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -96,8 +96,8 @@ function PrototypeMap(props) {
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: getFlag(contact.team.code),
-							scaledSize: new window.google.maps.Size(20, 20),
+							url: getMapIcon(contact.team.__t),
+							scaledSize: new window.google.maps.Size(55, 55),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}		
