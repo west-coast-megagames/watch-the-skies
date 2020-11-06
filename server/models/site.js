@@ -98,7 +98,7 @@ const GroundSite = Site.discriminator(
 	'GroundSite',
 	new Schema({
 		type: { type: String, default: 'Ground' },
-		subType: { type: String, default: 'City', enum: ['City', 'Crash'] },
+		subType: { type: String, default: 'City', enum: ['City', 'Crash', 'Point of Interest'] },
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
 			longDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W

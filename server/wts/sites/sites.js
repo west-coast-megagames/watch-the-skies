@@ -26,6 +26,7 @@ async function generateSite (site) {
 	let newSite = {
 		name: `${currentSite.country.name} Site - ${currentSite.country.code}0${count}`,
 		team: currentSite.team,
+		subType: 'Point of Interest',
 		country: currentSite.country,
 		zone: currentSite.zone,
 		code: c0de,
