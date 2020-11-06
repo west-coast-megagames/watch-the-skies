@@ -13,6 +13,7 @@ const { getDistance } = require('../../util/systems/geo');
 const { makeAfterActionReport } = require('./report');
 const dynReport = require('./battleDetails');
 const { logger } = require('../../middleware/log/winston');
+const { generateSite } = require('../sites/sites');
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -124,7 +125,7 @@ async function runInterceptions () {
 		let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. Projected target intercept is ${interception.distance}km away. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
 
 		// Skips mission if the current aircraft is dead
-		if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+		if (aircraft.status.destroyed) {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
 			continue;
 		}
@@ -175,9 +176,9 @@ async function runTransports () {
 		const report = new TransportReport();
 
 
-		const aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems');
+		const aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems').populate('team');
 
-		if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+		if (aircraft.status.destroyed) {
 			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
 			continue;
 		}
@@ -185,6 +186,7 @@ async function runTransports () {
 		const target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
 		missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
 		let atkReport = `${aircraft.name} has launched for a hauling run, en route to ${target.name}. Mission target is in a ${aircraft.country.name} controlled region.`;
+		if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Transport');
 
 		const patrolCheck = await checkPatrol(transport.target, atkReport, aircraft);
 
@@ -201,8 +203,13 @@ async function runTransports () {
 
 			// Schedule a ground mission.
 
+			// create new ground site
+			generateSite(target._id);
+
 			await aircraft.recall();
 		}
+
+
 	}
 
 	return;
@@ -303,7 +310,7 @@ async function runDiversions () {
 			.populate('systems')
 			.populate('origin')
 			.populate('team');
-		if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.country._id);
+		// if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.country._id);
 
 		// Diversion mission log
 
@@ -377,7 +384,7 @@ async function resolveTransfers () {
 		const report = new TransportReport();
 		const aircraft = await Aircraft.findById(transfer.aircraft).populate('country', 'name').populate('systems');
 
-		if (aircraft.status.destroyed || aircraft.systems.length < 1) {
+		if (aircraft.status.destroyed) {
 			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
 			continue;
 		}

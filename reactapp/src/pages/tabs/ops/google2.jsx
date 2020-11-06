@@ -7,7 +7,7 @@ import { mapKey } from '../../../config';
 import mapStyle from './mapStyles';
 import { Alert } from 'rsuite';
 import { targetAssigned } from '../../../store/entities/infoPanels';
-import { getCities } from '../../../store/entities/sites';
+import { getCities, getGround } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import getFlag from '../../../scripts/teamFlags';
@@ -118,7 +118,7 @@ function PrototypeMap(props) {
 					}}
 				/>)}
 			<MarkerClusterer options={clusterOptions}>
-				{(clusterer) => props.cities.map(city =>
+				{(clusterer) => props.groundSites.map(city => 
 					<Marker
 						key={city._id}
 						clusterer={clusterer}
@@ -154,7 +154,8 @@ const mapStateToProps = state => ({
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
 	contacts: getContacts(state),
-	cities: getCities(state)
+	cities: getCities(state),
+	groundSites: getGround(state)
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -19,7 +19,7 @@ async function crisis (zoneId, crisis) {
 	const siteId = null;
 	let reason = '';
 
-	zone = await Zone.findById(zoneId);
+	let zone = await Zone.findById(zoneId);
 	if (zone) {
 		oldTerror = zone.terror;
 		zone.terror += terror;
@@ -36,7 +36,7 @@ async function crisis (zoneId, crisis) {
 	else {
 		reason = `Zone not available for terror crisis function for crisis: ${crisis.name} terror change ${terror}pts `;
 		logger.error(`${reason}`);
-		await console.log(`${reason}`);
+		console.log(`${reason}`);
 		return reason;
 	}
 }
@@ -51,10 +51,10 @@ async function battle (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
+	let country = await Country.findById(countryId);
 	if (country) {
 		zoneId = country.zone;
-		zone = await Zone.findById(zoneId);
+		let zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
 			zone.terror += terror;
@@ -92,10 +92,10 @@ async function invasion (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
+	const country = await Country.findById(countryId);
 	if (country) {
 		zoneId = country.zone;
-		zone = await Zone.findById(zoneId);
+		const zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
 			zone.terror += terror; // Assigns terror to zone
@@ -306,8 +306,8 @@ async function industryDestruction (countryId) {
 	}
 }
 
-async function alienActivity (countryId) {
-	const terror = gonePublic ? 2 : 1; // Initial Terror caused by this event
+async function alienActivity (siteID, mission) {
+	let terror = gonePublic ? 2 : 1; // Default is Air mission
 	let newTerror = 0;
 	let oldTerror = 0;
 	let zoneId = null;
@@ -315,29 +315,36 @@ async function alienActivity (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
-		zone = await Zone.findById(zoneId);
+	if (mission === 'Transport') {
+		terror = gonePublic ? 3 : 2;
+	}
+	else if (mission === 'Raid') {
+		terror = gonePublic ? 4 : 3;
+	}
+
+	const site = await Site.findById(siteID);
+	if (site) {
+		zoneId = site.zone;
+		const zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
 			zone.terror += terror; // Assigns terror to zone
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `Alien activity in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `Alien ${mission} mission in ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, siteID, teamId, siteId);
 			logger.info(`${reason}`);
 			return reason;
 		}
 		else {
-			reason = `Zone not available for terror alienActivity function in ${country.name}: terror change ${terror}pts `;
+			reason = `Zone not available for terror alienActivity function in ${site.name}: terror change ${terror}pts `;
 			logger.error(`${reason}`);
 			return reason;
 		}
 	}
 	else {
-		reason = `Country not available for terror alienActivity function: terror change ${terror}pts country Id: ${countryId}`;
+		reason = `Country not available for terror alienActivity function: terror change ${terror}pts site Id: ${siteId}`;
 		logger.error(`${reason}`);
 		return reason;
 	}

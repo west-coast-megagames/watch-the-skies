@@ -1,4 +1,4 @@
-const { Site } = require('../../../models/sites/site');
+const { Site } = require('../../../models/site');
 
 async function genSiteCode (startCode, siteType) {
 
