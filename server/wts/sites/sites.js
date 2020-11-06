@@ -1,8 +1,6 @@
 const { Site, GroundSite } = require('../../models/site');
 const randomCords = require('../../util/systems/lz');
 const geo = require('../../util/systems/geo');
-const { genSiteCode } = require('../util/construction/genSiteCode');
-
 
 let count = 0; // How many sites have happened in the game.
 
@@ -43,4 +41,20 @@ async function generateSite (site) {
 	console.log(newSite);
 }
 
-module.exports = { generateSite };
+async function genSiteCode () {
+	const phoneticArray = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot', 'Golf', 'Hotel', 'India', 'Juliet', 'Kilo', 'Lima', 'Mike', 'November', 'Oscar', 'Papa', 'Quebec', 'Romeo', 'Sierra', 'Tango', 'Uniform', 'Victor', 'Whiskey', 'Xray', 'Yankee', 'Zulu'];
+	const desArray = ['Yellow', 'Red', 'Blue', 'Green', 'Cyan', 'Magenta', 'Aquamarine', 'Ruby', 'Sapphire', 'Emerald', 'Violet', 'Purple', 'Brown', 'Almond', 'Gold', 'Silver', 'Platnum'];
+
+	let chkDoc = 1;
+	let code = '';
+	do {
+		code = `${desArray[(Math.floor(Math.random() * desArray.length))]} - ${phoneticArray[(Math.floor(Math.random() * phoneticArray.length))]}`;
+		chkDoc = await Site.find({ code: code });
+	}
+	while (chkDoc.length > 0);
+
+	return code;
+}
+
+
+module.exports = { generateSite, genSiteCode };
