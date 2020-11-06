@@ -81,5 +81,5 @@ export const addsite = site =>
 	
 	export const getGround = createSelector(
     state => state.entities.sites.list,
-		sites => sites.filter(site => site.type === 'Ground' && site.geoDecimal != undefined)
+		sites => sites.filter(site => (site.subType === 'City' || site.subType === 'Point of Interest') && site.geoDecimal != undefined)
   );
