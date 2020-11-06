@@ -1,5 +1,5 @@
-import fighter from '../img/Aircraft_generic.png'
-import ufo from '../img/UFO_generic.png'
+//import fighter from '../img/Aircraft_generic.png'
+//import ufo from '../img/UFO_generic.png'
 
 const icon = {
 	National: 'https://cdn.discordapp.com/attachments/481529413482315777/774161300020264960/Aircraft_generic.png',

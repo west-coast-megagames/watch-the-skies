@@ -22,7 +22,7 @@ async function generateSite (site) {
 	const c0de = await genSiteCode('', site.type);
 
 	let newSite = {
-		name: `${currentSite.country.name} Site - ${currentSite.country.code}0${count}`,
+		name: `${currentSite.country.code} Site - ${c0de}`,
 		team: currentSite.team,
 		subType: 'Point of Interest',
 		country: currentSite.country,
