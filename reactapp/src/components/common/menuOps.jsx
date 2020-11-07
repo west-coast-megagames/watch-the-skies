@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { infoRequested, showSite, showLaunch } from '../../store/entities/infoPanels';
+import { infoRequested, showSite, showLaunch, showDeploy } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -24,6 +24,10 @@ class OpsMenu extends Component {
 	assign() {
 		this.props.assignTarget(this.props.info);
 		this.props.closeMenu();
+	}
+
+	deployMilitary() {
+		this.props.deploy(this.props.info)
 	}
 
 	render() { 
@@ -53,7 +57,7 @@ class OpsMenu extends Component {
 					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.props.info.model === 'Site' ? this.showSite() : this.props.info.model === 'Aircraft' ? this.showAircraft() : Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)} style={{...menu, top: '1px', left:'30px'}} />
 					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
-					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => Alert.warning('Deploying troops is not possible yet..')} style={{...menu, bottom: '1px', left:'30px'}} />
+					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
 				</div>
 			</React.Fragment>
 		);
@@ -67,7 +71,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
 	showAircraft: (payload) => dispatch(infoRequested(payload)),
-	assignTarget: (payload) => dispatch(showLaunch(payload))
+	assignTarget: (payload) => dispatch(showLaunch(payload)),
+	deploy: (payload) => dispatch(showDeploy(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpsMenu);

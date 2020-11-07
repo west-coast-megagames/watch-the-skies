@@ -21,7 +21,7 @@ class DeployMilitary extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({team: this.props.team.name, target: this.props.target})
+		this.setState({team: this.props.team.name, target: this.props.target});
 		this.filterUnits();
 		this.filterLocations();
 	}

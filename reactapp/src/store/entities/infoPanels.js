@@ -54,11 +54,12 @@ const slice = createSlice({
       info.showLaunch = false
 		},
 		showDeploy: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+			console.log(`${action.type} Dispatched...`)
+			info.Target = action.payload
       info.showDeploy = true
     },
     deployClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+			console.log(`${action.type} Dispatched...`)
       info.showDeploy = false
     }
   }
