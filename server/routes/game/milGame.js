@@ -48,6 +48,7 @@ router.put('/deploy', async function (req, res) {
 			.populate('country')
 			.populate('zone');
 		const unitArray = [];
+		siteObj.status.warzone = true;
 
 		for await (const unit of units) {
 			const update = await Military.findById(unit);
@@ -64,6 +65,7 @@ router.put('/deploy', async function (req, res) {
 			`Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
 		);
 		await account.save();
+		await siteObj.save();
 		routeDebugger(account);
 
 		let report = new DeploymentReport();

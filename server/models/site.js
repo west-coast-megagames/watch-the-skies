@@ -17,7 +17,7 @@ const SiteSchema = new Schema({
 	code: {
 		type: String,
 		minlength: 2,
-		maxlength: 20,
+		maxlength: 25,
 		required: true,
 		unique: true
 	},
@@ -115,6 +115,7 @@ const GroundSite = Site.discriminator(
 		salvage: [{ type: ObjectId, ref: 'Upgrade' }],
 		status: {
 			public: { type: Boolean, default: false },
+			warzone: { type: Boolean, default: false },
 			secret: { type: Boolean, default: false }
 		}
 	})

@@ -43,7 +43,7 @@ async function generateSite (site) {
 
 async function genSiteCode () {
 	const phoneticArray = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot', 'Golf', 'Hotel', 'India', 'Juliet', 'Kilo', 'Lima', 'Mike', 'November', 'Oscar', 'Papa', 'Quebec', 'Romeo', 'Sierra', 'Tango', 'Uniform', 'Victor', 'Whiskey', 'Xray', 'Yankee', 'Zulu'];
-	const desArray = ['Yellow', 'Red', 'Blue', 'Green', 'Cyan', 'Magenta', 'Aquamarine', 'Ruby', 'Sapphire', 'Emerald', 'Violet', 'Purple', 'Brown', 'Almond', 'Gold', 'Silver', 'Platnum'];
+	const desArray = ['Yellow', 'Red', 'Blue', 'Green', 'Cyan', 'Magenta', 'Ruby', 'Sapphire', 'Emerald', 'Violet', 'Purple', 'Brown', 'Almond', 'Gold', 'Silver', 'Platnum'];
 
 	let chkDoc = 1;
 	let code = '';

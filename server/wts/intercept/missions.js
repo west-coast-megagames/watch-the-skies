@@ -105,6 +105,8 @@ async function resolveMissions () {
 	// await resolveTransfers();
 	await clearMissions();
 
+	resolveGroundCombat();
+
 	missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
 	totalCount += count;
 	count = 0;
@@ -404,6 +406,26 @@ async function resolveTransfers () {
 	}
 
 	return;
+}
+
+async function resolveGroundCombat () {
+	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
+		console.log(site);
+		// do combat call here
+
+		// hit this logic if combat has been resolved successfully
+		if (site.subType === 'Point of Interest') {
+			site.hidden = true;
+			console.log('Site hidden');
+		}
+		else {
+			site.stats.warzone = false;
+			console.log('Site De-Warzoned');
+		}
+		await site.save();
+	}
+
+	return 0;
 }
 
 async function clearMissions () {
