@@ -409,8 +409,10 @@ async function resolveTransfers () {
 }
 
 async function resolveGroundCombat () {
+	let comCount = 0;
 	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
-		console.log(site);
+		comCount++;
+		console.log(`Resolving combat at ${site.name}`);
 		// do combat call here
 
 		// hit this logic if combat has been resolved successfully
@@ -424,7 +426,7 @@ async function resolveGroundCombat () {
 		}
 		await site.save();
 	}
-
+	console.log(`Resolved ${comCount} combat sites`);
 	return 0;
 }
 
