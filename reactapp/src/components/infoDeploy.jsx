@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Drawer, Button, InputPicker, FlexboxGrid, Alert } from 'rsuite'
 import { gameServer } from '../config';
 import axios from 'axios';
-import { deployClosed } from '../store/entities/infoPanels';
+import { launchClosed } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
 
 let missions = [
@@ -190,11 +190,11 @@ const mapStateToProps = state => ({
   aircrafts: getAircrafts(state),
   unit: state.info.Aircraft,
   target: state.info.Target,
-  show: state.info.showDeploy
+  show: state.info.showLaunch
 });
 
 const mapDispatchToProps = dispatch => ({
-  hideDeploy: () => dispatch(deployClosed())
+  hideDeploy: () => dispatch(launchClosed())
   
 });
 

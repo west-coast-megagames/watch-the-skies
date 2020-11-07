@@ -4,11 +4,12 @@ import { connect } from 'react-redux'; // Redux store provider
 import DeployModal from '../../../components/deployForm';
 import InvasionModal from '../../../components/InvasionForm';
 import { gameServer } from '../../../config';
+import { deployClosed, showDeploy } from '../../../store/entities/infoPanels';
 import axios from 'axios';
 
 class MilitaryControl extends Component {
     state = {
-        showDeploy: false,
+        showLaunch: false,
 				showInvade: false,
 				atkArray: [],
 				defArray: [],
@@ -22,8 +23,8 @@ class MilitaryControl extends Component {
 				defenderResult: 0
     }
 
-    showDeploy = () => { this.setState({showDeploy: true}) };
-    closeDeploy = () => { this.setState({showDeploy: false}) };
+    showLaunch = () => { this.setState({showLaunch: true}) };
+    closeDeploy = () => { this.setState({showLaunch: false}) };
     showInvade = () => { this.setState({showInvade: true}) };
 		closeInvade = () => { this.setState({showInvade: false}) };
 		
@@ -106,7 +107,7 @@ class MilitaryControl extends Component {
                 <Sidebar>
                     <ButtonToolbar>
                         <IconButton size="lg" color='red' onClick={this.showInvade} block icon={<Icon icon="target" />}>Start Invasion</IconButton>
-                        <IconButton size="lg" onClick={this.showDeploy} block icon={<Icon icon="plane" />}>New Deployment</IconButton>
+                        <IconButton size="lg" onClick={() => this.props.showDeploy()} block icon={<Icon icon="plane" />}>New Deployment</IconButton>
                     </ButtonToolbar>
                 </Sidebar>
                 <InvasionModal show={this.state.showInvade}
@@ -116,14 +117,6 @@ class MilitaryControl extends Component {
                     sites={this.props.sites}
                     showInvade={this.showInvade} 
                     closeInvade={this.closeInvade}
-                />
-                <DeployModal show={this.state.showDeploy}
-                    military={this.props.military}
-                    accounts={this.props.accounts}
-                    teams={this.props.teams}
-                    sites={this.props.sites}
-                    showDeploy={this.showDeploy} 
-                    closeDeploy={this.closeDeploy}
                 />
             </Container>
         );
@@ -140,6 +133,8 @@ const mapStateToProps = state => ({
 	// baseSites: getBases(state)
 	});
 	
-	const mapDispatchToProps = dispatch => ({});
- 
+	const mapDispatchToProps = dispatch => ({
+		showDeploy: () => dispatch(showDeploy())
+	});
+
 export default connect(mapStateToProps, mapDispatchToProps)(MilitaryControl);

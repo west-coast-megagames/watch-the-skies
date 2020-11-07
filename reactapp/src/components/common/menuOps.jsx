@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { infoRequested, showSite, targetAssigned } from '../../store/entities/infoPanels';
+import { infoRequested, showSite, showLaunch } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -67,7 +67,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
 	showAircraft: (payload) => dispatch(infoRequested(payload)),
-	assignTarget: (payload) => dispatch(targetAssigned(payload))
+	assignTarget: (payload) => dispatch(showLaunch(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OpsMenu);
