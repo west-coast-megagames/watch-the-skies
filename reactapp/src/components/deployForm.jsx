@@ -4,153 +4,175 @@ import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button 
 import { getCities, getBases } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
+import { getOpsAccount } from '../store/entities/accounts';
+import { deployClosed } from '../store/entities/infoPanels';
 
-class DeployModal extends Component {
-    state = {
-			/*
-        team: null,
-        units: [],
-        destination: null,
-        corpsUnits: [],
-        fleetUnits: [],
-        citySites: [],
-        baseSites: [],
-        seaDeploy: false,
-				cost: 0
-				*/
-    }
+class DeployMilitary extends Component {
+	state = {
+		team: undefined,
+		sites: [],
+		target: undefined,
+		destination: null,
+		corps: [],
+		fleets: [],
+		mobilization: [],
+		seaDeploy: false,
+		cost: 0
+	}
 
-    handleTeam = (value) => { this.setState({team: value}); this.filterUnits();};
-    handleType = (value) => { this.setState({seaDeploy: value, units: [], destination: null, cost: 0})};
-    handleDestination = (value) => { this.setState ({destination: value})};
-    handleUnits = (value) => { this.setState({units: value})};
-    
-    componentWillMount() {
-        this.filterUnits();
-      //  this.filterLocations();
-    }
+	componentDidMount() {
+		this.setState({team: this.props.team.name, target: this.props.target})
+		this.filterUnits();
+		this.filterLocations();
+	}
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.units.length !== prevState.units.length && this.state.destination !== null) {
-            let cost = 0 // Gets the current displayed cost
-            let targetSite = this.props.sites.find(el => el._id === this.state.destination); // Looks up the target site via the stored _id
-            Alert.warning(targetSite.name) // Gives me site name
-            for (let unit of this.state.units) {
-                unit = this.props.military.find(el => el._id === unit) // Looks up current unit
-                if (unit.zone.name === targetSite.zone.name) { cost += unit.stats.localDeploy };
-                if (unit.zone.name !== targetSite.zone.name) { cost += unit.stats.globalDeploy }; 
-            }
-            this.setState({cost})
-        }
-    }
-
-    render() {
-        return (
-        <Drawer size='sm'  placement='right' show={this.props.show} onHide={this.props.closeDeploy}>
-            <Drawer.Header>
-                <Drawer.Title>Military Deployment<Tag style={{ float: 'right' }} color="green">{this.props.accounts.length > 0 ? `Deployment Cost: $M${this.state.cost}` : `Deployment Cost: 0`}</Tag></Drawer.Title>
-            </Drawer.Header>
-            <Drawer.Body>
-                <h6>Select Team</h6>
-                <SelectPicker block placeholder='Select Team'
-                    data={this.props.teams.filter(el => el.type === 'N')}
-                    labelKey='name'
-                    valueKey='name'
-                    onChange={this.handleTeam}
-                    value={this.state.team}
-                />
-                <Divider />
-                <h6>Select Destination</h6>
-                <SelectPicker block disabled={this.state.team == null} placeholder='Select Destination'
-                    data={[...this.props.citySites].sort((el_a, el_b) => (el_a.name > el_b.name) ? 1 : -1)}
-                    onChange={this.handleDestination}
-                    valueKey='_id'
-                    labelKey='info'
-                    groupBy='checkZone'
-                />
-                <Divider />
-                <h6>Select Units</h6>
-                {this.state.seaDeploy && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
-                    data={this.state.fleetUnits.filter( el => el.team.name === this.state.team)}
-                    onChange={this.handleUnits}
-                    valueKey='_id'
-                    labelKey='info'
-                    groupBy='checkZone'
-                />}
-                {!this.state.seaDeploy && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
-                    data={this.state.corpsUnits.filter( el => el.team.name === this.state.team)}
-                    onChange={this.handleUnits}
-                    valueKey='_id'
-                    labelKey='info'
-                    groupBy='checkZone'
-                />}
-            </Drawer.Body>
-            <Drawer.Footer>
-                <Toggle style={{float: 'left'}} onChange={this.handleType} size="lg" checkedChildren="Sea Deploy" unCheckedChildren="Land Deploy" />
-                <Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
-                <Button onClick={this.props.closeDeploy} appearance="subtle">Cancel</Button>
-            </Drawer.Footer>
-        </Drawer>
-        );
-    }
-
-    filterUnits = () => {
-        Alert.warning(`Filtering Units!`);
-        let data = []
-				let military = this.props.military.map((item) => Object.assign({}, item, {selected:false}));
-
-        console.log(military)
-        for (let unit of military) {
-            unit.checkZone = unit.zone.name;
-            unit.info = `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`
-            data.push(unit);
-        }
-            
-        let corpsUnits = data.filter( el => el.type === 'Corps')
-        let fleetUnits = data.filter( el => el.type === 'Fleet')
-        this.setState({corpsUnits, fleetUnits});
-    }
-
-    filterLocations = () => {
-        Alert.warning('Filtering Locations')
-        let data = []
-        let sites = this.props.sites;
-        for (let site of sites) {
-            console.log(site)
-            site.checkZone = site.zone.name;
-            site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
-            data.push(site);
-        }
-            
-        let citySites = data.filter( el => el.type === 'Base')
-        let baseSites = data.filter( el => el.type === 'City')
-        this.setState({citySites, baseSites});
-    }
-
-    submitDeployment = async () => {
-        let { cost, units, destination, team } = this.state;
-        let deployment = { cost, units, destination, team };
-
-        try {
-            let { data } = await axios.put(`${gameServer}game/military/deploy`, deployment); // Axios call to deploy units
-            Alert.success(data)
-        } catch (err) {
-            Alert.error(`Error: ${err.body} ${err.message}`, 5000)
-        }
-        this.props.closeDeploy();
-    }   
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.mobilization.length !== prevState.mobilization.length && this.state.destination !== null) {
+				let cost = 0 // Gets the current displayed cost
+				let target = this.props.sites.find(el => el._id === this.state.destination); // Looks up the target site via the stored _id
+				Alert.warning(target.name) // Gives me site name
+				for (let unit of this.state.mobilization) {
+						unit = this.props.military.find(el => el._id === unit) // Looks up current unit
+						if (unit.zone.name === target.zone.name) { cost += unit.stats.localDeploy };
+						if (unit.zone.name !== target.zone.name) { cost += unit.stats.globalDeploy }; 
+				}
+				this.setState({cost, target});
+		}
+		if (this.state.team !== prevState.team) {
+			this.filterUnits();
+		}
 }
 
+	handleTeam = (value) => { this.setState({team: value, cost: 0}); this.filterUnits();};
+	handleType = (value) => { this.setState({seaDeploy: value, mobilization: [], destination: null, target: null, cost: 0})};
+	handleDestination = (value) => { 
+		let target = this.props.sites.find(el => el._id === value); // Looks up the target site via the stored _id
+		this.setState ({destination: value, target});
+	};
+	handleUnits = (value) => {
+		let cost = this.state.cost;
+		let mobilization = value;
+		for (let unit of mobilization) {
+			unit = this.props.military.find(el => el._id === unit) // Looks up current unit
+			if (unit.zone.name === this.state.target.zone.name) { cost += unit.stats.localDeploy };
+			if (unit.zone.name !== this.state.target.zone.name) { cost += unit.stats.globalDeploy }; 
+		}
+		this.setState({mobilization, cost});
+	};
+
+	render() { 
+		return (
+			<Drawer size='sm'  placement='right' show={this.props.show} onHide={() => this.props.hide()}>
+				<Drawer.Header>
+						<Drawer.Title>Military Deployment<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title>
+				</Drawer.Header>
+				<Drawer.Body>
+						<h6>Select Team</h6>
+						<SelectPicker block placeholder='Select Team'
+								data={[...this.props.teams].filter(el => el.type === 'National')}
+								labelKey='name'
+								valueKey='name'
+								onChange={this.handleTeam}
+								value={this.state.team}
+						/>
+						<Divider />
+						<h6>Select Destination</h6>
+						<SelectPicker block disabled={this.state.team == null} placeholder='Select Destination'
+								data={this.state.sites.sort((el_a, el_b) => (el_a.name > el_b.name) ? 1 : -1)}
+								onChange={this.handleDestination}
+								value={this.state.destination}
+								valueKey='_id'
+								labelKey='info'
+								groupBy='checkZone'
+						/>
+						<Divider />
+						<h6>Select Units</h6>
+						{this.state.seaDeploy && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
+								data={this.state.fleets}
+								onChange={this.handleUnits}
+								valueKey='_id'
+								labelKey='info'
+								groupBy='checkZone'
+								value={this.state.mobilization}
+						/>}
+						{!this.state.seaDeploy && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
+								data={this.state.corps}
+								onChange={this.handleUnits}
+								valueKey='_id'
+								labelKey='info'
+								groupBy='checkZone'
+								value={this.state.mobilization}
+						/>}
+				</Drawer.Body>
+				<Drawer.Footer>
+						<Toggle style={{float: 'left'}} onChange={this.handleType} size="lg" checkedChildren="Sea Deploy" unCheckedChildren="Land Deploy" />
+						<Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
+						<Button onClick={() => this.props.hide} appearance="subtle">Cancel</Button>
+				</Drawer.Footer>
+		</Drawer>
+		);
+	}
+
+	filterUnits = () => {
+		console.log('Filtering Units...')
+		let fleets = [];
+		let corps = [];
+		for (let unit of this.props.military) {
+			if (this.state.team === unit.team.name) {
+				let unitData = {
+					name: unit.name,
+					checkZone: unit.zone.name,
+					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`,
+					_id: unit._id
+				}
+				if (unit.type === 'Fleet') fleets.push(unitData);
+				if (unit.type === 'Corps') corps.push(unitData);
+			}
+		}
+		this.setState({corps, fleets});
+	}
+
+	filterLocations = () => {
+		console.log('Filtering Sites..')
+		let sites = []
+		for (let site of this.props.sites) {
+			let siteData = {
+				checkZone: site.zone.name,
+				info: `${site.country.name} - ${site.name} | ${site.subType}`,
+				_id: site._id
+			}
+	
+			sites.push(siteData);
+			this.setState({sites})
+		}
+	}
+
+	submitDeployment = async () => { 
+		let { cost, mobilization, destination, team } = this.state;
+		let deployment = { cost, units: mobilization, destination, team };
+
+		try {
+				let { data } = await axios.put(`${gameServer}game/military/deploy`, deployment); // Axios call to deploy units
+				Alert.success(data)
+		} catch (err) {
+				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+		}
+		this.props.hide();
+	}   
+}
 const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
+	teams: state.entities.teams.list,
 	sites: state.entities.sites.list,
+	account: getOpsAccount(state),
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list,
-	citySites: getCities(state),
-	// baseSites: getBases(state)
+	show: state.info.showDeploy,
+	target: state.info.target
 	});
 	
-	const mapDispatchToProps = dispatch => ({});
- 
-export default connect(mapStateToProps, mapDispatchToProps)(DeployModal);
+	const mapDispatchToProps = dispatch => ({
+		hide: () => dispatch(deployClosed())
+	});
+export default connect(mapStateToProps, mapDispatchToProps)(DeployMilitary);
