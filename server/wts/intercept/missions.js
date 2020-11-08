@@ -14,6 +14,7 @@ const { makeAfterActionReport } = require('./report');
 const dynReport = require('./battleDetails');
 const { logger } = require('../../middleware/log/winston');
 const { generateSite } = require('../sites/sites');
+const { Military } = require('../../models/military');
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -414,6 +415,11 @@ async function resolveGroundCombat () {
 		comCount++;
 		console.log(`Resolving combat at ${site.name}`);
 		// do combat call here
+
+		// recall units
+		for (const unit of await Military.find({ 'site._id': site._id })) {
+			unit.recall();
+		}
 
 		// hit this logic if combat has been resolved successfully
 		if (site.subType === 'Point of Interest') {

@@ -55,6 +55,7 @@ router.put('/deploy', async function (req, res) {
 			update.site = siteObj._id;
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
+			update.status.deployed = true;
 			unitArray.push(update._id);
 			await update.save();
 		}
