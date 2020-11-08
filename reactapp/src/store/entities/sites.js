@@ -87,5 +87,5 @@ export const addsite = site =>
 	
 	export const getPoI = createSelector(
     state => state.entities.sites.list,
-		sites => sites.filter(site => (site.subType === 'Point of Interest'))
+		sites => sites.filter(site => (site.subType === 'Point of Interest' && site.hidden === false))
   );
