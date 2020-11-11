@@ -131,14 +131,13 @@ async function dmgCalc (unit, report) {
 		dmgReport.outcome = `${unit.name} shot down in combat...`;
 		(dmgReport.destroyed = true),
 		(dmgReport.aar = `${dmgReport.aar} ${unit.name} shot down in combat...`);
-
-		// TODO: Create salvage loop for crashes in salvage.js
-		// 	for (let i = 0; i < unit.systems.length; i++) {
-		// 		const crashSystem = await generateSalvage(unit.systems[i], 'Wreckage');
-		// 		salvageArray.push(crashSystem);
-		// 		await crashSystem.save();
-		// 	}
-		// 	unit.systems = [];
+		for (const upgrade of unit.upgrades) {
+			upgrade.status.damaged = true;
+			upgrade.status.destroyed = true;
+			salvageArray.push(upgrade._id);
+		}
+		// a few default salvage
+		salvageArray.push('Salvage');
 	}
 
 	await applyDmg(unit);
