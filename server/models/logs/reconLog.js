@@ -3,7 +3,7 @@ const { Log } = require('./log');
 const Schema = mongoose.Schema;
 
 const ReconLog = Log.discriminator('ReconLog', new Schema({
-	logType: { type: String, default: 'Recon' },
+	type: { type: String, default: 'Recon' },
 	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	targetSite: { type: Schema.Types.ObjectId, ref: 'Site' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },

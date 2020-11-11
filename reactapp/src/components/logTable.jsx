@@ -16,7 +16,7 @@ class InterceptorLogs extends Component {
             console.log(this.props.interceptor._id)
             let res = await axios.get(`${gameServer}api/logs`);
             let logs = res.data; 
-            logs = logs.filter(l => l.logType === 'Interception');
+            logs = logs.filter(l => l.type === 'Interception');
             logs = logs.filter(l => l.unit === this.props.interceptor._id);
             this.setState({ logs })
         } catch (err) {
@@ -82,7 +82,7 @@ class InterceptorLogs extends Component {
                                     { this.state.logs.map(log => (
                                         <React.Fragment>
                                         <tr key={ log._id }>
-                                            <td>{ log.logType }</td>
+                                            <td>{ log.type }</td>
                                             <td>{ log.timestamp.turn }</td>
                                             <td>{ log.country.name }</td>
                                             <td>{ Math.round(log.atkStats.damage.frameDmg / this.props.interceptor.stats.hullMax * 100) }%</td>

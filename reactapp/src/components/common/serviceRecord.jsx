@@ -17,11 +17,11 @@ const ServiceRecord = (props) => {
       {logs.length >= 1 &&
       <Timeline style={{marginLeft: '16px'}}>
         {logs.map(log => {
-            if (log.logType === 'Interception') return (<InterceptLog key={log._id} log={log} />)
-            if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
-            if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />)
-            if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />)
-            if (log.logType === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />)
+            if (log.type === 'Interception') return (<InterceptLog key={log._id} log={log} />)
+            if (log.type === 'Transaction') return (<TransactionLog key={log._id} log={log} />)
+            if (log.type === 'Research') return (<ResearchLog key={log._id} log={log} />)
+            if (log.type === 'Deploy') return (<DeployLog key={log._id} log={log} />)
+            if (log.type === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />)
         })}
     </Timeline>}
     </Panel>
