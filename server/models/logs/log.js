@@ -8,21 +8,24 @@ const LogSchema = new Schema({
 	date: { type: Date },
 	timestamp: { type: Schema.Types.Mixed },
 	model: { type: String, default: 'Log', minlength: 1, maxlength: 3, required: true },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' }
+	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	zone: { type: Schema.Types.ObjectId, ref: 'Zone' }
 });
 
 
-LogSchema.methods.createTimestamp = (log) => {
+LogSchema.methods.createTimestamp = () => {
 	const Gameclock = require('../../wts/gameClock/gameClock');
 	const { turn, phase, turnNum, minutes, seconds } = Gameclock.getTimeRemaining();
-	log.timestamp = {
+	this.timestamp = {
 		turn,
 		phase,
 		turnNum,
 		clock: `${minutes}:${seconds}`
 	};
 
-	return log;
+	return this;
 };
 
 LogSchema.methods.validateLog = async function () {
@@ -38,7 +41,7 @@ LogSchema.methods.validateLog = async function () {
 const Log = mongoose.model('Log', LogSchema);
 
 const TerrorLog = Log.discriminator('TerrorLog', new Schema({
-	logType: { type: String, default: 'Terror' },
+	type: { type: String, default: 'Terror' },
 	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	targetSite: { type: Schema.Types.ObjectId, ref: 'Site' },
@@ -49,10 +52,7 @@ const TerrorLog = Log.discriminator('TerrorLog', new Schema({
 }));
 
 const TransportLog = Log.discriminator('TransportLog', new Schema({
-	logType: { type: String, default: 'Transport' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
-	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	type: { type: String, default: 'Transport' },
 	unit: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
 	report: { type: String, required: true }
 }));
