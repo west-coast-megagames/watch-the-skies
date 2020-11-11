@@ -1,4 +1,5 @@
 const salvageDebugger = require('debug')('app:intercept - salvage');
+const CrashLog = require('../../models/logs/crashLog');
 const { Site, GroundSite } = require('../../models/site');
 const { d4 } = require('../../util/systems/dice');
 const geo = require('../../util/systems/geo');
@@ -56,6 +57,9 @@ async function generateCrash (salvage, site) {
 			secret: true
 		}
 	};
+
+	const log = new CrashLog(crash);
+	log = await log.save();
 	crash = new GroundSite(crash);
 	crash = await crash.save();
 	console.log(crash);
