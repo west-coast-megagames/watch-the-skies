@@ -4,7 +4,7 @@ const { Zone } = require('../../models/zone');
 const { Country } = require('../../models/country');
 const { Site } = require('../../models/site');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
-const { TerrorReport } = require('../reports/reportClasses');
+const { TerrorLog } = require('../../models/logs/log');
 
 require ('winston-mongodb');
 
@@ -28,7 +28,7 @@ async function crisis (zoneId, crisis) {
 		await zone.save();
 
 		reason = `Crisis: ${crisis.name} has caused ${terror}pts in ${zone.name}. Current Terror: ${zone.terror}`;
-		logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+		TerrorLog(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
 		logger.info(`${reason}`);
 		// await console.log(`${reason}`);
 		return reason;
@@ -310,9 +310,6 @@ async function alienActivity (siteID, mission) {
 	let terror = gonePublic ? 2 : 1; // Default is Air mission
 	let newTerror = 0;
 	let oldTerror = 0;
-	let zoneId = null;
-	const teamId = null;
-	const siteId = null;
 	let reason = '';
 
 	if (mission === 'Transport') {
@@ -324,8 +321,7 @@ async function alienActivity (siteID, mission) {
 
 	const site = await Site.findById(siteID);
 	if (site) {
-		zoneId = site.zone;
-		const zone = await Zone.findById(zoneId);
+		const zone = await Zone.findById(site.zone._id);
 		if (zone) {
 			oldTerror = zone.terror;
 			zone.terror += terror; // Assigns terror to zone
@@ -333,7 +329,19 @@ async function alienActivity (siteID, mission) {
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
 			reason = `Alien ${mission} mission in ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, siteID, teamId, siteId);
+			let log = new TerrorLog({
+				date: Date.now(),
+				team: site.team._id,
+				country: site.country._id,
+				zone: site.zone._id,
+				site: site._id,
+				startTerror: oldTerror,
+				endTerror: newTerror,
+				terror,
+				reason
+			});
+			log = log.createTimestamp(log);
+			await log.save();
 			logger.info(`${reason}`);
 			return reason;
 		}
@@ -462,23 +470,6 @@ async function orbitalStrike (siteId) {
 		logger.error(`${reason}`);
 		return reason;
 	}
-}
-
-async function logTerror (oldTerror, terror, newTerror, reason, zone, country, team, site) {
-
-	const report = new TerrorReport;
-	report.date = Date.now();
-	report.team = team;
-	report.country = country;
-	report.zone = zone;
-	report.terrorMessage = reason;
-	report.startTerror = oldTerror;
-	report.addTerror = terror;
-	report.endTerror = newTerror;
-	report.targetSite = site;
-
-	await report.saveReport();
-
 }
 
 const terror = { battle, coverage, crisis, cityDestruction, nuclearStrike, industryDestruction, alienActivity,

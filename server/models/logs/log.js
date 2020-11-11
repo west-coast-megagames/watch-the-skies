@@ -15,17 +15,17 @@ const LogSchema = new Schema({
 });
 
 
-LogSchema.methods.createTimestamp = () => {
+LogSchema.methods.createTimestamp = (log) => {
 	const Gameclock = require('../../wts/gameClock/gameClock');
 	const { turn, phase, turnNum, minutes, seconds } = Gameclock.getTimeRemaining();
-	this.timestamp = {
+	log.timestamp = {
 		turn,
 		phase,
 		turnNum,
 		clock: `${minutes}:${seconds}`
 	};
 
-	return this;
+	return log;
 };
 
 LogSchema.methods.validateLog = async function () {
@@ -42,8 +42,7 @@ const Log = mongoose.model('Log', LogSchema);
 
 const TerrorLog = Log.discriminator('TerrorLog', new Schema({
 	type: { type: String, default: 'Terror' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
-	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
+
 	targetSite: { type: Schema.Types.ObjectId, ref: 'Site' },
 	startTerror: { type: Number },
 	addTerror: { type: Number },
