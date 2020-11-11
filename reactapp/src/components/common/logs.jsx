@@ -149,6 +149,9 @@ const InterceptLog = props => {
           {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
           Turn {log.timestamp.turnNum}
         </p>
+				<p>
+          <b>Mission:</b> {log.type} - {log.position}
+        </p>
         <p>
           <b>Team:</b> {log.team.name}
         </p>
@@ -411,6 +414,43 @@ const ReconLog = props => {
   );
 };
 
+const FailedLog = props => {
+  let { log } = props;
+  let date = new Date(log.date);
+
+  return (
+    <Timeline.Item key={log._id} dot={<Icon icon="exclamation-triangle" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundImage: "linear-gradient(to bottom right, #ed002b, #fff)"
+        }}
+        header={`After Action Report - ${log.team.code} | ${
+          log.timestamp.turn
+        } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        collapsible
+      >
+        <p>
+          {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
+          Turn {log.timestamp.turnNum}
+        </p>
+				<p>
+          <b>Mission:</b> {log.type} - {log.position}
+        </p>
+        <p>
+          <b>Team:</b> {log.team.name}
+        </p>
+        <p>
+          <b>Location:</b> {log.country.name} - {log.zone.name}
+        </p>
+        <p>
+          <b>Report:</b> {log.report}
+        </p>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 export {
   TransactionLog,
   ResearchLog,
@@ -422,5 +462,6 @@ export {
   CrisisLog,
   DeployLog,
   RepairLog,
-  ConstructionLog
+	ConstructionLog,
+	FailedLog
 };

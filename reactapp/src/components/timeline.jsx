@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Timeline, CheckPicker } from 'rsuite';
-import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog } from '../components/common/logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog, FailedLog } from '../components/common/logs'
 
 const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
 
@@ -30,7 +30,7 @@ class GameTimeline extends Component {
         const { length: count } = this.props.logs;
 
         return (
-             <React.Fragment>
+							<React.Fragment>
                 {this.props.team.type === 'Control' &&
                 <CheckPicker
                     sticky
@@ -59,7 +59,8 @@ class GameTimeline extends Component {
                         if (log.type === 'Research') return (<ResearchLog key={log._id} log={log} />);
                         if (log.type === 'Deploy') return (<DeployLog key={log._id} log={log} />);
                         if (log.type === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />);
-                        if (log.type === 'Recon') return (<ReconLog key={log._id} log={log} />);
+												if (log.type === 'Recon') return (<ReconLog key={log._id} log={log} />);
+												if (log.type === 'Failure') return (<FailedLog key={log._id} log={log} />);
                     })}
                 </Timeline>}
             </React.Fragment>
