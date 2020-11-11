@@ -7,7 +7,7 @@ import { mapKey } from '../../../config';
 import mapStyle from './mapStyles';
 import { Alert } from 'rsuite';
 import { showLaunch } from '../../../store/entities/infoPanels';
-import { getCities, getGround, getPoI } from '../../../store/entities/sites';
+import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import getMapIcon from '../../../scripts/mapIcons';
@@ -184,6 +184,7 @@ const mapStateToProps = state => ({
 	contacts: getContacts(state),
 	cities: getCities(state),
 	groundSites: getGround(state),
+	crash: getCrash(state),
 	poi: getPoI(state)
 });
 

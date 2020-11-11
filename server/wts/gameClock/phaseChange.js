@@ -31,9 +31,11 @@ async function actionPhase (turn) {
 
 async function freePhase (turn) {
 	phaseChangeDebugging(`Now changing to the FREE phase ${turn}...`);
+	/*
 	await startResearch(); // Resolve available research...
 	await assignKnowledgeCredit();
 	await techCheck(); // Checks the availibility of new research...
+	*/
 	phaseChangeDebugging(`Done with FREE phase change for ${turn}!`);
 	logger.info(`Turn ${turn} free phase has begun...`);
 	return 0;

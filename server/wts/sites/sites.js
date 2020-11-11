@@ -19,7 +19,7 @@ async function generateSite (site) {
 		longDMS: geo.convertToDms(newDecimal.lng, true)
 	};
 
-	const c0de = await genSiteCode('', site.type);
+	const c0de = await genSiteCode();
 
 	let newSite = {
 		name: `${currentSite.country.code} Site - ${c0de}`,

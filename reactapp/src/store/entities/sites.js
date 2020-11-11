@@ -81,11 +81,16 @@ export const addsite = site =>
 	
 	export const getGround = createSelector(
     state => state.entities.sites.list,
-		sites => sites.filter(site => (site.subType === 'City' || site.subType === 'Point of Interest') && site.geoDecimal != undefined)
+		sites => sites.filter(site => (site.subType === 'City' || site.subType === 'Point of Interest' || site.subType === 'Crash') && site.geoDecimal != undefined)
 	);
 	
 	
 	export const getPoI = createSelector(
     state => state.entities.sites.list,
 		sites => sites.filter(site => (site.subType === 'Point of Interest' && site.hidden === false))
+	);
+	
+	export const getCrash = createSelector(
+    state => state.entities.sites.list,
+		sites => sites.filter(site => (site.subType === 'Crash'))
   );

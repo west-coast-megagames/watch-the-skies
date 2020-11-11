@@ -125,7 +125,7 @@ async function runInterceptions () {
 		missionDebugger(`Mission #${count} - Intercept Mission`);
 
 		let stance = 'passive'; // Target stance for interception defaults to 'passive'
-		const aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('systems'); // Gets the Initiator from the DB
+		const aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('upgrades'); // Gets the Initiator from the DB
 		let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. Projected target intercept is ${interception.distance}km away. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
 
 		// Skips mission if the current aircraft is dead
@@ -134,7 +134,7 @@ async function runInterceptions () {
 			continue;
 		}
 
-		let target = await Aircraft.findById(interception.target).populate('systems'); // Gets the Target from the DB
+		let target = await Aircraft.findById(interception.target).populate('upgrades'); // Gets the Target from the DB
 		missionDebugger(`${aircraft.name} vs. ${target.name}`);
 
 

@@ -68,10 +68,12 @@ async function dmgCalc (unit, report) {
 		interceptDebugger(battleReport);
 	}
 
-	hit === true ? atkDmg = weaponDmg : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
+	hit === true ? atkDmg = weaponDmg + 3 : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
 
 	let hullDmg = atkDmg + damage;
 	interceptDebugger(`${unit.name} takes ${hullDmg} damage!`);
+
+	sysHit += 5;
 
 	if (sysHit > 0 || sysDmg) {
 		sysDmg === true ? (systemHits = sysHit + 1) : (systemHits = sysHit);
@@ -79,27 +81,30 @@ async function dmgCalc (unit, report) {
 		const systemKeys = Object.keys(unit.systems);
 
 		for (let i = 0; i < systemHits; i++) {
-			const roll = d6();
-			const index = rand(systemKeys - 1);
+			const index = rand(systemKeys.length - 1);
 
 			const sysName = systemKeys[index].charAt(0).toUpperCase() + systemKeys[index].slice(1);
 
-			if (roll <= 3) {
-				interceptDebugger(`Damaging ${sysName}...`);
+			// TODO: Check upgrade array for relevant upgrade
+			const upgrade = unit.upgrades.find(upG => upG.type === sysName);
+			if (!upgrade || upgrade === null) {
+				// default salvage here.. whenever we figure that out
+				salvageArray.push('Salvage'); // placehoder for now
+
+				interceptDebugger(`Damaging System ${sysName}...`);
 				battleReport = `${battleReport} ${sysName} damaged.`;
 				unit.systems[systemKeys[index]].damaged ? unit.systems[systemKeys[index]].destroyed = true : unit.systems[systemKeys[index]].damaged = true;
 				hullDmg += 1;
-				// TODO: Check upgrade array for relevant upgrade
-				// save system damage...
-				// TODO: CREATE MATERIAL SALVAGE and ADD to salvage array
 			}
-			else if (roll > 3) {
-				interceptDebugger(`Destroying ${sysName}...`);
-				battleReport = `${battleReport} ${sysName} destroyed.`;
-				unit.systems[systemKeys[index]].destroyed = true;
-				hullDmg += 1;
-				// TODO: Check upgrade array for relevant upgrade
-				// TODO: CREATE MATERIAL SALVAGE and ADD to salvage array
+			else if (upgrade.status.damaged === false) {
+				upgrade.status.damaged = true;
+				upgrade.status.salvage = true;
+				salvageArray.push(upgrade._id);
+				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
+			}
+			else if (upgrade.status.damaged === true) {
+				upgrade.status.destroyed = true;
+				// no salvage from destroyed systems? idk, might want to prevent "double dipping"
 			}
 		}
 	}
