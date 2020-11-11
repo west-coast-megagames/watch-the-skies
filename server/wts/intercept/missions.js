@@ -377,7 +377,7 @@ async function checkEscort (target, atkReport, attacker) {
 
 	target = await Aircraft.findById(target).populate('systems').populate('country'); // Loads original target in for interception
 	const defReport = `${target.name} was engaged over ${target.country.name} airspace.`; // Possible dynReport point
-	return { target, atkReport, defReport, stance: 'defensive' }; // Returns to mission function that called it
+	return { target, atkReport, defReport, stance: 'passive' }; // Returns to mission function that called it
 }
 
 async function resolveTransfers () {
