@@ -24,13 +24,12 @@ function outcome (unit, roll, stance) {
 			interceptDebugger(`${name}'s outcome ${aggresiveArray[0]} or less - Critical Fail.`);
 			result.damage = 1; // Crit fail does damage to the unit
 			result.evade -= 1; // Crit Fail gives you a evade reduction chance to evade
-			result.systemDmg = true; // Crit fail does damage to a units systems
+			result.sysDmg = true; // Crit fail does damage to a units systems
 			result.performance = 'Critical Fail';
 			break;
 		case (roll <= aggresiveArray[1]):
 			interceptDebugger(`${name}'s outcome between ${aggresiveArray[0] + 1} and ${aggresiveArray[1]} - Fail.`);
 			result.damage = 1; // Failure does damage to the unit
-			result.systemDmg = false; // No system damage done on a fail
 			result.performance = 'Fail';
 			break;
 		case (roll <= aggresiveArray[2]):
