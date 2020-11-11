@@ -47,6 +47,9 @@ async function interceptDmg (attacker, defender, atkResult, defResult) {
 		salvage: [...atkReport.salvage, ...defReport.salvage]
 	};
 
+	if (defOutcome.destroyed) dmgReport.atkReport = `${dmgReport.atkReport} ${dmgReport.defStatus}`;
+	if (atkOutcome.destroyed) dmgReport.defReport = `${dmgReport.defReport} ${dmgReport.atkStatus}`;
+
 	return dmgReport;
 }
 

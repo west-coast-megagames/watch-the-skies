@@ -154,7 +154,7 @@ async function runInterceptions () {
 				country: aircraft.country._id,
 				zone: aircraft.zone._id,
 				site: aircraft.site._id,
-				report: `${atkReport} ${aircraft.name} was unable to reach mission target.`,
+				report: `${atkReport} ${aircraft.name} mission target has been destroyed.`,
 				unit: aircraft._id,
 				opponent: target._id
 			};
