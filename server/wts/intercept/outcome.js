@@ -8,6 +8,7 @@ function outcome (unit, roll, stance) {
 	const result = {
 		damage: 0, // Hull dmg done to the aircraft due to pilot error
 		attack: unit.stats.attack, // Extra dmg done to opponent
+		penetration: unit.stats.penetration, // Extra hits to systems if it can get through armor
 		sysDmg: false, // System dmg done to aircraft due to pilot error
 		hit: false, // A hit with weapons scored on the enemy craft
 		evade: unit.stats.evade, // Extra evade due to pilot success
@@ -41,6 +42,8 @@ function outcome (unit, roll, stance) {
 			interceptDebugger(`${name}'s outcome between ${aggresiveArray[2] + 1 } and ${aggresiveArray[3]} - Success.`);
 			result.hit = true, // Success scores a hit on the target
 			result.attack += 1;
+			result.penetration += 1;
+			result.sysHit = true;
 			result.performance = 'Success';
 			break;
 		case (roll <= aggresiveArray[4]):
@@ -49,6 +52,7 @@ function outcome (unit, roll, stance) {
 			result.sysHit = true;
 			result.attack += 2;
 			result.evade += 1; // Crit Success gives you a chance to evade
+			result.penetration += 2;
 			result.performance = 'Critical Success';
 			break;
 		default:
@@ -77,22 +81,29 @@ function outcome (unit, roll, stance) {
 		case (roll <= passiveArray[2]):
 			interceptDebugger(`${name}'s outcome between ${passiveArray[1] + 1} and ${passiveArray[2]} - Neutral.`);
 			result.evade += 1;
+			result.performance = 'Neutral';
 			break;
 		case (roll <= passiveArray[3]):
 			interceptDebugger(`${name}'s outcome between ${passiveArray[2] + 1} and ${passiveArray[3]} - Success.`);
 			result.evade += 2;
+			result.hit = true;
+			result.performance = 'Success';
 			break;
 		case (roll <= passiveArray[4]):
 			interceptDebugger(`${name}'s outcome between ${passiveArray[3] + 1} and ${passiveArray[4]} - Skilled success.`);
 			result.evade += 2;
+			result.sysHit = true;
 			result.hit = true;
+			result.performance = 'Skilled Success';
 			break;
 		case (roll <= passiveArray[5]):
 			interceptDebugger(`${name}'s outcome is ${passiveArray[4] + 1} or more - Critical success.`);
 			result.evade += 3;
 			result.attack += 1;
+			result.penetration += 1;
 			result.hit = true;
 			result.sysHit = true;
+			result.performance = 'Critical Success';
 			break;
 		default:
 			interceptDebugger('The case does not work!');

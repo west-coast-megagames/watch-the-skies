@@ -14,7 +14,7 @@ async function interceptDmg (attacker, defender, atkResult, defResult) {
 		sysDmg: defResult.sysDmg, // Hard system damage
 		hit: atkResult.hit, // If defender was hit
 		weaponDmg: atkResult.attack, // Weapon damage on hit
-		sysHit: attacker.stats.penetration - defender.stats.armor// # of system hits
+		sysHit: atkResult.penetration - defender.stats.armor// # of system hits
 	};
 
 	const atkOutcome = {
@@ -23,7 +23,7 @@ async function interceptDmg (attacker, defender, atkResult, defResult) {
 		sysDmg: atkResult.sysDmg,
 		hit: defResult.hit,
 		weaponDmg: defResult.attack,
-		sysHit: defender.stats.penetration - attacker.stats.armor
+		sysHit: defResult.penetration - attacker.stats.armor
 	};
 
 	const defReport = await dmgCalc(defender, defOutcome);
@@ -68,13 +68,13 @@ async function dmgCalc (unit, report) {
 		interceptDebugger(battleReport);
 	}
 
-	hit === true ? atkDmg = weaponDmg + 3 : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
+	hit === true ? atkDmg = weaponDmg : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
 
 	let hullDmg = atkDmg + damage;
 	interceptDebugger(`${unit.name} takes ${hullDmg} damage!`);
 
 	if (sysHit > 0 || sysDmg) {
-		sysDmg === true ? (systemHits = sysHit + 1) : (systemHits = sysHit);
+		sysDmg === true ? (systemHits = sysHit + 2) : (systemHits = sysHit);
 
 		const systemKeys = Object.keys(unit.systems);
 
