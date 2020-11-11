@@ -144,6 +144,27 @@ function PrototypeMap(props) {
 					/>)
 				}
 			</MarkerClusterer>
+			{/* The crashes clusterer... */}
+			<MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.crashes.map(crash => 
+					<Marker
+						key={crash._id}
+						clusterer={clusterer}
+						position={{ lat: crash.geoDecimal.latDecimal, lng: crash.geoDecimal.longDecimal }}
+						onClick={()=> {
+							setGeo(crash.geoDecimal)
+							setMenu(crash);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMapIcon(crash.subType),
+							scaledSize: new window.google.maps.Size(55, 55),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)
+				}
+			</MarkerClusterer>
 			{/* On Click Alien spotted placeholder... */}
 			{markers.map(marker =>
 				<Marker
@@ -184,7 +205,7 @@ const mapStateToProps = state => ({
 	contacts: getContacts(state),
 	cities: getCities(state),
 	groundSites: getGround(state),
-	crash: getCrash(state),
+	crashes: getCrash(state),
 	poi: getPoI(state)
 });
 
