@@ -3,7 +3,7 @@ const { Log } = require('./log');
 const Schema = mongoose.Schema;
 
 const ResearchLog = Log.discriminator('ResearchLog', new Schema({
-	logType: { type: String, default: 'Research' },
+	type: { type: String, default: 'Research' },
 	lab: { type: Schema.Types.ObjectId, ref: 'Facility' },
 	project: { type: Schema.Types.ObjectId, ref: 'Research' },
 	funding: { type: Number },

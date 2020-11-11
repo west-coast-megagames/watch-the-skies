@@ -148,13 +148,13 @@ async function runInterceptions () {
 
 		if (target.status.destroyed || target.systems.length < 1) {
 			const log = {
-				logType: 'Failure',
+				type: 'Failure',
 				team: aircraft.team,
 				position: 'Offense',
 				country: aircraft.country._id,
 				zone: aircraft.zone._id,
 				site: aircraft.site._id,
-				report: `${atkReport} ${aircraft.name} was unable to find mission target.`,
+				report: `${atkReport} ${aircraft.name} was unable to reach mission target.`,
 				unit: aircraft._id,
 				opponent: target._id
 			};

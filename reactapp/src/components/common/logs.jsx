@@ -56,7 +56,7 @@ const TransactionLog = props => {
 
 // TODO - Research log should be fleshed out for March.
 const ResearchLog = props => {
-  let { outcomes, rolls, _id, team, logType, timestamp, lab, funding, stats, progress, project } = props.log;
+  let { outcomes, rolls, _id, team, type, timestamp, lab, funding, stats, progress, project } = props.log;
   if (props.log.project === null) console.log(props.log)
   let date = new Date(props.log.date);
   if (timestamp === undefined) timestamp = {turn: 'void', phase: 'uncertian', clock: '00:00'};
@@ -73,7 +73,7 @@ const ResearchLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d6eaf8, #fff)"
         }}
-        header={`${logType} - ${team.code} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`${type} - ${team.code} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
        <FlexboxGrid>
