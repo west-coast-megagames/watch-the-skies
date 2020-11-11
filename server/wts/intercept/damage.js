@@ -73,8 +73,6 @@ async function dmgCalc (unit, report) {
 	let hullDmg = atkDmg + damage;
 	interceptDebugger(`${unit.name} takes ${hullDmg} damage!`);
 
-	sysHit += 5;
-
 	if (sysHit > 0 || sysDmg) {
 		sysDmg === true ? (systemHits = sysHit + 1) : (systemHits = sysHit);
 
