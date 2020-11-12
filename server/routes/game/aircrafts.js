@@ -13,6 +13,7 @@ const { Site } = require('../../models/site');
 const { newUnit } = require('../../wts/construction/construction');
 const banking = require('../../wts/banking/banking');
 const randomCords = require('../../util/systems/lz');
+const terror = require('../../wts/terror/terror');
 
 // @route   PUT game/aircrafts   ... update
 // @Desc    Find Attacker/Defender and activate intercept
@@ -23,10 +24,10 @@ router.put('/', async (req, res) => {
 	const { mission } = req.body;
 	routeDebugger(req.body);
 
-	aircraft = await Aircraft.findById(aircraft).populate('systems').populate('site').populate('origin');
+	aircraft = await Aircraft.findById(aircraft).populate('upgrades').populate('site').populate('origin').populate('team');
 
 	if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
-		target = await Aircraft.findById(target).populate('systems').populate('site');
+		target = await Aircraft.findById(target).populate('upgrades').populate('site');
 		aircraft.site = target.site._id;
 		aircraft.location = randomCords(target.site.geoDecimal.latDecimal, target.site.geoDecimal.longDecimal);
 	}
@@ -35,6 +36,8 @@ router.put('/', async (req, res) => {
 		aircraft.site = target._id;
 		aircraft.location = randomCords(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal);
 	}
+
+	if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Air');
 
 	result = `${aircraft.name} launching...`;
 	aircraft.country = target.country;

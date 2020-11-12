@@ -1,10 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const { UpgradeBlueprint } = require('../../models/blueprint');
 const validateObjectId = require('../../middleware/util/validateObjectId');
+const { newUpgrade } = require('../../wts/construction/construction');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
-
 const { Upgrade } = require('../../models/upgrade');
-const { addUpgrade } = require('../../wts/upgrades/upgrades');
+const nexusEvent = require('../../middleware/events/events');
+const nexusError = require('../../middleware/util/throwError');
+const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
+const { Team } = require('../../models/team');
+const { Facility } = require('../../models/facility');
 
 // @route   GET api/upgrades
 // @Desc    Get all Upgrades
@@ -26,8 +31,30 @@ router.get(':id', async function (req, res) {
 // @Desc    add an upgrade to a unit
 // @access  Public
 router.post('/', async function (req, res) {
-	await addUpgrade(req.body.upgrade, req.body.unit);
-	res.status(200).send(`Added "${req.body.upgrade.name}" to unit "${req.body.unit.name}"`);
+	const { code } = req.body; // please give me these things
+	const team = await Team.findOne({ code: 'TCN' });
+	const facility = await Facility.findOne();
+	try {
+		const blue = await UpgradeBlueprint.findOne({ code: code });
+
+		if (!blue) nexusError(`Could not find Blueprint of ${code}`, 404);
+		let upgrade = new Upgrade();
+		upgrade.team = team;
+		upgrade.facility = facility;
+		upgrade.name = blue.name;
+		upgrade.cost = blue.cost;
+		upgrade.buildTime = blue.buildTime;
+		upgrade.desc = blue.desc;
+		upgrade.prereq = blue.prereq;
+		upgrade.effects = blue.effects;
+
+		upgrade = await upgrade.save();
+
+		res.status(200).json(upgrade);
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
+	}
 });
 
 // @route   DELETE api/upgrades/:id
@@ -38,6 +65,7 @@ router.delete('/:id', validateObjectId, async function (req, res) {// Scott has 
 	const upgrade = await Upgrade.findByIdAndRemove(id);
 	if (upgrade != null) {
 		logger.info(`${upgrade.name} with the id ${id} was deleted!`);
+		nexusEvent.emit('updateMilitary');
 		res.status(200).send(`${upgrade.name} with the id ${id} was deleted!`);
 	}
 	else {

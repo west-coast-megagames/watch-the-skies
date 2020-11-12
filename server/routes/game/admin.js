@@ -13,6 +13,7 @@ const { Team } = require('../../models/team');
 
 const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
+const { Site } = require('../../models/site');
 
 // Game State - Server side template items
 
@@ -134,4 +135,25 @@ router.patch('/load/tech/seed', async function (req, res) {
 	nexusEvent.emit('updateResearch');
 	return res.status(200).send(`We did it, we seeded Technology: ${response}`);
 });
+
+router.get('/test', async function (req, res) {
+	let count = 0;
+	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
+		console.log(site);
+		count++;
+		if (site.subType === 'Point of Interest') {
+			site.hidden = true;
+			console.log('Site hidden');
+		}
+		else {
+			site.stats.warzone = false;
+			console.log('Site De-Warzoned');
+		}
+		await site.save();
+	}
+
+	return res.status(200).send(`Number of Sites: ${count}`);
+});
+
+
 module.exports = router;

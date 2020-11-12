@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Icon, IconButton, Alert, ButtonGroup } from 'rsuite';
 import { getContacts } from '../store/entities/aircrafts';
-import { targetAssigned } from '../store/entities/infoPanels';
+import { showLaunch } from '../store/entities/infoPanels';
 import { getCities, getBases } from '../store/entities/sites';
 import { getOpsAccount } from '../store/entities/accounts';
 const { Column, HeaderCell, Cell } = Table;
@@ -135,11 +135,11 @@ const mapStateToProps = state => ({
 	contacts: getContacts(state),
 	cities: getCities(state),
 	bases: getBases(state),
-	show: state.info.showDeploy
+	show: state.info.showLaunch
 });
 
 const mapDispatchToProps = dispatch => ({
-  assignTarget: (payload) => dispatch(targetAssigned(payload))
+  assignTarget: (payload) => dispatch(showLaunch(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contacts);

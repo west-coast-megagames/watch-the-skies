@@ -6,6 +6,8 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
+const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
+const randomCords = require('../util/systems/lz');
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
@@ -96,6 +98,30 @@ MilitarySchema.methods.deploy = async (unit, country) => {
 	}
 };
 
+// Recall method - Returns the craft to origin
+MilitarySchema.methods.recall = async function () {
+	logger.info(`Recalling ${this.name} to base...`);
+
+	try {
+		const { origin } = this;
+		const home = await Facility.findById(origin)
+			.populate('site');
+
+		this.status.deployed = false;
+		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+		this.site = home.site;
+		this.country = home.site.country;
+		this.zone = home.site.zone;
+
+		const aircraft = await this.save();
+		logger.info(`${this.name} returned to ${home.name}...`);
+
+		return aircraft;
+	}
+	catch (err) {
+		nexusError(`${err.message}`, 500);
+	}
+};
 const Military = mongoose.model('Military', MilitarySchema);
 
 const Fleet = Military.discriminator(

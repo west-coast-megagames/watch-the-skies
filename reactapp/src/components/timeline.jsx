@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Timeline, CheckPicker } from 'rsuite';
-import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog } from '../components/common/logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog, FailedLog } from '../components/common/logs'
 
 const logTypes = [{ value: 'Transaction' }, { value: 'Research' }, { value: 'Interception' }, { value:'Construction' }, { value: 'Repair' }, {value: 'Recon' }, { value: 'Deploy' }, { value: 'Crash' }, { value: 'Trade' }]
 
@@ -30,7 +30,7 @@ class GameTimeline extends Component {
         const { length: count } = this.props.logs;
 
         return (
-             <React.Fragment>
+							<React.Fragment>
                 {this.props.team.type === 'Control' &&
                 <CheckPicker
                     sticky
@@ -54,12 +54,13 @@ class GameTimeline extends Component {
                 {count === 0 && <h4>No timeline for the game.</h4>}
                 {count > 0 && <Timeline className='game-timeline'>
                     {this.state.filteredLogs.map(log => {
-                        if (log.logType === 'Interception') return (<InterceptLog key={log._id} log={log} />);
-                        if (log.logType === 'Transaction') return (<TransactionLog key={log._id} log={log} />);
-                        if (log.logType === 'Research') return (<ResearchLog key={log._id} log={log} />);
-                        if (log.logType === 'Deploy') return (<DeployLog key={log._id} log={log} />);
-                        if (log.logType === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />);
-                        if (log.logType === 'Recon') return (<ReconLog key={log._id} log={log} />);
+                        if (log.type === 'Interception') return (<InterceptLog key={log._id} log={log} />);
+                        if (log.type === 'Transaction') return (<TransactionLog key={log._id} log={log} />);
+                        if (log.type === 'Research') return (<ResearchLog key={log._id} log={log} />);
+                        if (log.type === 'Deploy') return (<DeployLog key={log._id} log={log} />);
+                        if (log.type === 'Aircraft Repair') return (<RepairLog key={log._id} log={log} />);
+												if (log.type === 'Recon') return (<ReconLog key={log._id} log={log} />);
+												if (log.type === 'Failure') return (<FailedLog key={log._id} log={log} />);
                     })}
                 </Timeline>}
             </React.Fragment>
@@ -90,7 +91,7 @@ class GameTimeline extends Component {
         if (teamFilter.length === 0) postTeams = logs
         let postTypes = []
         for (let type of typeFilter) {
-            let typeLogs = postTeams.filter(el => el.logType === type);
+            let typeLogs = postTeams.filter(el => el.type === type);
             postTypes = [...postTypes,...typeLogs];
             console.log(postTypes);
         }

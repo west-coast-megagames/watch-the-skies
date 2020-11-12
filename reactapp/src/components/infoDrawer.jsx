@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { showDeploy } from '../store/entities/infoPanels';
+import DeployMilitary  from './deployForm';
 import InfoAircraft from './infoAircraft';
 import InfoDeploy from './infoDeploy';
 import InfoMilitary from './infoMilitary';
@@ -11,15 +13,17 @@ class InfoDrawer extends Component {
             <React.Fragment>
                 {this.props.login && <InfoAircraft />}
                 {this.props.login && <InfoDeploy />}
+								{this.props.login && <DeployMilitary />}
                 {this.props.login && <InfoMilitary />}
-							  {this.props.login && <InfoSite />}
+								{this.props.login && <InfoSite />}
             </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    login: state.auth.login
+		login: state.auth.login,
+		showDeploy: state.info.showDeploy
   });
   
   const mapDispatchToProps = dispatch => ({});

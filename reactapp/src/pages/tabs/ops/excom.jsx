@@ -4,7 +4,7 @@ import { Table, Icon, Alert, ButtonGroup, IconButton, Divider, Container, Conten
 import AircraftTable from "../../../components/aircraftTable";
 import { getOpsAccount } from "../../../store/entities/accounts";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
-import { targetAssigned } from "../../../store/entities/infoPanels";
+import { showLaunch } from "../../../store/entities/infoPanels";
 import { getCities, getBases } from "../../../store/entities/sites";
 import Contacts from '../../../components/contactsTable';
 
@@ -107,7 +107,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  assignTarget: (payload) => dispatch(targetAssigned(payload))
+  assignTarget: (payload) => dispatch(showLaunch(payload))
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(ExcomOps);

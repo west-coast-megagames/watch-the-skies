@@ -286,8 +286,7 @@
     "buildTime": 1,
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
     "prereq": [{ "type": "Technology", "code": "Agr2A" }],
-		"effects": [{ "type": "terror", "effect": -5 }],
-		"stats": { "dummy": 0 }
+		"effects": [{ "type": "terror", "effect": -5 }]
   },
   {
     "loadType": "blueprint",
@@ -618,8 +617,10 @@
     "cost": 2,
     "prereq": [{ "type": "Technology", "name": "Percision Mounted Lasers" }],
     "category": "Weapon",
-    "desc": "Laser designed to cut through material and do damage to systems",
-    "stats": { "attack": 1, "penetration": 1 }
+		"desc": "Laser designed to cut through material and do damage to systems",
+		"effects": [
+      { "type": "attack", "effect": 1 }
+    ]
   },
   {
     "loadType": "blueprint",
@@ -633,7 +634,9 @@
     "prereq": [],
     "category": "Weapon",
     "desc": "Basic terrestrial mounted railgun",
-    "stats": { "attack": 1 }
+		"effects": [
+      { "type": "attack", "effect": 1 }
+    ]
   },
   {
     "loadType": "blueprint",
@@ -647,7 +650,9 @@
     "prereq": [],
     "category": "Sensor",
     "desc": "Basic terrestrial sensor system",
-    "stats": { "evade": 0 }
+		"effects": [
+      { "type": "evade", "effect": 0 }
+    ]
   },
   {
     "loadType": "blueprint",
@@ -661,7 +666,9 @@
     "prereq": [],
     "category": "Compartment",
     "desc": "Basic single seater cock-pit",
-    "stats": { "cargo": 0 }
+		"effects": [
+      { "type": "cargo", "effect": 0 }
+    ]
   },
   {
     "loadType": "blueprint",
@@ -674,8 +681,11 @@
     "cost": 0,
     "prereq": [],
     "category": "Engine",
-    "desc": "Basic terrestrial sensor system",
-    "stats": { "range": 3000, "evade": 1 }
+		"desc": "Basic terrestrial sensor system",
+		"effects": [
+			{ "type": "range", "effect": 3000 },
+			{ "type": "evade", "effect": 1 }
+    ]
   },
   {
     "loadType": "blueprint",
@@ -689,7 +699,8 @@
     "prereq": [],
     "category": "Util",
     "desc": "Basic terrestrial sensor system",
-    "stats": { "dummy": 0 }
+		"effects": [
+    ]
   },
   {
     "loadType": "blueprint",
@@ -702,8 +713,10 @@
     "cost": 0,
     "prereq": [],
     "category": "Util",
-    "desc": "Basic terrestrial sensor system",
-    "stats": { "penetration": 1 }
+		"desc": "Basic terrestrial sensor system",
+		"effects": [
+			{ "type": "penetration", "effect": 1 }
+    ]
 	},
 	{
     "loadType": "blueprint",
@@ -738,8 +751,10 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Old Tech Vehicle",
-    "stats": { "attack": 2 }
+		"desc": "Old Tech Vehicle",
+		"effects": [
+			{ "type": "attack", "effect": 1 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -752,8 +767,12 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Modern Tech Vehicle",
-    "stats": { "attack": 4, "defense": 3, "health": 1 }
+		"desc": "Modern Tech Vehicle",
+		"effects": [
+			{ "type": "attack", "effect": 4 },
+			{ "type": "defense", "effect": 3 },
+			{ "type": "health", "effect": 1 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -766,8 +785,11 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Vehicles that allow for amphibious assults",
-    "stats": { "attack": 4, "defense": 2 }
+		"desc": "Vehicles that allow for amphibious assults",
+		"effects": [
+			{ "type": "attack", "effect": 4 },
+			{ "type": "defense", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -780,8 +802,11 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Marine Vehicle",
-    "stats": { "attack": 4, "defense": 2 }
+		"desc": "Marine Vehicle",
+		"effects": [
+			{ "type": "attack", "effect": 4 },
+			{ "type": "defense", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -794,8 +819,11 @@
     "buildtime": 2,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Fleet Carrier Group",
-    "stats": { "attack": 6, "defense": 2 }
+		"desc": "Fleet Carrier Group",
+		"effects": [
+			{ "type": "attack", "effect": 6 },
+			{ "type": "defense", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -808,8 +836,11 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Fleet Submarine Group",
-    "stats": { "attack": 5, "defense": 1 }
+		"desc": "Fleet Submarine Group",
+		"effects": [
+			{ "type": "attack", "effect": 5 },
+			{ "type": "defense", "effect": 1 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -822,8 +853,11 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Vehicles",
-    "desc": "Fleet Surface Group",
-    "stats": { "attack": 4, "defense": 1 }
+		"desc": "Fleet Surface Group",
+		"effects": [
+			{ "type": "attack", "effect": 4 },
+			{ "type": "defense", "effect": 1 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -836,8 +870,10 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Training",
-    "desc": "Militia Training",
-    "stats": { "health": 2 }
+		"desc": "Militia Training",
+		"effects": [
+			{ "type": "health", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -850,8 +886,11 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Training",
-    "desc": "Insurgent Training",
-    "stats": { "health": 2, "defense": 1 }
+		"desc": "Insurgent Training",
+		"effects": [
+			{ "type": "defense", "effect": 1 },
+			{ "type": "health", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -864,8 +903,10 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Training",
-    "desc": "Corps Training",
-    "stats": { "health": 2 }
+		"desc": "Corps Training",
+		"effects": [
+			{ "type": "health", "effect": 2 }
+    ]
 },
 {
 	"loadType": "blueprint",
@@ -878,7 +919,10 @@
     "buildtime": 1,
     "cost": 0,
     "category": "Training",
-    "desc": "Marine Training",
-    "stats": { "health": 1, "defense": 1 }
+		"desc": "Marine Training",
+		"effects": [
+			{ "type": "defense", "effect": 1 },
+			{ "type": "health", "effect": 1 }
+    ]
 }
 ]

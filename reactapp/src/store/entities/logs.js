@@ -84,5 +84,5 @@ export const getLogsByTeam = createSelector(
 
 export const getTransactionLogs = createSelector(
   state => state.entities.logs.list,
-  logs => logs.filter(log => log.logType === 'Transaction')
+  logs => logs.filter(log => log.type === 'Transaction')
 );

@@ -7,6 +7,7 @@ import ClockControls from './../components/clockControls';
 import { gameServer } from '../config';
 import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
+import UnitControl from './tabs/control/unitControl';
 import LoginLink from '../components/common/loginLink';
 
 class Control extends Component {
@@ -31,6 +32,7 @@ class Control extends Component {
 						<Nav.Item eventKey="national" to={`${url}/national`} componentClass={NavLink}> National Control</Nav.Item>
 						<Nav.Item eventKey="military" to={`${url}/military`} componentClass={NavLink} > Military Control</Nav.Item>
 						<Nav.Item eventKey="alien" to={`${url}/alien`} componentClass={NavLink} > Alien Control</Nav.Item>
+						<Nav.Item eventKey="unit" to={`${url}/unit`} componentClass={NavLink} > Unit Control</Nav.Item>
 					</Nav>
 				</Header>
 					<Content  className='tabContent' style={{ paddingLeft: 20 }}>
@@ -43,19 +45,19 @@ class Control extends Component {
 								<div>
 									<h5>Interception Controls</h5>
 									<ButtonGroup>
-										<Button color="info" size="sm" onClick={ () => this.deployAliens() }>
+										<Button color="blue" size="sm" onClick={ () => this.deployAliens() }>
 											Deploy Aliens
 										</Button>
-										<Button color="info" size="sm" onClick={ () => this.repairAll() }>
+										<Button color="blue" size="sm" onClick={ () => this.repairAll() }>
 											Repair all 
 										</Button>
-										<Button color="info" size="sm" onClick={ () => this.returnAliens() }>
+										<Button color="blue" size="sm" onClick={ () => this.returnAliens() }>
 											Return Aliens
 										</Button>
-										<Button color="info" size="sm" onClick={ () => this.returnAll() }>
+										<Button color="blue" size="sm" onClick={ () => this.returnAll() }>
 											Return Aircraft
 										</Button>
-										<Button color="info" size="sm" onClick={ () => this.updateAircraft() }>
+										<Button color="blue" size="sm" onClick={ () => this.updateAircraft() }>
 											Update Aircraft
 										</Button>
 									</ButtonGroup>
@@ -64,7 +66,7 @@ class Control extends Component {
 								<div>
 									<h5>Financial Controls</h5>
 									<ButtonGroup>
-										<Button color="info" size="sm" onClick={ () => this.resetAccounts() }>
+										<Button color="yellow" size="sm" onClick={ () => this.resetAccounts() }>
 											Reset Accounts
 										</Button>
 									</ButtonGroup>
@@ -110,6 +112,9 @@ class Control extends Component {
 						)}/>
 						<Route path={`${url}/alien`}  render={() => (
 							<h5>Grrr...</h5>
+						)}/>
+						<Route path={`${url}/unit`}  render={() => (
+							<UnitControl {...this.props} />
 						)}/>
 						<Redirect from={`${url}/`} exact to={`${url}/game`} />
 					</Switch>

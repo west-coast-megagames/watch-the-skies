@@ -315,7 +315,7 @@ class RepairReport {
 	constructor () {
 		this.team = '';
 		this.date = '';
-		this.logType = '';
+		this.type = '';
 		this.dmgRepaired = 0;
 		this.cost = 0;
 		this.saveReport = this.saveReport.bind(this);

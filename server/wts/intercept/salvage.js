@@ -1,8 +1,10 @@
 const salvageDebugger = require('debug')('app:intercept - salvage');
-const { Site } = require('../../models/site');
+const CrashLog = require('../../models/logs/crashLog');
+const { Site, GroundSite } = require('../../models/site');
 const { d4 } = require('../../util/systems/dice');
 const geo = require('../../util/systems/geo');
-
+const randomCords = require('../../util/systems/lz');
+const { genSiteCode } = require('../sites/sites');
 let count = 0; // How many crashes have happened in the game.
 
 async function generateSalvage (system, status) {
@@ -26,28 +28,40 @@ async function generateCrash (salvage, site) {
 	salvageDebugger(currentSite);
 	salvageDebugger(salvage);
 
-	const newDMS = {
-		latDMS: decimalCrash(currentSite.geoDecimal.latDecimal, false),
-		longDMS: decimalCrash(currentSite.geoDecimal.longDecimal, true)
+	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
+
+	const newNewDecimal = {
+		latDecimal: newDecimal.lat,
+		longDecimal: newDecimal.lng
 	};
 
-	const newDecimal = geo.parseDMS(`${newDMS.latDMS} ${newDMS.longDMS}`);
+	const newDMS = {
+		latDMS: geo.convertToDms(newDecimal.lat, false),
+		longDMS: geo.convertToDms(newDecimal.lng, true)
+	};
 
-	const crash = {
-		name: `${currentSite.country.name} Crash - ${currentSite.country.code}0${count}`,
+	const c0de = await genSiteCode();
+
+	let crash = {
+		name: `${currentSite.country.code} Crash - ${c0de}`,
 		team: currentSite.team,
+		subType: 'Crash',
 		country: currentSite.country,
 		zone: currentSite.zone,
-		siteCode: `${currentSite.country.code}-0${count}`,
+		code: c0de,
 		geoDMS: newDMS,
-		geoDecimal: newDecimal,
+		geoDecimal: newNewDecimal,
 		salvage: [...salvage],
 		status: {
 			public: false,
 			secret: true
 		}
 	};
-	count++;
+
+	const log = new CrashLog(crash);
+	await log.save();
+	crash = new GroundSite(crash);
+	crash = await crash.save();
 	console.log(crash);
 }
 

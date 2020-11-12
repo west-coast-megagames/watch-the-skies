@@ -6,16 +6,16 @@ import { formatRelative } from 'date-fns';
 import { mapKey } from '../../../config';
 import mapStyle from './mapStyles';
 import { Alert } from 'rsuite';
-import { targetAssigned } from '../../../store/entities/infoPanels';
-import { getCities } from '../../../store/entities/sites';
+import { showLaunch } from '../../../store/entities/infoPanels';
+import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
-import getFlag from '../../../scripts/teamFlags';
+import getMapIcon from '../../../scripts/mapIcons';
 
 const libraries = ['places'];
 const mapContainerStyle = {
 	width: '94.5%',
-	height: '92%',
+	height: '90%',
 	position: 'absolute'
 };
 
@@ -80,12 +80,14 @@ function PrototypeMap(props) {
 			zoom={4}
 			center={center}
 			options={options}
-			onClick={mapClick.event}
+			// onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
+
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
-				<OpsMenu info={menu} closeMenu={onCloseMenu} />
+			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
+			{/* The Aircraft clusterer... */}
 			{ props.contacts.map(contact =>
 					<Marker
 						key={contact._id}
@@ -96,13 +98,74 @@ function PrototypeMap(props) {
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: getFlag(contact.team.code),
-							scaledSize: new window.google.maps.Size(20, 20),
+							url: getMapIcon(contact.team.code),
+							scaledSize: new window.google.maps.Size(55, 55),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}		
 					/>)
 				}
+			{/* The Point of Interest Markers... */}
+				{props.poi.map(site => 
+					<Marker
+						key={site._id}
+						position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
+						onClick={()=> {
+							setGeo(site.geoDecimal)
+							setMenu(site);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMapIcon(site.subType),
+							scaledSize: new window.google.maps.Size(55, 55),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)
+				}
+			{/* The City clusterer... */}
+			<MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.cities.map(city => 
+					<Marker
+						key={city._id}
+						clusterer={clusterer}
+						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
+						onClick={()=> {
+							setGeo(city.geoDecimal)
+							setMenu(city);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMapIcon(city.subType),
+							scaledSize: new window.google.maps.Size(55, 55),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)
+				}
+			</MarkerClusterer>
+			{/* The crashes clusterer... */}
+			<MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.crashes.map(crash => 
+					<Marker
+						key={crash._id}
+						clusterer={clusterer}
+						position={{ lat: crash.geoDecimal.latDecimal, lng: crash.geoDecimal.longDecimal }}
+						onClick={()=> {
+							setGeo(crash.geoDecimal)
+							setMenu(crash);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMapIcon(crash.subType),
+							scaledSize: new window.google.maps.Size(55, 55),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)
+				}
+			</MarkerClusterer>
+			{/* On Click Alien spotted placeholder... */}
 			{markers.map(marker =>
 				<Marker
 					key={marker.time.toISOString()}
@@ -117,20 +180,6 @@ function PrototypeMap(props) {
 						anchor: new window.google.maps.Point(10, 10)
 					}}
 				/>)}
-			<MarkerClusterer options={clusterOptions}>
-				{(clusterer) => props.cities.map(city =>
-					<Marker
-						key={city._id}
-						clusterer={clusterer}
-						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
-						onClick={()=> {
-							setGeo(city.geoDecimal)
-							setMenu(city);
-							setMapClick({event: undefined});
-						}}
-					/>)
-				}
-			</MarkerClusterer>
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
@@ -154,11 +203,14 @@ const mapStateToProps = state => ({
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
 	contacts: getContacts(state),
-	cities: getCities(state)
+	cities: getCities(state),
+	groundSites: getGround(state),
+	crashes: getCrash(state),
+	poi: getPoI(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-  assignTarget: (payload) => dispatch(targetAssigned(payload))
+  assignTarget: (payload) => dispatch(showLaunch(payload))
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(PrototypeMap);

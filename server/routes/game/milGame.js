@@ -48,12 +48,14 @@ router.put('/deploy', async function (req, res) {
 			.populate('country')
 			.populate('zone');
 		const unitArray = [];
+		siteObj.status.warzone = true;
 
 		for await (const unit of units) {
 			const update = await Military.findById(unit);
 			update.site = siteObj._id;
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
+			update.status.deployed = true;
 			unitArray.push(update._id);
 			await update.save();
 		}
@@ -64,6 +66,7 @@ router.put('/deploy', async function (req, res) {
 			`Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
 		);
 		await account.save();
+		await siteObj.save();
 		routeDebugger(account);
 
 		let report = new DeploymentReport();
@@ -100,7 +103,7 @@ router.patch('/battle', async function (req, res) {
 	let attackerResult = 0;
 	let defenderResult = 0;
 	const spoils = [];
-
+	let report = '';
 
 	// 1) calculate total attack value of attackers
 	for (let unit of attackers) {
@@ -129,6 +132,7 @@ router.patch('/battle', async function (req, res) {
 			defenderResult++;
 		}
 	}
+	report = `Attacker hit ${attackerResult} out of ${attackerTotal} rolls!\nDefender hit ${defenderResult} out of ${defenderTotal}!\nAssigning defender casualties...\n`;
 
 	// 4) assign casualties to defenders
 	for (let i = 0; i < attackerResult; i++) {
@@ -141,7 +145,9 @@ router.patch('/battle', async function (req, res) {
 		if (casSpecific <= unit.stats.health) {
 			// 4.4) if it is a "HP" result, unit takes a hit.
 			unit.stats.health = unit.stats.health - 1;
+			report += `${unit.name} has been hit!`;
 			console.log(unit.name);
+			// MAKE SURE TO REMOVE UNIT IF IT HITS 0 HP
 		}
 		else {
 			// 4.5) if it is a "Upgrade" result, the upgrade is damaged, removed from the unit, and "dropped" onto the battlefield
@@ -149,6 +155,7 @@ router.patch('/battle', async function (req, res) {
 			console.log(hit.name);
 			// unit.upgrades[hit].pop or something
 			spoils.push(hit);
+			report += `${hit.name} has been hit!`;
 		}
 		// save the unit that was hit
 	}
@@ -168,7 +175,7 @@ router.patch('/battle', async function (req, res) {
 	// step 10) if both sides back down, no one gets control, create new site w/ scrap of all upgrades
 
 	const data = { attackerResult, defenderResult };
-	res.status(200).send(data);
+	res.status(200).send(data, report);
 });
 
 module.exports = router;

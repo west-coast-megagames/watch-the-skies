@@ -12,7 +12,8 @@ const slice = createSlice({
     Site: null,
     showSite: false,
     Target: null,
-    showDeploy: false,
+		showLaunch: false,
+		showDeploy: false
   },
   // Reducers - Events
   reducers: {
@@ -43,13 +44,22 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched...`)
       info.showAircraft = false
     },
-    targetAssigned: (info, action) => {
+    showLaunch: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info.Target = action.payload
+      info.showLaunch = true
+    },
+    launchClosed: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info.showLaunch = false
+		},
+		showDeploy: (info, action) => {
+			console.log(`${action.type} Dispatched...`)
+			info.Target = action.payload
       info.showDeploy = true
     },
     deployClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+			console.log(`${action.type} Dispatched...`)
       info.showDeploy = false
     }
   }
@@ -61,10 +71,12 @@ export const {
 	militaryClosed,
 	infoRequested,
 	infoClosed,
-	targetAssigned,
-	deployClosed,
+	showLaunch,
+	launchClosed,
 	showSite,
-	siteClosed
+	siteClosed,
+	showDeploy,
+	deployClosed
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

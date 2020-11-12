@@ -12,7 +12,7 @@ const UpgradeSchema = new Schema({
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	code: { type: String },
 	team: { type: ObjectId, ref: 'Team' },
-	unitType: { type: String },
+	// unitType: { type: String },
 	manufacturer: { type: ObjectId, ref: 'Team' },
 	cost: { type: Number },
 	buildTime: { type: Number, default: 0 },
@@ -33,49 +33,12 @@ const UpgradeSchema = new Schema({
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: [],
-	militaryStats: {
-		category: {
-			type: String,
-			enum: ['Weapons', 'Vehicles', 'Transport', 'Training']
-		},
-		stats: {
-			healthMax: { type: Number },
-			attack: { type: Number },
-			defense: { type: Number },
-			localDeploy: { type: Number },
-			globalDeploy: { type: Number },
-			invasion: { type: Number }
+	effects: [
+		{
+			type: { type: String },
+			effect: { type: Number }
 		}
-	},
-	facilityStats: {
-		stats: {
-			sciRate: { type: Number },
-			sciBonus: { type: Number },
-			capacity: { type: Number }
-		},
-		effects: [
-			{
-				type: { type: String },
-				effect: { type: Number }
-			}
-		]
-	},
-	aircraftStats: {
-		category: {
-			type: String,
-			enum: ['Weapon', 'Engine', 'Sensor', 'Compartment', 'Util']
-		},
-		stats: {
-			hullMax: { type: Number },
-			attack: { type: Number },
-			penetration: { type: Number },
-			armor: { type: Number },
-			shield: { type: Number },
-			evade: { type: Number },
-			range: { type: Number },
-			cargo: { type: Number }
-		}
-	}
+	]
 });
 
 // validateUpgrade method

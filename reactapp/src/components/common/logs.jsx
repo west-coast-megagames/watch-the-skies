@@ -56,7 +56,7 @@ const TransactionLog = props => {
 
 // TODO - Research log should be fleshed out for March.
 const ResearchLog = props => {
-  let { outcomes, rolls, _id, team, logType, timestamp, lab, funding, stats, progress, project } = props.log;
+  let { outcomes, rolls, _id, team, type, timestamp, lab, funding, stats, progress, project } = props.log;
   if (props.log.project === null) console.log(props.log)
   let date = new Date(props.log.date);
   if (timestamp === undefined) timestamp = {turn: 'void', phase: 'uncertian', clock: '00:00'};
@@ -73,7 +73,7 @@ const ResearchLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d6eaf8, #fff)"
         }}
-        header={`${logType} - ${team.code} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`${type} - ${team.code} | ${timestamp.turn} ${timestamp.phase} - ${timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
         collapsible
       >
        <FlexboxGrid>
@@ -148,6 +148,9 @@ const InterceptLog = props => {
         <p>
           {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
           Turn {log.timestamp.turnNum}
+        </p>
+				<p>
+          <b>Mission:</b> {log.type} - {log.position}
         </p>
         <p>
           <b>Team:</b> {log.team.name}
@@ -411,6 +414,43 @@ const ReconLog = props => {
   );
 };
 
+const FailedLog = props => {
+  let { log } = props;
+  let date = new Date(log.date);
+
+  return (
+    <Timeline.Item key={log._id} dot={<Icon icon="exclamation-triangle" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundImage: "linear-gradient(to bottom right, #ed002b, #fff)"
+        }}
+        header={`After Action Report - ${log.team.code} | ${
+          log.timestamp.turn
+        } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        collapsible
+      >
+        <p>
+          {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
+          Turn {log.timestamp.turnNum}
+        </p>
+				<p>
+          <b>Mission:</b> {log.type} - {log.position}
+        </p>
+        <p>
+          <b>Team:</b> {log.team.name}
+        </p>
+        <p>
+          <b>Location:</b> {log.country.name} - {log.zone.name}
+        </p>
+        <p>
+          <b>Report:</b> {log.report}
+        </p>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 export {
   TransactionLog,
   ResearchLog,
@@ -422,5 +462,6 @@ export {
   CrisisLog,
   DeployLog,
   RepairLog,
-  ConstructionLog
+	ConstructionLog,
+	FailedLog
 };

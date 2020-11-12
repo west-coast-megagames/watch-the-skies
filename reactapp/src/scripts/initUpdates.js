@@ -8,6 +8,8 @@ import { logsUpdated } from '../store/entities/logs';
 import { researchReceived } from '../store/entities/research';
 import { usersRecieved, loginSocket } from '../store/entities/auth';
 import { facilitiesUpdated } from '../store/entities/facilities';
+import { militaryUpdated } from '../store/entities/military';
+import { sitesReceived } from '../store/entities/sites';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -22,7 +24,13 @@ const initUpdates = () => {
         let state = store.getState()
         notify({catagory: 'update', type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${state.auth.team.name} have been updated...`});
         store.dispatch(aircraftsUpdated(aircrafts));
-    });
+		});
+		
+		updateEvents.updateSites((err, sites) => {
+			let state = store.getState()
+			notify({catagory: 'update', type: 'success', title: 'Sitess Update', body: `The sites for ${state.auth.team.name} have been updated...`});
+			store.dispatch(sitesReceived(sites));
+	});
 
     updateEvents.updateAccounts((err, accounts) => {
         console.log(accounts)
@@ -34,7 +42,8 @@ const initUpdates = () => {
     updateEvents.updateMilitary((err, military) => {
         console.log(military)
         notify({catagory: 'update', type: 'success', title: 'Military Update', body: `The current state of military has been updated...`});
-    });
+				store.dispatch(militaryUpdated(military));
+			});
 
     updateEvents.updateFacilities((err, facilities) => {
         console.log(facilities)

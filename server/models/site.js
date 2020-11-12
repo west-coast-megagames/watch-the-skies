@@ -17,7 +17,7 @@ const SiteSchema = new Schema({
 	code: {
 		type: String,
 		minlength: 2,
-		maxlength: 20,
+		maxlength: 25,
 		required: true,
 		unique: true
 	},
@@ -38,7 +38,7 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('City', 'Crash')
+			subType: Joi.string().valid('City', 'Crash', 'Point of Interest')
 		});
 
 		geoDMSSchema = Joi.object({
@@ -98,7 +98,7 @@ const GroundSite = Site.discriminator(
 	'GroundSite',
 	new Schema({
 		type: { type: String, default: 'Ground' },
-		subType: { type: String, default: 'City', enum: ['City', 'Crash'] },
+		subType: { type: String, default: 'City', enum: ['City', 'Crash', 'Point of Interest'] },
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
 			longDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
@@ -112,9 +112,10 @@ const GroundSite = Site.discriminator(
 			default: false
 		},
 		dateline: { type: String, default: 'Dateline' },
-		salvage: [{ type: ObjectId, ref: 'Upgrade' }],
+		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
 		status: {
 			public: { type: Boolean, default: false },
+			warzone: { type: Boolean, default: false },
 			secret: { type: Boolean, default: false }
 		}
 	})

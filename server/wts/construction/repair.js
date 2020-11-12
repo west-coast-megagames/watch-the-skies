@@ -9,7 +9,7 @@ async function repairSequence () {
 		if (aircraft.status.repair) {
 			Debugger(`${aircraft.name} is being repaired...`);
 			const report = new RepairReport;
-			report.logType = 'Aircraft Repair';
+			report.type = 'Aircraft Repair';
 			report.dmgRepaired = aircraft.stats.hullMax - aircraft.stats.hull;
 			aircraft.stats.hull = aircraft.stats.hullMax;
 			aircraft.status.damaged = false;
