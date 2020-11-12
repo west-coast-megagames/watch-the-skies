@@ -59,7 +59,7 @@ async function generateCrash (salvage, site) {
 	};
 
 	const log = new CrashLog(crash);
-	log = await log.save();
+	await log.save();
 	crash = new GroundSite(crash);
 	crash = await crash.save();
 	console.log(crash);
