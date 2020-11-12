@@ -98,7 +98,7 @@ function PrototypeMap(props) {
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: getMapIcon(contact.team.__t),
+							url: getMapIcon(contact.team.code),
 							scaledSize: new window.google.maps.Size(55, 55),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
