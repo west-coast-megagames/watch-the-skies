@@ -49,7 +49,7 @@ class InfoDeploy extends Component {
     let siteMissions = missions.filter(mission => mission.site === true);
     let airMissions = missions.filter(mission => mission.aircraft === true);
     let groundMissions = missions.filter(mission => mission.ground === true);
-    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true);
+    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready == true);
     let aircrafts = [];
     console.log(ships);
     if (ships.length > 0) {
