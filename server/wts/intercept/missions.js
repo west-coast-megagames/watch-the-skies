@@ -12,7 +12,6 @@ const { ReconReport, TransportReport } = require('../reports/reportClasses');
 const { getDistance } = require('../../util/systems/geo');
 const { makeAfterActionReport } = require('./report');
 const dynReport = require('./battleDetails');
-const { logger } = require('../../middleware/log/winston');
 const { generateSite } = require('../sites/sites');
 const { Military } = require('../../models/military');
 
@@ -72,7 +71,7 @@ async function start (aircraft, target, mission) {
 		transportMissions = [...transportMissions, ...newMission]; // Adds Transport to be resolved
 		missionDebugger(transportMissions);
 		break;
-	case mission === 'Recon Site' || mission === 'Recon Airship':
+	case mission === 'Recon Site' || mission === 'Recon Aircraft':
 		reconMissions = [...reconMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(reconMissions);
 		break;
@@ -86,7 +85,7 @@ async function start (aircraft, target, mission) {
 		break;
 	default:
 		result = `${result} This is not an acceptable mission type.`;
-		logger.error(`Invalid Air Mission: ${mission} is not a valid mission type.`);
+		throw new Error(`Invalid Air Mission: ${mission} is not a valid mission type.`);
 	}
 
 	missionDebugger(interceptionMissions.sort((a, b) => a.distance - b.distance));
@@ -199,6 +198,7 @@ async function runTransports () {
 			missionDebugger(`${aircraft.name} arrived safely at ${target.name}`);
 
 			report.team = aircraft.team._id;
+			report.report = atkReport;
 			report.unit = aircraft._id;
 			report.site = aircraft.site;
 			report.country = aircraft.country;
@@ -212,8 +212,6 @@ async function runTransports () {
 
 			await aircraft.recall();
 		}
-
-
 	}
 
 	return;
