@@ -1,4 +1,4 @@
-export default[
+export default[ // https://mapstyle.withgoogle.com/ for future styling
   {
     "elementType": "geometry",
     "stylers": [
