@@ -160,9 +160,9 @@ async function applyDmg (unit) {
 
 	const origin = await Site.findById(update.origin.site._id);
 
-	if (update.team.type === 'Alien') {
-		return 0;
-	}
+	// if (update.team.type === 'Alien') {
+	// 	return 0;
+	// }
 	// interceptDebugger(unit);
 	// interceptDebugger(update);
 
