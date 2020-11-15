@@ -83,28 +83,52 @@ function PrototypeMap(props) {
 			// onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
-
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 			{/* The Aircraft clusterer... */}
-			{ props.contacts.map(contact =>
-					<Marker
-						key={contact._id}
-						position={contact.location}
-						onClick={()=> {
-							setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng});
-							setMenu(contact);
-							setMapClick({event: undefined});
-						}}
-						icon={{
-							url: getMapIcon(contact.team.code),
-							scaledSize: new window.google.maps.Size(55, 55),
-							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
-						}}		
-					/>)
-				}
+			<MarkerClusterer options={clusterOptions} averageCenter={false}
+				styles={[
+					{
+						url: "it doesn't matter, arrays start at 0",
+						height: 56,
+						width: 55
+					},
+					{
+						url: "https://i.imgur.com/VukOC4d.png",
+						height: 53,
+						width: 53,
+						textColor: 'white',
+						textSize: 11,
+						iconAnchor: new window.google.maps.Point(100, 100)
+					},
+					{
+						url: "https://i.imgur.com/IEfm6Gj.png",
+						height: 55,
+						width: 56,
+						textColor: 'white'
+					},
+				]}
+			>
+				{(clusterer) => props.contacts.map(contact =>
+						<Marker
+							clusterer={clusterer}
+							key={contact._id}
+							position={contact.location}
+							onClick={()=> {
+								setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng});
+								setMenu(contact);
+								setMapClick({event: undefined});
+							}}
+							icon={{
+								url: getMapIcon(contact.team.code),
+								scaledSize: new window.google.maps.Size(55, 55),
+								origin: new window.google.maps.Point(0,0),
+								anchor: new window.google.maps.Point(10, 10)
+							}}		
+						/>)
+					}
+				</MarkerClusterer>
 			{/* The Point of Interest Markers... */}
 				{props.poi.map(site => 
 					<Marker
@@ -124,7 +148,30 @@ function PrototypeMap(props) {
 					/>)
 				}
 			{/* The City clusterer... */}
-			<MarkerClusterer options={clusterOptions}>
+			<MarkerClusterer options={clusterOptions}
+			styles={[
+				{
+					url: "it doesn't matter, arrays start at 0",
+					height: 56,
+					width: 55
+				},
+				{
+					url: "https://i.imgur.com/c5vhYl6.png",
+					height: 56,
+					width: 55,
+				},
+				{
+					url: "https://i.imgur.com/aHEbIh7.png",
+					height: 63,
+					width: 54,
+				},
+				{
+					url: "https://i.imgur.com/khjZhkm.png",
+					height: 66,
+					width: 65
+				},
+			]}
+			>
 				{(clusterer) => props.cities.map(city => 
 					<Marker
 						key={city._id}
@@ -145,7 +192,15 @@ function PrototypeMap(props) {
 				}
 			</MarkerClusterer>
 			{/* The crashes clusterer... */}
-			<MarkerClusterer options={clusterOptions}>
+			<MarkerClusterer options={clusterOptions}
+				styles={[
+					{
+						url: "https://unpkg.com/@googlemaps/markerclustererplus@1.0.3/images/m1.png",
+						height: 53,
+						width: 53
+					},
+				]}
+			>
 				{(clusterer) => props.crashes.map(crash => 
 					<Marker
 						key={crash._id}

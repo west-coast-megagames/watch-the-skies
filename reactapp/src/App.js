@@ -24,6 +24,7 @@ import Science from './pages/science';
 import Diplomacy from './pages/diplomacy';
 import News from './pages/news';
 import InfoDrawer from './components/infoDrawer';
+import MapPage from './pages/map';
 
 // Cascading Style Sheets - App.js | Bootstrap | Fontawesome | rsuite
 import 'bootstrap/dist/css/bootstrap.css'; //only used for global nav (black bar)
@@ -75,6 +76,11 @@ class App extends Component {
                     )}/>
                     <Route path="/home" render={(props) => (
                       <Home {...props}
+                        login={this.props.login}
+                      />
+                    )}/>
+										<Route path="/map" render={(props) => (
+                      <MapPage {...props}
                         login={this.props.login}
                       />
                     )}/>

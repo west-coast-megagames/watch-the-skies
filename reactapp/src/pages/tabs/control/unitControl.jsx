@@ -96,8 +96,6 @@ class UnitControl extends Component {
 					<hr />
 			</Header>
 			<Content>
-
-
 				{this.state.selected && <React.Fragment>
 					<InputNumber prefix="HP" style={{ width: 40 }} value={ this.state.selected.stats.health } onChange={(value) => this.handleEdit(value, 'health')}> </InputNumber>
 					<InputNumber prefix="ATK" style={{ width: 40 }} value={ this.state.selected.stats.attack } onChange={(value) => this.handleEdit(value, 'attack')}> </InputNumber>
@@ -105,9 +103,10 @@ class UnitControl extends Component {
 					<hr />
 					<p>Upgrades</p>
 					<Table 
-							rowKey='_id'
-							autoHeight
-							data={ this.state.selected.upgrades }
+						isTree
+						rowKey='_id'
+						autoHeight
+						data={ this.state.selected.upgrades }
 					>
 							<Column flexGrow={1}>
 									<HeaderCell>Name</HeaderCell>
