@@ -11,7 +11,7 @@ export default[ // https://mapstyle.withgoogle.com/ for future styling
     "elementType": "labels",
     "stylers": [
       {
-        "visibility": "off"
+        "visibility": "on"
       }
     ]
   },
