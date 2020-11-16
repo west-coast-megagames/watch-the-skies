@@ -91,7 +91,7 @@ function PrototypeMap(props) {
 			<MarkerClusterer options={clusterOptions}
 			styles={[
 				{
-					url: "XD",
+					url: "Arrays start at zero",
 					height: 56,
 					width: 55,
 				},
@@ -138,16 +138,19 @@ function PrototypeMap(props) {
 					url: "https://i.imgur.com/x7nIvRx.png",
 					height: 53,
 					width: 53,
+					textColor: 'white'
 				},
 				{
 					url: "https://i.imgur.com/IEfm6Gj.png",
 					height: 55,
 					width: 56,
+					textColor: 'white'
 				},
 				{
 					url: "https://i.imgur.com/R3yqwbI.png",
 					height: 60,
 					width: 61,
+					textColor: 'white'
 				},
 			]}
 			>
