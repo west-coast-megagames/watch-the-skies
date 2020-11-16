@@ -21,12 +21,13 @@ const icon = {
 	AUS: 'https://cdn.discordapp.com/attachments/582043597281427466/776294756921638912/AUS_Fighter_v2.png'
 }
 
-const getMapIcon = (type) => {
+export const getMapIcon = (type) => {
 	if (type === 'Point of Interest') type = 'PoI';
-
-
+	console.log(type);
 	if (!icon[type] || icon[type] === null) return ('https://cdn.discordapp.com/attachments/582043597281427466/776284440279515136/Unknown_Fighter_v2.png'); //the default '?' interceptor
 	else return icon[type];
 }
 
-export default getMapIcon;
+export const getAircraftIcon = (aircraft) => {
+	return icon[aircraft]
+}

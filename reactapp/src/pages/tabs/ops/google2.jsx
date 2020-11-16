@@ -10,7 +10,7 @@ import { showLaunch } from '../../../store/entities/infoPanels';
 import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
-import getMapIcon from '../../../scripts/mapIcons';
+import {getMapIcon, getAircraftIcon} from '../../../scripts/mapIcons';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -83,56 +83,34 @@ function PrototypeMap(props) {
 			// onClick={mapClick.event}
 			onLoad={onMapLoad}
 		>
+
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
-			{/* The Aircraft clusterer... */}
-			<MarkerClusterer options={clusterOptions} averageCenter={false}
-				styles={[
-					{
-						url: "it doesn't matter, arrays start at 0",
-						height: 56,
-						width: 55
-					},
-					{
-						url: "https://i.imgur.com/VukOC4d.png",
-						height: 53,
-						width: 53,
-						textColor: 'white',
-						textSize: 11,
-						iconAnchor: new window.google.maps.Point(100, 100)
-					},
-					{
-						url: "https://i.imgur.com/IEfm6Gj.png",
-						height: 55,
-						width: 56,
-						textColor: 'white'
-					},
-				]}
+			{/* The site clusterer... */}
+			<MarkerClusterer options={clusterOptions}
+			styles={[
+				{
+					url: "XD",
+					height: 56,
+					width: 55,
+				},
+				{
+					url: "https://i.imgur.com/h2t00jl.png",
+					height: 56,
+					width: 55,
+				},
+				{
+					url: "https://i.imgur.com/Cn8zTPb.png",
+					height: 62,
+					width: 63,
+				},
+			]}
 			>
-				{(clusterer) => props.contacts.map(contact =>
-						<Marker
-							clusterer={clusterer}
-							key={contact._id}
-							position={contact.location}
-							onClick={()=> {
-								setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng});
-								setMenu(contact);
-								setMapClick({event: undefined});
-							}}
-							icon={{
-								url: getMapIcon(contact.team.code),
-								scaledSize: new window.google.maps.Size(55, 55),
-								origin: new window.google.maps.Point(0,0),
-								anchor: new window.google.maps.Point(10, 10)
-							}}		
-						/>)
-					}
-				</MarkerClusterer>
-			{/* The Point of Interest Markers... */}
-				{props.poi.map(site => 
+				{(clusterer) => props.groundSites.map(site => 
 					<Marker
 						key={site._id}
+						clusterer={clusterer}
 						position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
 						onClick={()=> {
 							setGeo(site.geoDecimal)
@@ -147,43 +125,44 @@ function PrototypeMap(props) {
 						}}
 					/>)
 				}
-			{/* The City clusterer... */}
+			</MarkerClusterer>
+			{/*The Contact Clusterer*/}
 			<MarkerClusterer options={clusterOptions}
 			styles={[
 				{
-					url: "it doesn't matter, arrays start at 0",
-					height: 56,
-					width: 55
-				},
-				{
-					url: "https://i.imgur.com/c5vhYl6.png",
+					url: "XD",
 					height: 56,
 					width: 55,
 				},
 				{
-					url: "https://i.imgur.com/aHEbIh7.png",
-					height: 63,
-					width: 54,
+					url: "https://i.imgur.com/x7nIvRx.png",
+					height: 53,
+					width: 53,
 				},
 				{
-					url: "https://i.imgur.com/khjZhkm.png",
-					height: 66,
-					width: 65
+					url: "https://i.imgur.com/IEfm6Gj.png",
+					height: 55,
+					width: 56,
+				},
+				{
+					url: "https://i.imgur.com/R3yqwbI.png",
+					height: 60,
+					width: 61,
 				},
 			]}
 			>
-				{(clusterer) => props.cities.map(city => 
+				{(clusterer) => props.contacts.map(contact => 
 					<Marker
-						key={city._id}
+						key={contact._id}
 						clusterer={clusterer}
-						position={{ lat: city.geoDecimal.latDecimal, lng: city.geoDecimal.longDecimal }}
+						position={contact.location}
 						onClick={()=> {
-							setGeo(city.geoDecimal)
-							setMenu(city);
+							setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng})
+							setMenu(contact);
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: getMapIcon(city.subType),
+							url: getAircraftIcon(contact.team.code),
 							scaledSize: new window.google.maps.Size(55, 55),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
@@ -191,50 +170,6 @@ function PrototypeMap(props) {
 					/>)
 				}
 			</MarkerClusterer>
-			{/* The crashes clusterer... */}
-			<MarkerClusterer options={clusterOptions}
-				styles={[
-					{
-						url: "https://unpkg.com/@googlemaps/markerclustererplus@1.0.3/images/m1.png",
-						height: 53,
-						width: 53
-					},
-				]}
-			>
-				{(clusterer) => props.crashes.map(crash => 
-					<Marker
-						key={crash._id}
-						clusterer={clusterer}
-						position={{ lat: crash.geoDecimal.latDecimal, lng: crash.geoDecimal.longDecimal }}
-						onClick={()=> {
-							setGeo(crash.geoDecimal)
-							setMenu(crash);
-							setMapClick({event: undefined});
-						}}
-						icon={{
-							url: getMapIcon(crash.subType),
-							scaledSize: new window.google.maps.Size(55, 55),
-							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
-						}}
-					/>)
-				}
-			</MarkerClusterer>
-			{/* On Click Alien spotted placeholder... */}
-			{markers.map(marker =>
-				<Marker
-					key={marker.time.toISOString()}
-					position={{ lat: marker.lat, lng: marker.lng }}
-					onClick={()=> {
-						setSelected(marker);
-					}}
-					icon={{
-						url: 'https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/5506450561579004502-512.png',
-						scaledSize: new window.google.maps.Size(30, 30),
-						origin: new window.google.maps.Point(0,0),
-						anchor: new window.google.maps.Point(10, 10)
-					}}
-				/>)}
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
