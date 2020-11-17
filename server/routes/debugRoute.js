@@ -69,8 +69,12 @@ router.patch('/fixFacilities', async function (req, res) {
 	return res.status(200).send(`We handled ${count} facilities...`);
 });
 
+// @route   PATCH debug/missions
+// @desc    Trigger the air mission system
+// @access  Public
 router.patch('/missions', async function (req, res) {
 	resolveMissions();
+	res.status(200).send('Triggered air missions!');
 });
 
 // @route   PATCH debug/return/aliens
