@@ -27,6 +27,10 @@ const MilitarySchema = new Schema({
 	},
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	location: {
+		lat: { type: Number },
+		lng: { type: Number }
+	},
 	gameState: []
 });
 
