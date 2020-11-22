@@ -91,52 +91,16 @@ export default[ // https://mapstyle.withgoogle.com/ for future styling
         "color": "#023e58"
       }
     ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#283d6a"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#6f9ba5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#1d2c4d"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry.fill",
-    "stylers": [
-      {
-        "color": "#023e58"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#3C7680"
-      }
-    ]
-  },
+	},
+	{
+		"featureType": "poi",
+		"elementType": "labels.icon",
+		"stylers": [
+				{
+						"visibility": "off"
+				}
+		]
+	},
   {
     "featureType": "road",
     "stylers": [
@@ -252,7 +216,16 @@ export default[ // https://mapstyle.withgoogle.com/ for future styling
         "color": "#0e1626"
       }
     ]
-  },
+	},
+	{
+		"featureType": "transit",
+		"elementType": "labels.icon",
+		"stylers": [
+				{
+						"visibility": "off"
+				}
+		]
+	},
   {
     "featureType": "water",
     "elementType": "labels.text.fill",
