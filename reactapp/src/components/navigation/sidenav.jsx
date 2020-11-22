@@ -65,7 +65,7 @@ class SideNav extends Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  user: state.auth.user
+  user: state.auth.user.username
 });
 
 const mapDispatchToProps = dispatch => ({});

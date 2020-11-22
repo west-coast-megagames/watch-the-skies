@@ -187,7 +187,7 @@ class SubNews extends React.Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  user: state.auth.user,
+  user: state.auth.user.username,
   team: state.auth.team,
   zones: state.entities.zones.list,
   countries: state.entities.countries.list,

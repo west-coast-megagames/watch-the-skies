@@ -34,7 +34,7 @@ const slice = createSlice({
       const user = jwtDecode(jwt);
       playTrack('login');
       auth.team = user.team;
-      auth.user = user.username;
+      auth.user = user;
       auth.role = user.team.roles[0]
       auth.lastLogin = Date.now();
       auth.loading = false
