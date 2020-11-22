@@ -15,6 +15,7 @@ const { upgradeValue } = require('../../wts/upgrades/upgrades');
 
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
+const randomCords = require('../../util/systems/lz');
 
 
 // @route   PUT game/military/deploy
@@ -56,6 +57,7 @@ router.put('/deploy', async function (req, res) {
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
 			update.status.deployed = true;
+			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
 			unitArray.push(update._id);
 			await update.save();
 		}

@@ -88,3 +88,11 @@ export const getLabs = createSelector(
     facility => facility.capability.research.active === true && facility.team._id === team._id
   )
 );
+
+export const getFacilites = createSelector(
+  state => state.entities.facilities.list,
+  state => state.auth.team,
+  (facilities, team) => facilities.filter(
+    facility => facility.team._id === team._id
+  )
+);

@@ -11,6 +11,8 @@ import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon} from '../../../scripts/mapIcons';
+import { getDeployed } from '../../../store/entities/military';
+
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -61,7 +63,7 @@ function PrototypeMap(props) {
 	}, []);
 
 	const onCloseMenu = () => {
-		console.log('Closing the menu!')
+		// console.log('Closing the menu!')
 		setMapClick({event: onMapClick});
 		setMenu(null);
 	}
@@ -173,6 +175,28 @@ function PrototypeMap(props) {
 					/>)
 				}
 			</MarkerClusterer>
+			{/*The Military Clusterer*/}
+			<MarkerClusterer options={clusterOptions}
+			>
+				{(clusterer) => props.deployedMil.map(unit => 
+					<Marker
+						key={unit._id}
+						clusterer={clusterer}
+						position={unit.location}
+						onClick={()=> {
+							setGeo({latDecimal: unit.location.lat, longDecimal: unit.location.lng})
+							setMenu(unit);
+							setMapClick({event: undefined});
+						}}
+						icon={{
+							url: 'https://www.clipartmax.com/png/middle/42-424305_tank-free-icon-war-thank-icon-png.png',
+							scaledSize: new window.google.maps.Size(55, 55),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)
+				}
+			</MarkerClusterer>
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
@@ -195,6 +219,7 @@ const mapStateToProps = state => ({
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
+	deployedMil: getDeployed(state),
 	contacts: getContacts(state),
 	cities: getCities(state),
 	groundSites: getGround(state),
