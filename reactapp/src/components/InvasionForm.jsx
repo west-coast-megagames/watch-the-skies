@@ -61,7 +61,7 @@ class InvasionModal extends Component {
                 <Divider />
                 <h6>Select Team</h6>
                 <SelectPicker block placeholder='Select Team'
-                    data={this.props.teams.filter(el => el.type === 'N')}
+                    data={this.props.teams}
                     labelKey='name'
                     valueKey='name'
                     onChange={this.handleTeam}
