@@ -45,20 +45,17 @@ class InfoSite extends Component {
 							virtualized
 							height={200}
 							rowKey='_id'
-              
               data={ this.props.military.filter(el => el.origin.site === _id) }						
 						>
 							<Column flexGrow={2}>
-									<HeaderCell>Unit</HeaderCell>
-									<Cell dataKey='name' />
+								<HeaderCell>Unit</HeaderCell>
+								<Cell dataKey='name' />
 							</Column>
 							<Column flexGrow={1}>
-								<HeaderCell>Attack</HeaderCell>
-								<Cell dataKey='stats.attack' />
-							</Column>
-							<Column flexGrow={1}>
-								<HeaderCell>Defense</HeaderCell>
-								<Cell dataKey='status.damaged' />
+								<HeaderCell>Stats</HeaderCell>
+								<Cell>
+									{ rowData => `ATK: ${rowData.stats.attack} | DEF: ${rowData.stats.defense} | HP: ${rowData.stats.health}/${rowData.stats.healthMax}` }
+								</Cell>
 							</Column>
 						</Table>
 						<hr />
