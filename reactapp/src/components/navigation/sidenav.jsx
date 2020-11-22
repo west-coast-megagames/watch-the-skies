@@ -53,7 +53,7 @@ class SideNav extends Component {
 							<Whisper placement="right" trigger="click" speaker={clock}>
 								<Nav.Item eventKey="8" icon={<Icon icon="clock-o"/>}>Game Clock</Nav.Item>
 							</Whisper>
-							{this.props.user === 'FroBoyX' ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
+							{this.props.user.roles.some(el => el === 'Control') ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
 						</Nav>
 					</Sidenav.Body>
 				</Sidenav>
@@ -65,7 +65,7 @@ class SideNav extends Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  user: state.auth.user.username
+	user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({});
