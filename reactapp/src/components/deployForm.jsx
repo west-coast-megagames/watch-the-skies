@@ -21,12 +21,13 @@ class DeployMilitary extends Component {
 	}
 
 	componentDidMount() {
-		this.setState({team: this.props.team.name, target: this.props.target});
+		this.setState({team: this.props.team.name, target: this.props.target });
 		this.filterUnits();
 		this.filterLocations();
 	}
 
 	componentDidUpdate(prevProps, prevState) {
+		if (this.props.target !== prevProps.target) this.setState({ destination: this.props.target._id, target: this.props.target })
 		if (this.state.mobilization.length !== prevState.mobilization.length && this.state.destination !== null) {
 				let cost = 0 // Gets the current displayed cost
 				let target = this.props.sites.find(el => el._id === this.state.destination); // Looks up the target site via the stored _id
@@ -73,6 +74,7 @@ class DeployMilitary extends Component {
 								labelKey='name'
 								valueKey='name'
 								onChange={this.handleTeam}
+								disabled={!this.props.user.roles.some(el => el === 'Control')}
 								value={this.state.team}
 						/>
 						<Divider />
@@ -162,6 +164,7 @@ class DeployMilitary extends Component {
 }
 const mapStateToProps = state => ({
 	login: state.auth.login,
+	user: state.auth.user,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
 	sites: state.entities.sites.list,
@@ -169,7 +172,7 @@ const mapStateToProps = state => ({
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list,
 	show: state.info.showDeploy,
-	target: state.info.target
+	target: state.info.Target
 	});
 	
 	const mapDispatchToProps = dispatch => ({
