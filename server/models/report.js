@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 
 const ReportSchema = new Schema({
 	date: { type: Date },
+	code: { type: String },
 	timestamp: { type: Schema.Types.Mixed },
 	model: { type: String, default: 'Report', required: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
@@ -66,29 +67,7 @@ const AirMission = Report.discriminator('AirMission', new Schema({
 	opponent: { type: Schema.Types.Mixed },
 	targetAircraft: { type: Schema.Types.Mixed },
 	targetSite: { type: Schema.Types.Mixed },
-	interception: {
-		atkStats: {
-			stance: { type: String },
-			rolls: [Number],
-			rollTotal: { type: Number },
-			damage: {
-				frameDmg: { type: Number },
-				systemDmg: { type: Number }
-			},
-			outcome: { type: String }
-		},
-		defStats: {
-			stance: { type: String },
-			rolls: [Number],
-			rollTotal: { type: Number },
-			damage: {
-				frameDmg: { type: Number },
-				systemDmg: { type: Number }
-			},
-			outcome: { type: String }
-		},
-		salvage: [{ type: String }]
-	},
+	interception: { type: Schema.Types.Mixed },
 	recon: {
 		intel: [{ type: Schema.Types.Mixed }]
 	},

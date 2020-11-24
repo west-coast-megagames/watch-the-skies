@@ -32,6 +32,7 @@ const AircraftSchema = new Schema({
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
 	country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
 	mission: { type: String, default: 'Docked' },
+	stance: { type: String, default: 'aggresive', enum: ['aggresive', 'evasive', 'neutral'] },
 	status: {
 		damaged: { type: Boolean, default: false },
 		deployed: { type: Boolean, default: false },
@@ -63,11 +64,6 @@ const AircraftSchema = new Schema({
 			damaged: { type: Boolean, default: false },
 			destroyed: { type: Boolean, default: false }
 		},
-		armor: {
-			active: { type: Boolean, default: true },
-			damaged: { type: Boolean, default: false },
-			destroyed: { type: Boolean, default: false }
-		},
 		utility: {
 			active: { type: Boolean, default: true },
 			damaged: { type: Boolean, default: false },
@@ -81,6 +77,7 @@ const AircraftSchema = new Schema({
 		penetration: { type: Number, default: 0 },
 		armor: { type: Number, default: 0 },
 		evade: { type: Number, default: 0 },
+		detection: { type: Number, default: 1 },
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 },
 		passiveRolls: [Number],

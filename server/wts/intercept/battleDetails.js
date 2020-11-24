@@ -64,6 +64,7 @@ function randCode (length) {
 	let code = '';
 	let newChar = '';
 	for (let i = 0; i < length; i++) {
+		if (i == 2) code += '-';
 		if (newChar === '-' || code === '' || i == length - 1) {
 			newChar = characters.charAt(rand(characters.length - 1) - 1);
 		}
