@@ -53,7 +53,7 @@ class MilitaryControl extends Component {
 	
 		handleSubmit = async () => {
 			try {
-				let {data, report} = await axios.patch(`${gameServer}game/military/battle`, {attackers: this.state.atkArray, defenders: this.state.defArray})
+				let {data, report} = await axios.patch(`${gameServer}game/military/battleSim`, {attackers: this.state.atkArray, defenders: this.state.defArray})
 				this.setState({ attackerResult: data.attackerResult, defenderResult: data.defenderResult })
 				Alert.success(`${report}`);			
 			}
