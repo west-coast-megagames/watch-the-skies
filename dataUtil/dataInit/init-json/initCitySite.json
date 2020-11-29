@@ -2616,6 +2616,62 @@
     "countryCode": "US",
     "teamCode": "USA",
     "coastal": true
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "San Diego",
+    "dateline": "SAN DIEGO",
+    "code": "US SAN",
+    "latDMS": "32 42 13.3 N",
+    "longDMS": "117 11 3.1 W",
+    "latDecimal": 32.7037,
+    "longDecimal": -117.1842,
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Honolulu",
+    "dateline": "HONOLULU",
+    "code": "US HNL",
+    "latDMS": "21 20 58.9 N",
+    "longDMS": "157 56 43.1 W",
+    "latDecimal": 21.3497,
+    "longDecimal": -157.9453,
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Jacksonville",
+    "dateline": "JACKSONVILLE, Fla.",
+    "code": "US JAX",
+    "latDMS": "30 13 17.0 N",
+    "longDMS": "081 41 6.7 W",
+    "latDecimal": 30.2214,
+    "longDecimal": -81.6852,
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Virginia Beach",
+    "dateline": "VIRGINIA BEACH, Va.",
+    "code": "US VAB",
+    "latDMS": "30 13 17.0 N",
+    "longDMS": "081 41 6.7 W",
+    "latDecimal": 30.2214,
+    "longDecimal": -81.6852,
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true
   },
   {
     "loadType": "citySite",
@@ -2644,6 +2700,20 @@
     "countryCode": "RU",
     "teamCode": "RFD",
     "coastal": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Severomorsk",
+    "dateline": "SEVEROMORSK, Russia",
+    "code": "RU SRM",
+    "latDMS": "69 4 45.84 N",
+    "longDMS": "33 26 14.28 E",
+    "latDecimal": 69.0794,
+    "longDecimal": 33.4373,
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": true
   },
   {
     "loadType": "citySite",
