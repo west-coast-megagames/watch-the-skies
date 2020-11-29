@@ -13,7 +13,7 @@
     "name": "USA Modern Attack Sub Fleet 2",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -22,7 +22,7 @@
     "name": "USA Modern Attack Sub Fleet 3",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USHNL",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -31,7 +31,7 @@
     "name": "USA Modern Attack Sub Fleet 4",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USHNL",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -40,7 +40,7 @@
     "name": "USA Modern Attack Sub Fleet 5",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -58,7 +58,7 @@
     "name": "USA Modern Attack Sub Fleet 7",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USJAX",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -67,7 +67,7 @@
     "name": "USA Modern Attack Sub Fleet 8",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USJAX",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -76,7 +76,7 @@
     "name": "USA Modern Attack Sub Fleet 9",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USVAB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -85,7 +85,7 @@
     "name": "USA Modern Attack Sub Fleet 10",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USVAB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -139,7 +139,16 @@
     "name": "Russia Modern Attack Sub Fleet 3",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBA",
+    "origin": "RUNBB",
+    "gear": ["SBG-1"],
+    "type": "Fleet"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Modern Attack Sub Fleet 4",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -175,7 +184,7 @@
     "name": "Japan Modern Attack Sub Fleet 4",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -184,7 +193,7 @@
     "name": "Japan Modern Attack Sub Fleet 5",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -193,7 +202,7 @@
     "name": "Japan Standard Attack Sub Fleet 1",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -301,7 +310,7 @@
     "name": "China Modern Attack Sub Fleet 3",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -310,7 +319,7 @@
     "name": "China Modern Attack Sub Fleet 4",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["SBG-1"],
     "type": "Fleet"
   },
@@ -346,7 +355,7 @@
     "name": "USA Surface Fleet 2",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -355,7 +364,7 @@
     "name": "USA Surface Fleet 3",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USHNL",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -364,7 +373,16 @@
     "name": "USA Surface Fleet 4",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USJAX",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+	},
+	{
+    "model": "Military",
+    "name": "USA Surface Fleet 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USVAB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -383,6 +401,15 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
+    "gear": ["SFG-1"],
+    "type": "Fleet"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Surface Fleet 2",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -409,7 +436,7 @@
     "name": "Japan Surface Fleet 3",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -418,7 +445,7 @@
     "name": "Japan Surface Fleet 4",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -490,7 +517,7 @@
     "name": "China Surface Fleet 3",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -499,7 +526,7 @@
     "name": "China Surface Fleet 4",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["SFG-1"],
     "type": "Fleet"
   },
@@ -535,7 +562,7 @@
     "name": "USA Carrier Fleet 2",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -544,7 +571,7 @@
     "name": "USA Carrier Fleet 3",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USHNL",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -553,7 +580,7 @@
     "name": "USA Carrier Fleet 4",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USJAX",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -562,7 +589,7 @@
     "name": "USA Carrier Fleet 5",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USVAB",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -581,6 +608,15 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
+    "gear": ["CAG-1"],
+    "type": "Fleet"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Carrier Fleet 2",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBB",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -625,7 +661,7 @@
     "name": "China Carrier Fleet 3",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -634,7 +670,7 @@
     "name": "China Carrier Fleet 4",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["CAG-1"],
     "type": "Fleet"
   },
@@ -664,8 +700,44 @@
     "origin": "USSFO",
     "gear": ["V-MV1", "COR-1"],
     "type": "Corps"
-  },
-  {
+	},
+	{
+    "model": "Military",
+    "name": "USA Marine Corps 2",
+    "team": "USA",
+    "country": "US",
+    "origin": "USSAN",
+    "gear": ["V-MV1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Marine Corps 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USHNL",
+    "gear": ["V-MV1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Marine Corps 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USJAX",
+    "gear": ["V-MV1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Marine Corps 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USVAB",
+    "gear": ["V-MV1", "COR-1"],
+    "type": "Corps"
+	},
+	{
     "model": "Military",
     "name": "USA Old Technology Corps 1",
     "team": "USA",
@@ -679,7 +751,7 @@
     "name": "USA Old Technology Corps 2",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USHNL",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -688,7 +760,7 @@
     "name": "USA Old Technology Corps 3",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -697,7 +769,16 @@
     "name": "USA Old Technology Corps 4",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USJAX",
+    "gear": ["V-OT1", "COR-1"],
+    "type": "Corps"
+  },
+  {
+    "model": "Military",
+    "name": "USA Old Technology Corps 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USVAB",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -742,7 +823,7 @@
     "name": "Russia Old Technology Corps 3",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBA",
+    "origin": "RUNBB",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -751,7 +832,7 @@
     "name": "Russia Old Technology Corps 4",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBA",
+    "origin": "RUNBB",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -841,7 +922,7 @@
     "name": "China Old Technology Corps 3",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -850,7 +931,7 @@
     "name": "China Old Technology Corps 4",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
@@ -886,7 +967,34 @@
     "name": "USA Modern Technology Corps 2",
     "team": "USA",
     "country": "US",
-    "origin": "USSFO",
+    "origin": "USSAN",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Modern Technology Corps 3",
+    "team": "USA",
+    "country": "US",
+    "origin": "USHNL",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Modern Technology Corps 4",
+    "team": "USA",
+    "country": "US",
+    "origin": "USJAX",
+    "gear": ["V-MT1", "COR-1"],
+    "type": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "USA Modern Technology Corps 5",
+    "team": "USA",
+    "country": "US",
+    "origin": "USVAB",
     "gear": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
@@ -913,7 +1021,7 @@
     "name": "Japan Modern Technology Corps 2",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBB",
     "gear": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
@@ -950,7 +1058,7 @@
     "name": "China Modern Technology Corps 2",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBB",
     "gear": ["V-MT1", "COR-1"],
     "training": "Corps",
     "type": "Corps"
@@ -996,7 +1104,7 @@
     "name": "Russia Modern Technology Corps 3",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBA",
+    "origin": "RUNBB",
     "gear": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
