@@ -123,18 +123,6 @@ async function resolveBattle (attackers, defenders) {
 		}
 	}// for combatRound
 
-	if (defenders.length === 0) {
-		report += 'The Attackers are victorious!\n';
-	}
-	else if (attackers.length == 0) {
-		report += 'The Attackers are victorious!\n';
-	}
-	else {
-		report += 'The Battle ended in a stalemate!\n';
-	}
-
-	// 	9.1) control of site goes to victor
-	// 	9.2) all damaged upgrades go to victor
 	const data = { attackerResult, defenderResult, report, spoils };
 	return data;
 }

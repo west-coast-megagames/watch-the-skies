@@ -136,27 +136,50 @@ router.patch('/battleSim', async function (req, res) {
 
 router.patch('/resolve', async function (req, res) {
 	let report = '';
+	let data = {};
 	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
 		// collect all the attackers
 		const army = await Military.find({ site });
 
 		const defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString());
 		const attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString());
+		const attackerTeams = [];
+		// go over attackers, creating an array of objects
+		for (const unit of attackers) {
+			if (!attackerTeams.some(el => el === unit.team)) attackerTeams.push(unit.team);
+		}
 
 		report = report + (`Battle at ${site.name}: ${army.length} \nDefenders: ${defenders.length}\nAttackers: ${attackers.length}\n\n`);
 
-		const data = await resolveBattle(attackers, defenders);
-		// report = report + data.report + 'spoils of war: \n' + data.spoils;
+		if (attackers.length > 0 && defenders.length > 0) {
+			data = await resolveBattle(attackers, defenders);
+		}
+		report = report + data.report; // + 'spoils of war: \n' + data.spoils;
 
 		// if attackers were victorious, reset their origin to the target site then recall them
+		if (defenders.length === 0) {
+			report += 'The Attackers are victorious!\n';
+			site.status.warzone = false;
+			site.status.occupied = true;
+			for (const unit of attackers) {
+				unit.origin = site._id;
+				await unit.recall();
+			}
+		}
+		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
+			report += 'The Defenders are victorious!\n';
+			site.status.warzone = false;
+		}
+		else {
+			report += 'The Battle ended in a stalemate!\n';
+		}
 
 		// else if it was a stalemate, no one recalls
 
-		// else the defenders are victorius and there anre no more attackers?
+
 		for (const unit of army) {
 			await unit.recall();
 		}
-		site.status.warzone = false;
 		await site.save();
 	}
 	nexusEvent.emit('updateMilitary');
