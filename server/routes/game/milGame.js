@@ -17,6 +17,7 @@ const { upgradeValue } = require('../../wts/upgrades/upgrades');
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const randomCords = require('../../util/systems/lz');
 const { resolveBattle } = require('../../wts/military/combat');
+const { MilitaryMission } = require('../../models/report');
 
 
 // @route   PUT game/military/deploy
@@ -135,26 +136,32 @@ router.patch('/battleSim', async function (req, res) {
 });
 
 router.patch('/resolve', async function (req, res) {
+	let militaryReport = new MilitaryMission;
 	let report = '';
 	let data = {};
 	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
 		// collect all the attackers
+		report = '';
 		const army = await Military.find({ site });
 
-		const defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString());
-		const attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString());
+		const defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
+		const attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
 		const attackerTeams = [];
 		// go over attackers, creating an array of objects
 		for (const unit of attackers) {
-			if (!attackerTeams.some(el => el === unit.team)) attackerTeams.push(unit.team);
+			if (!attackerTeams.some(el => el === unit.team.toHexString())) attackerTeams.push(unit.team.toHexString());
 		}
 
 		report = report + (`Battle at ${site.name}: ${army.length} \nDefenders: ${defenders.length}\nAttackers: ${attackers.length}\n\n`);
+		militaryReport.attackers = attackers;
+		militaryReport.defenders = defenders;
+		militaryReport.site = site;
 
 		if (attackers.length > 0 && defenders.length > 0) {
 			data = await resolveBattle(attackers, defenders);
+			report = report + data.report; // + 'spoils of war: \n' + data.spoils;
 		}
-		report = report + data.report; // + 'spoils of war: \n' + data.spoils;
+
 
 		// if attackers were victorious, reset their origin to the target site then recall them
 		if (defenders.length === 0) {
@@ -169,17 +176,17 @@ router.patch('/resolve', async function (req, res) {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			site.status.warzone = false;
+			for (const unit of army) {
+				await unit.recall();
+			}
 		}
-		else {
+		else {// else if it was a stalemate, no one recalls
 			report += 'The Battle ended in a stalemate!\n';
 		}
 
-		// else if it was a stalemate, no one recalls
-
-
-		for (const unit of army) {
-			await unit.recall();
-		}
+		militaryReport.battleRecord = report;
+		militaryReport = militaryReport.createTimestamp(militaryReport);
+		militaryReport = await militaryReport.save();
 		await site.save();
 	}
 	nexusEvent.emit('updateMilitary');

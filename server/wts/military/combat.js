@@ -26,7 +26,7 @@ async function resolveBattle (attackers, defenders) {
 		report += `Beginning Combat Round ${combatRound}\n\n`;
 		// 1) calculate total attack value of attackers
 		for (let unit of attackers) {
-			unit = await Military.findById(unit).populate('upgrades');
+			unit = await Military.findById(unit).populate('upgrades').lean();
 			attackerTotal = attackerTotal + await upgradeValue(unit.upgrades, 'attack');
 			attackerTotal = attackerTotal + unit.stats.attack;
 		}
