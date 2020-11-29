@@ -13,9 +13,8 @@ the desired numerical stat effect
 async function upgradeValue (upgradeArray, desiredStat) {
 	let total = 0;
 	for(const element of upgradeArray) {// for every upgrade in the upgrade array and for every element in the stat object of the upgrade
-		for(const stat in element.stats) {
-			if(stat.type === desiredStat) total = total + element.stats.effect[stat]; // if the key (stat) is the stat we want add it to total
-			// if you are reading this, this has been untested and likely doesn't work cause scott is a terrible programmer oh god
+		for(const stat of element.effects) {
+			if(stat.type === desiredStat) total = total + stat.effect; // if the key (stat) is the stat we want add it to total
 		}
 	}
 	return total;

@@ -91,7 +91,13 @@ const MilitaryAction = Report.discriminator('MilitaryAction', new Schema({
 }));
 
 const MilitaryMission = Report.discriminator('MilitaryMission', new Schema ({
-	type: { type: String, default: 'After Action Report', enum: ['After Action Report', 'Invade', 'Support', 'Assist'] }
+	type: { type: String, default: 'After Action Report', enum: ['After Action Report', 'Invade', 'Support', 'Assist'] },
+	attackers: [{ type: Schema.Types.Mixed }],
+	attackingTeams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
+	defenders: [{ type: Schema.Types.Mixed }],
+	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	spoils: [{ type: Schema.Types.Mixed }],
+	battleRecord: { type: String }
 }));
 
 const ResearchReport = Report.discriminator('ResearchReport', new Schema({
