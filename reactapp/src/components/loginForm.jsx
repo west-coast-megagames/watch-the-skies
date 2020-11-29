@@ -23,7 +23,7 @@ class LoginForm extends Component {
       notify({catagory: 'app', type: 'error', title: 'Login Failed', body:`Error: ${this.props.errors.login}`});
     }
     if (this.props.login !== prevProps.login) {
-      notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user}...`})
+      notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user.username}...`})
       notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
       this.props.close();
     }
