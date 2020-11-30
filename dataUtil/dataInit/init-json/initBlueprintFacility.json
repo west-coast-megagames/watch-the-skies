@@ -1,0 +1,272 @@
+[
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Civilian Facilities",
+    "type": "Civilian",
+    "code": "CF-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["City"],
+    "desc": "Civilian Improvment Facility",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "MegaProject Facilites",
+    "type": "Civilian",
+    "code": "MF-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["City"],
+    "desc": "Civilian Improvment Facility",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": [{ "type": "pr", "effect": 1 }]
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Crisis Control",
+    "type": "Crisis",
+    "code": "CC-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Crisis"],
+    "desc": "Mobile Crisis Control Facility",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Lab",
+    "type": "Lab",
+    "code": "BL-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Base"],
+    "desc": "Standard Base Lab Facility",
+    "capacity": 1,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "sciRate": 3,
+    "sciBonus": 0,
+    "funding": 0,
+    "site": ""
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Hanger",
+    "type": "Hanger",
+    "code": "BH-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Base"],
+    "desc": "Standard Base Hanger Facility",
+    "capacity": 5,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Secret Lab",
+    "type": "Lab",
+    "code": "BSL-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Base"],
+    "desc": "Secret Base Lab Facility",
+    "capacity": 1,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": true,
+    "sciRate": 3,
+    "sciBonus": 0,
+    "funding": 0
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Factory",
+    "type": "Factory",
+    "code": "BF-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Base"],
+    "desc": "Base Factory Facility",
+    "capacity": 1,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Spacecraft Lab",
+    "type": "Lab",
+    "code": "SL-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Spacecraft"],
+    "desc": "Standard Spacecraft Lab Facility",
+    "capacity": 1,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "sciRate": 3,
+    "sciBonus": 0,
+    "funding": 0
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Spacecraft Hanger",
+    "type": "Hanger",
+    "code": "SH-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Spacecraft"],
+    "desc": "Standard Spacecraft Hanger Facility",
+    "capacity": 3,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false
+  },
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Crash Site Mobile Lab",
+    "type": "Lab",
+    "code": "CSL-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Crash"],
+    "desc": "Mobile Research Lab Facility",
+    "capacity": 1,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "sciRate": 3,
+    "sciBonus": 0,
+    "funding": 0
+	},
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Template",
+    "type": "Base",
+    "code": "BT-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Country"],
+    "desc": "Standard National Base",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+	},
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Hidden Base Template",
+    "type": "Base",
+    "code": "HBT-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Country"],
+    "desc": "Hidden National Base",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+	}
+]

@@ -42,7 +42,7 @@ function autoTransfer (transfer) {
 let banking = { bankingTransfer, autoTransfer };
 
 function updateAircrafts (cb) {
-  console.log('Listning for current aircrafts...')
+  console.log('Listing for current aircrafts...')
   updateSocket.on('currentAircrafts', data => cb(null, data));
 };
 

@@ -1,10 +1,12 @@
 const fs = require('fs');
 const config = require('config');
-const file = fs.readFileSync(
-	config.get('initPath') + 'init-json/initBlueprint.json',
-	'utf8'
-);
-const blueprintDataIn = JSON.parse(file);
+
+const aircraftBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintAircraft.json', 'utf8'));
+const facilityBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintFacility.json', 'utf8'));
+const upgradeBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintUpgrade.json', 'utf8'));
+const squadBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintSquad.json', 'utf8'));
+const blueprintDataIn = [...aircraftBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData];
+
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 

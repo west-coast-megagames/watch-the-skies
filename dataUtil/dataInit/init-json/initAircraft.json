@@ -16,7 +16,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBA",
+		"base": "USSFO",
 		"bpCode": "NX-002" 
   },
   {
@@ -26,7 +26,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBA",
+		"base": "USHNL",
 		"bpCode": "NX-002"
   },
   {
@@ -36,7 +36,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBA",
+		"base": "USVAB",
 		"bpCode": "NX-002"
   },
   {
@@ -46,7 +46,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBA",
+		"base": "USJAX",
 		"bpCode": "NX-002"
   },
   {
@@ -56,7 +56,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBA",
+		"base": "USBB",
 		"bpCode": "NX-002"
   },
   {
@@ -66,7 +66,7 @@
     "zone": "NA",
     "country": "US",
     "site": "",
-		"base": "USBB",
+		"base": "USSAN",
 		"bpCode": "NX-002"
   },
   {
@@ -156,7 +156,7 @@
     "zone": "EU",
     "country": "RU",
     "site": "",
-		"base": "RUBA",
+		"base": "RUNBA",
 		"bpCode": "NX-002"
   },
   {
@@ -166,7 +166,7 @@
     "zone": "EU",
     "country": "RU",
     "site": "",
-		"base": "RUBA",
+		"base": "RUNBB",
 		"bpCode": "NX-002"
   },
   {
@@ -186,7 +186,7 @@
     "zone": "EU",
     "country": "RU",
     "site": "",
-		"base": "RUBA",
+		"base": "RUNBA",
 		"bpCode": "NX-002"
   },
   {
@@ -216,7 +216,7 @@
     "zone": "AU",
     "country": "JP",
     "site": "",
-		"base": "JPBA",
+		"base": "JPBB",
 		"bpCode": "NX-002"
   },
   {
@@ -226,7 +226,7 @@
     "zone": "AU",
     "country": "JP",
     "site": "",
-		"base": "JPBA",
+		"base": "JPBB",
 		"bpCode": "NX-002"
   },
   {
@@ -246,7 +246,7 @@
     "zone": "AU",
     "country": "JP",
     "site": "",
-		"base": "JPBA",
+		"base": "JPBB",
 		"bpCode": "NX-002"
   },
   {
@@ -396,7 +396,7 @@
     "zone": "AU",
     "country": "CN",
     "site": "",
-		"base": "CNBA",
+		"base": "CNBB",
 		"bpCode": "NX-002"
   },
   {
@@ -406,7 +406,7 @@
     "zone": "AU",
     "country": "CN",
     "site": "",
-		"base": "CNBA",
+		"base": "CNBB",
 		"bpCode": "NX-002"
   },
   {
@@ -426,7 +426,7 @@
     "zone": "AU",
     "country": "CN",
     "site": "",
-		"base": "CNBA",
+		"base": "CNBB",
 		"bpCode": "NX-002"
   },
   {

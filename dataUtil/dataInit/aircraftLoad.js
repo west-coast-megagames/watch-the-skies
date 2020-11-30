@@ -121,6 +121,7 @@ async function newAircraftCreate (aData, rCounts) {
 	else {
 		newAircraft.stats = bpData.stats;
 		newAircraft.type = bpData.type;
+		newAircraft.blueprint = bpData._id;
 	}
 
 	const team = await axios.get(`${gameServer}init/initTeams/code/${aData.team}`);
