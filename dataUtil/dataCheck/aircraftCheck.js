@@ -231,23 +231,6 @@ async function chkAircraft (runFlag) {
 					);
 				}
 			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.systems, 'armor')) {
-				logger.error(
-					`systems.armor missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			else {
-				if (!Object.prototype.hasOwnProperty.call(aircraft.systems.armor, 'active')) {
-					logger.error(
-						`systems.armor.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
-					);
-				}
-				if (!Object.prototype.hasOwnProperty.call(aircraft.systems.armor, 'damaged')) {
-					logger.error(
-						`systems.armor.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
-					);
-				}
-			}
 
 			if (!Object.prototype.hasOwnProperty.call(aircraft.systems, 'utility')) {
 				logger.error(
