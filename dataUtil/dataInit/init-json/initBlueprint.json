@@ -12,16 +12,15 @@
     "prereq": [],
     "hidden": false,
     "stats": {
-			"hull": 5,
-      "hullMax": 5,
+			"hull": 4,
+      "hullMax": 4,
       "attack": 2,
       "penetration": 0,
-      "armor": 1,
-      "evade": 1,
+      "armor": 0,
+			"evade": 1,
+			"detection": 1,
       "range": 4000,
-			"cargo": 0,
-			"passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
+			"cargo": 0
     }
   },
   {
@@ -37,16 +36,15 @@
     "prereq": [],
     "hidden": false,
     "stats": {
-			"hull": 5,
-      "hullMax": 5,
-      "attack": 3,
+			"hull": 6,
+      "hullMax": 6,
+      "attack": 2,
       "penetration": 1,
       "armor": 1,
-      "evade": 2,
+			"evade": 2,
+			"detection": 2,
       "range": 16000,
-			"cargo": 1,
-			"passiveRolls": [2, 4, 7, 9, 11, 12],
-      "activeRolls": [3, 5, 8, 10, 12]
+			"cargo": 1
     }
   },
   {
