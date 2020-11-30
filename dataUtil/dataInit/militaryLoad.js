@@ -9,6 +9,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { validUnitType } = require('../util/validateUnitType');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -182,7 +183,8 @@ async function createFleet (iData, rCounts) {
 		newFleet.site = undefined;
 	}
 
-	newFleet.upgrade = [];
+	const upgrades = await findUpgrades(iData.upgrades, 'Fleet', iData.name, newFleet.team, newFleet.origin);
+	newFleet.upgrades = upgrades;
 
 	try {
 		await axios.post(`${gameServer}api/military`, newFleet);
@@ -262,7 +264,9 @@ async function createCorps (iData, rCounts) {
 		newCorps.site = undefined;
 	}
 
-	newCorps.upgrade = [];
+	const upgrades = await findUpgrades(iData.upgrades, 'Corps', iData.name, newCorps.team, newCorps.origin);
+	newCorps.upgrades = upgrades;
+
 	try {
 		await axios.post(`${gameServer}api/military`, newCorps);
 		++rCounts.loadCount;
@@ -274,4 +278,39 @@ async function createCorps (iData, rCounts) {
 	}
 }
 
+async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+	const upgIds = [];
+	for (const upg of upgrades) {
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);
+		const bpData = blueprint.data;
+
+		if (!bpData.desc) {
+			logger.error(`New ${unitType} Invalid Upgrade Blueprint: ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!bpData.buildModel === 'upgrade') {
+			logger.error(`New ${unitType} Upgrade Blueprint not an upgrade build model : ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!validUnitType(bpData.unitType, unitType)) {
+			logger.error(`New ${unitType} not valid for upgrade : ${unitName} ${upg}`);
+			continue;
+		}
+
+		try {
+			const rBody = { 'code': upg, 'team': team, 'facility': facility };
+			const newUpgrade = await axios.post(`${gameServer}game/upgrades/build/rBody`);
+			logger.error(`New ${unitType} upgrade posted : ${unitName} ${upg} ${rBody}`);
+			const newUpg = newUpgrade.data;
+
+			upgIds.push(newUpg._id);
+		}
+		catch (err) {
+			logger.error(`New ${unitType} Military Upgrade Save Error: ${err.message}`, { meta: err.stack });
+		}
+	}
+	return upgIds;
+}
 module.exports = runMilitaryLoad;

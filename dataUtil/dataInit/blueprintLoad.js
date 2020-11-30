@@ -68,16 +68,16 @@ async function loadBlueprint (bpData, rCounts) {
 
 			switch (bpData.buildModel) {
 			case 'facility':
-				await newFaclity(bpData, rCounts);
+				await newFacilityBP(bpData, rCounts);
 				break;
 			case 'aircraft':
-				await newAircraft(bpData, rCounts);
+				await newAircraftBP(bpData, rCounts);
 				break;
 			case 'squad':
-				await newSquad(bpData, rCounts);
+				await newSquadBP(bpData, rCounts);
 				break;
 			case 'upgrade':
-				await newUpgrade(bpData, rCounts);
+				await newUpgradeBP(bpData, rCounts);
 				break;
 
 			default:
@@ -126,7 +126,7 @@ async function deleteAllBlueprints () {
 	}
 }
 
-async function newAircraft (bpData, rCounts) {
+async function newAircraftBP (bpData, rCounts) {
 
 	// New Aircraft Blueprint here
 	const bpAircraft = bpData;
@@ -142,7 +142,7 @@ async function newAircraft (bpData, rCounts) {
 
 }
 
-async function newFaclity (bpData, rCounts) {
+async function newFacilityBP (bpData, rCounts) {
 
 	// New Facility Blueprint here
 	const bpFacility = bpData;
@@ -180,7 +180,7 @@ async function newFaclity (bpData, rCounts) {
 	}
 }
 
-async function newSquad (bpData, rCounts) {
+async function newSquadBP (bpData, rCounts) {
 
 	// New Squad Blueprint here
 	const bpSquad = bpData;
@@ -196,7 +196,7 @@ async function newSquad (bpData, rCounts) {
 
 }
 
-async function newUpgrade (bpData, rCounts) {
+async function newUpgradeBP (bpData, rCounts) {
 	// New Upgrade Blueprint here
 	const bpUpgrade = bpData;
 	try {
