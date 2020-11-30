@@ -224,5 +224,49 @@
     "sciRate": 3,
     "sciBonus": 0,
     "funding": 0
+	},
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Template",
+    "type": "Base",
+    "code": "BT-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Country"],
+    "desc": "Standard National Base",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
+	},
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Hidden Base Template",
+    "type": "Base",
+    "code": "HBT-1",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Country"],
+    "desc": "Hidden National Base",
+    "capacity": 2,
+    "facilityStats": {
+      "effect": []
+    },
+    "prereq": [],
+    "status": {
+      "secret": false
+    },
+    "hidden": false,
+    "site": ""
 	}
 ]
