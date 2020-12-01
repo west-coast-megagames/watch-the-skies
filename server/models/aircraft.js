@@ -31,7 +31,7 @@ const AircraftSchema = new Schema({
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
 	country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
-	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint', required: true },
+	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	mission: { type: String, default: 'Docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
 	status: {
