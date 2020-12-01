@@ -1,6 +1,6 @@
 const { Military } = require('../../models/military');
-const { Site } = require('../../models/site');
-const { Team } = require('../../models/team');
+// const { Site } = require('../../models/site');
+// const { Team } = require('../../models/team');
 const { d6, rand } = require('../../util/systems/dice');
 const { upgradeValue } = require('../upgrades/upgrades');
 
@@ -107,6 +107,10 @@ async function resolveBattle (attackers, defenders) {
 					report += `${unit.name} has been DESTROYED!\n`;
 					unit.status.destroyed = true;
 					attackers.splice(cas, 1);
+					while (unit.upgrades.length > 0) {
+						const up = unit.upgrades.pop();
+						spoils.push(up);
+					}
 				}
 			}
 			else {
