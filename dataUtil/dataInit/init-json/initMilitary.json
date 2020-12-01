@@ -5,7 +5,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -14,7 +14,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -23,7 +23,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -32,7 +32,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -41,7 +41,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -50,7 +50,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -59,7 +59,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -68,7 +68,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -77,7 +77,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -86,7 +86,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -95,7 +95,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -104,7 +104,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -113,7 +113,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -122,7 +122,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -131,7 +131,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -140,7 +140,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
 	},
 	{
@@ -149,7 +149,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -158,7 +158,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -167,7 +167,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -176,7 +176,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -185,7 +185,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -194,7 +194,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -203,7 +203,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -212,7 +212,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -221,7 +221,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -230,7 +230,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -239,7 +239,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -248,7 +248,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -257,7 +257,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -266,7 +266,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -275,7 +275,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -284,7 +284,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -293,7 +293,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -302,7 +302,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -311,7 +311,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -320,7 +320,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -329,7 +329,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -338,7 +338,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "gear": ["SBG-1"],
+    "upgrades": ["SBG-1"],
     "type": "Fleet"
   },
   {
@@ -347,7 +347,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -356,7 +356,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -365,7 +365,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -374,7 +374,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
 	},
 	{
@@ -383,7 +383,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -392,7 +392,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -401,7 +401,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
 	},
 	{
@@ -410,7 +410,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -419,7 +419,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -428,7 +428,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -437,7 +437,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -446,7 +446,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -455,7 +455,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -464,7 +464,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -473,7 +473,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -482,7 +482,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -491,7 +491,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -500,7 +500,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -509,7 +509,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -518,7 +518,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -527,7 +527,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -536,7 +536,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -545,7 +545,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "gear": ["SFG-1"],
+    "upgrades": ["SFG-1"],
     "type": "Fleet"
   },
   {
@@ -554,7 +554,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -563,7 +563,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -572,7 +572,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -581,7 +581,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -590,7 +590,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -599,7 +599,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -608,7 +608,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
 	},
 	{
@@ -617,7 +617,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -626,7 +626,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -635,7 +635,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -644,7 +644,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -653,7 +653,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -662,7 +662,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -671,7 +671,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -680,7 +680,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -689,7 +689,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "gear": ["CAG-1"],
+    "upgrades": ["CAG-1"],
     "type": "Fleet"
   },
   {
@@ -698,7 +698,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["V-MV1", "COR-1"],
+    "upgrades": ["V-MV1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -707,7 +707,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["V-MV1", "COR-1"],
+    "upgrades": ["V-MV1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -716,7 +716,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["V-MV1", "COR-1"],
+    "upgrades": ["V-MV1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -725,7 +725,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["V-MV1", "COR-1"],
+    "upgrades": ["V-MV1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -734,7 +734,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["V-MV1", "COR-1"],
+    "upgrades": ["V-MV1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -743,7 +743,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -752,7 +752,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -761,7 +761,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -770,7 +770,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -779,7 +779,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -788,7 +788,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -797,7 +797,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -806,7 +806,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -815,7 +815,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -824,7 +824,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -833,7 +833,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -842,7 +842,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -851,7 +851,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -860,7 +860,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -869,7 +869,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -878,7 +878,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -887,7 +887,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -896,7 +896,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -905,7 +905,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -914,7 +914,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -923,7 +923,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -932,7 +932,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -941,7 +941,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -950,7 +950,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "gear": ["V-OT1", "COR-1"],
+    "upgrades": ["V-OT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -959,7 +959,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -968,7 +968,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -977,7 +977,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -986,7 +986,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
 	},
 	{
@@ -995,7 +995,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1004,7 +1004,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1013,7 +1013,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1022,7 +1022,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1031,7 +1031,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "training": "Corps",
     "type": "Corps"
   },
@@ -1041,7 +1041,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1050,7 +1050,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1059,7 +1059,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "training": "Corps",
     "type": "Corps"
   },
@@ -1069,7 +1069,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1078,7 +1078,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1087,7 +1087,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1096,7 +1096,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1105,7 +1105,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1114,7 +1114,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1123,7 +1123,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1132,7 +1132,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1141,7 +1141,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1150,7 +1150,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1159,7 +1159,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   },
   {
@@ -1168,7 +1168,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "gear": ["V-MT1", "COR-1"],
+    "upgrades": ["V-MT1", "COR-1"],
     "type": "Corps"
   }
 ]
