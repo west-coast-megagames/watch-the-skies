@@ -10,7 +10,7 @@ import { showLaunch } from '../../../store/entities/infoPanels';
 import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
-import {getMapIcon, getAircraftIcon} from '../../../scripts/mapIcons';
+import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
 import { getDeployed } from '../../../store/entities/military';
 
 
@@ -120,7 +120,7 @@ function PrototypeMap(props) {
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: getMapIcon(site.subType),
+							url: getMapIcon(site),
 							scaledSize: new window.google.maps.Size(55, 55),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
@@ -168,7 +168,7 @@ function PrototypeMap(props) {
 						}}
 						icon={{
 							url: getAircraftIcon(contact.team.code),
-							scaledSize: new window.google.maps.Size(55, 55),
+							scaledSize: new window.google.maps.Size(65, 65),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
@@ -189,8 +189,8 @@ function PrototypeMap(props) {
 							setMapClick({event: undefined});
 						}}
 						icon={{
-							url: 'https://www.clipartmax.com/png/middle/42-424305_tank-free-icon-war-thank-icon-png.png',
-							scaledSize: new window.google.maps.Size(55, 55),
+							url: getMilitaryIcon(unit),
+							scaledSize: new window.google.maps.Size(70, 70),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}

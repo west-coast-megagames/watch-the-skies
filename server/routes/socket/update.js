@@ -97,7 +97,7 @@ module.exports = function (io) {
 		socketDebugger('Event: Updating Military...');
 		const military = await Military.find()
 			.sort({ team: 1 })
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('gear', 'name category')

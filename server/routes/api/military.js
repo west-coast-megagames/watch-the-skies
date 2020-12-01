@@ -17,7 +17,7 @@ router.get('/', async function (req, res) {
 
 	try {
 		const military = await Military.find()
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('site', 'name')
@@ -41,7 +41,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 
 	try {
 		const military = await Military.findById(id)
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('gear', 'name category')
