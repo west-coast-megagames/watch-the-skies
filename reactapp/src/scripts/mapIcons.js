@@ -50,7 +50,7 @@ export const getAircraftIcon = (aircraft) => {
 
 export const getMilitaryIcon = (unit) => {
 	console.log(unit);
-	if (unit.type === 'Corps') {
+	if (unit.type === 'Corps' || unit.type == 'Fleet') {
 		if (!milIcons[unit.team.code] || milIcons[unit.team.code] === null) return ('https://cdn.discordapp.com/attachments/582043597281427466/783190980333273128/UNKOWN_tank_v5.1.png'); //the default '?' tank
 		else return milIcons[unit.team.code];		
 	}
