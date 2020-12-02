@@ -300,9 +300,12 @@ async function findUpgrades (upgrades, unitType, unitName, team, facility) {
 		}
 
 		try {
-			const rBody = { 'code': upg, 'team': team, 'facility': facility };
-			const newUpgrade = await axios.post(`${gameServer}game/upgrades/build/rBody`);
-			logger.error(`New ${unitType} upgrade posted : ${unitName} ${upg} ${rBody}`);
+			const upgradeBody = { code: upg, team: team, facility: facility,
+				effects: bpData.effects, cost: bpData.cost, buildTime: bpData.buildTime,
+				name: unitName, manufacturer: team, desc: bpData.desc,
+				prereq: bpData.prereq };
+			const newUpgrade = await axios.post(`${gameServer}game/upgrades/build`, upgradeBody);
+			logger.debug(`New ${unitType} upgrade posted : ${unitName} ${upg} ${upgradeBody}`);
 			const newUpg = newUpgrade.data;
 
 			upgIds.push(newUpg._id);

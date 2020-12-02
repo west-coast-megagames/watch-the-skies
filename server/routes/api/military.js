@@ -8,6 +8,7 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 
 // Mongoose Model Import
 const { Military, Corps, Fleet } = require('../../models/military');
+const { Upgrade } = require('../../models/upgrade');
 
 // @route   GET api/military
 // @Desc    Get all Militaries
@@ -140,9 +141,34 @@ router.delete('/:id', async function (req, res) {
 // @desc    Delete All Military
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
-	const data = await Military.deleteMany();
-	console.log(data);
-	return res.status(200).send(`We wiped out ${data.deletedCount} Military!`);
+	let milDelCount = 0;
+	let upgDelCount = 0;
+	for await (const military of Military.find()) {
+		const id = military.id;
+		// delete attached upgrades
+		for (const upgrade of military.upgrades) {
+			try {
+				await Upgrade.findByIdAndRemove(upgrade);
+				upgDelCount += 1;
+			}
+			catch (err) {
+				nexusError(`${err.message}`, 500);
+			}
+		}
+		try {
+			const militaryDel = await Military.findByIdAndRemove(id);
+			if (militaryDel == null) {
+				res.status(404).send(`The Military with the ID ${id} was not found!`);
+			}
+			else {
+				milDelCount += 1;
+			}
+		}
+		catch (err) {
+			nexusError(`${err.message}`, 500);
+		}
+	}
+	return res.status(200).send(`We wiped out ${milDelCount} Military and ${upgDelCount} Upgrades! `);
 });
 
 module.exports = router;

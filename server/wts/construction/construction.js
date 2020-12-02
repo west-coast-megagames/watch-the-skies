@@ -63,6 +63,8 @@ async function newUpgrade (code, team, facility) {
 	upgrade.desc = blue.desc;
 	upgrade.prereq = blue.prereq;
 	upgrade.code = blue.code;
+	upgrade.manufacturer = team;
+	upgrade.effects = blue.effects;
 
 	return upgrade;
 }
