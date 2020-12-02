@@ -25,7 +25,7 @@ let diversionMissions = []; // Attempted Diversion missions for the round
 let transferMissions = []; // Attempted Transfer missions for the round
 
 let count = 0; // Mission Counter.
-let totalCount = 0;
+// let totalCount = 0;
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start (aircraft, target, mission) {
@@ -105,10 +105,8 @@ async function resolveMissions () {
 	// await resolveTransfers();
 	await clearMissions();
 
-	resolveGroundCombat();
-
 	missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
-	totalCount += count;
+	// totalCount += count;
 	count = 0;
 	nexusEvent.emit('updateAircrafts');
 	nexusEvent.emit('updateSites');
@@ -405,33 +403,6 @@ async function resolveTransfers () {
 	}
 
 	return;
-}
-
-async function resolveGroundCombat () {
-	let comCount = 0;
-	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
-		comCount++;
-		console.log(`Resolving combat at ${site.name}`);
-		// do combat call here
-
-		// recall units
-		for (const unit of await Military.find({ 'site._id': site._id })) {
-			unit.recall();
-		}
-
-		// hit this logic if combat has been resolved successfully
-		if (site.subType === 'Point of Interest') {
-			site.hidden = true;
-			console.log('Site hidden');
-		}
-		else {
-			site.stats.warzone = false;
-			console.log('Site De-Warzoned');
-		}
-		await site.save();
-	}
-	console.log(`Resolved ${comCount} combat sites`);
-	return 0;
 }
 
 async function clearMissions () {
