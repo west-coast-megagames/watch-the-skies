@@ -13,11 +13,11 @@ const nexusEvent = require('../../middleware/events/events');
 const { d6, rand } = require('../../../dataUtil/systems/dice');
 const { upgradeValue } = require('../../wts/upgrades/upgrades');
 
+
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const randomCords = require('../../util/systems/lz');
-const { resolveBattle } = require('../../wts/military/combat');
-const { MilitaryMission } = require('../../models/report');
+const { runMilitary } = require('../../wts/military/combat');
 
 
 // @route   PUT game/military/deploy
@@ -136,101 +136,8 @@ router.patch('/battleSim', async function (req, res) {
 });
 
 router.patch('/resolve', async function (req, res) {
-	let report = '';
-	let data = {};
-	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
-		// collect all the attackers
-		report = '';
-		const leadArmy = {
-			team: '',
-			strength: -1
-		};
-
-		let militaryReport = new MilitaryMission;
-		militaryReport.type = 'Invade';
-		const army = await Military.find({ site });
-
-		const defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
-		const attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
-		const attackerTeams = [];
-		// go over attackers, creating an array of objects
-		for (const unit of attackers) {
-			if (!attackerTeams.some(el => el === unit.team.toHexString())) attackerTeams.push(unit.team.toHexString());
-		}
-
-		report = report + (`Battle at ${site.name}:  \nDefenders: ${defenders.length}\nAttackers: ${attackers.length}\n\n`);
-		militaryReport.attackers = attackers;
-		militaryReport.defenders = defenders;
-		militaryReport.attackingTeams = attackerTeams;
-		militaryReport.site = site;
-
-		if (attackers.length > 0 && defenders.length > 0) {
-			data = await resolveBattle(attackers, defenders);
-			report = report + data.report; // + 'spoils of war: \n' + data.spoils;
-		}
-
-
-		// if attackers were victorious
-		if (defenders.length === 0 && attackers.length > 0) {
-			report += 'The Attackers are victorious!\n';
-			site.status.warzone = false;
-			site.status.occupied = true;
-
-			// determine who now owns the site.
-			for (const team of attackerTeams) {
-				let tempStrength = 0;
-				const tempArmy = attackers.filter(el => el.team.toHexString() === team);
-				for (let unit of tempArmy) {
-					unit = await Military.findById(unit).populate('upgrades');
-					tempStrength += unit.stats.attack + await upgradeValue(unit.upgrades, 'attack');
-				}
-				if (tempStrength > leadArmy.strength) {
-					leadArmy.team = team;
-					leadArmy.strength = tempStrength;
-				}
-				// I should put something in here if there's a tie, but fuck it. This will do till someone complains.
-			}
-
-			site.occupier = leadArmy.team;
-
-			if (data.spoils && data.spoils.length > 0) {
-				for (const upgrade of data.spoils) { // give out any spoils to the remainging attacker teams
-					const unit = rand(attackers.length) - 1;
-					upgrade.team = attackers[unit].team._id;
-					await upgrade.save();
-				}
-			}
-
-			// send the defeated units to a nearby site/facility
-		}
-		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
-			report += 'The Defenders are victorious!\n';
-			site.status.warzone = false;
-			for (const upgrade of data.spoils) {
-				upgrade.team = site.team._id;
-				await upgrade.save();
-			}
-			for (const unit of army) {
-				await unit.recall();
-			}
-		}
-		else {// else if it was a stalemate, no one recalls
-			report += 'The Battle ended in a stalemate!\n';
-			for (const upgrade of data.spoils) {
-				const unit = rand(army.length) - 1;
-				upgrade.team = army[unit].team._id;
-				await upgrade.save();
-			}
-		}
-
-		militaryReport.battleRecord = report;
-		militaryReport.spoils = data.spoils;
-		militaryReport = militaryReport.createTimestamp(militaryReport);
-		militaryReport = await militaryReport.save();
-		await site.save();
-	}
-	nexusEvent.emit('updateMilitary');
-	res.status(200).send(report);
+	await runMilitary();
+	res.status(200).send('Battles resolved');
 });
 
 router.patch('/recall', async function (req, res) {
@@ -251,7 +158,20 @@ router.patch('/resethealth', async function (req, res) {
 		await unit.save();
 	}
 	res.send('Military Health succesfully reset!');
-	nexusEvent.emit('updateAircrafts');
+	nexusEvent.emit('updateMilitary');
+});
+
+router.patch('/resetsites', async function (req, res) {
+	for await (const site of Site.find()) {
+		console.log(`Resetting ${site.name}`);
+		site.status.warzone = false;
+		site.status.occupied = false;
+		site.occupier = await Team.findOne({ code: 'TCN' });
+		await site.save();
+	}
+	console.log('All done');
+	res.send('All sites succesfully reset!');
+	nexusEvent.emit('updateSites');
 });
 
 module.exports = router;
