@@ -42,6 +42,9 @@ router.post('/build', async function (req, res) {
 
 	try {
 		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		if (upgrade.buildCount == 0) {
+			upgrade.status.building = false;
+		}
 		upgrade = await upgrade.save();
 
 		res.status(200).json(upgrade);
