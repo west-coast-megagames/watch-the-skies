@@ -14,7 +14,7 @@ class InfoSite extends Component {
   render() {
     let disable = false;
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, facilities, serviceRecord, country, zone, _id } = this.props.site;
+      let { name, subType, type, geoDMS, status, facilities, serviceRecord, country, zone, _id, occupier } = this.props.site;
     
       return(
         <Drawer
@@ -39,6 +39,9 @@ class InfoSite extends Component {
 							<p><b>Zone:</b> {`${zone.name}`}</p>
 							<p><b>Unrest:</b> 0</p> 
             </FlexboxGrid.Item>
+						{status.occupied && <FlexboxGrid.Item colspan={12}>
+							<p><b>Occupier:</b> {`${occupier.shortName}`}</p>
+            </FlexboxGrid.Item>}
             </FlexboxGrid>
 						<hr />
 						<Table
