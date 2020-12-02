@@ -21,6 +21,7 @@ router.get('/', async function (req, res) {
 			.populate('team', 'shortName name')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
+			.populate('occupier', 'name shortName code')
 			.sort({ name: -1 });
 		res.status(200).json(sites);
 	}
@@ -43,6 +44,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 			.populate('team', 'shortName name')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
+			.populate('occupier', 'name shortName code')
 			.sort({ team: 1 });
 		if (site != null) {
 			res.json(site);
