@@ -86,6 +86,27 @@ router.post('/', async (req, res) => {
 	}
 
 	try {
+		// update stats based on any upgrades
+		for (const upgId of newMilitary.upgrades) {
+			const upgrade = await Upgrade.findById(upgId);
+			if (upgrade) {
+				for (const element of upgrade.effects) {
+					switch (element.type) {
+					case 'health':
+						newMilitary.stats.health += element.effect;
+						break;
+					case 'attack':
+						newMilitary.stats.attack += element.effect;
+						break;
+					case 'defense':
+						newMilitary.stats.defense += element.effect;
+						break;
+					default: break;
+					}
+				}
+			}
+		}
+
 		await newMilitary.validateMilitary();
 		newMilitary = await newMilitary.save();
 		logger.info(`Unit ${newMilitary.name} created...`);
