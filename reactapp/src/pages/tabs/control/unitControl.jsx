@@ -15,9 +15,9 @@ class UnitControl extends Component {
 		hidden: true,
 		showUpgrade: false,
 		data: []
-	 }
+	}
 
-	 componentDidUpdate(prevProps, prevState) {
+	componentDidUpdate(prevProps, prevState) {
     if (prevProps.lastFetch !== this.props.lastFetch) {
 			this.handleSelect(this.state.selected._id);
 		}
@@ -31,9 +31,9 @@ class UnitControl extends Component {
 			this.loadTable();
 	};
 	
-	 showUpgrade = () => { this.setState({showUpgrade: true}) };
-	 closeUpgrade = () => { 
-		 this.setState({showUpgrade: false}) 
+	showUpgrade = () => { this.setState({showUpgrade: true}) };
+	closeUpgrade = () => { 
+		this.setState({showUpgrade: false}) 
 			this.handleSelect(this.state.selected._id)
 		};
 
@@ -160,52 +160,52 @@ class UnitControl extends Component {
 					<hr />
 					<p>Upgrades</p>
 					<Table
-          	 isTree
-          	 defaultExpandAllRows
-          	 rowKey="id"
-          	 autoHeight
-          	 data={this.state.data}
-          	 onExpandChange={(isOpen, rowData) => {
-          	      // console.log(isOpen, rowData);
-          	 }}
-          	 renderTreeToggle={(icon, rowData) => {
+						isTree
+						defaultExpandAllRows
+						rowKey="id"
+						autoHeight
+						data={this.state.data}
+						onExpandChange={(isOpen, rowData) => {
+							// console.log(isOpen, rowData);
+						}}
+						renderTreeToggle={(icon, rowData) => {
 							// console.log(rowData);
-          	     if (rowData.children && rowData.children.length === 0) {
-          	     return <Icon icon="spinner" spin />;
-          	     }
-          	     return icon;
-          	 }}
-          	 >
+							if (rowData.children && rowData.children.length === 0) {
+							return <Icon icon="spinner" spin />;
+							}
+							return icon;
+						}}
+						>
 
-          	 <Column flexGrow={1} >
-          	     <HeaderCell>Name</HeaderCell>
-          	     <Cell dataKey="name" />
-          	 </Column>
+						<Column flexGrow={1} >
+							<HeaderCell>Name</HeaderCell>
+							<Cell dataKey="name" />
+						</Column>
 
-						 <Column flexGrow={1} >
-          	     <HeaderCell>Type</HeaderCell>
-          	     <Cell dataKey="type" />
-          	 </Column>
+						<Column flexGrow={1} >
+							<HeaderCell>Type</HeaderCell>
+							<Cell dataKey="type" />
+						</Column>
 
-						 <Column flexGrow={1} >
-          	     <HeaderCell>Effects</HeaderCell>
-          	     <Cell dataKey="effect" />
-          	 </Column>
+						<Column flexGrow={1} >
+							<HeaderCell>Effects</HeaderCell>
+							<Cell dataKey="effect" />
+						</Column>
 
-						 <Column>
-						 	<HeaderCell>Delete</HeaderCell>
-							 <Cell style={{padding: '8px'}}>
-								 {rowData => {
-									 if (typeof rowData.id === 'string') return (<Button color='red' onClick={() => this.handleDelete(rowData.id)}>Delete</Button>)
-									 else return '';
-								 }}
-							 </Cell>
-						 </Column>
+						<Column>
+							<HeaderCell>Delete</HeaderCell>
+								<Cell style={{padding: '8px'}}>
+									{rowData => {
+										if (typeof rowData.id === 'string') return (<Button color='red' onClick={() => this.handleDelete(rowData.id)}>Delete</Button>)
+										else return '';
+									}}
+								</Cell>
+						</Column>
 
             </Table>
-					<div style={{ display: "flex "}}>
-						<IconButton color="green" onClick={this.showUpgrade}  style={{ marginLeft: "auto" }} icon={<Icon icon="plus"/>}></IconButton>
-					</div>
+						<div style={{ display: "flex "}}>
+							<IconButton color="green" onClick={this.showUpgrade}  style={{ marginLeft: "auto" }} icon={<Icon icon="plus"/>}></IconButton>
+						</div>
 				</React.Fragment>}
 			</Content>
 			</Container>
