@@ -31,8 +31,22 @@ class OpsMenu extends Component {
 		this.props.closeMenu();
 	}
 
+	handleInfo = () => {
+		//console.log(this.props.info.model)
+		switch (this.props.info.model) {
+			case 'Site': 
+				this.props.showSite(this.props.info);
+				break;
+			case 'Aircraft':
+				this.props.showAircraft(this.props.info);
+				break;
+			default:
+				Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)
+		}
+		this.props.closeMenu();
+	}
+
 	render() { 
-		console.log(this.props.info)
 		return (
 			<React.Fragment>
 				<div className="menu" id="menu"
@@ -55,7 +69,7 @@ class OpsMenu extends Component {
 						style={{...menu, top: '33px', left: '33px'}}
 						onClick={() => this.props.closeMenu()}
 					/>
-					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.props.info.model === 'Site' ? this.showSite() : this.props.info.model === 'Aircraft' ? this.showAircraft() : Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)} style={{...menu, top: '1px', left:'30px'}} />
+					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.handleInfo()} style={{...menu, top: '1px', left:'30px'}} />
 					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
