@@ -8,8 +8,6 @@ import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import ExcomOps from './tabs/ops/excom';
-import PrototypeMap from './tabs/ops/google2'
-
 class Operations extends Component {
   constructor() {
 		super();
@@ -51,7 +49,6 @@ class Operations extends Component {
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
 						{/* <Nav.Item eventKey="excom" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFighterJet} />}> Excom Ops</Nav.Item> */}
 						<Nav.Item eventKey="globe" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
-						<Nav.Item eventKey='google2' to={`${url}/google`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Map</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>
 				</Header>
@@ -84,10 +81,6 @@ class Operations extends Component {
 
 						<Route path={`${url}/globe`} render={() => (
 							<GlobalOps />
-						)}/>
-
-						<Route path={`${url}/google`} render={() => (
-							<PrototypeMap />
 						)}/>
 
 						<Route path={`${url}/nuclear`} render={() => (
