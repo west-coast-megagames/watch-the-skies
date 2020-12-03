@@ -60,10 +60,15 @@ class DeployMilitary extends Component {
 		}
 		this.setState({mobilization, cost});
 	};
+	handleExit = () => {
+		console.log('hello')
+		this.setState({mobilization: [], cost: 0});
+		this.props.hide();
+	}
 
 	render() { 
 		return (
-			<Drawer size='sm'  placement='right' show={this.props.show} onHide={() => this.props.hide()}>
+			<Drawer size='sm'  placement='right' show={this.props.show} onHide={this.handleExit}>
 				<Drawer.Header>
 						<Drawer.Title>Military Deployment<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title>
 				</Drawer.Header>
@@ -109,7 +114,7 @@ class DeployMilitary extends Component {
 				<Drawer.Footer>
 						<Toggle style={{float: 'left'}} onChange={this.handleType} size="lg" checkedChildren="Sea Deploy" unCheckedChildren="Land Deploy" />
 						<Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
-						<Button onClick={() => this.props.hide} appearance="subtle">Cancel</Button>
+						<Button onClick={this.handleExit} appearance="subtle">Cancel</Button>
 				</Drawer.Footer>
 		</Drawer>
 		);
@@ -156,6 +161,7 @@ class DeployMilitary extends Component {
 		try {
 				let { data } = await axios.put(`${gameServer}game/military/deploy`, deployment); // Axios call to deploy units
 				Alert.success(data)
+				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 		}
