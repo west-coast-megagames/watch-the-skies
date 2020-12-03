@@ -24,7 +24,7 @@ class GlobalOps extends Component {
                     autoHeight
                     data={ this.state.data }
                     onExpandChange={(isOpen, rowData) => {
-                        console.log(isOpen, rowData);
+                        // console.log(isOpen, rowData);
                         return
                     }}
                     renderTreeToggle={(icon, rowData) => {
@@ -93,8 +93,6 @@ class GlobalOps extends Component {
             zone.type = 'zone'
             for (let unit of military) {
                 let checkZone = zone;
-                console.log(unit)
-                console.log(checkZone)
                 if (unit.zone.name === checkZone.name) {
                     unit.type = 'unit'
                     unit.info = `Health ${unit.stats.health}/${unit.stats.healthMax} | Attack: ${unit.stats.attack} | Defense: ${unit.stats.defense}`;

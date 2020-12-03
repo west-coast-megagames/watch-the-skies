@@ -87,7 +87,7 @@ class InfoAircraft extends Component {
   }
 
   toggleTransfer() {
-    console.log(`Toggle`);
+    // console.log(`Toggle`);
     this.setState({ hideTransfer: !this.state.hideTransfer });
   }
 
@@ -177,7 +177,6 @@ class InfoAircraft extends Component {
         let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
-        console.log(response.data);
         Alert.success(response.data);
       } catch (err) {
         console.log(err.response.data);

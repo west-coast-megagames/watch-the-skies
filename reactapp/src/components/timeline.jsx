@@ -86,14 +86,12 @@ class GameTimeline extends Component {
         for (let team of teamFilter) {
             let teamLogs = logs.filter(el => el.team.code === team);
             postTeams = [...postTeams,...teamLogs];
-            console.log(postTeams);
         }
         if (teamFilter.length === 0) postTeams = logs
         let postTypes = []
         for (let type of typeFilter) {
             let typeLogs = postTeams.filter(el => el.type === type);
             postTypes = [...postTypes,...typeLogs];
-            console.log(postTypes);
         }
         if (typeFilter.length === 0) postTypes = postTeams
         const sorted = postTypes;

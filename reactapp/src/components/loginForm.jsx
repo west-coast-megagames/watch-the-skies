@@ -34,7 +34,6 @@ class LoginForm extends Component {
     const result = Joi.validate(this.state.account, this.schema, {
       abortEarly: false,
     });
-    console.log(result);
 
     const errors = {};
 
@@ -60,14 +59,14 @@ class LoginForm extends Component {
 
   handleSubmit = async (e) => {
 		this.setState({ isLoading: true });
-		console.log('Before: ', this.state.isLoading)		
+		// console.log('Before: ', this.state.isLoading)		
 
 		e.preventDefault();
     // Call the server
-    console.log("Submitted");
+    // console.log("Submitted");
 		await this.props.handleLogin(this.state.account); // Redux login action
 		this.setState({ isLoading: false });
-		console.log('After', this.state.isLoading)
+		// console.log('After', this.state.isLoading)
   };
 
   handleChange = ({ currentTarget: input }) => {

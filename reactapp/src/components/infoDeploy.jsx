@@ -51,10 +51,10 @@ class InfoDeploy extends Component {
     let groundMissions = missions.filter(mission => mission.ground === true);
     let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready == true);
     let aircrafts = [];
-    console.log(ships);
+    //console.log(ships);
     if (ships.length > 0) {
       for (let ship of ships) {
-        console.log(ship)
+        //console.log(ship)
         let data = { 
           label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
           value: ship._id
@@ -165,7 +165,7 @@ class InfoDeploy extends Component {
       mission: this.state.mission
     };
     try {
-      console.log(stats)
+      //console.log(stats)
       let response = await axios.put(`${gameServer}game/aircrafts`, stats);    
       Alert.success(response.data);
       this.setState({mission: null, unit: null});

@@ -45,7 +45,7 @@ class DeployMilitary extends Component {
 }
 
 	handleTeam = (value) => { this.setState({team: value, cost: 0}); this.filterUnits();};
-	handleType = (value) => { this.setState({seaDeploy: value, mobilization: [], destination: null, target: null, cost: 0})};
+	handleType = (value) => { this.setState({seaDeploy: value, mobilization: [], cost: 0})};
 	handleDestination = (value) => { 
 		let target = this.props.sites.find(el => el._id === value); // Looks up the target site via the stored _id
 		this.setState ({destination: value, target});
@@ -60,10 +60,14 @@ class DeployMilitary extends Component {
 		}
 		this.setState({mobilization, cost});
 	};
+	handleExit = () => {
+		this.setState({mobilization: [], cost: 0});
+		this.props.hide();
+	}
 
 	render() { 
 		return (
-			<Drawer size='sm'  placement='right' show={this.props.show} onHide={() => this.props.hide()}>
+			<Drawer size='sm'  placement='right' show={this.props.show} onHide={this.handleExit}>
 				<Drawer.Header>
 						<Drawer.Title>Military Deployment<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title>
 				</Drawer.Header>
@@ -109,22 +113,22 @@ class DeployMilitary extends Component {
 				<Drawer.Footer>
 						<Toggle style={{float: 'left'}} onChange={this.handleType} size="lg" checkedChildren="Sea Deploy" unCheckedChildren="Land Deploy" />
 						<Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
-						<Button onClick={() => this.props.hide} appearance="subtle">Cancel</Button>
+						<Button onClick={this.handleExit} appearance="subtle">Cancel</Button>
 				</Drawer.Footer>
 		</Drawer>
 		);
 	}
 
 	filterUnits = () => {
-		console.log('Filtering Units...')
+		// console.log('Filtering Units...')
 		let fleets = [];
 		let corps = [];
 		for (let unit of this.props.military) {
 			if (this.state.team === unit.team.name) {
 				let unitData = {
 					name: unit.name,
-					checkZone: unit.zone.name,
-					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`,
+					checkZone: unit.site.name,
+					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 					_id: unit._id
 				}
 				if (unit.type === 'Fleet') fleets.push(unitData);
@@ -135,7 +139,7 @@ class DeployMilitary extends Component {
 	}
 
 	filterLocations = () => {
-		console.log('Filtering Sites..')
+		// console.log('Filtering Sites..')
 		let sites = []
 		for (let site of this.props.sites) {
 			let siteData = {
@@ -156,6 +160,7 @@ class DeployMilitary extends Component {
 		try {
 				let { data } = await axios.put(`${gameServer}game/military/deploy`, deployment); // Axios call to deploy units
 				Alert.success(data)
+				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 		}

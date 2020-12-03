@@ -58,9 +58,7 @@ class ExcomOps extends Component {
     contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
-      console.log(newZone.name)
       let zone = {...newZone}
-      console.log(zone);
       zone.children = [];
       zone.name = zone.name;
       zone.type = "Zone";

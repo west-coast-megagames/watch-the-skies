@@ -24,9 +24,6 @@ class SubNews extends React.Component {
   }
 
   handleInput = (value, id) => {
-    // console.log(this);
-    console.log(value);
-    console.log(id);
     if (id === 'location') {
       let options = [...this.props.sites, ...this.props.countries, ...this.props.zones];
       let location = options.find(el => el._id === value);

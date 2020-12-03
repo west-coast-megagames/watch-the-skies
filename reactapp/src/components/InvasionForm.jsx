@@ -97,7 +97,6 @@ class InvasionModal extends Component {
         Alert.warning(`Filtering Units!`);
         let data = []
         let military = this.props.military;
-        console.log(military)
         for (let unit of military) {
             unit.checkZone = unit.zone.name;
             unit.info = `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`
@@ -114,7 +113,6 @@ class InvasionModal extends Component {
         let data = []
         let sites = this.props.sites;
         for (let site of sites) {
-            console.log(site)
             site.checkZone = site.zone.name;
             site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
             data.push(site);

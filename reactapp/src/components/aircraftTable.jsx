@@ -69,7 +69,6 @@ class AircraftTable extends Component {
                         <Cell style={{padding: '8px'}}>
                             {rowData => {
                                 let aircraft = rowData;
-                                console.log(aircraft);
                                 return (
                                 <ButtonGroup size='sm'>
                                     <IconButton icon={<Icon icon="info-circle" />} onClick={() => this.props.infoRequest(aircraft)} color="blue"/>

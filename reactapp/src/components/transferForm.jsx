@@ -57,7 +57,7 @@ class TransferForm extends Component {
 
         console.log(`Input Value: ${value}`);
         transfer[id] = value;
-        console.log(transfer);
+        // console.log(transfer);
         this.setState({ transfer })
     };
 
@@ -70,7 +70,7 @@ class TransferForm extends Component {
 
         const transfer = {...this.state.transfer};
         transfer.amount = Math.trunc(value);
-        console.log(transfer);
+        // console.log(transfer);
         this.setState({ transfer })
     }
 

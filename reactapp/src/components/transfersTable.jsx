@@ -22,7 +22,7 @@ class AutoTransfers extends Component {
         let transfers = [];
     
         for (let account of accounts) {
-            console.log(account)
+            // console.log(account)
             for (let transfer of account.autoTransfers) {
                 console.log(transfer)
                 if (transfer !== null) {
@@ -48,8 +48,8 @@ class AutoTransfers extends Component {
         let account = accounts[indexOf];
 
         let request = { account_id: account._id , transfer_id: transfer._id }
-        console.log(transfer);
-        console.log(request);
+        // console.log(transfer);
+        // console.log(request);
         let { data: response } = await axios.patch(`${gameServer}api/banking/delAutoTransfer`, request);
         this.props.alert({type: 'success', title: 'Deleted automatic payment', body: response});
     }

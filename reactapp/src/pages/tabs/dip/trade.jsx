@@ -38,7 +38,7 @@ const TradeOffer = (props) => { //trade object
         aircraft = formatData(aircraft)
     } 
         
-    console.log(research)
+    // console.log(research)
 
     const [formValue, setFormValue] = useState({
         input:
@@ -246,7 +246,7 @@ class Trade extends Component {
             tradePartner: this.state.partner
         };
         try {
-          console.log(trade)
+          // console.log(trade)
           let response = await axios.post(`${gameServer}game/diplomacy/trade`, trade);    
         //   Alert.success(response.data.comment[0].body);
           this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
@@ -258,7 +258,7 @@ class Trade extends Component {
     submitProposal = async () => {
       console.log('Submitting trade proposal...');
       try {
-          console.log(this.state)
+          // console.log(this.state)
           let { initiator, tradePartner } = this.state.trade;
           if (initiator.team._id === this.props.team._id)
               initiator.modified = true;

@@ -2,6 +2,7 @@ const phaseChangeDebugging = require('debug')('app:phaseChange');
 
 const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the PR system
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
+const { runMilitary } = require('../military/combat');
 const banking = require('../banking/banking'); // IMPORT - Banking System
 const { startResearch, assignKnowledgeCredit } = require('../research/research');
 const { techCheck } = require('../../wts/research/technology');
@@ -24,6 +25,7 @@ async function teamPhase (turn) {
 async function actionPhase (turn) {
 	phaseChangeDebugging(`Now changing to the action phase for ${turn}...`);
 	await resolveMissions(); // Resolve Interceptions that have been sent [coded]
+	await runMilitary(); // Resolve all Battles
 	setTimeout(async () => { await repairSequence(); }, 14000);
 	phaseChangeDebugging(`Done with action phase change for ${turn}!`);
 	logger.info(`Turn ${turn} action phase has begun...`);

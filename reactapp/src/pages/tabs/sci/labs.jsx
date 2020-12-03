@@ -13,7 +13,7 @@ class Labs extends Component {
         //const names = [...new Set(origData.allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
         //console.log('FUNKNAMES=', names);
         const knowledgeTypes = origData.filter(knowledge => (knowledge.type === "Knowledge"));
-        console.log('KNOWLEDGETYPES=', knowledgeTypes);
+        // console.log('KNOWLEDGETYPES=', knowledgeTypes);
         const physicsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Physics"));
         const socialScienceKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Social Science"));
         const biologyKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Biology"));
@@ -22,7 +22,7 @@ class Labs extends Component {
         const geneticsKnowledge = knowledgeTypes.filter(knowledge => (knowledge.field === "Genetics"));
 
         const techTypes = origData.filter(knowledge => (knowledge.type === "Tech"));
-        console.log('TECHTYPES=', techTypes);
+        //console.log('TECHTYPES=', techTypes);
         
         
         const tableData = [
@@ -118,15 +118,15 @@ class Labs extends Component {
     
     render() { 
         const myTableData = this.formatTableData(this.props.allKnowledge);
-        console.log('MYTABLEDATA:', myTableData);
+        //console.log('MYTABLEDATA:', myTableData);
         const { allKnowledge } = this.props;        // Scientific Knowledge Names
-        console.log('ALLKNOWLEDGE:', allKnowledge);
+        //console.log('ALLKNOWLEDGE:', allKnowledge);
         const names = [...new Set(allKnowledge.map(index => index.name))];      // Uniquify the names so that no knowledge is repeated, place into names array
-        console.log('NAMES: ', names);
+        //console.log('NAMES: ', names);
         const completedKnowledge = allKnowledge.filter(knowledge => knowledge.status.completed);
-        console.log('completedKnowledge: ', completedKnowledge);
+        //console.log('completedKnowledge: ', completedKnowledge);
         const inProgressKnowledge = allKnowledge.filter(knowledge => (!knowledge.status.completed && knowledge.status.available));
-        console.log('inProgressKnowledge: ', inProgressKnowledge);
+        // console.log('inProgressKnowledge: ', inProgressKnowledge);
         /* COMMENT FOR BELOW IN RETURN
         <ul>{ allKnowledge.map(index => (<li key={index._id}> Name: {index.name} </li>))}</ul>
         <ul>{ names.map(index => (<li key={index}> Unique: {index} </li>))}</ul>
