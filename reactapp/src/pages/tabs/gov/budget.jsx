@@ -47,7 +47,6 @@ class Budget extends Component {
 			let accountIndex = this.props.accounts.findIndex(account => account._id === value);
 			let account = this.props.accounts[accountIndex];
 			let account_id = value;
-			console.log(account)
 			this.setState({ account, account_id })
 	};
 
@@ -62,7 +61,6 @@ class Budget extends Component {
 
 	delTransfer = (id) => {
 			let transactions = this.state.transactions;
-			console.log(transactions)
 			let index = transactions.findIndex(el => el.id === id)
 			if (transactions.length === 1) {
 					transactions = []

@@ -18,7 +18,6 @@ const model = Schema.Model({
   password: StringType().isRequired('This field is required.'),
   verifyPassword: StringType()
     .addRule((value, data) => {
-      console.log(data);
 
       if (value !== data.password) {
         return false;
@@ -64,7 +63,6 @@ class RegForm extends React.Component {
     console.log('Form submitted...');
     let { fname, lname, username, email, dob, password } = this.state.formValue
     let user = { name: { first: fname, last: lname }, username, email, dob, password }
-    console.log(user);
     try {
     let res = await axios.post(`${gameServer}user`, user);
     localStorage.setItem('token', res.headers['x-auth-token']);

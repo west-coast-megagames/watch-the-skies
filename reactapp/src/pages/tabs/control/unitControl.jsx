@@ -96,8 +96,6 @@ class UnitControl extends Component {
 	}
 
 	handleDelete = async (upgrade) => {
-		console.log(`Nan: ${upgrade.isNaN}`);
-		console.log(`typeof: ${typeof upgrade}`);
 		try {
 			await axios.put(`${gameServer}game/upgrades/remove`, {upgrade, unit: this.state.selected});
 			let {data} = await axios.delete(`${gameServer}api/upgrades/${upgrade}`);

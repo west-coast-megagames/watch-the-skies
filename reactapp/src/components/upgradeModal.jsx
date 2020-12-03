@@ -13,7 +13,6 @@ class UpgradeModal extends Component {
 				selected: null,
 				hidden: true,
 		};
-		console.log(this)
 };
 
 	
@@ -30,7 +29,7 @@ class UpgradeModal extends Component {
 		// 1) make a new upgrade from blueprint
 		try{
 			let { data } = await axios.post(`${gameServer}api/upgrades/`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
-			console.log(data);
+		  //console.log(data);
 			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: data._id, unit: this.props.unit._id })
 			this.props.closeUpgrade()
 		}

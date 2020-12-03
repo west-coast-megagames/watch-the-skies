@@ -61,7 +61,6 @@ class DeployMilitary extends Component {
 		this.setState({mobilization, cost});
 	};
 	handleExit = () => {
-		console.log('hello')
 		this.setState({mobilization: [], cost: 0});
 		this.props.hide();
 	}
@@ -121,7 +120,7 @@ class DeployMilitary extends Component {
 	}
 
 	filterUnits = () => {
-		console.log('Filtering Units...')
+		// console.log('Filtering Units...')
 		let fleets = [];
 		let corps = [];
 		for (let unit of this.props.military) {
@@ -140,7 +139,7 @@ class DeployMilitary extends Component {
 	}
 
 	filterLocations = () => {
-		console.log('Filtering Sites..')
+		// console.log('Filtering Sites..')
 		let sites = []
 		for (let site of this.props.sites) {
 			let siteData = {

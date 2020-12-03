@@ -16,7 +16,7 @@ class MoshTest extends Component {
      }
 
      componentDidMount() {
-        console.log(this.props.opsAccount);
+        // console.log(this.props.opsAccount);
      }
 
      handleIncrement = counter => {

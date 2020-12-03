@@ -54,7 +54,6 @@ class Knowledge extends Component {
             if (object.research === undefined) object.research = knowledge.find(el => el.field === field && el.level === 5);
             data.push(object);
         }
-        console.log(data);
         return data;
     }
     
