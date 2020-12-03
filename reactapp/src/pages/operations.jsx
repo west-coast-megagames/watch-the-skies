@@ -8,9 +8,12 @@ import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import ExcomOps from './tabs/ops/excom';
+<<<<<<< HEAD
 import PrototypeMap from './tabs/ops/google2';
 import AssetsTab from './tabs/ops/assets';
 
+=======
+>>>>>>> 1ee6eb45c2536a97f6550a6d44abdade005c1280
 class Operations extends Component {
   constructor() {
 		super();
@@ -52,7 +55,6 @@ class Operations extends Component {
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
 						<Nav.Item eventKey="assets" to={`${url}/assets`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtlas} />}> Asset Manager</Nav.Item>
 						<Nav.Item eventKey="globe" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
-						<Nav.Item eventKey='google2' to={`${url}/google`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faMap} />}> Map</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>
 				</Header>
