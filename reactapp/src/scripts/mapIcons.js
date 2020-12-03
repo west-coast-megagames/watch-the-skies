@@ -39,7 +39,8 @@ const milIcons = {
 export const getMapIcon = (site) => {
 	// console.log(site)
 	if (site.status.occupied === true) return 'https://cdn.discordapp.com/attachments/582043597281427466/783202988109856809/City_site_occupied.png';
-	const type = site.subType
+	let type = site.subType;
+	if (type === 'Point of Interest') type = 'PoI';
 	if (!icon[type] || icon[type] === null) return ('https://cdn.discordapp.com/attachments/582043597281427466/776284440279515136/Unknown_Fighter_v2.png'); //the default '?' interceptor
 	else return icon[type];
 }
