@@ -1,4 +1,3 @@
-import { loadlogs } from '../store/entities/logs';
 import { loadsites } from '../store/entities/sites';
 import { loadteams } from '../store/entities/teams';
 import { loadaircrafts } from '../store/entities/aircrafts';
@@ -10,10 +9,11 @@ import { loadcountries } from '../store/entities/countries';
 import { loadresearch } from '../store/entities/research';
 import { loadaccounts } from '../store/entities/accounts';
 import { loadBlueprints } from '../store/entities/blueprints';
+import { loadReports } from '../store/entities/reports';
 
 //Get all objects from DB collections and store to redux state
 export default function loadState(store) {
-    store.dispatch(loadlogs()); // Initial Axios call for all log objects
+    store.dispatch(loadReports()); // Initial Axios call for all log objects
     store.dispatch(loadsites()); // Initial Axios call for all site objects
     store.dispatch(loadteams()); // Initial Axios call for all team objects
     store.dispatch(loadaircrafts()); // Initial Axios call for all aircraft objects

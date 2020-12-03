@@ -24,7 +24,7 @@ const account = require('./api/accounts');
 const blueprint = require('./api/blueprints');
 const country = require('./api/countries');
 const facilities = require('./api/facilities');
-const logs = require('./api/log');
+const reports = require('./api/reports');
 const military = require('./api/military');
 const squad = require('./api/squad');
 const research = require('./api/research');
@@ -99,7 +99,7 @@ module.exports = function (app) {
 	app.use('/api/blueprints', blueprint);
 	app.use('/api/countries', country); // Route for inputing countries
 	app.use('/api/facilities', facilities); // Route for inputing countries
-	app.use('/api/logs', logs); // Route for logs
+	app.use('/api/reports', reports); // Route for reports
 	app.use('/api/military', military); // Route for manipulating militarys
 	app.use('/api/squad', squad); // Route for manipulating squad
 	app.use('/api/research', research); // Route for research functions

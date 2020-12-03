@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import bugsReducer from './entities/bugs';
-import logsReducer from './entities/logs';
+import reportReducer from './entities/reports';
 import siteReducer from './entities/sites';
 import teamReducer from './entities/teams';
 import aircraftReducer from './entities/aircrafts';
@@ -19,7 +19,7 @@ import blueprintReducer from './entities/blueprints';
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
   bugs: bugsReducer,
-  logs: logsReducer,
+  reports: reportReducer,
   sites: siteReducer,
   teams: teamReducer,
   articles: articleReducer,
