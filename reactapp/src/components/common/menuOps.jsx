@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { infoRequested, showSite, showLaunch, showDeploy } from '../../store/entities/infoPanels';
+import { infoRequested, showSite, showLaunch, showDeploy, showMilitary } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -10,16 +10,6 @@ const menu = {
 
 class OpsMenu extends Component {
 	state = {}
-
-	showAircraft() {
-		this.props.showAircraft(this.props.info);
-		this.props.closeMenu();
-	}
-
-	showSite() {
-		this.props.showSite(this.props.info);
-		this.props.closeMenu();
-	}
 
 	assign() {
 		this.props.assignTarget(this.props.info);
@@ -39,6 +29,9 @@ class OpsMenu extends Component {
 				break;
 			case 'Aircraft':
 				this.props.showAircraft(this.props.info);
+				break;
+			case 'Military':
+				this.props.showMilitary(this.props.info);
 				break;
 			default:
 				Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)
@@ -86,6 +79,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
 	showAircraft: (payload) => dispatch(infoRequested(payload)),
+	showMilitary: (payload) => dispatch(showMilitary(payload)),
 	assignTarget: (payload) => dispatch(showLaunch(payload)),
 	deploy: (payload) => dispatch(showDeploy(payload))
 });
