@@ -45,7 +45,7 @@ class DeployMilitary extends Component {
 }
 
 	handleTeam = (value) => { this.setState({team: value, cost: 0}); this.filterUnits();};
-	handleType = (value) => { this.setState({seaDeploy: value, mobilization: [], destination: null, target: null, cost: 0})};
+	handleType = (value) => { this.setState({seaDeploy: value, mobilization: [], cost: 0})};
 	handleDestination = (value) => { 
 		let target = this.props.sites.find(el => el._id === value); // Looks up the target site via the stored _id
 		this.setState ({destination: value, target});
