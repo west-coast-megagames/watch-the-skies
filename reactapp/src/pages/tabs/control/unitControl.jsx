@@ -63,7 +63,7 @@ class UnitControl extends Component {
 		let selected = this.state.selected;
 		switch(target){
 			case 'health':
-				selected.stats.attack = value;
+				selected.stats.health = value;
 				break;
 			case 'attack':
 				selected.stats.attack = value;
@@ -145,9 +145,6 @@ class UnitControl extends Component {
 						rowKey="id"
 						autoHeight
 						data={this.state.data}
-						onExpandChange={(isOpen, rowData) => {
-							// console.log(isOpen, rowData);
-						}}
 						renderTreeToggle={(icon, rowData) => {
 							// console.log(rowData);
 							if (rowData.children && rowData.children.length === 0) {
