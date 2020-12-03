@@ -21,13 +21,13 @@ class UnitControl extends Component {
     if (prevProps.lastFetch !== this.props.lastFetch) {
 			this.handleSelect(this.state.selected._id);
 		}
-		if (prevState.selected !== this.state.selected) {
+		if (prevState.selected !== this.state.selected && this.state.selected !=null) {
 			this.loadTable();
 		}
 	}
 
 	componentDidMount() {
-		if (this.state.selected)
+		if (this.state.selected && this.state.selected !=null)
 			this.loadTable();
 	};
 	
@@ -43,24 +43,6 @@ class UnitControl extends Component {
 			return;
 		}
 		let {data} = await axios.get(`${gameServer}api/military/${unit}`);
-		// console.log(data.stats);
-		for (let upgrade of data.upgrades) {
-			for (let element of upgrade.effects) {
-				switch (element.type) {
-					case 'health':
-						data.stats.health+= element.effect
-						break;
-					case 'attack':
-						data.stats.attack+= element.effect
-						break;
-					case 'defense': 
-						data.stats.defense+= element.effect
-						break;
-					default: break;
-				}
-			}
-		}
-		// console.log(data.stats);
 		this.setState({ selected: data, hidden: false });
 	}
 
@@ -90,7 +72,7 @@ class UnitControl extends Component {
 				selected.stats.defense = value;
 				break;
 			default:
-				console.log("uh oh");
+				break;
 		}
 		this.setState({ selected });
 	}
