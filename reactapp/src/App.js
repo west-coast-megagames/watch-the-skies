@@ -68,7 +68,7 @@ class App extends Component {
         </Header>
         <Container>
             {this.props.login ? <SideNav team={ this.props.team} /> : null}
-            <Content>
+            <Content style={{ borderLeft: 'solid' }}>
                 <Switch>
                     <Route path="/login" render={(props) => (
                       <Registration {...props}
