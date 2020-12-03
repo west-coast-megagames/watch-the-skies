@@ -8,7 +8,8 @@
     "code": "NX-002",
     "cost": 1,
     "buildTime": 1,
-    "desc": "Generic XCOM Interceptor Blueprint",
+		"desc": "Generic XCOM Interceptor Blueprint",
+		"upgrades": ["W-RG1", "U-FTC1"],
     "prereq": [],
     "hidden": false,
     "stats": {
@@ -31,7 +32,8 @@
     "code": "UFO-13",
     "cost": 2,
     "buildTime": 1,
-    "desc": "Generic UFO Blueprint",
+		"desc": "Generic UFO Blueprint",
+		"upgrades": ["W-CL1", "S-HO1", "E-HVT1"],
     "prereq": [],
     "hidden": false,
     "stats": {

@@ -17,6 +17,7 @@ const MilitarySchema = new Schema({
 	country: { type: ObjectId, ref: 'Country' },
 	site: { type: ObjectId, ref: 'Site' },
 	origin: { type: ObjectId, ref: 'Facility' },
+	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	status: {
 		damaged: { type: Boolean, default: false },

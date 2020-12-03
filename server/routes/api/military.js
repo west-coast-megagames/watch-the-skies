@@ -146,6 +146,15 @@ router.delete('/:id', async function (req, res) {
 		const military = await Military.findByIdAndRemove(id);
 
 		if (military != null) {
+			// delete attached upgrades
+			for (const upgrade of military.upgrades) {
+				try {
+					await Upgrade.findByIdAndRemove(upgrade);
+				}
+				catch (err) {
+					nexusError(`${err.message}`, 500);
+				}
+			}
 			logger.info(`The unit ${military.name} with the id ${id} was deleted!`);
 			res.status(200).send(military);
 		}
