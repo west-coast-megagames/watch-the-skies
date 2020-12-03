@@ -128,8 +128,8 @@ class DeployMilitary extends Component {
 			if (this.state.team === unit.team.name) {
 				let unitData = {
 					name: unit.name,
-					checkZone: unit.zone.name,
-					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`,
+					checkZone: unit.site.name,
+					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 					_id: unit._id
 				}
 				if (unit.type === 'Fleet') fleets.push(unitData);
