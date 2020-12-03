@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { infoRequested, showSite, showLaunch, showDeploy, showMilitary } from '../../store/entities/infoPanels';
+import { showAircraft, showSite, showLaunch, showDeploy, showMilitary } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -78,7 +78,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
-	showAircraft: (payload) => dispatch(infoRequested(payload)),
+	showAircraft: (payload) => dispatch(showAircraft(payload)),
 	showMilitary: (payload) => dispatch(showMilitary(payload)),
 	assignTarget: (payload) => dispatch(showLaunch(payload)),
 	deploy: (payload) => dispatch(showDeploy(payload))
