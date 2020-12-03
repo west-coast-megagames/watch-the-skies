@@ -50,7 +50,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	let combat = true;
 
 	// Combat lasts until a unit dies, bugs out, or evades.
-	while (combat) {
+	do {
 		round++;
 		interceptDebugger(`Round ${round} of intercept ${atkReport.code}`);
 
@@ -103,6 +103,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 
 		if (attacker.stats.attack <= round && defender.stats.attack <= round) combat = false;
 	}
+	while (combat);
 
 	attackReport.interception = interception;
 	defenseReport.interception = interception;
@@ -157,7 +158,7 @@ function combatBonus (unit) {
 			break;
 		default:
 			interceptDebugger(`This craft has an unexpected ${key} system...`);
-		}	
+		}
 	}
 
 	interceptDebugger(`${unit.name} is in a ${unit.stance} stance.`);
@@ -183,7 +184,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 	let crash = false;
 
 	// If the unit has a positive ARMOR value, that will take the hit.
-	if (stats.armor > 0) {
+	if (stats.armor > 0 && !criticalHit) {
 		unit.stats.armor -= opposition.penetration; // Does damage equal to PENETRATION to armor
 		interception[side].dmg.armor += opposition.pentration; // Adds armor damage to report.
 		// TODO: Add dynamic report about armor hit.
@@ -200,6 +201,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 
 			const sysName = systemKeys[index].charAt(0).toUpperCase() + systemKeys[index].slice(1);
 			const upgrade = unit.upgrades.find(upG => upG.type === sysName);
+
 			if (!upgrade || upgrade === null) {
 				unit.systems[sysName].damaged ? unit.systems[sysName].destroyed = true : unit.systems[sysName].damaged = true;
 				interception.salvage.push('scrap');
