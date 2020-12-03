@@ -79,6 +79,14 @@ export const addmilitary = military =>
     onSuccess: militaryAdded.type
 	});
 	
+
+	// Selector
+	export const getMilitary = createSelector(
+		state => state.entities.military.list,
+		state => state.auth.team,
+		(military, team) => military.filter(military => military.team._id === team._id)
+	);
+
 	export const getDeployed = createSelector(
 		state => state.entities.military.list,
 		state => state.auth.team,
