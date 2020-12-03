@@ -28,6 +28,7 @@ class OpsMenu extends Component {
 
 	deployMilitary() {
 		this.props.deploy(this.props.info)
+		this.props.closeMenu();
 	}
 
 	render() { 
