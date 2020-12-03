@@ -63,7 +63,7 @@ class UnitControl extends Component {
 		let selected = this.state.selected;
 		switch(target){
 			case 'health':
-				selected.stats.health = value;
+				selected.stats.attack = value;
 				break;
 			case 'attack':
 				selected.stats.attack = value;
