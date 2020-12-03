@@ -23,14 +23,11 @@ const slice = createSlice({
   // Reducers - Events
   reducers: {
     loginRequested: (auth, action) => {
-      console.log(`${action.type} Dispatched...`)
       auth.loading = true;
     },
     authReceived: (auth, action) => {
-      console.log(`${action.type} Dispatched...`);
       let jwt = action.payload;
       localStorage.setItem("token", jwt);
-      console.log(`Token: ${jwt}`);
       const user = jwtDecode(jwt);
       playTrack('login');
       auth.team = user.team;
