@@ -3,9 +3,7 @@ const { MilitaryMission } = require('../../models/report');
 const { Site } = require('../../models/site');
 // const { Team } = require('../../models/team');
 const { d6, rand } = require('../../util/systems/dice');
-const { upgradeValue } = require('../upgrades/upgrades');
 const nexusEvent = require('../../middleware/events/events');
-
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -29,14 +27,12 @@ async function resolveBattle (attackers, defenders) {
 		// 1) calculate total attack value of attackers
 		for (let unit of attackers) {
 			unit = await Military.findById(unit).populate('upgrades').lean();
-			attackerTotal = attackerTotal + await upgradeValue(unit.upgrades, 'attack');
 			attackerTotal = attackerTotal + unit.stats.attack;
 		}
 
 		// 2) calculate total defense value of attackers
 		for (let unit of defenders) {
 			unit = await Military.findById(unit).populate('upgrades');
-			defenderTotal = defenderTotal + await upgradeValue(unit.upgrades, 'defense');
 			defenderTotal = defenderTotal + unit.stats.defense;
 		}
 
@@ -74,6 +70,21 @@ async function resolveBattle (attackers, defenders) {
 					report += `${unit.name} has been DESTROYED!\n`;
 					unit.status.destroyed = true;
 					defenders.splice(cas, 1);
+					while (unit.upgrades.length > 0) {
+						const up = unit.upgrades.pop();
+						for (const element of up.effects) {
+							switch (element.type) {
+							case 'attack':
+								unit.stats.attack -= element.effect;
+								break;
+							case 'defense':
+								unit.stats.defense -= element.effect;
+								break;
+							default: break;
+							}
+						}
+						spoils.push(up);
+					}
 				}
 			}
 			else {
@@ -82,6 +93,17 @@ async function resolveBattle (attackers, defenders) {
 				const hit = unit.upgrades[index];
 
 				unit.upgrades.splice(index, 1);
+				for (const element of hit.effects) {
+					switch (element.type) {
+					case 'attack':
+						unit.stats.attack -= element.effect;
+						break;
+					case 'defense':
+						unit.stats.defense -= element.effect;
+						break;
+					default: break;
+					}
+				}
 				spoils.push(hit);
 				report += `${hit.name} has been hit!\n`;
 			}
@@ -111,6 +133,17 @@ async function resolveBattle (attackers, defenders) {
 					attackers.splice(cas, 1);
 					while (unit.upgrades.length > 0) {
 						const up = unit.upgrades.pop();
+						for (const element of up.effects) {
+							switch (element.type) {
+							case 'attack':
+								unit.stats.attack -= element.effect;
+								break;
+							case 'defense':
+								unit.stats.defense -= element.effect;
+								break;
+							default: break;
+							}
+						}
 						spoils.push(up);
 					}
 				}
@@ -121,6 +154,17 @@ async function resolveBattle (attackers, defenders) {
 				const hit = unit.upgrades[index];
 
 				unit.upgrades.splice(index, 1);
+				for (const element of hit.effects) {
+					switch (element.type) {
+					case 'attack':
+						unit.stats.attack -= element.effect;
+						break;
+					case 'defense':
+						unit.stats.defense -= element.effect;
+						break;
+					default: break;
+					}
+				}
 				spoils.push(hit);
 				report += `${hit.name} has been hit!\n`;
 			}
@@ -180,7 +224,7 @@ async function runMilitary () {
 				const tempArmy = attackers.filter(el => el.team.toHexString() === team);
 				for (let unit of tempArmy) {
 					unit = await Military.findById(unit).populate('upgrades');
-					tempStrength += unit.stats.attack + await upgradeValue(unit.upgrades, 'attack');
+					tempStrength += unit.stats.attack;
 				}
 				if (tempStrength > leadArmy.strength) {
 					leadArmy.team = team;

@@ -46,6 +46,18 @@ async function addUpgrade (upgrade, unit) {
 	try{
 		unit.upgrades.push(upgrade);
 		upgrade.status.storage = false;
+
+		for (const element of upgrade.effects) {
+			switch (element.type) {
+			case 'attack':
+				unit.stats.attack += element.effect;
+				break;
+			case 'defense':
+				unit.stats.defense += element.effect;
+				break;
+			default: break;
+			}
+		}
 		upgrade = await upgrade.save();
 		unit = await unit.save();
 		return `Added "${upgrade.name}" to unit "${unit.name}"`;
@@ -79,6 +91,17 @@ async function removeUpgrade (upgrade, unit) {
 	if (index > -1) {
 		unit.upgrades.splice(index, 1);
 		response = `Removed "${upgrade.name}" from unit "${unit.name}"`;
+		for (const element of upgrade.effects) {
+			switch (element.type) {
+			case 'attack':
+				unit.stats.attack -= element.effect;
+				break;
+			case 'defense':
+				unit.stats.defense -= element.effect;
+				break;
+			default: break;
+			}
+		}
 	}
 	try{
 		unit = await unit.save();

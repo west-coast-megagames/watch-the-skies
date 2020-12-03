@@ -11,8 +11,6 @@ const { Team } = require('../../models/team');
 const banking = require('../../wts/banking/banking');
 const nexusEvent = require('../../middleware/events/events');
 const { d6, rand } = require('../../../dataUtil/systems/dice');
-const { upgradeValue } = require('../../wts/upgrades/upgrades');
-
 
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
@@ -109,13 +107,11 @@ router.patch('/battleSim', async function (req, res) {
 	const { attackers, defenders } = req.body;
 	for (let unit of attackers) {
 		unit = await Military.findById(unit).populate('upgrades');
-		attackerTotal = attackerTotal + await upgradeValue(unit.upgrades, 'attack');
 		attackerTotal = attackerTotal + unit.stats.attack;
 	}
 	// 2) calculate total defense value of attackers
 	for (let unit of defenders) {
 		unit = await Military.findById(unit).populate('upgrades');
-		defenderTotal = defenderTotal + await upgradeValue(unit.upgrades, 'defense');
 		defenderTotal = defenderTotal + unit.stats.defense;
 	}
 	// 3) roll both sides and save results
