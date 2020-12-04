@@ -1,6 +1,7 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { required } = require('joi');
 
 const Schema = mongoose.Schema;
 
@@ -9,9 +10,9 @@ const ReportSchema = new Schema({
 	code: { type: String },
 	timestamp: { type: Schema.Types.Mixed },
 	model: { type: String, default: 'Report', required: true },
-	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	status: {
