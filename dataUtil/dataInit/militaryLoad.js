@@ -55,22 +55,31 @@ async function initLoad (doLoad) {
 async function loadMilitary (iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/name/${iData.name}`);
+		// type is now on the blueprint
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${iData.bpCode}`);
+		const bpData = blueprint.data;
 
 		if (!data.type) {
-			switch (iData.type) {
+			if (!bpData.desc) {
+				++rCounts.loadErrCount;
+				logger.error(`New Military Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
+				return;
+			}
+
+			switch (bpData.type) {
 			case 'Fleet':
-				await createFleet(iData, rCounts);
+				await createFleet(iData, rCounts, bpData);
 				break;
 
 			case 'Corps':
-				await createCorps(iData, rCounts);
+				await createCorps(iData, rCounts, bpData);
 				break;
 
 			default:
 				++rCounts.loadErrCount;
 				logger.error(
 					'Invalid Military Load Type:',
-					iData.type,
+					bpData.type,
 					'name: ',
 					iData.name
 				);
@@ -116,11 +125,14 @@ async function deleteAllMilitarys (doLoad) {
 	}
 }
 
-async function createFleet (iData, rCounts) {
+async function createFleet (iData, rCounts, bpData) {
 	// New Fleet/Military here
 	const newFleet = iData;
 	newFleet.serviceRecord = [];
 	newFleet.gameState = [];
+	newFleet.blueprint = bpData._id;
+	newFleet.stats = bpData.stats;
+	newFleet.type = bpData.type;
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -183,7 +195,7 @@ async function createFleet (iData, rCounts) {
 		newFleet.site = undefined;
 	}
 
-	const upgrades = await findUpgrades(iData.upgrades, 'Fleet', iData.name, newFleet.team, newFleet.origin);
+	const upgrades = await findUpgrades(bpData.upgrades, 'Fleet', iData.name, newFleet.team, newFleet.origin);
 	newFleet.upgrades = upgrades;
 
 	try {
@@ -197,11 +209,14 @@ async function createFleet (iData, rCounts) {
 	}
 }
 
-async function createCorps (iData, rCounts) {
+async function createCorps (iData, rCounts, bpData) {
 	// New Corps/Military here
 	const newCorps = iData;
 	newCorps.serviceRecord = [];
 	newCorps.gameState = [];
+	newCorps.blueprint = bpData._id;
+	newCorps.stats = bpData.stats;
+	newCorps.type = bpData.type;
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -264,7 +279,7 @@ async function createCorps (iData, rCounts) {
 		newCorps.site = undefined;
 	}
 
-	const upgrades = await findUpgrades(iData.upgrades, 'Corps', iData.name, newCorps.team, newCorps.origin);
+	const upgrades = await findUpgrades(bpData.upgrades, 'Corps', iData.name, newCorps.team, newCorps.origin);
 	newCorps.upgrades = upgrades;
 
 	try {

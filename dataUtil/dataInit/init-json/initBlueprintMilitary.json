@@ -1,0 +1,156 @@
+[
+  {
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Modern Attack Submarine",
+    "type": "Fleet",
+    "code": "SUB-MA",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Modern Attack Submarine Blueprint",
+		"upgrades": ["SBG-1"],
+    "hidden": false,
+    "stats": {
+			"health": 4,
+      "hullMax": 4,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Standard Attack Submarine",
+    "type": "Fleet",
+    "code": "SUB-SA",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Standard Attack Submarine Blueprint",
+		"upgrades": ["SBG-1"],
+    "hidden": false,
+    "stats": {
+			"health": 4,
+      "hullMax": 4,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Standard Surface Fleet",
+    "type": "Fleet",
+    "code": "SUR-SS",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Standard Surface Fleet Blueprint",
+		"upgrades": ["SFG-1"],
+    "hidden": false,
+    "stats": {
+			"health": 4,
+      "hullMax": 4,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Standard Carrier Fleet",
+    "type": "Fleet",
+    "code": "CAR-SC",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Standard Carrier Fleet Blueprint",
+		"upgrades": ["CAG-1"],
+    "hidden": false,
+    "stats": {
+			"health": 4,
+      "hullMax": 4,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Marine Corps",
+    "type": "Corps",
+    "code": "MAR-SMC",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Marine Corps Blueprint",
+		"upgrades": ["V-MV1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Old Technology Corps",
+    "type": "Corps",
+    "code": "COR-OTC",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Old Technology Corps Blueprint",
+		"upgrades": ["V-OT1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "military",
+    "name": "Modern Technology Corps",
+    "type": "Corps",
+    "code": "COR-MTC",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Modern Technology Corps Blueprint",
+		"upgrades": ["V-MT1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2
+    }
+	}
+]

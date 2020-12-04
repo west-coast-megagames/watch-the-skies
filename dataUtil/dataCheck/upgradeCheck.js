@@ -191,8 +191,8 @@ async function chkUpgrade (runFlag) {
 		// validate call
 		try {
 			const valMessage = await axios.get(`${gameServer}init/initUpgrades/validate/${upgrade._id}`);
-			if (!valMessage.data.unitType) {
-				logger.error(`Validation Error: ${valMessage.data}`);
+			if (!valMessage.data.desc) {
+				logger.error(`Validation Error ${upgrade.code} ${upgrade.name} Upgrade: ${valMessage.data}`);
 			}
 		}
 		catch (err) {

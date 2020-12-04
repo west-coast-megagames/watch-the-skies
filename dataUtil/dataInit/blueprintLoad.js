@@ -5,7 +5,8 @@ const aircraftBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init
 const facilityBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintFacility.json', 'utf8'));
 const upgradeBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintUpgrade.json', 'utf8'));
 const squadBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintSquad.json', 'utf8'));
-const blueprintDataIn = [...aircraftBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData];
+const militaryBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintMilitary.json', 'utf8'));
+const blueprintDataIn = [...aircraftBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData, ...militaryBPData];
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
@@ -73,6 +74,9 @@ async function loadBlueprint (bpData, rCounts) {
 			case 'aircraft':
 				await newAircraftBP(bpData, rCounts);
 				break;
+			case 'military':
+				await newMilitaryBP(bpData, rCounts);
+				break;
 			case 'squad':
 				await newSquadBP(bpData, rCounts);
 				break;
@@ -138,6 +142,22 @@ async function newAircraftBP (bpData, rCounts) {
 	catch (err) {
 		++rCounts.loadErrCount;
 		logger.error(`New Aircraft Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
+
+}
+
+async function newMilitaryBP (bpData, rCounts) {
+
+	// New Military Blueprint here
+	const bpMilitary = bpData;
+	try {
+		await axios.post(`${gameServer}api/blueprints`, bpMilitary);
+		++rCounts.loadCount;
+		logger.debug(`${bpMilitary.name} add saved to Military Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Military Blueprint Save Error: ${err.message}`, { meta: err.stack });
 	}
 
 }

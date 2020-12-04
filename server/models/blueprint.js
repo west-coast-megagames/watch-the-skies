@@ -60,6 +60,17 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 		});
 		break;
 
+	case 'military':
+		schema = Joi.object({
+			code: Joi.string().min(2).max(20).required().uppercase(),
+			name: Joi.string().min(2).max(50).required(),
+			cost: Joi.number().min(0).required(),
+			buildTime: Joi.number().min(0).required(),
+			desc: Joi.string().min(1).max(255).required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
 	case 'upgrade':
 		schema = Joi.object({
 			code: Joi.string().min(2).max(20).required().uppercase(),
@@ -127,6 +138,16 @@ const SquadBlueprint = Blueprint.discriminator(
 	})
 );
 
+const MilitaryBlueprint = Blueprint.discriminator(
+	'MilitaryBlueprint',
+	new Schema({
+		buildModel: { type: String, required: true, default: 'military' },
+		stats: { type: Schema.Types.Mixed },
+		type: { type: Schema.Types.String },
+		upgrades: [Schema.Types.Mixed]
+	})
+);
+
 const UpgradeBlueprint = Blueprint.discriminator(
 	'UpgradeBlueprint',
 	new Schema({
@@ -136,4 +157,4 @@ const UpgradeBlueprint = Blueprint.discriminator(
 	})
 );
 
-module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint };
+module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint, MilitaryBlueprint };

@@ -5,8 +5,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -14,8 +13,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -23,8 +21,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -32,8 +29,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -41,8 +37,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -50,8 +45,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -59,8 +53,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -68,8 +61,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -77,8 +69,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -86,8 +77,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -95,8 +85,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -104,8 +93,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -113,8 +101,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -122,8 +109,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -131,8 +117,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -140,8 +125,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
 	},
 	{
     "model": "Military",
@@ -149,8 +133,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -158,8 +141,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -167,8 +149,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -176,8 +157,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -185,8 +165,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -194,8 +173,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -203,8 +181,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -212,8 +189,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -221,8 +197,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -230,8 +205,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -239,8 +213,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -248,8 +221,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -257,8 +229,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -266,8 +237,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -275,8 +245,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -284,8 +253,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -293,8 +261,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -302,8 +269,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -311,8 +277,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -320,8 +285,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
@@ -329,8 +293,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -338,8 +301,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "upgrades": ["SBG-1"],
-    "type": "Fleet"
+    "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
@@ -347,8 +309,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -356,8 +317,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -365,8 +325,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -374,8 +333,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
 	},
 	{
     "model": "Military",
@@ -383,8 +341,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -392,8 +349,8 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
+
   },
   {
     "model": "Military",
@@ -401,8 +358,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
 	},
 	{
     "model": "Military",
@@ -410,8 +366,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -419,8 +374,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -428,8 +382,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -437,8 +390,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -446,8 +398,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -455,8 +406,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -464,8 +414,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -473,8 +422,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -482,8 +430,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -491,8 +438,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -500,8 +446,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -509,8 +454,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -518,8 +462,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -527,8 +470,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -536,8 +478,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -545,8 +486,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "upgrades": ["SFG-1"],
-    "type": "Fleet"
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -554,8 +494,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -563,8 +502,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -572,8 +510,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -581,8 +518,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -590,8 +526,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -599,8 +534,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -608,8 +542,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
 	},
 	{
     "model": "Military",
@@ -617,8 +550,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -626,8 +558,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -635,8 +566,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -644,8 +574,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -653,8 +582,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -662,8 +590,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -671,8 +598,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -680,8 +606,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -689,8 +614,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "upgrades": ["CAG-1"],
-    "type": "Fleet"
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -698,8 +622,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["V-MV1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "MAR-SMC"
 	},
 	{
     "model": "Military",
@@ -707,8 +630,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["V-MV1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "MAR-SMC"
 	},
 	{
     "model": "Military",
@@ -716,8 +638,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["V-MV1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "MAR-SMC"
 	},
 	{
     "model": "Military",
@@ -725,8 +646,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["V-MV1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "MAR-SMC"
 	},
 	{
     "model": "Military",
@@ -734,8 +654,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["V-MV1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "MAR-SMC"
 	},
 	{
     "model": "Military",
@@ -743,8 +662,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -752,8 +670,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -761,8 +678,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -770,8 +686,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -779,8 +694,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -788,8 +702,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -797,8 +710,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -806,8 +718,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -815,8 +726,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -824,8 +734,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -833,8 +742,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -842,8 +750,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -851,8 +758,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -860,8 +766,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -869,8 +774,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -878,8 +782,7 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -887,8 +790,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -896,8 +798,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -905,8 +806,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -914,8 +814,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -923,8 +822,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -932,8 +830,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -941,8 +838,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -950,8 +846,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "upgrades": ["V-OT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
@@ -959,8 +854,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSFO",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -968,8 +862,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USSAN",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
 	},
 	{
     "model": "Military",
@@ -977,8 +870,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USHNL",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
 	},
 	{
     "model": "Military",
@@ -986,8 +878,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USJAX",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
 	},
 	{
     "model": "Military",
@@ -995,8 +886,7 @@
     "team": "USA",
     "country": "US",
     "origin": "USVAB",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1004,8 +894,7 @@
     "team": "TUK",
     "country": "GB",
     "origin": "GBBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1013,8 +902,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1022,8 +910,7 @@
     "team": "JPN",
     "country": "JP",
     "origin": "JPBB",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1031,9 +918,8 @@
     "team": "IND",
     "country": "IN",
     "origin": "INBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "training": "Corps",
-    "type": "Corps"
+    "bpCode": "COR-MTC",
+    "training": "Corps"
   },
   {
     "model": "Military",
@@ -1041,8 +927,7 @@
     "team": "TFR",
     "country": "FR",
     "origin": "FRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1050,8 +935,7 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1059,9 +943,8 @@
     "team": "PRC",
     "country": "CN",
     "origin": "CNBB",
-    "upgrades": ["V-MT1", "COR-1"],
-    "training": "Corps",
-    "type": "Corps"
+    "bpCode": "COR-MTC",
+    "training": "Corps"
   },
   {
     "model": "Military",
@@ -1069,8 +952,7 @@
     "team": "AUS",
     "country": "AU",
     "origin": "AUBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1078,8 +960,7 @@
     "team": "RSA",
     "country": "ZA",
     "origin": "ZABA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1087,8 +968,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1096,8 +976,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1105,8 +984,7 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1114,8 +992,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1123,8 +1000,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1132,8 +1008,7 @@
     "team": "IRN",
     "country": "IR",
     "origin": "IRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1141,8 +1016,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1150,8 +1024,7 @@
     "team": "EPT",
     "country": "EG",
     "origin": "EGBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1159,8 +1032,7 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
@@ -1168,7 +1040,6 @@
     "team": "BRZ",
     "country": "BR",
     "origin": "BRBA",
-    "upgrades": ["V-MT1", "COR-1"],
-    "type": "Corps"
+    "bpCode": "COR-MTC"
   }
 ]
