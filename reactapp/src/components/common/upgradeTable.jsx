@@ -13,6 +13,12 @@ class UpgradeTable extends Component {
 			this.loadTable();
 	};
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevProps.unit !== this.props.unit) {
+			this.loadTable();
+		}
+	}
+
 	loadTable () {
 		let obj = {};               // Object to add to the data array
 		let data = [];                  // Data to populate the table with

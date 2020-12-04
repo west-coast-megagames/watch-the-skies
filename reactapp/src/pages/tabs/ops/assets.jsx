@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Container, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List } from 'rsuite';
+import FacilityStats from '../../../components/common/facilityStats';
 import MilitaryStats from '../../../components/common/militaryStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
 import UpgradeTable from '../../../components/common/upgradeTable';
 import { getOpsAccount } from '../../../store/entities/accounts';
 import { getFacilites } from '../../../store/entities/facilities';
 import { getMilitary } from '../../../store/entities/military';
-
 
 class AssetTab extends Component {
 	state = {
@@ -23,11 +23,11 @@ class AssetTab extends Component {
            { true && <IconButton block size='sm' icon={<Icon icon="space-shuttle" />} onClick={() => Alert.info('You want to build a spacecraft, but you cant!')}>New Spacecraft</IconButton>}
 					{ true && <IconButton block size='sm' icon={<Icon icon="crosshairs" />} onClick={() => Alert.info('You want to build a military, but you cant!')}>New Military Unit</IconButton>}
            <br />
-           <PanelGroup accordion>
+           <PanelGroup accordion >
 						<Panel 
-							header="Facilities"
+							bordered bodyFill header="Facilities" height={400}
 						>
-							<List hover>
+							<List hover autoScroll>
 								{this.props.facilities.map((facility, index) => (
 									<List.Item key={index} index={index} onClick={() => this.setState({ facility, unit: undefined })}>
 										{facility.name}
@@ -36,9 +36,9 @@ class AssetTab extends Component {
 							</List>
 						</Panel>
 						<Panel 
-							header="Military Units"
+							bordered bodyFill header="Military Units"
 						>
-							<List hover>
+							<List hover autoScroll>
 								{this.props.units.map((unit, index) => (
 									<List.Item key={index} index={index} onClick={() => this.setState({ unit, facility: undefined })}>
 										{unit.name}
@@ -53,11 +53,11 @@ class AssetTab extends Component {
 					{ this.state.unit && <React.Fragment>
 							<MilitaryStats unit={this.state.unit} />
 							<UpgradeTable unit={this.state.unit}/>
-							<ServiceRecord owner={this.state.unit} />
+							{/*<ServiceRecord owner={this.state.unit} />*/}
 					</React.Fragment>
 					}
 					{ this.state.facility && 
-						<h4>{this.state.facility.name}</h4>
+						<FacilityStats facility={this.state.facility}/>
 					}
         </Content>
 

@@ -83,24 +83,24 @@ const MilitaryStats = (props) => {
 						)}
 					</div>
 					<div>
-						<Whisper placement="top" speaker={localSpeaker} trigger="click">
-							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-						</Whisper>{" "}
-						<b> Local Deployment Cost:</b> $M{stats.localDeploy}
-					</div>
-					<div>
 						<Whisper placement="top" speaker={attackSpeaker} trigger="click">
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 						</Whisper>{" "}
 						<b> Attack Rating:</b> {stats.attack}
 					</div>
-				</FlexboxGrid.Item>
-				<FlexboxGrid.Item colspan={12}>
 					<div>
-						<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
+						<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 						</Whisper>
-						<b> Invasion Cost:</b> $M{stats.invasion}
+						<b> Defense Rating:</b> {stats.defense}
+					</div>
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={12}>
+				<div>
+						<Whisper placement="top" speaker={localSpeaker} trigger="click">
+							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+						</Whisper>{" "}
+						<b> Local Deployment Cost:</b> $M{stats.localDeploy}
 					</div>
 					<div>
 						<Whisper placement="top" speaker={globalSpeaker} trigger="click">
@@ -109,10 +109,10 @@ const MilitaryStats = (props) => {
 						<b> Global Deployment Cost:</b> $M{stats.globalDeploy}
 					</div>
 					<div>
-						<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
+						<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 						</Whisper>
-						<b> Defense Rating:</b> {stats.defense}
+						<b> Invasion Cost:</b> $M{stats.invasion}
 					</div>
 				</FlexboxGrid.Item>
 				<FlexboxGrid.Item colspan={24}>
