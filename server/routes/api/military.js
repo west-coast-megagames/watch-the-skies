@@ -23,6 +23,7 @@ router.get('/', async function (req, res) {
 			.populate('country', 'name')
 			.populate('site', 'name')
 			.populate('origin')
+			.populate('upgrades', 'name effects')
 			.sort({ team: 1 });
 		res.status(200).json(military);
 	}

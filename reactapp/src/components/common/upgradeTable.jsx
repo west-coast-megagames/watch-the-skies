@@ -10,7 +10,6 @@ class UpgradeTable extends Component {
 	}
 
 	componentDidMount() {
-		if (this.state.selected && this.state.selected !=null)
 			this.loadTable();
 	};
 
@@ -18,8 +17,7 @@ class UpgradeTable extends Component {
 		let obj = {};               // Object to add to the data array
 		let data = [];                  // Data to populate the table with
 		let id_count = 0;           // A unique count to assign to the fields
-		
-		for (let upgrade of this.state.selected.upgrades) { 
+		for (let upgrade of this.props.unit.upgrades) { 
 			id_count++;   
 				obj = {
 						id: upgrade._id,
