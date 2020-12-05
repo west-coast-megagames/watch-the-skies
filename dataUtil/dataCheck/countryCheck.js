@@ -57,6 +57,15 @@ async function chkCountry (runFlag) {
 				);
 			}
 
+			if (!Object.prototype.hasOwnProperty.call(country, 'capital')) {
+				// Antarctica (AQ) does not have a capital
+				if (!country.code === 'AQ') {
+					logger.error(
+						`capital missing for Country ${country.code} ${country._id}`
+					);
+				}
+			}
+
 			if (!Object.prototype.hasOwnProperty.call(country, 'borderedBy')) {
 				logger.error(
 					`borderedBy missing for Country ${country.code} ${country._id}`

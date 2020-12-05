@@ -158,6 +158,9 @@ async function newCity (cData, rCounts) {
 		await axios.post(`${gameServer}api/sites`, CitySite);
 		++rCounts.loadCount;
 		logger.debug(`${CitySite.name} add saved to City Site collection.`);
+		if (CitySite.capital) {
+			await axios.patch(`${gameServer}api/Countries/setCapital/${CitySite.country}`);
+		}
 	}
 	catch (err) {
 		++rCounts.loadErrCount;
