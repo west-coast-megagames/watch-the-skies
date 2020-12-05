@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { required } = require('joi');
 
 const Schema = mongoose.Schema;
 
@@ -92,11 +91,10 @@ const MilitaryAction = Report.discriminator('MilitaryAction', new Schema({
 }));
 
 const MilitaryMission = Report.discriminator('MilitaryMission', new Schema ({
-	type: { type: String, default: 'After Action Report', enum: ['After Action Report', 'Invade', 'Support', 'Assist'] },
+	type: { type: String, default: 'After Action Report', enum: ['After Action Report', 'Invade', 'Support', 'Assist', 'Battle'] },
 	attackers: [{ type: Schema.Types.Mixed }],
 	attackingTeams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	defenders: [{ type: Schema.Types.Mixed }],
-	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	spoils: [{ type: Schema.Types.Mixed }],
 	battleRecord: { type: String }
 }));

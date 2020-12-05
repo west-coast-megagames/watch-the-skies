@@ -10,7 +10,7 @@ const { Team } = require('../../models/team');
 // Game Systems - Used to run Game functions
 const banking = require('../../wts/banking/banking');
 const nexusEvent = require('../../middleware/events/events');
-const { d6, rand } = require('../../../dataUtil/systems/dice');
+const { d6 } = require('../../../dataUtil/systems/dice');
 
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');

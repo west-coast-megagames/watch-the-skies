@@ -4,6 +4,7 @@ const { Site } = require('../../models/site');
 // const { Team } = require('../../models/team');
 const { d6, rand } = require('../../util/systems/dice');
 const nexusEvent = require('../../middleware/events/events');
+const { Upgrade } = require('../../models/upgrade');
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -189,15 +190,22 @@ async function runMilitary () {
 		};
 
 		let militaryReport = new MilitaryMission;
-		militaryReport.type = 'Invade';
+		militaryReport.type = 'Battle';
 		const army = await Military.find({ site });
-
-		const defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
-		const attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
+		let defenders = [];
+		let attackers = [];
+		if (site.status.occupied === true) {
+			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && el.status.destroyed === false);
+			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && el.status.destroyed === false);
+		}
+		else {
+			defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
+			attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
+		}
 		const attackerTeams = [];
 		// go over attackers, creating an array of objects
 		for (const unit of attackers) {
-			if (!attackerTeams.some(el => el === unit.team.toHexString())) attackerTeams.push(unit.team.toHexString());
+			if (!attackerTeams.some(el => el.toHexString() === unit.team.toHexString())) attackerTeams.push(unit.team);
 		}
 
 		report = report + (`Battle at ${site.name}:  \nDefenders: ${defenders.length}\nAttackers: ${attackers.length}\n\n`);
@@ -221,9 +229,9 @@ async function runMilitary () {
 			// determine who now owns the site.
 			for (const team of attackerTeams) {
 				let tempStrength = 0;
-				const tempArmy = attackers.filter(el => el.team.toHexString() === team);
+				const tempArmy = attackers.filter(el => el.team.toHexString() === team.toHexString());
 				for (let unit of tempArmy) {
-					unit = await Military.findById(unit).populate('upgrades');
+					unit = await Military.findById(unit);
 					tempStrength += unit.stats.attack;
 				}
 				if (tempStrength > leadArmy.strength) {
@@ -234,6 +242,9 @@ async function runMilitary () {
 			}
 
 			site.occupier = leadArmy.team;
+			if (site.occupier === site.team) {
+				site.status.occupied = false;
+			}
 			// hit this logic if combat has been resolved successfully
 			if (site.subType === 'Point of Interest') {
 				site.hidden = true;
@@ -241,8 +252,10 @@ async function runMilitary () {
 			}
 
 			if (data.spoils && data.spoils.length > 0) {
-				for (const upgrade of data.spoils) { // give out any spoils to the remainging attacker teams
+				for (let upgrade of data.spoils) { // give out any spoils to the remainging attacker teams
 					const unit = rand(attackers.length) - 1;
+					upgrade = await Upgrade.findById(upgrade);
+					upgrade.status.damaged = true;
 					upgrade.team = attackers[unit].team._id;
 					await upgrade.save();
 				}
@@ -253,26 +266,54 @@ async function runMilitary () {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			site.status.warzone = false;
-			for (const upgrade of data.spoils) {
-				upgrade.team = site.team._id;
-				await upgrade.save();
+			if (data.spoils && data.spoils.length > 0) {
+				for (let upgrade of data.spoils) {
+					upgrade = await Upgrade.findById(upgrade);
+					upgrade.status.damaged = true;
+					upgrade.team = site.team._id;
+					await upgrade.save();
+				}
 			}
+
 			for (const unit of army) {
 				await unit.recall();
 			}
 		}
 		else {// else if it was a stalemate, no one recalls
 			report += 'The Battle ended in a stalemate!\n';
-			for (const upgrade of data.spoils) {
-				const unit = rand(army.length) - 1;
-				upgrade.team = army[unit].team._id;
-				await upgrade.save();
+			if (data.spoils && data.spoils.length > 0) {
+				for (let upgrade of data.spoils) {
+					const unit = rand(army.length) - 1;
+					upgrade = await Upgrade.findById(upgrade);
+					upgrade.status.damaged = true;
+					upgrade.team = army[unit].team._id;
+					await upgrade.save();
+				}
 			}
+
 		}
 
 		militaryReport.battleRecord = report;
 		militaryReport.spoils = data.spoils;
 		militaryReport = militaryReport.createTimestamp(militaryReport);
+
+		for (const team of attackerTeams) {
+			let newReport = new MilitaryMission({
+				team,
+				type: militaryReport.type,
+				attackers: militaryReport.attackers,
+				defenders: militaryReport.defenders,
+				attackingTeams: militaryReport.attackingTeams,
+				site: militaryReport.site,
+				battleRecord: militaryReport.battleRecord,
+				spoils: militaryReport.spoils
+			});
+
+			newReport = newReport.createTimestamp(newReport);
+			newReport = await newReport.save();
+		}
+
+		militaryReport.team = site.team;
 		militaryReport = await militaryReport.save();
 		await site.save();
 	}
