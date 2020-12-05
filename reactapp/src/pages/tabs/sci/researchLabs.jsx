@@ -25,7 +25,7 @@ function findTechByID(_id, research) {
 const ProgressCell = (props) => {
 	let {rowData, techcost, research, onClick } = props;
 	//console.log(`Progress Cell...`)
-	// console.log(rowData)
+	 console.log(rowData)
 	// console.log(techcost)
 	if ( rowData.status === 'Destroyed' ) {
 		return (

@@ -17,6 +17,18 @@ class AssetTab extends Component {
 	render() { 
 		return (
 			<Container>
+				<Content>
+          { !this.state.unit && !this.state.facility && <h4>I didn't create a any content... so sorry...</h4> }
+					{ this.state.unit && <React.Fragment>
+							<MilitaryStats unit={this.state.unit} />
+							<UpgradeTable unit={this.state.unit}/>
+							<ServiceRecord owner={this.state.unit} />
+					</React.Fragment>
+					}
+					{ this.state.facility && 
+						<FacilityStats facility={this.state.facility}/>
+					}
+        </Content>
 				<Sidebar>
 					{ true && <IconButton block size='sm' icon={<Icon icon="building" />} onClick={() => Alert.info('You want to build a base, but you cant!')}>New Facility</IconButton>}
            { true && <IconButton block size='sm' icon={<Icon icon="fighter-jet" />} onClick={() => Alert.info('You want to build a aircraft, but you cant!')}>New Aircraft</IconButton>}
@@ -25,9 +37,9 @@ class AssetTab extends Component {
            <br />
            <PanelGroup accordion >
 						<Panel 
-							bordered bodyFill header="Facilities" height={400}
+							bordered bodyFill header="Facilities" 
 						>
-							<List hover autoScroll>
+							<List height={400} hover autoScroll>
 								{this.props.facilities.map((facility, index) => (
 									<List.Item key={index} index={index} onClick={() => this.setState({ facility, unit: undefined })}>
 										{facility.name}
@@ -38,7 +50,7 @@ class AssetTab extends Component {
 						<Panel 
 							bordered bodyFill header="Military Units"
 						>
-							<List hover autoScroll>
+							<List height={400} hover autoScroll bordered>
 								{this.props.units.map((unit, index) => (
 									<List.Item key={index} index={index} onClick={() => this.setState({ unit, facility: undefined })}>
 										{unit.name}
@@ -48,19 +60,6 @@ class AssetTab extends Component {
 						</Panel>
            </PanelGroup>
         </Sidebar>
-				<Content>
-          { !this.state.unit && !this.state.facility && <h4>I didn't create a any content... so sorry...</h4> }
-					{ this.state.unit && <React.Fragment>
-							<MilitaryStats unit={this.state.unit} />
-							<UpgradeTable unit={this.state.unit}/>
-							{/*<ServiceRecord owner={this.state.unit} />*/}
-					</React.Fragment>
-					}
-					{ this.state.facility && 
-						<FacilityStats facility={this.state.facility}/>
-					}
-        </Content>
-
         </Container>
 		);
 	}	
