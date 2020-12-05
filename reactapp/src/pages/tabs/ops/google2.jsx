@@ -13,7 +13,6 @@ import { getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
 import { getDeployed } from '../../../store/entities/military';
 
-
 const libraries = ['places'];
 const mapContainerStyle = {
 	width: '94.5%',
@@ -44,33 +43,33 @@ function PrototypeMap(props) {
 		libraries
 	});
 
-	const [markers, setMarkers] = React.useState([]);
+	// const [markers, setMarkers] = React.useState([]);
 	const [menu, setMenu] = React.useState(null);
 	const [geo, setGeo] = React.useState(null);
-	const [mapClick, setMapClick] = React.useState({event: undefined})
+	// const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
 
-	const onMapClick = React.useCallback((event) => {
-		// setMenu({
-		// 		lat: event.latLng.lat(),
-		// 		lng: event.latLng.lng()
-		// })
-		setMarkers(current => [...current, {
-			lat: event.latLng.lat(),
-			lng: event.latLng.lng(),
-			time: new Date
-		}])
-	}, []);
+	// const onMapClick = React.useCallback((event) => {
+	// 	setMenu({
+	// 			lat: event.latLng.lat(),
+	// 			lng: event.latLng.lng()
+	// 	})
+	// 	setMarkers(current => [...current, {
+	// 		lat: event.latLng.lat(),
+	// 		lng: event.latLng.lng(),
+	// 		time: new Date
+	// 	}])
+	// }, []);
 
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')
-		setMapClick({event: onMapClick});
+		// setMapClick({event: onMapClick});
 		setMenu(null);
 	}
 
 	const mapRef = React.useRef();
 	const onMapLoad = React.useCallback((map) => {
-		setMapClick({event: onMapClick})
+		// setMapClick({event: onMapClick})
 		mapRef.current = map;
 	}, []);
 	
@@ -117,7 +116,7 @@ function PrototypeMap(props) {
 						onClick={()=> {
 							setGeo(site.geoDecimal)
 							setMenu(site);
-							setMapClick({event: undefined});
+							// setMapClick({event: undefined});
 						}}
 						icon={{
 							url: getMapIcon(site),
@@ -164,7 +163,7 @@ function PrototypeMap(props) {
 						onClick={()=> {
 							setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng})
 							setMenu(contact);
-							setMapClick({event: undefined});
+							// setMapClick({event: undefined});
 						}}
 						icon={{
 							url: getAircraftIcon(contact.team.code),
@@ -186,7 +185,7 @@ function PrototypeMap(props) {
 						onClick={()=> {
 							setGeo({latDecimal: unit.location.lat, longDecimal: unit.location.lng})
 							setMenu(unit);
-							setMapClick({event: undefined});
+							// setMapClick({event: undefined});
 						}}
 						icon={{
 							url: getMilitaryIcon(unit),

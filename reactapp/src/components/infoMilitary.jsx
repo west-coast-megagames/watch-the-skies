@@ -1,21 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Drawer,
-  Button,
-  FlexboxGrid,
-  Icon,
-  IconButton,
-  Badge,
-  Tag,
-  TagGroup,
-  Alert,
-  Panel,
-  Whisper,
-  Popover,
-  SelectPicker,
-  Progress,
-} from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from "rsuite";
 import axios from "axios";
 import { militaryClosed } from "../store/entities/infoPanels";
 import { gameServer } from "../config";
@@ -218,21 +203,6 @@ class InfoMilitary extends Component {
       }
     }
   };
-}
-
-function unitGear(unit) { // needs to be updated with Upgrades
-  let { gear } = unit;
-  return (
-    <Panel header={`Unit gear - ${gear.length} Components`} collapsible>
-      <ul>
-        {gear.map((gear) => (
-          <li key={gear._id}>
-            {gear.name} | {gear.category}
-          </li>
-        ))}
-      </ul>
-    </Panel>
-  );
 }
 
 const healthSpeaker = (

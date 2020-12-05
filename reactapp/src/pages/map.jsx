@@ -1,13 +1,10 @@
 import React, { Component } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Button, Icon } from 'rsuite';
-import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
-import GlobalOps from './tabs/ops/global';
+import { Nav, Container, Header, Content, Icon } from 'rsuite';
+// import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
-import playTrack from './../scripts/audio';
-import ExcomOps from './tabs/ops/excom';
 import PrototypeMap from './tabs/ops/google2'
 
 class MapPage extends Component {
@@ -41,14 +38,13 @@ class MapPage extends Component {
 			this.props.history.push('/');
 			return <LoginLink history={this.props.history} />
 		}
-		const url = this.props.match.path;
 		const { tab } = this.state; 
 
     return (
 			<Container>
 				<Header>
 					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
-						 <Nav.Item eventKey="excom" icon={<Icon icon='fighter-jet' />}> Filter</Nav.Item>
+						<Nav.Item eventKey="excom" icon={<Icon icon='fighter-jet' />}> Filter</Nav.Item>
 					</Nav>
 				</Header>
 				<Content className='tabContent' style={{ paddingLeft: 20 }}>
@@ -60,11 +56,11 @@ class MapPage extends Component {
 }
 
 const mapStateToProps = state => ({
-login: state.auth.login,
-team: state.auth.team,
-sites: state.entities.sites.list,
-military: state.entities.military.list,
-aircraft: state.entities.aircrafts.list
+	login: state.auth.login,
+	team: state.auth.team,
+	sites: state.entities.sites.list,
+	military: state.entities.military.list,
+	aircraft: state.entities.aircrafts.list
 });
 
 const mapDispatchToProps = dispatch => ({});

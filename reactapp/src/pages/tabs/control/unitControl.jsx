@@ -48,9 +48,8 @@ class UnitControl extends Component {
 
 	handleSubmit = async () => {
 		try {
-			let {data} = await axios.patch(`${gameServer}api/military/`, {editedUnit: this.state.selected})
-			this.setState({ selected: null })
-		//console.log(data);			
+			await axios.patch(`${gameServer}api/military/`, {editedUnit: this.state.selected})
+			this.setState({ selected: null })		
 		}
 		catch (err) {
 			Alert.error(`Error: ${err.body} ${err.message}`, 5000)

@@ -30,23 +30,23 @@ class LoginForm extends Component {
 
   }
 
-  validate = () => {
-    const result = Joi.validate(this.state.account, this.schema, {
-      abortEarly: false,
-    });
+  // validate = () => {
+  //   const result = Joi.validate(this.state.account, this.schema, {
+  //     abortEarly: false,
+  //   });
 
-    const errors = {};
+  //   const errors = {};
 
-    const { account } = this.state;
+  //   const { account } = this.state;
 
-    if (account.login.trim() === "")
-      errors.login = "Username or email is required.";
+  //   if (account.login.trim() === "")
+  //     errors.login = "Username or email is required.";
 
-    if (account.password.trim() === "")
-      errors.password = "Password is required";
+  //   if (account.password.trim() === "")
+  //     errors.password = "Password is required";
 
-    return Object.keys(errors).length === 0 ? null : errors;
-  };
+  //   return Object.keys(errors).length === 0 ? null : errors;
+  // };
 
   validateProperty = ({ name, value }) => {
     if (name === "login") {

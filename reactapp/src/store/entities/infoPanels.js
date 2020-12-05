@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
-import { Alert } from "rsuite";
 
 // Create entity slice of the store
 const slice = createSlice({

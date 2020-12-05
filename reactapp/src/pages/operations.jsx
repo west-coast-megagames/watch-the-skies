@@ -3,7 +3,7 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faRadiation, faGlobe, faMap, faAtlas } from '@fortawesome/free-solid-svg-icons'
+import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
 import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';

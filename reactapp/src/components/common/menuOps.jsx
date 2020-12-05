@@ -55,7 +55,6 @@ class OpsMenu extends Component {
 						bottom: 0,
 						margin: 'auto',
 						textAlign: 'center',
-						borderRadius: '50%',
 						border: '2px solid black'
 						}}>
 					<IconButton icon={<Icon icon="close" />} size="sm" color="red" circle 
@@ -63,7 +62,7 @@ class OpsMenu extends Component {
 						onClick={() => this.props.closeMenu()}
 					/>
 					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.handleInfo()} style={{...menu, top: '1px', left:'30px'}} />
-					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
+					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type !== undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
 				</div>
