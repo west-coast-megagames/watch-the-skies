@@ -186,25 +186,6 @@ class InfoAircraft extends Component {
   };
 }
 
-function aircraftSystems(aircraft) {
-  let { systems } = aircraft;
-  return (
-    <Panel
-      header={`Aircraft Systems - ${systems.length} Components`}
-      collapsible
-      bordered
-    >
-      <ul>
-        {systems.map((system) => (
-          <li key={system._id}>
-            {system.name} | {system.category}
-          </li>
-        ))}
-      </ul>
-    </Panel>
-  );
-}
-
 const hullSpeaker = (
   <Popover title="Hull Information">
     <p>

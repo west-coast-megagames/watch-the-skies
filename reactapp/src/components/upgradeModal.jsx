@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { FlexboxGrid, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Alert, Button } from 'rsuite';
-import { getCities, getBases } from "../store/entities/sites";
+import { FlexboxGrid, Drawer, SelectPicker, Alert, Button } from 'rsuite';
+import { getCities } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
 
@@ -15,7 +15,6 @@ class UpgradeModal extends Component {
 		};
 };
 
-	
 	handleSelect = async (blueprint) => { 
 		if (!blueprint) {
 			this.setState({ selected: null, hidden: true });

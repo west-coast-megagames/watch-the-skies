@@ -6,8 +6,7 @@ import { gameServer } from '../../../config';
 import { lookupPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
-import { getAvailibleResearch, getTeamResearch } from '../../../store/entities/research';
-import { getLogsByTeam } from '../../../store/entities/logs';
+import { getTeamResearch } from '../../../store/entities/research';
 import { getLabs } from '../../../store/entities/facilities';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -329,14 +328,14 @@ class ResearchLabs extends Component {
 					</Modal>
 				</div>
 			</div>
-    	);
+		);
 	}
-	
+
 	// Function to close the MODAL when repair is canceled or submitted
 	closeModal = () => {
 		this.setState({ showModal: false });
 	}
-		
+
 	// Function to open the MODAL when repair of lab is requested
 	openModal = async (updatedLab) => {
 		this.setState({ 
@@ -344,8 +343,6 @@ class ResearchLabs extends Component {
 			repairLab: updatedLab
 		});
 	}
-		
-	
 
 	// Function run at start.  Initializes research state by this team
 	initResearch = () => {
@@ -376,7 +373,6 @@ class ResearchLabs extends Component {
 		if (teamLabs.length !== 0) {
 			let labs = [];				// Array of research Objects
 			let obj = {};               // Object to add to the research array
-			
 
 			teamLabs.forEach(facility => {
 				for (let i = 0; i < facility.capability.research.capacity; i++) {
@@ -416,9 +412,9 @@ class ResearchLabs extends Component {
 
 const mapStateToProps = state => ({
 	lastUpdate: state.entities.facilities.lastFetch,
-    team: state.auth.team,
-    facilities: getLabs(state),
-    research: getTeamResearch(state),
+  team: state.auth.team,
+  facilities: getLabs(state),
+  research: getTeamResearch(state),
 	account: getSciAccount(state)
 	
 });

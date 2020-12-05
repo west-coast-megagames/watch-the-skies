@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'; // Redux store provider
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, SelectPicker, Progress, Table} from 'rsuite';
+import { FlexboxGrid, Panel, Container, Table} from 'rsuite';
 import { getAircrafts } from "../../store/entities/aircrafts";
 import { getFacilites } from "../../store/entities/facilities";
 

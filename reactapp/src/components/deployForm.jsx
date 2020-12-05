@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
 import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button } from 'rsuite';
-import { getCities, getBases } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
 import { getOpsAccount } from '../store/entities/accounts';

@@ -1,7 +1,7 @@
 import React, { Component } from "react"; // React import
 import { connect } from 'react-redux'; // Redux store provider
 import { Container } from "rsuite";
-import { Panel, PanelGroup, IconButton, ButtonGroup, ButtonToolbar, Icon, Alert, Content, Sidebar, Button, Modal } from "rsuite";
+import { Panel, PanelGroup, IconButton, ButtonGroup, ButtonToolbar, Icon, Content, Sidebar, Modal } from "rsuite";
 import TeamAvatar from "../../../components/common/teamAvatar";
 import { articleHidden } from '../../../store/entities/articles';
 import ViewArticle from "../../../components/common/viewArticle";
@@ -81,7 +81,6 @@ const mapStateToProps = state => ({
   team: state.auth.team,
   articles: state.entities.articles.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
   teams: state.entities.teams.list,
-  team: state.auth.team,
   lastFetch: state.entities.articles.lastFetch
 });
 

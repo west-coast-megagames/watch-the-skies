@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, Container, SelectPicker, Header, Content, InputNumber, Icon, Table, Sidebar, ButtonToolbar, IconButton } from 'rsuite';
+import { Container, Content, Icon, Table } from 'rsuite';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -47,9 +47,7 @@ class UpgradeTable extends Component {
 	render() { 
 		return (
 			<Container>
-			<Container>
-			<Content>
-				<React.Fragment>
+				<Content>
 					<hr />
 					<p>Upgrades</p>
 					<Table
@@ -65,7 +63,7 @@ class UpgradeTable extends Component {
 							}
 							return icon;
 						}}
-						>
+					>
 						<Column flexGrow={1} >
 							<HeaderCell>Name</HeaderCell>
 							<Cell dataKey="name" />
@@ -80,12 +78,9 @@ class UpgradeTable extends Component {
 							<HeaderCell>Effects</HeaderCell>
 							<Cell dataKey="effect" />
 						</Column>
-            </Table>
-				</React.Fragment>
-			</Content>
+					</Table>
+				</Content>
 			</Container>
-	</Container>
-
 		);
 	}
 }

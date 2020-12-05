@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
-import { createSelector } from 'reselect'
+// import { createSelector } from 'reselect'
 import { Alert } from "rsuite";
 
 const slice = createSlice({

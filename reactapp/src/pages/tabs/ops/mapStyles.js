@@ -11,7 +11,7 @@ export default[ // https://mapstyle.withgoogle.com/ for future styling
     "elementType": "labels",
     "stylers": [
       {
-        "visibility": "on"
+        "visibility": "off"
       }
     ]
   },
@@ -53,7 +53,7 @@ export default[ // https://mapstyle.withgoogle.com/ for future styling
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#64779e"
+        "visibility": "off"
       }
     ]
   },

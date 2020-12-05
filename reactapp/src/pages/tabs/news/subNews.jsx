@@ -176,7 +176,6 @@ class SubNews extends React.Component {
 
     for (let zone of zones) {
       zone.children = countries.filter(el => el.zone.name === zone.name);
-      zone.name = zone.name;
     };
     this.setState({ data: zones })
   }

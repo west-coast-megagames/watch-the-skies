@@ -20,9 +20,7 @@ let missions = [
   { value: "Sabatage", label: "Sabatage | I bet the facilities here a booming", aircraft: false, site: false, ground: true },
 ]
 
-let groundMission = [
-
-]
+// let groundMission = []
 class InfoDeploy extends Component {
   constructor(props) {
     super(props);
@@ -49,7 +47,7 @@ class InfoDeploy extends Component {
     let siteMissions = missions.filter(mission => mission.site === true);
     let airMissions = missions.filter(mission => mission.aircraft === true);
     let groundMissions = missions.filter(mission => mission.ground === true);
-    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready == true);
+    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready === true);
     let aircrafts = [];
     //console.log(ships);
     if (ships.length > 0) {
@@ -195,7 +193,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hideDeploy: () => dispatch(launchClosed())
-  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoDeploy);

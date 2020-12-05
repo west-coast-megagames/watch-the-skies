@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, SelectPicker, Progress} from 'rsuite';
+import React from "react";
+import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
 
 
 const MilitaryStats = (props) => {
-	let { stats, status, name, country, zone, type, origin, site } = props.unit;
+	let { stats, status, name, zone, type, origin, site } = props.unit;
 	return (
 		<Container>
 			<Panel>

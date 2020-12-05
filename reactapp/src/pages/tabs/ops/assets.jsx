@@ -19,11 +19,11 @@ class AssetTab extends Component {
 			<Container>
 				<Sidebar>
 					{ true && <IconButton block size='sm' icon={<Icon icon="building" />} onClick={() => Alert.info('You want to build a base, but you cant!')}>New Facility</IconButton>}
-           { true && <IconButton block size='sm' icon={<Icon icon="fighter-jet" />} onClick={() => Alert.info('You want to build a aircraft, but you cant!')}>New Aircraft</IconButton>}
-           { true && <IconButton block size='sm' icon={<Icon icon="space-shuttle" />} onClick={() => Alert.info('You want to build a spacecraft, but you cant!')}>New Spacecraft</IconButton>}
+					{ true && <IconButton block size='sm' icon={<Icon icon="fighter-jet" />} onClick={() => Alert.info('You want to build a aircraft, but you cant!')}>New Aircraft</IconButton>}
+					{ true && <IconButton block size='sm' icon={<Icon icon="space-shuttle" />} onClick={() => Alert.info('You want to build a spacecraft, but you cant!')}>New Spacecraft</IconButton>}
 					{ true && <IconButton block size='sm' icon={<Icon icon="crosshairs" />} onClick={() => Alert.info('You want to build a military, but you cant!')}>New Military Unit</IconButton>}
-           <br />
-           <PanelGroup accordion >
+          <br />
+          <PanelGroup accordion >
 						<Panel 
 							bordered bodyFill header="Facilities" height={400}
 						>
@@ -46,14 +46,14 @@ class AssetTab extends Component {
 								))}
 							</List>
 						</Panel>
-           </PanelGroup>
+          </PanelGroup>
         </Sidebar>
 				<Content>
           { !this.state.unit && !this.state.facility && <h4>I didn't create a any content... so sorry...</h4> }
 					{ this.state.unit && <React.Fragment>
 							<MilitaryStats unit={this.state.unit} />
 							<UpgradeTable unit={this.state.unit}/>
-							{/*<ServiceRecord owner={this.state.unit} />*/}
+							<ServiceRecord owner={this.state.unit} />
 					</React.Fragment>
 					}
 					{ this.state.facility && 

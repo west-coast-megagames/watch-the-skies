@@ -14,30 +14,30 @@ const fields = ['Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Anal
 const ProgressCell = ({ rowData, dataKey, ...props }) => {
     let getPctResult = rowData.progressPct;
     if (getPctResult < 0) {     // If it is -1, then its a category.  Print "--"
-        return (
-            <Cell dataKey="progress" style={{ padding: 0 }} ></Cell>
-        )
+			return (
+				<Cell dataKey="progress" style={{ padding: 0 }} ></Cell>
+			)
     } else {
-        return (                // If it is >= 0, then its a research item.  Print the progress line
-            <Cell {...props} style={{ padding: 0 }}>
-                <div> <Progress.Line strokeWidth={10} percent={ rowData.progressPct } status='active' /> </div>
-            </Cell>
-        )
+			return (                // If it is >= 0, then its a research item.  Print the progress line
+				<Cell {...props} style={{ padding: 0 }}>
+					<div> <Progress.Line strokeWidth={10} percent={ rowData.progressPct } status='active' /> </div>
+				</Cell>
+			)
     }
 };
 
 
 class TechList extends Component {
-    state = {
-        showInfo: false,    // Boolean to tell whether to open the Info Drawer
-        research: {},       // The research item to display inside the Info Drawer
-        data: []            // All of the data to display in the tech list table
-    };
+	state = {
+		showInfo: false,    // Boolean to tell whether to open the Info Drawer
+		research: {},       // The research item to display inside the Info Drawer
+		data: []            // All of the data to display in the tech list table
+	};
 
-    // Loads the table when switching to this tab
-    componentDidMount() {
-        this.loadTable();
-    };
+	// Loads the table when switching to this tab
+	componentDidMount() {
+		this.loadTable();
+	};
 
     // Reloads the table when props are updated
     componentDidUpdate(prevProps, prevState) {

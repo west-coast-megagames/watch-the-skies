@@ -1,5 +1,5 @@
 import React from "react";
-import { Timeline, Icon, Panel, FlexboxGrid, IconButton, Whisper, Popover } from "rsuite";
+import { Timeline, Icon, Panel, FlexboxGrid } from "rsuite";
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = props => {

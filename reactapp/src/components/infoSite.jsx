@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, InputPicker, FlexboxGrid, Alert, Table } from 'rsuite'
-import { gameServer } from '../config';
-import axios from 'axios';
+import { Drawer, Button, FlexboxGrid,  Table } from 'rsuite'
 import { siteClosed } from '../store/entities/infoPanels';
-import { getFacilites, getLabs } from '../store/entities/facilities';
+import { getFacilites } from '../store/entities/facilities';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -12,9 +10,8 @@ class InfoSite extends Component {
 	state = {}
 
   render() {
-    let disable = false;
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, facilities, serviceRecord, country, zone, _id, occupier } = this.props.site;
+      let { name, subType, type, geoDMS, status, country, zone, _id, occupier } = this.props.site;
     
       return(
         <Drawer
