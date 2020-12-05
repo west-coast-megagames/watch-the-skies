@@ -126,6 +126,10 @@ async function chkSite (runFlag) {
 					logger.error(`coastal missing for Site ${site.name} ${site._id}`);
 				}
 
+				if (!Object.prototype.hasOwnProperty.call(site, 'capital')) {
+					logger.error(`capital missing for Site ${site.name} ${site._id}`);
+				}
+
 				if (!Object.prototype.hasOwnProperty.call(site, 'geoDMS')) {
 					logger.error(`geoDMS missing for Site ${site.name} ${site._id}`);
 				}

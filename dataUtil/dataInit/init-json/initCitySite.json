@@ -11,7 +11,8 @@
     "longDecimal": 126.9333,
     "countryCode": "KR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -25,7 +26,8 @@
     "longDecimal": 102.6,
     "countryCode": "LA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -39,7 +41,8 @@
     "longDecimal": 13.6,
     "countryCode": "LY",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -53,7 +56,8 @@
     "longDecimal": 1.5167,
     "countryCode": "AD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -67,7 +71,8 @@
     "longDecimal": -61.85,
     "countryCode": "AG",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -81,7 +86,8 @@
     "longDecimal": -170.7006,
     "countryCode": "AS",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -95,7 +101,8 @@
     "longDecimal": -77.3333,
     "countryCode": "BS",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -109,7 +116,8 @@
     "longDecimal": 50.5833,
     "countryCode": "BH",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -123,7 +131,8 @@
     "longDecimal": -59.6167,
     "countryCode": "BB",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -137,7 +146,8 @@
     "longDecimal": -64.782,
     "countryCode": "BM",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -151,7 +161,8 @@
     "longDecimal": 89.6361,
     "countryCode": "BT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -165,7 +176,8 @@
     "longDecimal": 114.9422,
     "countryCode": "BN",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -179,7 +191,8 @@
     "longDecimal": 11.5167,
     "countryCode": "CM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -193,7 +206,8 @@
     "longDecimal": -23.5167,
     "countryCode": "CV",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -207,7 +221,8 @@
     "longDecimal": -70.6667,
     "countryCode": "CL",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -221,7 +236,8 @@
     "longDecimal": 43.2667,
     "countryCode": "KM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -235,7 +251,8 @@
     "longDecimal": 15.2833,
     "countryCode": "CG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -249,7 +266,8 @@
     "longDecimal": 15.3222,
     "countryCode": "CD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -263,7 +281,8 @@
     "longDecimal": 16.0,
     "countryCode": "HR",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -277,7 +296,8 @@
     "longDecimal": 33.3667,
     "countryCode": "CY",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -291,7 +311,8 @@
     "longDecimal": -61.3833,
     "countryCode": "DM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -305,7 +326,8 @@
     "longDecimal": -69.9,
     "countryCode": "DO",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -319,7 +341,8 @@
     "longDecimal": 38.9333,
     "countryCode": "ER",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -333,7 +356,8 @@
     "longDecimal": 24.9333,
     "countryCode": "FI",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -347,7 +371,8 @@
     "longDecimal": 9.45,
     "countryCode": "GA",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -361,7 +386,8 @@
     "longDecimal": -16.6,
     "countryCode": "GM",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -375,7 +401,8 @@
     "longDecimal": -61.7542,
     "countryCode": "GD",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -389,7 +416,8 @@
     "longDecimal": -15.6,
     "countryCode": "GW",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -403,13 +431,14 @@
     "longDecimal": -52.3167,
     "countryCode": "GF",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
     "subType": "City",
     "name": "Budapest",
-    "dateline": "BUDAPEST, French Hungary",
+    "dateline": "BUDAPEST, Hungary",
     "code": "HU BUD",
     "latDMS": "47 29 33.00 N",
     "longDMS": "19 03 5.00 E",
@@ -417,7 +446,8 @@
     "longDecimal": 19.0514,
     "countryCode": "HU",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -431,7 +461,8 @@
     "longDecimal": 44.3833,
     "countryCode": "IQ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -445,7 +476,8 @@
     "longDecimal": -6.2533,
     "countryCode": "IE",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -459,7 +491,8 @@
     "longDecimal": -76.7931,
     "countryCode": "JM",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -473,7 +506,8 @@
     "longDecimal": 173.0,
     "countryCode": "KI",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -487,7 +521,8 @@
     "longDecimal": 9.5097,
     "countryCode": "LI",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -501,7 +536,8 @@
     "longDecimal": 21.4333,
     "countryCode": "MK",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -515,7 +551,8 @@
     "longDecimal": 73.5089,
     "countryCode": "MV",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -529,7 +566,8 @@
     "longDecimal": 14.5125,
     "countryCode": "MT",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -543,7 +581,8 @@
     "longDecimal": 171.0667,
     "countryCode": "MH",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -557,7 +596,8 @@
     "longDecimal": 57.5,
     "countryCode": "MU",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -571,7 +611,8 @@
     "longDecimal": 158.1667,
     "countryCode": "FM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -585,7 +626,8 @@
     "longDecimal": -6.85,
     "countryCode": "MA",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -599,7 +641,8 @@
     "longDecimal": 4.8833,
     "countryCode": "NL",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -613,7 +656,8 @@
     "longDecimal": 58.4083,
     "countryCode": "OM",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -627,7 +671,8 @@
     "longDecimal": 134.6333,
     "countryCode": "PW",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -641,7 +686,8 @@
     "longDecimal": -77.0283,
     "countryCode": "PE",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -655,7 +701,8 @@
     "longDecimal": 30.0595,
     "countryCode": "RW",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -669,7 +716,8 @@
     "longDecimal": -62.7083,
     "countryCode": "KN",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -683,7 +731,8 @@
     "longDecimal": -60.9833,
     "countryCode": "LC",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -697,7 +746,8 @@
     "longDecimal": -61.2306,
     "countryCode": "VC",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -711,7 +761,8 @@
     "longDecimal": -171.75,
     "countryCode": "WS",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -725,7 +776,8 @@
     "longDecimal": 12.4333,
     "countryCode": "SM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -739,7 +791,8 @@
     "longDecimal": 6.7333,
     "countryCode": "ST",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -753,7 +806,8 @@
     "longDecimal": 20.4667,
     "countryCode": "RS",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -767,7 +821,8 @@
     "longDecimal": 55.45,
     "countryCode": "SC",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -781,7 +836,8 @@
     "longDecimal": 14.5,
     "countryCode": "SI",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -795,7 +851,8 @@
     "longDecimal": 159.9667,
     "countryCode": "SB",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -809,7 +866,8 @@
     "longDecimal": 32.5333,
     "countryCode": "SD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -823,7 +881,8 @@
     "longDecimal": 35.2,
     "countryCode": "PS",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -837,7 +896,8 @@
     "longDecimal": 7.45,
     "countryCode": "CH",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -851,7 +911,8 @@
     "longDecimal": 100.4833,
     "countryCode": "TH",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -865,7 +926,8 @@
     "longDecimal": 125.56,
     "countryCode": "TL",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -879,7 +941,8 @@
     "longDecimal": 1.2167,
     "countryCode": "TG",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -893,7 +956,8 @@
     "longDecimal": -175.2,
     "countryCode": "TO",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -907,7 +971,8 @@
     "longDecimal": -61.5075,
     "countryCode": "TT",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -921,7 +986,8 @@
     "longDecimal": 179.2,
     "countryCode": "TV",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -935,7 +1001,8 @@
     "longDecimal": 168.3167,
     "countryCode": "VU",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -949,7 +1016,8 @@
     "longDecimal": -13.1833,
     "countryCode": "EH",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -963,7 +1031,8 @@
     "longDecimal": 27.4667,
     "countryCode": "CD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -977,7 +1046,8 @@
     "longDecimal": 12.569,
     "countryCode": "DK",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -991,7 +1061,8 @@
     "longDecimal": 43.1429,
     "countryCode": "DJ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1005,7 +1076,8 @@
     "longDecimal": -78.5114,
     "countryCode": "EC",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1019,7 +1091,8 @@
     "longDecimal": -89.1777,
     "countryCode": "SV",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1033,7 +1106,8 @@
     "longDecimal": 8.7796,
     "countryCode": "GQ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1047,13 +1121,14 @@
     "longDecimal": 24.7281,
     "countryCode": "EE",
     "teamCode": "NPC",
-    "coastal": true
-  },
-  {
+		"coastal": true,
+		"capital": true
+	},
+	{
     "loadType": "citySite",
     "subType": "City",
     "name": "Manzini",
-    "dateline": "MANZINI, Eswatini",
+    "dateline": "Manzini, Eswatini",
     "code": "SZ MTS",
     "latDMS": "26 30 15.0 S",
     "longDMS": "31 21 55.0 E",
@@ -1061,7 +1136,23 @@
     "longDecimal": 31.3653,
     "countryCode": "SZ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
+  },
+  {
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Mbabane",
+    "dateline": "Mbabane, Eswatini",
+    "code": "SZ QMN",
+    "latDMS": "26 19 0.1 S",
+    "longDMS": "31 07 59.9 E",
+    "latDecimal": -26.3167,
+    "longDecimal": 31.1333,
+    "countryCode": "SZ",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1075,7 +1166,8 @@
     "longDecimal": 38.7653,
     "countryCode": "ET",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1089,7 +1181,8 @@
     "longDecimal": 178.427,
     "countryCode": "FJ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1103,13 +1196,14 @@
     "longDecimal": 4.8344,
     "countryCode": "FR",
     "teamCode": "TFR",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
     "subType": "City",
-    "name": "Tbilsi",
-    "dateline": "TBILSI, Georgia",
+    "name": "Tbilisi",
+    "dateline": "TBILISI, Georgia",
     "code": "GE TBS",
     "latDMS": "41 41 36.09 N",
     "longDMS": "44 48 5.76 E",
@@ -1117,7 +1211,8 @@
     "longDecimal": 44.8016,
     "countryCode": "GE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1131,7 +1226,8 @@
     "longDecimal": 13.8833,
     "countryCode": "DE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1145,7 +1241,8 @@
     "longDecimal": 8.5833,
     "countryCode": "DE",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1159,7 +1256,8 @@
     "longDecimal": -0.2167,
     "countryCode": "GH",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1173,7 +1271,8 @@
     "longDecimal": 23.7333,
     "countryCode": "GR",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1187,7 +1286,8 @@
     "longDecimal": -51.7079,
     "countryCode": "GL",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1201,7 +1301,8 @@
     "longDecimal": -90.5155,
     "countryCode": "GT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1215,7 +1316,8 @@
     "longDecimal": -13.6547,
     "countryCode": "GN",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1229,7 +1331,8 @@
     "longDecimal": -58.1647,
     "countryCode": "GY",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1243,7 +1346,8 @@
     "longDecimal": -72.3474,
     "countryCode": "HT",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1257,7 +1361,8 @@
     "longDecimal": 12.4581,
     "countryCode": "VA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1271,7 +1376,8 @@
     "longDecimal": -87.1844,
     "countryCode": "HN",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1285,7 +1391,8 @@
     "longDecimal": -21.9424,
     "countryCode": "IS",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1299,7 +1406,8 @@
     "longDecimal": 77.2154,
     "countryCode": "IN",
     "teamCode": "IND",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1313,7 +1421,8 @@
     "longDecimal": 72.8139,
     "countryCode": "IN",
     "teamCode": "IND",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1327,13 +1436,14 @@
     "longDecimal": 88.3671,
     "countryCode": "IN",
     "teamCode": "IND",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
     "subType": "City",
     "name": "Jakarta",
-    "dateline": "JAKARTA, India",
+    "dateline": "JAKARTA, Indonesia",
     "code": "ID HLP",
     "latDMS": "6 10 29.12 S",
     "longDMS": "106 49 37.46 E",
@@ -1341,7 +1451,8 @@
     "longDecimal": 106.8271,
     "countryCode": "ID",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1355,7 +1466,8 @@
     "longDecimal": 35.2178,
     "countryCode": "IL",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1369,7 +1481,8 @@
     "longDecimal": 34.7667,
     "countryCode": "IL",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1383,7 +1496,8 @@
     "longDecimal": 9.1897,
     "countryCode": "IT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1397,7 +1511,8 @@
     "longDecimal": 12.4935,
     "countryCode": "IT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1411,7 +1526,8 @@
     "longDecimal": 135.5022,
     "countryCode": "JP",
     "teamCode": "JPN",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1425,7 +1541,8 @@
     "longDecimal": 139.7583,
     "countryCode": "JP",
     "teamCode": "JPN",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1439,13 +1556,14 @@
     "longDecimal": 35.9212,
     "countryCode": "JO",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
     "subType": "City",
-    "name": "Astana",
-    "dateline": "ASTANA, Kazakhstan",
+    "name": "Nur-Sultan (Astana)",
+    "dateline": "NUR-SULTAN, Kazakhstan",
     "code": "KZ TSE",
     "latDMS": "51 10 38.12 N",
     "longDMS": "71 25 26.55 E",
@@ -1453,7 +1571,8 @@
     "longDecimal": 71.424,
     "countryCode": "KZ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1467,7 +1586,8 @@
     "longDecimal": 36.9258,
     "countryCode": "KE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1481,7 +1601,8 @@
     "longDecimal": 47.9828,
     "countryCode": "KW",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1495,7 +1616,8 @@
     "longDecimal": 74.599,
     "countryCode": "KG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1509,7 +1631,8 @@
     "longDecimal": 24.1095,
     "countryCode": "LV",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1523,7 +1646,8 @@
     "longDecimal": 35.4803,
     "countryCode": "LB",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1537,7 +1661,8 @@
     "longDecimal": 27.48,
     "countryCode": "LS",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1551,7 +1676,8 @@
     "longDecimal": -10.8047,
     "countryCode": "LR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1565,7 +1691,8 @@
     "longDecimal": 25.2763,
     "countryCode": "LT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1579,7 +1706,8 @@
     "longDecimal": 6.1319,
     "countryCode": "LU",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1593,7 +1721,8 @@
     "longDecimal": 47.5167,
     "countryCode": "MG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1607,7 +1736,8 @@
     "longDecimal": 33.7694,
     "countryCode": "MW",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1621,7 +1751,8 @@
     "longDecimal": 101.6727,
     "countryCode": "MY",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1635,7 +1766,8 @@
     "longDecimal": -7.9988,
     "countryCode": "ML",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1649,7 +1781,8 @@
     "longDecimal": -15.9795,
     "countryCode": "MR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1663,7 +1796,8 @@
     "longDecimal": -99.1334,
     "countryCode": "MX",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1677,7 +1811,8 @@
     "longDecimal": -100.3171,
     "countryCode": "MX",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1691,7 +1826,8 @@
     "longDecimal": 28.8497,
     "countryCode": "MD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1705,7 +1841,8 @@
     "longDecimal": 7.4241,
     "countryCode": "MC",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1719,7 +1856,8 @@
     "longDecimal": 106.9176,
     "countryCode": "MN",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1733,7 +1871,8 @@
     "longDecimal": 19.2636,
     "countryCode": "ME",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1747,7 +1886,8 @@
     "longDecimal": 32.5892,
     "countryCode": "MZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1761,7 +1901,8 @@
     "longDecimal": 96.1157,
     "countryCode": "MM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1775,7 +1916,8 @@
     "longDecimal": 17.0836,
     "countryCode": "NA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1789,7 +1931,8 @@
     "longDecimal": 85.3143,
     "countryCode": "NP",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1803,7 +1946,8 @@
     "longDecimal": 166.45,
     "countryCode": "NC",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1817,7 +1961,8 @@
     "longDecimal": 174.7734,
     "countryCode": "NZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1831,7 +1976,8 @@
     "longDecimal": -86.26,
     "countryCode": "NI",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1845,7 +1991,8 @@
     "longDecimal": 2.1167,
     "countryCode": "NE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1859,7 +2006,8 @@
     "longDecimal": 8.5167,
     "countryCode": "NG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -1873,7 +2021,8 @@
     "longDecimal": 7.4839,
     "countryCode": "NG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1887,7 +2036,8 @@
     "longDecimal": 125.7524,
     "countryCode": "KP",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1901,7 +2051,8 @@
     "longDecimal": 10.7333,
     "countryCode": "NO",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1915,7 +2066,23 @@
     "longDecimal": 67.05,
     "countryCode": "PK",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Islamabad",
+    "dateline": "ISLAMABAD",
+    "code": "PK ISB",
+    "latDMS": "33 41 35.00 N",
+    "longDMS": "73 03 50.0 E",
+    "latDecimal": 33.6931,
+    "longDecimal": 73.0639,
+    "countryCode": "PK",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1929,7 +2096,8 @@
     "longDecimal": -79.527,
     "countryCode": "PA",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1943,7 +2111,8 @@
     "longDecimal": 147.1927,
     "countryCode": "PG",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1957,7 +2126,8 @@
     "longDecimal": -57.6333,
     "countryCode": "PY",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1971,7 +2141,8 @@
     "longDecimal": 120.9811,
     "countryCode": "PH",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1985,7 +2156,8 @@
     "longDecimal": 21.0,
     "countryCode": "PL",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -1999,7 +2171,8 @@
     "longDecimal": -9.15,
     "countryCode": "PT",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2013,7 +2186,8 @@
     "longDecimal": -66.0639,
     "countryCode": "PR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2027,7 +2201,8 @@
     "longDecimal": 51.5296,
     "countryCode": "QA",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2041,7 +2216,8 @@
     "longDecimal": 26.104,
     "countryCode": "RO",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2055,7 +2231,8 @@
     "longDecimal": 46.7151,
     "countryCode": "SA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2069,7 +2246,8 @@
     "longDecimal": 39.7988,
     "countryCode": "SA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2083,7 +2261,8 @@
     "longDecimal": -17.4408,
     "countryCode": "SN",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2097,7 +2276,8 @@
     "longDecimal": -13.2342,
     "countryCode": "SL",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2111,7 +2291,8 @@
     "longDecimal": 103.8281,
     "countryCode": "SG",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2125,7 +2306,8 @@
     "longDecimal": 17.1167,
     "countryCode": "SK",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2139,7 +2321,8 @@
     "longDecimal": 45.3428,
     "countryCode": "SO",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2153,7 +2336,8 @@
     "longDecimal": 28.0316,
     "countryCode": "ZA",
     "teamCode": "RSA",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2167,7 +2351,8 @@
     "longDecimal": 31.6167,
     "countryCode": "SS",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2181,7 +2366,8 @@
     "longDecimal": -3.6918,
     "countryCode": "ES",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2195,7 +2381,8 @@
     "longDecimal": 2.1649,
     "countryCode": "ES",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2209,7 +2396,8 @@
     "longDecimal": 79.8633,
     "countryCode": "LK",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2223,7 +2411,8 @@
     "longDecimal": -55.1667,
     "countryCode": "SR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2237,7 +2426,8 @@
     "longDecimal": 18.0536,
     "countryCode": "SE",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2251,7 +2441,8 @@
     "longDecimal": 36.2933,
     "countryCode": "SY",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2265,7 +2456,8 @@
     "longDecimal": 68.7738,
     "countryCode": "TJ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2279,7 +2471,8 @@
     "longDecimal": 35.7467,
     "countryCode": "TZ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2293,7 +2486,8 @@
     "longDecimal": 39.2833,
     "countryCode": "TZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2307,7 +2501,8 @@
     "longDecimal": 10.1642,
     "countryCode": "TN",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2321,7 +2516,8 @@
     "longDecimal": 32.8406,
     "countryCode": "TR",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2335,7 +2531,8 @@
     "longDecimal": 58.3855,
     "countryCode": "TM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2349,7 +2546,8 @@
     "longDecimal": 32.5656,
     "countryCode": "UG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2363,7 +2561,8 @@
     "longDecimal": 30.5234,
     "countryCode": "UA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2377,7 +2576,8 @@
     "longDecimal": 54.3796,
     "countryCode": "AE",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2391,7 +2591,8 @@
     "longDecimal": -56.1983,
     "countryCode": "UY",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2405,12 +2606,13 @@
     "longDecimal": -87.6324,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
     "subType": "City",
-    "name": "Washington",
+    "name": "Washington D.C.",
     "dateline": "WASHINGTON",
     "code": "US WAS",
     "latDMS": "38 53 43.91 N",
@@ -2419,7 +2621,8 @@
     "longDecimal": -77.032,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2433,7 +2636,8 @@
     "longDecimal": -74.0071,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2447,7 +2651,8 @@
     "longDecimal": -118.2423,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2461,7 +2666,8 @@
     "longDecimal": -90.0767,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2475,7 +2681,8 @@
     "longDecimal": -86.7847,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2489,7 +2696,8 @@
     "longDecimal": -104.9903,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2503,7 +2711,8 @@
     "longDecimal": -80.234,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2517,7 +2726,8 @@
     "longDecimal": 69.2818,
     "countryCode": "UZ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2531,7 +2741,8 @@
     "longDecimal": -66.9151,
     "countryCode": "VE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2545,7 +2756,8 @@
     "longDecimal": 105.8537,
     "countryCode": "VN",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2559,7 +2771,8 @@
     "longDecimal": 106.7012,
     "countryCode": "VN",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2573,7 +2786,8 @@
     "longDecimal": 44.2062,
     "countryCode": "YE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2587,7 +2801,8 @@
     "longDecimal": 28.2833,
     "countryCode": "ZM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2601,7 +2816,8 @@
     "longDecimal": 31.0522,
     "countryCode": "ZW",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2615,7 +2831,8 @@
     "longDecimal": -122.4313,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
 	},
 	{
     "loadType": "citySite",
@@ -2629,7 +2846,8 @@
     "longDecimal": -117.1842,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
 	},
 	{
     "loadType": "citySite",
@@ -2643,7 +2861,8 @@
     "longDecimal": -157.9453,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
 	},
 	{
     "loadType": "citySite",
@@ -2657,7 +2876,8 @@
     "longDecimal": -81.6852,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
 	},
 	{
     "loadType": "citySite",
@@ -2671,7 +2891,8 @@
     "longDecimal": -81.6852,
     "countryCode": "US",
     "teamCode": "USA",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2685,7 +2906,8 @@
     "longDecimal": 37.6172,
     "countryCode": "RU",
     "teamCode": "RFD",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2699,7 +2921,8 @@
     "longDecimal": 44.514,
     "countryCode": "RU",
     "teamCode": "RFD",
-    "coastal": false
+		"coastal": false,
+		"capital": false
 	},
 	{
     "loadType": "citySite",
@@ -2713,7 +2936,8 @@
     "longDecimal": 33.4373,
     "countryCode": "RU",
     "teamCode": "RFD",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2727,7 +2951,8 @@
     "longDecimal": 37.7833,
     "countryCode": "RU",
     "teamCode": "RFD",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2741,7 +2966,8 @@
     "longDecimal": 131.9,
     "countryCode": "RU",
     "teamCode": "RFD",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2755,7 +2981,8 @@
     "longDecimal": 116.3833,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2769,7 +2996,8 @@
     "longDecimal": 87.5885,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2783,7 +3011,8 @@
     "longDecimal": 75.9818,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2797,7 +3026,8 @@
     "longDecimal": 126.65,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2811,7 +3041,8 @@
     "longDecimal": 106.529,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2825,7 +3056,8 @@
     "longDecimal": 121.4697,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2839,7 +3071,8 @@
     "longDecimal": 114.1578,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2853,7 +3086,8 @@
     "longDecimal": 121.6333,
     "countryCode": "CN",
     "teamCode": "PRC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2867,7 +3101,8 @@
     "longDecimal": 2.3522,
     "countryCode": "FR",
     "teamCode": "TFR",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2881,7 +3116,8 @@
     "longDecimal": 5.37,
     "countryCode": "FR",
     "teamCode": "TFR",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2895,7 +3131,8 @@
     "longDecimal": 1.8564,
     "countryCode": "FR",
     "teamCode": "TFR",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2909,7 +3146,8 @@
     "longDecimal": -0.1275,
     "countryCode": "GB",
     "teamCode": "TUK",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2923,7 +3161,8 @@
     "longDecimal": -2.9833,
     "countryCode": "GB",
     "teamCode": "TUK",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2937,7 +3176,8 @@
     "longDecimal": -4.1422,
     "countryCode": "GB",
     "teamCode": "TUK",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2951,7 +3191,8 @@
     "longDecimal": 139.2729,
     "countryCode": "AQ",
     "teamCode": "USA",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -2965,7 +3206,8 @@
     "longDecimal": 18.4233,
     "countryCode": "ZA",
     "teamCode": "RSA",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2979,7 +3221,8 @@
     "longDecimal": 51.1522,
     "countryCode": "IR",
     "teamCode": "IRN",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -2993,7 +3236,8 @@
     "longDecimal": 56.2667,
     "countryCode": "IR",
     "teamCode": "IRN",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3007,7 +3251,8 @@
     "longDecimal": 31.4056,
     "countryCode": "EG",
     "teamCode": "EPT",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3021,7 +3266,8 @@
     "longDecimal": 29.9167,
     "countryCode": "EG",
     "teamCode": "EPT",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3035,7 +3281,8 @@
     "longDecimal": -43.2506,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3049,7 +3296,8 @@
     "longDecimal": 151.2094,
     "countryCode": "AU",
     "teamCode": "AUS",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3063,7 +3311,8 @@
     "longDecimal": 115.8589,
     "countryCode": "AU",
     "teamCode": "AUS",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3077,7 +3326,8 @@
     "longDecimal": 152.0281,
     "countryCode": "AU",
     "teamCode": "AUS",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3091,7 +3341,23 @@
     "longDecimal": 144.9631,
     "countryCode": "AU",
     "teamCode": "AUS",
-    "coastal": true
+		"coastal": true,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Canberra",
+    "dateline": "CANBERRA, Australia",
+    "code": "AU CBR",
+    "latDMS": "35 17 35.16 S",
+    "longDMS": "149 07 36.84 E",
+    "latDecimal": -35.2931,
+    "longDecimal": 149.1269,
+    "countryCode": "AU",
+    "teamCode": "AUS",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3105,7 +3371,8 @@
     "longDecimal": 69.22,
     "countryCode": "AF",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3119,7 +3386,8 @@
     "longDecimal": 19.8178,
     "countryCode": "AL",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3133,7 +3401,8 @@
     "longDecimal": 3.0589,
     "countryCode": "DZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3147,7 +3416,8 @@
     "longDecimal": 13.2344,
     "countryCode": "AO",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3161,7 +3431,8 @@
     "longDecimal": -64.7766,
     "countryCode": "AR",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3175,7 +3446,8 @@
     "longDecimal": -58.7714,
     "countryCode": "AR",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3189,7 +3461,8 @@
     "longDecimal": 44.564,
     "countryCode": "AM",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3203,7 +3476,8 @@
     "longDecimal": 16.3667,
     "countryCode": "AT",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3217,7 +3491,8 @@
     "longDecimal": 49.8473,
     "countryCode": "AZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3231,7 +3506,8 @@
     "longDecimal": 90.3824,
     "countryCode": "BD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3245,7 +3521,8 @@
     "longDecimal": 27.5482,
     "countryCode": "BY",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3259,7 +3536,8 @@
     "longDecimal": 4.4024,
     "countryCode": "BE",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3273,7 +3551,23 @@
     "longDecimal": -88.1886,
     "countryCode": "BZ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Belmopan",
+    "dateline": "BELMOPAN, Belize",
+    "code": "BZ BMP",
+    "latDMS": "17 15 5.04 N",
+    "longDMS": "88 46 0.84 W",
+    "latDecimal": 17.2514,
+    "longDecimal": -88.7669,
+    "countryCode": "BZ",
+    "teamCode": "NPC",
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3287,13 +3581,29 @@
     "longDecimal": 2.4197,
     "countryCode": "BJ",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Porto-Novo",
+    "dateline": "PORTO-NOVO, Benin",
+    "code": "BJ PTN",
+    "latDMS": "6 29 49.92 N",
+    "longDMS": "2 36 18.0 E",
+    "latDecimal": 6.4972,
+    "longDecimal": 2.605,
+    "countryCode": "BJ",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
     "subType": "City",
     "name": "Cochabamba",
-    "dateline": "Cochabamba, Bolivia",
+    "dateline": "COCHABAMBA, Bolivia",
     "code": "BO CBB",
     "latDMS": "17 25 16.00 S",
     "longDMS": "66 10 38.0 W",
@@ -3301,7 +3611,23 @@
     "longDecimal": -66.1772,
     "countryCode": "BO",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Sucre",
+    "dateline": "SUCRE, Bolivia",
+    "code": "BO SRE",
+    "latDMS": "19 3 0.00 S",
+    "longDMS": "65 15 0.0 W",
+    "latDecimal": -19.05,
+    "longDecimal": -65.25,
+    "countryCode": "BO",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3315,7 +3641,8 @@
     "longDecimal": 18.42,
     "countryCode": "BA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3329,7 +3656,8 @@
     "longDecimal": 25.9524,
     "countryCode": "BW",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3343,7 +3671,8 @@
     "longDecimal": -38.471,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3357,7 +3686,8 @@
     "longDecimal": -34.9324,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3371,7 +3701,8 @@
     "longDecimal": -38.5167,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3385,7 +3716,8 @@
     "longDecimal": -47.9522,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3399,7 +3731,8 @@
     "longDecimal": -46.6363,
     "countryCode": "BR",
     "teamCode": "BRZ",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3413,7 +3746,8 @@
     "longDecimal": 23.4083,
     "countryCode": "BG",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3427,7 +3761,8 @@
     "longDecimal": -1.5003,
     "countryCode": "BF",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3441,7 +3776,23 @@
     "longDecimal": 29.3816,
     "countryCode": "BI",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Gitega",
+    "dateline": "GITEGA, Burundi",
+    "code": "BI GID",
+    "latDMS": "3 25 59.99 S",
+    "longDMS": "29 53 60.0 E",
+    "latDecimal": -3.4333,
+    "longDecimal": 29.9,
+    "countryCode": "BI",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3455,7 +3806,8 @@
     "longDecimal": 104.8971,
     "countryCode": "KH",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3469,7 +3821,8 @@
     "longDecimal": -123.1,
     "countryCode": "CA",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3483,7 +3836,8 @@
     "longDecimal": -73.5534,
     "countryCode": "CA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3497,7 +3851,23 @@
     "longDecimal": -79.3817,
     "countryCode": "CA",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
+	},
+	{
+    "loadType": "citySite",
+    "subType": "City",
+    "name": "Ottawa",
+    "dateline": "OTTAWA, Canada",
+    "code": "CA OTT",
+    "latDMS": "45 25 28.92 N",
+    "longDMS": "75 41 42.0 W",
+    "latDecimal": 45.4247,
+    "longDecimal": -75.695,
+    "countryCode": "CA",
+    "teamCode": "NPC",
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3511,7 +3881,8 @@
     "longDecimal": 18.5549,
     "countryCode": "CF",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3525,7 +3896,8 @@
     "longDecimal": 15.0411,
     "countryCode": "TD",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3539,7 +3911,8 @@
     "longDecimal": -75.5732,
     "countryCode": "CO",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": false
   },
   {
     "loadType": "citySite",
@@ -3553,21 +3926,23 @@
     "longDecimal": -74.0533,
     "countryCode": "CO",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
     "subType": "City",
-    "name": "San Juan",
-    "dateline": "SAN JUAN, Costa Rica",
-    "code": "CR UPL",
-    "latDMS": "9 57 40.07 N",
-    "longDMS": "84 4 55.84 W",
-    "latDecimal": 9.9611,
-    "longDecimal": -84.0822,
+    "name": "San Jose",
+    "dateline": "SAN JOSE, Costa Rica",
+    "code": "CR SJO",
+    "latDMS": "9 51 57.6 N",
+    "longDMS": "84 8 19.68 W",
+    "latDecimal": 9.8660,
+    "longDecimal": -84.1388,
     "countryCode": "CR",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3581,7 +3956,8 @@
     "longDecimal": -4.0197,
     "countryCode": "CI",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3595,7 +3971,8 @@
     "longDecimal": -82.3642,
     "countryCode": "CU",
     "teamCode": "NPC",
-    "coastal": true
+		"coastal": true,
+		"capital": true
   },
   {
     "loadType": "citySite",
@@ -3609,6 +3986,7 @@
     "longDecimal": 14.4176,
     "countryCode": "CZ",
     "teamCode": "NPC",
-    "coastal": false
+		"coastal": false,
+		"capital": true
   }
 ]

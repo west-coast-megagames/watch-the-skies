@@ -8,6 +8,7 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 
 // Mongoose Model Import
 const { Country, GroundCountry, SpaceCountry } = require('../../models/country');
+const { Site } = require('../../models/site');
 
 // @route   GET api/counties
 // @Desc    Get all countries
@@ -140,6 +141,31 @@ router.patch('/deleteAll', async function (req, res) {
 	catch (err) {
 		console.log(`Error: ${err.message}`);
 		res.status(400).send(`Error: ${err.message}`);
+	}
+});
+
+// @route   PATCH api/countries/setCapital
+// @desc    Set Countrys Capital (site id to city)
+// @access  Public
+router.patch('/setCapital/:id', validateObjectId, async function (req, res) {
+	const countryId = req.params.id;
+	try {
+
+		const capital = await Site.findOne({ 'type': 'Ground', 'subType': 'City', 'country': countryId, 'capital': true });
+
+		if (capital) {
+			const country = await Country.findByIdAndUpdate(countryId,
+				{ capital: capital._id },
+				{ new: true, omitUndefined: true });
+			logger.info(`The country ${country.name} with the id ${countryId} updated with Capital!`);
+			res.status(200).json(country);
+		}
+		else {
+			res.status(200);
+		}
+	}
+	catch (err) {
+		httpErrorHandler(res, err);
 	}
 });
 

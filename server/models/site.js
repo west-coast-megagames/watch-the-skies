@@ -112,6 +112,10 @@ const GroundSite = Site.discriminator(
 			type: Boolean,
 			default: false
 		},
+		capital: {
+			type: Boolean,
+			default: false
+		},
 		dateline: { type: String, default: 'Dateline' },
 		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
 		status: {

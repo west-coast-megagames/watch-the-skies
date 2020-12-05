@@ -11,6 +11,7 @@ const CountrySchema = new Schema({
 	model: { type: String, default: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	capital: { type: Schema.Types.ObjectId, ref: 'Site' },
 	code: {
 		type: String,
 		required: true,
