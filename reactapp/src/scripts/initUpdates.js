@@ -10,6 +10,7 @@ import { usersRecieved, loginSocket } from '../store/entities/auth';
 import { facilitiesUpdated } from '../store/entities/facilities';
 import { militaryUpdated } from '../store/entities/military';
 import { sitesReceived } from '../store/entities/sites';
+import { upgradesUpdated } from '../store/entities/upgrades';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -25,6 +26,12 @@ const initUpdates = () => {
         notify({catagory: 'update', type: 'success', title: 'Aircrafts Update', body: `The aircrafts for ${state.auth.team.name} have been updated...`});
         store.dispatch(aircraftsUpdated(aircrafts));
 		});
+
+		updateEvents.updateUpgrades((err, upgrades) => {
+			let state = store.getState()
+			notify({catagory: 'update', type: 'success', title: 'Upgrades Update', body: `The upgrades for ${state.auth.team.name} have been updated...`});
+			store.dispatch(upgradesUpdated(upgrades));
+	});
 		
 		updateEvents.updateSites((err, sites) => {
 			let state = store.getState()
