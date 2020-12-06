@@ -17,6 +17,12 @@ class AssetTab extends Component {
 		facility: undefined,
 		upgrade: undefined
 	}
+
+	componentDidUpdate(prevProps, prevState) {
+
+	}
+
+
 	render() { 
 		return (
 			<Container>
@@ -69,10 +75,10 @@ class AssetTab extends Component {
 					{ this.state.upgrade && 
 						<Panel>
 						<FlexboxGrid>
-						<FlexboxGrid.Item colspan={4}>
-									<img
-										src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="120" height="120" 
-									/>									
+							<FlexboxGrid.Item colspan={4}>
+								<img
+									src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" 
+								/>									
 							</FlexboxGrid.Item>
 							<FlexboxGrid.Item colspan={12}>
 								<p>
@@ -84,7 +90,7 @@ class AssetTab extends Component {
 							</FlexboxGrid.Item>
 						</FlexboxGrid>
 						<Table height={300} data={this.state.upgrade.effects}>
-							<Column verticalAlign='middle' flexGrow={2} align="left" fixed>
+							<Column verticalAlign='middle' align="left" fixed>
 								<HeaderCell>Type</HeaderCell>
 								<Cell>
 									{rowData => {
@@ -103,7 +109,7 @@ class AssetTab extends Component {
 									}}
 								</Cell>
 							</Column>
-							<Column verticalAlign='middle' >
+							<Column verticalAlign='middle' align="center">
 								<HeaderCell>Effect</HeaderCell>
 								<Cell dataKey="effect" />
 							</Column>

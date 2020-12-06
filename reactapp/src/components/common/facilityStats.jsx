@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios';
 import { connect } from 'react-redux'; // Redux store provider
-import { FlexboxGrid, Panel, Container, Table, Col, Row, SelectPicker} from 'rsuite';
+import { Tag, TagGroup, FlexboxGrid, Panel, Container, Table, Col, Row, SelectPicker, Icon, Alert, IconButton} from 'rsuite';
 import { getAircrafts } from "../../store/entities/aircrafts";
 import { getFacilites } from "../../store/entities/facilities";
 import { gameServer } from "../../config";
@@ -119,18 +119,33 @@ class FacilityStats extends Component{
 	}
 
 	render () {
-		const {name, site, capability} = this.props.facility;
+		const {name, site, capability, status} = this.props.facility;
 		return (
 			<Container>
 			<Panel>
 			<FlexboxGrid>
-				<FlexboxGrid.Item colspan={12}>
+				<FlexboxGrid.Item colspan={4}>
+						<img
+							src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" 
+						/>									
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={16}>
 					<p>
 						<b>Name:</b> {name}
 					</p>
 					<p>
 						<b>Location:</b> {site.name}
 					</p>
+					<TagGroup>
+						{!status.damaged && !status.deployed && <Tag color="green">Mission Ready</Tag>}
+						{status.secret && <Tag color="blue">Hidden</Tag>}
+						{status.repair && <Tag color="yellow">Repairing</Tag>}
+						{status.defenses && <Tag color="green">Defenses Active</Tag>}
+					</TagGroup>
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={4}>
+				{ true && <IconButton block size='sm' icon={<Icon icon="building" />} onClick={() => Alert.info('You want to build a base, but you cant!')}>Build New Facility</IconButton>}
+					{ true && <IconButton block size='sm' icon={<Icon icon="plus" />} onClick={() => Alert.info('You want to upgrade this facility, but you cant!')}>Upgrade Facility</IconButton>}
 				</FlexboxGrid.Item>
 			</FlexboxGrid>
 			</Panel>

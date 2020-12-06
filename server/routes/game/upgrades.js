@@ -25,6 +25,7 @@ router.put('/add', async function (req, res) {
 	unit = await Military.findById(unit);
 	const response = await addUpgrade(upgrade, unit);
 	nexusEvent.emit('updateMilitary');
+	nexusEvent.emit('updateUpgrades');
 	res.status(200).send(response);
 });
 
@@ -34,6 +35,7 @@ router.put('/add', async function (req, res) {
 router.put('/remove', async function (req, res) {
 	const response = await removeUpgrade(req.body.upgrade, req.body.unit);
 	nexusEvent.emit('updateMilitary');
+	nexusEvent.emit('updateUpgrades');
 	res.status(200).send(response);
 });
 
@@ -43,7 +45,7 @@ router.post('/build', async function (req, res) {
 	try {
 		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
 		upgrade = await upgrade.save();
-
+		nexusEvent.emit('updateUpgrades');
 		res.status(200).json(upgrade);
 	}
 	catch (err) {
