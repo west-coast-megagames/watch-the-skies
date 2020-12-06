@@ -13,6 +13,7 @@ class FacilityStats extends Component{
 		aircraft: [],
 		military: [],
 		selected: null,
+		factories: [],
 		labs: []
 	}
 
@@ -20,6 +21,7 @@ class FacilityStats extends Component{
 		const aircraft = this.props.aircrafts.filter(el => el.origin.name === this.props.facility.name );
 		const military = this.props.military.filter(el => el.origin.name === this.props.facility.name );
 		this.initLabs(this.props.facility);
+		this.initProduction(this.props.facility);
 		this.setState({ aircraft, military });
 	};
 
@@ -28,6 +30,7 @@ class FacilityStats extends Component{
 			const aircraft = this.props.aircrafts.filter(el => el.origin.name === this.props.facility.name );
 			const military = this.props.military.filter(el => el.origin.name === this.props.facility.name );
 			this.initLabs(this.props.facility);
+			this.initProduction(this.props.facility);
 			this.setState({ aircraft, military });
 		}
 	}
@@ -82,7 +85,37 @@ class FacilityStats extends Component{
 	}
 
 	initProduction = (facility) => {
+		let thisFacility = this.props.facilities.filter(el => el.team !== null );
+		if (thisFacility.length !== 0) {
+			let factories = [];				// Array of research Objects
+			let obj = {};               // Object to add to the research array
+			
 
+			for (let i = 0; i < facility.capability.manufacturing.capacity; i++) {
+				 let { manufacturing } = facility.capability;
+				//console.log(facility);
+				obj = {
+					_id: 			facility._id,
+					index:			i,
+					name:			`${facility.name} - Factory 0${i+1}`,			
+					status:			{ 
+										damage: manufacturing.damage,
+										active: manufacturing.active
+									},
+					team:			{
+										_id:			facility.team._id,
+										shortName:		facility.team.shortName
+									}
+				}
+				// Temporary fix for backend not clearing out the factories' research array upon completion
+				// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
+				//console.log(obj.name);
+				// if (getLabPct(obj._id, this.props.facilities, this.props.research, this.props.techCost) >= 100) {	obj.research = []; } 
+				factories.push(obj);
+			}
+
+			this.setState({factories});
+		}
 	}
 
 	render () {
@@ -102,7 +135,7 @@ class FacilityStats extends Component{
 			</FlexboxGrid>
 			</Panel>
 			<Panel header={`Production			| Capacity: ${capability.manufacturing.capacity}`}>
-				<Table height={100} data={this.state.labs}>
+				<Table height={100} data={this.state.factories}>
 						<Column verticalAlign='middle' flexGrow={2} align="left" fixed>
 							<HeaderCell>Name</HeaderCell>
 							<Cell dataKey="name" />

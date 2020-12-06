@@ -77,7 +77,7 @@ export const addUpgrades = upgrade =>
 	});
 	
 	export const getUpgrades = createSelector(
-		state => state.entities.upgrade.list,
+		state => state.entities.upgrades.list,
 		state => state.auth.team,
 		(upgrade, team) => upgrade.filter(upgrade => upgrade.team === team._id)
 	);

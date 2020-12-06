@@ -32,10 +32,28 @@ class UpgradeTable extends Component {
 						children: []
 				}
 				for (let effect of upgrade.effects) {
+					let thisType = 'Unknown'
+					switch (effect.type) {
+						case 'attack': 
+							thisType = 'Attack'
+							break;
+						case 'defense': 
+							thisType = 'Defense'
+							break;
+						case 'terror': 
+							thisType = 'Terror'
+							break;
+						case 'pr': 
+							thisType = 'PR'
+							break;
+						default:
+							thisType = 'Unknown'
+							break;
+					}
 					let ob2 = {
 						id: id_count,
 						effect: effect.effect,
-						type: effect.type
+						type: thisType
 					}
 					obj.children.push(ob2);
 				}

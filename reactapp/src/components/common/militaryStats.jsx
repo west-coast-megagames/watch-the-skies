@@ -8,52 +8,37 @@ const MilitaryStats = (props) => {
 		<Container>
 			<Panel>
 			<FlexboxGrid>
-              <FlexboxGrid.Item colspan={12}>
-                <p>
-                  <b>Name:</b> {name}
-                </p>
-                <p>
-                  <b>Location:</b> {site.name} |{" "}
-                  {zone.name} zone
-                </p>
-              </FlexboxGrid.Item>
-							<FlexboxGrid.Item colspan={12}>
-                <p>
-                  <b>Type:</b> {type}
-                </p>
-								<p>
-                  <b>Base:</b> {origin.name}{" "}
-									<IconButton
-                    size="xs"
-                    onClick={() =>
-                      Alert.warning(`Base transfers have not been implemented`)
-                    }
-                    icon={<Icon icon="send" />}
-                  >
-                    Transfer Unit
-                  </IconButton>
-                </p>
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
-            <br />
-            <FlexboxGrid>
-              <FlexboxGrid.Item colspan={12}>
-                <p>Health Bar</p>
-                <Progress.Line
-                  percent={(stats.health/stats.healthMax) * 100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
-              </FlexboxGrid.Item>
-							<FlexboxGrid.Item colspan={12}>
-                <p>Placeholder Bar</p>
-                <Progress.Line
-                  percent={100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+					<FlexboxGrid.Item colspan={4}>
+						<img
+							src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" 
+						/>									
+					</FlexboxGrid.Item>
+          <FlexboxGrid.Item colspan={12}>
+            <p>
+              <b>Name:</b> {name}
+            </p>
+            <p>
+              <b>Location:</b> {site.name} |{" "}
+              {zone.name} zone
+            </p>
+						<p>
+              <b>Type:</b> {type}
+            </p>
+						<p>
+              <b>Base:</b> {origin.name}{" "}
+							<IconButton
+                size="xs"
+                onClick={() =>
+                  Alert.warning(`Base transfers have not been implemented`)
+                }
+                icon={<Icon icon="send" />}
+              >
+                Transfer Unit
+              </IconButton>
+            </p>
+          </FlexboxGrid.Item>
+       </FlexboxGrid>
+        <br />
 			</Panel>
 			<Panel header="Unit Statistics">
 			<FlexboxGrid>
@@ -63,6 +48,11 @@ const MilitaryStats = (props) => {
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 						</Whisper>
 						<b> Health:</b> {stats.health}/{stats.healthMax}{" "}
+						<Progress.Line
+              percent={(stats.health/stats.healthMax) * 100}
+              strokeColor="#32a844"
+              showInfo={false}
+            />
 						{stats.health < stats.healthMax && (
 							<span>
 								{" "}
