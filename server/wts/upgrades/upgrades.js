@@ -46,8 +46,8 @@ async function addUpgrade (upgrade, unit) {
 	try{
 		unit.upgrades.push(upgrade);
 		upgrade.status.storage = false;
-
-		for (const element of upgrade.effects) {
+		upgrade.team = unit.team; // this is in case an upgrade is made by control, the team still gets it
+		for (const element of upgrade.effects) {// add all unit types and effects here
 			switch (element.type) {
 			case 'attack':
 				unit.stats.attack += element.effect;
