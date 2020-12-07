@@ -1,5 +1,6 @@
 import React from "react";
 import { Timeline, Icon, Panel, FlexboxGrid } from "rsuite";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = props => {
@@ -126,6 +127,42 @@ const ResearchLog = props => {
     </Timeline.Item>
   );
 };
+
+// TODO - Nothing scott is perfect in every way
+const BattleLog = props => {
+  let { log } = props;
+  let date = new Date(log.date);
+
+  return (
+    <Timeline.Item key={log._id} dot={<Icon icon="crosshairs" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundImage: "linear-gradient(to bottom right, #fff, #f8f9f9)"
+        }}
+        header={`Battle Log - ${log.team.code} | ${
+          log.timestamp.turn
+        } ${log.timestamp.phase} - ${log.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        collapsible
+      >
+        <p>
+          {log.timestamp.clock} {log.timestamp.turn} - {log.timestamp.phase} -
+          Turn {log.timestamp.turnNum}
+        </p>
+        <p>
+          <b>Team:</b> {log.team.name}
+        </p>
+        <p>
+          <b>Location:</b> {log.site.name} 
+        </p>
+				<p>
+					<b>Report:</b> {log.report}
+				</p>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 
 // TODO - Look of an Intercept log should be fleshed out for march.
 const InterceptLog = props => {
@@ -398,7 +435,7 @@ const ReconLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
+          backgroundImage: "linear-gradient(to bottom right, #ff7f00, #fff)"
         }}
         header={`Recon Report - ${log.team.code} | ${
           log.timestamp.turn
@@ -455,7 +492,8 @@ export {
   TransactionLog,
   ResearchLog,
   ReconLog,
-  InterceptLog,
+	InterceptLog,
+	BattleLog,
   TradeLog,
   TreatyLog,
   TerrorLog,
