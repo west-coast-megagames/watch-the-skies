@@ -19,7 +19,14 @@ class AssetTab extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-
+    if (prevProps.lastFetch !== this.props.lastFetch) {
+			console.log('hello2')
+			if(this.state.unit) {
+				console.log('hello')
+				let unit = this.props.units.find(el => el._id === this.state.unit._id);
+				this.setState({ unit });
+			}
+		}
 	}
 
 
@@ -194,7 +201,8 @@ const mapStateToProps = state => ({
 	account: getOpsAccount(state),
 	units: getMilitary(state),
 	upgrades: getUpgrades(state),
-	facilities: getFacilites(state)
+	facilities: getFacilites(state),
+	lastFetch: state.entities.military.lastFetch
 });
 
 const mapDispatchToProps = dispatch => ({});

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Button, Alert, Table, Drawer, List, Popover, Whisper, Icon, IconButton, Panel } from 'rsuite';
 import ListItem from 'rsuite/lib/List/ListItem';
 import { gameServer } from '../../config';
-import { getUpgrades } from '../../store/entities/upgrades';
+import { getStored } from '../../store/entities/upgrades';
 import axios from 'axios';
 
 const { HeaderCell, Cell, Column } = Table;
@@ -14,9 +14,8 @@ class UpgradeDrawer extends Component {
 		eligibleUps: []
 	 }
 
-	 componentDidMount() { //el.status.storage === true &&
-		const eligibleUps = this.props.upgrades.filter(el =>  el.status.damaged === false && el.status.destroyed === false);
-		this.setState({ eligibleUps });
+	 componentDidMount() { //
+		this.setState({ eligibleUps: this.props.upgrades });
 		console.log(this.state.eligibleUps)
 	};
 
@@ -131,7 +130,8 @@ class UpgradeDrawer extends Component {
 }
  
 const mapStateToProps = state => ({
-	upgrades: getUpgrades(state),
+	upgrades: getStored(state),
+	lastFetch: state.entities.upgrades.lastFetch
 });
 
 const mapDispatchToProps = dispatch => ({});

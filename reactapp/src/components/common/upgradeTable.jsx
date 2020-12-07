@@ -80,7 +80,7 @@ handleDelete = async (upgrade) => {
 				<Content>
 					<hr />
 					<p>Upgrades</p>
-					<Table
+					{this.state.data.length > 0 && <Table
 						isTree
 						defaultExpandAllRows
 						rowKey="id"
@@ -118,6 +118,8 @@ handleDelete = async (upgrade) => {
 								</Cell>
 						</Column>
 					</Table>
+					}
+				<br></br>
 				</Content>
 			</Container>
 		);
