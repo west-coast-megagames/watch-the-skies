@@ -11,7 +11,7 @@ const ServiceRecord = (props) => {
 	let s = reports.length !== 1 ? 's' : '';
 
 	return(
-	<Panel header={`Service Record - ${reports.length} Report${s}`} collapsible bordered>
+	<Panel header={`Service Record - ${reports.length} Report${s}`} collapsible>
 		{reports.length === 0 && <p>No service record available...</p>}
 		{reports.length >= 1 &&
 		<Timeline style={{marginLeft: '16px'}}>
