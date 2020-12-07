@@ -68,8 +68,12 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 
 		interceptDebugger(`${attacker.name} rolled a ${atkRoll} for round ${round}!`);
 		if (atkRoll >= atkHitTarget || atkRoll == 10) {
-			defender = await dmgAircraft(defender, atkStats, 'defender');
-
+			if (defRoll == 10) {
+				defender = await dmgAircraft(defender, atkStats, 'defender', true); // Assigns a crit hit
+			}
+			else {
+				defender = await dmgAircraft (defender, atkStats, 'defender', false); // Assigns a normal hit
+			}
 		}
 		else {
 			interceptDebugger(`${attacker.name} missed the target of ${atkHitTarget}!`);
@@ -80,7 +84,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 		interceptDebugger(`${defender.name} rolled a ${defRoll} for round ${round}!`);
 		if (defRoll >= defHitTarget || defRoll == 10) {
 			if (defRoll == 10) {
-				attacker = await dmgAircraft(attacker, defStats, 'attacker', true); // Assigns a crit hit
+				attacker = await dmgAircraft(attacker, defStats, 'attaker', true); // Assigns a crit hit
 			}
 			else {
 				attacker = await dmgAircraft (attacker, defStats, 'attaker', false); // Assigns a normal hit
@@ -106,8 +110,11 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	while (combat);
 
 	attackReport.interception = interception;
-	defenseReport.interception = interception;
+	attackReport = attackReport.createTimestamp(attackReport);
 	await attackReport.save();
+
+	defenseReport.interception = interception;
+	defenseReport = defenseReport.createTimestamp(defenseReport);
 	await defenseReport.save();
 
 	await applyDmg(attacker);
@@ -125,7 +132,6 @@ function combatBonus (unit) {
 		for (const effect of upgrade.effects) {
 
 			if (effect.type in stats) stats[effect.type] += effect.value;
-
 		}
 	}
 
@@ -197,15 +203,15 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 		systemKeys.shift();
 
 		for (let i = 0; i < hits; i++) {
-			const index = rand(systemKeys.length - 1); // Selects a random system
+			const index = rand(systemKeys.length) - 1; // Selects a random system
 
-			const sysName = systemKeys[index].charAt(0).toUpperCase() + systemKeys[index].slice(1);
+			const sysName = systemKeys[index];
 			const upgrade = unit.upgrades.find(upG => upG.type === sysName);
 
 			if (!upgrade || upgrade === null) {
 				unit.systems[sysName].damaged ? unit.systems[sysName].destroyed = true : unit.systems[sysName].damaged = true;
 				interception.salvage.push('scrap');
-				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
+				interceptDebugger(`Damaging Upgrade ${sysName}...`);
 				// TODO: Add dynamic report of system hit and status of system
 			}
 			else if (upgrade.status.damaged === false) {
