@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { UpgradeBlueprint } = require('../../models/blueprint');
 const validateObjectId = require('../../middleware/util/validateObjectId');
-const { newUpgrade } = require('../../wts/construction/construction');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const { Upgrade } = require('../../models/upgrade');
 const nexusEvent = require('../../middleware/events/events');
