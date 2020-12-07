@@ -81,3 +81,9 @@ export const addUpgrades = upgrade =>
 		state => state.auth.team,
 		(upgrade, team) => upgrade.filter(upgrade => upgrade.team === team._id)
 	);
+
+	export const getStored = createSelector(
+		state => state.entities.upgrades.list,
+		state => state.auth.team,
+		(upgrade, team) => upgrade.filter(upgrade => upgrade.team === team._id && upgrade.status.storage === true &&  upgrade.status.damaged === false && upgrade.status.destroyed === false)
+	);
