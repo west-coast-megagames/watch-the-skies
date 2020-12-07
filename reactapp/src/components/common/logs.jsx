@@ -156,7 +156,7 @@ const BattleLog = props => {
           <b>Location:</b> {report.site.name} 
         </p>
 				<p>
-					<b>Report:</b> {report.report}
+					<b>Report:</b> {report.battleRecord}
 				</p>
       </Panel>
     </Timeline.Item>
