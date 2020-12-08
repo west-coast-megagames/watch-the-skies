@@ -63,10 +63,12 @@ const control = require('./game/control');
 const diplomacy = require('./game/diplomacy');
 const science = require('./game/science');
 const aircrafts = require('./game/aircrafts');
-const milGame = require('./game/milGame');
+// const milGame = require('./game/milGame');
 const news = require('./game/news');
 const shared = require('./game/shared');
 const upgrades = require('./game/upgrades');
+
+const tempMil = require('./game/tempMil');
 
 const debug = require('./debugRoute');
 
@@ -89,7 +91,7 @@ module.exports = function (app) {
 	app.use('/game/upgrades', upgrades);
 	app.use('/science', science);
 	app.use('/game/aircrafts', aircrafts);
-	app.use('/game/military', milGame);
+	// app.use('/game/military', milGame);
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering
@@ -125,6 +127,9 @@ module.exports = function (app) {
 	app.use('/init/initResearch', initResearch); // Route for init/check of Research
 	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
 	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
+
+
+	app.use('/game/tempMil', tempMil);
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones

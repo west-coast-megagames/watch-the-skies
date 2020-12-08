@@ -128,7 +128,7 @@ class InvasionModal extends Component {
         let invasion = { cost, units, destination, team };
 
         try {
-            let { data } = await axios.put(`${gameServer}game/military/deploy`, invasion); // Axios call to deploy units
+            let { data } = await axios.put(`${gameServer}game/tempMil/deploy`, invasion); // Axios call to deploy units
             Alert.success(data)
         } catch (err) {
             Alert.error(`Error: ${err.body} ${err.message}`, 5000)
