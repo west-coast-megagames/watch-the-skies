@@ -4,13 +4,13 @@ import { updateEvents } from '../api';
 import { accountsUpdated } from '../store/entities/accounts';
 import { aircraftsUpdated } from '../store/entities/aircrafts';
 import { articleAdded } from '../store/entities/articles';
-import { logsUpdated } from '../store/entities/logs';
 import { researchReceived } from '../store/entities/research';
 import { usersRecieved, loginSocket } from '../store/entities/auth';
 import { facilitiesUpdated } from '../store/entities/facilities';
 import { militaryUpdated } from '../store/entities/military';
 import { sitesReceived } from '../store/entities/sites';
 import { upgradesUpdated } from '../store/entities/upgrades';
+import { reportsUpdated } from '../store/entities/reports';
 
 const initUpdates = () => {
     updateEvents.updateTeam((err, team) => {
@@ -58,9 +58,9 @@ const initUpdates = () => {
         store.dispatch(facilitiesUpdated(facilities));
     });
 
-    updateEvents.updateLogs((err, logs) => {
-        notify({catagory: 'update', type: 'success', title: 'Logs Update', body: `The current state of game logs has been updated...`});
-        store.dispatch(logsUpdated(logs));
+    updateEvents.updateReports((err, reports) => {
+        notify({catagory: 'update', type: 'success', title: 'Reports Update', body: `The current state of game reports has been updated...`});
+        store.dispatch(reportsUpdated(reports));
     });
 
     updateEvents.updateResearch((err, research) => {

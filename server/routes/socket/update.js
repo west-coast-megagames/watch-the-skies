@@ -11,9 +11,9 @@ const { Article } = require('../../models/article');
 const { Research } = require('../../models/research');
 const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/military');
-const { Log } = require('../../models/logs/log');
 const { Site } = require('../../models/site');
 const { Upgrade } = require('../../models/upgrade');
+const { Report } = require('../../models/report');
 
 module.exports = function (io) {
 	const UpdateClients = new SocketServer();
@@ -108,9 +108,9 @@ module.exports = function (io) {
 		updateSocket.emit('updateMilitary', military);
 	});
 
-	nexusEvent.on('updateLogs', async () => {
-		socketDebugger('Event: Updating logs...');
-		const logs = await Log.find()
+	nexusEvent.on('updateReports', async () => {
+		socketDebugger('Event: Updating reports...');
+		const reports = await Report.find()
 			.populate('team')
 			.populate('country', 'name')
 			.populate('zone')
@@ -119,7 +119,7 @@ module.exports = function (io) {
 			.populate('theory')
 			.populate('units')
 			.sort({ date: 1 });
-		updateSocket.emit('updateLogs', logs);
+		updateSocket.emit('updateReports', reports);
 	});
 
 	nexusEvent.on('newsAlert', async (article) => {

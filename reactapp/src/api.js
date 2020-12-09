@@ -66,8 +66,8 @@ function updateMilitary (cb) {
   updateSocket.on('updateMilitary', data => cb(null, data));
 }
 
-function updateLogs(cb) {
-  updateSocket.on('updateLogs', data => cb(null, data));
+function updateReports(cb) {
+  updateSocket.on('updateReports', data => cb(null, data));
 }
 
 function addNews (cb) {
@@ -90,6 +90,6 @@ function updateUpgrades (cb) {
 	updateSocket.on('updateUpgrades', data => cb(null, data));
 }
 
-let updateEvents = { updateUpgrades, login, updateUsers, updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities, addNews, updateLogs, updateSites };
+let updateEvents = { updateUpgrades, login, updateUsers, updateMilitary, updateTeam, updateAircrafts, updateAccounts, updateResearch, updateFacilities, addNews, updateReports, updateSites };
 
 export { gameClock, banking, updateEvents, socket, clockSocket, updateSocket };
