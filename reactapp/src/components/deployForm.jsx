@@ -157,7 +157,7 @@ class DeployMilitary extends Component {
 		let deployment = { cost, units: mobilization, destination, team };
 
 		try {
-				let { data } = await axios.put(`${gameServer}game/military/deploy`, deployment); // Axios call to deploy units
+				let { data } = await axios.put(`${gameServer}game/tempMil/deploy`, deployment); // Axios call to deploy units
 				Alert.success(data)
 				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
