@@ -14,7 +14,7 @@ const { Facility } = require('../../models/facility');
 // @Desc    Get all Upgrades
 // @access  Public
 router.get('/', async function (req, res) {
-	const upgrades = await Upgrade.find();
+	const upgrades = await Upgrade.find().populate('team', 'name shortName');
 	res.status(200).json(upgrades);
 });
 
