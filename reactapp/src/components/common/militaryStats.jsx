@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
 import UpgradeDrawer from "./upgradeDrawer";
-
+import axios from 'axios';
+import { gameServer } from "../../config";
 
 class MilitaryStats extends Component {
 	state = { 
@@ -15,6 +16,18 @@ class MilitaryStats extends Component {
 
 	closeUpgrade = () => { 
 		this.setState({showUpgrade: false}) 
+		};
+
+		repair = async () => {
+			try {
+				let response = await axios.put(`${gameServer}game/tempMil/repair`, {
+					_id: this.props.unit._id,
+				});
+				Alert.success(response.data);
+			} catch (err) {
+				console.log(err.response.data);
+				Alert.error(`Error: ${err.response.data}`);
+			}
 		};
 
 	render() {
@@ -78,11 +91,9 @@ class MilitaryStats extends Component {
 									<IconButton
 										size="xs"
 										onClick={() =>
-											Alert.warning(
-												`Repairs for military units has not been implemented yet...`
-											)
+											this.repair()
 										}
-										disabled={stats.hull === stats.hullMax || status.repair}
+										disabled={stats.health === stats.healthMax || status.repair}
 										icon={<Icon icon="wrench" />}
 									>
 										Repair

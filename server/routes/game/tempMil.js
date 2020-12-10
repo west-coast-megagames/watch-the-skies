@@ -110,6 +110,7 @@ router.patch('/resethealth', async function (req, res) {
 		console.log(`${unit.name} has ${unit.stats.health} health points`);
 		unit.stats.health = unit.stats.healthMax;
 		unit.status.destroyed = false;
+		unit.stats.damaged = false;
 		console.log(`${unit.name} now has ${unit.stats.health} health points`);
 		await unit.save();
 	}
@@ -129,5 +130,47 @@ router.patch('/resetsites', async function (req, res) {
 	res.send('All sites succesfully reset!');
 	nexusEvent.emit('updateSites');
 });
+
+router.put('/repair', async function (req, res) {
+	const unit = await Military.findById(req.body._id);
+	console.log(req.body);
+	console.log(unit);
+	let account = await Account.findOne({
+		name: 'Operations',
+		team: unit.team
+	});
+	if (account.balance < 2) {
+		routeDebugger('Not enough funding...');
+		res
+			.status(402)
+			.send(
+				`No Funding! Assign more money to your operations account to repair ${unit.name}.`
+			);
+	}
+	else {
+		account = await banking.withdrawal(
+			account,
+			2,
+			`Repairs for ${unit.name}`
+		);
+		await account.save();
+		routeDebugger(account);
+
+		// unit.status.repair = true;
+		// unit.status.ready = false;
+		unit.status.ready = true;
+		unit.status.destroyed = true;
+		unit.status.damaged = true;
+		unit.stats.health = unit.stats.healthMax;
+
+		await unit.save();
+
+		routeDebugger(`${unit.name} put in for repairs...`);
+
+		res.status(200).send(`${unit.name} put in for repairs...`);
+		nexusEvent.emit('updateMilitary');
+	}
+});
+
 
 module.exports = router;
