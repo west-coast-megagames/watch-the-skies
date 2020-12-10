@@ -5,6 +5,7 @@ const { Site } = require('../../models/site');
 const { d6, rand } = require('../../util/systems/dice');
 const nexusEvent = require('../../middleware/events/events');
 const { Upgrade } = require('../../models/upgrade');
+const { findById } = require('../../models/logs/reconLog');
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -13,6 +14,7 @@ async function resolveBattle (attackers, defenders) {
 	let defenderResult = 0;
 	const spoils = [];
 	let report = '';
+	const resultReport = [];
 	let combatRound = 1;
 
 	for (combatRound; combatRound < 4; combatRound++) {
@@ -20,6 +22,17 @@ async function resolveBattle (attackers, defenders) {
 		defenderTotal = 0;
 		attackerResult = 0;
 		defenderResult = 0;
+		const result = {
+			round: combatRound,
+			attackerRolls: 0,
+			attackerHits: 0,
+			defenderRolls: 0,
+			defenderHits: 0,
+			attackersDamaged: [],
+			attackersDestroyed: [],
+			defendersDamaged: [],
+			defendersDestroyed: []
+		};
 
 		if (attackers.length === 0 || defenders.length === 0) {
 			break;
@@ -39,18 +52,22 @@ async function resolveBattle (attackers, defenders) {
 
 		// 3) roll both sides and save results
 		for (let i = 0; i < attackerTotal; i++) {
-			const result = d6();
-			if (result > 2) {
+			const res = d6();
+			if (res > 2) {
 				attackerResult++;
 			}
 		}
 		for (let i = 0; i < defenderTotal; i++) {
-			const result = d6();
-			if (result > 2) {
+			const res = d6();
+			if (res > 2) {
 				defenderResult++;
 			}
 		}
 		report += `Attacker hit ${attackerResult} out of ${attackerTotal} rolls!\nDefender hit ${defenderResult} out of ${defenderTotal}!\nAssigning defender casualties...\n`;
+		result.attackerRolls = attackerTotal;
+		result.attackerHits = attackerResult;
+		result.defenderRolls = defenderTotal;
+		result.defenderHits = defenderResult;
 
 		// 4) assign casualties to defenders
 		for (let i = 0; i < attackerResult; i++) {
@@ -66,9 +83,13 @@ async function resolveBattle (attackers, defenders) {
 				// 4.4) if it is a "HP" result, unit takes a hit.
 				unit.stats.health = unit.stats.health - 1;
 				report += `${unit.name} has been hit!\n`;
+				result.defendersDamaged.push(unit.name);
+
 				// MAKE SURE TO REMOVE UNIT IF IT HITS 0 HP
 				if (unit.stats.health === 0) {
 					report += `${unit.name} has been DESTROYED!\n`;
+					result.defendersDestroyed.push(unit.name);
+
 					unit.status.destroyed = true;
 					defenders.splice(cas, 1);
 					while (unit.upgrades.length > 0) {
@@ -107,6 +128,7 @@ async function resolveBattle (attackers, defenders) {
 				}
 				spoils.push(hit);
 				report += `${hit.name} has been hit!\n`;
+				result.defendersDamaged.push(hit.name);
 			}
 			// save the unit that was hit
 			await unit.save();
@@ -126,10 +148,13 @@ async function resolveBattle (attackers, defenders) {
 			// 	5.4) if it is a "HP" result, unit takes a hit.
 				unit.stats.health = unit.stats.health - 1;
 				report += `${unit.name} has been hit!\n`;
+				result.attackersDamaged.push(unit.name);
 
 				// MAKE SURE TO REMOVE UNIT IF IT HITS 0 HP
 				if (unit.stats.health === 0) {
 					report += `${unit.name} has been DESTROYED!\n`;
+					result.attackersDestroyed.push(unit.name);
+
 					unit.status.destroyed = true;
 					attackers.splice(cas, 1);
 					while (unit.upgrades.length > 0) {
@@ -168,13 +193,15 @@ async function resolveBattle (attackers, defenders) {
 				}
 				spoils.push(hit);
 				report += `${hit.name} has been hit!\n`;
+				result.attackersDamaged.push(hit.name);
 			}
 			// save the unit that was hit
 			await unit.save();
 		}
+		resultReport.push(result);
 	}// for combatRound
 
-	const data = { attackerResult, defenderResult, report, spoils };
+	const data = { resultReport, report, spoils };
 	return data;
 }
 
@@ -191,7 +218,7 @@ async function runMilitary () {
 
 		let militaryReport = new MilitaryMission;
 		militaryReport.type = 'Battle';
-		const army = await Military.find({ site });
+		const army = await Military.find({ site }).lean();
 		let defenders = [];
 		let attackers = [];
 		if (site.status.occupied === true) {
@@ -202,6 +229,7 @@ async function runMilitary () {
 			defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
 			attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
 		}
+		const initialAttackers = [ ...attackers];
 		const attackerTeams = [];
 		// go over attackers, creating an array of objects
 		for (const unit of attackers) {
@@ -217,6 +245,7 @@ async function runMilitary () {
 		if (attackers.length > 0 && defenders.length > 0) {
 			data = await resolveBattle(attackers, defenders);
 			report = report + data.report; // + 'spoils of war: \n' + data.spoils;
+			militaryReport.results = data.resultReport;
 		}
 
 
@@ -256,6 +285,7 @@ async function runMilitary () {
 					const unit = rand(attackers.length) - 1;
 					upgrade = await Upgrade.findById(upgrade);
 					upgrade.status.damaged = true;
+					upgrade.status.storage = true;
 					upgrade.team = attackers[unit].team._id;
 					await upgrade.save();
 				}
@@ -270,12 +300,14 @@ async function runMilitary () {
 				for (let upgrade of data.spoils) {
 					upgrade = await Upgrade.findById(upgrade);
 					upgrade.status.damaged = true;
+					upgrade.status.storage = true;
 					upgrade.team = site.team._id;
 					await upgrade.save();
 				}
 			}
 
-			for (const unit of army) {
+			for (let unit of initialAttackers) {
+				unit = await Military.findById(unit._id);
 				await unit.recall();
 			}
 		}
@@ -286,6 +318,7 @@ async function runMilitary () {
 					const unit = rand(army.length) - 1;
 					upgrade = await Upgrade.findById(upgrade);
 					upgrade.status.damaged = true;
+					upgrade.status.storage = true;
 					upgrade.team = army[unit].team._id;
 					await upgrade.save();
 				}
@@ -306,6 +339,7 @@ async function runMilitary () {
 				attackingTeams: militaryReport.attackingTeams,
 				site: militaryReport.site,
 				battleRecord: militaryReport.battleRecord,
+				results: militaryReport.results,
 				spoils: militaryReport.spoils
 			});
 

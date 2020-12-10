@@ -15,7 +15,7 @@ const nexusEvent = require('../../middleware/events/events');
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const randomCords = require('../../util/systems/lz');
-// const { runMilitary } = require('../../wts/military/combat');
+const { runMilitary } = require('../../wts/military/combat');
 
 // @route   PUT game/military/deploy
 // @Desc    Deploy a group of units for a country
@@ -159,8 +159,8 @@ router.put('/repair', async function (req, res) {
 		// unit.status.repair = true;
 		// unit.status.ready = false;
 		unit.status.ready = true;
-		unit.status.destroyed = true;
-		unit.status.damaged = true;
+		unit.status.destroyed = false;
+		unit.status.damaged = false;
 		unit.stats.health = unit.stats.healthMax;
 
 		await unit.save();
@@ -170,6 +170,11 @@ router.put('/repair', async function (req, res) {
 		res.status(200).send(`${unit.name} put in for repairs...`);
 		nexusEvent.emit('updateMilitary');
 	}
+});
+
+router.patch('/resolve', async function (req, res) {
+	await runMilitary();
+	res.status(200).send('Battles resolved');
 });
 
 
