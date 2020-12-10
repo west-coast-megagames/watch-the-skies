@@ -1,6 +1,6 @@
 import React, { Component, Image, View } from 'react';
 import { connect } from 'react-redux';
-import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table } from 'rsuite';
+import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag } from 'rsuite';
 import FacilityStats from '../../../components/common/facilityStats';
 import MilitaryStats from '../../../components/common/militaryStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
@@ -9,6 +9,9 @@ import { getOpsAccount } from '../../../store/entities/accounts';
 import { getFacilites } from '../../../store/entities/facilities';
 import { getMilitary } from '../../../store/entities/military';
 import { getUpgrades } from '../../../store/entities/upgrades';
+
+import axios from 'axios';
+import { gameServer } from '../../../config';
 
 const { HeaderCell, Cell, Column } = Table;
 class AssetTab extends Component {
@@ -20,15 +23,28 @@ class AssetTab extends Component {
 
 	componentDidUpdate(prevProps, prevState) {
     if (prevProps.lastFetch !== this.props.lastFetch) {
-			console.log('hello2')
 			if(this.state.unit) {
-				console.log('hello')
 				let unit = this.props.units.find(el => el._id === this.state.unit._id);
 				this.setState({ unit });
+			}
+			else if (this.state.upgrade) {
+				let upgrade = this.props.upgrades.find(el => el._id === this.state.upgrade._id);
+				this.setState({ upgrade });
 			}
 		}
 	}
 
+	repair = async (upgrade) => {
+		try {
+			let response = await axios.put(`${gameServer}game/upgrades/repair`, {
+				_id: upgrade._id,
+			});
+			Alert.success(response.data);
+		} catch (err) {
+			console.log(err.response.data);
+			Alert.error(`Error: ${err.response.data}`);
+		}
+	};
 
 	render() { 
 		return (
@@ -94,6 +110,25 @@ class AssetTab extends Component {
 								<p>
 									<b>Description:</b> {this.state.upgrade.desc}
 								</p>
+								<p>
+									<b>Status:</b>
+								</p>									
+									<TagGroup>
+										{this.state.upgrade.status.damaged && <Tag color='oragnge'>Damaged</Tag>}
+										{this.state.upgrade.status.storage && <Tag color='green'>Stored</Tag>}
+										{!this.state.upgrade.status.storage && <Tag color='violet'>Attached</Tag>}
+										{this.state.upgrade.status.destroyed && <Tag color='red'>Destroyed</Tag>}
+										{this.state.upgrade.status.salvage && <Tag color='blue'>Salvage</Tag>}
+									</TagGroup>
+								{this.state.upgrade.status.damaged && <IconButton
+										size="xs"
+										onClick={() =>
+											this.repair(this.state.upgrade)
+										}
+										icon={<Icon icon="wrench" />}
+									>
+										Repair
+									</IconButton>}
 							</FlexboxGrid.Item>
 						</FlexboxGrid>
 						<Table height={300} data={this.state.upgrade.effects}>
