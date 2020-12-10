@@ -125,8 +125,6 @@ router.patch('/', async (req, res) => {
 	const { editedUnit } = req.body;
 	try{
 		const unit = await Military.findByIdAndUpdate(editedUnit._id, editedUnit, { new: true, overwrite: true });
-		// unit = await unit.save();
-		console.log(unit);
 		res.status(200).send(unit);
 	}
 	catch (err) {
