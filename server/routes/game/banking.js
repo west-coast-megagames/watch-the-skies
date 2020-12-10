@@ -106,7 +106,7 @@ router.get('/accounts/:id', validateObjectId, async function (req, res) {
 router.patch('/accounts', async function (req, res) {
 	for await (const account of Account.find()) {
 		{
-			account.balance = 0;
+			account.balance = 1000;
 			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 		}

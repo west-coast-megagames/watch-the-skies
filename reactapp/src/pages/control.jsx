@@ -161,7 +161,7 @@ class Control extends Component {
 
 	resetAccounts = async () => {
 		try {
-				const response = await axios.patch(`${gameServer}api/banking/accounts`)
+				const response = await axios.patch(`${gameServer}game/banking/accounts`)
 				this.props.alert({type: 'success', title: 'Accounts Reset', body: response.data })
 		} catch (err) {
 				this.props.alert({type: 'error', title: 'Failed to reset accounts', body: `${err.response.data} - ${err.message}` })
