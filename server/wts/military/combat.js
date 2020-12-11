@@ -5,7 +5,6 @@ const { Site } = require('../../models/site');
 const { d6, rand } = require('../../util/systems/dice');
 const nexusEvent = require('../../middleware/events/events');
 const { Upgrade } = require('../../models/upgrade');
-const { findById } = require('../../models/logs/reconLog');
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -229,7 +228,7 @@ async function runMilitary () {
 			defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
 			attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
 		}
-		const initialAttackers = [ ...attackers];
+
 		const attackerTeams = [];
 		// go over attackers, creating an array of objects
 		for (const unit of attackers) {
@@ -252,6 +251,7 @@ async function runMilitary () {
 		// if attackers were victorious
 		if (defenders.length === 0 && attackers.length > 0) {
 			report += 'The Attackers are victorious!\n';
+			let liberated = false;
 			site.status.warzone = false;
 			site.status.occupied = true;
 
@@ -271,9 +271,18 @@ async function runMilitary () {
 			}
 
 			site.occupier = leadArmy.team;
-			if (site.occupier === site.team) {
+			if (site.occupier.toHexString() === site.team.toHexString()) {
 				site.status.occupied = false;
+				liberated = true;
 			}
+
+			for (let unit of army) {
+				unit = await Military.findById(unit._id);
+				if (unit.status.destroyed === true || (liberated && unit.team.toHexString() === site.team.toHexString())) {
+					await unit.recall();
+				}
+			}
+
 			// hit this logic if combat has been resolved successfully
 			if (site.subType === 'Point of Interest') {
 				site.hidden = true;
@@ -306,9 +315,11 @@ async function runMilitary () {
 				}
 			}
 
-			for (let unit of initialAttackers) {
+			for (let unit of army) {
 				unit = await Military.findById(unit._id);
-				await unit.recall();
+				if (attackerTeams.some(el => el.toHexString() === unit.team.toHexString()) || unit.status.destroyed === true) {
+					await unit.recall();
+				}
 			}
 		}
 		else {// else if it was a stalemate, no one recalls

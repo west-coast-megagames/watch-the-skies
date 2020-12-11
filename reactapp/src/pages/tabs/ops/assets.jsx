@@ -114,7 +114,7 @@ class AssetTab extends Component {
 									<b>Status:</b>
 								</p>									
 									<TagGroup>
-										{this.state.upgrade.status.damaged && <Tag color='oragnge'>Damaged</Tag>}
+										{this.state.upgrade.status.damaged && <Tag color='orange'>Damaged</Tag>}
 										{this.state.upgrade.status.storage && <Tag color='green'>Stored</Tag>}
 										{!this.state.upgrade.status.storage && <Tag color='violet'>Attached</Tag>}
 										{this.state.upgrade.status.destroyed && <Tag color='red'>Destroyed</Tag>}
