@@ -1,6 +1,9 @@
 import React from "react";
-import { Timeline, Icon, Panel, FlexboxGrid } from "rsuite";
+import { Timeline, Icon, Panel, FlexboxGrid, Table, List } from "rsuite";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Col from "rsuite/lib/Carousel";
+import FlexboxGridItem from "rsuite/lib/FlexboxGrid/FlexboxGridItem";
+const { HeaderCell, Cell, Column } = Table;
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = props => {
@@ -131,7 +134,26 @@ const ResearchLog = props => {
 // TODO - Nothing scott is perfect in every way
 const BattleLog = props => {
   let { report } = props;
-  let date = new Date(report.date);
+	let date = new Date(report.date);
+	
+	const Record = () => {
+		const result = report.results[0]
+		console.log(result);
+		return (
+			<FlexboxGrid header={`Round: ${result.round}`}>
+				<FlexboxGrid.Item colspan={12}><b>Attackers Hit {result.attackerHits} out of {result.attackerRolls}</b>
+					<List hover autoScroll bordered>
+						{result.defendersDamaged.map((unit, index) => (
+							<List.Item key={index} index={index} >
+								{unit}
+							</List.Item>
+						))}
+					</List>
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={12}><b>Defenders Hit {result.defenderHits} out of {result.defenderRolls}</b></FlexboxGrid.Item>
+			</FlexboxGrid>			
+		)
+	}
 
   return (
     <Timeline.Item key={report._id} dot={<Icon icon="crosshairs" size="2x" />}>
@@ -155,9 +177,28 @@ const BattleLog = props => {
         <p>
           <b>Location:</b> {report.site.name} 
         </p>
-				<p>
-					<b>Report:</b> {report.battleRecord}
-				</p>
+				<br/>
+				<FlexboxGrid>
+					<FlexboxGrid.Item colspan={12}>Attackers
+						<Table data={report.attackers}>
+							<Column flexGrow={12}>
+								<HeaderCell>Units</HeaderCell>
+								<Cell dataKey="name" />
+							</Column>
+						</Table>
+					</FlexboxGrid.Item>
+					<FlexboxGrid.Item colspan={12}>Defenders
+						<Table data={report.defenders}>
+							<Column flexGrow={12}>
+								<HeaderCell>Units</HeaderCell>
+								<Cell dataKey="name" />
+							</Column>
+						</Table>
+					</FlexboxGrid.Item>
+					<br/>
+				</FlexboxGrid>
+				<br/>
+				{report.results.length >0 && <Record></Record>}
       </Panel>
     </Timeline.Item>
   );
