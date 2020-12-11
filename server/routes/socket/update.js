@@ -118,6 +118,7 @@ module.exports = function (io) {
 			.populate('lab')
 			.populate('theory')
 			.populate('units')
+			.populate('site', 'name team')
 			.sort({ date: 1 });
 		updateSocket.emit('updateReports', reports);
 	});

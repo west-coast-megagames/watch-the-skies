@@ -23,6 +23,7 @@ router.get('/', async function (req, res) {
 			.populate('lab')
 			.populate('theory')
 			.populate('units')
+			.populate('site', 'name team')
 			.sort({ date: 1 });
 		res.status(200).json(reports);
 	}
