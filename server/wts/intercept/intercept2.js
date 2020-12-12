@@ -1,5 +1,6 @@
 const interceptDebugger = require('debug')('app:intercept');
 const { d10, rand } = require('../../util/systems/dice');
+const dynReport = require('./battleDetails');
 
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
@@ -15,12 +16,23 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	interceptDebugger('Beginning intercept...');
 	attackReport = atkReport; // Assigns the Attack Report to global variable
 	defenseReport = defReport; // Assigns the Defense Report to global variable
+
+	attackReport.report += ` ${dynReport.engageDesc(atkUnit, atkUnit.team)}`;
+	attackReport.opponent = defUnit; // Tracks that the opponent is the current target
+	attackReport.unit = atkUnit; // Tracks current stats of the unit
+	attackReport.position = 'offense';
+
+	defenseReport.opponent = atkUnit; // Tracks that the opponent is the attacker
+	defenseReport.unit = defUnit; // Tracks current stats of the unit
+	defenseReport.position = 'defense';
+
 	// Resets the global interception report for both AAR reports.
 	interception = {
-		attaker: {
+		attacker: {
 			stance: atkUnit.stance,
 			rolls: [],
 			outcomes: [],
+			stats: [],
 			dmg: {
 				armor: 0,
 				frame: 0,
@@ -31,6 +43,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 			stance: defUnit.stance,
 			rolls: [],
 			outcomes: [],
+			stats: [],
 			dmg: {
 				armor: 0,
 				frame: 0,
@@ -54,47 +67,64 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 		round++;
 		interceptDebugger(`Round ${round} of intercept ${atkReport.code}`);
 
-		const atkStats = combatBonus(attacker);
-		const defStats = combatBonus(defender);
+		const atkStats = combatBonus(attacker); // Calculates the current stats for the attacker
+		interception.attacker.stats.push(atkStats);
+		const defStats = combatBonus(defender); // Calculates the current stats for the defender
+		interception.defender.stats.push(defStats);
 
-		const atkHitTarget = 6 + defStats.evade - atkStats.detection;
-		const defHitTarget = 6 + atkStats.evade - defStats.detection;
+		const atkHitTarget = 4 + defStats.evade - atkStats.detection; // Calculates how hard the defender is to hit
+		const defHitTarget = 4 + atkStats.evade - defStats.detection; // Calculates how hard the attacker is to hit
 
-		const atkRoll = round <= atkStats.attack ? d10() : 0; // Rolls attakers roll for the round, assigns 0 if they have no roll.
-		interception.attaker.rolls.push(atkRoll); // Pushes the result to the attackers report.
+		const atkRoll = round <= atkStats.attack ? d10() : 0; // Rolls attackers roll for the round, assigns 0 if they have no roll.
+		interception.attacker.rolls.push(atkRoll); // Pushes the result to the attacker report.
 
 		const defRoll = round <= defStats.attack ? d10() : 0; // Rolls defender roll for the round, assigns 0 if they have no roll.
-		interception.attaker.rolls.push(atkRoll);
+		interception.defender.rolls.push(defRoll); // Pushes the result to defender report.
 
 		interceptDebugger(`${attacker.name} rolled a ${atkRoll} for round ${round}!`);
+		// Checks for a hit by the attacker for the round, and if it is a critical hit
 		if (atkRoll >= atkHitTarget || atkRoll == 10) {
-			if (defRoll == 10) {
+			if (atkRoll == 10) {
 				defender = await dmgAircraft(defender, atkStats, 'defender', true); // Assigns a crit hit
+				interception.attacker.outcomes.push('critical');
 			}
 			else {
 				defender = await dmgAircraft (defender, atkStats, 'defender', false); // Assigns a normal hit
+				interception.attacker.outcomes.push('hit');
 			}
 		}
+		else if (atkRoll == 0) {
+			interceptDebugger(`${attacker.name} is out of attacks!`);
+			interception.attacker.outcomes.push('no attack');
+		}
 		else {
-			interceptDebugger(`${attacker.name} missed the target of ${atkHitTarget}!`);
-			// dynamic reporting of attackers miss
-			// dynamic reporting of defender evading
+			attackReport.report = `${attackReport.report} ${dynReport.missedOpponent(attacker)}`; // dynamic reporting of attackers miss
+			defenseReport.report = `${defenseReport.report} ${dynReport.dodgeDesc(defender)}`; // dynamic reporting of defender evading
+			interception.attacker.outcomes.push('miss');
 		}
 
 		interceptDebugger(`${defender.name} rolled a ${defRoll} for round ${round}!`);
+		// Checks for a hit by the defender for the round, and if it is a critical hit
 		if (defRoll >= defHitTarget || defRoll == 10) {
 			if (defRoll == 10) {
-				attacker = await dmgAircraft(attacker, defStats, 'attaker', true); // Assigns a crit hit
+				attacker = await dmgAircraft(attacker, defStats, 'attacker', true); // Assigns a crit hit
+				interception.defender.outcomes.push('critical');
 			}
 			else {
-				attacker = await dmgAircraft (attacker, defStats, 'attaker', false); // Assigns a normal hit
+				attacker = await dmgAircraft (attacker, defStats, 'attacker', false); // Assigns a normal hit
+				interception.defender.outcomes.push('hit');
 			}
 
 		}
+		else if (defRoll == 0) {
+			interceptDebugger(`${defender.name} is out of attacks!`);
+			interception.defender.outcomes.push('no attack');
+		}
 		else {
 			interceptDebugger(`${defender.name} missed the target of ${defHitTarget}!`);
-			// dynamic reporting of defenders miss
-			// dynamic reporting of defender evading
+			defenseReport.report = `${defenseReport.report} ${dynReport.missedOpponent(defender)}`; // dynamic reporting of defenders miss
+			attackReport.report = `${attackReport.report} ${dynReport.dodgeDesc(attacker)}`; // dynamic reporting of attacker evading
+			interception.defender.outcomes.push('miss');
 		}
 
 		// Combat ends if either aircraft is destroyed and a crash is generated for each destroyed aircraft
@@ -117,15 +147,22 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	defenseReport = defenseReport.createTimestamp(defenseReport);
 	await defenseReport.save();
 
-	await applyDmg(attacker);
-	await applyDmg(defender);
+	await applyDmg(attacker); // Saves the effects of the combat for the attacker
+	await applyDmg(defender); // Saves the effects of the combat for the defender
+
+	attackReport = undefined; // Resets Attack Report to undefined
+	attacker = undefined; // Resets the attacker to undefefined
+	defenseReport = undefined; // Resets Attack Report to undefined
+	defender = undefined; // Resets the Defender to undefined
 
 	return;
 }
 
+
+// Looks through the upgrades, system damage, and stance of a craft and adjusts the combat stats accordingly
 function combatBonus (unit) {
 	interceptDebugger(`Recalculating Combat Bonuses for ${unit.name}!`);
-	const	stats = unit.stats;
+	const	stats = unit.stats.toObject();
 
 	// Give stat bonus based on upgrades
 	for (const upgrade of unit.upgrades) {
@@ -136,7 +173,8 @@ function combatBonus (unit) {
 	}
 
 	const systemKeys = Object.keys(unit.systems); // Pulls all system keys
-	systemKeys.shift();
+	systemKeys.shift(); // Gets rid of the system key 'index' at index 0
+
 	// Checks craft for damage for this round
 	for (const key of systemKeys) {
 		switch (key) {
@@ -183,8 +221,9 @@ function combatBonus (unit) {
 	return stats;
 }
 
+// Damages an aircraft due to the current side
 async function dmgAircraft (unit, opposition, side, criticalHit) {
-	interceptDebugger(`Damaging ${unit.name} due to damage by the ${side}.`);
+	interceptDebugger(`Damaging ${side} ${unit.name}...`);
 	const { stats } = unit;
 	let hits = 0;
 	let crash = false;
@@ -211,7 +250,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 			if (!upgrade || upgrade === null) {
 				unit.systems[sysName].damaged ? unit.systems[sysName].destroyed = true : unit.systems[sysName].damaged = true;
 				interception.salvage.push('scrap');
-				interceptDebugger(`Damaging Upgrade ${sysName}...`);
+				interceptDebugger(`Damaging ${sysName} system...`);
 				// TODO: Add dynamic report of system hit and status of system
 			}
 			else if (upgrade.status.damaged === false) {

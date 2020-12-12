@@ -17,7 +17,7 @@ let missions = [
   { value: "Cargo", label: "Cargo Run | Pick up cargo at site", aircraft: false, site: false, ground: true },
   { value: "Abduction", label: "Abduction | Pick up some 'willing' people", aircraft: false, site: false, ground: true },
   { value: "Raid", label: "Raid | Squad attacks target site", aircraft: false, site: false, ground: true },
-  { value: "Sabatage", label: "Sabatage | I bet the facilities here a booming", aircraft: false, site: false, ground: true },
+  { value: "Sabatage", label: "Sabatage | I bet the facilities here are booming", aircraft: false, site: false, ground: true },
 ]
 
 // let groundMission = []
