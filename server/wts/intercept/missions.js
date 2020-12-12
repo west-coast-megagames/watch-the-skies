@@ -258,9 +258,9 @@ async function runRecon () {
 			const escortCheck = await checkEscort(recon.target, undefined, atkReport);
 
 			// Check if we are still doing a recon mission or being intercepted.
-			if (escortCheck.target.toHexString() === recon.target.toHexString()) {
+			if (escortCheck.target._id.toHexString() === recon.target.toHexString()) {
 				// toHexString allows checking equality for _id
-				atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
+				atkReport.report = `${atkReport.report} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
 
 				// eslint-disable-next-line no-unused-vars
 				const roll = d6();
@@ -279,7 +279,7 @@ async function runRecon () {
 				const defReport = escortCheck.defReport; // The unit defending from recon, becomes the attacker for the interception
 
 				missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
-				atkReport.report = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
+				atkReport.report = `${atkReport.report} ${aircraft.name} engaged ${target.type}.`;
 				await intercept(target, defReport, aircraft, atkReport);
 				return;
 			}
@@ -304,9 +304,7 @@ async function runRecon () {
 
 			const patrolCheck = await checkPatrol(recon.target, atkReport, aircraft);
 			if (patrolCheck.continue === true) {
-				atkReport = patrolCheck.defReport;
-
-				atkReport.report = `${atkReport} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
+				atkReport.report = `${atkReport.report} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
 				missionDebugger(
 					`${aircraft.name} safely gathered information on ${target.name}`
 				);
@@ -354,9 +352,8 @@ async function runDiversions () {
 
 		const patrolCheck = await checkPatrol(mission.target, atkReport, aircraft);
 		if (patrolCheck.continue === true) {
-			atkReport = patrolCheck.defReport;
 
-			atkReport.report = `${atkReport} ${aircraft.name} distracted over target site without interference.`;
+			atkReport.report = `${atkReport.report} ${aircraft.name} distracted over target site without interference.`;
 
 			atkReport = atkReport.createTimestamp(atkReport);
 			await atkReport.save();

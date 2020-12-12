@@ -487,6 +487,7 @@ const ReconLog = props => {
           {report.timestamp.clock} {report.timestamp.turn} - {report.timestamp.phase} -
           Turn {report.timestamp.turnNum}
         </p>
+				<p>{report.report}</p>
       </Panel>
     </Timeline.Item>
   );
