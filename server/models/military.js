@@ -57,7 +57,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 	}
 };
 
-
 MilitarySchema.methods.deploy = async (unit, country) => {
 	const banking = require('../../../wts/banking/banking');
 	const { Account } = require('../../account');

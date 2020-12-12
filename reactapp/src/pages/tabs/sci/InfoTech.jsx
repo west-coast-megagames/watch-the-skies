@@ -1,3 +1,4 @@
+// TODO: Move this to be apart of the INFO DRAWER component system
 import React, { Component } from 'react'
 import { Drawer, Button, Table, Whisper, Icon, IconButton, Popover } from 'rsuite'
 import SciIcon from './../../../components/common/sciencIcon';

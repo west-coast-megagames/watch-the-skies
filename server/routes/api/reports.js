@@ -8,6 +8,7 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 const { Report } = require('../../models/report');
 const nexusError = require('../../middleware/util/throwError'); // Custom Error handling for Nexus
 const httpErrorHandler = require('../../middleware/util/httpError'); // Custom HTTP error sending for Nexus
+const nexusEvent = require('../../middleware/events/events');
 
 // @route   GET api/reports
 // @Desc    Get all Reports
@@ -81,12 +82,13 @@ router.delete('/:id', validateObjectId, async function (req, res) {
 	}
 });
 
-// @route   PATCH api/log/deleteAll
+// @route   PATCH api/reports/deleteAll
 // @desc    Delete All Logs
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
 	const data = await Report.deleteMany();
 	console.log(data);
+	nexusEvent.emit('updateReports');
 	return res.status(200).send(`We wiped out ${data.deletedCount} Logs!`);
 });
 
