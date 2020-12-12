@@ -251,6 +251,7 @@ async function runMilitary () {
 		// if attackers were victorious
 		if (defenders.length === 0 && attackers.length > 0) {
 			report += 'The Attackers are victorious!\n';
+			militaryReport.winner = 'The Attackers are victorious';
 			let liberated = false;
 			site.status.warzone = false;
 			site.status.occupied = true;
@@ -272,6 +273,7 @@ async function runMilitary () {
 
 			site.occupier = leadArmy.team;
 			if (site.occupier.toHexString() === site.team.toHexString()) {
+				militaryReport.winner += ', and the site was liberated';
 				site.status.occupied = false;
 				liberated = true;
 			}
@@ -304,6 +306,7 @@ async function runMilitary () {
 		}
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
+			militaryReport.winner = 'The Defenders are victorious';
 			site.status.warzone = false;
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {
@@ -324,6 +327,7 @@ async function runMilitary () {
 		}
 		else {// else if it was a stalemate, no one recalls
 			report += 'The Battle ended in a stalemate!\n';
+			militaryReport.winner = 'The Battle ended in a stalemate';
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {
 					const unit = rand(army.length) - 1;
@@ -350,7 +354,8 @@ async function runMilitary () {
 				attackingTeams: militaryReport.attackingTeams,
 				site: militaryReport.site,
 				battleRecord: militaryReport.battleRecord,
-				results: militaryReport.results,
+				results: militaryReport.results, 
+				winner: militaryReport.winner,
 				spoils: militaryReport.spoils
 			});
 

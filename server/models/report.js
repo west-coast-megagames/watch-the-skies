@@ -95,6 +95,7 @@ const MilitaryMission = Report.discriminator('MilitaryMission', new Schema ({
 	attackers: [{ type: Schema.Types.Mixed }],
 	attackingTeams: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	defenders: [{ type: Schema.Types.Mixed }],
+	winner: { type: String },
 	spoils: [{ type: Schema.Types.Mixed }],
 	results: [{ type: Schema.Types.Mixed }],
 	battleRecord: { type: String }

@@ -135,25 +135,6 @@ const ResearchLog = props => {
 const BattleLog = props => {
   let { report } = props;
 	let date = new Date(report.date);
-	
-	const Record = () => {
-		const result = report.results[0]
-		console.log(result);
-		return (
-			<FlexboxGrid header={`Round: ${result.round}`}>
-				<FlexboxGrid.Item colspan={12}><b>Attackers Hit {result.attackerHits} out of {result.attackerRolls}</b>
-					<List hover autoScroll bordered>
-						{result.defendersDamaged.map((unit, index) => (
-							<List.Item key={index} index={index} >
-								{unit}
-							</List.Item>
-						))}
-					</List>
-				</FlexboxGrid.Item>
-				<FlexboxGrid.Item colspan={12}><b>Defenders Hit {result.defenderHits} out of {result.defenderRolls}</b></FlexboxGrid.Item>
-			</FlexboxGrid>			
-		)
-	}
 
   return (
     <Timeline.Item key={report._id} dot={<Icon icon="crosshairs" size="2x" />}>
@@ -177,6 +158,43 @@ const BattleLog = props => {
         <p>
           <b>Location:</b> {report.site.name} 
         </p>
+				<p>
+          <b>Result:</b> {report.winner} 
+        </p>
+				<br/>
+				{report.results[0] && 
+				<div>
+					<p>
+					<b>Round 1:</b>
+					</p>
+					<p>
+						Attackers Hit {report.results[0].attackerHits} out of {report.results[0].attackerRolls} || {report.results[0].defendersDamaged.length} Defenders damaged, {report.results[0].defendersDestroyed.length} destroyed</p>
+					<p>
+						Defenders Hit {report.results[0].defenderHits} out of {report.results[0].defenderRolls} || {report.results[0].attackersDamaged.length} Attackers damaged, {report.results[0].attackersDestroyed.length} destroyed</p>					
+				</div>
+				}
+				{report.results[1] && 
+				<div>
+					<p>
+					<b>Round 2:</b>
+					</p>
+					<p>
+						Attackers Hit {report.results[1].attackerHits} out of {report.results[1].attackerRolls} || {report.results[1].defendersDamaged.length} Defenders damaged, {report.results[1].defendersDestroyed.length} destroyed</p>
+					<p>
+						Defenders Hit {report.results[1].defenderHits} out of {report.results[1].defenderRolls} || {report.results[1].attackersDamaged.length} Attackers damaged, {report.results[1].attackersDestroyed.length} destroyed</p>					
+				</div>
+				}
+				{report.results[2] && 
+				<div>
+					<p>
+					<b>Round 3:</b>
+					</p>
+					<p>
+						Attackers Hit {report.results[2].attackerHits} out of {report.results[2].attackerRolls} || {report.results[2].defendersDamaged.length} Defenders damaged, {report.results[2].defendersDestroyed.length} destroyed</p>
+					<p>
+						Defenders Hit {report.results[2].defenderHits} out of {report.results[2].defenderRolls} || {report.results[2].attackersDamaged.length} Attackers damaged, {report.results[2].attackersDestroyed.length} destroyed</p>					
+				</div>
+				}
 				<br/>
 				<FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>Attackers
@@ -197,13 +215,10 @@ const BattleLog = props => {
 					</FlexboxGrid.Item>
 					<br/>
 				</FlexboxGrid>
-				<br/>
-				{report.results.length >0 && <Record></Record>}
       </Panel>
     </Timeline.Item>
   );
 };
-
 
 // TODO - Look of an Intercept log should be fleshed out for march.
 const InterceptLog = props => {
