@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 import playTrack from "../../scripts/audio";
-import initUpdates from '../../scripts/initUpdates';
 import { clockSocket, updateSocket } from '../../api' // Socket.io event triggers and actions
 import jwtDecode from 'jwt-decode' // JSON web-token decoder
 
@@ -23,18 +22,15 @@ const slice = createSlice({
   // Reducers - Events
   reducers: {
     loginRequested: (auth, action) => {
-      console.log(`${action.type} Dispatched...`)
       auth.loading = true;
     },
     authReceived: (auth, action) => {
-      console.log(`${action.type} Dispatched...`);
       let jwt = action.payload;
       localStorage.setItem("token", jwt);
-      console.log(`Token: ${jwt}`);
       const user = jwtDecode(jwt);
       playTrack('login');
       auth.team = user.team;
-      auth.user = user.username;
+      auth.user = user;
       auth.role = user.team.roles[0]
       auth.lastLogin = Date.now();
       auth.loading = false

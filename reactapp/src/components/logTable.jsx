@@ -13,7 +13,6 @@ class InterceptorLogs extends Component {
 
     async getLogs() {
         try {
-            console.log(this.props.interceptor._id)
             let res = await axios.get(`${gameServer}api/logs`);
             let logs = res.data; 
             logs = logs.filter(l => l.type === 'Interception');

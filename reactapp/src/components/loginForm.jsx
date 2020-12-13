@@ -23,31 +23,30 @@ class LoginForm extends Component {
       notify({catagory: 'app', type: 'error', title: 'Login Failed', body:`Error: ${this.props.errors.login}`});
     }
     if (this.props.login !== prevProps.login) {
-      notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user}...`})
+      notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user.username}...`})
       notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
       this.props.close();
     }
 
   }
 
-  validate = () => {
-    const result = Joi.validate(this.state.account, this.schema, {
-      abortEarly: false,
-    });
-    console.log(result);
+  // validate = () => {
+  //   const result = Joi.validate(this.state.account, this.schema, {
+  //     abortEarly: false,
+  //   });
 
-    const errors = {};
+  //   const errors = {};
 
-    const { account } = this.state;
+  //   const { account } = this.state;
 
-    if (account.login.trim() === "")
-      errors.login = "Username or email is required.";
+  //   if (account.login.trim() === "")
+  //     errors.login = "Username or email is required.";
 
-    if (account.password.trim() === "")
-      errors.password = "Password is required";
+  //   if (account.password.trim() === "")
+  //     errors.password = "Password is required";
 
-    return Object.keys(errors).length === 0 ? null : errors;
-  };
+  //   return Object.keys(errors).length === 0 ? null : errors;
+  // };
 
   validateProperty = ({ name, value }) => {
     if (name === "login") {
@@ -60,14 +59,14 @@ class LoginForm extends Component {
 
   handleSubmit = async (e) => {
 		this.setState({ isLoading: true });
-		console.log('Before: ', this.state.isLoading)		
+		// console.log('Before: ', this.state.isLoading)		
 
 		e.preventDefault();
     // Call the server
-    console.log("Submitted");
+    // console.log("Submitted");
 		await this.props.handleLogin(this.state.account); // Redux login action
 		this.setState({ isLoading: false });
-		console.log('After', this.state.isLoading)
+		// console.log('After', this.state.isLoading)
   };
 
   handleChange = ({ currentTarget: input }) => {

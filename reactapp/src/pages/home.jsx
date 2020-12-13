@@ -24,6 +24,7 @@ const Home = (props) => {
                         <li>Team Log / Game Timeline [Governance Page | Timeline Tab]</li>
                         <li>Team Budget / Banking [Governance Page | Budget Tab]</li>
                         <li>Interceptions & Air Missions [Operations Page | Map Tab]</li>
+												<li>Ground Military System [Map | Map Page]</li>
                         <li>News Feed [News Page | News Feed Tabs]</li>
                         <li>News / PR Submission [News Page | News Feed Tab]</li>
                         <li>Applied Reserch System [Science Page | Research Tab]</li>

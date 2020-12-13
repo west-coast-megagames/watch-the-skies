@@ -6,8 +6,7 @@ import { gameServer } from '../../../config';
 import { lookupPct } from './../../../scripts/labs';
 import BalanceHeader from '../../../components/common/BalanceHeader';
 import { getSciAccount } from '../../../store/entities/accounts';
-import { getAvailibleResearch, getTeamResearch } from '../../../store/entities/research';
-import { getLogsByTeam } from '../../../store/entities/logs';
+import { getTeamResearch } from '../../../store/entities/research';
 import { getLabs } from '../../../store/entities/facilities';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -24,9 +23,9 @@ function findTechByID(_id, research) {
 
 const ProgressCell = (props) => {
 	let {rowData, techcost, research, onClick } = props;
-	console.log(`Progress Cell...`)
-	console.log(rowData)
-	console.log(techcost)
+	//console.log(`Progress Cell...`)
+	 console.log(rowData)
+	// console.log(techcost)
 	if ( rowData.status === 'Destroyed' ) {
 		return (
 			<Cell {...props} style={{ padding: 0 }}>
@@ -105,7 +104,7 @@ class ResearchLabs extends Component {
 			}
 		} else if (txnType === "Lab Repair") {
 			cost = labRepairCost;
-			console.log("UPDATEDLAB=",updatedLab);
+			// console.log("UPDATEDLAB=",updatedLab);
 			txnNote = `Repair of science lab ${updatedLab.name} for team ${updatedLab.team.shortName}`;
 			this.closeModal();
 		} else {
@@ -139,7 +138,7 @@ class ResearchLabs extends Component {
 
 						// for lab update, need to provide lab object
 						const newLab = { funding: parseInt(updatedLab.funding), name: updatedLab.name, index: updatedLab.index, _id: updatedLab._id, research: updatedLab.research }
-						console.log(newLab);
+						//console.log(newLab);
 						myAxiosCall = await axios.put(`${gameServer}science/research`, newLab);
 						Alert.success(myAxiosCall.data, 4000);
 					}	
@@ -157,14 +156,14 @@ class ResearchLabs extends Component {
 
 				// Error condition for lab update
 				} catch (err) {
-					console.log(err.message)
+					//console.log(err.message)
 					Alert.error(err.message, 4000) 
 					labs[labIndex].disableFunding = false;
 				};
 
 			// Error condition for withdrawal 
 			} catch (err) { 
-				console.log(err.message)
+				//console.log(err.message)
 				Alert.error(err.message, 4000)
 			};
 
@@ -222,7 +221,7 @@ class ResearchLabs extends Component {
 							function handleChange(value) {
 								let updatedLab = rowData;
 								updatedLab.research = findTechByID(value, props.research);
-								console.log(updatedLab);
+								//console.log(updatedLab);
 								sendLabUpdate(updatedLab, "research");
 							}
 							if ( rowData.status === 'Destroyed') {
@@ -232,7 +231,7 @@ class ResearchLabs extends Component {
 								);
 							} else {  
 								let defaultValue = "Select Project";
-								console.log(rowData);
+								//console.log(rowData);
 								if (rowData.research !== undefined) {		// New research is null
 									defaultValue = rowData.research;
 								}
@@ -329,14 +328,14 @@ class ResearchLabs extends Component {
 					</Modal>
 				</div>
 			</div>
-    	);
+		);
 	}
-	
+
 	// Function to close the MODAL when repair is canceled or submitted
 	closeModal = () => {
 		this.setState({ showModal: false });
 	}
-		
+
 	// Function to open the MODAL when repair of lab is requested
 	openModal = async (updatedLab) => {
 		this.setState({ 
@@ -344,8 +343,6 @@ class ResearchLabs extends Component {
 			repairLab: updatedLab
 		});
 	}
-		
-	
 
 	// Function run at start.  Initializes research state by this team
 	initResearch = () => {
@@ -376,12 +373,11 @@ class ResearchLabs extends Component {
 		if (teamLabs.length !== 0) {
 			let labs = [];				// Array of research Objects
 			let obj = {};               // Object to add to the research array
-			
 
 			teamLabs.forEach(facility => {
 				for (let i = 0; i < facility.capability.research.capacity; i++) {
 					let { funding, projects, status } = facility.capability.research;
-					console.log(facility);
+					//console.log(facility);
 					let funds = typeof funding[i] === 'number' ? funding[i] : 0;
 					let research = projects[i] === null ? undefined : projects[i];
 					obj = {
@@ -402,7 +398,7 @@ class ResearchLabs extends Component {
 
 					// Temporary fix for backend not clearing out the labs' research array upon completion
 					// TODO: Jay fix the backend so that the research array for a lab is nulled out when a research completes to 100%
-					console.log(obj.name);
+					//console.log(obj.name);
 					// if (getLabPct(obj._id, this.props.facilities, this.props.research, this.props.techCost) >= 100) {	obj.research = []; } 
 
 					labs.push(obj);
@@ -416,9 +412,9 @@ class ResearchLabs extends Component {
 
 const mapStateToProps = state => ({
 	lastUpdate: state.entities.facilities.lastFetch,
-    team: state.auth.team,
-    facilities: getLabs(state),
-    research: getTeamResearch(state),
+  team: state.auth.team,
+  facilities: getLabs(state),
+  research: getTeamResearch(state),
 	account: getSciAccount(state)
 	
 });

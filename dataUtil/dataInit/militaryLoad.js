@@ -9,6 +9,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { validUnitType } = require('../util/validateUnitType');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -54,22 +55,31 @@ async function initLoad (doLoad) {
 async function loadMilitary (iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/name/${iData.name}`);
+		// type is now on the blueprint
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${iData.bpCode}`);
+		const bpData = blueprint.data;
 
 		if (!data.type) {
-			switch (iData.type) {
+			if (!bpData.desc) {
+				++rCounts.loadErrCount;
+				logger.error(`New Military Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
+				return;
+			}
+
+			switch (bpData.type) {
 			case 'Fleet':
-				await createFleet(iData, rCounts);
+				await createFleet(iData, rCounts, bpData);
 				break;
 
 			case 'Corps':
-				await createCorps(iData, rCounts);
+				await createCorps(iData, rCounts, bpData);
 				break;
 
 			default:
 				++rCounts.loadErrCount;
 				logger.error(
 					'Invalid Military Load Type:',
-					iData.type,
+					bpData.type,
 					'name: ',
 					iData.name
 				);
@@ -115,11 +125,14 @@ async function deleteAllMilitarys (doLoad) {
 	}
 }
 
-async function createFleet (iData, rCounts) {
+async function createFleet (iData, rCounts, bpData) {
 	// New Fleet/Military here
 	const newFleet = iData;
 	newFleet.serviceRecord = [];
 	newFleet.gameState = [];
+	newFleet.blueprint = bpData._id;
+	newFleet.stats = bpData.stats;
+	newFleet.type = bpData.type;
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -182,7 +195,8 @@ async function createFleet (iData, rCounts) {
 		newFleet.site = undefined;
 	}
 
-	newFleet.upgrade = [];
+	const upgrades = await findUpgrades(bpData.upgrades, 'Fleet', iData.name, newFleet.team, newFleet.origin);
+	newFleet.upgrades = upgrades;
 
 	try {
 		await axios.post(`${gameServer}api/military`, newFleet);
@@ -195,11 +209,14 @@ async function createFleet (iData, rCounts) {
 	}
 }
 
-async function createCorps (iData, rCounts) {
+async function createCorps (iData, rCounts, bpData) {
 	// New Corps/Military here
 	const newCorps = iData;
 	newCorps.serviceRecord = [];
 	newCorps.gameState = [];
+	newCorps.blueprint = bpData._id;
+	newCorps.stats = bpData.stats;
+	newCorps.type = bpData.type;
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -262,7 +279,9 @@ async function createCorps (iData, rCounts) {
 		newCorps.site = undefined;
 	}
 
-	newCorps.upgrade = [];
+	const upgrades = await findUpgrades(bpData.upgrades, 'Corps', iData.name, newCorps.team, newCorps.origin);
+	newCorps.upgrades = upgrades;
+
 	try {
 		await axios.post(`${gameServer}api/military`, newCorps);
 		++rCounts.loadCount;
@@ -272,6 +291,45 @@ async function createCorps (iData, rCounts) {
 		++rCounts.loadErrCount;
 		logger.error(`New Corps Military Save Error: ${err.message}`, { meta: err.stack });
 	}
+}
+
+async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+	const upgIds = [];
+	for (const upg of upgrades) {
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);
+		const bpData = blueprint.data;
+
+		if (!bpData.desc) {
+			logger.error(`New ${unitType} Invalid Upgrade Blueprint: ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!bpData.buildModel === 'upgrade') {
+			logger.error(`New ${unitType} Upgrade Blueprint not an upgrade build model : ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!validUnitType(bpData.unitType, unitType)) {
+			logger.error(`New ${unitType} not valid for upgrade : ${unitName} ${upg}`);
+			continue;
+		}
+
+		try {
+			const upgradeBody = { code: upg, team: team, facility: facility,
+				effects: bpData.effects, cost: bpData.cost, buildTime: bpData.buildTime,
+				name: bpData.name, manufacturer: team, desc: bpData.desc,
+				prereq: bpData.prereq };
+			const newUpgrade = await axios.post(`${gameServer}init/initUpgrades/build`, upgradeBody);
+			logger.debug(`New ${unitType} upgrade posted : ${unitName} ${upg} ${upgradeBody}`);
+			const newUpg = newUpgrade.data;
+
+			upgIds.push(newUpg._id);
+		}
+		catch (err) {
+			logger.error(`New ${unitType} Military Upgrade Save Error: ${err.message}`, { meta: err.stack });
+		}
+	}
+	return upgIds;
 }
 
 module.exports = runMilitaryLoad;

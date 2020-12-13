@@ -14,7 +14,7 @@ const BalanceHeader = (props) => {
 
 	let color = 'orange';
 
-	if (account == undefined) return (
+	if (account === undefined) return (
 			<Affix>
 				<h5 style={{display: 'inline'}}>{ props.title }</h5>
 				<Loader style={{display: 'inline', float: 'right'}} content="No account..." />

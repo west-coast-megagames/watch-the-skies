@@ -1,10 +1,13 @@
 const fs = require('fs');
 const config = require('config');
-const file = fs.readFileSync(
-	config.get('initPath') + 'init-json/initBlueprint.json',
-	'utf8'
-);
-const blueprintDataIn = JSON.parse(file);
+
+const aircraftBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintAircraft.json', 'utf8'));
+const facilityBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintFacility.json', 'utf8'));
+const upgradeBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintUpgrade.json', 'utf8'));
+const squadBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintSquad.json', 'utf8'));
+const militaryBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintMilitary.json', 'utf8'));
+const blueprintDataIn = [...aircraftBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData, ...militaryBPData];
+
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
@@ -66,16 +69,19 @@ async function loadBlueprint (bpData, rCounts) {
 
 			switch (bpData.buildModel) {
 			case 'facility':
-				await newFaclity(bpData, rCounts);
+				await newFacilityBP(bpData, rCounts);
 				break;
 			case 'aircraft':
-				await newAircraft(bpData, rCounts);
+				await newAircraftBP(bpData, rCounts);
+				break;
+			case 'military':
+				await newMilitaryBP(bpData, rCounts);
 				break;
 			case 'squad':
-				await newSquad(bpData, rCounts);
+				await newSquadBP(bpData, rCounts);
 				break;
 			case 'upgrade':
-				await newUpgrade(bpData, rCounts);
+				await newUpgradeBP(bpData, rCounts);
 				break;
 
 			default:
@@ -124,7 +130,7 @@ async function deleteAllBlueprints () {
 	}
 }
 
-async function newAircraft (bpData, rCounts) {
+async function newAircraftBP (bpData, rCounts) {
 
 	// New Aircraft Blueprint here
 	const bpAircraft = bpData;
@@ -140,7 +146,23 @@ async function newAircraft (bpData, rCounts) {
 
 }
 
-async function newFaclity (bpData, rCounts) {
+async function newMilitaryBP (bpData, rCounts) {
+
+	// New Military Blueprint here
+	const bpMilitary = bpData;
+	try {
+		await axios.post(`${gameServer}api/blueprints`, bpMilitary);
+		++rCounts.loadCount;
+		logger.debug(`${bpMilitary.name} add saved to Military Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Military Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
+
+}
+
+async function newFacilityBP (bpData, rCounts) {
 
 	// New Facility Blueprint here
 	const bpFacility = bpData;
@@ -178,7 +200,7 @@ async function newFaclity (bpData, rCounts) {
 	}
 }
 
-async function newSquad (bpData, rCounts) {
+async function newSquadBP (bpData, rCounts) {
 
 	// New Squad Blueprint here
 	const bpSquad = bpData;
@@ -194,7 +216,7 @@ async function newSquad (bpData, rCounts) {
 
 }
 
-async function newUpgrade (bpData, rCounts) {
+async function newUpgradeBP (bpData, rCounts) {
 	// New Upgrade Blueprint here
 	const bpUpgrade = bpData;
 	try {

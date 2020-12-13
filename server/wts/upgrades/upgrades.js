@@ -13,9 +13,8 @@ the desired numerical stat effect
 async function upgradeValue (upgradeArray, desiredStat) {
 	let total = 0;
 	for(const element of upgradeArray) {// for every upgrade in the upgrade array and for every element in the stat object of the upgrade
-		for(const stat in element.stats) {
-			if(stat.type === desiredStat) total = total + element.stats.effect[stat]; // if the key (stat) is the stat we want add it to total
-			// if you are reading this, this has been untested and likely doesn't work cause scott is a terrible programmer oh god
+		for(const stat of element.effects) {
+			if(stat.type === desiredStat) total = total + stat.effect; // if the key (stat) is the stat we want add it to total
 		}
 	}
 	return total;
@@ -47,6 +46,18 @@ async function addUpgrade (upgrade, unit) {
 	try{
 		unit.upgrades.push(upgrade);
 		upgrade.status.storage = false;
+		upgrade.team = unit.team; // this is in case an upgrade is made by control, the team still gets it
+		for (const element of upgrade.effects) {// add all unit types and effects here
+			switch (element.type) {
+			case 'attack':
+				unit.stats.attack += element.effect;
+				break;
+			case 'defense':
+				unit.stats.defense += element.effect;
+				break;
+			default: break;
+			}
+		}
 		upgrade = await upgrade.save();
 		unit = await unit.save();
 		return `Added "${upgrade.name}" to unit "${unit.name}"`;
@@ -80,6 +91,17 @@ async function removeUpgrade (upgrade, unit) {
 	if (index > -1) {
 		unit.upgrades.splice(index, 1);
 		response = `Removed "${upgrade.name}" from unit "${unit.name}"`;
+		for (const element of upgrade.effects) {
+			switch (element.type) {
+			case 'attack':
+				unit.stats.attack -= element.effect;
+				break;
+			case 'defense':
+				unit.stats.defense -= element.effect;
+				break;
+			default: break;
+			}
+		}
 	}
 	try{
 		unit = await unit.save();

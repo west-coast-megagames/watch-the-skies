@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'; // Redux store provider
-import { Table, Icon, Alert, ButtonGroup, IconButton, Divider, Container, Content, Sidebar, Button } from "rsuite";
+import { Divider, Container, Content } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
 import { getOpsAccount } from "../../../store/entities/accounts";
 import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
 import { showLaunch } from "../../../store/entities/infoPanels";
 import { getCities, getBases } from "../../../store/entities/sites";
-import Contacts from '../../../components/contactsTable';
-
-const { HeaderCell, Cell, Column } = Table;
 
 class ExcomOps extends Component {
   state = {
@@ -43,9 +40,6 @@ class ExcomOps extends Component {
             account={this.props.account}
           />
         </Content>
-        {/* <Sidebar>
-          <Button block onClick={() => Alert.warning('Surpise! The rawr button is a placeholder...', 4000)}>Rawr</Button>
-        </Sidebar> */}
       </Container>
     );
   }
@@ -58,11 +52,8 @@ class ExcomOps extends Component {
     contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
-      console.log(newZone.name)
       let zone = {...newZone}
-      console.log(zone);
       zone.children = [];
-      zone.name = zone.name;
       zone.type = "Zone";
       zone.children = [];
       for (let newUnit of contacts) {

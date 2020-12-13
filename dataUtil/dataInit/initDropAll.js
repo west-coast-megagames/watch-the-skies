@@ -7,11 +7,11 @@ async function dropAll (doDrop) {
 
 	// tables/collections not loaded cleared on full init
 	try {
-		await axios.patch(`${gameServer}api/logs/deleteAll`);
-		logger.info('Delete of All logs done (initDropAll).');
+		await axios.patch(`${gameServer}api/reports/deleteAll`);
+		logger.info('Delete of All reportss done (initDropAll).');
 	}
 	catch (err) {
-		logger.error(`Catch deleteAll Logs in initDropAll: ${err.message}`, { meta: err.stack });
+		logger.error(`Catch deleteAll Reports in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {

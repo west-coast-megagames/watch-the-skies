@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { FlexboxGrid, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Alert, Button } from 'rsuite';
-import { getCities, getBases } from "../store/entities/sites";
+import { FlexboxGrid, Drawer, SelectPicker, Alert, Button } from 'rsuite';
+import { getCities } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
 
@@ -13,10 +13,8 @@ class UpgradeModal extends Component {
 				selected: null,
 				hidden: true,
 		};
-		console.log(this)
 };
 
-	
 	handleSelect = async (blueprint) => { 
 		if (!blueprint) {
 			this.setState({ selected: null, hidden: true });
@@ -30,7 +28,7 @@ class UpgradeModal extends Component {
 		// 1) make a new upgrade from blueprint
 		try{
 			let { data } = await axios.post(`${gameServer}api/upgrades/`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
-			console.log(data);
+		  //console.log(data);
 			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: data._id, unit: this.props.unit._id })
 			this.props.closeUpgrade()
 		}

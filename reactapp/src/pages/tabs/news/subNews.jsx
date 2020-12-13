@@ -24,9 +24,6 @@ class SubNews extends React.Component {
   }
 
   handleInput = (value, id) => {
-    // console.log(this);
-    console.log(value);
-    console.log(id);
     if (id === 'location') {
       let options = [...this.props.sites, ...this.props.countries, ...this.props.zones];
       let location = options.find(el => el._id === value);
@@ -179,7 +176,6 @@ class SubNews extends React.Component {
 
     for (let zone of zones) {
       zone.children = countries.filter(el => el.zone.name === zone.name);
-      zone.name = zone.name;
     };
     this.setState({ data: zones })
   }
@@ -187,7 +183,7 @@ class SubNews extends React.Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  user: state.auth.user,
+  user: state.auth.user.username,
   team: state.auth.team,
   zones: state.entities.zones.list,
   countries: state.entities.countries.list,

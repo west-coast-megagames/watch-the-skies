@@ -61,7 +61,7 @@ class InvasionModal extends Component {
                 <Divider />
                 <h6>Select Team</h6>
                 <SelectPicker block placeholder='Select Team'
-                    data={this.props.teams.filter(el => el.type === 'N')}
+                    data={this.props.teams}
                     labelKey='name'
                     valueKey='name'
                     onChange={this.handleTeam}
@@ -97,7 +97,6 @@ class InvasionModal extends Component {
         Alert.warning(`Filtering Units!`);
         let data = []
         let military = this.props.military;
-        console.log(military)
         for (let unit of military) {
             unit.checkZone = unit.zone.name;
             unit.info = `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense}`
@@ -114,7 +113,6 @@ class InvasionModal extends Component {
         let data = []
         let sites = this.props.sites;
         for (let site of sites) {
-            console.log(site)
             site.checkZone = site.zone.name;
             site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
             data.push(site);
@@ -130,7 +128,7 @@ class InvasionModal extends Component {
         let invasion = { cost, units, destination, team };
 
         try {
-            let { data } = await axios.put(`${gameServer}game/military/deploy`, invasion); // Axios call to deploy units
+            let { data } = await axios.put(`${gameServer}game/tempMil/deploy`, invasion); // Axios call to deploy units
             Alert.success(data)
         } catch (err) {
             Alert.error(`Error: ${err.body} ${err.message}`, 5000)

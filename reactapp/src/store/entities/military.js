@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
+import { createSelector } from 'reselect'
 import { Alert } from "rsuite";
 
 // Create entity slice of the store
@@ -76,4 +77,20 @@ export const addmilitary = military =>
     method: "post",
     data: military,
     onSuccess: militaryAdded.type
-  });
+	});
+	
+
+	// Selector
+	export const getMilitary = createSelector(
+		state => state.entities.military.list,
+		state => state.auth.team,
+		(military, team) => military.filter(military => military.team._id === team._id)
+	);
+
+	export const getDeployed = createSelector(
+		state => state.entities.military.list,
+		state => state.auth.team,
+		(military, team) => military.filter(
+			military => military.status.deployed === true
+		)
+	);

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert, Icon, IconButton } from 'rsuite';
 import { connect } from 'react-redux';
-import { infoRequested, showSite, showLaunch, showDeploy } from '../../store/entities/infoPanels';
+import { showAircraft, showSite, showLaunch, showDeploy, showMilitary } from '../../store/entities/infoPanels';
 
 const menu = {
 	display: 'inline-block',
@@ -11,16 +11,6 @@ const menu = {
 class OpsMenu extends Component {
 	state = {}
 
-	showAircraft() {
-		this.props.showAircraft(this.props.info);
-		this.props.closeMenu();
-	}
-
-	showSite() {
-		this.props.showSite(this.props.info);
-		this.props.closeMenu();
-	}
-
 	assign() {
 		this.props.assignTarget(this.props.info);
 		this.props.closeMenu();
@@ -28,10 +18,28 @@ class OpsMenu extends Component {
 
 	deployMilitary() {
 		this.props.deploy(this.props.info)
+		this.props.closeMenu();
+	}
+
+	handleInfo = () => {
+		//console.log(this.props.info.model)
+		switch (this.props.info.model) {
+			case 'Site': 
+				this.props.showSite(this.props.info);
+				break;
+			case 'Aircraft':
+				this.props.showAircraft(this.props.info);
+				break;
+			case 'Military':
+				this.props.showMilitary(this.props.info);
+				break;
+			default:
+				Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)
+		}
+		this.props.closeMenu();
 	}
 
 	render() { 
-		console.log(this.props.info)
 		return (
 			<React.Fragment>
 				<div className="menu" id="menu"
@@ -47,15 +55,14 @@ class OpsMenu extends Component {
 						bottom: 0,
 						margin: 'auto',
 						textAlign: 'center',
-						borderRadius: '50%',
 						border: '2px solid black'
 						}}>
 					<IconButton icon={<Icon icon="close" />} size="sm" color="red" circle 
 						style={{...menu, top: '33px', left: '33px'}}
 						onClick={() => this.props.closeMenu()}
 					/>
-					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.props.info.model === 'Site' ? this.showSite() : this.props.info.model === 'Aircraft' ? this.showAircraft() : Alert.info(`Latitude: ${this.props.info.lat}\nLongitude: ${this.props.info.lng}`)} style={{...menu, top: '1px', left:'30px'}} />
-					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type != undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
+					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.handleInfo()} style={{...menu, top: '1px', left:'30px'}} />
+					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type !== undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
 				</div>
@@ -70,7 +77,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	showSite: (payload) => dispatch(showSite(payload)),
-	showAircraft: (payload) => dispatch(infoRequested(payload)),
+	showAircraft: (payload) => dispatch(showAircraft(payload)),
+	showMilitary: (payload) => dispatch(showMilitary(payload)),
 	assignTarget: (payload) => dispatch(showLaunch(payload)),
 	deploy: (payload) => dispatch(showDeploy(payload))
 });

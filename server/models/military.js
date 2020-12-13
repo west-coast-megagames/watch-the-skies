@@ -17,6 +17,7 @@ const MilitarySchema = new Schema({
 	country: { type: ObjectId, ref: 'Country' },
 	site: { type: ObjectId, ref: 'Site' },
 	origin: { type: ObjectId, ref: 'Facility' },
+	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	status: {
 		damaged: { type: Boolean, default: false },
@@ -27,6 +28,10 @@ const MilitarySchema = new Schema({
 	},
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	location: {
+		lat: { type: Number },
+		lng: { type: Number }
+	},
 	gameState: []
 });
 
@@ -51,7 +56,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 		await validLog(servRec);
 	}
 };
-
 
 MilitarySchema.methods.deploy = async (unit, country) => {
 	const banking = require('../../../wts/banking/banking');

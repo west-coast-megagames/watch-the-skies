@@ -106,6 +106,234 @@
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US SFO"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA SAN Diego Base Alpha",
+		"code": "USSAN",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 7,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 20,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true,
+    "siteCode": "US SAN"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA Honolulu Base Alpha",
+		"code": "USHNL",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 7,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 20,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true,
+    "siteCode": "US HNL"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA Jacksonville FL Base Alpha",
+		"code": "USJAX",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 7,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 20,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true,
+    "siteCode": "US JAX"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "USA Virginia Beach VA Base Alpha",
+		"code": "USVAB",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "manufacturing": {
+        "capacity": 1,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 7,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 20,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "US",
+    "teamCode": "USA",
+    "coastal": true,
+    "siteCode": "US VAB"
   },
   {
     "loadType": "baseFacility",
@@ -349,6 +577,57 @@
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU NOI"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RFD Naval Base Beta",
+		"code": "RUNBB",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 2,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 8,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 6,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false,
+    "siteCode": "RU SRM"
   },
   {
     "loadType": "baseFacility",
@@ -400,6 +679,57 @@
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP OSA"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Beta",
+		"code": "JPBB",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 7,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 2,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 15,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP NRT"
   },
   {
     "loadType": "baseFacility",
@@ -655,6 +985,57 @@
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN SHA"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "PRC Base Beta",
+		"code": "CNBB",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 9,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 8,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 15,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 10,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "CN",
+    "teamCode": "PRC",
+    "coastal": true,
+    "siteCode": "CN TPE"
   },
   {
     "loadType": "baseFacility",

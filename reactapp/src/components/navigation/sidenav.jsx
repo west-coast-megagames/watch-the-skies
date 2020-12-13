@@ -44,6 +44,7 @@ class SideNav extends Component {
 					<Sidenav.Body>
 						<Nav>
 							<Nav.Item eventKey="1" to="/gov" componentClass={NavLink} icon={<Icon icon="bank" />}>Governance</Nav.Item>
+							<Nav.Item eventKey="10" to="/map" componentClass={NavLink} icon={<Icon icon='map' />}>Map</Nav.Item>
 							<Nav.Item eventKey="2" to="/ops" componentClass={NavLink} icon={<Icon icon="globe2" />}>Operations</Nav.Item>
 							<Nav.Item eventKey="3" to="/sci" componentClass={NavLink} icon={<Icon icon="flask" />}>Science</Nav.Item>
 							<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
@@ -52,7 +53,7 @@ class SideNav extends Component {
 							<Whisper placement="right" trigger="click" speaker={clock}>
 								<Nav.Item eventKey="8" icon={<Icon icon="clock-o"/>}>Game Clock</Nav.Item>
 							</Whisper>
-							{this.props.user === 'FroBoyX' ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
+							{this.props.user.roles.some(el => el === 'Control') ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
 						</Nav>
 					</Sidenav.Body>
 				</Sidenav>
@@ -64,7 +65,7 @@ class SideNav extends Component {
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  user: state.auth.user
+	user: state.auth.user
 });
 
 const mapDispatchToProps = dispatch => ({});

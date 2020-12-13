@@ -1,21 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Drawer,
-  Button,
-  FlexboxGrid,
-  Icon,
-  IconButton,
-  Badge,
-  Tag,
-  TagGroup,
-  Alert,
-  Panel,
-  Whisper,
-  Popover,
-  SelectPicker,
-  Progress,
-} from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from "rsuite";
 import axios from "axios";
 import { militaryClosed } from "../store/entities/infoPanels";
 import { gameServer } from "../config";
@@ -119,7 +104,7 @@ class InfoMilitary extends Component {
   }
 
   toggleTransfer() {
-    console.log(`Toggle`);
+    // console.log(`Toggle`);
     this.setState({ hideTransfer: !this.state.hideTransfer });
   }
 
@@ -211,29 +196,13 @@ class InfoMilitary extends Component {
         let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
-        console.log(response.data);
         Alert.success(response.data);
       } catch (err) {
-        console.log(err.response.data);
+        // console.log(err.response.data);
         Alert.error(`Error: ${err.response.data}`);
       }
     }
   };
-}
-
-function unitGear(unit) { // needs to be updated with Upgrades
-  let { gear } = unit;
-  return (
-    <Panel header={`Unit gear - ${gear.length} Components`} collapsible>
-      <ul>
-        {gear.map((gear) => (
-          <li key={gear._id}>
-            {gear.name} | {gear.category}
-          </li>
-        ))}
-      </ul>
-    </Panel>
-  );
 }
 
 const healthSpeaker = (

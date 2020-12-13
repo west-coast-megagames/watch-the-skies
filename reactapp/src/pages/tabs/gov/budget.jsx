@@ -3,81 +3,78 @@ import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
 import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
-import { Container, Content, Loader, Placeholder, Sidebar, SelectPicker, ButtonGroup, Button, Modal } from 'rsuite';
+import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
 import AccountGraph from '../../../components/common/GraphAccounts';
 
 let count = 0;
 
 const formatPickerData = (accounts) => {
-    let data = [];
-    for (let account of accounts) {
-        let option = {
-            _id: account._id,
-            label: `${account.name} | Balance: $M${account.balance}`
-        }
-        data.push(option);
-    }
-    return data;
+	let data = [];
+	for (let account of accounts) {
+		let option = {
+			_id: account._id,
+			label: `${account.name} | Balance: $M${account.balance}`
+		}
+		data.push(option);
+	}
+  return data;
 }
 
 class Budget extends Component {
 	constructor(props) {
-			super(props);
-			this.state = {
-					data: formatPickerData(this.props.accounts),
-					account: this.props.account,
-					account_id: this.props.account !== undefined ? this.props.account._id : undefined,
-					transactions: []
-			}
-			this.handleChange = this.handleChange.bind(this);
-			this.addTransfer = this.addTransfer.bind(this);
-			this.delTransfer = this.delTransfer.bind(this);
+		super(props);
+		this.state = {
+			data: formatPickerData(this.props.accounts),
+			account: this.props.account,
+			account_id: this.props.account !== undefined ? this.props.account._id : undefined,
+			transactions: []
+		}
+		this.handleChange = this.handleChange.bind(this);
+		this.addTransfer = this.addTransfer.bind(this);
+		this.delTransfer = this.delTransfer.bind(this);
 	}
 
 	componentDidUpdate(prevProps) {
-			if (prevProps.lastFetch !== this.props.lastFetch) {
-					let newAccount = this.props.accounts.find(account => account._id === this.state.account_id);
-					let data = formatPickerData(this.props.accounts);
-					this.setState({ account: newAccount, data });
-			}
+		if (prevProps.lastFetch !== this.props.lastFetch) {
+			let newAccount = this.props.accounts.find(account => account._id === this.state.account_id);
+			let data = formatPickerData(this.props.accounts);
+			this.setState({ account: newAccount, data });
+		}
 	}
 
 	handleChange = (value) => {
-			let accountIndex = this.props.accounts.findIndex(account => account._id === value);
-			let account = this.props.accounts[accountIndex];
-			let account_id = value;
-			console.log(account)
-			this.setState({ account, account_id })
+		let accountIndex = this.props.accounts.findIndex(account => account._id === value);
+		let account = this.props.accounts[accountIndex];
+		let account_id = value;
+		this.setState({ account, account_id })
 	};
 
 	addTransfer = (schedule) => {
-			let transfer = { id: count, to: undefined, from: undefined, amount: 0, note: undefined }
-			if (schedule === true) transfer.schedule = true;
-			let transactions = this.state.transactions;
-			transactions.push(transfer)
-			this.setState({ transactions })
-			count++;
+		let transfer = { id: count, to: undefined, from: undefined, amount: 0, note: undefined }
+		if (schedule === true) transfer.schedule = true;
+		let transactions = this.state.transactions;
+		transactions.push(transfer)
+		this.setState({ transactions })
+		count++;
 	};
 
 	delTransfer = (id) => {
-			let transactions = this.state.transactions;
-			console.log(transactions)
-			let index = transactions.findIndex(el => el.id === id)
-			if (transactions.length === 1) {
-					transactions = []
-			} else {
-					transactions.splice(index, 1);
-			}
-			this.setState({ transactions })
+		let transactions = this.state.transactions;
+		let index = transactions.findIndex(el => el.id === id)
+		if (transactions.length === 1) {
+			transactions = []
+		} else {
+			transactions.splice(index, 1);
+		}
+		this.setState({ transactions })
 	}
 
 	render() {
 		if (!this.props.account) {
-			return(
-				<Loader center content="No accounts Loaded..." vertical />
-			);
+			return(<Loader center content="No accounts Loaded..." vertical />);
 		};
+
 		return (
 			<Container className="budget-tab">
 				<Container className="transfers">

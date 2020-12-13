@@ -1,6 +1,6 @@
+/* eslint-disable no-trailing-spaces */
 const missionDebugger = require('debug')('app:missions - air');
-const nexusEvent = require('../../middleware/events/events');
-const { intercept } = require('./intercept');
+const { intercept } = require('./intercept2');
 const { d6 } = require('../../util/systems/dice');
 const terror = require('../terror/terror');
 
@@ -8,13 +8,12 @@ const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Site } = require('../../models/site');
 
-const { ReconReport, TransportReport } = require('../reports/reportClasses');
+
 const { getDistance } = require('../../util/systems/geo');
-const { makeAfterActionReport } = require('./report');
 const dynReport = require('./battleDetails');
-const { logger } = require('../../middleware/log/winston');
 const { generateSite } = require('../sites/sites');
-const { Military } = require('../../models/military');
+const { AirMission } = require('../../models/report');
+const { randCode } = require('./battleDetails');
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -23,10 +22,9 @@ let patrolMissions = []; // Attempted Patrol missions for the round
 let transportMissions = []; // Attempted Transport missions for the round
 let reconMissions = []; // Attempted Recon missions for the round
 let diversionMissions = []; // Attempted Diversion missions for the round
-let transferMissions = []; // Attempted Transfer missions for the round
 
 let count = 0; // Mission Counter.
-let totalCount = 0;
+// let totalCount = 0;
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
 async function start (aircraft, target, mission) {
@@ -54,7 +52,7 @@ async function start (aircraft, target, mission) {
 	}
 
 	// SWITCH Sorts the mission into the correct mission
-	const newMission = [{ aircraft, target, distance, origin }]; // Saves the mission combination
+	const newMission = [{ aircraft, target, distance, origin, mission }]; // Saves the mission combination
 	switch (true) {
 	case mission === 'Interception':
 		interceptionMissions = [...interceptionMissions, ...newMission]; // Adds Interception to be resolved
@@ -72,7 +70,7 @@ async function start (aircraft, target, mission) {
 		transportMissions = [...transportMissions, ...newMission]; // Adds Transport to be resolved
 		missionDebugger(transportMissions);
 		break;
-	case mission === 'Recon Site' || mission === 'Recon Airship':
+	case mission === 'Recon Site' || mission === 'Recon Aircraft':
 		reconMissions = [...reconMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(reconMissions);
 		break;
@@ -80,40 +78,30 @@ async function start (aircraft, target, mission) {
 		diversionMissions = [...diversionMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(diversionMissions);
 		break;
-	case mission === 'Transfer':
-		transferMissions.push(newMission);
-		missionDebugger(transferMissions);
-		break;
 	default:
 		result = `${result} This is not an acceptable mission type.`;
-		logger.error(`Invalid Air Mission: ${mission} is not a valid mission type.`);
+		throw new Error(`Invalid Air Mission: ${mission} is not a valid mission type.`);
 	}
 
 	missionDebugger(interceptionMissions.sort((a, b) => a.distance - b.distance));
 	missionDebugger(`${result}`);
 
-	return;
+	return result;
 }
 
 // Function for resolving missions when the Team Phase ends.
 async function resolveMissions () {
 	missionDebugger('Resolving Missions...');
 
-	await runInterceptions(); // Runs through all Inteceptions | Checks for escorts
-	await runTransports();
-	await runRecon();
-	await runDiversions();
-	// await resolveTransfers();
+	await runInterceptions(); // Runs through all Inteception Missions | Checks for escorts
+	await runTransports(); // Runs through all Transport missions | Checks for Patrols
+	await runRecon(); // Runs through all Recon missions | Checks for escorts and Patrols
+	await runDiversions(); // Runs through all diversion missions | Checks for any Patrols
 	await clearMissions();
 
-	resolveGroundCombat();
-
 	missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
-	totalCount += count;
+	// totalCount += count;
 	count = 0;
-	nexusEvent.emit('updateAircrafts');
-	nexusEvent.emit('updateSites');
-	nexusEvent.emit('updateLogs');
 
 	return 0;
 }
@@ -122,65 +110,66 @@ async function resolveMissions () {
 async function runInterceptions () {
 	for await (const interception of interceptionMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each interception
-		missionDebugger(`Mission #${count} - Intercept Mission`);
+		const missionCode = randCode(5); // Generates a unique code for this interception
+		missionDebugger(`Mission #${count} - Interception`);
 
-		let stance = 'passive'; // Target stance for interception defaults to 'passive'
-		const aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('upgrades'); // Gets the Initiator from the DB
-		let atkReport = `${aircraft.name} en route to ${aircraft.country.name} airspace. Projected target intercept is ${interception.distance}km away. ${aircraft.name} attempting to engage a contact.`; // Starts narrative report
+		const aircraft = await Aircraft.findById(interception.aircraft).populate('country', 'name').populate('team', 'name').populate('upgrades'); // Gets the Initiator from the DB
+		let atkReport = new AirMission({
+			type: 'Interception', 					// Records the After Action Report Type
+			code: missionCode, 							// Unique code for this encounter
+			mission: interception.mission,	// Mission type from the attacking unit
+			team: aircraft.team,						// Team of the attacking unit
+			country: aircraft.country._id,	// Country the mission is taking place over
+			zone: aircraft.zone._id,				// Zone the mission is in
+			site: aircraft.site._id,				// Site the mission is over
+			aircraft: aircraft._id,					// ID of the aircraft this report is for
+			report: `${aircraft.name} en route to ${aircraft.country.name} airspace on mission ${missionCode}. Projected target intercept is ${interception.distance.toFixed(2)}km away.`,
+			position: 'offense'							// Designates this aircraft as the offense or defense
+		});
 
 		// Skips mission if the current aircraft is dead
 		if (aircraft.status.destroyed) {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
+			atkReport.type = 'Failure';
+			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
+			atkReport.status.complete = true;
+			atkReport = atkReport.createTimestamp(atkReport);
+			await atkReport.save();
 			continue;
 		}
 
-		let target = await Aircraft.findById(interception.target).populate('upgrades'); // Gets the Target from the DB
+		let target = await Aircraft.findById(interception.target).populate('country', 'name').populate('upgrades').populate('team'); // Gets the Target from the DB
 		missionDebugger(`${aircraft.name} vs. ${target.name}`);
 
-
-		const escortCheck = await checkEscort(interception.target, atkReport, aircraft); // Checks to see if the target is escorted
+		const escortCheck = await checkEscort(interception.target, undefined, atkReport); // Checks to see if the target is escorted
 
 		target = escortCheck.target;
-		atkReport = escortCheck.atkReport;
-		stance = escortCheck.stance;
 		const defReport = escortCheck.defReport;
 
 
 		if (target.status.destroyed || target.systems.length < 1) {
-			const log = {
-				type: 'Failure',
-				team: aircraft.team,
-				position: 'Offense',
-				country: aircraft.country._id,
-				zone: aircraft.zone._id,
-				site: aircraft.site._id,
-				report: `${atkReport} ${aircraft.name} mission target has been destroyed.`,
-				unit: aircraft._id,
-				opponent: target._id
-			};
-			await makeAfterActionReport(log);
-			// TODO return attacker to base
-			missionDebugger(atkReport);
+			atkReport.type = 'Failure';
+			atkReport.report += ' Mission target was destroyed prior to intercept.',
+			atkReport.status.complete = true;
+			atkReport = atkReport.createTimestamp(atkReport);
+			await atkReport.save();
 			continue;
 		}
 
 		missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
-		atkReport = `${atkReport} ${dynReport.engageDesc(aircraft, aircraft.country)}`;
-		await intercept(aircraft, 'aggresive', atkReport, target, stance, defReport);
+		await intercept(aircraft, atkReport, target, defReport);
 	}
-	return 0;
+	return;
 }
 
 // Iterate over all remaining transport missions
 async function runTransports () {
 	for await (const transport of transportMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each mission
+		const missionCode = randCode(5); // Generates a unique code for this transport
 		missionDebugger(`Mission #${count} - Transport Mission`);
 
-		const report = new TransportReport();
-
-
-		const aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('systems').populate('team');
+		const aircraft = await Aircraft.findById(transport.aircraft).populate('country', 'name').populate('upgrades').populate('team');
 
 		if (aircraft.status.destroyed) {
 			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
@@ -189,21 +178,29 @@ async function runTransports () {
 
 		const target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
 		missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
-		let atkReport = `${aircraft.name} has launched for a hauling run, en route to ${target.name}. Mission target is in a ${aircraft.country.name} controlled region.`;
+
+		let atkReport = new AirMission({
+			type: 'Transport', 							// Records the After Action Report Type
+			code: missionCode, 							// Unique code for this encounter
+			mission: transport.mission,			// Mission type from the attacking unit
+			team: aircraft.team,						// Team of the attacking unit
+			country: aircraft.country._id,	// Country the mission is taking place over
+			zone: aircraft.zone._id,				// Zone the mission is in
+			site: aircraft.site._id,				// Site the mission is over
+			aircraft: aircraft._id,					// ID of the aircraft this report is for
+			report: `${aircraft.name} has launched for a hauling run, en route to ${target.name}. Mission target is ${transport.distance.toFixed(2)}km away in a ${aircraft.country.name} controlled region.`,
+			position: 'offense'							// Designates this aircraft as the offense or defense
+		});
+
 		if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Transport');
 
 		const patrolCheck = await checkPatrol(transport.target, atkReport, aircraft);
 
 		if (patrolCheck.continue === true) {
-			atkReport = `${atkReport} ${aircraft.name} arrived safely at ${target.name}.`;
+			atkReport.report = `${atkReport.report} ${aircraft.name} arrived safely at ${target.name}.`;
 			missionDebugger(`${aircraft.name} arrived safely at ${target.name}`);
-
-			report.team = aircraft.team._id;
-			report.unit = aircraft._id;
-			report.site = aircraft.site;
-			report.country = aircraft.country;
-			report.zone = aircraft.zone;
-			await report.saveReport();
+			atkReport = atkReport.createTimestamp(atkReport);
+			await atkReport.save();
 
 			// Schedule a ground mission.
 
@@ -212,8 +209,6 @@ async function runTransports () {
 
 			await aircraft.recall();
 		}
-
-
 	}
 
 	return;
@@ -222,82 +217,99 @@ async function runTransports () {
 // Iterate over all remaining Recon missions - DONE [NOT TESTED]
 async function runRecon () {
 	for await (const recon of reconMissions.sort((a, b) => a.distance - b.distance)) {
-		const MissionReport = new ReconReport();
 		count++; // Count iteration for each mission
+		const missionCode = randCode(5); // Generates a unique code for this recon mission
 		missionDebugger(`Mission #${count} - Recon Mission`);
 		const aircraft = await Aircraft.findById(recon.aircraft)
 			.populate('country', 'name')
-			.populate('systems')
-			.populate('origin');
-		let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
+			.populate('upgrades')
+			.populate('origin')
+			.populate('team');
+		// let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.country.name}.`;
 
 		if (aircraft.mission === 'Recon Aircraft') {
 			let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
 
-			if (target.status.destroyed || target.systems.length < 1) {
-				atkReport = `${atkReport} Target has been shot down prior to recon.`;
-				console.log(atkReport);
+			let atkReport = new AirMission({
+				type: 'Recon', 							// Records the After Action Report Type
+				code: missionCode, 							// Unique code for this encounter
+				mission: recon.mission,			// Mission type from the attacking unit
+				team: aircraft.team._id,						// Team of the attacking unit
+				country: aircraft.country._id,	// Country the mission is taking place over
+				zone: aircraft.zone._id,				// Zone the mission is in
+				site: aircraft.site._id,				// Site the mission is over
+				aircraft: aircraft._id,
+				unit: aircraft.toObject(),				// ID of the aircraft this report is for
+				report: `${aircraft.name} has launched to gather intel, en route to ${target.name}. Mission target is ${recon.distance.toFixed(2)}km away in a ${aircraft.country.name} controlled region.`,
+				position: 'offense'							// Designates this aircraft as the offense or defense
+			});
 
+			if (target.status.destroyed || target.systems.length < 1) {
+				atkReport.report = `${atkReport.report} Target has been shot down prior to recon.`;
+				atkReport = atkReport.createTimestamp(atkReport);
+				await atkReport.save();
 				continue;
 			}
 
-			const escortCheck = await checkEscort(recon.target, atkReport);
-
-			target = escortCheck.target;
-			atkReport = escortCheck.atkReport;
+			const escortCheck = await checkEscort(recon.target, undefined, atkReport);
 
 			// Check if we are still doing a recon mission or being intercepted.
-			if (target.toHexString() === recon.target.toHexString()) {
+			if (escortCheck.target._id.toHexString() === recon.target.toHexString()) {
 				// toHexString allows checking equality for _id
-				atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
+				atkReport.report = `${atkReport.report} ${aircraft.name} safely gathered information on ${target.type} and safely returned to base.`;
+
+				// eslint-disable-next-line no-unused-vars
 				const roll = d6();
 
 				// Generate Intel
+				// Make intel addition to the report
 
-				MissionReport.team = aircraft.team._id;
-				MissionReport.unit = aircraft._id;
-				MissionReport.targetAircraft = target._id;
-				MissionReport.report = atkReport;
-				MissionReport.country = aircraft.country._id;
-				MissionReport.zone = aircraft.zone._id;
-				MissionReport.rolls.push(roll);
-				MissionReport.date = Date.now();
-
-				MissionReport.saveReport();
+				atkReport = atkReport.createTimestamp(atkReport);
+				await atkReport.save();
 
 				await aircraft.recall();
 				return;
 			}
 			else {
-				const { defReport, stance } = escortCheck;
+				target = escortCheck.target; // Target, now the unit countering the recon attempt
+				const defReport = escortCheck.defReport; // The unit defending from recon, becomes the attacker for the interception
 
 				missionDebugger(`${aircraft.name} is engaging ${target.name}.`);
-				const report = `${atkReport} ${aircraft.name} engaged ${target.type}.`;
-				await intercept(aircraft, 'passive', report, target, stance, defReport);
-				return 0;
+				atkReport.report = `${atkReport.report} ${aircraft.name} engaged ${target.type}.`;
+				await intercept(target, defReport, aircraft, atkReport);
+				return;
 			}
 		}
 
 		if (aircraft.mission === 'Recon Site') {
+			const target = await Site.findById(recon.target); // Loading Site that the recon is heading to.
+
+			let atkReport = new AirMission({
+				type: 'Recon', 							// Records the After Action Report Type
+				code: missionCode, 							// Unique code for this encounter
+				mission: recon.mission,			// Mission type from the attacking unit
+				team: aircraft.team._id,						// Team of the attacking unit
+				country: aircraft.country._id,	// Country the mission is taking place over
+				zone: aircraft.zone._id,				// Zone the mission is in
+				site: aircraft.site._id,				// Site the mission is over
+				aircraft: aircraft._id,
+				unit: aircraft.toObject(),				// ID of the aircraft this report is for
+				report: `${aircraft.name} has launched to gather intel, en route to ${target.name}. Mission target is ${recon.distance.toFixed(2)}km away in a ${aircraft.country.name} controlled region.`,
+				position: 'offense'							// Designates this aircraft as the offense or defense
+			});
+
 			const patrolCheck = await checkPatrol(recon.target, atkReport, aircraft);
-			const target = await Site.findById(recon.target); // Loading Aircraft that the recon is heading to.
 			if (patrolCheck.continue === true) {
-				atkReport = `${atkReport} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
+				atkReport.report = `${atkReport.report} ${aircraft.name} safely gathered information on ${target.name} and safely returned to base.`;
 				missionDebugger(
 					`${aircraft.name} safely gathered information on ${target.name}`
 				);
+
+				// eslint-disable-next-line no-unused-vars
 				const roll = d6();
 
-				MissionReport.team = aircraft.team._id;
-				MissionReport.unit = aircraft._id;
-				MissionReport.targetSite = target._id;
-				MissionReport.country = aircraft.country._id;
-				MissionReport.zone = aircraft.zone._id;
-				MissionReport.report = atkReport;
-				MissionReport.rolls.push(roll);
-				MissionReport.date = Date.now();
-
-				MissionReport.saveReport();
+				atkReport = atkReport.createTimestamp(atkReport);
+				await atkReport.save();
 
 				await aircraft.recall();
 				return;
@@ -309,131 +321,158 @@ async function runRecon () {
 async function runDiversions () {
 	for await (const mission of diversionMissions.sort((a, b) => a.distance - b.distance)) {
 		missionDebugger(`Running diversion for ${mission.aircraft.name}`);
+		count++; // Count iteration for each mission
+		const missionCode = randCode(5); // Generates a unique code for this recon mission
+
 		const aircraft = await Aircraft.findById(mission.aircraft)
 			.populate('country', 'name')
-			.populate('systems')
+			.populate('upgrades')
 			.populate('origin')
 			.populate('team');
-		// if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.country._id);
 
-		// Diversion mission log
+		const target = await Site.findById(mission.target); // Loading Site that the rdiversion is heading to.
+
+		let atkReport = new AirMission({
+			type: 'Diversion', 							// Records the After Action Report Type
+			code: missionCode, 							// Unique code for this encounter
+			mission: mission.mission,			// Mission type from the attacking unit
+			team: aircraft.team._id,						// Team of the attacking unit
+			country: aircraft.country._id,	// Country the mission is taking place over
+			zone: aircraft.zone._id,				// Zone the mission is in
+			site: aircraft.site._id,				// Site the mission is over
+			aircraft: aircraft._id,
+			unit: aircraft.toObject(),				// ID of the aircraft this report is for
+			report: `${aircraft.name} has launched to gather intel, en route to ${target.name}. Mission target is ${mission.distance.toFixed(2)}km away in a ${aircraft.country.name} controlled region.`,
+			position: 'offense'							// Designates this aircraft as the offense or defense
+		});
+
+		const patrolCheck = await checkPatrol(mission.target, atkReport, aircraft);
+		if (patrolCheck.continue === true) {
+
+			atkReport.report = `${atkReport.report} ${aircraft.name} distracted over target site without interference.`;
+
+			atkReport = atkReport.createTimestamp(atkReport);
+			await atkReport.save();
+
+			await aircraft.recall();
+		}
+		else {
+			// Add terror for non-intercepted alien craft, possibly a news report
+			// if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.country._id);
+		}
 
 		await aircraft.recall();
+		return;
 	}
 }
 
-// Check for all patrol missions for any that are guarding transport target (Site)
-async function checkPatrol (target, atkReport, aircraft) {
+// Check for all patrol missions for any that are guarding target target (Site)
+async function checkPatrol (target, defReport, aircraft) {
 	for await (const patrol of patrolMissions) {
 		missionDebugger('Checking patrol missions...');
 		if (target.toHexString() === patrol.target.toHexString()) {
+			count++; // Count iteration for each mission
+			const missionCode = randCode(5); // Generates a unique code for this recon mission
 			// toHexString allows checking equality for _id
 			missionDebugger('Patrol engaging!');
 
-			target = await Aircraft.findById(patrol.aircraft).populate('systems');
+			target = await Aircraft.findById(patrol.aircraft).populate('site');
 			patrolMissions.splice(patrolMissions.indexOf(patrol), 1);
 
-			let defReport = `${target.name} breaking off from patrol to engage ${aircraft.type}.`;
-			atkReport = `${atkReport} patrol sited over target site, being engaged by ${target.type}.`;
+			const atkReport = new AirMission({
+				type: 'Interception', 					// Records the After Action Report Type
+				code: missionCode, 							// Unique code for this encounter
+				mission: 'Patrol',							// Mission type from the attacking unit
+				team: target.team,						// Team of the attacking unit
+				country: target.country._id,	// Country the mission is taking place over
+				zone: target.zone._id,				// Zone the mission is in
+				site: target.site._id,				// Site the mission is over
+				aircraft: target._id,					// ID of the aircraft this report is for
+				report: `${target.name} en route ${target.site.name} airspace on mission ${missionCode}. Patrol target is ${patrol.distance.toFixed(2)}km away. Establishing patrol pattern ${randCode(3)}. Unknown approaching patrol target, ${target.name} breaking off from patrol to engage ${aircraft.type}.`,
+				position: 'offense'							// Designates this aircraft as the offense or defense
+			});
 
-			const escortCheck = await checkEscort(aircraft._id, defReport); // Checking to see if the mission ship has a Escort;
+			defReport.report = `${defReport.report} Patrol sited over target site, prepearing to be engaged by incoming ${target.type}.`;
+			defReport.position = 'defense';
+
+			const escortCheck = await checkEscort(aircraft._id, defReport, atkReport); // Checking to see if the mission ship has a Escort;
 
 			if (aircraft._id.toHexString() === escortCheck.target._id.toHexString()) {
-				defReport = escortCheck.atkReport;
-				const escortReport = `${atkReport} ${escortCheck.defReport}`;
-				await intercept(escortCheck.target, 'aggresive', escortReport, target, 'aggresive', defReport);
-				atkReport = `${atkReport} Escort has broken off to engage patrol.`;
+				await intercept(target, atkReport, escortCheck.target, escortCheck.defReport);
+				return { continue: false };
 			}
 			else {
-				await intercept(aircraft, 'passive', atkReport, target, 'aggresive', defReport);
-				return { continue: false };
+				defReport.report = `${defReport.report} Escort has broken off to engage patrol.`;
+				await intercept(target, atkReport, escortCheck.target, escortCheck.defReport);
+				return { continue: true, defReport };
 			}
 		}
 	}
-	return { continue: true, atkReport };
+	return { continue: true };
 }
 
 // Check for all escort missions for any that are guarding (Aircraft)
-async function checkEscort (target, atkReport, attacker) {
+async function checkEscort (target, defReport, atkReport) {
 
 	// Checks all remaining escort missions sorted by distance
 	for await (const escort of escortMissions.sort((a, b) => a.distance - b.distance)) {
 		missionDebugger('Checking escort missions...');
 
+		// Checks if the original target is the escorts target | toHexString allows checking equality for _id
 		if (target.toHexString() === escort.target.toHexString()) {
-			// toHexString allows checking equality for _id
+			count++; // Count iteration for each mission
+			const missionCode = randCode(5); // Generates a unique code for this recon mission
 			missionDebugger('Escort engaging!');
 			target = await Aircraft.findById(target); // Gets the original target of the interception
-			const newTarget = await Aircraft.findById(escort.aircraft).populate('systems').populate('country'); // Gets the escorter for the target
+
+			const newTarget = await Aircraft.findById(escort.aircraft)
+				.populate('country', 'name')
+				.populate('upgrades')
+				.populate('team')
+				.populate('site'); // Gets the escorter for the target
 			escortMissions.splice(escortMissions.indexOf(escort), 1); // Removes the current escort from the missions array
-			const stance = 'aggresive'; // Sets the stance for the new target to
-			const defReport = dynReport.escortDesc(newTarget, target);
-			atkReport = dynReport.escortEngageDesc(attacker, atkReport);
 
-			target = newTarget;
-			return { target, atkReport, defReport, stance };
+			// Saves the old units aar if there is one
+			if (defReport) {
+				defReport.report = `${defReport.report} Our escort is intercepting incoming units!`;
+				defReport = await defReport.createTimestamp(defReport);
+				await defReport.save();
+			}
+
+			// Creates a new report for the defensive escort engaging the attackerr
+			defReport = new AirMission({
+				type: 'Interception',
+				code: missionCode,
+				mission: 'Escort',
+				team: target.team,
+				country: atkReport.country,
+				zone: atkReport.zone,
+				site: atkReport.site,
+				aircraft: target._id,
+				report: `${newTarget.name} escorting ${target.name} to ${newTarget.country.name} airspace on mission ${missionCode}. Desination is ${escort.distance.toFixed(2)}km away. Patrol sited over target site, prepearing to be engaged by ${target.type}. ${dynReport.escortDesc(newTarget, target)}`,
+				position: 'defense'
+			});
+
+			target = newTarget; // Assigns the escort as the new target of the interception
+
+			return { target, defReport }; // Returns to the mission for interception.
 		}
 	}
 
-	target = await Aircraft.findById(target).populate('systems').populate('country'); // Loads original target in for interception
-	const defReport = `${target.name} was engaged over ${target.country.name} airspace.`; // Possible dynReport point
-	return { target, atkReport, defReport, stance: 'passive' }; // Returns to mission function that called it
-}
-
-async function resolveTransfers () {
-	for await (const transfer of transportMissions.sort((a, b) => a.distance - b.distance)) {
-		count++; // Count iteration for each mission
-		missionDebugger(`Mission #${count} - Transfer Mission`);
-
-		const report = new TransportReport();
-		const aircraft = await Aircraft.findById(transfer.aircraft).populate('country', 'name').populate('systems');
-
-		if (aircraft.status.destroyed) {
-			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
-			continue;
-		}
-
-		const target = await Facility.findById(transfer.target); // Loading Site that the aircraft is heading to.
-		missionDebugger(`${aircraft.name} transferring to ${target.name}`);
-		aircraft.origin = target;
-
-
-		report.team = aircraft.team._id;
-		report.unit = aircraft._id;
-		report.site = aircraft.site;
-		report.country = aircraft.country;
-		report.zone = aircraft.zone;
-		await report.save();
-	}
-
-	return;
-}
-
-async function resolveGroundCombat () {
-	let comCount = 0;
-	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
-		comCount++;
-		console.log(`Resolving combat at ${site.name}`);
-		// do combat call here
-
-		// recall units
-		for (const unit of await Military.find({ 'site._id': site._id })) {
-			unit.recall();
-		}
-
-		// hit this logic if combat has been resolved successfully
-		if (site.subType === 'Point of Interest') {
-			site.hidden = true;
-			console.log('Site hidden');
-		}
-		else {
-			site.stats.warzone = false;
-			console.log('Site De-Warzoned');
-		}
-		await site.save();
-	}
-	console.log(`Resolved ${comCount} combat sites`);
-	return 0;
+	target = await Aircraft.findById(target).populate('country'); // Loads original target in for interception
+	defReport = new AirMission({
+		type: 'Interception',
+		code: atkReport.missionCode,
+		mission: target.mission,
+		team: target.team,
+		country: atkReport.country,
+		zone: atkReport.zone,
+		site: atkReport.site,
+		aircraft: target._id,
+		report: `${target.name} was engaged over ${target.country.name} airspace.`, // Possible dynReport point
+		position: 'defense'
+	});
+	return { target, defReport }; // Returns to mission function that called it
 }
 
 async function clearMissions () {
@@ -446,7 +485,6 @@ async function clearMissions () {
 	transportMissions = []; // Attempted Transport missions for the round
 	reconMissions = []; // Attempted Recon missions for the round
 	diversionMissions = []; // Attempted Diversion missions for the round
-	transferMissions = [];
 
 	return 0;
 }

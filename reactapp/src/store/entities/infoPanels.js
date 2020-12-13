@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
-import { Alert } from "rsuite";
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -17,6 +16,10 @@ const slice = createSlice({
   },
   // Reducers - Events
   reducers: {
+		infoRequest: (info, action) => {
+      console.log(`${action.type} Dispatched...`)
+      info[action.payload.model] = action.payload
+    },
     showMilitary: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info.Military = action.payload
@@ -35,12 +38,12 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched...`)
       info.showSite = false
 		},
-    infoRequested: (info, action) => {
+    showAircraft: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info[action.payload.model] = action.payload
       info.showAircraft = true
     },
-    infoClosed: (info, action) => {
+    aircraftClosed: (info, action) => {
       console.log(`${action.type} Dispatched...`)
       info.showAircraft = false
     },
@@ -69,8 +72,8 @@ const slice = createSlice({
 export const {
 	showMilitary,
 	militaryClosed,
-	infoRequested,
-	infoClosed,
+	showAircraft,
+	aircraftClosed,
 	showLaunch,
 	launchClosed,
 	showSite,

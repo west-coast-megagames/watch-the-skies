@@ -17,12 +17,10 @@ let missions = [
   { value: "Cargo", label: "Cargo Run | Pick up cargo at site", aircraft: false, site: false, ground: true },
   { value: "Abduction", label: "Abduction | Pick up some 'willing' people", aircraft: false, site: false, ground: true },
   { value: "Raid", label: "Raid | Squad attacks target site", aircraft: false, site: false, ground: true },
-  { value: "Sabatage", label: "Sabatage | I bet the facilities here a booming", aircraft: false, site: false, ground: true },
+  { value: "Sabatage", label: "Sabatage | I bet the facilities here are booming", aircraft: false, site: false, ground: true },
 ]
 
-let groundMission = [
-
-]
+// let groundMission = []
 class InfoDeploy extends Component {
   constructor(props) {
     super(props);
@@ -49,12 +47,12 @@ class InfoDeploy extends Component {
     let siteMissions = missions.filter(mission => mission.site === true);
     let airMissions = missions.filter(mission => mission.aircraft === true);
     let groundMissions = missions.filter(mission => mission.ground === true);
-    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready == true);
+    let ships = this.props.aircrafts.filter(aircraft => aircraft.status.deployed !== true && aircraft.status.ready === true);
     let aircrafts = [];
-    console.log(ships);
+    //console.log(ships);
     if (ships.length > 0) {
       for (let ship of ships) {
-        console.log(ship)
+        //console.log(ship)
         let data = { 
           label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
           value: ship._id
@@ -165,7 +163,7 @@ class InfoDeploy extends Component {
       mission: this.state.mission
     };
     try {
-      console.log(stats)
+      //console.log(stats)
       let response = await axios.put(`${gameServer}game/aircrafts`, stats);    
       Alert.success(response.data);
       this.setState({mission: null, unit: null});
@@ -195,7 +193,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hideDeploy: () => dispatch(launchClosed())
-  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoDeploy);

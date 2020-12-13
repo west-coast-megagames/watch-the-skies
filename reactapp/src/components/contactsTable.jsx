@@ -41,7 +41,7 @@ class Contacts extends Component {
 				autoHeight
 				data={this.state.data}
 				onExpandChange={(isOpen, rowData) => {
-					console.log(isOpen, rowData);
+					// console.log(isOpen, rowData);
 				}}
 				renderTreeToggle={(icon, rowData) => {
 					if (rowData.children && rowData.children.length === 0) {

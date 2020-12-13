@@ -51,10 +51,6 @@ async function initLoad (doLoad) {
 	let brecReadCount = 0;
 	const brecCounts = { loadCount: 0, loadErrCount: 0, updCount: 0, skipCount: 0 };
 	for await (const bData of countryDataIn) {
-		/*
-    logger.debug(
-      `jeff in 2nd loop ... country code ${bData.code} ... borderedBy ${bData.borderedBy}`);
-    */
 		++brecReadCount;
 		await setBorderedBy(bData, brecCounts);
 	}
@@ -104,6 +100,7 @@ async function loadCountry (cData, rCounts) {
 			if (NewCountry.type === 'Space') {
 				NewCountry.coastal = false;
 				NewCountry.borderedBy = [];
+				NewCountry.capital = undefined;
 			}
 
 			const zone = await axios.get(`${gameServer}init/initZones/code/${cData.zone}`);
@@ -136,7 +133,6 @@ async function loadCountry (cData, rCounts) {
 				await axios.post(`${gameServer}api/countries`, NewCountry);
 				++rCounts.loadCount;
 				logger.debug(`${NewCountry.name} add saved to Country collection.`);
-
 			}
 			catch (err) {
 				++rCounts.loadErrCount;

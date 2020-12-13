@@ -4,20 +4,6 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-/* not yet
-const systemCategories = ['Weapon', 'Engine', 'Sensor', 'Compartment', 'Util'];
-const gearCategories = ['Weapons', 'Vehicles', 'Transport', 'Training'];
-// do not have kit Category yet
-// const kitCategories = [];
-
-function inArray (array, value) {
-	for (let i = 0; i < array.length; i++) {
-		if (array[i] == value) return true;
-	}
-	return false;
-}
-*/
-
 async function chkUpgrade (runFlag) {
 	let uFinds = [];
 	try {
@@ -82,12 +68,6 @@ async function chkUpgrade (runFlag) {
 		) {
 			logger.error(
 				`code is blank for Upgrade ${upgrade.name} ${upgrade._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(upgrade, 'unitType')) {
-			logger.error(
-				`unitType missing for Upgrade ${upgrade.name} ${upgrade._id}`
 			);
 		}
 
@@ -211,8 +191,8 @@ async function chkUpgrade (runFlag) {
 		// validate call
 		try {
 			const valMessage = await axios.get(`${gameServer}init/initUpgrades/validate/${upgrade._id}`);
-			if (!valMessage.data.unitType) {
-				logger.error(`Validation Error: ${valMessage.data}`);
+			if (!valMessage.data.desc) {
+				logger.error(`Validation Error ${upgrade.code} ${upgrade.name} Upgrade: ${valMessage.data}`);
 			}
 		}
 		catch (err) {

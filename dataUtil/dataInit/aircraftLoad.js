@@ -10,6 +10,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { validUnitType } = require('../util/validateUnitType');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -121,6 +122,7 @@ async function newAircraftCreate (aData, rCounts) {
 	else {
 		newAircraft.stats = bpData.stats;
 		newAircraft.type = bpData.type;
+		newAircraft.blueprint = bpData._id;
 	}
 
 	const team = await axios.get(`${gameServer}init/initTeams/code/${aData.team}`);
@@ -187,6 +189,12 @@ async function newAircraftCreate (aData, rCounts) {
 		newAircraft.site = baseSite;
 	}
 
+	// get upgrades if we have a valid blueprint
+	if (bpData.desc) {
+		const upgrades = await findUpgrades(bpData.upgrades, newAircraft.type, newAircraft.name, newAircraft.team, newAircraft.origin);
+		newAircraft.upgrades = upgrades;
+	}
+
 	try {
 		await axios.post(`${gameServer}api/aircrafts`, newAircraft);
 		++rCounts.loadCount;
@@ -196,6 +204,45 @@ async function newAircraftCreate (aData, rCounts) {
 		++rCounts.loadErrCount;
 		logger.error(`New Aircraft Save Error: ${err.message}`, { meta: err.stack });
 	}
+}
+
+async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+	const upgIds = [];
+	for (const upg of upgrades) {
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);
+		const bpData = blueprint.data;
+
+		if (!bpData.desc) {
+			logger.error(`New ${unitType} Invalid Upgrade Blueprint: ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!bpData.buildModel === 'upgrade') {
+			logger.error(`New ${unitType} Upgrade Blueprint not an upgrade build model : ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!validUnitType(bpData.unitType, unitType)) {
+			logger.error(`New ${unitType} not valid for upgrade : ${unitName} ${upg}`);
+			continue;
+		}
+
+		try {
+			const upgradeBody = { code: upg, team: team, facility: facility,
+				effects: bpData.effects, cost: bpData.cost, buildTime: bpData.buildTime,
+				name: bpData.name, manufacturer: team, desc: bpData.desc,
+				prereq: bpData.prereq };
+			const newUpgrade = await axios.post(`${gameServer}init/initUpgrades/build`, upgradeBody);
+			logger.debug(`New ${unitType} upgrade posted : ${unitName} ${upg} ${upgradeBody}`);
+			const newUpg = newUpgrade.data;
+
+			upgIds.push(newUpg._id);
+		}
+		catch (err) {
+			logger.error(`New ${unitType} Aircraft Upgrade Save Error: ${err.message}`, { meta: err.stack });
+		}
+	}
+	return upgIds;
 }
 
 module.exports = runaircraftLoad;

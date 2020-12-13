@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import bugsReducer from './entities/bugs';
-import logsReducer from './entities/logs';
+import reportReducer from './entities/reports';
 import siteReducer from './entities/sites';
 import teamReducer from './entities/teams';
 import aircraftReducer from './entities/aircrafts';
@@ -12,14 +12,14 @@ import countryReducer from './entities/countries';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
-// import upgradeReducer from './entities/upgrades';
+ import upgradeReducer from './entities/upgrades';
 
 
 
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
   bugs: bugsReducer,
-  logs: logsReducer,
+  reports: reportReducer,
   sites: siteReducer,
   teams: teamReducer,
   articles: articleReducer,
@@ -31,5 +31,5 @@ export default combineReducers({
   research: researchReducer,
 	accounts: accountReducer,
 	blueprints: blueprintReducer,
-	// upgrades: upgradeReducer
+	upgrades: upgradeReducer
 });

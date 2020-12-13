@@ -4,6 +4,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 const validateObjectId = require('../../middleware/util/validateObjectId');
 const httpErrorHandler = require('../../middleware/util/httpError');
+const { newUpgrade } = require('../../wts/construction/construction');
 
 // Mongoose Model Import
 const { Upgrade } = require('../../models/upgrade');
@@ -88,6 +89,21 @@ router.get('/validate/:id', validateObjectId, async (req, res) => {
 	}
 	catch (err) {
 		httpErrorHandler(res, err);
+	}
+});
+
+router.post('/build', async function (req, res) {
+	const { code, team, facility } = req.body; // please give me these things
+
+	try {
+		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		upgrade.status.building = false;	// init upgrades are assumed to be built
+		upgrade = await upgrade.save();
+
+		res.status(200).json(upgrade);
+	}
+	catch (err) {
+		res.status(404).send(err.message); // This returns a really weird json... watch out for that
 	}
 });
 

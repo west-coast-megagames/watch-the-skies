@@ -24,7 +24,7 @@ const account = require('./api/accounts');
 const blueprint = require('./api/blueprints');
 const country = require('./api/countries');
 const facilities = require('./api/facilities');
-const logs = require('./api/log');
+const reports = require('./api/reports');
 const military = require('./api/military');
 const squad = require('./api/squad');
 const research = require('./api/research');
@@ -68,6 +68,8 @@ const news = require('./game/news');
 const shared = require('./game/shared');
 const upgrades = require('./game/upgrades');
 
+const tempMil = require('./game/tempMil');
+
 const debug = require('./debugRoute');
 
 module.exports = function (app) {
@@ -99,7 +101,7 @@ module.exports = function (app) {
 	app.use('/api/blueprints', blueprint);
 	app.use('/api/countries', country); // Route for inputing countries
 	app.use('/api/facilities', facilities); // Route for inputing countries
-	app.use('/api/logs', logs); // Route for logs
+	app.use('/api/reports', reports); // Route for reports
 	app.use('/api/military', military); // Route for manipulating militarys
 	app.use('/api/squad', squad); // Route for manipulating squad
 	app.use('/api/research', research); // Route for research functions
@@ -125,6 +127,9 @@ module.exports = function (app) {
 	app.use('/init/initResearch', initResearch); // Route for init/check of Research
 	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
 	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
+
+
+	app.use('/game/tempMil', tempMil);
 
 	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones

@@ -3,7 +3,6 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom'; // React router for URL links
 import { gameServer } from '../config'; // Used for the current server URL.
 import axios from 'axios'; // Axios import - used for HTTP calls
-import { updateEvents } from '../api' // Socket.IO commands - used for socket communication with server
 
 // Science Tabs
 import Labs from '../pages/tabs/sci/labs';

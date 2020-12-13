@@ -12,7 +12,7 @@ const UpgradeSchema = new Schema({
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	code: { type: String },
 	team: { type: ObjectId, ref: 'Team' },
-	// unitType: { type: String },
+	facility: { type: ObjectId, ref: 'Facility' },
 	manufacturer: { type: ObjectId, ref: 'Team' },
 	cost: { type: Number },
 	buildTime: { type: Number, default: 0 },

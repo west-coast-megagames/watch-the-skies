@@ -156,6 +156,12 @@ async function chkAircraft (runFlag) {
 			);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(aircraft, 'blueprint')) {
+			logger.error(
+				`blueprint missing for Aircraft ${aircraft.name} ${aircraft._id}`
+			);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'systems')) {
 			logger.error(
 				`systems missing for Aircraft ${aircraft.name} ${aircraft._id}`
@@ -231,23 +237,6 @@ async function chkAircraft (runFlag) {
 					);
 				}
 			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.systems, 'armor')) {
-				logger.error(
-					`systems.armor missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			else {
-				if (!Object.prototype.hasOwnProperty.call(aircraft.systems.armor, 'active')) {
-					logger.error(
-						`systems.armor.active missing for Aircraft ${aircraft.name} ${aircraft._id}`
-					);
-				}
-				if (!Object.prototype.hasOwnProperty.call(aircraft.systems.armor, 'damaged')) {
-					logger.error(
-						`systems.armor.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
-					);
-				}
-			}
 
 			if (!Object.prototype.hasOwnProperty.call(aircraft.systems, 'utility')) {
 				logger.error(
@@ -309,6 +298,11 @@ async function chkAircraft (runFlag) {
 					`stats.evade missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
+			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'detection')) {
+				logger.error(
+					`stats.detection missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
 			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'range')) {
 				logger.error(
 					`stats.range missing for Aircraft ${aircraft.name} ${aircraft._id}`
@@ -317,26 +311,6 @@ async function chkAircraft (runFlag) {
 			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'cargo')) {
 				logger.error(
 					`stats.cargo missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'passiveRolls')) {
-				logger.error(
-					`stats.passiveRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			else if (aircraft.stats.passiveRolls.length === 0) {
-				logger.error(
-					`stats.passiveRolls length zero for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.stats, 'activeRolls')) {
-				logger.error(
-					`stats.activeRolls missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			else if (aircraft.stats.activeRolls.length === 0) {
-				logger.error(
-					`stats.activeRolls length zero for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
 		}

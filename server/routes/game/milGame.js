@@ -10,11 +10,12 @@ const { Team } = require('../../models/team');
 // Game Systems - Used to run Game functions
 const banking = require('../../wts/banking/banking');
 const nexusEvent = require('../../middleware/events/events');
-const { d6, rand } = require('../../../dataUtil/systems/dice');
-const { upgradeValue } = require('../../wts/upgrades/upgrades');
+const { d6 } = require('../../../dataUtil/systems/dice');
 
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
+const randomCords = require('../../util/systems/lz');
+const { runMilitary } = require('../../wts/military/combat');
 
 
 // @route   PUT game/military/deploy
@@ -56,6 +57,7 @@ router.put('/deploy', async function (req, res) {
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
 			update.status.deployed = true;
+			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
 			unitArray.push(update._id);
 			await update.save();
 		}
@@ -95,30 +97,23 @@ router.put('/deploy', async function (req, res) {
 	}
 });
 
-
-router.patch('/battle', async function (req, res) {
-	const { attackers, defenders } = req.body;
+// untested should be fine22
+router.patch('/battleSim', async function (req, res) {
 	let attackerTotal = 0;
 	let defenderTotal = 0;
 	let attackerResult = 0;
 	let defenderResult = 0;
-	const spoils = [];
 	let report = '';
-
-	// 1) calculate total attack value of attackers
+	const { attackers, defenders } = req.body;
 	for (let unit of attackers) {
 		unit = await Military.findById(unit).populate('upgrades');
-		attackerTotal = attackerTotal + await upgradeValue(unit.upgrades, 'attack');
 		attackerTotal = attackerTotal + unit.stats.attack;
 	}
-
 	// 2) calculate total defense value of attackers
 	for (let unit of defenders) {
 		unit = await Military.findById(unit).populate('upgrades');
-		defenderTotal = defenderTotal + await upgradeValue(unit.upgrades, 'defense');
 		defenderTotal = defenderTotal + unit.stats.defense;
 	}
-
 	// 3) roll both sides and save results
 	for (let i = 0; i < attackerTotal; i++) {
 		const result = d6();
@@ -132,50 +127,47 @@ router.patch('/battle', async function (req, res) {
 			defenderResult++;
 		}
 	}
-	report = `Attacker hit ${attackerResult} out of ${attackerTotal} rolls!\nDefender hit ${defenderResult} out of ${defenderTotal}!\nAssigning defender casualties...\n`;
+	report += `Attacker hit ${attackerResult} out of ${attackerTotal} rolls!\nDefender hit ${defenderResult} out of ${defenderTotal}!\n`;
+	res.status(200).send(report);
+});
 
-	// 4) assign casualties to defenders
-	for (let i = 0; i < attackerResult; i++) {
-		// 4.1) for every hit, randomly pick a unit from the defender
-		const cas = rand(defenders.length) - 1;
-		// 4.2) compile an array made up of unit's HP and upgrades
-		const unit = await Military.findById(defenders[cas]).populate('upgrades');
-		// 4.3) pick one element from that array
-		const casSpecific = rand(unit.stats.health + unit.upgrades.length);
-		if (casSpecific <= unit.stats.health) {
-			// 4.4) if it is a "HP" result, unit takes a hit.
-			unit.stats.health = unit.stats.health - 1;
-			report += `${unit.name} has been hit!`;
-			console.log(unit.name);
-			// MAKE SURE TO REMOVE UNIT IF IT HITS 0 HP
-		}
-		else {
-			// 4.5) if it is a "Upgrade" result, the upgrade is damaged, removed from the unit, and "dropped" onto the battlefield
-			const hit = unit.upgrades[rand(unit.upgrades.length) - 1];
-			console.log(hit.name);
-			// unit.upgrades[hit].pop or something
-			spoils.push(hit);
-			report += `${hit.name} has been hit!`;
-		}
-		// save the unit that was hit
+router.patch('/resolve', async function (req, res) {
+	await runMilitary();
+	res.status(200).send('Battles resolved');
+});
+
+router.patch('/recall', async function (req, res) {
+	for (const unit of await Military.find({ 'status.deployed': true })) {
+		console.log(unit.name);
+		await unit.recall();
 	}
+	nexusEvent.emit('updateMilitary');
+	res.status(200).send('Military Units Recalled');
+});
 
-	// 5) assign casualties to attackers
-	// 	5.1) for every hit, randomly pick a unit from the attacker
-	// 	5.2) compile an array made up of unit's HP and upgrades
-	// 	5.3) pick one element from that array
-	// 	5.4) if it is a "HP" result, unit takes a hit.
-	// 	5.5) if it is a "Upgrade" result, the upgrade is damaged, removed from the unit, and "dropped" onto the battlefield
-	// 6) inform both generals of causalities
-	// 7) ask both generals if they would like to proceed
-	// 8) if both generals continue, repeat to step 1
-	// 9) if one side backs out while they other continues, that side "wins"
-	// 	 9.1) control of site goes to victor
-	// 	 9.2) all damaged upgrades go to victor
-	// step 10) if both sides back down, no one gets control, create new site w/ scrap of all upgrades
+router.patch('/resethealth', async function (req, res) {
+	for await (const unit of Military.find()) {
+		console.log(`${unit.name} has ${unit.stats.health} health points`);
+		unit.stats.health = unit.stats.healthMax;
+		unit.status.destroyed = false;
+		console.log(`${unit.name} now has ${unit.stats.health} health points`);
+		await unit.save();
+	}
+	res.send('Military Health succesfully reset!');
+	nexusEvent.emit('updateMilitary');
+});
 
-	const data = { attackerResult, defenderResult };
-	res.status(200).send(data, report);
+router.patch('/resetsites', async function (req, res) {
+	for await (const site of Site.find()) {
+		console.log(`Resetting ${site.name}`);
+		site.status.warzone = false;
+		site.status.occupied = false;
+		site.occupier = await Team.findOne({ code: 'TCN' });
+		await site.save();
+	}
+	console.log('All done');
+	res.send('All sites succesfully reset!');
+	nexusEvent.emit('updateSites');
 });
 
 module.exports = router;

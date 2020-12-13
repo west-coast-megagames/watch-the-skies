@@ -9,15 +9,34 @@ const { interceptLogging } = require('./report');
 async function intercept (attacker, atkStance, atkReport, defender, defStance, defReport) {
 	interceptDebugger('Beginning intercept...');
 
-	const atkRoll = d6() + d6(); // Attacker Roll | 2 d6
-	interceptDebugger(`${attacker.name} rolled a ${atkRoll}`);
-	const defRoll = d6() + d6(); // Defender Roll | 2 d6
-	interceptDebugger(`${defender.name} rolled a ${defRoll}`);
+	let atkTotal = 0;
+	let defTotal = 0;
 
-	const atkResult = await outcome(attacker, atkRoll, atkStance); // Puts the attacker through the results table returning results data | outcome.js
-	const defResult = await outcome(defender, defRoll, defStance); // Puts the attacker through the results table returning results data | outcome.js
+	for (let i = 0; i < 2; i++) {
+		const atkRoll = d6();
+		atkTotal += atkRoll;
+		const defRoll = d6();
+		defTotal += defRoll;
+		// Save rolls to attack report
+		atkReport.interception.atkStats.rolls.push(atkRoll);
+		// Save rolls to defense report
+		defReport.interception.defStats.rolls.push(defRoll);
+	}
 
-	const interceptReport = await interceptDmg(attacker, defender, atkResult, defResult); // Calculates damage and applies it | damage.js
+	atkReport.interception.atkStats.rollTotal = atkTotal;
+	atkReport.interception.atkStats.stance = atkStance;
+	interceptDebugger(`${attacker.name} rolled a ${atkTotal}`);
+	defReport.interception.defStats.rollTotal = defTotal;
+	defReport.interception.defStats.stance = defStance;
+	interceptDebugger(`${defender.name} rolled a ${defTotal}`);
+
+	const atkResult = await outcome(attacker, atkTotal, atkStance); // Puts the attacker through the results table returning results data | outcome.js
+	const defResult = await outcome(defender, defTotal, defStance); // Puts the attacker through the results table returning results data | outcome.js
+
+	const offense = { attacker, atkResult, atkReport };
+	const defense = { defender, defResult, defReport };
+
+	const interceptReport = await interceptDmg(offense, defense); // Calculates damage and applies it | damage.js
 
 	if (interceptReport.salvage.length > 0) {
 		await generateCrash(interceptReport.salvage, attacker.site, attacker.country);

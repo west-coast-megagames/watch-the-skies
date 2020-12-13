@@ -11,8 +11,9 @@ const { Article } = require('../../models/article');
 const { Research } = require('../../models/research');
 const { Facility } = require('../../models/facility');
 const { Military } = require('../../models/military');
-const { Log } = require('../../models/logs/log');
 const { Site } = require('../../models/site');
+const { Upgrade } = require('../../models/upgrade');
+const { Report } = require('../../models/report');
 
 module.exports = function (io) {
 	const UpdateClients = new SocketServer();
@@ -97,19 +98,19 @@ module.exports = function (io) {
 		socketDebugger('Event: Updating Military...');
 		const military = await Military.find()
 			.sort({ team: 1 })
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('gear', 'name category')
 			.populate('site', 'name')
-			.populate('upgrade')
+			.populate('upgrades', 'name effects')
 			.populate('origin');
 		updateSocket.emit('updateMilitary', military);
 	});
 
-	nexusEvent.on('updateLogs', async () => {
-		socketDebugger('Event: Updating logs...');
-		const logs = await Log.find()
+	nexusEvent.on('updateReports', async () => {
+		socketDebugger('Event: Updating reports...');
+		const reports = await Report.find()
 			.populate('team')
 			.populate('country', 'name')
 			.populate('zone')
@@ -117,8 +118,9 @@ module.exports = function (io) {
 			.populate('lab')
 			.populate('theory')
 			.populate('units')
+			.populate('site', 'name team')
 			.sort({ date: 1 });
-		updateSocket.emit('updateLogs', logs);
+		updateSocket.emit('updateReports', reports);
 	});
 
 	nexusEvent.on('newsAlert', async (article) => {
@@ -144,6 +146,13 @@ module.exports = function (io) {
 			.populate('zone', 'model name code')
 			.sort({ name: -1 });
 		updateSocket.emit('updateSites', sites);
+	});
+
+
+	nexusEvent.on('updateUpgrades', async () => {
+		socketDebugger('Event: Updating Upgrades...');
+		const upgrades = await Upgrade.find();
+		updateSocket.emit('updateUpgrades', upgrades);
 	});
 
 	nexusEvent.on('error', async (err) => {

@@ -1,3 +1,5 @@
+// TODO: If I've succeeded at this, then this file will be deletable!
+
 const reportDebugger = require('debug')('app:reports');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 
@@ -96,7 +98,7 @@ class TransportReport {
 		this.date = '';
 		this.team = {};
 		this.unit = {};
-		this.report = {};
+		this.report = '';
 		this.site = {};
 		this.country = {};
 		this.zone = {};

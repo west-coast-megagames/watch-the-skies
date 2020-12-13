@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { UpgradeBlueprint } = require('../../models/blueprint');
 const validateObjectId = require('../../middleware/util/validateObjectId');
-const { newUpgrade } = require('../../wts/construction/construction');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const { Upgrade } = require('../../models/upgrade');
 const nexusEvent = require('../../middleware/events/events');
@@ -15,7 +14,7 @@ const { Facility } = require('../../models/facility');
 // @Desc    Get all Upgrades
 // @access  Public
 router.get('/', async function (req, res) {
-	const upgrades = await Upgrade.find();
+	const upgrades = await Upgrade.find().populate('team', 'name shortName');
 	res.status(200).json(upgrades);
 });
 

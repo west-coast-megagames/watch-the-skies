@@ -6,8 +6,11 @@ const { d6, rand } = require('../../util/systems/dice');
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
 
-async function interceptDmg (attacker, defender, atkResult, defResult) {
+async function interceptDmg (offense, defense) {
 	interceptDebugger('Prepearing damage report...');
+	const { attacker, atkResult } = offense;
+	const { defender, defResult } = defense;
+
 	const defOutcome = {
 		evade: defResult.evade - Math.floor(atkResult.evade / 2), // Final defender evade
 		damage: defResult.damage, // Final self dmg to defender
@@ -38,12 +41,12 @@ async function interceptDmg (attacker, defender, atkResult, defResult) {
 		defSysDmg: defReport.sysDmg,
 		defenseDesc: defReport.dmgDesc,
 		defStatus: defReport.outcome,
-		defReport: defReport.aar,
+		defReport: defReport.aarUnit + atkReport.aarOpponent,
 		atkDmg: atkReport.dmg,
 		atkSysDmg: atkReport.sysDmg,
 		atkDesc: atkReport.dmgDesc,
 		atkStatus: atkReport.outcome,
-		atkReport: atkReport.aar,
+		atkReport: atkReport.aarUnit + defReport.aarOpponent,
 		salvage: [...atkReport.salvage, ...defReport.salvage]
 	};
 
@@ -60,7 +63,8 @@ async function dmgCalc (unit, report) {
 
 	interceptDebugger(`Calculating ${name} damage...`);
 	interceptDebugger(report);
-	let battleReport = '';
+	let unitReport = '';
+	let opponentReport = '';
 	const salvageArray = [];
 	let crash = false;
 
@@ -71,8 +75,9 @@ async function dmgCalc (unit, report) {
 	if (evade > 0) {
 		weaponDmg < evade ? evaded = weaponDmg : evaded = evade;
 		weaponDmg < evade ? weaponDmg = 0 : weaponDmg -= evade;
-		battleReport = `${battleReport}${name} evades ${evaded}pts of damage. `;
-		interceptDebugger(battleReport);
+		unitReport = `${unitReport}${name} evades ${evaded}pts of damage. `; // TODO - Make evasion dynamic
+		opponentReport = `Target has evaded ${evaded}pts of damage. `; // TODO - Make evasion dynamic
+		interceptDebugger(unitReport);
 	}
 
 	hit === true ? atkDmg = weaponDmg : sysHit = 0; // If a hit is scored then add damage otherwise no system hits happen.
@@ -97,7 +102,8 @@ async function dmgCalc (unit, report) {
 				salvageArray.push('Salvage'); // placehoder for now
 
 				interceptDebugger(`Damaging System ${sysName}...`);
-				battleReport = `${battleReport}${sysName} damaged. `;
+				unitReport = `${unitReport}${sysName} damaged. `;
+				opponentReport = `${opponentReport} Hit confirmed on targets ${sysName} `;
 				unit.systems[systemKeys[index]].damaged ? unit.systems[systemKeys[index]].destroyed = true : unit.systems[systemKeys[index]].damaged = true;
 				hullDmg += 1;
 			}
@@ -117,10 +123,11 @@ async function dmgCalc (unit, report) {
 	if (unit.systems['engine'].destroyed || unit.systems['cockpit'].destroyed) crash = true;
 
 	unit.stats.hull = unit.stats.hull - hullDmg;
-	battleReport = `${battleReport}${unit.name} took ${hullDmg}pts of damage in the battle. `;
-	if (unit.systems['engine'].destroyed) {battleReport = `${battleReport}${unit.name} has lost control due to engine damage. `;}
-	if (unit.systems['cockpit'].destroyed) {battleReport = `${battleReport}All contact with the pilot has been lost. `;}
-	interceptDebugger(battleReport);
+	unitReport = `${unitReport}${unit.name} took ${hullDmg}pts of damage in the battle. `;
+	opponentReport = `${opponentReport} Target took ${hullDmg}pts of damage in the battle. `;
+	if (unit.systems['engine'].destroyed) {unitReport = `${unitReport}${unit.name} has lost control due to engine damage. `;}
+	if (unit.systems['cockpit'].destroyed) {unitReport = `${unitReport}All contact with the pilot has been lost. `;}
+	interceptDebugger(unitReport);
 
 	const dmgReport = {
 		dmg: hullDmg,
@@ -129,15 +136,17 @@ async function dmgCalc (unit, report) {
 		outcome: `${unit.name} returns to base!`,
 		destroyed: false,
 		salvage: salvageArray,
-		aar: battleReport
+		aarUnit: unitReport,
+		aarOpponent: opponentReport
 	};
 
 	if (unit.stats.hull <= 0 || crash === true) {
 		interceptDebugger(`${unit.name} shot down in combat...`);
 		unit.status.destroyed = true;
 		dmgReport.outcome = `${unit.name} shot down in combat...`;
-		(dmgReport.destroyed = true),
-		(dmgReport.aar = `${dmgReport.aar}${unit.name} shot down in combat...`);
+		dmgReport.destroyed = true,
+		dmgReport.aarUnit = `${dmgReport.aar}${unit.name} shot down in combat...`;
+		dmgReport.aarOpponent = `${dmgReport.aar}Target shot down in combat...`;
 		for (const upgrade of unit.upgrades) {
 			upgrade.status.damaged = true;
 			upgrade.status.destroyed = true;
@@ -182,7 +191,7 @@ async function applyDmg (unit) {
 
 	await update.save();
 	interceptDebugger(`Damage applied to ${unit.name}...`);
-	return 0;
+	return;
 }
 
 module.exports = { interceptDmg, dmgCalc };

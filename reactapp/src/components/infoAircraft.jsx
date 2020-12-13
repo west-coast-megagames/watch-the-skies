@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, } from "rsuite";
 import axios from "axios";
-import { infoClosed } from "../store/entities/infoPanels";
+import { aircraftClosed } from "../store/entities/infoPanels";
 
 import { gameServer } from "../config";
 import ServiceRecord from "./common/serviceRecord";
@@ -87,7 +87,7 @@ class InfoAircraft extends Component {
   }
 
   toggleTransfer() {
-    console.log(`Toggle`);
+    // console.log(`Toggle`);
     this.setState({ hideTransfer: !this.state.hideTransfer });
   }
 
@@ -177,7 +177,6 @@ class InfoAircraft extends Component {
         let response = await axios.put(`${gameServer}game/aircrafts/repair`, {
           _id: this.props.aircraft._id,
         });
-        console.log(response.data);
         Alert.success(response.data);
       } catch (err) {
         console.log(err.response.data);
@@ -185,25 +184,6 @@ class InfoAircraft extends Component {
       }
     }
   };
-}
-
-function aircraftSystems(aircraft) {
-  let { systems } = aircraft;
-  return (
-    <Panel
-      header={`Aircraft Systems - ${systems.length} Components`}
-      collapsible
-      bordered
-    >
-      <ul>
-        {systems.map((system) => (
-          <li key={system._id}>
-            {system.name} | {system.category}
-          </li>
-        ))}
-      </ul>
-    </Panel>
-  );
 }
 
 const hullSpeaker = (
@@ -268,7 +248,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  hideAircraft: () => dispatch(infoClosed("Aircraft")),
+  hideAircraft: () => dispatch(aircraftClosed("Aircraft")),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(InfoAircraft);

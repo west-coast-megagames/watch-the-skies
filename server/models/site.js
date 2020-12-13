@@ -12,6 +12,7 @@ const SiteSchema = new Schema({
 	model: { type: String, default: 'Site' },
 	name: { type: String, required: true, minlength: 2, maxlength: 50 },
 	team: { type: ObjectId, ref: 'Team' },
+	occupier: { type: ObjectId, ref: 'Team' },
 	country: { type: ObjectId, ref: 'Country' },
 	zone: { type: ObjectId, ref: 'Zone' },
 	code: {
@@ -111,12 +112,17 @@ const GroundSite = Site.discriminator(
 			type: Boolean,
 			default: false
 		},
+		capital: {
+			type: Boolean,
+			default: false
+		},
 		dateline: { type: String, default: 'Dateline' },
 		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
 		status: {
 			public: { type: Boolean, default: false },
 			warzone: { type: Boolean, default: false },
-			secret: { type: Boolean, default: false }
+			secret: { type: Boolean, default: false },
+			occupied: { type: Boolean, default: false }
 		}
 	})
 );

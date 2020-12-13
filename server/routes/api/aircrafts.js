@@ -7,6 +7,7 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft'); // Aircraft Model
 const { Team } = require('../../models/team'); // WTS Team Model
+const { Upgrade } = require('../../models/upgrade');
 const httpErrorHandler = require('../../middleware/util/httpError');
 const nexusError = require('../../middleware/util/throwError');
 
@@ -66,6 +67,37 @@ router.post('/', async function (req, res) {
 
 	try {
 		let newAircraft = new Aircraft(req.body);
+
+		// update stats based on any upgrades
+		for (const upgId of newAircraft.upgrades) {
+			const upgrade = await Upgrade.findById(upgId);
+			if (upgrade) {
+				for (const element of upgrade.effects) {
+					switch (element.type) {
+					case 'health':
+						newAircraft.stats.health += element.effect;
+						break;
+					case 'attack':
+						newAircraft.stats.attack += element.effect;
+						break;
+					case 'defense':
+						newAircraft.stats.defense += element.effect;
+						break;
+					case 'range':
+						newAircraft.stats.range += element.effect;
+						break;
+					case 'evade':
+						newAircraft.stats.evade += element.effect;
+						break;
+					case 'penetration':
+						newAircraft.stats.penetration += element.effect;
+						break;
+					default: break;
+					}
+				}
+			}
+		}
+
 		await newAircraft.validateAircraft();
 		const docs = await Aircraft.find({ name: req.body.name, team: req.body.team });
 
@@ -111,9 +143,34 @@ router.delete('/:id', async function (req, res) {
 // @desc    Delete All Aircraft
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
-	const data = await Aircraft.deleteMany();
-	console.log(data);
-	return res.status(200).send(`We wiped out ${data.deletedCount} Aircraft!`);
+	let airDelCount = 0;
+	let upgDelCount = 0;
+	for await (const aircraft of Aircraft.find()) {
+		const id = aircraft.id;
+		// delete attached upgrades
+		for (const upgrade of aircraft.upgrades) {
+			try {
+				await Upgrade.findByIdAndRemove(upgrade);
+				upgDelCount += 1;
+			}
+			catch (err) {
+				nexusError(`${err.message}`, 500);
+			}
+		}
+		try {
+			const aircraftDel = await Aircraft.findByIdAndRemove(id);
+			if (aircraftDel == null) {
+				res.status(404).send(`The Aircraft with the ID ${id} was not found!`);
+			}
+			else {
+				airDelCount += 1;
+			}
+		}
+		catch (err) {
+			nexusError(`${err.message}`, 500);
+		}
+	}
+	return res.status(200).send(`We wiped out ${airDelCount} Aircraft and ${upgDelCount} Upgrades! `);
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { infoRequested } from '../store/entities/infoPanels';
+import { showAircraft } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
 import { Table, Progress, IconButton, Icon, ButtonGroup, Alert } from 'rsuite';
 
@@ -69,7 +69,6 @@ class AircraftTable extends Component {
                         <Cell style={{padding: '8px'}}>
                             {rowData => {
                                 let aircraft = rowData;
-                                console.log(aircraft);
                                 return (
                                 <ButtonGroup size='sm'>
                                     <IconButton icon={<Icon icon="info-circle" />} onClick={() => this.props.infoRequest(aircraft)} color="blue"/>
@@ -91,7 +90,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    infoRequest: aircraft => dispatch(infoRequested(aircraft))
+    infoRequest: aircraft => dispatch(showAircraft(aircraft))
 
 });
 
