@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Home = (props) => {
     return (    
         <div className='tabContent' style={{paddingTop: '10px', height: 'calc(100vh - 50px)'}}>
-            <h4>Current Build v0.1.3 d7 - Game Loop Development</h4>
+            <h4>Current Build v0.1.3 d8 - Game Loop Development</h4>
             {props.login === false ? <span><Link to='/login'>Sign into Demo</Link> | </span>: null}<a href='https://discord.gg/m88Q6KH' target='blank'>West Coast Megagames Discord Server Invite</a> | <a href='https://github.com/west-coast-megagames/watch-the-skies/wiki'>WTS Prototype Roadmap</a>
             <hr />
             <p><b>Type:</b> Front-End Prototype / Demo | <b>Game:</b> Watch the Skies</p>
@@ -24,6 +24,7 @@ const Home = (props) => {
                         <li>Team Log / Game Timeline [Governance Page | Timeline Tab]</li>
                         <li>Team Budget / Banking [Governance Page | Budget Tab]</li>
                         <li>Interceptions & Air Missions [Operations Page | Map Tab]</li>
+												<li>Ground Military System [Map | Map Page]</li>
                         <li>News Feed [News Page | News Feed Tabs]</li>
                         <li>News / PR Submission [News Page | News Feed Tab]</li>
                         <li>Applied Reserch System [Science Page | Research Tab]</li>
