@@ -387,16 +387,16 @@ async function checkPatrol (target, defReport, aircraft) {
 				type: 'Interception', 					// Records the After Action Report Type
 				code: missionCode, 							// Unique code for this encounter
 				mission: 'Patrol',							// Mission type from the attacking unit
-				team: aircraft.team,						// Team of the attacking unit
-				country: aircraft.country._id,	// Country the mission is taking place over
-				zone: aircraft.zone._id,				// Zone the mission is in
-				site: aircraft.site._id,				// Site the mission is over
-				aircraft: aircraft._id,					// ID of the aircraft this report is for
-				report: `${aircraft.name} en route ${target.site.name} airspace on mission ${missionCode}. Patrol target is ${patrol.distance.toFixed(2)}km away. Establishing patrol pattern ${randCode(3)}. Unknown approaching patrol target, ${target.name} breaking off from patrol to engage ${aircraft.type}.`,
+				team: target.team,						// Team of the attacking unit
+				country: target.country._id,	// Country the mission is taking place over
+				zone: target.zone._id,				// Zone the mission is in
+				site: target.site._id,				// Site the mission is over
+				aircraft: target._id,					// ID of the aircraft this report is for
+				report: `${target.name} en route ${target.site.name} airspace on mission ${missionCode}. Patrol target is ${patrol.distance.toFixed(2)}km away. Establishing patrol pattern ${randCode(3)}. Unknown approaching patrol target, ${target.name} breaking off from patrol to engage ${aircraft.type}.`,
 				position: 'offense'							// Designates this aircraft as the offense or defense
 			});
 
-			defReport.report = `${defReport.report} Patrol sited over target site, prepearing to be engaged by ${target.type}.`;
+			defReport.report = `${defReport.report} Patrol sited over target site, prepearing to be engaged by incoming ${target.type}.`;
 			defReport.position = 'defense';
 
 			const escortCheck = await checkEscort(aircraft._id, defReport, atkReport); // Checking to see if the mission ship has a Escort;
@@ -432,7 +432,8 @@ async function checkEscort (target, defReport, atkReport) {
 			const newTarget = await Aircraft.findById(escort.aircraft)
 				.populate('country', 'name')
 				.populate('upgrades')
-				.populate('team'); // Gets the escorter for the target
+				.populate('team')
+				.populate('site'); // Gets the escorter for the target
 			escortMissions.splice(escortMissions.indexOf(escort), 1); // Removes the current escort from the missions array
 
 			// Saves the old units aar if there is one
@@ -452,7 +453,7 @@ async function checkEscort (target, defReport, atkReport) {
 				zone: atkReport.zone,
 				site: atkReport.site,
 				aircraft: target._id,
-				report: `${target.name} escorting ${target.name} to ${target.site.name} airspace on mission ${missionCode}. Desination is ${escort.distance.toFixed(2)}km away. ${dynReport.escortDesc(newTarget, target)}`,
+				report: `${newTarget.name} escorting ${target.name} to ${newTarget.country.name} airspace on mission ${missionCode}. Desination is ${escort.distance.toFixed(2)}km away. Patrol sited over target site, prepearing to be engaged by ${target.type}. ${dynReport.escortDesc(newTarget, target)}`,
 				position: 'defense'
 			});
 
