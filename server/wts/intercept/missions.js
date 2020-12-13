@@ -1,6 +1,5 @@
 /* eslint-disable no-trailing-spaces */
 const missionDebugger = require('debug')('app:missions - air');
-const nexusEvent = require('../../middleware/events/events');
 const { intercept } = require('./intercept2');
 const { d6 } = require('../../util/systems/dice');
 const terror = require('../terror/terror');
@@ -103,9 +102,6 @@ async function resolveMissions () {
 	missionDebugger(`Mission resolution complete. Mission Count: ${count}`);
 	// totalCount += count;
 	count = 0;
-	nexusEvent.emit('updateAircrafts');
-	nexusEvent.emit('updateSites');
-	nexusEvent.emit('updateReports');
 
 	return 0;
 }
