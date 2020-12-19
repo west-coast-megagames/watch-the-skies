@@ -354,7 +354,7 @@ async function runMilitary () {
 				attackingTeams: militaryReport.attackingTeams,
 				site: militaryReport.site,
 				battleRecord: militaryReport.battleRecord,
-				results: militaryReport.results, 
+				results: militaryReport.results,
 				winner: militaryReport.winner,
 				spoils: militaryReport.spoils
 			});
