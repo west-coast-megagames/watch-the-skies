@@ -46,37 +46,43 @@ class AssetTab extends Component {
 		}
 	};
 
+	listStyle (item) {
+		if (item === this.state.unit || item === this.state.facility || item === this.state.upgrade) {
+			return ({backgroundColor: "#e5f2ff"})
+		}
+	}
+
 	render() { 
 		return (
 			<Container>
 				<Sidebar>
           <PanelGroup accordion >
 						<Panel 
-							bordered bodyFill header="Facilities" 
+							bordered bodyFill header="Facilities" eventKey={1}
 						>
-							<List height={400} hover autoScroll>
+							<List style={{maxHeight: 500, overflow: 'auto'}} hover autoScroll>
 								{this.props.facilities.map((facility, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ facility, unit: undefined, upgrade: undefined })}>
+									<List.Item key={index} index={index} onClick={() => this.setState({ facility, unit: undefined, upgrade: undefined })} style={this.listStyle(facility)}>
 										{facility.name}
 									</List.Item>
 								))}
 							</List>
 						</Panel>
 						<Panel 
-							bordered bodyFill header="Military Units"
+							bordered bodyFill header="Military Units" eventKey={2}
 						>
-							<List height={400} hover autoScroll bordered>
+							<List style={{maxHeight: 500, overflow: 'auto'}} hover autoScroll bordered>
 								{this.props.units.map((unit, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ unit, facility: undefined, upgrade: undefined })}>
+									<List.Item key={index} index={index} onClick={() => this.setState({ unit, facility: undefined, upgrade: undefined })} style={this.listStyle(unit)}>
 										{unit.name}
 									</List.Item>
 								))}
 							</List>
 						</Panel>
-						<Panel bordered bodyFill header="Upgrades">
-							<List height={400} hover autoScroll bordered>
+						<Panel bordered bodyFill header="Upgrades" eventKey={3}>
+							<List hover autoScroll bordered style={{maxHeight: 500, overflow: 'auto'}}>
 								{this.props.upgrades.map((upgrade, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ upgrade, facility: undefined, unit: undefined })}>
+									<List.Item key={index} index={index} onClick={() => this.setState({ upgrade, facility: undefined, unit: undefined })} style={this.listStyle(upgrade)}>
 										{upgrade.name}
 									</List.Item>
 								))}
