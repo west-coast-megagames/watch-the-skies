@@ -628,6 +628,57 @@
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU SRM"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RFD Naval Base Charlie",
+		"code": "RUNBC",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 2,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 4,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 8,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 6,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false,
+    "siteCode": "RU GRH"
   },
   {
     "loadType": "baseFacility",
@@ -730,7 +781,109 @@
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP NRT"
-  },
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Charlie",
+		"code": "JPBC",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 7,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 2,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 15,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP SPK"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Delta",
+		"code": "JPBD",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 12,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 7,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 2,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 15,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP FUK"
+	},
   {
     "loadType": "baseFacility",
     "type": "Base",
@@ -1036,6 +1189,57 @@
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN TPE"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "PRC Base Charlie",
+		"code": "CNBC",
+		"bpCode": "",
+    "baseDefenses": false,
+    "public": false,
+    "capability": {
+      "research": {
+        "capacity": 1,
+        "projects": [],
+        "active": true,
+        "sciRate": 9,
+        "sciBonus": 0,
+        "funding": [],
+        "status": {
+          "damage": [],
+          "pending": []
+        }
+      },
+      "airMission": {
+        "capacity": 8,
+        "aircraft": [],
+        "active": true,
+        "damage": []
+      },
+      "storage": {
+        "capacity": 3,
+        "upgrade": [],
+        "active": true,
+        "damage": []
+      },
+      "ground": {
+        "capacity": 15,
+        "corps": [],
+        "active": true,
+        "damage": []
+      },
+      "naval": {
+        "capacity": 10,
+        "fleet": [],
+        "active": true,
+        "damage": []
+      }
+    },
+    "countryCode": "CN",
+    "teamCode": "PRC",
+    "coastal": true,
+    "siteCode": "CN SY1"
   },
   {
     "loadType": "baseFacility",
