@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Button, Alert, Table, Drawer, List, Popover, Whisper, Icon, IconButton, Panel } from 'rsuite';
-import ListItem from 'rsuite/lib/List/ListItem';
 import { gameServer } from '../../config';
 import { getStored } from '../../store/entities/upgrades';
 import axios from 'axios';
