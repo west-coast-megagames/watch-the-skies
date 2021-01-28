@@ -14,20 +14,32 @@ const SquadSchema = new Schema({
 		default: 'Raid',
 		enum: ['Raid', 'Assault', 'Infiltration', 'Envoy', 'Science']
 	},
-	rollBonus: { type: Number, required: true, default: 0 },
-	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	rollBonus: { type: Number, required: true, default: 0 }, // possibly defunct
+	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
+	stats: {
+		clandestine: { type: Number, default: 0 },
+		effectiveness: { type: Number, default: 0 },
+		survivability: { type: Number, default: 0 }
+	},
+	missionType: { type: String, default: 'Awaiting Mission', enum: ['Awaiting Mission', 'Counter-Espionage', 'Gather Intel', 'Sabotage', 'Heist'] },
+	mission: {
+		priorities: [{ type: String, enum: ['clandestine', 'effectiveness', 'survivability'] }]
+	},
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
+	location: {
+		lat: { type: Number },
+		lng: { type: Number }
+	},
 	status: {
-		damaged: { type: Boolean, default: false },
 		deployed: { type: Boolean, default: false },
 		destroyed: { type: Boolean, default: false },
-		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false }
+		ready: { type: Boolean, default: true },
+		captured: { type: Boolean, default: false }
 	},
 	gameState: []
 });

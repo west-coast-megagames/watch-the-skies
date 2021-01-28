@@ -2,25 +2,25 @@ const express = require('express'); // Import of Express web framework
 const router = express.Router(); // Destructure of HTTP router for server
 const routeDebugger = require('debug')('app:routes');
 
-// Agent Model - Using Mongoose Model
-const { Agent } = require('../../models/agent'); // Agent Model
+// Squad Model - Using Mongoose Model
+const { Squad } = require('../../models/squad'); // Squad Model
 const { Account } = require('../../models/account');
 const { Team } = require('../../models/team');
 
 // Game Systems - Used to run Game functions
 // const nexusEvent = require('../../middleware/events/events');
 const banking = require('../../wts/banking/banking');
-const { runAgentActions } = require('../../wts/agents/agents');
+const { runSquadActions } = require('../../wts/squads/squads');
 
-// @route   PUT game/agents/deploy
-// @Desc    Deploy an agent to a mission
+// @route   PUT game/squads/deploy
+// @Desc    Deploy an squad to a mission
 // @access  Public
 router.put('/deploy', async function (req, res) {
 	const { destination, missionType, priority1, priority2, priority3 } = req.body;
-	let { agent } = req.body;
-	agent = await Agent.findById(agent);
+	let { squad } = req.body;
+	squad = await Squad.findById(squad);
 	// console.log(req.body);
-	const teamObj = await Team.findById(agent.team);
+	const teamObj = await Team.findById(squad.team);
 	let account = await Account.findOne({
 		name: 'Operations',
 		team: teamObj._id
@@ -31,39 +31,39 @@ router.put('/deploy', async function (req, res) {
 	);
 
 	if (account.balance < 1) {
-		routeDebugger('Not enough funding to deploy agent...');
+		routeDebugger('Not enough funding to deploy squad...');
 		res
 			.status(402)
 			.send(
-				'Not enough funding! Assign 1 more megabuck to deploy agent.'
+				'Not enough funding! Assign 1 more megabuck to deploy squad.'
 			);
 	}
 	else {
-		agent.missionType = missionType;
-		agent.status.deployed = true;
-		agent.status.ready = false;
-		agent.site = destination;
-		agent.mission.priorities = [priority1, priority2, priority3];
+		squad.missionType = missionType;
+		squad.status.deployed = true;
+		squad.status.ready = false;
+		squad.site = destination;
+		squad.mission.priorities = [priority1, priority2, priority3];
 
-		console.log(agent);
+		console.log(squad);
 		account = await banking.withdrawal(
 			account,
 			1,
-			`Sending ${agent.name} on a ${agent.missionType} mission...`
+			`Sending ${squad.name} on a ${squad.missionType} mission...`
 		);
 		await account.save();
-		await agent.save();
-		res.status(200).send(`${agent.name} successfuly sent on a ${agent.missionType} mission`);
+		await squad.save();
+		res.status(200).send(`${squad.name} successfuly sent on a ${squad.missionType} mission`);
 	}
 }); // deploy
 
-router.patch('/runAgents', async function (req, res) {
-	await runAgentActions();
-	res.status(200).send('Agent Actions Resolved');
+router.patch('/runSquads', async function (req, res) {
+	await runSquadActions();
+	res.status(200).send('Squad Actions Resolved');
 });
 
-router.patch('/resetAgents', async function (req, res) {
-	for await (const unit of Agent.find()) {
+router.patch('/resetSquads', async function (req, res) {
+	for await (const unit of Squad.find()) {
 		unit.status.destroyed = false;
 		unit.status.deployed = false;
 		unit.status.captured = false;
@@ -71,7 +71,7 @@ router.patch('/resetAgents', async function (req, res) {
 		console.log(`${unit.name} has been healed`);
 		await unit.save();
 	}
-	res.send('Agents succesfully reset!');
+	res.send('Squads succesfully reset!');
 	// nexusEvent.emit('updateMilitary');
 });
 
