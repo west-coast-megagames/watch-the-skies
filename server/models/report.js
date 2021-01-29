@@ -46,6 +46,12 @@ ReportSchema.methods.validateReport = async function () {
 
 const Report = mongoose.model('Report', ReportSchema);
 
+const AgentAction = Report.discriminator('AgentAction', new Schema({
+	missionType: { type: String, default: 'Awaiting Mission', enum: ['Awaiting Mission', 'Counter-Espionage', 'Gather Intel', 'Sabotage', 'Heist'] },
+	priorities: [{ type: String, enum: ['clandestine', 'effectiveness', 'survivability'] }],
+	result: { type: Number }
+}));
+
 const AircraftAction = Report.discriminator('AircraftAction', new Schema({
 	type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
 	repair: {
@@ -150,4 +156,4 @@ const Transaction = Report.discriminator('Transaction', new Schema({
 	note: { type: String }
 }));
 
-module.exports = { Report, AircraftAction, AirMission, CrashReport, MilitaryAction, MilitaryMission, ResearchReport, TerrorReport, TheoryReport, TradeReport, Transaction };
+module.exports = { Report, AgentAction, AircraftAction, AirMission, CrashReport, MilitaryAction, MilitaryMission, ResearchReport, TerrorReport, TheoryReport, TradeReport, Transaction };

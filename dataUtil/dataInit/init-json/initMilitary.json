@@ -132,7 +132,7 @@
     "name": "Russia Modern Attack Sub Fleet 4",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBB",
+    "origin": "RUNBC",
     "bpCode": "SUB-MA"
   },
   {
@@ -148,7 +148,7 @@
     "name": "Japan Modern Attack Sub Fleet 2",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBC",
     "bpCode": "SUB-MA"
   },
   {
@@ -156,7 +156,7 @@
     "name": "Japan Modern Attack Sub Fleet 3",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBD",
     "bpCode": "SUB-MA"
   },
   {
@@ -172,7 +172,7 @@
     "name": "Japan Modern Attack Sub Fleet 5",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBB",
+    "origin": "JPBA",
     "bpCode": "SUB-MA"
   },
   {
@@ -196,7 +196,7 @@
     "name": "Japan Standard Attack Sub Fleet 3",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBD",
     "bpCode": "SUB-SA"
   },
   {
@@ -268,7 +268,7 @@
     "name": "China Modern Attack Sub Fleet 2",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBC",
     "bpCode": "SUB-MA"
   },
   {
@@ -367,6 +367,14 @@
     "country": "RU",
     "origin": "RUNBB",
     "bpCode": "SUR-SS"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Surface Fleet 3",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBC",
+    "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
@@ -397,7 +405,7 @@
     "name": "Japan Surface Fleet 4",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBB",
+    "origin": "JPBD",
     "bpCode": "SUR-SS"
   },
   {
@@ -405,7 +413,7 @@
     "name": "Japan Surface Fleet 5",
     "team": "JPN",
     "country": "JP",
-    "origin": "JPBA",
+    "origin": "JPBC",
     "bpCode": "SUR-SS"
   },
   {
@@ -453,7 +461,7 @@
     "name": "China Surface Fleet 2",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBC",
     "bpCode": "SUR-SS"
   },
   {
@@ -551,6 +559,14 @@
     "country": "RU",
     "origin": "RUNBB",
     "bpCode": "CAR-SC"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Carrier Fleet 3",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBC",
+    "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
@@ -581,7 +597,7 @@
     "name": "China Carrier Fleet 2",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBC",
     "bpCode": "CAR-SC"
   },
   {
@@ -741,7 +757,7 @@
     "name": "Russia Old Technology Corps 4",
     "team": "RFD",
     "country": "RU",
-    "origin": "RUNBB",
+    "origin": "RUNBC",
     "bpCode": "COR-OTC"
   },
   {
@@ -813,7 +829,7 @@
     "name": "China Old Technology Corps 2",
     "team": "PRC",
     "country": "CN",
-    "origin": "CNBA",
+    "origin": "CNBC",
     "bpCode": "COR-OTC"
   },
   {
@@ -945,6 +961,15 @@
     "origin": "CNBB",
     "bpCode": "COR-MTC",
     "training": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "China Modern Technology Corps 3",
+    "team": "PRC",
+    "country": "CN",
+    "origin": "CNBC",
+    "bpCode": "COR-MTC",
+    "training": "Corps"
   },
   {
     "model": "Military",
@@ -984,6 +1009,14 @@
     "team": "RFD",
     "country": "RU",
     "origin": "RUNBB",
+    "bpCode": "COR-MTC"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Modern Technology Corps 4",
+    "team": "RFD",
+    "country": "RU",
+    "origin": "RUNBC",
     "bpCode": "COR-MTC"
   },
   {

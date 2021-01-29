@@ -43,7 +43,7 @@ router.put('/deploy', async function (req, res) {
 			);
 	}
 	else {
-		console.log(destination);
+		// console.log(destination);
 		const siteObj = await Site.findById(destination)
 			.populate('country')
 			.populate('zone');

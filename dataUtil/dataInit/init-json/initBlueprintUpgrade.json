@@ -23,8 +23,7 @@
     "buildTime": 1,
     "desc": "Better water supply techniques have been implemented, so water is more readily available than in the past.",
     "effects": [{ "type": "terror", "effect": -5 }],
-    "prereq": [{ "type": "Technology", "code": "Agr2B" }],
-    "stats": { "dummy": 0 }
+    "prereq": [{ "type": "Technology", "code": "Agr2B" }]
   },
   {
     "loadType": "blueprint",
@@ -37,8 +36,7 @@
     "buildTime": 1,
     "desc": "Farming techinques have been come easier to track and implement.",
     "effects": [{ "type": "terror", "effect": -8 }],
-    "prereq": [{ "type": "Technology", "code": "Agr3C" }],
-    "stats": { "dummy": 0 }
+    "prereq": [{ "type": "Technology", "code": "Agr3C" }]
   },
   {
     "loadType": "blueprint",

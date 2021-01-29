@@ -104,7 +104,7 @@ const ResearchLog = props => {
           <FlexboxGrid.Item colspan={12}>
           <div>
               {/* <Whisper placement="top" speaker={amountSpeaker} trigger="click">
-                <IconButton size="xs" icon={<Icon icon="info-circle" />} />
+                < size="xs" icon={<Icon icon="info-circle" />} />
               </Whisper> */}
               <b> Multiplyer:</b> {stats.finalMultiplyer}
             </div> 

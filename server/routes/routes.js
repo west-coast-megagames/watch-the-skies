@@ -18,6 +18,7 @@ const home = require('./public/home');
 
 // API Routes - Using Express.js
 // Desc - API routes are the raw HTTP GET/POST/DEL access to our models
+const agent = require('./api/agents');
 const article = require('./api/articles');
 const aircraft = require('./api/aircrafts');
 const account = require('./api/accounts');
@@ -57,6 +58,7 @@ const initTreaties = require('./init/initTreaties');
 
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
+const agents = require('./game/agents');
 const admin = require('./game/admin');
 const banking = require('./game/banking');
 const control = require('./game/control');
@@ -85,6 +87,7 @@ module.exports = function (app) {
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
 	app.use('/game/admin', admin);
+	app.use('/game/agents', agents); // Route for inputing accounts
 	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
 	app.use('/game/diplomacy', diplomacy);
@@ -95,6 +98,7 @@ module.exports = function (app) {
 	app.use('/game/news', news); // Route for the news desks
 	app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering
+	app.use('/api/agents', agent); // Route for inputing accounts
 	app.use('/api/accounts', account); // Route for inputing accounts
 	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
 	app.use('/api/articles', article); // Route for manipulating articles

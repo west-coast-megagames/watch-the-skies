@@ -176,7 +176,7 @@
     "zone": "EU",
     "country": "RU",
     "site": "",
-		"base": "RUBA",
+		"base": "RUNBA",
 		"bpCode": "NX-002"
   },
   {
@@ -186,7 +186,17 @@
     "zone": "EU",
     "country": "RU",
     "site": "",
-		"base": "RUNBA",
+		"base": "RUNBB",
+		"bpCode": "NX-002"
+	},
+	{
+    "model": "Aircraft",
+    "name": "Russia Air 6",
+    "team": "RFD",
+    "zone": "EU",
+    "country": "RU",
+    "site": "",
+		"base": "RUNBC",
 		"bpCode": "NX-002"
   },
   {
@@ -236,7 +246,7 @@
     "zone": "AU",
     "country": "JP",
     "site": "",
-		"base": "JPBA",
+		"base": "JPBC",
 		"bpCode": "NX-002"
   },
   {
@@ -246,7 +256,7 @@
     "zone": "AU",
     "country": "JP",
     "site": "",
-		"base": "JPBB",
+		"base": "JPBD",
 		"bpCode": "NX-002"
   },
   {
@@ -386,7 +396,7 @@
     "zone": "AU",
     "country": "CN",
     "site": "",
-		"base": "CNBA",
+		"base": "CNBC",
 		"bpCode": "NX-002"
   },
   {
@@ -426,7 +436,7 @@
     "zone": "AU",
     "country": "CN",
     "site": "",
-		"base": "CNBB",
+		"base": "CNBC",
 		"bpCode": "NX-002"
   },
   {
