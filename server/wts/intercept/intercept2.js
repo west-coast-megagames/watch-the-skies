@@ -166,9 +166,10 @@ function combatBonus (unit) {
 
 	// Give stat bonus based on upgrades
 	for (const upgrade of unit.upgrades) {
-		for (const effect of upgrade.effects) {
-
-			if (effect.type in stats) stats[effect.type] += effect.value;
+		if (upgrade.effects.length > 0) {
+			for (const effect of upgrade.effects) {
+				if (effect.type in stats) stats[effect.type] += effect.value;
+			}
 		}
 	}
 
