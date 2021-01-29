@@ -1,4 +1,4 @@
-const events = require('events')
+const events = require('events');
 
 class NexusEvent extends events {}
 
