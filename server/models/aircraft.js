@@ -189,6 +189,33 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	return aircraft;
 };
 
+AircraftSchema.methods.populateAircraft = function () {
+	return this
+		.populate('team', 'name shortName code')
+		.populate('zone', 'name')
+		.populate('country', 'name')
+		.populate('site', 'name geoDecimal')
+		.populate('origin', 'name')
+		.execPopulate();
+};
+
 const Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
-module.exports = { Aircraft };
+// { Aircraft Selectior Functions }
+const getAircrafts = async function () {
+	try {
+		const aircrafts = await Aircraft.find()
+			.sort({ team: 1 })
+			.populate('team', 'name shortName code')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('site', 'name geoDecimal')
+			.populate('origin', 'name');
+		return aircrafts;
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+	}
+};
+
+module.exports = { Aircraft, getAircrafts };
