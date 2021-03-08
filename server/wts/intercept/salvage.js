@@ -65,7 +65,6 @@ async function generateCrash (salvage, site) {
 	console.log(crash);
 }
 
-
 function decimalCrash (dd, isLng) {
 	const rand = d4();
 	const plusOrMinus = Math.random() < 0.5 ? -1 : 1;

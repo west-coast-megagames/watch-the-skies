@@ -11,6 +11,18 @@ import ExcomOps from './tabs/ops/excom';
 import PrototypeMap from './tabs/ops/google2';
 import AssetsTab from './tabs/ops/assets';
 
+/*
+TODO CHECKLIST
+[] Players can assign Upgrades
+[] Players can un-assign Upgrades
+[] Players can make Upgrades (?)
+[] Players can repair units
+[] Transfer Units
+[] Deploy Units
+[] Aggress Units
+[] connect battles with alliances && multiple opposing armies 
+*/
+
 class Operations extends Component {
   constructor() {
 		super();

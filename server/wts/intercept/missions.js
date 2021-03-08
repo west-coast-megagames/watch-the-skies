@@ -1,14 +1,16 @@
-/* eslint-disable no-trailing-spaces */
 const missionDebugger = require('debug')('app:missions - air');
-const { intercept } = require('./intercept2');
-const { d6 } = require('../../util/systems/dice');
+const { intercept } = require('./intercept2'); // Second version of an intercept system
+const { d6 } = require('../../util/systems/dice'); // Six Sided dice roll
 const terror = require('../terror/terror');
 
+// Intercept System Imports
+
+// Mongoose Models
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Site } = require('../../models/site');
 
-
+// Utility Imports
 const { getDistance } = require('../../util/systems/geo');
 const dynReport = require('./battleDetails');
 const { generateSite } = require('../sites/sites');

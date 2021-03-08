@@ -5,13 +5,14 @@ const dynReport = require('./battleDetails');
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
 
-let attackReport = undefined;
-let defenseReport = undefined;
-let interception = {};
+let attackReport = undefined; // Report for the mission member
+let defenseReport = undefined; // Report for the mission target
+let interception = {}; // Interception object
 
-let attacker = undefined;
-let defender = undefined;
+let attacker = undefined; // Aircraft on the mission
+let defender = undefined; // Target of the interception
 
+// Intercept Function: Initiates an interception
 async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	interceptDebugger('Beginning intercept...');
 	attackReport = atkReport; // Assigns the Attack Report to global variable
@@ -157,7 +158,6 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 
 	return;
 }
-
 
 // Looks through the upgrades, system damage, and stance of a craft and adjusts the combat stats accordingly
 function combatBonus (unit) {

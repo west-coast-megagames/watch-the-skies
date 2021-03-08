@@ -37,7 +37,6 @@ const TreatySchema = new Schema({
 		complete: { type: Boolean, default: false },
 		deleted: { type: Boolean, default: false }
 	}
-
 });
 
 // validateTreaty method
@@ -65,7 +64,6 @@ TreatySchema.methods.validateTreaty = async function () {
 	for await (const sigs of this.signatories) {
 		await validTeam(sigs);
 	}
-
 };
 
 TreatySchema.methods.saveActivity = async (treaty, incHeader) => {

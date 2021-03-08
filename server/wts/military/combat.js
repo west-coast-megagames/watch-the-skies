@@ -218,6 +218,19 @@ async function runMilitary () {
 		let militaryReport = new MilitaryMission;
 		militaryReport.type = 'Battle';
 		const army = await Military.find({ site }).lean();
+
+		/* TODO for adding allinaces into combat
+			[] Creat a array of Teams involved
+			[] Check each teams alliances
+			[] Create armies for each alliance group
+
+			1) Get list of all Teams at battle
+			2) Go over list and compare each team's Alliances. Create list of who each team CAN attack
+			3) Use valid targets list to assign casualties to enemies
+			4) After combat round, update valid targets lists to remove those knocked out
+		*/
+
+
 		let defenders = [];
 		let attackers = [];
 		if (site.status.occupied === true) {
@@ -290,6 +303,8 @@ async function runMilitary () {
 				site.hidden = true;
 				console.log('Site hidden');
 			}
+
+			// TODO: Add in any crash site spoils to the iterator
 
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) { // give out any spoils to the remainging attacker teams

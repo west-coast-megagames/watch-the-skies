@@ -9,8 +9,8 @@ const banking = require('../../wts/banking/banking');
 
 let msgKey = 0;
 
-module.exports = function(io) {
-	let MainClients = new SocketServer
+module.exports = function (io) {
+	const MainClients = new SocketServer;
 
 	io.on('connection', (client) => {
 		logger.info(`New client subscribing to main socket... ${client.id}`);
@@ -19,37 +19,37 @@ module.exports = function(io) {
 
 		client.on('new user', (data) => {
 			MainClients.saveUser(data, client);
-			logger.info(`${data.user} for the ${data.team} have been registered on the main socket...`)
+			logger.info(`${data.user} for the ${data.team} have been registered on the main socket...`);
 		});
 
 		client.on('chat msg', (data) => {
 			data.key = msgKey;
 			msgKey++;
 			io.sockets.emit('new msg', data);
-		})
-    
+		});
+
 		client.on('pauseGame', () => {
 			gameClock.pauseClock();
 		});
-    
+
 		client.on('startGame', () => {
 			gameClock.startClock();
 		});
-    
+
 		client.on('resetClock', () => {
 			gameClock.resetClock();
 		});
-    
+
 		client.on('skipPhase', () => {
 			gameClock.skipPhase();
 		});
-    
-		client.on('bankingTransfer', async (transfer) => {
-			let { to, from, amount, note } = transfer;
 
-			if (to === from){
-				let err = `Someone tried to send money to themselves`
-				return nexusEvent.emit(`error`, err);                
+		client.on('bankingTransfer', async (transfer) => {
+			const { to, from, amount, note } = transfer;
+
+			if (to === from) {
+				const err = 'Someone tried to send money to themselves';
+				return nexusEvent.emit('error', err);
 			}
 
 			socketDebugger(transfer);
@@ -60,7 +60,7 @@ module.exports = function(io) {
 		});
 
 		client.on('autoTransfer', async (transfer) => {
-			let { to, from, amount, note } = transfer;
+			const { to, from, amount, note } = transfer;
 			socketDebugger(transfer);
 			await banking.setAutoTransfer(to, from, amount, note);
 
@@ -70,8 +70,8 @@ module.exports = function(io) {
 		client.on('disconnect', () => {
 			logger.info(`Client disconnecting from update service... ${client.id}`);
 			MainClients.delClient(client);
-			socketDebugger( `${MainClients.connections.length} clients connected`);
+			socketDebugger(`${MainClients.connections.length} clients connected`);
 		});
 
-	})
-}
+	});
+};

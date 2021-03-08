@@ -9,7 +9,7 @@ import Aircraft from './tabs/editor/aircraft';
 
 class Models extends Component {
     state = {
-        tab: 'overview',
+      tab: 'overview',
     };
 
     handleSelect = (activeKey) => {
@@ -20,7 +20,7 @@ class Models extends Component {
         const url = this.props.match.path;
         const { tab } = this.state; 
 
-         return (
+        return (
         <Container>
             <Header>
                 <Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
