@@ -55,7 +55,7 @@ class Operations extends Component {
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>
 				</Header>
-				<Content className='tabContent' style={{ paddingLeft: 20 }}>
+				<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
 					<Switch>
 						<Route path={`${url}/dashboard`} render={() => (
 							<div>

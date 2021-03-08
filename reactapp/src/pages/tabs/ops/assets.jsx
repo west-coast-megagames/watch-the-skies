@@ -1,6 +1,6 @@
 import React, { Component, Image, View } from 'react';
 import { connect } from 'react-redux';
-import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag } from 'rsuite';
+import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input } from 'rsuite';
 import FacilityStats from '../../../components/common/facilityStats';
 import MilitaryStats from '../../../components/common/militaryStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
@@ -14,11 +14,16 @@ import axios from 'axios';
 import { gameServer } from '../../../config';
 
 const { HeaderCell, Cell, Column } = Table;
+
+/* 
+This Components gets passed 
+*/
 class AssetTab extends Component {
 	state = {
 		unit: undefined,
 		facility: undefined,
-		upgrade: undefined
+		upgrade: undefined,
+		filter: ''
 	}
 
 	componentDidUpdate(prevProps, prevState) {
@@ -32,64 +37,12 @@ class AssetTab extends Component {
 				this.setState({ upgrade });
 			}
 		}
-	}
-
-	repair = async (upgrade) => {
-		try {
-			let response = await axios.put(`${gameServer}game/upgrades/repair`, {
-				_id: upgrade._id,
-			});
-			Alert.success(response.data);
-		} catch (err) {
-			console.log(err.response.data);
-			Alert.error(`Error: ${err.response.data}`);
-		}
-	};
-
-	listStyle (item) {
-		if (item === this.state.unit || item === this.state.facility || item === this.state.upgrade) {
-			return ({backgroundColor: "#e5f2ff"})
-		}
+		// add in conditions to update the list with new/removed elements, calling create List
 	}
 
 	render() { 
 		return (
-			<Container>
-				<Sidebar>
-          <PanelGroup accordion >
-						<Panel 
-							bordered bodyFill header="Facilities" eventKey={1}
-						>
-							<List style={{maxHeight: 500, overflow: 'auto'}} hover autoScroll>
-								{this.props.facilities.map((facility, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ facility, unit: undefined, upgrade: undefined })} style={this.listStyle(facility)}>
-										{facility.name}
-									</List.Item>
-								))}
-							</List>
-						</Panel>
-						<Panel 
-							bordered bodyFill header="Military Units" eventKey={2}
-						>
-							<List style={{maxHeight: 500, overflow: 'auto'}} hover autoScroll bordered>
-								{this.props.units.map((unit, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ unit, facility: undefined, upgrade: undefined })} style={this.listStyle(unit)}>
-										{unit.name}
-									</List.Item>
-								))}
-							</List>
-						</Panel>
-						<Panel bordered bodyFill header="Upgrades" eventKey={3}>
-							<List hover autoScroll bordered style={{maxHeight: 500, overflow: 'auto'}}>
-								{this.props.upgrades.map((upgrade, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ upgrade, facility: undefined, unit: undefined })} style={this.listStyle(upgrade)}>
-										{upgrade.name}
-									</List.Item>
-								))}
-							</List>
-						</Panel>
-          </PanelGroup>
-        </Sidebar>
+			<Container style={{padddingRight: '0px', height: '100vh'}}>
 				<Content>
           { !this.state.unit && !this.state.facility && !this.state.upgrade && <h4>Select an Asset</h4> }
 					{ this.state.unit && <React.Fragment>
@@ -173,9 +126,67 @@ class AssetTab extends Component {
 						</Panel>
 					}
         </Content>
-        </Container>
+				<Sidebar>
+				<Panel style={{ marginRight: '0', backgroundColor: "#434645", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }}>
+						<Input onChange={(value)=> this.setState({filter: value})} placeholder="Search"></Input>
+					</Panel>
+					<Panel bodyFill style={{height: 'calc(100vh - 100px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+						<List hover size='sm'>
+							<h6>Military Units</h6>
+							{this.props.units.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((unit, index) => (
+								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(unit)} onClick={()=> this.setState({unit, facility: undefined, upgrade: undefined})} >
+									{unit.name}
+								</List.Item>
+							))}
+						</List>		
+
+						<List hover size='sm'>
+							<h6>Facilities</h6>
+							{this.props.facilities.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((facility, index) => (
+								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(facility)} onClick={()=> this.setState({facility, unit: undefined, upgrade: undefined})}>
+									{facility.name}
+								</List.Item>
+							))}
+						</List>	
+
+						<List hover size='sm'>
+							<h6>Upgrades</h6>
+							{this.props.upgrades.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((upgrade, index) => (
+								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(upgrade)} onClick={()=> this.setState({upgrade, facility: undefined, unit: undefined})}>
+									{upgrade.name}
+								</List.Item>
+							))}
+						</List>						
+					</Panel>
+						
+        </Sidebar>
+      </Container>
 		);
 	}	
+
+	listStyle (item) {
+		if (this.state.unit && this.state.unit._id === item._id)
+			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+		else if (this.state.facility && this.state.facility._id === item._id)
+			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+		if (this.state.upgrade && this.state.upgrade._id === item._id)
+			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+		else
+			return({backgroundColor: "#FCFCFC", cursor: 'pointer'});
+	}
+
+
+	repair = async (upgrade) => {
+		try {
+			let response = await axios.put(`${gameServer}game/upgrades/repair`, {
+				_id: upgrade._id,
+			});
+			Alert.success(response.data);
+		} catch (err) {
+			console.log(err.response.data);
+			Alert.error(`Error: ${err.response.data}`);
+		}
+	};
 
 	whisperSelector = (rowData) => {
 	// console.log(rowData);

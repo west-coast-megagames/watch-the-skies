@@ -19,7 +19,7 @@ async function runSquadActions () {
 		// 1 Roll 2d6
 		const result = d6() + d6() - squads.length;
 		console.log(`The Result was ${result}`);
-		if (result > 2 && result < 6) {
+		if (result < 6) {
 			numRes = 1;
 		}
 		else if (result > 5 && result < 9) {
