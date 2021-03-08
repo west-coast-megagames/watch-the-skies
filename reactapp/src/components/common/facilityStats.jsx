@@ -92,7 +92,7 @@ class FacilityStats extends Component{
 			
 
 			for (let i = 0; i < facility.capability.manufacturing.capacity; i++) {
-				 let { manufacturing } = facility.capability;
+				let { manufacturing } = facility.capability;
 				//console.log(facility);
 				obj = {
 					_id: 			facility._id,

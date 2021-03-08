@@ -32,6 +32,7 @@ import 'font-awesome/css/font-awesome.css';
 import 'rsuite/dist/styles/rsuite-default.css'; // Light theme for rsuite components
 // import 'rsuite/dist/styles/rsuite-dark.css'; // Dark theme for rsuite components
 import './App.css';
+import { tokenLogin } from './store/entities/auth';
 
 initUpdates()
 
@@ -48,9 +49,17 @@ class App extends Component {
   }
 
   componentDidMount() {
+		if (!this.props.login) {
+			let token = localStorage.getItem('wtsLoginToken');
+
+			if (token) {
+				this.props.tokenLogin({ token });
+			}
+		}
+
     gameClock.subscribeToClock((err, clock) => {
-      if(this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
-          updateEvents.updateTeam(this.props.team._id);
+      if (this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
+        updateEvents.updateTeam(this.props.team._id);
       }
       this.setState({clock})
     })
@@ -67,62 +76,62 @@ class App extends Component {
           />
         </Header>
         <Container>
-            {this.props.login ? <SideNav team={ this.props.team} /> : null}
-            <Content>
-                <Switch>
-                    <Route path="/login" render={(props) => (
-                      <Registration {...props}
-                      />
-                    )}/>
-                    <Route path="/home" render={(props) => (
-                      <Home {...props}
-                        login={this.props.login}
-                      />
-                    )}/>
-										<Route path="/map" render={(props) => (
-                      <MapPage {...props}
-                        login={this.props.login}
-                      />
-                    )}/>
-                    <Route path="/ops" render={(props) => (
-                      <Operations {...props}
-                        accounts={ this.state.accounts }
-                        alert={ notify }
-                      />
-                    )} />
-                    <Route path="/gov" render={(props) => (
-                      <Governance {...props}
-                          accounts = { this.state.accounts }
-                          alert={ notify }
-                      />
-                    )}/>
-                    <Route path="/sci" render={(props) => (
-                      <Science {...props}
-                          alert={ notify }
-                      />
-                    )}/>
-                    <Route path="/dip" render={(props) => (
-                      <Diplomacy {...props}
-                          accounts={ this.state.accounts }
-                          alert={ notify }
-                      />
-                    )}/>
-                    <Route path="/news" render={(props) => (
-                      <News {...props} {...this.state}
-                        alert={ notify }
-                        handleArtHide={this.handleArtHide}
-                      />
-                    )}/>
-                    <Route path="/control" render={(props) => (
-                      <Control {...props} {...this.state}
-                          alert = { notify }
-                      />
-                    )}/>
-                    <Route path="/not-found" component={ NotFound } />
-                    <Redirect from="/" exact to="home" />
-                    <Redirect to="/not-found" />
-                </Switch>
-            </Content>
+					{this.props.login ? <SideNav team={ this.props.team} /> : null}
+					<Content>
+						<Switch>
+							<Route path="/login" render={(props) => (
+								<Registration {...props}
+								/>
+							)}/>
+							<Route path="/home" render={(props) => (
+								<Home {...props}
+									login={this.props.login}
+								/>
+							)}/>
+							<Route path="/map" render={(props) => (
+								<MapPage {...props}
+									login={this.props.login}
+								/>
+							)}/>
+							<Route path="/ops" render={(props) => (
+								<Operations {...props}
+									accounts={ this.state.accounts }
+									alert={ notify }
+								/>
+							)} />
+							<Route path="/gov" render={(props) => (
+								<Governance {...props}
+										accounts = { this.state.accounts }
+										alert={ notify }
+								/>
+							)}/>
+							<Route path="/sci" render={(props) => (
+								<Science {...props}
+										alert={ notify }
+								/>
+							)}/>
+							<Route path="/dip" render={(props) => (
+								<Diplomacy {...props}
+										accounts={ this.state.accounts }
+										alert={ notify }
+								/>
+							)}/>
+							<Route path="/news" render={(props) => (
+								<News {...props} {...this.state}
+									alert={ notify }
+									handleArtHide={this.handleArtHide}
+								/>
+							)}/>
+							<Route path="/control" render={(props) => (
+								<Control {...props} {...this.state}
+									alert = { notify }
+								/>
+							)}/>
+							<Route path="/not-found" component={ NotFound } />
+							<Redirect from="/" exact to="home" />
+							<Redirect to="/not-found" />
+						</Switch>
+					</Content>
         </Container>
         <InfoDrawer />
         <AlertPage alerts={ this.props.notifications } />
@@ -138,6 +147,8 @@ const mapStateToProps = state => ({
   login: state.auth.login
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	tokenLogin: (data) => dispatch(tokenLogin(data))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

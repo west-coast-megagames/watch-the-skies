@@ -27,7 +27,6 @@ class LoginForm extends Component {
       notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
       this.props.close();
     }
-
   }
 
   // validate = () => {
@@ -84,7 +83,7 @@ class LoginForm extends Component {
     const { account, errors, isLoading } = this.state;
     return (
       <div>
-        <form >
+        <form>
           <TxtInput
             name="login"
             value={account.login}

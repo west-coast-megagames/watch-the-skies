@@ -89,7 +89,8 @@ UserSchema.methods.generateAuthToken = function () {
 			team: this.team,
 			roles: this.roles
 		},
-		config.get('jwtPrivateKey')
+		config.get('jwtPrivateKey'),
+		{ expiresIn: '2w' }
 	);
 
 	return token;

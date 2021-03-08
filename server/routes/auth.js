@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const express = require('express');
 const { logger } = require('../middleware/log/winston');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 const { User } = require('../models/user');
 
@@ -27,6 +29,29 @@ router.post('/', async function (req, res) {
 
 	const token = user.generateAuthToken();
 	res.status(200).send(token);
+});
+
+router.post('/tokenLogin', async function (req, res) {
+	try {
+		const decoded = jwt.verify(req.body.token, config.get('jwtPrivateKey'), { maxAge: '2w' });
+
+		let user = await User.findById(decoded._id).populate('team');
+
+		console.log('Issuing new Token');
+		user.lastLogin = new Date;
+		user = await user.save();
+		const token = user.generateAuthToken();
+		console.log(token);
+		res.status(200).send(token);
+	}
+	catch(err) {
+		if (err.name === 'TokenExpiredError') {
+			res.status(401).send(`${err.name}: ${err.message}`);
+		}
+		else {
+			res.status(500).send('Server Error');
+		}
+	}
 });
 
 module.exports = router;

@@ -26,8 +26,9 @@ const slice = createSlice({
     },
     authReceived: (auth, action) => {
       let jwt = action.payload;
-      localStorage.setItem("token", jwt);
+      localStorage.setItem('wtsLoginToken', jwt);
       const user = jwtDecode(jwt);
+			console.log(user);
       playTrack('login');
       auth.team = user.team;
       auth.user = user;
@@ -70,10 +71,24 @@ export default slice.reducer; // Reducer Export
 const url = "/auth";
 
 // aircraft Loader into state
-export const loginuser = payload => (dispatch, getState) => {
+export const loginuser = payload => (dispatch, state) => {
   return dispatch(
     apiCallBegan({
       url,
+      method: 'post',
+      data: payload,
+      onStart:loginRequested.type,
+      onSuccess:authReceived.type,
+      onError:authRequestFailed.type
+    })
+  );
+};
+
+
+export const tokenLogin = payload => (dispatch, state) => {
+  return dispatch(
+    apiCallBegan({
+      url: `${url}/tokenLogin`,
       method: 'post',
       data: payload,
       onStart:loginRequested.type,
