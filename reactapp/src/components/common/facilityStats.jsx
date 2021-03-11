@@ -144,8 +144,8 @@ class FacilityStats extends Component{
 					</TagGroup>
 				</FlexboxGrid.Item>
 				<FlexboxGrid.Item colspan={4}>
-				{ true && <IconButton block size='sm' icon={<Icon icon="building" />} onClick={() => Alert.info('You want to build a base, but you cant!')}>Build New Facility</IconButton>}
-					{ true && <IconButton block size='sm' icon={<Icon icon="plus" />} onClick={() => Alert.info('You want to upgrade this facility, but you cant!')}>Upgrade Facility</IconButton>}
+					<IconButton color='green' block size='sm' icon={<Icon icon="building" />} onClick={() => Alert.info('You want to build a base, but you cant!')}>Build New Facility</IconButton>
+					<IconButton color='blue' block size='sm' icon={<Icon icon="plus" />} onClick={() => Alert.info('You want to upgrade this facility, but you cant!')}>Upgrade Facility</IconButton>
 				</FlexboxGrid.Item>
 			</FlexboxGrid>
 			</Panel>
@@ -175,7 +175,7 @@ class FacilityStats extends Component{
 			<hr/>
 			<Row>
 				<Col md={8} sm={14}>
-					<Panel header={`Docked Aircraft			| Capacity: ${this.state.aircraft.length} / ${capability.airMission.capacity}`}>
+					<Panel bordered header={`Docked Aircraft			| Capacity: ${this.state.aircraft.length} / ${capability.airMission.capacity}`}>
 					<Table data={this.state.aircraft}>
 							<Column width={300} fixed>
 								<HeaderCell>Name</HeaderCell>
@@ -185,7 +185,7 @@ class FacilityStats extends Component{
 					</Panel>
 				</Col>
 				<Col md={8} sm={14}>
-					<Panel header={`Based Military			| Capacity: ${this.state.military.length} / ${capability.ground.capacity}`}>
+					<Panel bordered header={`Based Military			| Capacity: ${this.state.military.length} / ${capability.ground.capacity}`}>
 					<Table data={this.state.military}>
 							<Column width={300} fixed>
 								<HeaderCell>Name</HeaderCell>
@@ -195,7 +195,7 @@ class FacilityStats extends Component{
 					</Panel>
 				</Col >
 				<Col>
-					<Panel header={`Research			| Capacity: ${capability.research.capacity}`}>
+					<Panel bordered header={`Research			| Capacity: ${capability.research.capacity}`}>
 							<Table data={this.state.labs}>
 									<Column width={300} fixed>
 										<HeaderCell>Name</HeaderCell>

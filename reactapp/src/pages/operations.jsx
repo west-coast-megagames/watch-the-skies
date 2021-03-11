@@ -13,9 +13,9 @@ import AssetsTab from './tabs/ops/assets';
 
 /*
 TODO CHECKLIST
-[] Players can assign Upgrades
-[] Players can un-assign Upgrades
-[] Players can make Upgrades (?)
+[X] Players can assign Upgrades
+[X] Players can un-assign Upgrades
+[] Players can make Upgrades (? Possibly outside the scope of planned test) 
 [] Players can repair units
 [] Transfer Units
 [] Deploy Units
