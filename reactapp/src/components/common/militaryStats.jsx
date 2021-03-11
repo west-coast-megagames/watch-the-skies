@@ -66,7 +66,7 @@ class MilitaryStats extends Component {
 							</p>
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={4}>
-							{ true && <IconButton block size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
+							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
 						</FlexboxGrid.Item>
 				 </FlexboxGrid>
 					<br />

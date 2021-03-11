@@ -79,15 +79,19 @@ class UpgradeDrawer extends Component {
 						<Drawer.Title>Add an Upgrade from storage:</Drawer.Title>
 					</Drawer.Header>
 					<Drawer.Body>
-						<List height={400} hover autoScroll bordered>
-							{this.state.eligibleUps.map((upgrade, index) => (
-								<List.Item key={index} index={index} onClick={() => this.setState({ selected: upgrade })}>
-									{upgrade.name}
-								</List.Item>
-							))}
-						</List>
-						{this.state.selected && <Panel header="Panel title">
-						 <Table height={200} data={this.state.selected.effects}>
+						{!this.state.selected &&  <Panel bodyFill >
+							<List hover autoScroll bordered style={{scrollbarWidth: 'none', textAlign: 'center', cursor: 'pointer' }}>
+								{this.state.eligibleUps.map((upgrade, index) => (
+									<List.Item key={index} index={index} onClick={() => this.setState({ selected: upgrade })}>
+										{upgrade.name}
+									</List.Item>
+								))}
+							</List>							
+						</Panel>}
+
+						{this.state.selected && <React.Fragment>
+						 <h4>{this.state.selected.name}</h4>
+						 <Table data={this.state.selected.effects} header={'Upgrade Stats'}>
 							<Column verticalAlign='middle' align="left" fixed>
 								<HeaderCell>Type</HeaderCell>
 								<Cell>
@@ -120,8 +124,9 @@ class UpgradeDrawer extends Component {
 								</Cell>
 							</Column>
 						</Table>
-						<Button color="green" style={{ marginLeft: "auto" }} onClick={this.handleSubmit}>Add</Button>		
-					 </Panel>}
+							<Button color="red"  onClick={()=> this.setState({selected: null})}>Reselect</Button>		
+							<Button color="green"  onClick={this.handleSubmit}>Add</Button>
+					 </React.Fragment>}
 					</Drawer.Body>
 			</Drawer>
 		 );

@@ -42,7 +42,7 @@ class AssetTab extends Component {
 
 	render() { 
 		return (
-			<Container style={{padddingRight: '0px', height: '100vh'}}>
+			<Container style={{padddingRight: '0px', overflow: 'auto', height: 'calc(100vh)'}}>
 				<Content>
           { !this.state.unit && !this.state.facility && !this.state.upgrade && <h4>Select an Asset</h4> }
 					{ this.state.unit && <React.Fragment>
@@ -127,37 +127,40 @@ class AssetTab extends Component {
 					}
         </Content>
 				<Sidebar>
-				<Panel style={{ marginRight: '0', backgroundColor: "#434645", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px' }}>
-						<Input onChange={(value)=> this.setState({filter: value})} placeholder="Search"></Input>
-					</Panel>
-					<Panel bodyFill style={{height: 'calc(100vh - 100px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
-						<List hover size='sm'>
-							<h6>Military Units</h6>
-							{this.props.units.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((unit, index) => (
-								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(unit)} onClick={()=> this.setState({unit, facility: undefined, upgrade: undefined})} >
-									{unit.name}
-								</List.Item>
-							))}
-						</List>		
+					<PanelGroup>
+						<Panel style={{ marginRight: '0', backgroundColor: "#262327", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', borderTopRightRadius: '0px' }}>
+							<Input onChange={(value)=> this.setState({filter: value})} placeholder="Search"></Input>
+						</Panel>
+						<Panel bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+							<List hover autoScroll size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units</h6>
+								{this.props.units.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((unit, index) => (
+									<List.Item key={index}  index={index} size={'md'} style={this.listStyle(unit)} onClick={()=> this.setState({unit, facility: undefined, upgrade: undefined})} >
+										{unit.name}
+									</List.Item>
+								))}
+							</List>		
 
-						<List hover size='sm'>
-							<h6>Facilities</h6>
-							{this.props.facilities.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((facility, index) => (
-								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(facility)} onClick={()=> this.setState({facility, unit: undefined, upgrade: undefined})}>
-									{facility.name}
-								</List.Item>
-							))}
-						</List>	
+							<List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities</h6>
+								{this.props.facilities.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((facility, index) => (
+									<List.Item key={index} index={index} size={'md'} style={this.listStyle(facility)} onClick={()=> this.setState({facility, unit: undefined, upgrade: undefined})}>
+										{facility.name}
+									</List.Item>
+								))}
+							</List>	
 
-						<List hover size='sm'>
-							<h6>Upgrades</h6>
-							{this.props.upgrades.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((upgrade, index) => (
-								<List.Item key={index}  index={index} size={'md'} style={this.listStyle(upgrade)} onClick={()=> this.setState({upgrade, facility: undefined, unit: undefined})}>
-									{upgrade.name}
-								</List.Item>
-							))}
-						</List>						
-					</Panel>
+							<List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Upgrades</h6>
+								{this.props.upgrades.filter(el => el.name.toLowerCase().includes(this.state.filter.toLowerCase())).map((upgrade, index) => (
+									<List.Item key={index}  index={index} size={'md'} style={this.listStyle(upgrade)} onClick={()=> this.setState({upgrade, facility: undefined, unit: undefined})}>
+										{upgrade.name}
+									</List.Item>
+								))}
+							</List>						
+						</Panel>
+					</PanelGroup>
+
 						
         </Sidebar>
       </Container>
@@ -166,13 +169,13 @@ class AssetTab extends Component {
 
 	listStyle (item) {
 		if (this.state.unit && this.state.unit._id === item._id)
-			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+			return({backgroundColor: "#2196f3", cursor: 'pointer', color: 'white' });
 		else if (this.state.facility && this.state.facility._id === item._id)
-			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+			return({backgroundColor: "#2196f3", cursor: 'pointer', color: 'white'});
 		if (this.state.upgrade && this.state.upgrade._id === item._id)
-			return({backgroundColor: "#a1f9f6", cursor: 'pointer'});
+			return({backgroundColor: "#2196f3", cursor: 'pointer', color: 'white'});
 		else
-			return({backgroundColor: "#FCFCFC", cursor: 'pointer'});
+			return({cursor: 'pointer'});
 	}
 
 
