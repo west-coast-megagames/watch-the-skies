@@ -4,6 +4,7 @@ import { Button, Alert, Table, Drawer, List, Popover, Whisper, Icon, IconButton,
 import { gameServer } from '../../config';
 import { getStored } from '../../store/entities/upgrades';
 import axios from 'axios';
+import { socket } from '../../api';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -59,7 +60,7 @@ class UpgradeDrawer extends Component {
 	handleSubmit = async (blueprint) => {
 		// 1) make a new upgrade from blueprint
 		try{
-			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: this.state.selected._id, unit: this.props.unit._id })
+			socket.emit( 'upgradeSocket', 'add', {upgrade: this.state.selected._id, unit: this.props.unit._id, model: this.props.unit.model })
 			
 			this.props.closeUpgrade()
 		}

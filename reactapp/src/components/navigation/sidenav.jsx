@@ -3,6 +3,7 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Sidenav, Sidebar, Icon, Nav, Navbar, Dropdown, Whisper, Popover } from 'rsuite'; // rsuite components
 import { NavLink } from 'react-router-dom'; // React navigation components
 import ClockControls from '../clockControls';
+import { signOut } from '../../store/entities/auth';
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 
@@ -57,7 +58,7 @@ class SideNav extends Component {
 						</Nav>
 					</Sidenav.Body>
 				</Sidenav>
-				<NavToggle login={this.state.login} expand={expand} onChange={this.handleToggle} signOut={this.handleSignout} />
+				<NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.logoff} />
 			</Sidebar>
 		);
 	}
@@ -68,7 +69,9 @@ const mapStateToProps = state => ({
 	user: state.auth.user
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	logoff: () => dispatch(signOut())
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
 

@@ -3,6 +3,8 @@ const { Military } = require('../../models/military');
 const { Squad } = require('../../models/squad');
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
+const { Account } = require('../../models/account');
+const banking = require('../../wts/banking/banking');
 
 /*
 function that applies upgrade to any unit
@@ -21,27 +23,28 @@ async function upgradeValue (upgradeArray, desiredStat) {
 }
 
 // pass me the full unit
-async function addUpgrade (upgrade, unit) {
+async function addUpgrade (data) {
+	// console.log(data);
+	let { upgrade, unit, model } = data;
 	upgrade = await Upgrade.findById(upgrade);
 
 	if (!upgrade.status.storage) return 'This Upgrade is already in use somewhere!';
 
-	switch(unit.model) {
+	switch(model) {
 	case 'Military':
-		unit = await Military.findById(unit._id);
+		unit = await Military.findById(unit);
 		break;
 	case 'Squad':
-		unit = await Squad.findById(unit._id);
+		unit = await Squad.findById(unit);
 		break;
 	case 'Aircraft':
-		unit = await Aircraft.findById(unit._id);
+		unit = await Aircraft.findById(unit);
 		break;
 	case 'Facility':
-		unit = await Facility.findById(unit._id);
+		unit = await Facility.findById(unit);
 		break;
 	default:
-		return 'UwU could not find the right Unit for addUpgrade! someone made an oopsie-woopsie!';
-
+		return ({ message : `UwU could not find the right Unit for addUpgrade! ${unit} `, type: 'error' });
 	}
 	try{
 		unit.upgrades.push(upgrade);
@@ -60,17 +63,19 @@ async function addUpgrade (upgrade, unit) {
 		}
 		upgrade = await upgrade.save();
 		unit = await unit.save();
-		return `Added "${upgrade.name}" to unit "${unit.name}"`;
+		return ({ message : `Added "${upgrade.name}" to unit "${unit.name}"`, type: 'success' });
 	}
 	catch(err) {
-		return `ERROR IN addUpgrade: ${err}`;
+		console.log(err);
+		return ({ message : `ERROR IN addUpgrade: ${err}`, type: 'error' });
 	}
 
 }
 
-async function removeUpgrade (upgrade, unit) {
+async function removeUpgrade (data) {
+	let { upgrade, unit, model } = data;
 	upgrade = await Upgrade.findById(upgrade);
-	switch(unit.model) {
+	switch(model) {
 	case 'Military':
 		unit = await Military.findById(unit._id);
 		break;
@@ -84,7 +89,7 @@ async function removeUpgrade (upgrade, unit) {
 		unit = await Facility.findById(unit._id);
 		break;
 	default:
-		return 'UwU could not find the right Unit for removeUpgrade! someone made an oopsie-woopsie!';
+		return ({ message : `UwU could not find the right Unit for removeUpgrade! ${unit} `, type: 'error' });
 	}
 	let response = 'Could not find desired Upgrade to remove from unit';
 	const index = unit.upgrades.indexOf(upgrade._id);
@@ -107,13 +112,40 @@ async function removeUpgrade (upgrade, unit) {
 		unit = await unit.save();
 		upgrade.status.storage = true;
 		upgrade = await upgrade.save();
-
-		return response;
+		return ({ message : response, type: 'success' });
 	}
 	catch(err) {
-		return `ERROR IN removeUpgrade: ${err}`;
+		return ({ message : `ERROR IN removeUpgrade: ${err}`, type: 'error' });
 	}
 
 }
 
-module.exports = { upgradeValue, addUpgrade, removeUpgrade };
+async function repairUpgrade (data) {
+	const upgrade = await Upgrade.findById(data._id);
+
+	let account = await Account.findOne({
+		name: 'Operations',
+		team: upgrade.team
+	});
+	if (account.balance < 2) {
+		// error send here
+		return ({ message : `No Funding! Assign more money to your operations account to repair ${upgrade.name}.`, type: 'error' });
+	}
+	else {
+		account = await banking.withdrawal(
+			account,
+			2,
+			`Repairs for ${upgrade.name}`
+		);
+		await account.save();
+
+		// upgrade.status.repair = true;
+		// upgrade.status.ready = false;
+		upgrade.status.destroyed = false;
+		upgrade.status.damaged = false;
+		await upgrade.save();
+		return ({ message : `${upgrade.name} repaired!`, type: 'success' });
+	}
+}
+
+module.exports = { upgradeValue, addUpgrade, removeUpgrade, repairUpgrade };

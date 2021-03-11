@@ -20,7 +20,7 @@ router.get('/stat', async function (req, res) {
 	res.status(200).send(`The result is: ${z}`);
 });
 
-
+// moved to socket
 router.put('/add', async function (req, res) {
 	let { upgrade, unit } = req.body;
 	upgrade = await Upgrade.findById(upgrade);
@@ -42,10 +42,8 @@ router.put('/remove', async function (req, res) {
 });
 
 router.post('/build', async function (req, res) {
-	const { code, team, facility } = req.body; // please give me these things
-
 	try {
-		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		let upgrade = await newUpgrade(req.body); // just the facility ID
 		upgrade = await upgrade.save();
 		nexusEvent.emit('updateUpgrades');
 		res.status(200).json(upgrade);

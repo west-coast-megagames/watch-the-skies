@@ -12,6 +12,7 @@ import { getUpgrades } from '../../../store/entities/upgrades';
 
 import axios from 'axios';
 import { gameServer } from '../../../config';
+import { socket } from '../../../api';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -181,10 +182,7 @@ class AssetTab extends Component {
 
 	repair = async (upgrade) => {
 		try {
-			let response = await axios.put(`${gameServer}game/upgrades/repair`, {
-				_id: upgrade._id,
-			});
-			Alert.success(response.data);
+			socket.emit( 'upgradeSocket', 'repair', {_id: upgrade._id });
 		} catch (err) {
 			console.log(err.response.data);
 			Alert.error(`Error: ${err.response.data}`);

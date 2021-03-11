@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Content, Icon, Table, Button, Alert } from 'rsuite';
 import axios from 'axios';
 import { gameServer } from '../../config';
+import { socket } from '../../api';
 
 
 const { HeaderCell, Cell, Column } = Table;
@@ -65,9 +66,9 @@ class UpgradeTable extends Component {
 		this.setState({ data })
 }
 
-handleDelete = async (upgrade) => {
+handleRemove = async (upgrade) => {
 	try {
-		await axios.put(`${gameServer}game/upgrades/remove`, {upgrade, unit: this.state.selected});
+		socket.emit( 'upgradeSocket', 'remove', {upgrade, unit: this.state.selected, model: this.props.unit.model });
 	}
 	catch (err) {
 		Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -112,7 +113,7 @@ handleDelete = async (upgrade) => {
 							<HeaderCell>Delete</HeaderCell>
 								<Cell style={{padding: '8px'}}>
 									{rowData => {
-										if (typeof rowData.id === 'string') return (<Button color='red' onClick={() => this.handleDelete(rowData.id)}>Remove</Button>)
+										if (typeof rowData.id === 'string') return (<Button color='red' onClick={() => this.handleRemove(rowData.id)}>Remove</Button>)
 										else return '';
 									}}
 								</Cell>

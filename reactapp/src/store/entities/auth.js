@@ -39,6 +39,20 @@ const slice = createSlice({
       clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
       updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
     },
+		signOut: (auth, action) => {
+			console.log(`${action.type} Dispatched`);
+			localStorage.removeItem('wtsLoginToken');
+			auth.user = null;
+			auth.team = null;
+			auth.role = null;
+			auth.tags = [];
+			auth.login = false;
+			auth.loading = false;
+			auth.lastLogin = null;
+			auth.socket = null;
+			auth.users = [];
+			auth.errors = {};
+		},
     authRequestFailed: (auth, action) => {
       console.log(`${action.type} Dispatched`)
       auth.loading = false;
@@ -62,7 +76,8 @@ export const {
   loginRequested,
   authRequestFailed,
   usersRecieved,
-  loginSocket
+  loginSocket,
+	signOut
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

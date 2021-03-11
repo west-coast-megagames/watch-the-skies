@@ -4,6 +4,7 @@ import { FlexboxGrid, Drawer, SelectPicker, Alert, Button } from 'rsuite';
 import { getCities } from "../store/entities/sites";
 import { gameServer } from '../config';
 import axios from 'axios';
+import { socket } from '../api';
 
 class UpgradeModal extends Component {
 	constructor(props) {
@@ -28,8 +29,7 @@ class UpgradeModal extends Component {
 		// 1) make a new upgrade from blueprint
 		try{
 			let { data } = await axios.post(`${gameServer}api/upgrades/`, {code: this.state.selected.code, team: this.props.team, facility: 'TEST FACILITY'})
-		  //console.log(data);
-			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: data._id, unit: this.props.unit._id })
+			socket.emit( 'upgradeSocket', 'add', {upgrade: data._id, unit: this.props.unit._id, model: this.props.unit.model })
 			this.props.closeUpgrade()
 		}
 		catch (err) {

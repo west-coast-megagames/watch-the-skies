@@ -6,6 +6,8 @@ const { logger } = require('../../middleware/log/winston'); // middleware/error.
 // Watch the Skies game functions
 const gameClock = require('../../wts/gameClock/gameClock');
 const banking = require('../../wts/banking/banking');
+const { addUpgrade, removeUpgrade, repairUpgrade } = require('../../wts/upgrades/upgrades');
+const { newUpgrade } = require('../../wts/construction/construction');
 
 let msgKey = 0;
 
@@ -48,6 +50,36 @@ module.exports = function (io) {
 			}
 		});
 
+		client.on('upgradeSocket', async (type, data) => { // all game clock sockets in one dyamic one -Scott
+			logger.info(`upgradeSocket triggered: ''${type}''`);
+			let response;
+			switch(type) {
+			case 'add': {
+				response = await addUpgrade(data);
+				break;
+			}
+			case 'remove': {
+				response = await removeUpgrade(data);
+				break;
+			}
+			case 'build': {
+				response = await newUpgrade(data); // just the facility ID
+				break;
+			}
+			case 'repair': {
+				response = await repairUpgrade(data); // just the facility ID
+				break;
+			}
+			default:
+				console.log('Bad upgradeSocket Request: ', type); // need an error socket to trigger
+				client.emit('alert', { message : `Bad upgradeSocket Request: ${type}`, type: 'error' });
+				break;
+			}
+			client.emit('alert', response);
+			nexusEvent.emit('updateUpgrades');
+			nexusEvent.emit('updateMilitary');
+		});
+
 		client.on('bankingTransfer', async (transfer) => {
 			const { to, from, amount, note } = transfer;
 
@@ -76,6 +108,5 @@ module.exports = function (io) {
 			MainClients.delClient(client);
 			socketDebugger(`${MainClients.connections.length} clients connected`);
 		});
-
 	});
 };

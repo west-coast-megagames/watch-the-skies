@@ -29,6 +29,8 @@ function skipPhase () {
 
 let gameClock = { subscribeToClock, pauseGame, startGame, resetClock, skipPhase };
 
+// Asset Sockets
+
 
 // Banking Socket Events and Event Listners
 function bankingTransfer (transfer) {
@@ -40,6 +42,8 @@ function autoTransfer (transfer) {
 };
 
 let banking = { bankingTransfer, autoTransfer };
+
+// Update Sockets
 
 function updateAircrafts (cb) {
   console.log('Listing for current aircrafts...')

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
 import initUpdates from './scripts/initUpdates';
 
-import { Header, Container, Content } from 'rsuite'; // rsuite components
-import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
+import { Header, Container, Content, Alert } from 'rsuite'; // rsuite components
+import { updateEvents, gameClock, socket } from './api' // Socket.io event triggers and actions
 import notify from './scripts/notify';
 
 // Components
@@ -63,6 +63,23 @@ class App extends Component {
       }
       this.setState({clock})
     })
+
+
+		socket.on('alert', data => {
+			switch (data.type) {
+				case ('error'):
+					Alert.error(data.message, 6000);
+					break;
+				case ('success'):
+					Alert.success(data.message, 6000);
+					break;
+				case ('warning'):
+					Alert.warning(data.message, 6000);
+					break;
+				default:
+					Alert.info(data.message, 6000);
+			}
+		})
   }
 
   render() {

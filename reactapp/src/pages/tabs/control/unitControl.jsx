@@ -4,6 +4,7 @@ import { connect } from 'react-redux'; // Redux store provider
 import UpgradeModal from '../../../components/upgradeModal';
 import { gameServer } from '../../../config';
 import axios from 'axios';
+import { socket } from '../../../api';
 // import upgrade from '../../../../../server/models/upgrade';
 
 const { HeaderCell, Cell, Column } = Table;
@@ -78,7 +79,7 @@ class UnitControl extends Component {
 
 	handleDelete = async (upgrade) => {
 		try {
-			await axios.put(`${gameServer}game/upgrades/remove`, {upgrade, unit: this.state.selected});
+			socket.emit( 'upgradeSocket', 'remove', {upgrade, unit: this.state.selected, model: this.props.unit.model });
 			let {data} = await axios.delete(`${gameServer}api/upgrades/${upgrade}`);
 			Alert.success(data);		
 		}
