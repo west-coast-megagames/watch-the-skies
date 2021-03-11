@@ -28,20 +28,24 @@ module.exports = function (io) {
 			io.sockets.emit('new msg', data);
 		});
 
-		client.on('pauseGame', () => {
-			gameClock.pauseClock();
-		});
-
-		client.on('startGame', () => {
-			gameClock.startClock();
-		});
-
-		client.on('resetClock', () => {
-			gameClock.resetClock();
-		});
-
-		client.on('skipPhase', () => {
-			gameClock.skipPhase();
+		client.on('clockSocket', data => { // all game clock sockets in one dyamic one -Scott
+			switch(data) {
+			case 'pauseGame':
+				gameClock.pauseClock();
+				break;
+			case 'startGame':
+				gameClock.startClock();
+				break;
+			case 'resetClock':
+				gameClock.resetClock();
+				break;
+			case 'skipPhase':
+				gameClock.skipPhase();
+				break;
+			default:
+				console.log('Bad clockSocket Request: ', data); // need an error socket to trigger
+				break;
+			}
 		});
 
 		client.on('bankingTransfer', async (transfer) => {

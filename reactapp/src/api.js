@@ -12,19 +12,19 @@ function subscribeToClock (cb) {
 };
 
 function pauseGame () {
-  socket.emit('pauseGame');
+  socket.emit( 'clockSocket', 'pauseGame');
 };
 
 function startGame () {
-  socket.emit('startGame');
+  socket.emit('clockSocket', 'startGame');
 };
 
 function resetClock () {
-  socket.emit('resetClock');
+  socket.emit('clockSocket', 'resetClock');
 };
 
 function skipPhase () {
-  socket.emit('skipPhase');
+  socket.emit('clockSocket', 'skipPhase');
 };
 
 let gameClock = { subscribeToClock, pauseGame, startGame, resetClock, skipPhase };
