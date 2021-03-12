@@ -16,8 +16,8 @@ TODO CHECKLIST
 [X] Players can assign Upgrades
 [X] Players can un-assign Upgrades
 [] Players can make Upgrades (? Possibly outside the scope of planned test) 
-[] Players can repair units
-[] Transfer Units
+[X] Players can repair units
+[X] Transfer Units
 [] Deploy Units
 [] Aggress Units
 [] connect battles with alliances && multiple opposing armies 

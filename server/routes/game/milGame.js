@@ -15,7 +15,7 @@ const { d6 } = require('../../../dataUtil/systems/dice');
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const randomCords = require('../../util/systems/lz');
-const { runMilitary } = require('../../wts/military/combat');
+const { runMilitary } = require('../../wts/military/military');
 
 
 // @route   PUT game/military/deploy

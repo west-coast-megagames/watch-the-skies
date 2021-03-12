@@ -41,7 +41,9 @@ const AircraftSchema = new Schema({
 		ready: { type: Boolean, default: true },
 		upgrade: { type: Boolean, default: false },
 		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false }
+		secret: { type: Boolean, default: false },
+		action: { type: Boolean, default: true }, // transfer/deployment/repair
+		mission: { type: Boolean, default: true } // invade
 	},
 	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
 	systems: {
@@ -122,6 +124,8 @@ AircraftSchema.methods.launch = async function (mission) {
 		this.status.ready = false;
 		this.mission = mission;
 
+		this.status.mission = false; // Nex Action/Mission system
+
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
 		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
 		await banking.withdrawal(account, 1, `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`);
@@ -156,6 +160,9 @@ AircraftSchema.methods.recall = async function () {
 		this.site = home.site;
 		this.country = home.site.country;
 		this.zone = home.site.zone;
+
+		this.status.mission = false; // Nex Action/Mission system
+		this.status.action = false;
 
 		const aircraft = await this.save();
 		logger.info(`${this.name} returned to ${home.name}...`);

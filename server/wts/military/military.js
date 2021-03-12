@@ -5,6 +5,10 @@ const { Site } = require('../../models/site');
 const { d6, rand } = require('../../util/systems/dice');
 const nexusEvent = require('../../middleware/events/events');
 const { Upgrade } = require('../../models/upgrade');
+const { Account } = require('../../models/account');
+const banking = require('../banking/banking');
+const { Facility } = require('../../models/facility');
+const randomCords = require('../../util/systems/lz');
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -387,4 +391,69 @@ async function runMilitary () {
 	nexusEvent.emit('updateLogs');
 }
 
-module.exports = { resolveBattle, runMilitary };
+async function repairUnit (data) {
+	const unit = await Military.findById(data._id);
+
+	let account = await Account.findOne({
+		name: 'Operations',
+		team: unit.team
+	});
+	if (account.balance < 2) {
+		// error send here
+		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
+	}
+	else {
+		account = await banking.withdrawal(
+			account,
+			2,
+			`Repairs for ${unit.name}`
+		);
+		await account.save();
+
+		// unit.status.repair = true;
+		// unit.status.ready = false;
+		unit.status.ready = true;
+		unit.status.destroyed = false;
+		unit.status.damaged = false;
+		unit.stats.health = unit.stats.healthMax;
+		await unit.save();
+		return ({ message : `${unit.name} repaired!`, type: 'success' });
+	}
+}
+
+async function transferUnit (data) { // for transferring to other facilities as an action
+	const unit = await Military.findById(data.unit);
+	const facility = await Facility.findById(data.facility).populate('site');
+
+	if (unit.status.action) {
+		unit.origin = data.facility;
+		unit.status.action = false;
+
+		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.site = facility.site;
+		unit.country = facility.site.country;
+		unit.zone = facility.site.zone;
+
+		await unit.save();
+		return ({ message : `Used ${unit.name}'s action to transfer to ${facility.name}!`, type: 'success' });
+	}
+	else if (unit.status.mission) {
+		unit.origin = data.facility;
+		unit.status.mission = false;
+		unit.status.ready = false;
+
+		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.site = facility.site;
+		unit.country = facility.site.country;
+		unit.zone = facility.site.zone;
+
+		await unit.save();
+		return ({ message : `Used ${unit.name}'s mission to transfer to ${facility.name}!`, type: 'success' });
+	}
+	else {
+		return ({ message : `${unit.name} has already used its Action this turn. Transfer cancelled.`, type: 'error' });
+	}
+
+}
+
+module.exports = { resolveBattle, runMilitary, repairUnit, transferUnit };

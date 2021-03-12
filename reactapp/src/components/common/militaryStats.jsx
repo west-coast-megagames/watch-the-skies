@@ -3,32 +3,36 @@ import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton,
 import UpgradeDrawer from "./upgradeDrawer";
 import axios from 'axios';
 import { gameServer } from "../../config";
+import { socket } from "../../api";
+import TransferForm from "./TransferForm";
 
 class MilitaryStats extends Component {
 	state = { 
 		showUpgrade: false,
+		showTransfer: false,
 	}
 
 	showUpgrade = () => { 
-		this.setState({showUpgrade: true}) 
-		console.log(this.state.showUpgrade)	
+		this.setState({showUpgrade: true});
 	};
 
 	closeUpgrade = () => { 
 		this.setState({showUpgrade: false}) 
 		};
 
-		repair = async () => {
-			try {
-				let response = await axios.put(`${gameServer}game/tempMil/repair`, {
-					_id: this.props.unit._id,
-				});
-				Alert.success(response.data);
-			} catch (err) {
-				console.log(err.response.data);
-				Alert.error(`Error: ${err.response.data}`);
-			}
+	closeTransfer = () => { 
+		this.setState({showTransfer: false}) 
 		};
+
+	repair = async () => {
+		try {
+			socket.emit( 'militarySocket', 'repair', {_id: this.props.unit._id });
+		}
+		catch (err) {
+			console.log(err.response.data);
+			Alert.error(`Error: ${err.response.data}`);
+		}
+	};
 
 	render() {
 		let { stats, status, name, zone, type, origin, site } = this.props.unit;
@@ -54,13 +58,7 @@ class MilitaryStats extends Component {
 							</p>
 							<p>
 								<b>Base:</b> {origin.name}{" "}
-								<IconButton
-									size="xs"
-									onClick={() =>
-										Alert.warning(`Base transfers have not been implemented`)
-									}
-									icon={<Icon icon="send" />}
-								>
+								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
 									Transfer Unit
 								</IconButton>
 							</p>
@@ -146,10 +144,13 @@ class MilitaryStats extends Component {
 				</FlexboxGrid>
 			</Panel>
 			{this.state.showUpgrade && <UpgradeDrawer show={this.state.showUpgrade}
-				showUpgrade={this.showUpgrade} 
 				closeUpgrade={this.closeUpgrade}
 				unit={this.props.unit}
 			/>}
+			{this.state.showTransfer && <TransferForm 
+				show={this.state.showTransfer} 
+				closeTransfer={this.closeTransfer}
+				unit={this.props.unit} />}
 			</Container>
 			
 	

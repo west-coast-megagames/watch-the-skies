@@ -481,6 +481,13 @@ async function clearMissions () {
 	for (const aircraft of await Aircraft.find({ 'status.deployed': true })) {
 		await aircraft.recall();
 	}
+
+	for (const aircraft of await Aircraft.find({ 'status.action': false } || { 'status.mission': false })) {
+		aircraft.status.action = true;
+		aircraft.status.mission = true;
+		await aircraft.save();
+	}
+
 	interceptionMissions = []; // Attempted Interception missions for the round
 	escortMissions = []; // Attempted Escort missions for the round
 	patrolMissions = []; // Attempted Patrol missions for the round

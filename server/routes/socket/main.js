@@ -8,6 +8,7 @@ const gameClock = require('../../wts/gameClock/gameClock');
 const banking = require('../../wts/banking/banking');
 const { addUpgrade, removeUpgrade, repairUpgrade } = require('../../wts/upgrades/upgrades');
 const { newUpgrade } = require('../../wts/construction/construction');
+const { repairUnit, transferUnit } = require('../../wts/military/military');
 
 let msgKey = 0;
 
@@ -79,6 +80,31 @@ module.exports = function (io) {
 			nexusEvent.emit('updateUpgrades');
 			nexusEvent.emit('updateMilitary');
 		});
+
+		client.on('militarySocket', async (type, data) => { // all game clock sockets in one dyamic one -Scott
+			logger.info(`militarySocket triggered: ''${type}''`);
+			let response;
+			switch(type) {
+			case 'repair': {
+				response = await repairUnit(data);
+				break;
+			}
+			case 'transfer': {
+				// console.log(data);
+				response = await transferUnit(data);
+				break;
+			}
+			default:
+				console.log('Bad militarySocket Request: ', type); // need an error socket to trigger
+				client.emit('alert', { message : `Bad militarySocket Request: ${type}`, type: 'error' });
+				break;
+			}
+			client.emit('alert', response);
+			nexusEvent.emit('updateUpgrades');
+			nexusEvent.emit('updateMilitary');
+		});
+
+
 
 		client.on('bankingTransfer', async (transfer) => {
 			const { to, from, amount, note } = transfer;

@@ -2,7 +2,7 @@ const phaseChangeDebugging = require('debug')('app:phaseChange');
 
 const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the PR system
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
-const { runMilitary } = require('../military/combat');
+const { runMilitary } = require('../military/military');
 const banking = require('../banking/banking'); // IMPORT - Banking System
 // const { startResearch, assignKnowledgeCredit } = require('../research/research');
 // const { techCheck } = require('../../wts/research/technology');

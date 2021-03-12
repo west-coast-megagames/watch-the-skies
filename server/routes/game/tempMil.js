@@ -15,7 +15,7 @@ const nexusEvent = require('../../middleware/events/events');
 // Report Classes - Used to log game interactions
 const { DeploymentReport } = require('../../wts/reports/reportClasses');
 const randomCords = require('../../util/systems/lz');
-const { runMilitary } = require('../../wts/military/combat');
+const { runMilitary } = require('../../wts/military/military');
 
 // @route   PUT game/military/deploy
 // @Desc    Deploy a group of units for a country
@@ -129,47 +129,6 @@ router.patch('/resetsites', async function (req, res) {
 	console.log('All done');
 	res.send('All sites succesfully reset!');
 	nexusEvent.emit('updateSites');
-});
-
-router.put('/repair', async function (req, res) {
-	const unit = await Military.findById(req.body._id);
-	console.log(req.body);
-	console.log(unit);
-	let account = await Account.findOne({
-		name: 'Operations',
-		team: unit.team
-	});
-	if (account.balance < 2) {
-		routeDebugger('Not enough funding...');
-		res
-			.status(402)
-			.send(
-				`No Funding! Assign more money to your operations account to repair ${unit.name}.`
-			);
-	}
-	else {
-		account = await banking.withdrawal(
-			account,
-			2,
-			`Repairs for ${unit.name}`
-		);
-		await account.save();
-		routeDebugger(account);
-
-		// unit.status.repair = true;
-		// unit.status.ready = false;
-		unit.status.ready = true;
-		unit.status.destroyed = false;
-		unit.status.damaged = false;
-		unit.stats.health = unit.stats.healthMax;
-
-		await unit.save();
-
-		routeDebugger(`${unit.name} put in for repairs...`);
-
-		res.status(200).send(`${unit.name} put in for repairs...`);
-		nexusEvent.emit('updateMilitary');
-	}
 });
 
 router.patch('/resolve', async function (req, res) {
