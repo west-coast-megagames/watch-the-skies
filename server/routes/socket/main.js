@@ -8,7 +8,7 @@ const gameClock = require('../../wts/gameClock/gameClock');
 const banking = require('../../wts/banking/banking');
 const { addUpgrade, removeUpgrade, repairUpgrade } = require('../../wts/upgrades/upgrades');
 const { newUpgrade } = require('../../wts/construction/construction');
-const { repairUnit, transferUnit } = require('../../wts/military/military');
+const { repairUnit, transferUnit, deployUnit } = require('../../wts/military/military');
 
 let msgKey = 0;
 
@@ -90,8 +90,12 @@ module.exports = function (io) {
 				break;
 			}
 			case 'transfer': {
-				// console.log(data);
 				response = await transferUnit(data);
+				break;
+			}
+			case 'deploy': {
+				// console.log(data);
+				response = await deployUnit(data);
 				break;
 			}
 			default:

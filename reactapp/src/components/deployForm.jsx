@@ -5,6 +5,7 @@ import { gameServer } from '../config';
 import axios from 'axios';
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed } from '../store/entities/infoPanels';
+import { socket } from '../api';
 
 class DeployMilitary extends Component {
 	state = {
@@ -157,8 +158,7 @@ class DeployMilitary extends Component {
 		let deployment = { cost, units: mobilization, destination, team };
 
 		try {
-				let { data } = await axios.put(`${gameServer}game/tempMil/deploy`, deployment); // Axios call to deploy units
-				Alert.success(data)
+				socket.emit( 'militarySocket', 'deploy', deployment);
 				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)

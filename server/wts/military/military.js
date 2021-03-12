@@ -1,14 +1,16 @@
 const { Military } = require('../../models/military');
 const { MilitaryMission } = require('../../models/report');
 const { Site } = require('../../models/site');
-// const { Team } = require('../../models/team');
+const { Team } = require('../../models/team');
 const { d6, rand } = require('../../util/systems/dice');
 const nexusEvent = require('../../middleware/events/events');
+const routeDebugger = require('debug')('app:routes');
 const { Upgrade } = require('../../models/upgrade');
 const { Account } = require('../../models/account');
 const banking = require('../banking/banking');
 const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
+const { DeploymentReport } = require('../reports/reportClasses');
 
 async function resolveBattle (attackers, defenders) {
 	let attackerTotal = 0;
@@ -456,4 +458,69 @@ async function transferUnit (data) { // for transferring to other facilities as 
 
 }
 
-module.exports = { resolveBattle, runMilitary, repairUnit, transferUnit };
+async function deployUnit (data) {
+	const { units, cost, destination, team } = data;
+	console.log(data);
+	const teamObj = await Team.findOne({ name: team });
+	let account = await Account.findOne({
+		name: 'Operations',
+		team: teamObj._id
+	});
+	routeDebugger(`${teamObj.name} is attempting to deploy.`);
+	routeDebugger(
+		`Deployment cost: $M${cost} | Account Balance: $M${account.balance}`
+	);
+	if (account.balance < cost) {
+		routeDebugger('Not enough funding to deploy units...');
+		return ({ message : `Not enough funding! Assign ${cost - account.balance} more money teams operations account to deploy these units.`, type: 'error' });
+	}
+	else {
+		console.log(destination);
+		const siteObj = await Site.findById(destination)
+			.populate('country')
+			.populate('zone');
+		const unitArray = [];
+		siteObj.status.warzone = true;
+
+		for await (const unit of units) {
+			const update = await Military.findById(unit);
+			update.site = siteObj._id;
+			update.country = siteObj.country._id;
+			update.zone = siteObj.zone._id;
+			update.status.deployed = true;
+			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
+			unitArray.push(update._id);
+			await update.save();
+		}
+
+		account = await banking.withdrawal(
+			account,
+			cost,
+			`Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
+		);
+		await account.save();
+		await siteObj.save();
+		routeDebugger(account);
+
+		let report = new DeploymentReport();
+
+		report.team = teamObj._id;
+		report.site = siteObj._id;
+		report.country = siteObj.country._id;
+		report.zone = siteObj.zone._id;
+		report.units = unitArray;
+		report.cost = cost;
+
+		report = await report.saveReport();
+
+		// for await (let unit of units) {
+		//   let update = await Military.findById(unit)
+		//   unit.serviceRecord.push(report);
+		//   await update.save();
+		// }
+
+		return ({ message : `Unit deployment to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
+	}
+}
+
+module.exports = { resolveBattle, runMilitary, repairUnit, transferUnit, deployUnit };
