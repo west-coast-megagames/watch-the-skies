@@ -6,13 +6,14 @@ import { militaryClosed } from "../store/entities/infoPanels";
 import { gameServer } from "../config";
 import ServiceRecord from "./common/serviceRecord";
 import { getOpsAccount } from "../store/entities/accounts";
+import TransferForm from "./common/TransferForm";
 
 class InfoMilitary extends Component {
   constructor(props) {
     super(props);
     this.state = {
       update: false,
-      hideTransfer: true,
+      hideTransfer: false,
     };
     this.toggleTransfer = this.toggleTransfer(this);
     this.unitStats = this.unitStats.bind(this);
@@ -48,9 +49,7 @@ class InfoMilitary extends Component {
                   <b>Base:</b> {this.props.unit.origin.name}{" "}
                   <IconButton
                     size="xs"
-                    onClick={() =>
-                      Alert.warning(`Base transfers have not been implemented`)
-                    }
+                    onClick={()=> this.setState({ hideTransfer: !this.state.hideTransfer })}
                     icon={<Icon icon="send" />}
                   >
                     Transfer Unit
@@ -99,12 +98,20 @@ class InfoMilitary extends Component {
           </Button>
         </Drawer.Footer>
         <SelectPicker />
+				{this.state.hideTransfer && <TransferForm 
+				show={this.state.hideTransfer} 
+				closeTransfer={this.closeTransfer}
+				unit={this.props.unit} />}
       </Drawer>
     );
   }
 
+	closeTransfer = () => { 
+		this.setState({hideTransfer: false}) 
+	};
+
   toggleTransfer() {
-    // console.log(`Toggle`);
+    console.log(`Toggle`);
     this.setState({ hideTransfer: !this.state.hideTransfer });
   }
 

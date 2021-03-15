@@ -136,7 +136,7 @@ class InvasionModal extends Component {
         this.props.closeDeploy();
     }   
 }
- 
+
 const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,

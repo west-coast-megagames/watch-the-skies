@@ -100,11 +100,17 @@ function PrototypeMap(props) {
 					url: "https://i.imgur.com/h2t00jl.png",
 					height: 56,
 					width: 55,
+					position: 'absolute',
+					left: '100px',
+					top: '100px'
 				},
 				{
 					url: "https://i.imgur.com/Cn8zTPb.png",
 					height: 62,
 					width: 63,
+					position: 'absolute',
+					left: '100px',
+					top: '100px'
 				},
 			]}
 			>
@@ -139,7 +145,10 @@ function PrototypeMap(props) {
 					url: "https://i.imgur.com/x7nIvRx.png",
 					height: 53,
 					width: 53,
-					textColor: 'white'
+					textColor: 'white',
+					position: 'absolute',
+					right: '100px',
+					bottom: '100px'
 				},
 				{
 					url: "https://i.imgur.com/IEfm6Gj.png",

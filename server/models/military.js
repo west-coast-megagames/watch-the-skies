@@ -119,6 +119,9 @@ MilitarySchema.methods.recall = async function () {
 		this.country = home.site.country;
 		this.zone = home.site.zone;
 
+		this.status.action = true;
+		this.status.mission = true;
+
 		const aircraft = await this.save();
 		logger.info(`${this.name} returned to ${home.name}...`);
 

@@ -95,7 +95,12 @@ module.exports = function (io) {
 			}
 			case 'deploy': {
 				// console.log(data);
-				response = await deployUnit(data);
+				response = await deployUnit(data, 'deploy');
+				break;
+			}
+			case 'invade': {
+				// console.log(data);
+				response = await deployUnit(data, 'invade');
 				break;
 			}
 			default:

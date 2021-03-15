@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { createSelector, createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import distance from "../../scripts/range";
 
 // Create entity slice of the store
 const slice = createSlice({
@@ -58,7 +59,7 @@ const slice = createSlice({
 		},
 		showDeploy: (info, action) => {
 			console.log(`${action.type} Dispatched...`)
-			info.Target = action.payload
+			info.Site = action.payload
       info.showDeploy = true
     },
     deployClosed: (info, action) => {
@@ -83,3 +84,18 @@ export const {
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
+
+	// Selector
+	export const targetFacilities = createSelector(
+		state => state.info.Site,
+		state => state.entities.facilities.list,
+		(target, facilities) => target ? facilities.filter(facility => facility.site._id === target._id) : []
+	);
+
+		// Selector
+		export const nearestFacility = createSelector(
+			state => state.info.Site,
+			state => state.entities.facilities.list,
+			state => state.auth.team, 
+			(target, facilities, team) => target ? facilities.filter(facility => facility.team._id === team._id).sort((a, b) => { if (distance(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal, a.site.geoDecimal.latDecimal, a.site.geoDecimal.longDecimal) < distance(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal, b.site.geoDecimal.latDecimal, b.site.geoDecimal.longDecimal)) { return -1 } else { return 1 }  }) : []
+		);

@@ -16,7 +16,7 @@ router.get('/', async function (req, res) {
 	logger.info('GET Route: api/facilities requested...');
 	try {
 		const facilities = await Facility.find()
-			.populate('site', 'name type')
+			.populate('site', 'name type geoDecimal')
 			.populate('team', 'shortName name sciRate')
 			.populate('research')
 			.populate('upgrade');

@@ -424,6 +424,7 @@ async function repairUnit (data) {
 }
 
 async function transferUnit (data) { // for transferring to other facilities as an action
+	// TODO: Check if Facility has capacity
 	const unit = await Military.findById(data.unit);
 	const facility = await Facility.findById(data.facility).populate('site');
 
@@ -435,6 +436,7 @@ async function transferUnit (data) { // for transferring to other facilities as 
 		unit.site = facility.site;
 		unit.country = facility.site.country;
 		unit.zone = facility.site.zone;
+		unit.status.deployed = false;
 
 		await unit.save();
 		return ({ message : `Used ${unit.name}'s action to transfer to ${facility.name}!`, type: 'success' });
@@ -448,6 +450,7 @@ async function transferUnit (data) { // for transferring to other facilities as 
 		unit.site = facility.site;
 		unit.country = facility.site.country;
 		unit.zone = facility.site.zone;
+		unit.status.deployed = false;
 
 		await unit.save();
 		return ({ message : `Used ${unit.name}'s mission to transfer to ${facility.name}!`, type: 'success' });
@@ -458,9 +461,9 @@ async function transferUnit (data) { // for transferring to other facilities as 
 
 }
 
-async function deployUnit (data) {
+async function deployUnit (data, type) {
+	// this code assumes all units passed to it are eligible for deploy/invade. Re-writes are required if we want double checking
 	const { units, cost, destination, team } = data;
-	console.log(data);
 	const teamObj = await Team.findOne({ name: team });
 	let account = await Account.findOne({
 		name: 'Operations',
@@ -468,22 +471,29 @@ async function deployUnit (data) {
 	});
 	routeDebugger(`${teamObj.name} is attempting to deploy.`);
 	routeDebugger(
-		`Deployment cost: $M${cost} | Account Balance: $M${account.balance}`
+		`${type} cost: $M${cost} | Account Balance: $M${account.balance}`
 	);
 	if (account.balance < cost) {
 		routeDebugger('Not enough funding to deploy units...');
 		return ({ message : `Not enough funding! Assign ${cost - account.balance} more money teams operations account to deploy these units.`, type: 'error' });
 	}
 	else {
-		console.log(destination);
 		const siteObj = await Site.findById(destination)
 			.populate('country')
 			.populate('zone');
 		const unitArray = [];
-		siteObj.status.warzone = true;
 
 		for await (const unit of units) {
 			const update = await Military.findById(unit);
+
+			if (type === 'invade') {
+				update.status.mission = false;
+			}
+			else {
+				update.status.action = false;
+			}
+
+
 			update.site = siteObj._id;
 			update.country = siteObj.country._id;
 			update.zone = siteObj.zone._id;
@@ -496,10 +506,15 @@ async function deployUnit (data) {
 		account = await banking.withdrawal(
 			account,
 			cost,
-			`Unit deployment to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
+			`Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
 		);
 		await account.save();
-		await siteObj.save();
+
+		if (type === 'invade') {
+			siteObj.warzone = true;
+			await siteObj.save();
+		}
+
 		routeDebugger(account);
 
 		let report = new DeploymentReport();
@@ -519,8 +534,9 @@ async function deployUnit (data) {
 		//   await update.save();
 		// }
 
-		return ({ message : `Unit deployment to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
+		return ({ message : `Unit ${type} to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
 	}
 }
+
 
 module.exports = { resolveBattle, runMilitary, repairUnit, transferUnit, deployUnit };

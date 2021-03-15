@@ -21,7 +21,7 @@ router.get('/', async function (req, res) {
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
 			.populate('country', 'name')
-			.populate('site', 'name')
+			.populate('site', 'name geoDecimal')
 			.populate('origin')
 			.populate('upgrades', 'name effects')
 			.sort({ team: 1 });

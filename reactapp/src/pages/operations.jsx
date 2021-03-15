@@ -19,7 +19,7 @@ TODO CHECKLIST
 [X] Players can repair units
 [X] Transfer Units
 [X] Deploy Units
-[] Aggress Units
+[X] Aggress Units
 [] connect battles with alliances && multiple opposing armies 
 */
 
