@@ -100,7 +100,7 @@ class InfoDeploy extends Component {
             <FlexboxGrid.Item colspan={12}>
               <InputPicker
                 disabled={disable}
-                placeholder={`Scramble a aircraft over ${country.name}`}
+                placeholder={ this.state.aircrafts.length < 1 ? `${this.props.team.shortName} has no aircraft...` : `Scramble a aircraft over ${country.name}`}
                 data={this.state.aircrafts} 
                 labelKey='label'
                 value={this.state.unit}
@@ -186,6 +186,7 @@ class InfoDeploy extends Component {
 
 const mapStateToProps = state => ({
   aircrafts: getAircrafts(state),
+	team: state.auth.team,
   unit: state.info.Aircraft,
   target: state.info.Target,
   show: state.info.showLaunch

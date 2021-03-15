@@ -17,7 +17,14 @@ const nexusError = require('../../middleware/util/throwError');
 router.get('/', async function (req, res) {
 	logger.info('GET Route: api/aircraft requested...');
 	try {
-		const aircrafts = await Aircraft.find();
+		const aircrafts = await Aircraft.find()
+			.sort({ team: 1 })
+			.populate('team', 'name shortName')
+			.populate('zone', 'name')
+			.populate('country', 'name')
+			.populate('systems', 'name category')
+			.populate('site', 'name')
+			.populate('base', 'name');
 		res.status(200).json(aircrafts);
 	}
 	catch (err) {

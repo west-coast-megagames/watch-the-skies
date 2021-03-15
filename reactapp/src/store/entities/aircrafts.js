@@ -93,5 +93,5 @@ export const getAircrafts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   state => state.auth.login,
-  (aircrafts, team, login) => login === true ? aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false) : []
+  (aircrafts, team, login) => aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false)
 );
