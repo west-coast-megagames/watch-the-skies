@@ -96,7 +96,8 @@ router.post('/build', async function (req, res) {
 	const { code, team, facility } = req.body; // please give me these things
 
 	try {
-		let upgrade = await newUpgrade(code, team, facility); // just the facility ID
+		const data = { code: code, team: team, facility: facility };
+		let upgrade = await newUpgrade(data); // just the facility ID
 		upgrade.status.building = false;	// init upgrades are assumed to be built
 		upgrade = await upgrade.save();
 
