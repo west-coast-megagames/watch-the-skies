@@ -49,9 +49,23 @@ async function chkSquad (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(squad, 'origin')) {
 			logger.error(`origin missing for Squad ${squad.name} ${squad._id}`);
 		}
+		else if (
+			squad.origin === '' ||
+				squad.origin == undefined ||
+				squad.origin == null
+		) {
+			logger.error(`origin is null for Squad ${squad.name} ${squad._id}`);
+		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'site')) {
 			logger.error(`site missing for Squad ${squad.name} ${squad._id}`);
+		}
+		else if (
+			squad.site === '' ||
+				squad.site == undefined ||
+				squad.site == null
+		) {
+			logger.error(`site is null for Squad ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'name')) {

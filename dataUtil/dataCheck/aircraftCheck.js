@@ -53,11 +53,25 @@ async function chkAircraft (runFlag) {
 					`origin missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
+			else if (
+				aircraft.origin === '' ||
+					aircraft.origin == undefined ||
+					aircraft.origin == null
+			) {
+				logger.error(`origin is null for Aircraft ${aircraft.name} ${aircraft._id}`);
+			}
 
 			if (!Object.prototype.hasOwnProperty.call(aircraft, 'site')) {
 				logger.error(
 					`site missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
+			}
+			else if (
+				aircraft.site === '' ||
+					aircraft.site == undefined ||
+					aircraft.site == null
+			) {
+				logger.error(`site is null for Aircraft ${aircraft.name} ${aircraft._id}`);
 			}
 		}
 

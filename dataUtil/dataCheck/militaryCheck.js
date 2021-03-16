@@ -76,11 +76,25 @@ async function chkMilitary (runFlag) {
 				`site missing for Military ${military.name} ${military._id}`
 			);
 		}
+		else if (
+			military.site === '' ||
+				military.site == undefined ||
+				military.site == null
+		) {
+			logger.error(`site is null for Military ${military.name} ${military._id}`);
+		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'origin')) {
 			logger.error(
 				`origin missing for Military ${military.name} ${military._id}`
 			);
+		}
+		else if (
+			military.origin === '' ||
+				military.origin == undefined ||
+				military.origin == null
+		) {
+			logger.error(`origin is null for Military ${military.name} ${military._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'status')) {
