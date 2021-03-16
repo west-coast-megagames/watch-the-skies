@@ -102,7 +102,7 @@ module.exports = function (io) {
 			.populate('zone', 'name')
 			.populate('country', 'name')
 			.populate('gear', 'name category')
-			.populate('site', 'name')
+			.populate('site', 'name geoDecimal')
 			.populate('upgrades', 'name effects')
 			.populate('origin');
 		updateSocket.emit('updateMilitary', military);
