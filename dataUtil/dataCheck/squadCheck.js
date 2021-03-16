@@ -65,17 +65,17 @@ async function chkSquad (runFlag) {
 			logger.error(`Squad status is missing ${squad.name} ${squad._id}`);
 		}
 		else {
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'damaged')) {
+			if (!Object.prototype.hasOwnProperty.call(squad.status, 'destroyed')) {
 				logger.error(
-					`status.damaged missing for Squad ${squad.name} ${squad._id}`
+					`status.destroyed missing for Squad ${squad.name} ${squad._id}`
 				);
 			}
 			else if (
-				squad.status.damaged === undefined ||
-          squad.status.damaged === null
+				squad.status.destroyed === undefined ||
+          squad.status.destroyed === null
 			) {
 				logger.error(
-					`Squad status.damaged is not set ${squad.name} ${squad._id}`
+					`Squad status.destroyed is not set ${squad.name} ${squad._id}`
 				);
 			}
 
@@ -93,39 +93,25 @@ async function chkSquad (runFlag) {
 				);
 			}
 
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'destroyed')) {
+			if (!Object.prototype.hasOwnProperty.call(squad.status, 'ready')) {
 				logger.error(
-					`status.destroyed missing for Squad ${squad.name} ${squad._id}`
+					`status.ready missing for Squad ${squad.name} ${squad._id}`
 				);
 			}
-			else if (
-				squad.status.destroyed === undefined ||
-          squad.status.destroyed === null
-			) {
+			else if (squad.status.ready === undefined || squad.status.ready === null) {
 				logger.error(
-					`Squad status.destroyed is not set ${squad.name} ${squad._id}`
+					`Squad status.ready is not set ${squad.name} ${squad._id}`
 				);
 			}
 
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'repair')) {
+			if (!Object.prototype.hasOwnProperty.call(squad.status, 'captured')) {
 				logger.error(
-					`status.repair missing for Squad ${squad.name} ${squad._id}`
+					`status.captured missing for Squad ${squad.name} ${squad._id}`
 				);
 			}
-			else if (squad.status.repair === undefined || squad.status.repair === null) {
+			else if (squad.status.ready === undefined || squad.status.ready === null) {
 				logger.error(
-					`Squad status.repair is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (squad.status.repair === undefined || squad.status.repair === null) {
-				logger.error(
-					`Squad status.secret is not set ${squad.name} ${squad._id}`
+					`Squad status.captured is not set ${squad.name} ${squad._id}`
 				);
 			}
 		}
