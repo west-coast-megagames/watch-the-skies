@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, FlexboxGrid,  Table } from 'rsuite'
+import { Drawer, Button, FlexboxGrid,  Table, Tag, TagGroup } from 'rsuite'
 import { siteClosed } from '../store/entities/infoPanels';
 import { getFacilites } from '../store/entities/facilities';
 
@@ -11,7 +11,7 @@ class InfoSite extends Component {
 
   render() {
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, country, zone, _id, occupier } = this.props.site;
+      let { name, subType, type, geoDMS, status, country, zone, _id, occupier, coastal, capital } = this.props.site;
     
       return(
         <Drawer
@@ -24,10 +24,20 @@ class InfoSite extends Component {
           </Drawer.Header>
           <Drawer.Body>
           <FlexboxGrid>
-            <FlexboxGrid.Item colspan={24}>
+            <FlexboxGrid.Item colspan={12}>
               <h6>{`${subType}`} - Information</h6>
-              <hr />
             </ FlexboxGrid.Item>
+						<FlexboxGrid.Item colspan={12}>
+							<b>Status:</b>
+							<TagGroup>
+								{ !status.occupied && <Tag color='green'>Un-Occupied</Tag> }
+								{ status.occupied && <Tag color='red'>Occupied</Tag> }
+								{ status.warzone && <Tag color='orange'>Warzone</Tag> }
+								{ coastal && <Tag color='blue'>Costal</Tag> }
+								{ capital && <Tag color='violet'>Capital</Tag> }
+							</TagGroup>									
+						</FlexboxGrid.Item>
+						<hr />
             <FlexboxGrid.Item colspan={12}>
 							<p><b>Country:</b> {`${country.name}`}</p>
               <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.longDMS}`}</p>
