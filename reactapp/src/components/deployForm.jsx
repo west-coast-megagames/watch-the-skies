@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button, TagGroup, FlexboxGrid, RadioGroup, Radio, List } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button, TagGroup, FlexboxGrid, RadioGroup, Radio, List, ButtonGroup } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
@@ -88,7 +88,9 @@ class DeployMilitary extends Component {
 						{ this.state.target && <div>
 							<FlexboxGrid>
 								<FlexboxGrid.Item colspan={12}>
-									<h4>{ this.state.target.name }</h4> 									
+									<h4>{ this.state.target.name }</h4> 	
+									{!this.state.target.status.occupied && <p>{this.state.target.team.name}</p>	}			
+									{ this.state.target.status.occupied && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
 								</FlexboxGrid.Item>
 								<FlexboxGrid.Item colspan={12}>
 									<b>Status:</b>
@@ -114,12 +116,12 @@ class DeployMilitary extends Component {
 							/>
 						</div> }
 						<Divider />
-						<div style={{display: 'flex', justifyContent: 'center'}} >
-								<RadioGroup name="radioList" inline appearance="picker" defaultValue="deploy" onChange={(value) => this.handleType(value)} >
-									<Radio style={this.toggleStyle('deploy')} value="deploy" >Deploy</Radio>
-									<Radio style={this.toggleStyle('invade')} value="invade" >Invade</Radio>
-									<Radio style={this.toggleStyle('transfer')} value="transfer" >Tranfer</Radio>
-								</RadioGroup>				
+						<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
+								<ButtonGroup>
+									<Button color={this.state.deployType === 'deploy' ? 'blue' : ''} onClick={() => this.handleType('deploy')} >Deploy</Button>
+									<Button color={this.state.deployType === 'invade' ? 'red' : ''} onClick={() => this.handleType('invade')} >Invade</Button>
+									<Button color={this.state.deployType === 'transfer' ? 'green' : ''} onClick={() => this.handleType('transfer')} >Transfer</Button>
+								</ButtonGroup>		
 						</div>
 						<Divider />
 						{ this.state.deployType === 'transfer' &&
@@ -160,21 +162,6 @@ class DeployMilitary extends Component {
 				</Drawer.Footer>
 		</Drawer>
 		);
-	}
-
-	toggleStyle = (deployType) => {
-		if (this.state.deployType === deployType) {
-			switch(deployType) {
-				case 'deploy':
-					return ({backgroundColor: '#2196f3', color: '#fffff'})
-				case 'invade': 
-					return ({backgroundColor: 'red', color: 'white'})
-				case 'transfer': 
-					return ({backgroundColor: 'green', color: 'white'})
-			}
-		}
-		else
-			return;
 	}
 
 	filterUnits = (deployType = this.state.deployType) => {
@@ -220,7 +207,7 @@ class DeployMilitary extends Component {
 		let deployment = { cost, units: mobilization, destination, team };
 
 		try {
-				socket.emit( 'militarySocket', 'deploy', deployment);
+				socket.emit( 'militarySocket', this.state.deployType, deployment);
 				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
