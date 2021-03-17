@@ -12,16 +12,13 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 async function runBlueprintLoad (runFlag) {
 	if (!runFlag) return false;

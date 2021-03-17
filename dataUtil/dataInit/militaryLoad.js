@@ -12,13 +12,10 @@ const axios = require('axios');
 const { validUnitType } = require('../util/validateUnitType');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 async function runMilitaryLoad (runFlag) {
 	try {

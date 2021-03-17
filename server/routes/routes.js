@@ -1,5 +1,3 @@
-const bodyParser = require('body-parser');
-
 // Error handling and Logging
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const debugBoot = require('debug')('app:boot');
@@ -71,13 +69,13 @@ const upgrades = require('./game/upgrades');
 const tempMil = require('./game/tempMil');
 
 const debug = require('./debugRoute');
+const express = require('express');
 
 module.exports = function (app) {
 	logger.info('Opening routes...');
 	debugBoot('Opening routes...');
 
-	// Bodyparser Middleware
-	app.use(bodyParser.json());
+	app.use(express.json());
 
 	// Cors use to allow CORS (Cross-Origin Resource Sharing) [Remove before deployment!]
 	app.use(cors());

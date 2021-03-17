@@ -5,22 +5,17 @@ const file = fs.readFileSync(
 	'utf8'
 );
 const userDataIn = JSON.parse(file);
-// const mongoose = require('mongoose');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
 const express = require('express');
-const bodyParser = require('body-parser');
-// const bcrypt = require('bcryptjs');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 async function runUserLoad (runFlag) {
 	try {

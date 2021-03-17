@@ -11,14 +11,11 @@ const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 async function runAccountLoad (runFlag) {
 	if (!runFlag) return false;
