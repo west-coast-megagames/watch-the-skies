@@ -37,7 +37,7 @@
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
-    "mongoose": "^5.10.10",
+    "mongoose": "^5.12.0",
     "socket.io": "^2.4.0",
     "supports-color": "^7.2.0",
     "winston": "^3.3.3",
