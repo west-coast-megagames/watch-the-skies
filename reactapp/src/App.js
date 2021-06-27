@@ -4,7 +4,8 @@ import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation 
 import initUpdates from './scripts/initUpdates';
 
 import { Header, Container, Content, Alert } from 'rsuite'; // rsuite components
-import { updateEvents, gameClock, socket } from './api' // Socket.io event triggers and actions
+import { updateEvents, gameClock } from './api' // Socket.io event triggers and actions
+import socket from './socket';
 import notify from './scripts/notify';
 
 // Components
@@ -51,7 +52,6 @@ class App extends Component {
   componentDidMount() {
 		if (!this.props.login) {
 			let token = localStorage.getItem('wtsLoginToken');
-
 			if (token) {
 				this.props.tokenLogin({ token });
 			}

@@ -1,57 +1,56 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
 import { apiCallBegan } from "../api"; // Import Redux API call
 import playTrack from "../../scripts/audio";
-import { clockSocket, updateSocket } from '../../api' // Socket.io event triggers and actions
+import { initConnection } from '../../socket' // Socket.io event triggers and actions
+import appInfo from '../../../package.json'
 import jwtDecode from 'jwt-decode' // JSON web-token decoder
 
 // Create entity slice of the store
 const slice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
-    team: null,
-    role: null,
-    tags: [],
     login: false,
     loading: false,
-    lastLogin: null,
-    socket: null,
     users: [],
+		user: undefined,
+    team: undefined,
+    role: undefined,
+		version: appInfo.version,
+    tags: [],
     errors: {}
   },
   // Reducers - Events
   reducers: {
     loginRequested: (auth, action) => {
+      console.log(`${action.type} Dispatched...`)
       auth.loading = true;
     },
     authReceived: (auth, action) => {
-      let jwt = action.payload;
-      localStorage.setItem('wtsLoginToken', jwt);
+			console.log(`${action.type} Dispatched...`);
+      let jwt = action.payload.token;
+
+      localStorage.setItem('nexusAuth', jwt);
       const user = jwtDecode(jwt);
 			console.log(user);
       playTrack('login');
-      auth.team = user.team;
+      // auth.team = user.team;
       auth.user = user;
-      auth.role = user.team.roles[0]
-      auth.lastLogin = Date.now();
+      // auth.role = user.team.roles[0]
       auth.loading = false
       auth.login = true;
-      clockSocket.emit('new user', { team: user.team.shortName, user: user.username });
-      updateSocket.emit('new user', { team: user.team.shortName, user: user.username });
+      // socket.emit('new user', { team: user.team.shortName, user: user.username });
+      initConnection(auth.user, auth.team, auth.version);
     },
 		signOut: (auth, action) => {
 			console.log(`${action.type} Dispatched`);
-			localStorage.removeItem('wtsLoginToken');
-			auth.user = null;
-			auth.team = null;
-			auth.role = null;
-			auth.tags = [];
+			localStorage.removeItem('nexusAuth');
 			auth.login = false;
 			auth.loading = false;
-			auth.lastLogin = null;
-			auth.socket = null;
 			auth.users = [];
-			auth.errors = {};
+			auth.user = undefined;
+			auth.team = undefined;
+			auth.role = undefined;
+			auth.tags = [];
 		},
     authRequestFailed: (auth, action) => {
       console.log(`${action.type} Dispatched`)
@@ -83,9 +82,9 @@ export const {
 export default slice.reducer; // Reducer Export
 
 // Action Creators (Commands)
-const url = "/auth";
+const url = "https://nexus-central-server.herokuapp.com/auth";
 
-// aircraft Loader into state
+// Autherization Login into state
 export const loginuser = payload => (dispatch, state) => {
   return dispatch(
     apiCallBegan({
