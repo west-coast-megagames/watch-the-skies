@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     accountsReceived: (accounts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('account State Loaded!', 3000);
+      // Alert.info('account State Loaded!', 3000);
       accounts.list = action.payload;
       accounts.loading = false;
       accounts.lastFetch = Date.now();

@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     articlesReceived: (articles, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('article State Loaded!', 3000);
+      // Alert.info('article State Loaded!', 3000);
       articles.list = action.payload;
       articles.loading = false;
       articles.lastFetch = Date.now();

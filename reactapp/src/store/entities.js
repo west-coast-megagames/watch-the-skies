@@ -12,13 +12,13 @@ import countryReducer from './entities/countries';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
- import upgradeReducer from './entities/upgrades';
+import upgradeReducer from './entities/upgrades';
 
 
 
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
-  bugs: bugsReducer,
+  // bugs: bugsReducer,
   reports: reportReducer,
   sites: siteReducer,
   teams: teamReducer,

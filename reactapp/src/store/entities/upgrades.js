@@ -17,7 +17,7 @@ const slice = createSlice({
 		},
 		upgradesReceived: (upgrades, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Upgrade State Loaded!', 3000);
+      // Alert.info('Upgrade State Loaded!', 3000);
       upgrades.list = action.payload;
       upgrades.loading = false;
       upgrades.lastFetch = Date.now();

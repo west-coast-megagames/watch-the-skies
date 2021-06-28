@@ -7,14 +7,15 @@ import InfoMilitary from './infoMilitary';
 import InfoSite from './infoSite';
 
 class InfoDrawer extends Component {
-	render() { 
+	render() {
+		const { team } = this.props.auth;
 		return (
 			<React.Fragment>
-			{this.props.login && <InfoAircraft />}
-			{this.props.login && <InfoDeploy />}
-			{this.props.login && <DeployMilitary />}
-			{this.props.login && <InfoMilitary />}
-			{this.props.login && <InfoSite />}
+			{ this.props.login && team && <InfoAircraft /> }
+			{ this.props.login && team && <InfoDeploy /> }
+			{ this.props.login && team && <DeployMilitary /> }
+			{ this.props.login && team && <InfoMilitary /> }
+			{ this.props.login && team && <InfoSite /> }
 			</React.Fragment>
 		);
 	}
@@ -22,6 +23,7 @@ class InfoDrawer extends Component {
 
 const mapStateToProps = state => ({
 		login: state.auth.login,
+		auth: state.auth,
 		showDeploy: state.info.showDeploy
 });
 

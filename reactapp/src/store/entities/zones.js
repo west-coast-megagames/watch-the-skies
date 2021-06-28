@@ -19,7 +19,7 @@ const slice = createSlice({
     },
     zonesReceived: (zones, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('zone State Loaded!', 3000);
+      // Alert.info('zone State Loaded!', 3000);
       zones.list = action.payload;
       zones.loading = false;
       zones.lastFetch = Date.now();

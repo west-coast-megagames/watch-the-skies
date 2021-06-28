@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     researchReceived: (research, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Research State Loaded!', 3000);
+      // Alert.info('Research State Loaded!', 3000);
       research.list = action.payload;
       research.loading = false;
       research.lastFetch = Date.now();

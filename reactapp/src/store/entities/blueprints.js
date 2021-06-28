@@ -17,7 +17,7 @@ const slice = createSlice({
 		},
 		blueprintsReceived: (blueprints, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Blueprint State Loaded!', 3000);
+      // Alert.info('Blueprint State Loaded!', 3000);
       blueprints.list = action.payload;
       blueprints.loading = false;
       blueprints.lastFetch = Date.now();

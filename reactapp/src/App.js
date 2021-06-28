@@ -14,6 +14,7 @@ import SideNav from './components/navigation/sidenav';
 import Registration from './components/registration';
 import AlertPage from './components/common/alert';
 import UserList from './components/common/userList';
+import LoadingPage from './components/loading';
 
 // Pages
 import Governance from './pages/governance';
@@ -145,6 +146,7 @@ class App extends Component {
 								/>
 							)}/>
 							<Route path="/not-found" component={ NotFound } />
+							<Route path="/loading" component={ LoadingPage } />
 							<Redirect from="/" exact to="home" />
 							<Redirect to="/not-found" />
 						</Switch>

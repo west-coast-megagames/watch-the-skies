@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button, TagGroup, FlexboxGrid, RadioGroup, Radio, List, ButtonGroup } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button, TagGroup, FlexboxGrid, RadioGroup, Radio, List, ButtonGroup, Loader } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
@@ -70,9 +70,10 @@ class DeployMilitary extends Component {
 		return (
 			<Drawer size='sm' placement='right' show={this.props.show} onHide={this.handleExit}>
 				<Drawer.Header>
-						<Drawer.Title>{ this.state.deployType === 'deploy' ? 'Military Deployment' : this.state.deployType === 'invade' ?  `Invade ${this.state.target.name}` : `Transfer to facility in ${this.state.target.name}` } - { this.props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title>
+					{ this.state.team && <Drawer.Title>{ this.state.deployType === 'deploy' ? 'Military Deployment' : this.state.deployType === 'invade' ?  `Invade ${this.state.target.name}` : `Transfer to facility in ${this.state.target.name}` } - { this.props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title> }
 				</Drawer.Header>
-				<Drawer.Body>
+				{ !this.state.team && <Drawer.Body><Loader /></Drawer.Body>}
+				{ this.state.team && <Drawer.Body>
 						{ this.props.user.roles.some(el => el === 'Control') && <div>
 							<h6>Select Team</h6>
 							<SelectPicker block placeholder='Select Team'
@@ -155,7 +156,7 @@ class DeployMilitary extends Component {
 								groupBy='checkZone'
 								value={ this.state.mobilization }
 						/> }
-				</Drawer.Body>
+				</Drawer.Body>}
 				<Drawer.Footer>
 						<Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
 						<Button onClick={this.handleExit} appearance="subtle">Cancel</Button>

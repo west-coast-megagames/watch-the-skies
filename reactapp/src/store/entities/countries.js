@@ -19,7 +19,7 @@ const slice = createSlice({
     },
     countriesReceived: (countries, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('country State Loaded!', 3000);
+      // Alert.info('country State Loaded!', 3000);
       countries.list = action.payload;
       countries.loading = false;
       countries.lastFetch = Date.now();

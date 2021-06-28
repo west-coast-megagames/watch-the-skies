@@ -20,14 +20,14 @@ const slice = createSlice({
     },
     facilitiesReceived: (facilities, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('facility State Loaded!', 3000);
+      // Alert.info('facility State Loaded!', 3000);
       facilities.list = action.payload;
       facilities.loading = false;
       facilities.lastFetch = Date.now();
     },
     facilitiesRequestFailed: (facilities, action) => {
       console.log(`${action.type} Dispatched`)
-      Alert.error(`${action.type}: ${action.payload}`, 4000);
+      // Alert.error(`${action.type}: ${action.payload}`, 4000);
       facilities.loading = false;
     },
     facilityAdded: (facilities, action) => {
@@ -36,7 +36,7 @@ const slice = createSlice({
     },
     facilitiesUpdated: (facilities, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Facilities updated!', 2000);
+      // Alert.info('Facilities updated!', 2000);
       facilities.list = action.payload;
       facilities.lastFetch = Date.now();
     }

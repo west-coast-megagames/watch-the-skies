@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     militaryReceived: (military, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Military State Loaded!', 3000);
+      // Alert.info('Military State Loaded!', 3000);
       military.list = action.payload;
       military.loading = false;
       military.lastFetch = Date.now();

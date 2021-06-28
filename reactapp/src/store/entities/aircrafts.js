@@ -21,7 +21,7 @@ const slice = createSlice({
     },
     aircraftsReceived: (aircrafts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Aircraft State Loaded!', 3000);
+      // Alert.info('Aircraft State Loaded!', 3000);
       aircrafts.list = action.payload;
       aircrafts.loading = false;
       aircrafts.lastFetch = Date.now();
