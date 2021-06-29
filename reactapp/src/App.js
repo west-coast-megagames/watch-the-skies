@@ -41,13 +41,7 @@ initUpdates()
 // React App Component
 class App extends Component {
   state = {
-    clock: {
-      minutes: '00',
-      seconds: '00',
-      turn: null
-    },
     accounts: [],
-    megabucks: 0
   }
 
   componentDidMount() {
@@ -57,14 +51,6 @@ class App extends Component {
 				this.props.tokenLogin({ token });
 			}
 		}
-
-    gameClock.subscribeToClock((err, clock) => {
-      if (this.state.turn !== 'Test Turn' && this.state.turnNum !== clock.turnNum && this.props.team !== null) {
-        updateEvents.updateTeam(this.props.team._id);
-      }
-      this.setState({clock})
-    })
-
 
 		socket.on('alert', data => {
 			switch (data.type) {
@@ -87,11 +73,7 @@ class App extends Component {
     return(
       <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
         <Header>
-          <NavBar
-            clock={ this.state.clock }
-            team={ this.props.team }
-            megabucks={ this.state.megabucks }
-          />
+          <NavBar />
         </Header>
         <Container>
 					{this.props.login ? <SideNav team={ this.props.team} /> : null}

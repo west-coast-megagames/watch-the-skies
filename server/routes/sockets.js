@@ -2,6 +2,8 @@
 const { logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const config = require('config');
 const clock = require('./socket/clock');
+const nexusEvent = require('../middleware/events/events');
+const masterClock = require('../wts/gameClock/gameClock');
 
 const routes = { clock };
 
@@ -60,6 +62,18 @@ module.exports = function (server) {
 			currentUsers();
 		});
 	});
+
+	nexusEvent.on('broadcast', (data) => {
+		let message;
+		switch(data.action) {
+		case('clock'):
+			io.emit('clock', masterClock.getClockState());
+			break;
+		default:
+			message = `No broadcast for ${data.action} event call`;
+			throw new Error(message);
+		}
+	})
 
 	function currentUsers() {
 		const users = [];

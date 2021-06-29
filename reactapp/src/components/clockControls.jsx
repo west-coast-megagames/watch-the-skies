@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { gameClock } from '../api';
 import { faPause, faPlay, faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import socket from '../socket';
 
 class ClockControls extends Component {
     startClock = () => {
-        console.log('Game Clock started');
-        gameClock.startGame();
+        socket.emit('request', { route: 'clock', action: 'play' });
     };
 
     stopClock = () => {
@@ -36,5 +36,5 @@ class ClockControls extends Component {
         );
     }
 }
- 
+
 export default ClockControls;

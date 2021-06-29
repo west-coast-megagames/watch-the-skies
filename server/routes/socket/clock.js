@@ -1,30 +1,20 @@
-const SocketServer = require('../../util/systems/socketServer'); // Client Tracking Object
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 
-const gameClock = require('../../wts/gameClock/gameClock');
+const masterClock = require('../../wts/gameClock/gameClock');
 
-module.exports = function (io) {
-	const ClockClients = new SocketServer;
-
-	io.of('/clock').on('connection', (client) => {
-		logger.info(`New client subscribing to clock... ${client.id}`);
-		ClockClients.connections.push(client);
-		logger.info(`${ClockClients.connections.length} ${ClockClients.connections.length === 1 ? 'client' : 'clients'} subscribed to game clock...`);
-
-		client.on('new user', (data) => {
-			ClockClients.saveUser(data, client);
-			logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`);
-		});
-
-		const gClock = setInterval(() => {
-			client.emit('gameClock', gameClock.getTimeRemaining());
-		}, 1000);
-
-		client.on('disconnect', () => {
-			logger.info(`Client disconnecting from game clock... ${client.id}`);
-			ClockClients.delClient(client);
-			console.log(`${ClockClients.connections.length} clients connected`);
-			clearInterval(gClock);
-		});
-	});
+module.exports = function (client, req) {
+	logger.info(`${client.username} has made a ${req.action} request!`);
+	let message;
+	switch(req.action) {
+	case('getState'):
+		client.emit('clock', masterClock.getClockState());
+		break;
+	case('play'):
+		masterClock.unpause();
+		break;
+	default:
+		message = `No ${req.action} is in the ${req.route} route.`;
+		client.emit('alert', { type: 'error', message });
+		throw new Error(message);
+	}
 };

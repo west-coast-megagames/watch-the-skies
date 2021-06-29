@@ -13,7 +13,7 @@ class GameTimer {
 		this.phaseNum = -1; // Current Phase Number
 		this.turnNum = -1; // Current Turn Number
 		this.currentTurn = 'Pre-Briefing'; // Current Turn Name
-		this.currentRound = 'Tech-Support'; // Current Phase Name
+		this.currentPhase = 'Tech-Support'; // Current Phase Name
 		this.year = 2024; // In game year
 
 		this.phaseTimes = [10, 12, 8]; // The amount of minutes in each phase
@@ -38,14 +38,12 @@ class GameTimer {
 		this.interval = setInterval(() => {
 			this.gameTick();
 		}, interval);
-
 		return;
 	}
 
 	// Stops gameTicks event
 	stop() {
 		clearInterval(this.interval);
-
 		return;
 	}
 
@@ -78,6 +76,8 @@ class GameTimer {
 			this.go();
 
 			logger.info(`Game unpaused - ${this.getTimeRemaining()} on the clock!`);
+
+			nexusEvent.emit('broadcast', { action: 'clock', payload: this.getClockState() });
 
 			return;
 		}
@@ -112,11 +112,8 @@ class GameTimer {
 
 	startGame() {
 		if (this.turnNum < 0) {
-			this.turnNum = 0;
-			this.phaseNum = 0;
-			this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
-			this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
-			this.currentTurn = `${this.turnNames[this.turnNum % this.turnNames.length]} ${this.year}`;
+			this.nextTurn();
+			this.nextPhase();
 
 			this.paused = false;
 
@@ -137,8 +134,8 @@ class GameTimer {
 
 		this.phaseNum++;
 		this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
-		nexusEvent.emit(this.currentPhase);
 		this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
+		nexusEvent.emit('phaseChange', this.currentPhase);
 		logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
 
 		return;
@@ -175,7 +172,6 @@ class GameTimer {
 		else {
 			throw Error('Cannot revert, at start of game');
 		}
-
 	}
 
 	getTimeRemaining() {
@@ -200,6 +196,21 @@ class GameTimer {
 
 	getTimeStamp() {
 		return { turn: this.currentTurn, phase: this.currentPhase, turnNum: this.turnNum, year: this.year, clock: this.getTimeRemaining() };
+	}
+
+	getClockState() {
+		return {
+			paused: this.paused,
+			hours: this.hours,
+			minutes: this.minutes,
+			seconds: this.seconds,
+			turn: this.currentTurn,
+			phase: this.currentPhase,
+			turnNum: this.turnNum,
+			year: this.year,
+			clock: this.getTimeRemaining(),
+			deadline: this.roundEnd
+		};
 	}
 
 	setSeconds(secs = 0) {

@@ -23,6 +23,8 @@ require('./routes/routes')(app); // Bootup for Express routes
 require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
 require('./config/config')(); // Bootup for special configurations
 require('./middleware/production/prod')(app); // Production compression and middleware
+require('./wts/gameClock/gameClock');
+require('./wts/gameClock/phaseChange');
 
 app.use(express.static('public'));
 
