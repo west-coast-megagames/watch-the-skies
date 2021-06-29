@@ -40,42 +40,34 @@ function getTimeRemianing(clock, deadline) {
 let interval = undefined;
 
 const NavBar = (props) => {
-	const [clock, setClock] = React.useState({ clock: '00:00', hours: 0, minutes: 0, seconds: 0, });
+	const [time, setTime] = React.useState('00:00');
+	const [clock, setClock] = React.useState({ hours: 0, minutes: 0, seconds: 0, });
 	const [deadline, setDeadline] = React.useState(Date.now());
 	const [info, setInfo] = React.useState({ phase: 'Test Phase', turn:  'Test Turn', turnNum: 0, year: 2021 });
 	const [paused, setPaused] = React.useState(true);
 
 	useEffect(() => {
 		playTrack('bootup');
+		socket.emit('request', {route: 'clock', action:'getState'})
 		socket.on('clock', (data) => {
-			const { paused, clock, deadline, hours, minutes, seconds, phase, turn, turnNum, year } = data;
-			setClock({ time: clock, hours, minutes, seconds });
-			setInfo({ phase, turn, turnNum, year });
-			setDeadline(deadline);
+			const { paused, deadline, hours, minutes, seconds, phase, turn, turnNum, year } = data;
+			if (paused) clearInterval(interval)
 			setPaused(paused)
+			setTime(getTimeRemianing({ hours, minutes, seconds }, deadline));
+			setClock({ hours, minutes, seconds });
+			setDeadline(deadline);
+			setInfo({ phase, turn, turnNum, year });
 			console.log(data);
 		})
-		socket.emit('request', {route: 'clock', action:'getState'})
 		return () => socket.off('clock');
 	}, []);
 
 	useEffect(() => {
-		playTrack('bootup');
-		socket.on('clock', (data) => {
-			const { clock, hours, minutes, seconds } = data;
-			setClock({ time: clock, hours, minutes, seconds });
-			console.log(data);
-		})
-		socket.emit('request', {route: 'clock', action:'getState'})
-		return () => socket.off('clock');
-	}, [])
-
-	useEffect(() => {
 		if (!paused) interval = setTimeout(() => {
+			if (paused) clearInterval(interval)
 			const { hours, minutes, seconds } = clock;
 			setClock({ time: getTimeRemianing(clock, deadline), hours, minutes, seconds });
 		}, 1000);
-		if (paused) clearInterval(interval)
 	}, [paused, clock]);
 
 	const megabucks = props.account !== undefined ? props.account.balance : 0
@@ -90,7 +82,7 @@ const NavBar = (props) => {
 					Project Nexus
 			</Link>
 			<div className="collapse navbar-collapse" id="navbarNav" />
-			{ props.login && <span className="navbar-text mr-md-5">{info.phase} {clock.time} <FontAwesomeIcon icon={faClock} /> | {info.turn}</span> }
+			{ props.login && <span className="navbar-text mr-md-5">{info.phase} {clock.time} <FontAwesomeIcon icon={faClock} /> | {info.turnNum >= 0 ? `${info.turn} ${info.year}` : `${info.turn}`}</span> }
 			{ props.login && <span className="navbar-text mr-1">{pr}</span> }
 			{ props.login && <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span> }
 			<span className="navbar-text mr-1"> {!props.team ? <Link to="/login">Sign In</Link> : props.team.name} </span>

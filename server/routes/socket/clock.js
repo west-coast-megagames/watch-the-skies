@@ -12,6 +12,18 @@ module.exports = function (client, req) {
 	case('play'):
 		masterClock.unpause();
 		break;
+	case('pause'):
+		masterClock.pause();
+		break;
+	case('skip'):
+		masterClock.turnNum < 0 ? masterClock.startGame() : masterClock.nextPhase();
+		break;
+	case('revert'):
+		masterClock.revertPhase();
+		break;
+	case('reset'):
+		masterClock.reset();
+		break;
 	default:
 		message = `No ${req.action} is in the ${req.route} route.`;
 		client.emit('alert', { type: 'error', message });
