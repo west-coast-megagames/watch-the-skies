@@ -65,12 +65,16 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`);
       auth.users = action.payload.userList;
       auth.socket = action.payload.me;
-    }
+    },
+		debugTeam: (auth, action) => {
+			auth.team = action.payload;
+		}
   }
 });
 
 // Action Export
 export const {
+	debugTeam,
   authReceived,
   loginRequested,
   authRequestFailed,
