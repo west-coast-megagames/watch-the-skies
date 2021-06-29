@@ -150,7 +150,7 @@ const TradeReport = Report.discriminator('TradeReport', new Schema({
 const Transaction = Report.discriminator('Transaction', new Schema({
 	type: { type: String, default: 'Transaction' },
 	transaction: { type: String, enum: ['Deposit', 'Withdrawal'] },
-	currency: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
+	resource: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
 	account: { type: String, required: true },
 	amount: { type: Number, required: true },
 	note: { type: String }

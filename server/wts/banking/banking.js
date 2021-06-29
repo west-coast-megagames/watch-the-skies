@@ -1,12 +1,12 @@
 const bankDebugging = require('debug')('app:bankingSystem'); // Debug console log
-
+const clock = require('../gameClock/gameClock');
 const transactionLog = require('../../models/logs/transactionLog'); // WTS Game log function
 
 // FUNCTION - transfer [async]
 // IN: Transfer Object { team_id, to, from, amount, note }
 // OUT: Modified Accounts Object - From the Team Object
 // PROCESS: Takes the Transfer object and initiates the correct Deposit and withdrawal
-async function transfer (to, from, amount, note) {
+async function transfer(to, from, amount, note) {
 	const { Account } = require('../../models/account');
 
 	let depositAccount = await Account.findOne({ _id: to });
@@ -23,7 +23,7 @@ async function transfer (to, from, amount, note) {
 	return;
 }
 
-async function deposit (account, amount, note) {
+async function deposit(account, amount, note) {
 	bankDebugging(`Attempting to deposit into ${account.name}.`);
 	bankDebugging(`Current amount in ${account.name}: ${account.balance}`);
 	account.balance += parseInt(amount);
@@ -31,19 +31,11 @@ async function deposit (account, amount, note) {
 	bankDebugging(`${amount} deposited into ${account.owner}'s ${account.name}.`);
 	bankDebugging(`Reason: ${note}`);
 
-	const { getTimeRemaining } = require('../gameClock/gameClock');
-	const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
-
-	account = trackTransaction(account, amount, 'deposit');
+	// account = trackTransaction(account, amount, 'deposit');
 
 	const log = new transactionLog({
 		date: Date.now(),
-		timestamp: {
-			turn,
-			phase,
-			turnNum,
-			clock: `${minutes}:${seconds}`
-		},
+		timestamp: clock.getTimeStamp(),
 		team: account.team,
 		transaction: 'Deposit',
 		account: account.name,
@@ -58,7 +50,7 @@ async function deposit (account, amount, note) {
 	return account;
 }
 
-async function withdrawal (account, amount, note) {
+async function withdrawal(account, amount, note) {
 	bankDebugging(`Attempting to withdrawal from ${account.name}.`);
 	bankDebugging(`Current amount in ${account.name}: ${account.balance}`);
 
@@ -67,19 +59,11 @@ async function withdrawal (account, amount, note) {
 	bankDebugging(`${amount} witdrawn from ${account.owner}'s ${account.name} account.`);
 	bankDebugging(`Reason: ${note}`);
 
-	const { getTimeRemaining } = require('../gameClock/gameClock');
-	const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
-
-	account = trackTransaction(account, amount, 'withdrawal');
+	// account = trackTransaction(account, amount, 'withdrawal');
 
 	const log = new transactionLog({
 		date: Date.now(),
-		timestamp: {
-			turn,
-			phase,
-			turnNum,
-			clock: `${minutes}:${seconds}`
-		},
+		timestamp: clock.getTimeStamp(),
 		team: account.team,
 		transaction: 'Withdrawal',
 		account: account.name,
@@ -95,7 +79,7 @@ async function withdrawal (account, amount, note) {
 	return account;
 }
 
-async function setAutoTransfer (to, from, amount, note) {
+async function setAutoTransfer(to, from, amount, note) {
 	const { Account } = require('../../models/account');
 
 	const account = await Account.findOne({ _id: from });
@@ -110,7 +94,7 @@ async function setAutoTransfer (to, from, amount, note) {
 	return 'New autotransfer created';
 }
 
-async function automaticTransfer () {
+async function automaticTransfer() {
 	const { Account } = require('../../models/account');
 
 	for (let account of await Account.find()) {
@@ -138,17 +122,15 @@ async function automaticTransfer () {
 	}
 }
 
-function trackTransaction (account, amount, type) {
-	const { getTimeRemaining } = require('../gameClock/gameClock');
-	const { turnNum } = getTimeRemaining();
+function trackTransaction(account, amount, type) {
 	amount = parseInt(amount);
 	if (type === 'deposit') {
-		account.deposits[turnNum] += amount;
+		account.deposits[clock.turnNum] += amount;
 		bankDebugging(`Deposit of ${amount} tracked on the ${account.name} account...`);
 		account.markModified('deposits');
 	}
 	else if (type === 'withdrawal') {
-		account.withdrawals[turnNum] += amount;
+		account.withdrawals[clock.turnNum] += amount;
 		bankDebugging(`Withdrawal of ${amount} tracked on the ${account.name} account...`);
 		account.markModified('withdrawals');
 	}
