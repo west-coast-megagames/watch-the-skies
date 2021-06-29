@@ -4,7 +4,7 @@
     "testEnvironment": "node",
     "verbose": true
   },
-  "version": "0.1.3",
+  "version": "0.1.3.1",
   "description": "Server for West Coast Megagames Watch the Skies Prototype.",
   "main": "server.js",
   "directories": {
