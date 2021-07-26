@@ -9,6 +9,7 @@ import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
 import UnitControl from './tabs/control/unitControl';
 import LoginLink from '../components/common/loginLink';
+import Registration from './tabs/control/registration';
 
 class Control extends Component {
   state = {
@@ -33,6 +34,7 @@ class Control extends Component {
 						<Nav.Item eventKey="military" to={`${url}/military`} componentClass={NavLink} > Military Control</Nav.Item>
 						<Nav.Item eventKey="alien" to={`${url}/alien`} componentClass={NavLink} > Alien Control</Nav.Item>
 						<Nav.Item eventKey="unit" to={`${url}/unit`} componentClass={NavLink} > Unit Control</Nav.Item>
+						<Nav.Item eventKey="registration" to={`${url}/registration`} componentClass={NavLink} > Registration</Nav.Item>
 					</Nav>
 				</Header>
 					<Content  className='tabContent' style={{ paddingLeft: 20 }}>
@@ -115,6 +117,9 @@ class Control extends Component {
 						)}/>
 						<Route path={`${url}/unit`}  render={() => (
 							<UnitControl {...this.props} />
+						)}/>
+						<Route path={`${url}/registration`}  render={() => (
+							<Registration  {...this.props} />
 						)}/>
 						<Redirect from={`${url}/`} exact to={`${url}/game`} />
 					</Switch>
