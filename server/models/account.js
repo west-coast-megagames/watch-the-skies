@@ -4,6 +4,8 @@ const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 const accountDebugging = require('debug')('model:accountSystem'); // Debug console log
 
+const clock = require('../wts/gameClock/gameClock')
+
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 
@@ -36,47 +38,91 @@ const AccountSchema = new Schema({
 
 // Deposit Method
 AccountSchema.methods.deposit = async function (transaction) {
-	const { from, resource, amount, note } = transaction;
-	try {
-		accountDebugging(`Attempting to deposit into ${this.name}.`);
-		accountDebugging(`Current amount in ${this.name}: ${this.balance}`);
-		this.balance += parseInt(amount);
+	// This method of the Account Model takes a transaction and deposits the appropriate resource into th
+	const { resource, amount, note } = transaction;
 
-		accountDebugging(`${amount} deposited into ${this.owner}'s ${this.name} account.`);
+	try {
+		this.gameState.push(this);
+		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
+		accountDebugging(resources);
+
+		let index = this.resources.findIndex(el => el.type = resource);
+		if (index < 0) {
+			accountDebugging(`Account doesn't currently have a balance of ${resource}`);
+			this.resources.push({ type: resource, balance: 0 });
+		}
+		else {
+			this.resources[index].balance += parseInt(amount);
+		}
+
+		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		const { getTimeRemaining } = require('../gameClock/gameClock');
-		const { turn, phase, turnNum, minutes, seconds } = getTimeRemaining();
+		let account = await account.save();
+		return account;
 
-		account = trackTransaction(account, amount, 'deposit');
+	} catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
+};
 
+// Withdrawl Method
+AccountSchema.methods.withdrawal = async function (transaction) {
+	// This method of the Account Model takes a transaction and deposits the appropriate resource into th
+	const { resource, amount, note } = transaction;
+
+	try {
+		this.gameState.push(this);
+		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
+		accountDebugging(resources);
+
+		let index = this.resources.findIndex(el => el.type = resource);
+		if (index < 0) {
+			throw Error(`Account doesn't currently have a balance of ${resource}`)
+		}
+		else {
+			if (this.resources[index].balance > amount) throw Error(`Less then ${amount} ${resource} in ${this.name}`);
+			this.resources[index].balance -= parseInt(amount);
+		}
+
+		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
+		accountDebugging(`Reason: ${note}`);
+
+		let account = await account.save();
+		return account;
+
+	} catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
+};
+
+AccountSchema.methods.transactionLog = async function (transaction, type) {
+	const { from, to, resource, amount, note } = transaction;
+	try {
 		const log = new transactionLog({
 			date: Date.now(),
-			timestamp: {
-				turn,
-				phase,
-				turnNum,
-				clock: `${minutes}:${seconds}`
-			},
+			timestamp: clock.getTimeStamp(),
 			team: this.team,
-			transaction: 'Deposit',
+			transaction: type,
+			resource,
 			account: this.name,
 			amount,
 			note
 		});
 
-		log.save();
-		let account = await account.save();
+		if (type === 'Deposit') log.counterparty = from;
+		if (type === 'Withdrawl') log.counterparty = to;
 
-		accountDebugging('Deposit log created...');
-		return account;
-
-	} catch (err) {
-		console.log(err);
+		await log.save();
+		accountDebugging(`${type} log created...`);
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
 		return err;
 	}
 };
-
 
 // validateAccount method
 AccountSchema.methods.validateAccount = async function () {
