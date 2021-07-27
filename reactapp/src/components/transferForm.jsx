@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert, Modal, ControlLabel } from 'rsuite';
 import { banking } from '../api';
+import socket from '../socket';
 import Select from './common/selectPicker';
 import notify from '../scripts/notify';
 
@@ -23,6 +24,7 @@ class TransferForm extends Component {
 			from: null
 		},
 		account: {},
+		resource: 'Megabucks',
 		schedule: false
 	}
 
@@ -38,7 +40,7 @@ class TransferForm extends Component {
 				banking.autoTransfer(this.state.transfer);
 				console.log('Submitted automatic transfer');
 			} else {
-				banking.bankingTransfer(this.state.transfer);
+				socket.emit('request', { route: 'transaction', action: 'transfer', data: this.state.transfer });
 				console.log('Submitted transfer');
 			}
 			notify({catagory: 'action',type: 'success', title: 'Submitted Transfer', body: `Placeholder notification for your transfer of ${this.state.transfer.amount}`})
