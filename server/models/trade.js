@@ -95,7 +95,7 @@ TradeSchema.methods.saveActivity = async (trade, incHeader) => {
 	const activity = {
 		header: incHeader,
 		date: new Date(),
-		timestamp: Gameclock.makeTimestamp()
+		timestamp: Gameclock.getTimeStamp()
 	};
 
 	trade.activityFeed.push(activity);
