@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		newArticle.date = new Date();
-		const retTimestamp = clock.getTimestamp();
+		const retTimestamp = clock.getTimeStamp();
 		if (retTimestamp) {
 			newArticle.timestamp = retTimestamp;
 		}
