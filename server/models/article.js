@@ -47,7 +47,7 @@ ArticleSchema.methods.validateArticle = async function () {
 		turn: Joi.string().min(1),
 		phase: Joi.string().min(1),
 		clock: Joi.string().min(1),
-		turnNum: Joi.number().min(0)
+		turnNum: Joi.number()
 	});
 
 	const timestampCheck = timestampSchma.validate(this, { allowUnknown: true });
