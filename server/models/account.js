@@ -3,8 +3,9 @@ const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 const accountDebugging = require('debug')('model:accountSystem'); // Debug console log
+const transactionLog = require('../models/logs/transactionLog'); // WTS Game log function
 
-const clock = require('../wts/gameClock/gameClock')
+const clock = require('../wts/gameClock/gameClock');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -44,9 +45,9 @@ AccountSchema.methods.deposit = async function (transaction) {
 	try {
 		this.gameState.push(this);
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
-		accountDebugging(resources);
+		accountDebugging(resource);
 
-		let index = this.resources.findIndex(el => el.type = resource);
+		const index = this.resources.findIndex(el => el.type = resource);
 		if (index < 0) {
 			accountDebugging(`Account doesn't currently have a balance of ${resource}`);
 			this.resources.push({ type: resource, balance: 0 });
@@ -58,10 +59,11 @@ AccountSchema.methods.deposit = async function (transaction) {
 		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		let account = await account.save();
+		const account = await account.save();
 		return account;
 
-	} catch (err) {
+	}
+	catch (err) {
 		console.log(err); // TODO: Add error handling
 		return err;
 	}
@@ -75,11 +77,11 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 	try {
 		this.gameState.push(this);
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
-		accountDebugging(resources);
+		accountDebugging(resource);
 
-		let index = this.resources.findIndex(el => el.type = resource);
+		const index = this.resources.findIndex(el => el.type = resource);
 		if (index < 0) {
-			throw Error(`Account doesn't currently have a balance of ${resource}`)
+			throw Error(`Account doesn't currently have a balance of ${resource}`);
 		}
 		else {
 			if (this.resources[index].balance > amount) throw Error(`Less then ${amount} ${resource} in ${this.name}`);
@@ -89,10 +91,11 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		let account = await account.save();
+		const account = await account.save();
 		return account;
 
-	} catch (err) {
+	}
+	catch (err) {
 		console.log(err); // TODO: Add error handling
 		return err;
 	}
@@ -131,8 +134,7 @@ AccountSchema.methods.validateAccount = async function () {
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
 		code: Joi.string().min(3).max(3).required().uppercase(),
-		owner: Joi.string(),
-		balance: Joi.number()
+		owner: Joi.string()
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

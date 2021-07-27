@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Function Import
-const { makeTimestamp } = require('../../wts/gameClock/gameClock');
+const clock = require('../../wts/gameClock/gameClock');
 
 // Mongoose Model Import
 const { Article } = require('../../models/article');
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
 
 	try {
 		newArticle.date = new Date();
-		const retTimestamp = makeTimestamp();
+		const retTimestamp = clock.getTimestamp();
 		if (retTimestamp) {
 			newArticle.timestamp = retTimestamp;
 		}

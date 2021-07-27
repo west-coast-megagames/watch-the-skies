@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runArticleLoad (runFlag) {
+async function runArticleLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -32,7 +32,7 @@ async function runArticleLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	let recReadCount = 0;
@@ -47,7 +47,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadArticle (iData, rCounts) {
+async function loadArticle(iData, rCounts) {
 	try {
 		// there is no article key field or updates ... just new ones
 		// New Article/Article here
@@ -117,7 +117,7 @@ async function loadArticle (iData, rCounts) {
 	}
 }
 
-async function deleteAllArticles (doLoad) {
+async function deleteAllArticles(doLoad) {
 	if (!doLoad) return;
 
 	try {

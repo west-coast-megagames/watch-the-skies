@@ -87,7 +87,7 @@ module.exports = function (server) {
 		}
 
 		for (const client of clients) {
-			client.emit('update')s
+			client.emit('update')
 		}
 		
 	})
