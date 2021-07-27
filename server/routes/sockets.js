@@ -1,12 +1,16 @@
 /* eslint-disable no-trailing-spaces */
 const { logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const config = require('config');
-const clock = require('./socket/clock');
-const nexusEvent = require('../middleware/events/events');
-const masterClock = require('../wts/gameClock/gameClock');
+const config = require('config'); // Import of config modules to pull config variables
 
-const routes = { clock };
+const nexusEvent = require('../middleware/events/events'); // Local NODE event trigger
+const masterClock = require('../wts/gameClock/gameClock'); // Import of main clock class
 
+const transaction = require('./socket/transactions') // Import of Socket route for WTS Transaction system
+const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
+
+const routes = { clock, transaction }; // Route object for routing to various socket routes
+
+// Function for initializing the Socket.io socket server
 module.exports = function (server) {
 	logger.info('Socket.io servers initialized...');
 	const io = require('socket.io')(server, {
@@ -75,6 +79,19 @@ module.exports = function (server) {
 		}
 	});
 
+	nexusEvent.on('update', (data) => {
+		let clients = [];
+		const socketArray = Array.from(io.sockets.sockets.values());
+		for (const socket of socketArray) {
+			if (socket[data.updateKey] === data.clientKey) clients.push(socket);
+		}
+
+		for (const client of clients) {
+			client.emit('update')
+		}
+		
+	})
+
 	function currentUsers() {
 		const users = [];
 		for (const [id, socket] of io.of('/').sockets) {
@@ -87,7 +104,6 @@ module.exports = function (server) {
 		}
 		io.emit('clients', users);
 	}
-	// require('./socket/clock')(io);
 	// require('./socket/update')(io);
 	// require('./socket/main')(io);
 	logger.info('Sockets Online...');
