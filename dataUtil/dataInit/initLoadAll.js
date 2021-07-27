@@ -16,7 +16,7 @@ const runResearchLoad = require('../dataInit/researchLoad');
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
-async function fullInit (selStr) {
+async function fullInit(selStr) {
 	let dropAllDone = false;
 	let blueprintDone = false;
 	let zoneDone = false;

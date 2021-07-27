@@ -73,7 +73,7 @@ module.exports = function (server) {
 			message = `No broadcast for ${data.action} event call`;
 			throw new Error(message);
 		}
-	})
+	});
 
 	function currentUsers() {
 		const users = [];
