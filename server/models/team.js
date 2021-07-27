@@ -13,7 +13,7 @@ const RoleSchema = new Schema({
 		type: String,
 		enum: ['Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military']
 	},
-	user: { type: ObjectId, ref: 'User' }
+	user: { type: String }
 });
 
 const TeamSchema = new Schema({
@@ -41,7 +41,6 @@ const TeamSchema = new Schema({
 
 TeamSchema.methods.validateTeam = async function () {
 	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
-	// validUser   no using yet
 
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
@@ -66,13 +65,9 @@ TeamSchema.methods.validateTeam = async function () {
 			agents: Joi.number().min(0),
 			prLevel: Joi.number(),
 			sciRate: Joi.number(),
-			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') }))
+			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
+			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
-		/* not using user roles currently
-		for await (const userId of this.roles.user) {
-			await validUser(userId);
-		}
-		*/
 
 		break;
 
@@ -84,13 +79,10 @@ TeamSchema.methods.validateTeam = async function () {
 			type: Joi.string().min(1).max(10),
 			actionPts: Joi.number(),
 			agents: Joi.number().min(0),
-			sciRate: Joi.number()
+			sciRate: Joi.number(),
+			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
+			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
-		/* not using user roles currently
-		for await (const userId of this.roles.userId) {
-			await validUser(userId);
-		}
-		*/
 
 		break;
 
@@ -100,13 +92,10 @@ TeamSchema.methods.validateTeam = async function () {
 			shortName: Joi.string().min(2).max(30),
 			code: Joi.string().min(2).max(3).required().uppercase(),
 			type: Joi.string().min(1).max(10),
-			sciRate: Joi.number()
+			sciRate: Joi.number(),
+			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
+			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
-		/* not using user roles currently
-		for await (const userId of this.roles.user) {
-			await validUser(userId);
-		}
-		*/
 		break;
 
 	case('Media'):
@@ -115,7 +104,9 @@ TeamSchema.methods.validateTeam = async function () {
 			shortName: Joi.string().min(2).max(30),
 			code: Joi.string().min(2).max(3).required().uppercase(),
 			type: Joi.string().min(1).max(10),
-			agents: Joi.number().min(0)
+			agents: Joi.number().min(0),
+			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
+			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
 		break;
 
@@ -149,7 +140,8 @@ const National = Team.discriminator(
 		prTrack: [Number],
 		agents: { type: Number, min: 0, default: 0 },
 		prLevel: { type: Number },
-		sciRate: { type: Number, default: 25 }
+		sciRate: { type: Number, default: 25 },
+		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -160,7 +152,8 @@ const Alien = Team.discriminator(
 		roles: [RoleSchema],
 		actionPts: { type: Number, default: 25 },
 		agents: { type: Number, min: 0, default: 0 },
-		sciRate: { type: Number, default: 25 }
+		sciRate: { type: Number, default: 25 },
+		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -169,7 +162,8 @@ const Control = Team.discriminator(
 	new Schema({
 		type: { type: String, default: 'Control' },
 		sciRate: { type: Number, default: 25 },
-		roles: [RoleSchema]
+		roles: [RoleSchema],
+		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -177,7 +171,9 @@ const Media = Team.discriminator(
 	'Media',
 	new Schema({
 		type: { type: String, default: 'Media' },
-		agents: { type: Number, min: 0, default: 0 }
+		agents: { type: Number, min: 0, default: 0 },
+		roles: [RoleSchema],
+		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -188,7 +184,7 @@ const Npc = Team.discriminator(
 	})
 );
 
-async function getTeam (team_id) {
+async function getTeam(team_id) {
 	const team = await Team.findOne({ _id: team_id });
 	return team;
 }
