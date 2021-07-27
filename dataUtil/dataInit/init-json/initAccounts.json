@@ -1,7 +1,7 @@
 [
 {"name": "Treasury", 
 "code" : "tre", 
-"balance" : 0
+"balance" : 1000
 },
 {"name": "Governance", 
 "code" : "gov", 
