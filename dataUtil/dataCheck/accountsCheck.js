@@ -4,14 +4,14 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkAccount (runFlag) {
+async function chkAccount(runFlag) {
 	const nameVals = [
 		'Treasury',
 		'UNSC',
@@ -65,26 +65,29 @@ async function chkAccount (runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(account, 'deposits')) {
+		if (!Object.prototype.hasOwnProperty.call(account, 'resources')) {
 			logger.error(
 				`deposits missing for Account ${account.name} ${account.owner} ${account._id}`
 			);
 		}
-		else if (account.deposits.length < 15) {
+		else if (account.resources.length < 1) {
 			logger.error(
-				`deposits has too few entries for Account ${account.name} ${account.owner} ${account._id}`
+				`resources has too few entries for Account ${account.name} ${account.owner} ${account._id}`
 			);
 		}
-
-		if (!Object.prototype.hasOwnProperty.call(account, 'withdrawals')) {
-			logger.error(
-				`withdrawals missing for Account ${account.name} ${account.owner} ${account._id}`
-			);
-		}
-		else if (account.withdrawals.length < 15) {
-			logger.error(
-				`withdrawals has too few entries for Account ${account.name} ${account.owner} ${account._id}`
-			);
+		else {
+			let megabucksFound = false;
+			for (const resource of account.resources) {
+				if (resource.type === 'Megabucks') {
+					megabucksFound = true;
+					if (isNaN(resource.balance)) {
+						logger.error(`Account ${account.name} ${account.owner} ${account._id} Megabucks balance is not a number ${resource.balance}`);
+					}
+				}
+			}
+			if (!megabucksFound) {
+				logger.error(`Account ${account.name} ${account.owner} ${account._id} Megabucks balance is not found`);
+			}
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(account, 'code')) {
@@ -120,17 +123,6 @@ async function chkAccount (runFlag) {
 			if (!inArray(nameVals, account.name)) {
 				logger.error(`Invalid account name $${account.name} ${account._id}`);
 			}
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(account, 'balance')) {
-			logger.error(
-				`Account balance is missing  ${account.name} ${account._id}`
-			);
-		}
-		else if (isNaN(account.balance)) {
-			logger.error(
-				`Account ${account.name} ${account._id} balance is not a number ${account.balance}`
-			);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(account, 'owner')) {
