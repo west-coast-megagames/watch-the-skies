@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runTeamLoad (runFlag) {
+async function runTeamLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) await initLoad(runFlag);
@@ -29,7 +29,7 @@ async function runTeamLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	// delete old data
@@ -54,7 +54,7 @@ async function initLoad (doLoad) {
 	return;
 }
 
-async function loadTeam (tData, rCounts) {
+async function loadTeam(tData, rCounts) {
 	try {
 
 		const { data } = await axios.get(`${gameServer}init/initTeams/code/${tData.code}`);
@@ -96,7 +96,7 @@ async function loadTeam (tData, rCounts) {
 	}
 }
 
-async function deleteAllTeams () {
+async function deleteAllTeams() {
 
 	try {
 		let delErrorFlag = false;
@@ -121,7 +121,7 @@ async function deleteAllTeams () {
 	}
 }
 
-async function newNational (tData, rCounts) {
+async function newNational(tData, rCounts) {
 
 	// New National Team here
 	const NationalTeam = {
@@ -136,7 +136,8 @@ async function newNational (tData, rCounts) {
 		prTrack: tData.prTrack,
 		roles: tData.roles,
 		prLevel: tData.prLevel,
-		agents: tData.agents
+		agents: tData.agents,
+		users: tData.users
 	};
 
 	try {
@@ -150,7 +151,7 @@ async function newNational (tData, rCounts) {
 	}
 }
 
-async function newAlien (tData, rCounts) {
+async function newAlien(tData, rCounts) {
 
 	const AlienTeam = {
 		type: 'Alien',
@@ -164,7 +165,8 @@ async function newAlien (tData, rCounts) {
 		prTrack: tData.prTrack,
 		roles: tData.roles,
 		prLevel: tData.prLevel,
-		agents: tData.agents
+		agents: tData.agents,
+		users: tData.users
 	};
 
 	try {
@@ -178,7 +180,7 @@ async function newAlien (tData, rCounts) {
 	}
 }
 
-async function newMedia (tData, rCounts) {
+async function newMedia(tData, rCounts) {
 	const MediaTeam = {
 		type: 'Media',
 		code: tData.code,
@@ -191,7 +193,8 @@ async function newMedia (tData, rCounts) {
 		prTrack: tData.prTrack,
 		roles: tData.roles,
 		prLevel: tData.prLevel,
-		agents: tData.agents
+		agents: tData.agents,
+		users: tData.users
 	};
 
 	try {
@@ -205,7 +208,7 @@ async function newMedia (tData, rCounts) {
 	}
 }
 
-async function newControl (tData, rCounts) {
+async function newControl(tData, rCounts) {
 	const ControlTeam = {
 		type: 'Control',
 		code: tData.code,
@@ -218,7 +221,8 @@ async function newControl (tData, rCounts) {
 		prTrack: tData.prTrack,
 		roles: tData.roles,
 		prLevel: tData.prLevel,
-		agents: tData.agents
+		agents: tData.agents,
+		users: tData.users
 	};
 
 	try {
@@ -232,7 +236,7 @@ async function newControl (tData, rCounts) {
 	}
 }
 
-async function newNPC (tData, rCounts) {
+async function newNPC(tData, rCounts) {
 	const NpcTeam = {
 		type: 'Npc',
 		code: tData.code,
@@ -243,7 +247,6 @@ async function newNPC (tData, rCounts) {
 		trades: [],
 		treaties: [],
 		prTrack: tData.prTrack,
-		roles: tData.roles,
 		prLevel: tData.prLevel,
 		agents: tData.agents
 	};
