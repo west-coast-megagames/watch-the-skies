@@ -1,7 +1,6 @@
 const runDropAll = require('../dataInit/initDropAll');
 const runBluePrintLoad = require('../dataInit/blueprintLoad');
 const runZoneLoad = require('../dataInit/zoneLoad');
-const runUserLoad = require('../dataInit/userLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
 const runCountryLoad = require('../dataInit/countryLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
@@ -20,7 +19,6 @@ async function fullInit(selStr) {
 	let dropAllDone = false;
 	let blueprintDone = false;
 	let zoneDone = false;
-	let userDone = false;
 	let teamDone = false;
 	let countryDone = false;
 	let citySiteDone = false;
@@ -79,9 +77,6 @@ async function fullInit(selStr) {
 
 		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
 		logger.debug(`Research Load Done: ${researchDone}`);
-
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 
@@ -166,12 +161,6 @@ async function fullInit(selStr) {
 	case 'Research':
 		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
 		logger.debug(`Research Load Done: ${researchDone}`);
-
-		break;
-
-	case 'User':
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 

@@ -1,11 +1,11 @@
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 const express = require('express');
-const { logger } = require('../middleware/log/winston');
+// const { logger } = require('../middleware/log/winston');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const config = require('config');
 
-const { User } = require('../models/user');
+// const { User } = require('../models/user');
 
 // @route   POST /user
 // @Desc    Post a new User
@@ -14,6 +14,7 @@ router.post('/', async function (req, res) {
 	const { password, login } = req.body;
 	console.log(`${login} is attempting to log in...`);
 
+	/*
 	let user = await User.findOne({ email: login }).populate('team');
 	if (!user) user = await User.findOne({ username: login }).populate('team');
 	if (!user) {
@@ -29,12 +30,17 @@ router.post('/', async function (req, res) {
 
 	const token = user.generateAuthToken();
 	res.status(200).send(token);
+	*/
+
+	res.status(500).send('Server Error: Can not login user via local user table');
+
 });
 
 router.post('/tokenLogin', async function (req, res) {
 	try {
 		const decoded = jwt.verify(req.body.token, config.get('jwtPrivateKey'), { maxAge: '2w' });
 
+		/*
 		let user = await User.findById(decoded._id).populate('team');
 
 		console.log('Issuing new Token');
@@ -43,6 +49,8 @@ router.post('/tokenLogin', async function (req, res) {
 		const token = user.generateAuthToken();
 		console.log(token);
 		res.status(200).send(token);
+		*/
+		res.status(500).send('Server Error: Can not issue new user token via local user table');
 	}
 	catch(err) {
 		if (err.name === 'TokenExpiredError') {
