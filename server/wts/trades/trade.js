@@ -3,7 +3,6 @@ const routeDebugger = require('debug')('app:routes');
 const { Account } = require('../../models/account');
 const { Aircraft } = require ('../../models/aircraft');
 const { Upgrade } = require ('../../models/upgrade');
-const { deposit, withdrawal } = require ('../../wts/banking/banking');
 const { TradeReport } = require ('../../wts/reports/reportClasses');
 
 const { Trade } = require('../../models/trade');
@@ -63,8 +62,8 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 		try{
 			const accountFrom = await Account.findOne({ 'team' : senderTeam, 'name' : 'Treasury' });
 			const accountTo = await Account.findOne({ 'team' : opposingTeam, 'name' : 'Treasury' });
-			await withdrawal(accountFrom, senderOffer.megabucks, 'Trade with so and so');
-			await deposit(accountTo, senderOffer.megabucks, 'Stuff');
+			await accountFrom.withdrawal({ from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so' });
+			await accountTo.deposit({from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so'});
 		}
 		catch(err) {
 			console.log(`ERROR WITH MEGABUCK TRADE: ${err}`);
