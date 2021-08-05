@@ -11,7 +11,7 @@ const ReportSchema = new Schema({
 	model: { type: String, default: 'Report', required: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
+	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	country: { type: Schema.Types.ObjectId, ref: 'Country' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	status: {
@@ -147,9 +147,10 @@ const TradeReport = Report.discriminator('TradeReport', new Schema({
 	trade: { type: Schema.Types.ObjectId, ref: 'Trade' }
 }));
 
-const Transaction = Report.discriminator('Transaction', new Schema({
+const Transaction = Report.discriminator('TransactionReport', new Schema({
 	type: { type: String, default: 'Transaction' },
 	transaction: { type: String, enum: ['Deposit', 'Withdrawal'] },
+	counterparty:{ type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	resource: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
 	account: { type: String, required: true },
 	amount: { type: Number, required: true },
