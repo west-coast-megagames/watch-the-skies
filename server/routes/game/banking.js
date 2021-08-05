@@ -1,3 +1,4 @@
+// TO-DO:  This route needs to be updated to use the transaction system encapalated in the ACCOUNT model and then turned into a debug route
 const nexusEvent = require('../../middleware/events/events');
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,6 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 // Account Model - Using Mongoose Model
 const { Account, validateAccount } = require('../../models/account');
 const { Team } = require('../../models/team');
-const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts
 // @Desc    Get all Accounts

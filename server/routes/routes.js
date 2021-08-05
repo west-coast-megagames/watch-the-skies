@@ -54,7 +54,6 @@ const initTreaties = require('./init/initTreaties');
 // Game Routes - Using Express.js
 // Desc - Game routes serve as the HTTP access point to game functions
 const admin = require('./game/admin');
-const banking = require('./game/banking');
 const control = require('./game/control');
 const diplomacy = require('./game/diplomacy');
 const science = require('./game/science');
@@ -81,7 +80,6 @@ module.exports = function (app) {
 	// Express Routes - Endpoints to connect to through the browser. (Housed routes folder)
 	app.use('/', home);
 	app.use('/game/admin', admin);
-	app.use('/game/banking', banking); // Route for banking functions
 	app.use('/game/control', control);
 	app.use('/game/diplomacy', diplomacy);
 	app.use('/game/upgrades', upgrades);
