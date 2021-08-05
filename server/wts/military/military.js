@@ -7,7 +7,6 @@ const nexusEvent = require('../../middleware/events/events');
 const routeDebugger = require('debug')('app:routes');
 const { Upgrade } = require('../../models/upgrade');
 const { Account } = require('../../models/account');
-const banking = require('../banking/banking');
 const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
 const { DeploymentReport } = require('../reports/reportClasses');
@@ -405,12 +404,7 @@ async function repairUnit (data) {
 		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
 	}
 	else {
-		account = await banking.withdrawal(
-			account,
-			2,
-			`Repairs for ${unit.name}`
-		);
-		await account.save();
+		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}`});
 
 		// unit.status.repair = true;
 		// unit.status.ready = false;
@@ -503,12 +497,7 @@ async function deployUnit (data, type) {
 			await update.save();
 		}
 
-		account = await banking.withdrawal(
-			account,
-			cost,
-			`Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`
-		);
-		await account.save();
+		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`});
 
 		if (type === 'invade') {
 			siteObj.warzone = true;

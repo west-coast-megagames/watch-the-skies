@@ -4,7 +4,6 @@ const { Squad } = require('../../models/squad');
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Account } = require('../../models/account');
-const banking = require('../../wts/banking/banking');
 
 /*
 function that applies upgrade to any unit
@@ -132,11 +131,7 @@ async function repairUpgrade (data) {
 		return ({ message : `No Funding! Assign more money to your operations account to repair ${upgrade.name}.`, type: 'error' });
 	}
 	else {
-		account = await banking.withdrawal(
-			account,
-			2,
-			`Repairs for ${upgrade.name}`
-		);
+		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${upgrade.name}` });
 		await account.save();
 
 		// upgrade.status.repair = true;

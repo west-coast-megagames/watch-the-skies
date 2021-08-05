@@ -1,7 +1,6 @@
 const { d8 } = require('../../util/systems/dice');
 const prDebugging = require('debug')('app:prSystem');
 const nexusEvent = require('../../middleware/events/events');
-const { deposit } = require('../banking/banking');
 
 async function updatePR () {
 	const gameClock = require('../gameClock/gameClock');
@@ -20,9 +19,8 @@ async function updatePR () {
 				let account = await Account.findOne({ name: 'Treasury', 'team': _id });
 
 				const prChange = rollPR(prLevel, prTrack, 0);
-				account = await deposit(account, prChange.income, `Turn ${turnNum} income.`);
+				account = await account.deposit({ to: account, amount: prChange.income, resource: 'Megabucks', note: `Turn ${turnNum} income.`});
 				team.prLevel = prChange.prLevel;
-				account = await account.save();
 				team = await team.save();
 				prDebugging(`${team.shortName} has PR Level of ${team.prLevel}`);
 				// prDebugging(account);

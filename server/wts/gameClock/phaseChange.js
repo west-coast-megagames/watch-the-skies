@@ -3,7 +3,6 @@ const phaseChangeDebugging = require('debug')('app:phaseChange');
 const { updatePR } = require('../pr/pr'); // IMPORT - updatePR function from the PR system
 const { resolveMissions } = require('../intercept/missions'); // IMPORT - Intercept system
 const { runMilitary } = require('../military/military');
-const banking = require('../banking/banking'); // IMPORT - Banking System
 // const { startResearch, assignKnowledgeCredit } = require('../research/research');
 // const { techCheck } = require('../../wts/research/technology');
 const repairSequence = require('../construction/repair');
@@ -18,7 +17,7 @@ const nexusEvent = require('../../middleware/events/events');
 async function teamPhase() {
 	phaseChangeDebugging(`Now changing to the team phase for ${clock.currentTurn}...`);
 	setTimeout(async () => { await updatePR(); }, 2000); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
-	setTimeout(async () => { await banking.automaticTransfer(); }, 4000); // Iterate through set-automatic transfers [Implemented]
+	// setTimeout(async () => { await banking.automaticTransfer(); }, 4000); // Iterate through set-automatic transfers [Implemented]
 	phaseChangeDebugging(`Done with team phase change for ${clock.currentTurn}!`);
 	logger.info(`Turn ${clock.currentTurn} team phase has begun...`);
 	return 0;
