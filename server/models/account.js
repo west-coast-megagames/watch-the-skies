@@ -105,7 +105,7 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		await this.report(transaction, 'Withdrawal')
+		await this.report(transaction, transaction.to ? 'Withdrawal' : 'Expense');
 
 		const account = await this.save();
 		console.log(this);

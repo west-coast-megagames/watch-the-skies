@@ -149,8 +149,8 @@ const TradeReport = Report.discriminator('TradeReport', new Schema({
 
 const Transaction = Report.discriminator('TransactionReport', new Schema({
 	type: { type: String, default: 'Transaction' },
-	transaction: { type: String, enum: ['Deposit', 'Withdrawal'] },
-	counterparty:{ type: Schema.Types.ObjectId, ref: 'Team', required: true },
+	transaction: { type: String, enum: ['Deposit', 'Withdrawal', 'Expense'] },
+	counterparty:{ type: Schema.Types.ObjectId, ref: 'Team' },
 	resource: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
 	account: { type: String, required: true },
 	amount: { type: Number, required: true },
