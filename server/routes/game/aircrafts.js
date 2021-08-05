@@ -11,7 +11,6 @@ const { Facility } = require('../../models/facility');
 const { Site } = require('../../models/site');
 
 const { newUnit } = require('../../wts/construction/construction');
-const banking = require('../../wts/banking/banking');
 const randomCords = require('../../util/systems/lz');
 const terror = require('../../wts/terror/terror');
 
@@ -120,12 +119,7 @@ router.put('/repair', async function (req, res) {
 			);
 	}
 	else {
-		account = await banking.withdrawal(
-			account,
-			2,
-			`Repairs for ${aircraft.name}`
-		);
-		await account.save();
+		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${aircraft.name}` });
 		routeDebugger(account);
 
 		aircraft.status.repair = true;
