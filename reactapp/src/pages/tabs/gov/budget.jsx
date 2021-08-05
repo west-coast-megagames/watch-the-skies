@@ -14,7 +14,7 @@ const formatPickerData = (accounts) => {
 	for (let account of accounts) {
 		let option = {
 			_id: account._id,
-			label: `${account.name} | Balance: $M${account.balance}`
+			label: `${account.name} | Balance: $M${account.resources[0].balance}`
 		}
 		data.push(option);
 	}
@@ -51,7 +51,7 @@ class Budget extends Component {
 	};
 
 	addTransfer = (schedule) => {
-		let transfer = { id: count, to: undefined, from: undefined, amount: 0, note: undefined }
+		let transfer = { id: count, to: undefined, from: undefined, amount: 0, resource:'Megabucks', note: undefined }
 		if (schedule === true) transfer.schedule = true;
 		let transactions = this.state.transactions;
 		transactions.push(transfer)
@@ -80,9 +80,9 @@ class Budget extends Component {
 				<Container className="transfers">
 					<Content>
 						<h4>{this.state.account.name} Account</h4>
-						<AccountGraph
+						{/* <AccountGraph
 							account={this.state.account}
-						/>
+						/> */}
 						<h4>Automatic Transfers</h4>
 						<AutoTransfers
 							accounts={ this.props.accounts }

@@ -10,7 +10,7 @@ const formatPickerData = (accounts) => {
 	for (let account of accounts) {
 		let option = {
 			_id: account._id,
-			name: `${account.name} | Balance: $M${account.balance}`
+			name: `${account.name} | Balance: $M${account.resources[0].balance}`
 		}
 			data.push(option);
 	}
@@ -21,11 +21,11 @@ class TransferForm extends Component {
 	state = {
 		transfer: {
 			to: null,
-			from: null
-		},
-		account: {},
-		resource: 'Megabucks',
-		schedule: false
+			from: null,
+			resource: 'Megabucks',
+			account: {},
+			schedule: false
+		}
 	}
 
 	handleSubmit = e => {
