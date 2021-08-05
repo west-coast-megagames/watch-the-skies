@@ -32,12 +32,10 @@ const trade = require('./api/trade');
 const treaty = require('./api/treaty');
 const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
-const users = require('./api/users');
 const logerrors = require('./api/logerrors');
 
 // data init and check routes
 const initZones = require('./init/initZones');
-const initUsers = require('./init/initUsers');
 const initTeams = require('./init/initTeams');
 const initCountries = require('./init/initCountries');
 const initBlueprints = require('./init/initBlueprints');
@@ -110,7 +108,6 @@ module.exports = function (app) {
 	app.use('/api/upgrades', upgrade); // Route for upgrades
 	app.use('/api/logerrors', logerrors); // Route for logerrors
 	app.use('/init/initZones', initZones); // Route for init/check of zones
-	app.use('/init/initUsers', initUsers); // Route for init/check of Users
 	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
 	app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
 	app.use('/init/initBlueprints', initBlueprints); // Route for init/check of Blueprints
@@ -129,7 +126,6 @@ module.exports = function (app) {
 
 	app.use('/game/tempMil', tempMil);
 
-	app.use('/api/user', users); // Route for dealing with Users
 	app.use('/api/zones', zones); // Route for inputing zones
 
 	app.use('/log/logErrors', logError); // Route for manipulating logError

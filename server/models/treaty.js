@@ -70,7 +70,7 @@ TreatySchema.methods.saveActivity = async (treaty, incHeader) => {
 	const activity = {
 		header: incHeader,
 		date: new Date(),
-		timestamp: Gameclock.makeTimestamp()
+		timestamp: Gameclock.getTimeStamp()
 	};
 
 	treaty.activityFeed.push(activity);

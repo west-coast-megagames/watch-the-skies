@@ -67,7 +67,7 @@ async function chkAccount(runFlag) {
 
 		if (!Object.prototype.hasOwnProperty.call(account, 'resources')) {
 			logger.error(
-				`deposits missing for Account ${account.name} ${account.owner} ${account._id}`
+				`resources missing for Account ${account.name} ${account.owner} ${account._id}`
 			);
 		}
 		else if (account.resources.length < 1) {

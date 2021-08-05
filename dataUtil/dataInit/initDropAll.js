@@ -143,15 +143,6 @@ async function dropAll(doDrop) {
 		logger.error(`Catch deleteAll Research in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
-	try {
-		await axios.patch(`${gameServer}api/user/deleteAll`);
-		logger.info('Delete of All users done (initDropAll).');
-	}
-	catch (err) {
-		logger.error(`Catch deleteAll Users in initDropAll: ${err.message}`, { meta: err.stack });
-	}
-
-
 	return true;
 }
 

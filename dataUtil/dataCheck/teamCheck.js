@@ -7,14 +7,14 @@ require('winston-mongodb');
 // National, Alien, Media, Control, ncP
 const teamTypeVals = ['National', 'Alien', 'Media', 'Control', 'Npc'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkTeam (runFlag) {
+async function chkTeam(runFlag) {
 	// get accounts once
 	let aFinds = [];
 	try {
@@ -186,6 +186,17 @@ async function chkTeam (runFlag) {
 						`National Team ${team.name} ${team._id} prLevel is not a number ${team.prLevel}`
 					);
 				}
+
+				if (!Object.prototype.hasOwnProperty.call(team, 'users')) {
+					logger.error(
+						`users missing for National Team ${team.name} ${team._id}`
+					);
+				}
+				else if (team.users.length < 1) {
+					logger.error(
+						`No users assigned for National Team ${team.name} ${team._id}`
+					);
+				}
 			}
 
 			if (team.type === 'Alien') {
@@ -230,6 +241,17 @@ async function chkTeam (runFlag) {
 						`Alien Team ${team.name} ${team._id} actionPts is not a number ${team.agents}`
 					);
 				}
+
+				if (!Object.prototype.hasOwnProperty.call(team, 'users')) {
+					logger.error(
+						`users missing for Alien Team ${team.name} ${team._id}`
+					);
+				}
+				else if (team.users.length < 1) {
+					logger.error(
+						`No users assigned for Alien Team ${team.name} ${team._id}`
+					);
+				}
 			}
 
 			if (team.type === 'Control') {
@@ -254,9 +276,31 @@ async function chkTeam (runFlag) {
 						`Control Team ${team.name} ${team._id} sciRate is not a number ${team.sciRate}`
 					);
 				}
+
+				if (!Object.prototype.hasOwnProperty.call(team, 'users')) {
+					logger.error(
+						`users missing for Control Team ${team.name} ${team._id}`
+					);
+				}
+				else if (team.users.length < 1) {
+					logger.error(
+						`No users assigned for Control Team ${team.name} ${team._id}`
+					);
+				}
 			}
 
 			if (team.type === 'Media') {
+				if (!Object.prototype.hasOwnProperty.call(team, 'roles')) {
+					logger.error(
+						`roles missing for Media Team ${team.name} ${team._id}`
+					);
+				}
+				else if (team.roles.length < 1) {
+					logger.error(
+						`No roles assigned for Media Team ${team.name} ${team._id}`
+					);
+				}
+
 				if (!Object.prototype.hasOwnProperty.call(team, 'agents')) {
 					logger.error(
 						`agents missing for Media Team ${team.name} ${team._id}`
@@ -265,6 +309,17 @@ async function chkTeam (runFlag) {
 				else if (isNaN(team.agents)) {
 					logger.error(
 						`Media Team ${team.name} ${team._id} agents is not a number ${team.agents}`
+					);
+				}
+
+				if (!Object.prototype.hasOwnProperty.call(team, 'users')) {
+					logger.error(
+						`users missing for Media Team ${team.name} ${team._id}`
+					);
+				}
+				else if (team.users.length < 1) {
+					logger.error(
+						`No users assigned for Media Team ${team.name} ${team._id}`
 					);
 				}
 			}
