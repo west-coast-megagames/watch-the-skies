@@ -3,7 +3,7 @@ const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 const accountDebugging = require('debug')('model:accountSystem'); // Debug console log
-const transactionLog = require('../models/logs/transactionLog'); // WTS Game log function
+const { Transaction } = require('./report'); // WTS Game log function
 
 const clock = require('../wts/gameClock/gameClock');
 
@@ -33,33 +33,42 @@ const AccountSchema = new Schema({
 	code: { type: String, minlength: 3, maxlength: 3, required: true },
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
-	autoTransfers: [TransferSchema],
+	queue: [TransferSchema], // JEFF - I changed this property
 	gameState: []
 });
 
-// Deposit Method
+// METHOD - deposit
 AccountSchema.methods.deposit = async function (transaction) {
 	// This method of the Account Model takes a transaction and deposits the appropriate resource into th
 	const { resource, amount, note } = transaction;
 
 	try {
-		this.gameState.push(this);
+		this.gameState.push(this.toObject());
+		this.markModified('gameState');
+
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
 		accountDebugging(resource);
 
-		const index = this.resources.findIndex(el => el.type = resource);
+		let index = this.resources.findIndex(el => el.type = resource);
 		if (index < 0) {
-			accountDebugging(`Account doesn't currently have a balance of ${resource}`);
+			console.log(`Account doesn't currently have a balance of ${resource}`);
 			this.resources.push({ type: resource, balance: 0 });
+			index = this.resources.findIndex(el => el.type = resource);
 		}
-		else {
-			this.resources[index].balance += parseInt(amount);
-		}
+
+		this.resources[index].balance += parseInt(amount);
+		this.markModified('resources');
 
 		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		const account = await account.save();
+		await this.report(transaction, 'Withdrawal')
+
+		const account = await this.save();
+		console.log(this);
+
+		// TODO - Notify/Update team via socket-event
+
 		return account;
 
 	}
@@ -69,31 +78,41 @@ AccountSchema.methods.deposit = async function (transaction) {
 	}
 };
 
-// Withdrawl Method
+// METHOD - withdrawl
+// IN - Transaction Object { team_id, to, from, amount, note }
+// OUT: Modified Accounts Object - From the Team Object
+// PROCESS: This method of the Account Model takes a transaction and withdraws the appropriate resource from the account
 AccountSchema.methods.withdrawal = async function (transaction) {
-	// This method of the Account Model takes a transaction and deposits the appropriate resource into th
 	const { resource, amount, note } = transaction;
 
 	try {
-		this.gameState.push(this);
+		this.gameState.push(this.toObject());
+		this.markModified('gameState');
+
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
 		accountDebugging(resource);
 
-		const index = this.resources.findIndex(el => el.type = resource);
+		const index = this.resources.findIndex(el => el.type === resource);
 		if (index < 0) {
 			throw Error(`Account doesn't currently have a balance of ${resource}`);
 		}
 		else {
-			if (this.resources[index].balance > amount) throw Error(`Less then ${amount} ${resource} in ${this.name}`);
+			if (this.resources[index].balance < amount) throw Error(`Less then ${amount} ${resource} in ${this.name}`);
 			this.resources[index].balance -= parseInt(amount);
+			this.markModified('resources');
 		}
 
 		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		const account = await account.save();
-		return account;
+		await this.report(transaction, 'Withdrawal')
 
+		const account = await this.save();
+		console.log(this);
+
+		// TODO - Notify/Update team via socket-event
+		
+		return account;
 	}
 	catch (err) {
 		console.log(err); // TODO: Add error handling
@@ -101,10 +120,80 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 	}
 };
 
-AccountSchema.methods.transactionLog = async function (transaction, type) {
+// METHOD - schedule
+// IN - Transaction Object { team_id, to, from, amount, note }
+// OUT: String Message
+// PROCESS: Schedules a transaction for a later date.
+AccountSchema.methods.schedule = async function (transaction) {
+
+	try {
+		this.queue.push(transaction);
+		this.markModified('queue');
+
+		accountDebugging(`${this.owner} is setting up an automatic payment!`);
+
+		await this.save();
+		console.log(`${this.owner} has set up an auto-transfer for ${this.name}`);
+		
+		// TODO - Notify/Update team via socket-event
+
+		return `${this.owner} scheduled a transaction`;
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
+};
+
+// METHOD - resolveQueue
+// IN - VOID
+// OUT: String Message
+// PROCESS: Conducts all transfers currently in the queue
+AccountSchema.methods.resolveQueue = async function () {
+	let count = 0;
+	for await (const transaction of this.queue) {
+		let complete = false;
+		if ( transaction !== null) complete = await this.transfer(transaction);
+		if (complete) {
+			let index = this.queue.findIndex( el => el.id === transaction.id);
+			this.queue.splice(index, 1);
+			count++;
+		}
+	}
+
+	let message = `${count} transactions completed for ${this.owner}'s ${this.name} account`;
+	console.log(message);
+	return message;
+}
+
+// METHOD - transfer
+// IN - Transaction Object { team_id, to, from, amount, note }
+// OUT: VOID
+// PROCESS: Transfers resources from the initiator to the counterparty
+AccountSchema.methods.transfer = async function (transaction) {
+	const { resource, to, amount, note } = transaction;
+
+	try {
+		await this.withdrawal(transaction);
+
+		let counterparty = await Account.findOne({ _id: to });
+		await counterparty.deposit(transaction);
+
+		accountDebugging(`${this.owner}s transfer completed!`);
+
+		return true;
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		// TODO: Revert the transaction if there are any errors
+		return err;
+	}
+};
+
+AccountSchema.methods.report = async function (transaction, type) {
 	const { from, to, resource, amount, note } = transaction;
 	try {
-		const log = new transactionLog({
+		const log = new Transaction({
 			date: Date.now(),
 			timestamp: clock.getTimeStamp(),
 			team: this.team,
@@ -116,10 +205,10 @@ AccountSchema.methods.transactionLog = async function (transaction, type) {
 		});
 
 		if (type === 'Deposit') log.counterparty = from;
-		if (type === 'Withdrawl') log.counterparty = to;
+		if (type === 'Withdrawal') log.counterparty = to;
 
 		await log.save();
-		accountDebugging(`${type} log created...`);
+		console.log(`${type} report created...`);
 	}
 	catch (err) {
 		console.log(err); // TODO: Add error handling
