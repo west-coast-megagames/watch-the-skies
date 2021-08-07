@@ -75,6 +75,7 @@ class Budget extends Component {
 			return(<Loader center content="No accounts Loaded..." vertical />);
 		};
 
+		// TODO John Review if AutoTransfers needs to be updated for account.autoTransfer change to account.queue
 		return (
 			<Container className="budget-tab">
 				<Container className="transfers">

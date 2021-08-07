@@ -140,9 +140,9 @@ async function chkAccount(runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(account, 'autoTransfers')) {
+		if (!Object.prototype.hasOwnProperty.call(account, 'queue')) {
 			logger.error(
-				`autoTransfers missing for Account ${account.name} ${account.owner} ${account._id}`
+				`queue missing for Account ${account.name} ${account.owner} ${account._id}`
 			);
 		}
 

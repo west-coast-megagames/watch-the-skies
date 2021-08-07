@@ -33,7 +33,7 @@ const AccountSchema = new Schema({
 	code: { type: String, minlength: 3, maxlength: 3, required: true },
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
-	queue: [TransferSchema], // JEFF - I changed this property
+	queue: [TransferSchema],
 	gameState: []
 });
 
@@ -62,7 +62,7 @@ AccountSchema.methods.deposit = async function (transaction) {
 		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		await this.report(transaction, 'Withdrawal')
+		await this.report(transaction, 'Withdrawal');
 
 		const account = await this.save();
 		console.log(this);
@@ -111,7 +111,6 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 		console.log(this);
 
 		// TODO - Notify/Update team via socket-event
-		
 		return account;
 	}
 	catch (err) {
@@ -134,7 +133,7 @@ AccountSchema.methods.schedule = async function (transaction) {
 
 		await this.save();
 		console.log(`${this.owner} has set up an auto-transfer for ${this.name}`);
-		
+
 		// TODO - Notify/Update team via socket-event
 
 		return `${this.owner} scheduled a transaction`;
@@ -153,18 +152,18 @@ AccountSchema.methods.resolveQueue = async function () {
 	let count = 0;
 	for await (const transaction of this.queue) {
 		let complete = false;
-		if ( transaction !== null) complete = await this.transfer(transaction);
+		if (transaction !== null) complete = await this.transfer(transaction);
 		if (complete) {
-			let index = this.queue.findIndex( el => el.id === transaction.id);
+			const index = this.queue.findIndex(el => el.id === transaction.id);
 			this.queue.splice(index, 1);
 			count++;
 		}
 	}
 
-	let message = `${count} transactions completed for ${this.owner}'s ${this.name} account`;
+	const message = `${count} transactions completed for ${this.owner}'s ${this.name} account`;
 	console.log(message);
 	return message;
-}
+};
 
 // METHOD - transfer
 // IN - Transaction Object { team_id, to, from, amount, note }
@@ -176,7 +175,7 @@ AccountSchema.methods.transfer = async function (transaction) {
 	try {
 		await this.withdrawal(transaction);
 
-		let counterparty = await Account.findOne({ _id: to });
+		const counterparty = await Account.findOne({ _id: to });
 		await counterparty.deposit(transaction);
 
 		accountDebugging(`${this.owner}s transfer completed!`);
