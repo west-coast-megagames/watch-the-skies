@@ -5,8 +5,10 @@ const bankDebugging = require('debug')('sockets:Transactions'); // Debug console
 
 module.exports = async function (client, req) {
 	logger.info(`${client.username} has made a ${req.action} request!`);
-	let { from } = req.data;
-	let account = await Account.findOne({ _id: from });
+
+	const { from } = req.data;
+	const account = await Account.findOne({ _id: from });
+
 	let message;
 	switch(req.action) {
 	case('transfer'):
@@ -14,7 +16,7 @@ module.exports = async function (client, req) {
 		account.transfer(req.data);
 		break;
 	case('schedule'):
-		account.schedule(transaction);
+		account.schedule(req.data);
 		break;
 	default:
 		message = `No ${req.action} is in the ${req.route} route.`;

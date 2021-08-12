@@ -3,7 +3,7 @@ const routeDebugger = require('debug')('app:routes');
 const { Account } = require('../../models/account');
 const { Aircraft } = require ('../../models/aircraft');
 const { Upgrade } = require ('../../models/upgrade');
-const { TradeReport } = require ('../../wts/reports/reportClasses');
+const { TradeReport } = require ('../../models/report');
 
 const { Trade } = require('../../models/trade');
 const { Research } = require('../../models/research');

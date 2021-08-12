@@ -65,8 +65,8 @@ AccountSchema.methods.deposit = async function (transaction) {
 
 		await this.report(transaction, 'Withdrawal');
 
-		const account = await this.save();
-		await account.populateMe();
+		let account = await this.save();
+		account = await account.populateMe();
 		console.log(account);
 
 		// Notify/Update team via socket-event
@@ -109,9 +109,8 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 
 		await this.report(transaction, transaction.to ? 'Withdrawal' : 'Expense');
 
-		const account = await this.save();
-		await account.populateMe();
-		console.log(account);
+		let account = await this.save();
+		account = await account.populateMe();
 
 		nexusEvent.emit('request', 'update', [ account ]); // Notify/Update team via socket-event
 		return account;
@@ -136,9 +135,9 @@ AccountSchema.methods.schedule = async function (transaction) {
 
 		console.log(`${this.owner} has set up an auto-transfer for ${this.name}`);
 
-		const account = await this.save();
-		await account.populateMe();
-		console.log(account);
+		let account = await this.save();
+		account = await account.populateMe();
+		// console.log(account);
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ account ]); // Scott Note: Untested might not work
@@ -198,7 +197,7 @@ AccountSchema.methods.transfer = async function (transaction) {
 AccountSchema.methods.report = async function (transaction, type) {
 	const { from, to, resource, amount, note } = transaction;
 	try {
-		const report = new Transaction({
+		let report = new Transaction({
 			date: Date.now(),
 			timestamp: clock.getTimeStamp(),
 			team: this.team,
@@ -212,8 +211,8 @@ AccountSchema.methods.report = async function (transaction, type) {
 		if (type === 'Deposit') report.counterparty = from;
 		if (type === 'Withdrawal') report.counterparty = to;
 
-		await report.save();
-		await report.populateMe();
+		report = await report.save();
+		// report = await report.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ report ]); // Scott Note: Untested might not work

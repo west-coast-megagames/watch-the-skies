@@ -2,10 +2,10 @@ const techDebugger = require('debug')('app:tech');
 const { Team } = require('../../models/team');
 const { Research, TechResearch } = require('../../models/research');
 
-const { TheoryReport } = require('../reports/reportClasses');
+const { TheoryReport } = require('../../models/report');
 
 // Technology Constructor Function
-function Technology (tech) {
+function Technology(tech) {
 	this.name = tech.name;
 	this.type = tech.type;
 	this.level = tech.level;
@@ -178,7 +178,7 @@ function Technology (tech) {
 	};// this.unlock
 }
 
-async function techCheck () {
+async function techCheck() {
 	for await (const research of Research.find().populate('team')) {
 		if (research.status.visible && !research.status.available) {
 			let count = 0;

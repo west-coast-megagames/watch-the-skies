@@ -103,7 +103,7 @@ class GameTimeline extends Component {
 const mapStateToProps = state => ({
 	user: state.auth.user,
 	lastFetch: state.entities.reports.lastFetch,
-	reports: state.entities.reports.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
+	reports: state.entities.reports.list.sort((a, b) => new Date(b.date) - new Date(a.date)),
 	teams: state.entities.teams.list,
 	team: state.auth.team
 })

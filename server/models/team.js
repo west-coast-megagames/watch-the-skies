@@ -7,6 +7,11 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
+const { Account } = require('./account');
+
+const clock = require('../wts/gameClock/gameClock');
+const die = require('../util/systems/dice');
+
 const RoleSchema = new Schema({
 	role: { type: String },
 	type: {
@@ -37,6 +42,61 @@ const TeamSchema = new Schema({
 	gameState: [],
 	treaties: [{ type: ObjectId, ref: 'Treaties' }]
 });
+
+TeamSchema.methods.prRoll = async function () {
+	if (this.type !== 'National') throw Error('Only National teams have PR');
+	const { turnNum } = clock.getTimeRemaining();
+	const prRoll = die.d8();
+	let prLevel = this.prLevel;
+
+	console.log(`Current PR: ${this.prLevel}`);
+	console.log(`PR Roll: ${prRoll}`);
+
+	if (turnNum > 1) {
+		if (prRoll < this.prLevel) {
+			prLevel = this.prLevel + this.prModifier - Math.floor(((this.prLevel - prRoll) / 1.5));
+		}
+		else if (prRoll > this.prLevel) {
+			prLevel = this.prLevel + this.prModifier + 1;
+		}
+		else {
+			prLevel = this.prLevel + this.prModifier;
+		}
+
+		prLevel = prLevel > 8 ? 8 : prLevel;
+		prLevel = prLevel < 1 ? 1 : prLevel;
+	}
+	this.prLevel = prLevel;
+
+	const team = await this.save();
+
+	console.log(`PR Level: ${prLevel}`);
+
+	// TODO - Socket update for client
+
+	return team;
+};
+
+TeamSchema.methods.assignIncome = async function () {
+	if (this.type !== 'National') throw Error('Only National teams have PR based income');
+	const { turnNum } = clock.getTimeRemaining();
+
+	console.log(`Assigning income for ${this.shortName}... ${turnNum} income...`);
+
+	const account = await Account.findOne({ name: 'Treasury', 'team': this._id });
+
+	const income = this.prTrack[this.prLevel]; // Finds the current income value
+	await account.deposit({ to: account._id, amount: income, resource: 'Megabucks', note: `Turn ${turnNum} income.` });
+
+	return;
+};
+
+TeamSchema.methods.turnEnd = async function () {
+	await this.prRoll();
+	await this.assignIncome();
+
+	return;
+};
 
 TeamSchema.methods.validateTeam = async function () {
 	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
@@ -121,7 +181,6 @@ TeamSchema.methods.validateTeam = async function () {
 
 	default:
 		nexusError('Invalid Team Type ${this.type} ', 404);
-
 	}
 
 	const { error } = schema.validate(this, { allowUnknown: true });

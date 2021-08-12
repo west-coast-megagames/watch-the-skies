@@ -29,7 +29,7 @@ let count = 0; // Mission Counter.
 // let totalCount = 0;
 
 // Start function | loads in an aircraft & target as well as the mission type and saves them for resolution
-async function start (aircraft, target, mission) {
+async function start(aircraft, target, mission) {
 	let result = `Plan for ${mission.toLowerCase()} mission by ${aircraft.name} submitted.`;
 	const origin = await Facility.findById(aircraft.origin).populate('site'); // Populate home facility for the aircraft
 	let distance;
@@ -92,7 +92,7 @@ async function start (aircraft, target, mission) {
 }
 
 // Function for resolving missions when the Team Phase ends.
-async function resolveMissions () {
+async function resolveMissions() {
 	missionDebugger('Resolving Missions...');
 
 	await runInterceptions(); // Runs through all Inteception Missions | Checks for escorts
@@ -109,7 +109,7 @@ async function resolveMissions () {
 }
 
 // Iterate over all submitted Interceptions in range order
-async function runInterceptions () {
+async function runInterceptions() {
 	for await (const interception of interceptionMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each interception
 		const missionCode = randCode(5); // Generates a unique code for this interception
@@ -165,7 +165,7 @@ async function runInterceptions () {
 }
 
 // Iterate over all remaining transport missions
-async function runTransports () {
+async function runTransports() {
 	for await (const transport of transportMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each mission
 		const missionCode = randCode(5); // Generates a unique code for this transport
@@ -217,7 +217,7 @@ async function runTransports () {
 }
 
 // Iterate over all remaining Recon missions - DONE [NOT TESTED]
-async function runRecon () {
+async function runRecon() {
 	for await (const recon of reconMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each mission
 		const missionCode = randCode(5); // Generates a unique code for this recon mission
@@ -320,7 +320,7 @@ async function runRecon () {
 	}
 }
 
-async function runDiversions () {
+async function runDiversions() {
 	for await (const mission of diversionMissions.sort((a, b) => a.distance - b.distance)) {
 		missionDebugger(`Running diversion for ${mission.aircraft.name}`);
 		count++; // Count iteration for each mission
@@ -369,7 +369,7 @@ async function runDiversions () {
 }
 
 // Check for all patrol missions for any that are guarding target target (Site)
-async function checkPatrol (target, defReport, aircraft) {
+async function checkPatrol(target, defReport, aircraft) {
 	for await (const patrol of patrolMissions) {
 		missionDebugger('Checking patrol missions...');
 		if (target.toHexString() === patrol.target.toHexString()) {
@@ -414,7 +414,7 @@ async function checkPatrol (target, defReport, aircraft) {
 }
 
 // Check for all escort missions for any that are guarding (Aircraft)
-async function checkEscort (target, defReport, atkReport) {
+async function checkEscort(target, defReport, atkReport) {
 
 	// Checks all remaining escort missions sorted by distance
 	for await (const escort of escortMissions.sort((a, b) => a.distance - b.distance)) {
@@ -477,7 +477,7 @@ async function checkEscort (target, defReport, atkReport) {
 	return { target, defReport }; // Returns to mission function that called it
 }
 
-async function clearMissions () {
+async function clearMissions() {
 	for (const aircraft of await Aircraft.find({ 'status.deployed': true })) {
 		await aircraft.recall();
 	}
