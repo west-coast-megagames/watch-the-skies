@@ -30,7 +30,17 @@ const slice = createSlice({
     siteAdded: (sites, action) => {
       console.log(`${action.type} Dispatched`)
       sites.list.push(action.payload);
-    }
+    },
+		siteDeleted: (site, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = site.list.findIndex(el => el._id === action.payload._id);
+      site.list.splice(index, 1);
+    },
+		siteUpdated: (site, action) => {
+      console.log(`${action.type} Dispatched...`);
+      site.list = action.payload;
+      site.lastFetch = Date.now();
+    },
   }
 });
 
@@ -38,6 +48,8 @@ const slice = createSlice({
 export const {
   siteAdded,
   sitesReceived,
+	siteDeleted,
+	siteUpdated,
   sitesRequested,
   sitesRequestFailed
 } = slice.actions;

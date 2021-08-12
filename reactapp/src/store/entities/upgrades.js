@@ -31,11 +31,16 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       upgrades.list.push(action.payload);
     },
-    upgradesUpdated: (upgrades, action) => {
+    upgradeUpdated: (upgrades, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Upgrade updated!', 2000);
+      // Alert.info('Upgrade updated!', 2000);
       upgrades.list = action.payload;
       upgrades.lastFetch = Date.now();
+    },
+		upgradeDeleted: (upgrade, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = upgrade.list.findIndex(el => el._id === action.payload._id);
+      upgrade.list.splice(index, 1);
     },
 	}
 });
@@ -43,7 +48,8 @@ const slice = createSlice({
 // Action Export
 export const {
   upgradeAdded,
-  upgradesUpdated,
+  upgradeUpdated,
+	upgradeDeleted,
   upgradesReceived,
   upgradesRequested,
   upgradesRequestFailed

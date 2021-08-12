@@ -35,11 +35,16 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       aircrafts.list.push(action.payload);
     },
-    aircraftsUpdated: (aircrafts, action) => {
+    aircraftUpdated: (aircrafts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Aircrafts updated!', 2000);
+      // Alert.info('Aircrafts updated!', 2000);
       aircrafts.list = action.payload;
       aircrafts.lastFetch = Date.now();
+    },
+		aircraftDeleted: (aircrafts, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = aircrafts.list.findIndex(el => el._id === action.payload._id);
+      aircrafts.list.splice(index, 1);
     },
   }
 });
@@ -47,10 +52,11 @@ const slice = createSlice({
 // Action Export
 export const {
   aircraftAdded,
-  aircraftsUpdated,
+  aircraftUpdated,
+	aircraftDeleted,
   aircraftsReceived,
   aircraftsRequested,
-  aircraftsRequestFailed
+  aircraftsRequestFailed,
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

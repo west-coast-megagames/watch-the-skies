@@ -32,14 +32,27 @@ const slice = createSlice({
     zoneAdded: (zones, action) => {
       console.log(`${action.type} Dispatched`)
       zones.list.push(action.payload);
-    }
+    },
+		zoneUpdated: (zone, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('zone updated!', 2000);
+      zone.list = action.payload;
+      zone.lastFetch = Date.now();
+    },
+		zonesDeleted: (zones, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = zones.list.findIndex(el => el._id === action.payload._id);
+      zones.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   zoneAdded,
+	zoneUpdated,
   zonesReceived,
+	zonesDeleted,
   zonesRequested,
   zonesRequestFailed
 } = slice.actions;
