@@ -46,8 +46,6 @@ const TradeSchema = new Schema({
 	},
 	status: {
 		draft: { type: Boolean, default: true },
-		proposal: { type: Boolean, default: false },
-		pending: { type: Boolean, default: false },
 		rejected: { type: Boolean, default: false },
 		complete: { type: Boolean, default: false },
 		deleted: { type: Boolean, default: false }

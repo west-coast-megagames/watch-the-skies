@@ -13,6 +13,7 @@ import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
 import upgradeReducer from './entities/upgrades';
+import tradeReducer from './entities/trades';
 
 
 
@@ -31,5 +32,6 @@ export default combineReducers({
   research: researchReducer,
 	accounts: accountReducer,
 	blueprints: blueprintReducer,
-	upgrades: upgradeReducer
+	upgrades: upgradeReducer,
+	trades: tradeReducer,
 });

@@ -32,7 +32,8 @@ const slice = createSlice({
     },
 		teamUpdated: (team, action) => {
       console.log(`${action.type} Dispatched...`);
-      team.list = action.payload;
+      const index = team.list.findIndex(el => el._id === action.payload._id);
+			team.list[index] = action.payload;
       team.lastFetch = Date.now();
     },
 		teamDeleted: (team, action) => {

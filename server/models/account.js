@@ -113,8 +113,7 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 		await account.populateMe();
 		console.log(account);
 
-		// Notify/Update team via socket-event
-		nexusEvent.emit('request', 'update', [ account ]); //
+		nexusEvent.emit('request', 'update', [ account ]); // Notify/Update team via socket-event
 		return account;
 	}
 	catch (err) {

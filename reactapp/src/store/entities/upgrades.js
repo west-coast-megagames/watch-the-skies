@@ -33,8 +33,8 @@ const slice = createSlice({
     },
     upgradeUpdated: (upgrades, action) => {
       console.log(`${action.type} Dispatched...`);
-      // Alert.info('Upgrade updated!', 2000);
-      upgrades.list = action.payload;
+      const index = upgrades.list.findIndex(el => el._id === action.payload._id);
+			upgrades.list[index] = action.payload;
       upgrades.lastFetch = Date.now();
     },
 		upgradeDeleted: (upgrade, action) => {

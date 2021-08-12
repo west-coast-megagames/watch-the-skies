@@ -35,7 +35,6 @@ const TeamSchema = new Schema({
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	gameState: [],
-	trades: [{ type: ObjectId, ref: 'Trades' }],
 	treaties: [{ type: ObjectId, ref: 'Treaties' }]
 });
 

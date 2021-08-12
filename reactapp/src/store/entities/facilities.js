@@ -36,8 +36,8 @@ const slice = createSlice({
     },
     facilityUpdated: (facilities, action) => {
       console.log(`${action.type} Dispatched...`);
-      // Alert.info('Facilities updated!', 2000);
-      facilities.list = action.payload;
+      const index = facilities.list.findIndex(el => el._id === action.payload._id);
+			facilities.list[index] = action.payload;
       facilities.lastFetch = Date.now();
     },
 		facilityDeleted: (facilities, action) => {

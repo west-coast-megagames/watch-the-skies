@@ -35,7 +35,8 @@ const slice = createSlice({
     },
 		countryUpdated: (countries, action) => {
       console.log(`${action.type} Dispatched...`);
-      countries.list = action.payload;
+			const index = countries.list.findIndex(el => el._id === action.payload._id);
+			countries.list[index] = action.payload;
       countries.lastFetch = Date.now();
     },
 		countryDeleted: (countries, action) => {

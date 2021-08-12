@@ -30,8 +30,8 @@ const slice = createSlice({
     },
     logUpdated: (logs, action) => {
       console.log(`${action.type} Dispatched...`);
-      // Alert.info('Logs updated!', 2000);
-      logs.list = action.payload;
+      const index = logs.list.findIndex(el => el._id === action.payload._id);
+			logs.list[index] = action.payload;
       logs.lastFetch = Date.now();
     },
     logAdded: (logs, action) => {

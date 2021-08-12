@@ -14,6 +14,7 @@ import { siteAdded, siteDeleted, siteUpdated } from './entities/sites';
 import { teamAdded, teamDeleted, teamUpdated } from './entities/teams';
 import { upgradeAdded, upgradeDeleted, upgradeUpdated } from './entities/upgrades';
 import { zoneAdded, zonesDeleted, zoneUpdated } from './entities/zones';
+import { tradeAdded, tradeDeleted, tradeUpdated } from './entities/trades';
 
 const updaterFunctions = {
 	account: accountUpdated,
@@ -28,6 +29,7 @@ const updaterFunctions = {
 	research: researchUpdated,
 	site: siteUpdated,
 	team: teamUpdated,
+	trade: tradeUpdated,
 	upgrade: upgradeUpdated,
 	zone: zoneUpdated
 }
@@ -45,6 +47,7 @@ const adderFunctions = {
 	research: researchAdded,
 	site: siteAdded,
 	team: teamAdded,
+	trade: tradeAdded,
 	upgrade: upgradeAdded,
 	zone: zoneAdded
 }
@@ -62,6 +65,7 @@ const deleteFunctions = {
 	research: researchDeleted,
 	site: siteDeleted,
 	team: teamDeleted,
+	trade: tradeDeleted,
 	upgrade: upgradeDeleted,
 	zone: zonesDeleted
 }

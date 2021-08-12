@@ -36,8 +36,8 @@ const slice = createSlice({
     },
     militaryUpdated: (military, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('military updated!', 2000);
-      military.list = action.payload;
+      const index = military.list.findIndex(el => el._id === action.payload._id);
+			military.list[index] = action.payload;
       military.lastFetch = Date.now();
     },
 		militaryDeleted: (military, action) => {
@@ -75,16 +75,6 @@ export const loadmilitary = () => (dispatch, getState) => {
     })
   );
 };
-
-// Add a military to the list of military
-export const addmilitary = military =>
-  apiCallBegan({
-    url,
-    method: "post",
-    data: military,
-    onSuccess: militaryAdded.type
-	});
-	
 
 	// Selector
 	export const getMilitary = createSelector(

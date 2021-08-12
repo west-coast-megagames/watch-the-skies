@@ -4,12 +4,13 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { gameServer } from "../../../config";
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup } from 'rsuite';
+import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 import { getTreasuryAccount } from '../../../store/entities/accounts';
 import { getCompletedResearch } from '../../../store/entities/research';
 import { getAircrafts } from '../../../store/entities/aircrafts';
 import { rand } from '../../../scripts/dice';
+import socket from '../../../socket';
 
 const formatData = (array) => {
 	let data = []
@@ -237,15 +238,15 @@ class Trade extends Component {
 
 	createTrade = async () => {
 		console.log('Creating a new Trade...');
-		let trade = {
+		let data = {
 			initiator: this.props.team._id,
 			tradePartner: this.state.partner
 		};
 		try {
 			// console.log(trade)
-			let response = await axios.post(`${gameServer}game/diplomacy/trade`, trade);    
+			socket.emit('request', { route: 'trade', action: 'newTrade', data});
 		//   Alert.success(response.data.comment[0].body);
-			this.setState({newTrade: false, partner: null, trade: response.data, viewTrade: true });
+			this.setState({newTrade: false, partner: null, trade: null, viewTrade: true });
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -319,7 +320,29 @@ class Trade extends Component {
 							</Panel>
 					</PanelGroup> }
 					{ !this.state.viewTrade && <PanelGroup>
-						<Panel header="Draft Trades"></Panel>
+						<Panel header="Draft Trades">
+							<List hover>
+								{this.props.trades.filter(el => el.status.draft === true).map((trade, index) => (
+									<List.Item index={index} style={{ cursor: 'pointer', }}  onClick={()=> this.setState({ trade })} >
+										<FlexboxGrid justify="space-around" align="middle">
+											<FlexboxGrid.Item colspan={4}>
+											<Whisper placement="right" trigger="hover" speaker={<Tooltip>{trade.initiator.team.shortName} is {trade.initiator.ratified ? <b style={{ backgroundColor: 'green' }} >Ready!</b>:<b style={{ backgroundColor: 'red' }} >Not Ready!</b>}   </Tooltip>}>
+												<img src={trade.initiator.ratified ? `/images/check-mark.png` : `/images/xmark.png`} style={{ width: '100%' }} alt='oops' />														
+											</Whisper>
+											</FlexboxGrid.Item>
+											<FlexboxGrid.Item colspan={12}>
+												Trade with {trade.initiator.team._id === this.props.team._id ? trade.tradePartner.team.shortName : trade.initiator.team.shortName}
+											</FlexboxGrid.Item>
+											<FlexboxGrid.Item colspan={4}>
+												<Whisper placement="right" trigger="hover" speaker={<Tooltip>{trade.tradePartner.team.shortName} is {trade.tradePartner.ratified ? <b style={{ backgroundColor: 'green' }} >Ready!</b>:<b style={{ backgroundColor: 'red' }} >Not Ready!</b>}   </Tooltip>}>
+													<img src={trade.tradePartner.ratified ? `/images/check-mark.png` : `/images/xmark.png`} style={{ width: '100%' }} alt='oops' />													
+												</Whisper>
+											</FlexboxGrid.Item>
+										</FlexboxGrid>												
+									</List.Item>
+								))}							
+							</List>	   
+						</Panel>
 						<Panel header="Pending Trades"></Panel>
 						<Panel header="Completed Trades"></Panel>
 					</PanelGroup> }
@@ -351,6 +374,7 @@ const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
+	trades: state.entities.trades.list,
 	account: getTreasuryAccount(state)
 });
 

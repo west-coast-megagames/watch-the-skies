@@ -8,9 +8,22 @@ const { TradeReport } = require ('../../wts/reports/reportClasses');
 const { Trade } = require('../../models/trade');
 const { Research } = require('../../models/research');
 const { techTree } = require('../../wts/research/techTree');
+const { Team } = require('../../models/team');
+const nexusEvent = require('../../middleware/events/events');
 
+async function createTrade(data) {
+	const initiator = await Team.findById(data.initiator);
+	const tradePartner = await Team.findById(data.tradePartner);
+	let newTrade = new Trade();
+	newTrade.initiator = initiator;
+	newTrade.tradePartner = tradePartner;
+	newTrade = await newTrade.save();
 
-async function resolveTrade (req, res) {// I have not tested this much at all will need reviewing
+	nexusEvent.emit('request', 'create', [ newTrade ]); //
+	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
+}
+
+async function resolveTrade(req, res) {// I have not tested this much at all will need reviewing
 	const { initiator, tradePartner } = req.body;
 	let trade = await Trade.findById({ _id: req.body._id });
 
@@ -40,7 +53,7 @@ async function resolveTrade (req, res) {// I have not tested this much at all wi
 
 }// resolveTrade
 
-async function exchangeUpgrade (transferred, newOwner) {
+async function exchangeUpgrade(transferred, newOwner) {
 	for await (const thing of transferred) {
 		// check what currently has the upgrade
 		try{
@@ -55,7 +68,7 @@ async function exchangeUpgrade (transferred, newOwner) {
 	}// for thing
 }// exchangeUpgrade
 
-async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
+async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
 	// case "megabucks":
 	routeDebugger('Working on Megabucks');
 	if (senderOffer.megabucks > 0) {
@@ -63,7 +76,7 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 			const accountFrom = await Account.findOne({ 'team' : senderTeam, 'name' : 'Treasury' });
 			const accountTo = await Account.findOne({ 'team' : opposingTeam, 'name' : 'Treasury' });
 			await accountFrom.withdrawal({ from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so' });
-			await accountTo.deposit({from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so'});
+			await accountTo.deposit({ from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so' });
 		}
 		catch(err) {
 			console.log(`ERROR WITH MEGABUCK TRADE: ${err}`);
@@ -101,4 +114,4 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	}
 }
 
-module.exports = { resolveTrade };
+module.exports = { resolveTrade, createTrade };

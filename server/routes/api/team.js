@@ -22,7 +22,8 @@ router.get('/', async function (req, res) {
 
 	try {
 		const teams = await Team.find()
-			.sort({ team: 1 });
+			.sort({ team: 1 })
+			.populate('trades');
 		res.status(200).json(teams);
 	}
 	catch (err) {

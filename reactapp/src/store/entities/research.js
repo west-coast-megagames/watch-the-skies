@@ -35,8 +35,8 @@ const slice = createSlice({
     },
 		researchUpdated: (research, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('research updated!', 2000);
-      research.list = action.payload;
+      const index = research.list.findIndex(el => el._id === action.payload._id);
+			research.list[index] = action.payload;
       research.lastFetch = Date.now();
     },
 		researchDeleted: (research, action) => {

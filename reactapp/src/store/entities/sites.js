@@ -38,7 +38,8 @@ const slice = createSlice({
     },
 		siteUpdated: (site, action) => {
       console.log(`${action.type} Dispatched...`);
-      site.list = action.payload;
+      const index = site.list.findIndex(el => el._id === action.payload._id);
+			site.list[index] = action.payload;
       site.lastFetch = Date.now();
     },
   }

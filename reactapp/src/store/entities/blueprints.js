@@ -33,7 +33,8 @@ const slice = createSlice({
     },
     blueprintUpdated: (blueprints, action) => {
       console.log(`${action.type} Dispatched...`);
-      blueprints.list = action.payload;
+      const index = blueprints.list.findIndex(el => el._id === action.payload._id);
+			blueprints.list[index] = action.payload;
       blueprints.lastFetch = Date.now();
     },
 		blueprintDeleted: (blueprints, action) => {
