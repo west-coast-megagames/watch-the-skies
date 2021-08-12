@@ -65,8 +65,8 @@ AccountSchema.methods.deposit = async function (transaction) {
 
 		await this.report(transaction, 'Withdrawal');
 
-		const account = await this.save();
-		await account.populateMe();
+		let account = await this.save();
+		account = await account.populateMe();
 		console.log(account);
 
 		// Notify/Update team via socket-event
@@ -109,9 +109,8 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 
 		await this.report(transaction, transaction.to ? 'Withdrawal' : 'Expense');
 
-		const account = await this.save();
-		await account.populateMe();
-		console.log(account);
+		let account = await this.save();
+		account = await account.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ account ]); //

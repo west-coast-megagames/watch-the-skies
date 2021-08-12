@@ -48,25 +48,26 @@ TeamSchema.methods.prRoll = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR');
 	const { turnNum } = clock.getTimeRemaining();
 	const prRoll = die.d8();
-	let prLevel = this.currentPR;
+	let prLevel = this.prLevel;
 
-	console.log(`Current PR: ${this.currentPR}`);
+	console.log(`Current PR: ${this.prLevel}`);
 	console.log(`PR Roll: ${prRoll}`);
 
 	if (turnNum > 1) {
-		if (prRoll < this.currentPR) {
-			prLevel = this.currentPR + this.prModifier - Math.floor(((this.currentPR - prRoll) / 1.5));
+		if (prRoll < this.prLevel) {
+			prLevel = this.prLevel + this.prModifier - Math.floor(((this.prLevel - prRoll) / 1.5));
 		}
-		else if (prRoll > this.currentPR) {
-			prLevel = this.currentPR + this.prModifier + 1;
+		else if (prRoll > this.prLevel) {
+			prLevel = this.prLevel + this.prModifier + 1;
 		}
 		else {
-			prLevel = this.currentPR + this.prModifier;
+			prLevel = this.prLevel + this.prModifier;
 		}
 
 		prLevel = prLevel > 8 ? 8 : prLevel;
 		prLevel = prLevel < 1 ? 1 : prLevel;
 	}
+	this.prLevel = prLevel;
 
 	const team = await this.save();
 
@@ -81,7 +82,7 @@ TeamSchema.methods.assignIncome = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR based income');
 	const { turnNum } = clock.getTimeRemaining();
 
-	console(`Assigning income for ${this.shortName}... ${turnNum} income...`);
+	console.log(`Assigning income for ${this.shortName}... ${turnNum} income...`);
 
 	const account = await Account.findOne({ name: 'Treasury', 'team': this._id });
 
