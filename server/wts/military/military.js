@@ -9,9 +9,9 @@ const { Upgrade } = require('../../models/upgrade');
 const { Account } = require('../../models/account');
 const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
-const { DeploymentReport } = require('../reports/reportClasses');
+const { DeploymentReport } = require('../../models/report');
 
-async function resolveBattle (attackers, defenders) {
+async function resolveBattle(attackers, defenders) {
 	let attackerTotal = 0;
 	let defenderTotal = 0;
 	let attackerResult = 0;
@@ -209,7 +209,7 @@ async function resolveBattle (attackers, defenders) {
 	return data;
 }
 
-async function runMilitary () {
+async function runMilitary() {
 	let report = '';
 	let data = {};
 	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
@@ -392,7 +392,7 @@ async function runMilitary () {
 	nexusEvent.emit('updateLogs');
 }
 
-async function repairUnit (data) {
+async function repairUnit(data) {
 	const unit = await Military.findById(data._id);
 
 	let account = await Account.findOne({
@@ -404,7 +404,7 @@ async function repairUnit (data) {
 		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
 	}
 	else {
-		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}`});
+		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
 
 		// unit.status.repair = true;
 		// unit.status.ready = false;
@@ -417,7 +417,7 @@ async function repairUnit (data) {
 	}
 }
 
-async function transferUnit (data) { // for transferring to other facilities as an action
+async function transferUnit(data) { // for transferring to other facilities as an action
 	// TODO: Check if Facility has capacity
 	const unit = await Military.findById(data.unit);
 	const facility = await Facility.findById(data.facility).populate('site');
@@ -455,7 +455,7 @@ async function transferUnit (data) { // for transferring to other facilities as 
 
 }
 
-async function deployUnit (data, type) {
+async function deployUnit(data, type) {
 	// this code assumes all units passed to it are eligible for deploy/invade. Re-writes are required if we want double checking
 	const { units, cost, destination, team } = data;
 	const teamObj = await Team.findOne({ name: team });
@@ -497,7 +497,7 @@ async function deployUnit (data, type) {
 			await update.save();
 		}
 
-		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.`});
+		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.` });
 
 		if (type === 'invade') {
 			siteObj.warzone = true;

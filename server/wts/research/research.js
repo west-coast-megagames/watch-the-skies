@@ -9,11 +9,11 @@ const { techCost, fundingCost, multiplier } = require('./sciState');
 
 const { Facility } = require('../../models/facility');
 const { Team } = require('../../models/team');
-const { ResearchReport } = require('../reports/reportClasses');
+const { ResearchReport } = require('../../models/report');
 const { techTree } = require('./techTree');
 const { knowledgeTree } = require('./knowledge');
 
-async function startResearch () {
+async function startResearch() {
 	researchDebugger('Research system triggered...');
 	const placeholder = await Research.findOne({ name: 'Empty Lab' });
 
@@ -64,7 +64,7 @@ async function startResearch () {
 }
 
 // FUNCTION for calculating the progress applied to a single RESEARCH project
-async function conductResearch (lab) {
+async function conductResearch(lab) {
 	researchDebugger(`${lab.name} has begun conducting research.`);
 	let report = new ResearchReport;
 
@@ -148,7 +148,7 @@ async function conductResearch (lab) {
 }
 
 // Calculates the multiplier for the current research project and returns the progress
-function calculateProgress (sciRate, funding, sciBonus) {
+function calculateProgress(sciRate, funding, sciBonus) {
 	let finalMultiplier = 1 + sciBonus; // Gives the base multiplier calculated as 1 + any sciBonus the team or lab have
 	const rolls = [];
 	const outcomes = [];
@@ -195,7 +195,7 @@ function calculateProgress (sciRate, funding, sciBonus) {
 }
 
 // FUNCTION for finalizing a completed tech
-async function completeResearch (research) {
+async function completeResearch(research) {
 	researchDebugger(`Enough progress has been made to complete ${research.name}...`);
 	research.status.available = false;
 
@@ -227,7 +227,7 @@ async function completeResearch (research) {
 	return research;
 }
 
-async function advanceKnowledge (research, lab) {
+async function advanceKnowledge(research, lab) {
 	for await (const knowledge of research.knowledge) {
 		const project = await Research.findOne({
 			type: 'Knowledge',
@@ -245,7 +245,7 @@ async function advanceKnowledge (research, lab) {
 	return;
 }
 
-async function produceBreakthrough (research, lab, count) {
+async function produceBreakthrough(research, lab, count) {
 	const options = [...research.breakthrough, ...research.unlocks];
 	const team = await Team.findById(lab.team);
 	for (let i = 0; i < count; i++) {
@@ -269,7 +269,7 @@ async function produceBreakthrough (research, lab, count) {
 }
 
 // Assigns credit for all pending knowledge fields
-async function assignKnowledgeCredit () {
+async function assignKnowledgeCredit() {
 	try {
 		const research = await Research.find({ 'status.pending': true, type: 'Knowledge' }); // Gets all pending knowledge from the DB
 		researchDebugger(`${research.length} research to give credit for!`);
