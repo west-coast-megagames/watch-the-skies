@@ -40,7 +40,18 @@ const slice = createSlice({
       articles.list[index].hidden = true;
       articles.list = articles.list.filter(item => item.hidden === false);
       articles.hidden = articles.list.filter(item => item.hidden === true);
-    }
+    },
+		articleUpdated: (articles, action) => {
+      console.log(`${action.type} Dispatched...`);
+      // Alert.info('articles updated!', 2000);
+      articles.list = action.payload;
+      articles.lastFetch = Date.now();
+    },
+		articleDeleted: (articles, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = articles.list.findIndex(el => el._id === action.payload._id);
+      articles.list.splice(index, 1);
+    },
   }
 });
 
@@ -48,6 +59,8 @@ const slice = createSlice({
 export const {
   articleAdded,
   articleHidden,
+	articleUpdated,
+	articleDeleted,
   articlesReceived,
   articlesRequested,
   articlesRequestFailed

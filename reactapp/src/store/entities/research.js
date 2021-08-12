@@ -32,13 +32,26 @@ const slice = createSlice({
     researchAdded: (research, action) => {
       console.log(`${action.type} Dispatched`)
       research.list.push(action.payload);
-    }
+    },
+		researchUpdated: (research, action) => {
+      console.log(`${action.type} Dispatched...`);
+      Alert.info('research updated!', 2000);
+      research.list = action.payload;
+      research.lastFetch = Date.now();
+    },
+		researchDeleted: (research, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = research.list.findIndex(el => el._id === action.payload._id);
+      research.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   researchAdded,
+	researchUpdated,
+	researchDeleted,
   researchReceived,
   researchRequested,
   researchRequestFailed

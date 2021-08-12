@@ -31,11 +31,15 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       blueprints.list.push(action.payload);
     },
-    blueprintsUpdated: (blueprints, action) => {
+    blueprintUpdated: (blueprints, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Blueprint updated!', 2000);
       blueprints.list = action.payload;
       blueprints.lastFetch = Date.now();
+    },
+		blueprintDeleted: (blueprints, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = blueprints.list.findIndex(el => el._id === action.payload._id);
+      blueprints.list.splice(index, 1);
     },
 	}
 });
@@ -43,7 +47,8 @@ const slice = createSlice({
 // Action Export
 export const {
   blueprintAdded,
-  blueprintsUpdated,
+  blueprintUpdated,
+	blueprintDeleted,
   blueprintsReceived,
   blueprintsRequested,
   blueprintsRequestFailed

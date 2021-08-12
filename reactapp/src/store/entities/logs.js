@@ -28,7 +28,7 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       logs.loading = false;
     },
-    logsUpdated: (logs, action) => {
+    logUpdated: (logs, action) => {
       console.log(`${action.type} Dispatched...`);
       // Alert.info('Logs updated!', 2000);
       logs.list = action.payload;
@@ -37,7 +37,12 @@ const slice = createSlice({
     logAdded: (logs, action) => {
       console.log(`${action.type} Dispatched`)
       logs.list.push(action.payload);
-    }
+    },
+		logDeleted: (logs, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = logs.list.findIndex(el => el._id === action.payload._id);
+      logs.list.splice(index, 1);
+    },
   }
 });
 
@@ -47,7 +52,8 @@ export const {
   logsReceived,
   logsRequested,
   logsRequestFailed,
-  logsUpdated
+  logUpdated,
+	logDeleted
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
