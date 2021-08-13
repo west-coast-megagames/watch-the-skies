@@ -7,6 +7,11 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
+const clock = require('../wts/gameClock/gameClock');
+const nexusEvent = require('../middleware/events/events');
+const die = require('../util/systems/dice');
+const { AgentAction } = require('../models/report');
+
 const SquadSchema = new Schema({
 	model: { type: String, default: 'Squad' },
 	type: {
@@ -43,6 +48,68 @@ const SquadSchema = new Schema({
 	},
 	gameState: []
 });
+
+SquadSchema.methods.runMission = async function () {
+	if (!this.status.mission) throw Error(`The ${this.name} squad has no misssion...`);
+	let cland = false;	// boolean for mission secrecy
+	let surv = false;		// boolean for squad survival
+	let succ = false;		// boolean for mission success
+	let numRes = 0;			// number for iterating over array later
+
+	const { site } = this;
+	const squads = await Squad.find({ site, missionType: 'Counter-Espionage' }).lean();
+
+	const result = die.d6() + die.d6() - squads.length; // 1 Roll 2d6
+	console.log(`The Result was ${result}`);
+	if (result < 6) {
+		numRes = 1;
+	}
+	else if (result > 5 && result < 9) {
+		numRes = 2;
+	}
+	else if (result > 8) {
+		numRes = 3;
+	}
+
+	for (let i = 0; i < numRes; i++) {
+		switch (this.mission.priorities[i]) {
+		case 'clandestine':
+			cland = true;
+			break;
+		case 'effectiveness':
+			succ = true;
+			break;
+		case 'survivability':
+			surv = true;
+			break;
+		}
+	}
+
+	if (!cland) { // if the squad was detected, make a report for the target team
+		console.log(`${this.name} was detected`);
+	}
+	if (!surv) { // if the squad was killed or captured
+		console.log(`${this.name} was killed`);
+	}
+	if (succ) { // if the mission was succsessful
+		// 3 resolve the mission based on the type
+		console.log(`${this.name} was successful in their mission`);
+	}
+
+	let missionReport = new AgentAction({
+		date: Date.now(),
+		timestamp: clock.getTimeStamp(),
+		team: this.team,
+		site: this.site,
+		missionType: this.missionType,
+		priorities: this.mission.priorities,
+		result: numRes
+	}); // the report for the squad's team
+	missionReport = await missionReport.save();
+
+	// TODO - Add event based updating...
+	return;
+};
 
 // validateSquad Method
 SquadSchema.methods.validateSquad = async function () {
