@@ -43,6 +43,10 @@ const TeamSchema = new Schema({
 	treaties: [{ type: ObjectId, ref: 'Treaties' }]
 });
 
+// METHOD - prRoll
+// IN - VOID
+// OUT: Modified Team Object
+// PROCESS: This method rolls and assigns a new PR level for the team
 TeamSchema.methods.prRoll = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR');
 	const { turnNum } = clock.getTimeStamp();
@@ -77,6 +81,9 @@ TeamSchema.methods.prRoll = async function () {
 	return team;
 };
 
+// METHOD - assignIncome
+// IN - VOID | OUT: VOID
+// PROCESS: This method gives the treasury for the team income based on the PR level
 TeamSchema.methods.assignIncome = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR based income');
 	const { turnNum } = clock.getTimeStamp();
@@ -91,9 +98,12 @@ TeamSchema.methods.assignIncome = async function () {
 	return;
 };
 
-TeamSchema.methods.turnEnd = async function () {
-	await this.prRoll();
-	await this.assignIncome();
+// METHOD - endTurn
+// IN - VOID | OUT: VOID
+// PROCESS: Standard WTS method for end of turn maintanance for the team object
+TeamSchema.methods.endTurn = async function () {
+	await this.prRoll(); // Activates the roll for PR method of the team model
+	await this.assignIncome(); // Activates the assign income method of the team model
 
 	return;
 };
