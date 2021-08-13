@@ -12,11 +12,14 @@ const { Team } = require('../../models/team');
 const nexusEvent = require('../../middleware/events/events');
 
 async function createTrade(data) {
-	const initiator = await Team.findById(data.initiator);
-	const tradePartner = await Team.findById(data.tradePartner);
+	let { initiator, tradePartner } = data;
+	initiator = await Team.findById(initiator);
+	tradePartner = await Team.findById(tradePartner);
+
 	let newTrade = new Trade();
-	newTrade.initiator = initiator;
-	newTrade.tradePartner = tradePartner;
+	newTrade.initiator.team = initiator;
+	newTrade.tradePartner.team = tradePartner;
+	console.log(newTrade.initiator);
 	newTrade = await newTrade.save();
 
 	nexusEvent.emit('request', 'create', [ newTrade ]); //
