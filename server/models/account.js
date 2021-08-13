@@ -63,7 +63,7 @@ AccountSchema.methods.deposit = async function (transaction) {
 		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		await this.report(transaction, 'Withdrawal');
+		await this.report(transaction, 'Deposit');
 
 		let account = await this.save();
 		account = await account.populateMe();
