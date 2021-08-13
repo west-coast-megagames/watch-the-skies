@@ -45,7 +45,7 @@ const TeamSchema = new Schema({
 
 TeamSchema.methods.prRoll = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR');
-	const { turnNum } = clock.getTimeRemaining();
+	const { turnNum } = clock.getTimeStamp();
 	const prRoll = die.d8();
 	let prLevel = this.prLevel;
 
@@ -79,7 +79,7 @@ TeamSchema.methods.prRoll = async function () {
 
 TeamSchema.methods.assignIncome = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR based income');
-	const { turnNum } = clock.getTimeRemaining();
+	const { turnNum } = clock.getTimeStamp();
 
 	console.log(`Assigning income for ${this.shortName}... ${turnNum} income...`);
 
