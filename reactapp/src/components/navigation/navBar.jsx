@@ -74,7 +74,7 @@ const NavBar = (props) => {
 		}, 1000);
 	}, [paused, clock]);
 
-	const rawr = props.account.resources.find(el => el.type === 'Megabucks'); 
+	const rawr = props.account !== undefined ? props.account.resources.find(el => el.type === 'Megabucks') : undefined
 
 	const megabucks = props.account !== undefined ? rawr.balance : 0
 	const pr = !props.team ? 'PR Level: Unknown |' : `PR Level: ${props.team.prLevel} | `;
