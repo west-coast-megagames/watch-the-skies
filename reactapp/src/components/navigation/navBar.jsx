@@ -74,7 +74,9 @@ const NavBar = (props) => {
 		}, 1000);
 	}, [paused, clock]);
 
-	const megabucks = props.account !== undefined ? props.account.balance : 0
+	const rawr = props.account.resources.find(el => el.type === 'Megabucks'); 
+
+	const megabucks = props.account !== undefined ? rawr.balance : 0
 	const pr = !props.team ? 'PR Level: Unknown |' : `PR Level: ${props.team.prLevel} | `;
 	const megabuckDisplay = ` $M${megabucks} | `
 	const brandLink = !props.team ? '/' : '/home';
