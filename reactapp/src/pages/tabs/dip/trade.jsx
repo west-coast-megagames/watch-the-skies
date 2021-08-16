@@ -120,8 +120,6 @@ const Trade = ({ trades, team, teams, account }) => {
 		}
 	}
 
-
-	// let { status, lastUpdated } = selectedTrade;
 	return (
 		<Container>
 			<Content>
@@ -144,11 +142,9 @@ const Trade = ({ trades, team, teams, account }) => {
 				{ selectedTrade && <PanelGroup>
 					<Panel header="Trade Details">
 						<TagGroup>
-							{ selectedTrade.status.draft && <Tag color="red">Draft</Tag> }
-							{ selectedTrade.status.pending && <Tag color="yellow">Pending Execution</Tag> }
-							{ selectedTrade.status.rejected && <Tag color="red">Rejected</Tag> }
-							{ selectedTrade.status.proposal && <Tag color="yellow">Awaiting Ratification</Tag> }
-							{ selectedTrade.status.proposal && <Tag color="green">Completed</Tag> }
+							{ selectedTrade.status === 'Draft' && <Tag color="orange">Draft</Tag> }
+							{ selectedTrade.status === 'Trashed' && <Tag color="red">Trashed</Tag> }
+							{ selectedTrade.status === 'Completed' && <Tag color="green">Completed</Tag> }
 						</TagGroup>
 						<p><b>Last Updated:</b> {`${new Date(selectedTrade.lastUpdated).toLocaleTimeString()} - ${new Date(selectedTrade.lastUpdated).toDateString()}`}</p>
 					</Panel>
@@ -160,8 +156,8 @@ const Trade = ({ trades, team, teams, account }) => {
 						{!newTrade && !selectedTrade && <IconButton color={'blue'} block size='sm' onClick={() => setNewTrade(!newTrade)} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
 						<ButtonGroup justified>
 							<Button onClick={() => handleFilter('Draft')}>Drafts</Button>
-							<Button>Completed</Button>
-							<Button>Trashed</Button>
+							<Button onClick={() => handleFilter('Complete')}>Completed</Button>
+							<Button onClick={() => handleFilter('Trashed')}>Trashed</Button>
 						</ButtonGroup>
 					</Panel>
 					<Panel>
@@ -184,7 +180,10 @@ const Trade = ({ trades, team, teams, account }) => {
 										</FlexboxGrid.Item>
 									</FlexboxGrid>												
 								</List.Item>
-							))}							
+							))}				
+							{filter.map((fil, index) => (
+								<List.Item>{fil}</List.Item>
+							))}			
 						</List>	   
 					</Panel>
 				</PanelGroup> }
