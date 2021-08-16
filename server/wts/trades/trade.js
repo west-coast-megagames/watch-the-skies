@@ -19,11 +19,26 @@ async function createTrade(data) {
 	let newTrade = new Trade();
 	newTrade.initiator.team = initiator;
 	newTrade.tradePartner.team = tradePartner;
-	console.log(newTrade.initiator);
 	newTrade = await newTrade.save();
 
+	await newTrade.populateMe();
 	nexusEvent.emit('request', 'create', [ newTrade ]); //
 	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
+}
+
+async function trashTrade(data) {
+	let { trade, trasher } = data;
+	trade = await Trade.findById(trade);
+
+	trade.status.draft = false;
+	trade.status.rejected = true;
+	trade.status.deleted = true;
+
+	trade = await trade.save();
+	trade = await trade.populateMe();
+	console.log(trade);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `${trasher} trashed a Trade...`, type: 'success' };
 }
 
 async function resolveTrade(req, res) {// I have not tested this much at all will need reviewing
@@ -117,4 +132,4 @@ async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
 	}
 }
 
-module.exports = { resolveTrade, createTrade };
+module.exports = { resolveTrade, createTrade, trashTrade };

@@ -16,6 +16,7 @@ const ActivitySchema = new Schema({
 });
 
 const TradeSchema = new Schema({
+	model: { type: String, default: 'Trade' },
 	initiator: {
 		team: { type: ObjectId, ref: 'Team' },
 		ratified: { type: Boolean, default: false },
@@ -44,12 +45,7 @@ const TradeSchema = new Schema({
 			comments: []
 		} // tradePartner
 	},
-	status: {
-		draft: { type: Boolean, default: true },
-		rejected: { type: Boolean, default: false },
-		complete: { type: Boolean, default: false },
-		deleted: { type: Boolean, default: false }
-	},
+	status: { type: String, default: 'Draft', enum: ['Draft', 'Rejected', 'Trashed', 'Completed' ] },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() }
 });// const TradeSchema
@@ -99,6 +95,12 @@ TradeSchema.methods.saveActivity = async (trade, incHeader) => {
 	trade.activityFeed.push(activity);
 	trade = await trade.save();
 	return trade;
+};
+
+TradeSchema.methods.populateMe = function () {
+	return this
+		.populate('team', 'name shortName')
+		.execPopulate();
 };
 
 const Trade = mongoose.model('Trade', TradeSchema);

@@ -89,12 +89,14 @@ const initUpdates = () => {
    socket.on('createClients', (data) => { 
        console.log(`createClients`);
        for (const el of data) {
-				if (el) {
+				if (el && el.model) {
 					let func = adderFunctions[el.model.toLowerCase()];
 					func ? store.dispatch(func(el)) : console.log(`ERROR INVALID CREATE FUNCTION: ${el.model.toLowerCase()} - ${func}`);			
 				}
-        else
-        console.log(`Defined Error: Unable to createClients Redux for ${el}`);
+        else {
+					console.log(`Defined Error: Unable to createClients Redux for ${el}`);
+					console.log(el);
+				}
        }
    });
 

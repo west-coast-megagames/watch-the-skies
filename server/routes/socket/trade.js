@@ -1,5 +1,5 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const { createTrade } = require('../../wts/trades/trade');
+const { createTrade, trashTrade } = require('../../wts/trades/trade');
 
 module.exports = async function (client, req) {
 	logger.info(`${client.username} has made a ${req.action} request!`);
@@ -7,6 +7,10 @@ module.exports = async function (client, req) {
 	switch(req.action) {
 	case 'newTrade': {
 		message = await createTrade(req.data);
+		break;
+	}
+	case 'trashTrade': {
+		message = await trashTrade(req.data);
 		break;
 	}
 	default:

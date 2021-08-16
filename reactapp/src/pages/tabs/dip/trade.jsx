@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { gameServer } from "../../../config";
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip } from 'rsuite';
+import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip, Input, ButtonGroup } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 import { getTreasuryAccount } from '../../../store/entities/accounts';
 import { getCompletedResearch } from '../../../store/entities/research';
@@ -16,6 +16,8 @@ import TradeOffer from './tradeOffer';
 const Trade = ({ trades, team, teams, account }) => {
 	const [selectedTrade, setSelectedTrade] = React.useState(null);
 	const [newTrade, setNewTrade] = React.useState(false);
+	const [partner, setPartner] = React.useState(false);
+  const [filter, setFilter] = React.useState(['Draft']);
 	const [form, setForm] = React.useState({
 		initiator: {
 			team: {},
@@ -63,11 +65,12 @@ const Trade = ({ trades, team, teams, account }) => {
 		console.log('Creating a new Trade...');
 		let data = {
 			initiator: team._id,
-			tradePartner: this.state.partner
+			tradePartner: partner
 		};
 		try {
 			// console.log(trade)
 			socket.emit('request', { route: 'trade', action: 'newTrade', data});
+			setNewTrade(false);
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -75,20 +78,54 @@ const Trade = ({ trades, team, teams, account }) => {
 
 	const selectTrade = async (selected) => {
 		const selectedTrade = trades.find(el => el._id === selected._id);
-		console.log(selectedTrade)
 		setSelectedTrade(selectedTrade);
-		// console.log(this.state.selectedTrade)
 	}
 
 	const onOfferEdit = async () => {
 		console.log('hi')
 	}
 
+	const submitProposal = async () => {
+		console.log('hi')
+	}
+
+	const rejectProposal = async () => {
+		console.log('hi')
+	}
+
+	const trashProposal = async () => {
+		// Alert.warning('Rejection has not been implemented...', 4000)
+		let data = {
+			trade: selectedTrade._id,
+			trasher: team.shortName
+		};
+		socket.emit('request', { route: 'trade', action: 'trashTrade', data});
+		setSelectedTrade(false);
+	}
+
+	const handleFilter = async (thing) => {
+		const index = filter.findIndex(el => el === thing);
+		let temp = filter;
+
+		if (index === -1) { // if the thing is NOT in the filter array
+			temp.push(thing);
+			console.log(temp)
+			setFilter(temp)
+		}
+		else {
+			temp.splice(index, 1);
+			console.log(filter)
+			setFilter(temp)
+			console.log(filter)
+		}
+	}
+
+
 	// let { status, lastUpdated } = selectedTrade;
 	return (
 		<Container>
 			<Content>
-				{ !selectedTrade && <h4>I didn't create a trade feed... so sorry...</h4>}
+				{ !selectedTrade && <h4>Please select a Trade...</h4>}
 				{ selectedTrade && <FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>
 						<TradeOffer disabled={false} account={account} team={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.team : selectedTrade.tradePartner.team} onOfferEdit={onOfferEdit}/>
@@ -98,12 +135,11 @@ const Trade = ({ trades, team, teams, account }) => {
 					</FlexboxGrid.Item>
 				</FlexboxGrid>}
 			</Content>
-			<Sidebar>
-				{!newTrade && !selectedTrade && <IconButton block size='sm' onClick={() => this.toggleNew()} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() =>this.submitProposal()}>Submit Proposal</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => Alert.warning('Rejection has not been implemented...', 4000)}>Reject Proposal</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => Alert.warning('Trashing a trade deal has not been implemented...', 4000)}>Trash Trade</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => this.setState({ selectedTrade: false })}>Close Trade</IconButton>}
+			<Sidebar style={{ backgroundColor: '#898b8c', height: '80vh' }}>
+				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() => submitProposal()}>Submit Proposal</IconButton>}
+				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => rejectProposal()}>Reject Proposal</IconButton>}
+				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
+				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => setSelectedTrade(null)}>Close Trade</IconButton>}
 				<br />
 				{ selectedTrade && <PanelGroup>
 					<Panel header="Trade Details">
@@ -120,9 +156,17 @@ const Trade = ({ trades, team, teams, account }) => {
 						</Panel>
 				</PanelGroup> }
 				{ !selectedTrade && <PanelGroup>
-					<Panel header="Draft Trades">
+					<Panel>
+						{!newTrade && !selectedTrade && <IconButton color={'blue'} block size='sm' onClick={() => setNewTrade(!newTrade)} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
+						<ButtonGroup justified>
+							<Button onClick={() => handleFilter('Draft')}>Drafts</Button>
+							<Button>Completed</Button>
+							<Button>Trashed</Button>
+						</ButtonGroup>
+					</Panel>
+					<Panel>
 						<List hover>
-							{trades.filter(el => el.status.draft === true).map((trade, index) => (
+							{trades.filter(trade => filter.some(el => el === trade.status) ).map((trade, index) => (
 								<List.Item index={index} style={{ cursor: 'pointer', }}  onClick={()=> selectTrade(trade)} >
 									<FlexboxGrid justify="space-around" align="middle">
 										<FlexboxGrid.Item colspan={4}>
@@ -143,12 +187,10 @@ const Trade = ({ trades, team, teams, account }) => {
 							))}							
 						</List>	   
 					</Panel>
-					<Panel header="Pending Trades"></Panel>
-					<Panel header="Completed Trades"></Panel>
 				</PanelGroup> }
 			</Sidebar>
 
-			<Modal size="xs" show={newTrade} onHide={() => setNewTrade(!newTrade)}>
+			<Modal size="xs" show={newTrade} onHide={() => setNewTrade(false)}>
 				<Modal.Header>
 					<Modal.Title>New Trade Submission</Modal.Title>
 				</Modal.Header>
@@ -158,12 +200,12 @@ const Trade = ({ trades, team, teams, account }) => {
 						data={teams.filter(el => el._id !== team._id)}
 						labelKey='name'
 						valueKey='_id'
-						onChange={(value) => this.setState({partner: value})} 
+						onChange={(value) => setPartner(value)} 
 					/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button onClick={() => this.createTrade()}>Create Trade</Button>
-					<Button onClick={() => this.setState({newTrade: false})}>Cancel</Button>
+					<Button disabled={!partner} onClick={() => createTrade()}>Create Trade</Button>
+					<Button onClick={() => setNewTrade(false)}>Cancel</Button>
 				</Modal.Footer>
 			</Modal>
 		</Container>
