@@ -41,8 +41,8 @@ const TradeOffer = (props) => { //trade object
 	// console.log(research)
 
 	const [formValue, setFormValue] = useState({
-		input: "I want all your things!!.",
-		slider: 0,
+		comments: props.offer.comments,
+		megabucks: props.offer.megabucks,
 		aircraft: [],
 		intel: [],
 		research: [],
@@ -55,8 +55,13 @@ const TradeOffer = (props) => { //trade object
 	const readOnly = mode === 'readonly';
 
 	function onEdit(){
-		props.onOfferEdit();
+		// props.onOfferEdit();
 		setMode("normal");
+	}
+
+	const submitEdit = async () => {
+		props.onOfferEdit(formValue);
+		setMode("disabled")
 	}
 
 	return(
@@ -70,7 +75,7 @@ const TradeOffer = (props) => { //trade object
 					accepter={Slider}
 					min={0}
 					max={props.account === undefined ? 100 : props.account.balance}
-					name="slider"
+					name="megabucks"
 					label="Level"
 					style={{ width: 200, margin: '10px 0' }}
 					disabled={disabled}
@@ -164,9 +169,9 @@ const TradeOffer = (props) => { //trade object
 				</Panel> : null }
 
 				<FormGroup >
-					<ControlLabel>Comment Input</ControlLabel>
+					<ControlLabel>Comments</ControlLabel>
 					<FormControl
-					name="input"
+					name="comments"
 					rows={5}
 					width='100%'
 					componentClass="textarea"
@@ -175,7 +180,8 @@ const TradeOffer = (props) => { //trade object
 					/>
 				</FormGroup>
 				{disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
-				{!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => setMode("disabled")}>Save Offer</IconButton> }
+				{!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => submitEdit()}>Save Offer</IconButton> }
+				<Button></Button>
 			</Form>
 		</div>
 	)

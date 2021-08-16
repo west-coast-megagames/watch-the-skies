@@ -128,7 +128,7 @@ AircraftSchema.methods.launch = async function (mission) {
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
 		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
-		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id});
+		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
 
 		const aircraft = await this.save();
 		await aircraft.populateAircraft();

@@ -26,8 +26,24 @@ async function createTrade(data) {
 	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
 }
 
+async function editTrade(data) {
+	let { offer, editor, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+
+	trade.initiator.team._id === editor ? trade.initiator.offer = offer : trade.tradePartner.offer = offer;
+	trade.initiator.ratified = false;
+	trade.tradePartner.ratified = false;
+
+	trade = await trade.save();
+
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
 async function trashTrade(data) {
-	let { trade, trasher } = data;
+	let { trade } = data;
 	trade = await Trade.findById(trade);
 
 	trade.status = 'Trashed';
@@ -36,7 +52,7 @@ async function trashTrade(data) {
 	trade = await trade.populateMe();
 	console.log(trade);
 	nexusEvent.emit('request', 'update', [ trade ]); //
-	return { message : `${trasher} trashed a Trade...`, type: 'success' };
+	return { message : `${data.trasher} trashed a Trade...`, type: 'success' };
 }
 
 async function resolveTrade(req, res) {// I have not tested this much at all will need reviewing
@@ -130,4 +146,4 @@ async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
 	}
 }
 
-module.exports = { resolveTrade, createTrade, trashTrade };
+module.exports = { resolveTrade, createTrade, trashTrade, editTrade };

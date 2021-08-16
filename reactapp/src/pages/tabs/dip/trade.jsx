@@ -19,39 +19,6 @@ const Trade = ({ trades, team, teams, account }) => {
 	const [partner, setPartner] = React.useState(false);
 	const [groups, setGroups] = React.useState([])
   const [filter, setFilter] = React.useState(['Draft']);
-	const [form, setForm] = React.useState({
-		initiator: {
-			team: {},
-			ratified: false,
-			modified: false,
-			offer: {
-				megabucks: 0, 
-				aircraft: [], 
-				//intel: [], 
-				research: [], 
-				//sites: [], 
-				upgrade: [],  
-				comments: []
-			}
-		},//initiator
-		tradePartner: {
-			team: {},
-			ratified: false,
-			modified: false,
-			offer: {
-					megabucks: 0, 
-					aircraft: [], 
-					//intel: [], 
-					research: [], 
-					//sites: [], 
-					upgrade: [],  
-					comments: []
-			}
-		},//initiator
-		status: {draft: true, proposal: false, pending: false, rejected: false, complete: false, deleted: false, },
-		lastUpdated: Date.now(),
-		_id: ""
-	});
 
 		useEffect(() => {
 			if (selectedTrade) {
@@ -86,8 +53,18 @@ const Trade = ({ trades, team, teams, account }) => {
 		setSelectedTrade(selectedTrade);
 	}
 
-	const onOfferEdit = async () => {
-		console.log('hi')
+	const onOfferEdit = async (form) => {
+		let data = {
+			offer: form,
+			trade: selectedTrade._id,
+			editor: team._id
+		};
+		try {
+			// console.log(trade)
+			socket.emit('request', { route: 'trade', action: 'editTrade', data});
+		} catch (err) {
+			Alert.error(`${err.data} - ${err.message}`)
+		};
 	}
 
 	const submitProposal = async () => {
@@ -115,18 +92,25 @@ const Trade = ({ trades, team, teams, account }) => {
 				{ !selectedTrade && <h4>Please select a Trade...</h4>}
 				{ selectedTrade && <FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>
-						<TradeOffer disabled={false} account={account} team={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.team : selectedTrade.tradePartner.team} onOfferEdit={onOfferEdit}/>
+						<TradeOffer 
+							offer={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.offer : selectedTrade.tradePartner.offer} 
+							account={account} 
+							team={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.team : selectedTrade.tradePartner.team} 
+							onOfferEdit={onOfferEdit}/>
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={12}>
-						<TradeOffer team={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.team : selectedTrade.initiator.team} onOfferEdit={onOfferEdit}/>
+						<TradeOffer 
+							team={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.team : selectedTrade.initiator.team} 
+							offer={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.offer : selectedTrade.initiator.offer} 
+							onOfferEdit={onOfferEdit}/>
 					</FlexboxGrid.Item>
 				</FlexboxGrid>}
 			</Content>
-			<Sidebar style={{ backgroundColor: '#898b8c', height: '80vh' }}>
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="check" />} onClick={() => submitProposal()}>Submit Proposal</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => rejectProposal()}>Reject Proposal</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
-				{ selectedTrade && <IconButton block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => setSelectedTrade(null)}>Close Trade</IconButton>}
+			<Sidebar style={{ backgroundColor: '#a3a3a3', height: '80vh' }}>
+				{ selectedTrade && <IconButton  color={'green'} block size='sm' icon={<Icon icon="check" />} onClick={() => submitProposal()}>Submit Proposal</IconButton>}
+				{ selectedTrade && <IconButton  color={'orange'} block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => rejectProposal()}>Reject Proposal</IconButton>}
+				{ selectedTrade && <IconButton  color={'red'} block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
+				{ selectedTrade && <IconButton  color={'blue'} block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => setSelectedTrade(null)}>Close Trade</IconButton>}
 				<br />
 				{ selectedTrade && <PanelGroup>
 					<Panel header="Trade Details">
@@ -141,21 +125,21 @@ const Trade = ({ trades, team, teams, account }) => {
 						</Panel>
 				</PanelGroup> }
 				{ !selectedTrade && <PanelGroup>
-					<Panel>
-						{!newTrade && !selectedTrade && <IconButton color={'blue'} block size='sm' onClick={() => setNewTrade(!newTrade)} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
-						<CheckPicker
-							block
-							sticky
-							data={ groups }
-							value={ filter }
-							onChange={ value => setFilter(value) }
-							placeholder='Trade Filter'
-						/>
-					</Panel>
-					<Panel>
+					<IconButton color={'blue'} block size='sm' onClick={() => setNewTrade(!newTrade)} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>
+					<CheckPicker
+						block
+						sticky
+						searchable={false}
+						data={ groups }
+						value={ filter }
+						onChange={ value => setFilter(value) }
+						placeholder='Trade Filter'
+					/>
+					<hr/>
+					<Panel bodyFill>
 						<List hover>
 							{trades.filter(trade => filter.some(el => el === trade.status) ).map((trade, index) => (
-								<List.Item index={index} style={{ cursor: 'pointer', }}  onClick={()=> selectTrade(trade)} >
+								<List.Item index={index} style={{ cursor: 'pointer', textAlign: 'center', marginLeft: '2px', marginRight: '2px' }} onClick={()=> selectTrade(trade)} >
 									<FlexboxGrid justify="space-around" align="middle">
 										<FlexboxGrid.Item colspan={4}>
 										<Whisper placement="left" trigger="hover" speaker={<Tooltip>{trade.initiator.team.shortName} is {trade.initiator.ratified ? <b style={{ backgroundColor: 'green' }} >Ready!</b>:<b style={{ backgroundColor: 'red' }} >Not Ready!</b>}   </Tooltip>}>
@@ -163,7 +147,12 @@ const Trade = ({ trades, team, teams, account }) => {
 										</Whisper>
 										</FlexboxGrid.Item>
 										<FlexboxGrid.Item colspan={12}>
-											Trade with {trade.initiator.team._id === team._id ? trade.tradePartner.team.shortName : trade.initiator.team.shortName}
+											<b>Trade with {trade.initiator.team._id === team._id ? trade.tradePartner.team.shortName : trade.initiator.team.shortName}</b>	
+											<p>
+												{ trade.status === 'Draft' && <Tag color="orange">Draft</Tag> }
+												{ trade.status === 'Trashed' && <Tag color="red">Trashed</Tag> }
+												{ trade.status === 'Completed' && <Tag color="green">Completed</Tag> }
+											</p>
 										</FlexboxGrid.Item>
 										<FlexboxGrid.Item colspan={4}>
 											<Whisper placement="left" trigger="hover" speaker={<Tooltip>{trade.tradePartner.team.shortName} is {trade.tradePartner.ratified ? <b style={{ backgroundColor: 'green' }} >Ready!</b>:<b style={{ backgroundColor: 'red' }} >Not Ready!</b>}   </Tooltip>}>
@@ -173,9 +162,6 @@ const Trade = ({ trades, team, teams, account }) => {
 									</FlexboxGrid>												
 								</List.Item>
 							))}				
-							{filter.map((fil, index) => (
-								<List.Item>{fil}</List.Item>
-							))}			
 						</List>	   
 					</Panel>
 				</PanelGroup> }
