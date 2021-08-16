@@ -30,9 +30,7 @@ async function trashTrade(data) {
 	let { trade, trasher } = data;
 	trade = await Trade.findById(trade);
 
-	trade.status.draft = false;
-	trade.status.rejected = true;
-	trade.status.deleted = true;
+	trade.status = 'Trashed';
 
 	trade = await trade.save();
 	trade = await trade.populateMe();

@@ -131,11 +131,9 @@ const Trade = ({ trades, team, teams, account }) => {
 				{ selectedTrade && <PanelGroup>
 					<Panel header="Trade Details">
 						<TagGroup>
-							{ selectedTrade.status.draft && <Tag color="red">Draft</Tag> }
-							{ selectedTrade.status.pending && <Tag color="yellow">Pending Execution</Tag> }
-							{ selectedTrade.status.rejected && <Tag color="red">Rejected</Tag> }
-							{ selectedTrade.status.proposal && <Tag color="yellow">Awaiting Ratification</Tag> }
-							{ selectedTrade.status.proposal && <Tag color="green">Completed</Tag> }
+							{ selectedTrade.status === 'Draft' && <Tag color="orange">Draft</Tag> }
+							{ selectedTrade.status === 'Trashed' && <Tag color="red">Trashed</Tag> }
+							{ selectedTrade.status === 'Completed' && <Tag color="green">Completed</Tag> }
 						</TagGroup>
 						<p><b>Last Updated:</b> {`${new Date(selectedTrade.lastUpdated).toLocaleTimeString()} - ${new Date(selectedTrade.lastUpdated).toDateString()}`}</p>
 					</Panel>
@@ -174,7 +172,10 @@ const Trade = ({ trades, team, teams, account }) => {
 										</FlexboxGrid.Item>
 									</FlexboxGrid>												
 								</List.Item>
-							))}							
+							))}				
+							{filter.map((fil, index) => (
+								<List.Item>{fil}</List.Item>
+							))}			
 						</List>	   
 					</Panel>
 				</PanelGroup> }
