@@ -38,7 +38,7 @@ const AccountsTable = (props) => {
 					<Cell dataKey="name" />
 			</Column>
 			<Column align="center" width={80}>
-					<HeaderCell title="Total" summary={total}>Total {total}</HeaderCell>
+					<HeaderCell title="Total" summary={total}>Total ({total})</HeaderCell>
 					<Cell dataKey="balance" />
 			</Column>
 		</Table>
