@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { gameServer } from "../../../config";
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip, Input, ButtonGroup } from 'rsuite';
+import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip, CheckPicker, Input, ButtonGroup } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 import { getTreasuryAccount } from '../../../store/entities/accounts';
 import { getCompletedResearch } from '../../../store/entities/research';
@@ -17,6 +17,7 @@ const Trade = ({ trades, team, teams, account }) => {
 	const [selectedTrade, setSelectedTrade] = React.useState(null);
 	const [newTrade, setNewTrade] = React.useState(false);
 	const [partner, setPartner] = React.useState(false);
+	const [groups, setGroups] = React.useState([])
   const [filter, setFilter] = React.useState(['Draft']);
 	const [form, setForm] = React.useState({
 		initiator: {
@@ -58,8 +59,12 @@ const Trade = ({ trades, team, teams, account }) => {
 				// console.log(trade);
 				setSelectedTrade(trade);		
 			}
+			let groups = [];
+			for (let trade of trades) {
+				if (!groups.some(el => el.value === trade.status)) groups.push({ value: trade.status, label: trade.status });
+			}
+			setGroups(groups);
 		}, [trades, selectedTrade]);
-
 
 	const createTrade = async () => {
 		console.log('Creating a new Trade...');
@@ -103,24 +108,6 @@ const Trade = ({ trades, team, teams, account }) => {
 		setSelectedTrade(false);
 	}
 
-	const handleFilter = async (thing) => {
-		const index = filter.findIndex(el => el === thing);
-		let temp = filter;
-
-		if (index === -1) { // if the thing is NOT in the filter array
-			temp.push(thing);
-			console.log(temp)
-			setFilter(temp)
-		}
-		else {
-			temp.splice(index, 1);
-			console.log(filter)
-			setFilter(temp)
-			console.log(filter)
-		}
-	}
-
-
 	// let { status, lastUpdated } = selectedTrade;
 	return (
 		<Container>
@@ -158,11 +145,14 @@ const Trade = ({ trades, team, teams, account }) => {
 				{ !selectedTrade && <PanelGroup>
 					<Panel>
 						{!newTrade && !selectedTrade && <IconButton color={'blue'} block size='sm' onClick={() => setNewTrade(!newTrade)} icon={<Icon icon="exchange" />}>Start New Trade</IconButton>}
-						<ButtonGroup justified>
-							<Button onClick={() => handleFilter('Draft')}>Drafts</Button>
-							<Button>Completed</Button>
-							<Button>Trashed</Button>
-						</ButtonGroup>
+						<CheckPicker
+							block
+							sticky
+							data={ groups }
+							value={ filter }
+							onChange={ value => setFilter(value) }
+							placeholder='Trade Filter'
+						/>
 					</Panel>
 					<Panel>
 						<List hover>
