@@ -19,9 +19,11 @@ async function createTrade(data) {
 	let newTrade = new Trade();
 	newTrade.initiator.team = initiator;
 	newTrade.tradePartner.team = tradePartner;
-	newTrade = await newTrade.save();
+	await newTrade.save();
+	newTrade = await Trade.findById(newTrade._id)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code'); 
 
-	await newTrade.populateMe();
 	nexusEvent.emit('request', 'create', [ newTrade ]); //
 	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
 }
@@ -38,6 +40,38 @@ async function editTrade(data) {
 
 	trade = await trade.save();
 
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function approveTrade(data) {
+	let { ratifier, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+
+	trade.initiator.team._id == ratifier ? trade.initiator.ratified = true : trade.tradePartner.ratified = true;
+	trade = await trade.save();
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function rejectTrade(data) {
+	let { rejecter, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+
+	trade.initiator.team._id == rejecter ? trade.initiator.ratified = false : trade.tradePartner.ratified = false;
+	trade = await trade.save();
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
 	nexusEvent.emit('request', 'update', [ trade ]); //
 	return { message : `Trade Edited...`, type: 'success' };
 }
@@ -146,4 +180,4 @@ async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
 	}
 }
 
-module.exports = { resolveTrade, createTrade, trashTrade, editTrade };
+module.exports = { resolveTrade, createTrade, trashTrade, editTrade, approveTrade, rejectTrade };

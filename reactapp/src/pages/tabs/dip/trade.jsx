@@ -67,12 +67,30 @@ const Trade = ({ trades, team, teams, account }) => {
 		};
 	}
 
-	const submitProposal = async () => {
-		console.log('hi')
+	const submitApproval = async () => {
+		let data = {
+			trade: selectedTrade._id,
+			ratifier: team._id
+		};
+		try {
+			// console.log(trade)
+			socket.emit('request', { route: 'trade', action: 'approveTrade', data});
+		} catch (err) {
+			Alert.error(`${err.data} - ${err.message}`)
+		};
 	}
 
 	const rejectProposal = async () => {
-		console.log('hi')
+		let data = {
+			trade: selectedTrade._id,
+			rejecter: team._id
+		};
+		try {
+			// console.log(trade)
+			socket.emit('request', { route: 'trade', action: 'rejectTrade', data});
+		} catch (err) {
+			Alert.error(`${err.data} - ${err.message}`)
+		};
 	}
 
 	const trashProposal = async () => {
@@ -93,22 +111,28 @@ const Trade = ({ trades, team, teams, account }) => {
 				{ selectedTrade && <FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>
 						<TradeOffer 
+							submitApproval={submitApproval}
+							rejectProposal={rejectProposal}
 							offer={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.offer : selectedTrade.tradePartner.offer} 
+							ratified={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.ratified : selectedTrade.tradePartner.ratified} 
 							account={account} 
+							myTeam={team}
 							team={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.team : selectedTrade.tradePartner.team} 
 							onOfferEdit={onOfferEdit}/>
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={12}>
 						<TradeOffer 
+							submitApproval={submitApproval}
+							rejectProposal={rejectProposal}
+							myTeam={team}
 							team={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.team : selectedTrade.initiator.team} 
 							offer={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.offer : selectedTrade.initiator.offer} 
+							ratified={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.ratified : selectedTrade.initiator.ratified} 
 							onOfferEdit={onOfferEdit}/>
 					</FlexboxGrid.Item>
 				</FlexboxGrid>}
 			</Content>
 			<Sidebar style={{ backgroundColor: '#a3a3a3', height: '80vh' }}>
-				{ selectedTrade && <IconButton  color={'green'} block size='sm' icon={<Icon icon="check" />} onClick={() => submitProposal()}>Submit Proposal</IconButton>}
-				{ selectedTrade && <IconButton  color={'orange'} block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => rejectProposal()}>Reject Proposal</IconButton>}
 				{ selectedTrade && <IconButton  color={'red'} block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
 				{ selectedTrade && <IconButton  color={'blue'} block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => setSelectedTrade(null)}>Close Trade</IconButton>}
 				<br />

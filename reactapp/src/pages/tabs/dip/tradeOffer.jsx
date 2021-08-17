@@ -179,9 +179,23 @@ const TradeOffer = (props) => { //trade object
 					readOnly={readOnly}
 					/>
 				</FormGroup>
-				{disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
-				{!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => submitEdit()}>Save Offer</IconButton> }
-				<Button></Button>
+				<FlexboxGrid>
+					<FlexboxGrid.Item colspan={12} >
+						{disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
+						{!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => submitEdit()}>Save Offer</IconButton> }
+					</FlexboxGrid.Item>
+					<FlexboxGrid.Item colspan={12} >
+						{props.myTeam._id === props.team._id && <div>
+							{ props.ratified && <IconButton  color={'orange'} block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => props.rejectProposal()}>Reject Proposal</IconButton>}
+							{ !props.ratified && <IconButton  color={'green'} block size='sm' icon={<Icon icon="check" />} onClick={() => props.submitApproval()}>Approve Proposal</IconButton>}
+						</div>}
+						{props.myTeam._id !== props.team._id && <div>
+							{ props.ratified && <Tag color='green'>Ratify</Tag>}
+							{ !props.ratified && <Tag color='red'>Reject</Tag>}
+						</div>}
+
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
 			</Form>
 		</div>
 	)
