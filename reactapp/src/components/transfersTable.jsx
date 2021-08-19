@@ -23,7 +23,7 @@ class AutoTransfers extends Component {
     
         for (let account of accounts) {
             // console.log(account)
-            for (let transfer of account.autoTransfers) {
+            for (let transfer of account.queue) {
                 console.log(transfer)
                 if (transfer !== null) {
                     let index = this.state.transfers.findIndex( t => t._id === transfer._id);

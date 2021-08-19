@@ -25,7 +25,7 @@ router.get('/accounts', async function (req, res) {
 // @Desc    Post a new account
 // @access  Public
 router.post('/account', async function (req, res) {
-	const { teamId, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
+	const { teamId, name, code, balance, deposits, withdrawals, queue } = req.body;
 
 	const team = await Team.findById({ _id: teamId });
 	if (!team) {
@@ -35,7 +35,7 @@ router.post('/account', async function (req, res) {
 
 	const newAccount = new Account(
 		// eslint-disable-next-line no-undef
-		{ team: teamId, name, code, balance, deposits, withdrawals, autoTransfers, owner }
+		{ team: teamId, name, code, balance, deposits, withdrawals, queue, owner }
 	);
 	const { error } = validateAccount(newAccount);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -131,13 +131,13 @@ router.patch('/delAutoTransfer', async function (req, res) {
 	logger.info(`${req.body}`);
 	const { account_id, transfer_id } = req.body;
 	const account = await Account.findOne({ _id: account_id });
-	logger.info(`${account.autoTransfers}`);
-	const indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
+	logger.info(`${account.queue}`);
+	const indexOf = account.queue.findIndex((t => t._id == transfer_id));
 	logger.info(`${indexOf}`);
-	account.autoTransfers.splice(indexOf, 1);
-	logger.info(`${account.autoTransfers.length}`);
+	account.queue.splice(indexOf, 1);
+	logger.info(`${account.queue.length}`);
 
-	account.markModified('autoTransfers');
+	account.markModified('queue');
 	await account.save();
 	res.status(200).send('Automatic transfer deleted!');
 	nexusEvent.emit('updateAccounts');
