@@ -1,4 +1,4 @@
-import React, {Component} from 'react'; // React import
+import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
 import AccountsTable from '../../../components/accountsTable'
@@ -21,99 +21,110 @@ const formatPickerData = (accounts) => {
   return data;
 }
 
-class Budget extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			data: formatPickerData(this.props.accounts),
-			account: this.props.account,
-			account_id: this.props.account !== undefined ? this.props.account._id : undefined,
-			transactions: []
-		}
-		this.handleChange = this.handleChange.bind(this);
-		this.addTransfer = this.addTransfer.bind(this);
-		this.delTransfer = this.delTransfer.bind(this);
-	}
+const BudgetTab = (props) => {
+	const [account, setAccount] = React.useState(props.account); // The currently selected account
+	const [type, setType] = React.useState('Megabucks'); // The currently selected resource
+	const [resourceList, setResourceList] = React.useState([{ value: 'Megabucks', label: 'Megabucks' }, { value: 'Red Murcury', label: 'Red Murcury' }]); // List of resources
+	const [options, setOptions] = React.useState([]); // The selection options
+	const [transactions, setTransactions] = React.useState([]); // Transactions to be pushed
 
-	componentDidUpdate(prevProps) {
-		if (prevProps.lastFetch !== this.props.lastFetch) {
-			let newAccount = this.props.accounts.find(account => account._id === this.state.account_id);
-			let data = formatPickerData(this.props.accounts);
-			this.setState({ account: newAccount, data });
-		}
-	}
+	useEffect(() => {
+		setOptions(formatPickerData(props.accounts))
+		setAccount(props.accounts.find(el => el._id === account._id));
+	}, [props.accounts, props.lastFetch, account]);
 
-	handleChange = (value) => {
-		let accountIndex = this.props.accounts.findIndex(account => account._id === value);
-		let account = this.props.accounts[accountIndex];
-		let account_id = value;
-		this.setState({ account, account_id })
+	useEffect(() => {
+		let accountOptions = []
+		for (let account of props.accounts) {
+			let resource = account.resources.find(el => el.type === type);
+			let balance = resource ? resource.balance : 0;
+			let option = {
+				_id: account._id,
+				label: `${account.name} | Balance: $M${balance}`
+			}
+			accountOptions.push(option);
+		}
+		setOptions(accountOptions);
+	}, [props.accounts, type])
+
+	const handleChange = (value) => {
+		let accountIndex = props.accounts.findIndex(account => account._id === value);
+		setAccount(props.accounts[accountIndex]);
 	};
 
-	addTransfer = (schedule) => {
-		let transfer = { id: count, to: undefined, from: undefined, amount: 0, resource:'Megabucks', note: undefined }
+	const addTransfer = (schedule) => {
+		let transfer = { id: count, to: undefined, from: undefined, amount: 0, resource: type, note: undefined }
 		if (schedule === true) transfer.schedule = true;
-		let transactions = this.state.transactions;
-		transactions.push(transfer)
-		this.setState({ transactions })
+		let list = transactions;
+		list.push(transfer);
+		setTransactions(list);
 		count++;
 	};
 
-	delTransfer = (id) => {
-		let transactions = this.state.transactions;
-		let index = transactions.findIndex(el => el.id === id)
-		if (transactions.length === 1) {
-			transactions = []
+	const delTransfer = (id) => {
+		let list = transactions;
+		let index = list.findIndex(el => el.id === id)
+		if (list.length === 1) {
+			list = []
 		} else {
-			transactions.splice(index, 1);
+			list.splice(index, 1);
 		}
-		this.setState({ transactions })
+		setTransactions(list);
 	}
 
-	render() {
-		if (!this.props.account) {
-			return(<Loader center content="No accounts Loaded..." vertical />);
-		};
+	if (!props.account) {
+		return(<Loader center content="No accounts Loaded..." vertical />);
+	};
 
-		return (
-			<Container className="budget-tab">
-				<Container className="transfers">
-					<Content>
-						<h4>{this.state.account.name} Account</h4>
-						{/* <AccountGraph
-							account={this.state.account}
-						/> */}
-						<h4>Automatic Transfers</h4>
-						<AutoTransfers
-							accounts={ this.props.accounts }
-							Alert={ this.props.alert }
+	// TODO John Review if AutoTransfers needs to be updated for account.autoTransfer change to account.queue
+	return (
+		<Container className="budget-tab">
+			<Container className="transfers">
+				<Content>
+					<h4>{account.name} Account</h4>
+					{/* <AccountGraph
+						account={this.state.account}
+					/> */}
+					<h4>Automatic Transfers</h4>
+					<AutoTransfers
+						accounts={ props.accounts }
+						Alert={ props.alert }
+					/>
+				</Content>
+					<Sidebar>
+						<SelectPicker
+							block
+							style={{paddingBottom: '5px'}}
+							searchable={false}
+							cleanable={false}
+							data={ options } 
+							value={ account._id }
+							placeholder='Select account for graph'
+							onChange={handleChange}
+							valueKey='_id'
 						/>
-					</Content>
-						<Sidebar>
-							<SelectPicker
-								block
-								style={{paddingBottom: '5px'}}
-								searchable={false}
-								cleanable={false}
-								data={ this.state.data } 
-								value={ this.state.account_id }
-								placeholder='Select account for graph'
-								onChange={this.handleChange}
-								valueKey='_id'
-							/>
-							<Button block onClick={() => this.addTransfer(false)}>New Transfer</Button>
-							<Button block onClick={() => this.addTransfer(true)}>Set Automatic Transfer</Button>
-							<AccountsTable accounts={ this.props.accounts } />
-						</Sidebar>
-					</Container>
-					{this.state.transactions.map(el => (
-						<Modal show={this.state.transactions.length > 0} size='xs' onHide={() => this.delTransfer(el.id)}>
-						<TransferForm key={el.id} transfer={el} delTransfer={this.delTransfer} {...this.props} />
-						</Modal>
-					))}
-			</Container>
-		);
-	}
+						<SelectPicker
+							block
+							style={{paddingBottom: '5px'}}
+							searchable={false}
+							cleanable={false}
+							data={ resourceList } 
+							value={ type }
+							placeholder='Select Desired resource'
+							onChange={ value => setType(value) }
+						/>
+						<Button block onClick={() => addTransfer(false)}>New Transfer</Button>
+						<Button block onClick={() => addTransfer(true)}>Set Automatic Transfer</Button>
+						<AccountsTable accounts={ props.accounts } resource={ type } />
+					</Sidebar>
+				</Container>
+				{transactions.map(el => (
+					<Modal show={transactions.length > 0} size='xs' onHide={() => delTransfer(el.id)}>
+					<TransferForm key={el.id} transfer={el} delTransfer={delTransfer} {...props} />
+					</Modal>
+				))}
+		</Container>
+	);
 }
 
 const mapStateToProps = state => ({
@@ -125,4 +136,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Budget);
+export default connect(mapStateToProps, mapDispatchToProps)(BudgetTab);

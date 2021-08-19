@@ -1,7 +1,7 @@
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const nexusEvent = require('../../middleware/events/events');
-const { RepairReport } = require('../reports/reportClasses');
+const { RepairReport } = require('../../models/report');
 const Debugger = require('debug')('app:construction:repair');
 
 async function repairSequence () {

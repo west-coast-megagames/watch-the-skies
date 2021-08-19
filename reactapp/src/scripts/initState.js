@@ -13,6 +13,7 @@ import { loadaccounts } from '../store/entities/accounts';
 import { loadBlueprints } from '../store/entities/blueprints';
 import { loadReports } from '../store/entities/reports';
 import { loadUpgrades } from '../store/entities/upgrades';
+import { loadTrades } from '../store/entities/trades';
 
 let loader = {
 	accounts: loadaccounts,
@@ -26,6 +27,7 @@ let loader = {
 	research: loadresearch,
 	sites: loadsites,
 	teams: loadteams,
+	trades: loadTrades,
 	upgrades: loadUpgrades,
 	zones: loadzones
 }
@@ -36,10 +38,9 @@ export default function loadState() {
 	let slices = Object.keys(state.entities).sort();
 
 	let func = undefined;
-
 	for (let section of slices) {
 		let slice = state.entities[section];
-
+		console.log(section)
 		func = loader[section];
 		if (func) store.dispatch(func());
 	}

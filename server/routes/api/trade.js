@@ -16,7 +16,8 @@ router.get('/', async function (req, res) {
 	logger.info('GET Route: api/trade requested...');
 	try {
 		const trade = await Trade.find()
-			.sort({ team: 1 });
+			.populate('initiator.team', 'shortName name code')
+			.populate('tradePartner.team', 'shortName name code');
 		res.status(200).json(trade);
 	}
 	catch (err) {

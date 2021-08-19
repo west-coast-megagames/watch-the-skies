@@ -3,14 +3,93 @@ const routeDebugger = require('debug')('app:routes');
 const { Account } = require('../../models/account');
 const { Aircraft } = require ('../../models/aircraft');
 const { Upgrade } = require ('../../models/upgrade');
-const { TradeReport } = require ('../../wts/reports/reportClasses');
+const { TradeReport } = require ('../../models/report');
 
 const { Trade } = require('../../models/trade');
 const { Research } = require('../../models/research');
 const { techTree } = require('../../wts/research/techTree');
+const { Team } = require('../../models/team');
+const nexusEvent = require('../../middleware/events/events');
 
+async function createTrade(data) {
+	let { initiator, tradePartner } = data;
+	initiator = await Team.findById(initiator);
+	tradePartner = await Team.findById(tradePartner);
 
-async function resolveTrade (req, res) {// I have not tested this much at all will need reviewing
+	let newTrade = new Trade();
+	newTrade.initiator.team = initiator;
+	newTrade.tradePartner.team = tradePartner;
+	await newTrade.save();
+	newTrade = await Trade.findById(newTrade._id)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code'); 
+
+	nexusEvent.emit('request', 'create', [ newTrade ]); //
+	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
+}
+
+async function editTrade(data) {
+	let { offer, editor, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+
+	trade.initiator.team._id === editor ? trade.initiator.offer = offer : trade.tradePartner.offer = offer;
+	trade.initiator.ratified = false;
+	trade.tradePartner.ratified = false;
+
+	trade = await trade.save();
+
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function approveTrade(data) {
+	let { ratifier, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+
+	trade.initiator.team._id == ratifier ? trade.initiator.ratified = true : trade.tradePartner.ratified = true;
+	trade = await trade.save();
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function rejectTrade(data) {
+	let { rejecter, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+
+	trade.initiator.team._id == rejecter ? trade.initiator.ratified = false : trade.tradePartner.ratified = false;
+	trade = await trade.save();
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function trashTrade(data) {
+	let { trade } = data;
+	trade = await Trade.findById(trade);
+
+	trade.status = 'Trashed';
+
+	trade = await trade.save();
+	trade = await trade.populateMe();
+	console.log(trade);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `${data.trasher} trashed a Trade...`, type: 'success' };
+}
+
+async function resolveTrade(req, res) {// I have not tested this much at all will need reviewing
 	const { initiator, tradePartner } = req.body;
 	let trade = await Trade.findById({ _id: req.body._id });
 
@@ -40,7 +119,7 @@ async function resolveTrade (req, res) {// I have not tested this much at all wi
 
 }// resolveTrade
 
-async function exchangeUpgrade (transferred, newOwner) {
+async function exchangeUpgrade(transferred, newOwner) {
 	for await (const thing of transferred) {
 		// check what currently has the upgrade
 		try{
@@ -55,7 +134,7 @@ async function exchangeUpgrade (transferred, newOwner) {
 	}// for thing
 }// exchangeUpgrade
 
-async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
+async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
 	// case "megabucks":
 	routeDebugger('Working on Megabucks');
 	if (senderOffer.megabucks > 0) {
@@ -63,7 +142,7 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 			const accountFrom = await Account.findOne({ 'team' : senderTeam, 'name' : 'Treasury' });
 			const accountTo = await Account.findOne({ 'team' : opposingTeam, 'name' : 'Treasury' });
 			await accountFrom.withdrawal({ from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so' });
-			await accountTo.deposit({from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so'});
+			await accountTo.deposit({ from: accountFrom._id, to: accountTo._id, amount: senderOffer.megabucks, note: 'Trade with so and so' });
 		}
 		catch(err) {
 			console.log(`ERROR WITH MEGABUCK TRADE: ${err}`);
@@ -101,4 +180,4 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	}
 }
 
-module.exports = { resolveTrade };
+module.exports = { resolveTrade, createTrade, trashTrade, editTrade, approveTrade, rejectTrade };

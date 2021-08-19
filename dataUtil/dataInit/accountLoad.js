@@ -103,7 +103,8 @@ async function loadAccount(t_id, tName, aData, rCounts) {
 				owner: tName,
 				team: t_id,
 				resources: [],
-				gameState: []
+				gameState: [],
+				queue: []
 			};
 			const resource = 'Megabucks';
 			newAccount.resources.push({ type: resource, balance: aData.balance });

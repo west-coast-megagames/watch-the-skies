@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { gameServer } from '../config';
 
+// TODO John Review if AutoTransfers needs to be updated for account.autoTransfer change to account.queue 
 class AutoTransfers extends Component {
     state = {
         transfers: []

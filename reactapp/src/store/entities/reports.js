@@ -30,14 +30,19 @@ const slice = createSlice({
     },
     reportsUpdated: (reports, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('reports updated!', 2000);
-      reports.list = action.payload;
+      const index = reports.list.findIndex(el => el._id === action.payload._id);
+			reports.list[index] = action.payload;
       reports.lastFetch = Date.now();
     },
     reportAdded: (reports, action) => {
       console.log(`${action.type} Dispatched`)
       reports.list.push(action.payload);
-    }
+    },
+		reportDeleted: (report, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = report.list.findIndex(el => el._id === action.payload._id);
+      report.list.splice(index, 1);
+    },
   }
 });
 
@@ -47,7 +52,8 @@ export const {
   reportsReceived,
   reportsRequested,
   reportsRequestFailed,
-  reportsUpdated
+  reportsUpdated,
+	reportDeleted
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export

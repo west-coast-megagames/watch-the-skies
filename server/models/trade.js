@@ -7,6 +7,7 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const Gameclock = require('../wts/gameClock/gameClock');
+const nexusEvent = require('../middleware/events/events');
 
 const ActivitySchema = new Schema({
 	header: { type: String, default: 'Trade Event' },
@@ -16,6 +17,7 @@ const ActivitySchema = new Schema({
 });
 
 const TradeSchema = new Schema({
+	model: { type: String, default: 'Trade' },
 	initiator: {
 		team: { type: ObjectId, ref: 'Team' },
 		ratified: { type: Boolean, default: false },
@@ -27,7 +29,7 @@ const TradeSchema = new Schema({
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
 			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
-			comments: []
+			comments: { type: String, default: 'No Comments' }
 		} // initiator
 	},
 	tradePartner: {
@@ -41,17 +43,10 @@ const TradeSchema = new Schema({
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
 			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
-			comments: []
+			comments: { type: String, default: 'No Comments' }
 		} // tradePartner
 	},
-	status: {
-		draft: { type: Boolean, default: true },
-		proposal: { type: Boolean, default: false },
-		pending: { type: Boolean, default: false },
-		rejected: { type: Boolean, default: false },
-		complete: { type: Boolean, default: false },
-		deleted: { type: Boolean, default: false }
-	},
+	status: { type: String, default: 'Draft', enum: ['Draft', 'Rejected', 'Trashed', 'Completed' ] },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() }
 });// const TradeSchema
@@ -101,6 +96,36 @@ TradeSchema.methods.saveActivity = async (trade, incHeader) => {
 	trade.activityFeed.push(activity);
 	trade = await trade.save();
 	return trade;
+};
+
+TradeSchema.methods.editTrade = async (data) => {
+	logger.info('Attempting to edit trade...');
+	try {
+		const { offer, editor } = data;
+
+		this.initiator.team._id === editor ? this.initiator.offer = offer : this.tradePartner.offer = offer;
+		this.initiator.ratified = false;
+		this.tradePartner.ratified = false;
+
+		const trade = await trade.save();
+		await trade.populateMe();
+		nexusEvent.emit('request', 'update', [ trade ]); //
+	}
+	catch (err) {
+		if (err.status !== undefined) {
+			nexusError(err.message, err.status);
+		}
+		else {
+			nexusError(err.message, 500);
+		}
+	}
+};
+
+
+TradeSchema.methods.populateMe = function () {
+	return this
+		.populate('team', 'name shortName')
+		.execPopulate();
 };
 
 const Trade = mongoose.model('Trade', TradeSchema);

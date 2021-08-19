@@ -6,6 +6,7 @@ const accountDebugging = require('debug')('model:accountSystem'); // Debug conso
 const { Transaction } = require('./report'); // WTS Game log function
 
 const clock = require('../wts/gameClock/gameClock');
+const nexusEvent = require('../middleware/events/events');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -33,7 +34,7 @@ const AccountSchema = new Schema({
 	code: { type: String, minlength: 3, maxlength: 3, required: true },
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
-	queue: [TransferSchema], // JEFF - I changed this property
+	queue: [TransferSchema],
 	gameState: []
 });
 
@@ -62,13 +63,14 @@ AccountSchema.methods.deposit = async function (transaction) {
 		accountDebugging(`${amount} ${resource} deposited into ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		await this.report(transaction, 'Withdrawal')
+		await this.report(transaction, 'Deposit');
 
-		const account = await this.save();
-		console.log(this);
+		let account = await this.save();
+		account = await account.populateMe();
+		console.log(account);
 
-		// TODO - Notify/Update team via socket-event
-
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ account ]); //
 		return account;
 
 	}
@@ -107,11 +109,10 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 
 		await this.report(transaction, transaction.to ? 'Withdrawal' : 'Expense');
 
-		const account = await this.save();
-		console.log(this);
+		let account = await this.save();
+		account = await account.populateMe();
 
-		// TODO - Notify/Update team via socket-event
-		
+		nexusEvent.emit('request', 'update', [ account ]); // Notify/Update team via socket-event
 		return account;
 	}
 	catch (err) {
@@ -132,11 +133,14 @@ AccountSchema.methods.schedule = async function (transaction) {
 
 		accountDebugging(`${this.owner} is setting up an automatic payment!`);
 
-		await this.save();
 		console.log(`${this.owner} has set up an auto-transfer for ${this.name}`);
-		
-		// TODO - Notify/Update team via socket-event
 
+		let account = await this.save();
+		account = await account.populateMe();
+		// console.log(account);
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ account ]); // Scott Note: Untested might not work
 		return `${this.owner} scheduled a transaction`;
 	}
 	catch (err) {
@@ -153,30 +157,30 @@ AccountSchema.methods.resolveQueue = async function () {
 	let count = 0;
 	for await (const transaction of this.queue) {
 		let complete = false;
-		if ( transaction !== null) complete = await this.transfer(transaction);
+		if (transaction !== null) complete = await this.transfer(transaction);
 		if (complete) {
-			let index = this.queue.findIndex( el => el.id === transaction.id);
+			const index = this.queue.findIndex(el => el.id === transaction.id);
 			this.queue.splice(index, 1);
 			count++;
 		}
 	}
 
-	let message = `${count} transactions completed for ${this.owner}'s ${this.name} account`;
+	const message = `${count} transactions completed for ${this.owner}'s ${this.name} account`;
 	console.log(message);
 	return message;
-}
+};
 
 // METHOD - transfer
 // IN - Transaction Object { team_id, to, from, amount, note }
 // OUT: VOID
 // PROCESS: Transfers resources from the initiator to the counterparty
 AccountSchema.methods.transfer = async function (transaction) {
-	const { resource, to, amount, note } = transaction;
+	const { to } = transaction; // {} resource, to, amount, note }
 
 	try {
 		await this.withdrawal(transaction);
 
-		let counterparty = await Account.findOne({ _id: to });
+		const counterparty = await Account.findOne({ _id: to });
 		await counterparty.deposit(transaction);
 
 		accountDebugging(`${this.owner}s transfer completed!`);
@@ -193,7 +197,7 @@ AccountSchema.methods.transfer = async function (transaction) {
 AccountSchema.methods.report = async function (transaction, type) {
 	const { from, to, resource, amount, note } = transaction;
 	try {
-		const log = new Transaction({
+		let report = new Transaction({
 			date: Date.now(),
 			timestamp: clock.getTimeStamp(),
 			team: this.team,
@@ -204,10 +208,14 @@ AccountSchema.methods.report = async function (transaction, type) {
 			note
 		});
 
-		if (type === 'Deposit') log.counterparty = from;
-		if (type === 'Withdrawal') log.counterparty = to;
+		if (type === 'Deposit') report.counterparty = from;
+		if (type === 'Withdrawal') report.counterparty = to;
 
-		await log.save();
+		report = await report.save();
+		// report = await report.populateMe();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ report ]); // Scott Note: Untested might not work
 		console.log(`${type} report created...`);
 	}
 	catch (err) {
@@ -230,6 +238,12 @@ AccountSchema.methods.validateAccount = async function () {
 	if (error != undefined) nexusError(`${error}`, 400);
 
 	await validTeam(this.team);
+};
+
+AccountSchema.methods.populateMe = function () {
+	return this
+		.populate('team', 'name shortName')
+		.execPopulate();
 };
 
 const Account = mongoose.model('account', AccountSchema); // Creation of Account Model

@@ -32,13 +32,26 @@ const slice = createSlice({
     countryAdded: (countries, action) => {
       console.log(`${action.type} Dispatched`)
       countries.list.push(action.payload);
-    }
+    },
+		countryUpdated: (countries, action) => {
+      console.log(`${action.type} Dispatched...`);
+			const index = countries.list.findIndex(el => el._id === action.payload._id);
+			countries.list[index] = action.payload;
+      countries.lastFetch = Date.now();
+    },
+		countryDeleted: (countries, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = countries.list.findIndex(el => el._id === action.payload._id);
+      countries.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   countryAdded,
+	countryUpdated,
+	countryDeleted,
   countriesReceived,
   countriesRequested,
   countriesRequestFailed

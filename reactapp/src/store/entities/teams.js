@@ -29,14 +29,27 @@ const slice = createSlice({
     teamAdded: (teams, action) => {
       console.log(`${action.type} Dispatched`)
       teams.list.push(action.payload);
-    }
+    },
+		teamUpdated: (team, action) => {
+      console.log(`${action.type} Dispatched...`);
+      const index = team.list.findIndex(el => el._id === action.payload._id);
+			team.list[index] = action.payload;
+      team.lastFetch = Date.now();
+    },
+		teamDeleted: (team, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = team.list.findIndex(el => el._id === action.payload._id);
+      team.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   teamAdded,
+	teamUpdated,
   teamsReceived,
+	teamDeleted,
   teamsRequested,
   teamsRequestFailed
 } = slice.actions;

@@ -26,9 +26,9 @@ const BalanceHeader = (props) => {
 		<div>
 			<Affix>
 				<h5 style={{display: 'inline'}}>{ props.title }</h5>
-				<Tag style={{display: 'inline', float: 'right'}} color={ color }>$ { account.balance } MB</Tag>
+				<Tag style={{display: 'inline', float: 'right'}} color={ color }>$ { account.resources.find(el => el.type === 'Megabucks').balance } MB</Tag>
 				<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} > { account.name } Balance:</h6>
-				<hr />
+				<hr style={{ marginBottom: '5px' }} />
 			</Affix>
 		</div>
 	);

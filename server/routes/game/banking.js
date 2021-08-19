@@ -24,6 +24,7 @@ router.get('/accounts', async function (req, res) {
 // @route   POST api/banking/account
 // @Desc    Post a new account
 // @access  Public
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 router.post('/account', async function (req, res) {
 	const { teamId, name, code, balance, deposits, withdrawals, queue } = req.body;
 

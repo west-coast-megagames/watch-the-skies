@@ -5,10 +5,11 @@ const config = require('config'); // Import of config modules to pull config var
 const nexusEvent = require('../middleware/events/events'); // Local NODE event trigger
 const masterClock = require('../wts/gameClock/gameClock'); // Import of main clock class
 
-const transaction = require('./socket/transactions') // Import of Socket route for WTS Transaction system
+const transaction = require('./socket/transactions'); // Import of Socket route for WTS Transaction system
 const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
+const trade = require('./socket/trade'); // Import of Socket route for WTS Clock controls
 
-const routes = { clock, transaction }; // Route object for routing to various socket routes
+const routes = { clock, transaction, trade }; // Route object for routing to various socket routes
 
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
@@ -44,7 +45,7 @@ module.exports = function (server) {
 			}
 			else {
 				const route = routes[req.route];
-				route(client, req);
+				route ? route(client, req) : console.log(`Invalid route call: ${req.route}`);
 			}
 		});
 
@@ -67,6 +68,30 @@ module.exports = function (server) {
 		});
 	});
 
+	nexusEvent.on('request', async (req, data) => {
+		const socketArray = Array.from(io.sockets.sockets.values());
+		let socket = null;
+		for (const sock of socketArray) {
+			if (sock.character === data.characterName) socket = sock;
+		}
+		switch(req) {
+		case 'update':
+			io.emit('updateClients', data);
+			break;
+		case 'create':
+			io.emit('createClients', data);
+			break;
+		case 'delete':
+			io.emit('deleteClients', data);
+			break;
+		case 'broadcast':
+			socket ? socket.emit('alert', data) : console.log(`${data.characterName} was not online to get their mail`);
+			break;
+		default: 
+			console.log(`Error: ${req} was not found in nexusEvent`); // phaseChange
+		}
+	});
+
 	nexusEvent.on('broadcast', (data) => {
 		let message;
 		switch(data.action) {
@@ -78,19 +103,6 @@ module.exports = function (server) {
 			throw new Error(message);
 		}
 	});
-
-	nexusEvent.on('update', (data) => {
-		let clients = [];
-		const socketArray = Array.from(io.sockets.sockets.values());
-		for (const socket of socketArray) {
-			if (socket[data.updateKey] === data.clientKey) clients.push(socket);
-		}
-
-		for (const client of clients) {
-			client.emit('update')
-		}
-		
-	})
 
 	function currentUsers() {
 		const users = [];

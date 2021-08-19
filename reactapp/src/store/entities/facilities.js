@@ -34,22 +34,28 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       facilities.list.push(action.payload);
     },
-    facilitiesUpdated: (facilities, action) => {
+    facilityUpdated: (facilities, action) => {
       console.log(`${action.type} Dispatched...`);
-      // Alert.info('Facilities updated!', 2000);
-      facilities.list = action.payload;
+      const index = facilities.list.findIndex(el => el._id === action.payload._id);
+			facilities.list[index] = action.payload;
       facilities.lastFetch = Date.now();
-    }
+    },
+		facilityDeleted: (facilities, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = facilities.list.findIndex(el => el._id === action.payload._id);
+      facilities.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   facilityAdded,
+	facilityDeleted,
   facilitiesReceived,
   facilitiesRequested,
   facilitiesRequestFailed,
-  facilitiesUpdated
+  facilityUpdated
 
 } = slice.actions;
 

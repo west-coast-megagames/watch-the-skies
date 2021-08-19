@@ -2,6 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const nexusEvent = require('../middleware/events/events');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -127,9 +128,13 @@ AircraftSchema.methods.launch = async function (mission) {
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
 		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
-		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id});
+		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
 
 		const aircraft = await this.save();
+		await aircraft.populateAircraft();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 		return aircraft;
 	}
 	catch (err) {
@@ -164,6 +169,11 @@ AircraftSchema.methods.recall = async function () {
 		this.status.action = false;
 
 		const aircraft = await this.save();
+		await aircraft.populateAircraft();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
+
 		logger.info(`${this.name} returned to ${home.name}...`);
 
 		return aircraft;
@@ -192,6 +202,10 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	}
 	this.upgrades = [];
 	const aircraft = await this.save();
+	await aircraft.populateAircraft();
+
+	// Notify/Update team via socket-event
+	nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 	return aircraft;
 };
 
