@@ -16,7 +16,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Custom H
 router.get('/', async function (req, res) {
 	logger.info('GET Route: api/account requested...');
 	try {
-		const accounts = await Account.find()
+		const accounts = await Account.find({}, '-gameState')
 			.sort({ team: 1 })
 			.populate('team', 'name shortName');
 		res.status(200).json(accounts);
