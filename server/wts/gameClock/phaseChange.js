@@ -18,7 +18,7 @@ async function teamPhase() {
 	phaseChangeDebugging(`Now changing to the team phase for ${clock.currentTurn}...`);
 	setTimeout(async () => {
 		for await (const team of Team.find()) {
-			if (team.type === 'National') await team.turnEnd();
+			if (team.type === 'National') await team.endTurn();
 		}
 	}, 2000); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
 	// setTimeout(async () => { await banking.automaticTransfer(); }, 4000); // Iterate through set-automatic transfers [Implemented]

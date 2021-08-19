@@ -25,9 +25,9 @@ function getTimeRemianing(clock, deadline) {
 
 	if(!clock.paused) {
 		const t = Date.parse(deadline) - Date.parse(now);
-		seconds = seconds > 0 ? Math.floor((t / 1000) % 60) : 0;
-		minutes = minutes > 0 ? Math.floor((t / 1000 / 60) % 60) : 0;
-		hours = hours > 0 ? Math.floor((t / (1000 * 60 * 60)) % 24) : 0;
+		seconds = Math.floor((t / 1000) % 60);
+		minutes = Math.floor((t / 1000 / 60) % 60);
+		hours = Math.floor((t / (1000 * 60 * 60)) % 24);
 		// let days = Math.floor( t/(1000*60*60*24) );
 	}
 
@@ -49,7 +49,7 @@ const NavBar = (props) => {
 	const [paused, setPaused] = React.useState(true);
 
 	useEffect(() => {
-		playTrack('bootup');
+		// playTrack('bootup'); // ahhh, sweet silence....
 		socket.on('clock', (data) => {
 
 			const { deadline, hours, minutes, seconds, phase, turn, turnNum, year, clock } = data;
@@ -59,7 +59,7 @@ const NavBar = (props) => {
 			setClock({ hours, minutes, seconds });
 			setDeadline(deadline);
 			setInfo({ phase, turn, turnNum, year });
-			console.log(data);
+			console.log('data');
 		})
 		socket.emit('request', {route: 'clock', action:'getState'})
 		return () => socket.off('clock');
