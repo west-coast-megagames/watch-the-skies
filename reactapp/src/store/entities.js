@@ -9,6 +9,7 @@ import zoneReducer from './entities/zones';
 import militaryReducer from './entities/military';
 import facilityReducer from './entities/facilities';
 import countryReducer from './entities/countries';
+import clockReducer from './entities/clock';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
@@ -28,6 +29,7 @@ export default combineReducers({
   zones: zoneReducer,
   military: militaryReducer,
   facilities: facilityReducer,
+	clock: clockReducer,
   countries: countryReducer,
   research: researchReducer,
 	accounts: accountReducer,

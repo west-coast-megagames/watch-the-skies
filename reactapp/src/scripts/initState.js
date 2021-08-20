@@ -14,12 +14,14 @@ import { loadBlueprints } from '../store/entities/blueprints';
 import { loadReports } from '../store/entities/reports';
 import { loadUpgrades } from '../store/entities/upgrades';
 import { loadTrades } from '../store/entities/trades';
+import { loadClock } from '../store/entities/clock';
 
 let loader = {
 	accounts: loadaccounts,
 	aircrafts: loadaircrafts,
 	articles: loadarticles,
 	blueprints: loadBlueprints,
+	clock: loadClock,
 	countries: loadcountries,
 	facilities: loadfacilities,
 	military: loadmilitary,

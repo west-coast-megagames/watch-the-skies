@@ -3,6 +3,7 @@ const nexusEvent = require('../../middleware/events/events'); // Local event tri
 
 class GameTimer {
 	constructor() {
+		this.model = 'Clock';
 		this.roundEnd = new Date(Date.now() + (1000 * this.seconds) + (1000 * 60 * this.minutes) + (1000 * 60 * 60 * this.hours));
 		this.paused = true; // Current state of game clock
 
@@ -88,6 +89,7 @@ class GameTimer {
 	}
 
 	reset() {
+		this.model = 'Clock';
 		this.paused = true; // Current state of game clock
 
 		this.hours = 1; // Remaining hours on master game clock (Only when paused)
@@ -207,6 +209,7 @@ class GameTimer {
 
 	getClockState() {
 		return {
+			model: this.model,
 			paused: this.paused,
 			hours: this.hours,
 			minutes: this.minutes,
@@ -215,7 +218,7 @@ class GameTimer {
 			phase: this.currentPhase,
 			turnNum: this.turnNum,
 			year: this.year,
-			clock: this.getTimeRemaining(),
+			gameClock: this.getTimeRemaining(),
 			deadline: this.roundEnd
 		};
 	}
@@ -276,7 +279,7 @@ class GameTimer {
 		this.broadcastClock();
 	}
 	broadcastClock() {
-		nexusEvent.emit('broadcast', { action: 'clock', payload: this.getClockState() });
+		nexusEvent.emit('request', 'clock', [ this.getClockState() ]);
 	}
 }
 

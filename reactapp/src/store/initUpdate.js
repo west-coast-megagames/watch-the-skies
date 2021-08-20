@@ -15,12 +15,14 @@ import { teamAdded, teamDeleted, teamUpdated } from './entities/teams';
 import { upgradeAdded, upgradeDeleted, upgradeUpdated } from './entities/upgrades';
 import { zoneAdded, zonesDeleted, zoneUpdated } from './entities/zones';
 import { tradeAdded, tradeDeleted, tradeUpdated } from './entities/trades';
+import { clockUpdated } from './entities/clock';
 
 const updaterFunctions = {
 	account: accountUpdated,
 	aircraft: aircraftUpdated,
 	article: articleUpdated,
 	blueprint: blueprintUpdated,
+	clock: clockUpdated,
 	country: countryUpdated,
 	facility: facilityUpdated,
 	log: logUpdated,
@@ -74,7 +76,7 @@ const initUpdates = () => {
    socket.on('connect', () => { console.log('UwU I made it') });
 
    socket.on('updateClients', (data) => { 
-    console.log('updateClients');
+    console.log(data);
     for (const el of data) {
         // console.log(el)
         if (el) {

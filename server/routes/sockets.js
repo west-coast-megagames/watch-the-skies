@@ -84,6 +84,9 @@ module.exports = function (server) {
 		case 'delete':
 			io.emit('deleteClients', data);
 			break;
+		case'clock':
+			io.emit('updateClients', data);
+			break;
 		case 'broadcast':
 			socket ? socket.emit('alert', data) : console.log(`${data.characterName} was not online to get their mail`);
 			break;
@@ -95,9 +98,6 @@ module.exports = function (server) {
 	nexusEvent.on('broadcast', (data) => {
 		let message;
 		switch(data.action) {
-		case('clock'):
-			io.emit('clock', masterClock.getClockState());
-			break;
 		default:
 			message = `No broadcast for ${data.action} event call`;
 			throw new Error(message);

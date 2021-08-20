@@ -1,3 +1,4 @@
+const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 
 const masterClock = require('../../wts/gameClock/gameClock');
@@ -7,7 +8,7 @@ module.exports = function (client, req) {
 	let message;
 	switch(req.action) {
 	case('getState'):
-		client.emit('clock', masterClock.getClockState());
+		nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 		break;
 	case('play'):
 		masterClock.unpause();

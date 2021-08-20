@@ -20,6 +20,7 @@ const article = require('./api/articles');
 const aircraft = require('./api/aircrafts');
 const account = require('./api/accounts');
 const blueprint = require('./api/blueprints');
+const clock = require('./api/clock');
 const country = require('./api/countries');
 const facilities = require('./api/facilities');
 const reports = require('./api/reports');
@@ -90,6 +91,7 @@ module.exports = function (app) {
 	app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering
 	app.use('/api/accounts', account); // Route for inputing accounts
+	app.use('/api/clock', clock); // Route for inputing accounts
 	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
 	app.use('/api/articles', article); // Route for manipulating articles
 	app.use('/api/blueprints', blueprint);
