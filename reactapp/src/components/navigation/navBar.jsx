@@ -46,16 +46,13 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info }) => 
 	const [clock, setClock] = React.useState({ hours: 0, minutes: 0, seconds: 0, });
 
 	useEffect(() => {
-		console.log(interval)
-		if (!paused) interval = setTimeout(() => {
-			if (paused) clearInterval(interval)
+		if (paused) clearInterval(interval)
+		if (!paused) interval = setInterval(() => {
 			let setter = getTimeRemianing(gameClock, deadline);
-			console.log(setter)
 			setTime(setter.time);
 			setClock(setter.clock);
 		}, 1000);
-		console.log(interval)
-	}, [deadline, paused]);
+	}, [paused, gameClock, deadline]);
 
 	const rawr = account !== undefined ? account.resources.find(el => el.type === 'Megabucks') : undefined
 
