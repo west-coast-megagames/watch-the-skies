@@ -16,11 +16,11 @@ const { Team } = require('../../models/team');
 
 async function teamPhase() {
 	phaseChangeDebugging(`Now changing to the team phase for ${clock.currentTurn}...`);
-	setTimeout(async () => {
-		for await (const team of Team.find()) {
-			if (team.type === 'National') await team.endTurn();
-		}
-	}, 2000); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
+	// setTimeout(async () => { Scott disabled this cause it is broken
+	// 	for await (const team of Team.find()) {
+	// 		if (team.type === 'National') await team.endTurn();
+	// 	}
+	// }, 2000); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
 	// setTimeout(async () => { await banking.automaticTransfer(); }, 4000); // Iterate through set-automatic transfers [Implemented]
 	phaseChangeDebugging(`Done with team phase change for ${clock.currentTurn}!`);
 	logger.info(`Turn ${clock.currentTurn} team phase has begun...`);
@@ -32,9 +32,9 @@ async function actionPhase() {
 	await resolveMissions(); // Resolve Interceptions that have been sent [coded]
 	await runMilitary(); // Resolve all Battles
 	setTimeout(async () => { await repairSequence(); }, 14000);
-	nexusEvent.emit('updateAircrafts');
-	nexusEvent.emit('updateSites');
-	nexusEvent.emit('updateReports');
+	// nexusEvent.emit('updateAircrafts'); // TODO re-add update broadcasts
+	// nexusEvent.emit('updateSites');
+	// nexusEvent.emit('updateReports');
 	phaseChangeDebugging(`Done with action phase change for ${clock.currentTurn}!`);
 	logger.info(`Turn ${clock.currentTurn} action phase has begun...`);
 }
