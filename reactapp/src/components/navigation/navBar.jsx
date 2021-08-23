@@ -31,6 +31,10 @@ function getTimeRemianing(clock, deadline) {
 		// let days = Math.floor( t/(1000*60*60*24) );
 	}
 
+	hours = hours < 0 ? 0 : hours;
+	minutes = minutes < 0 ? 0 : minutes;
+	seconds = seconds < 0 ? 0 : seconds;
+
 	clock = { seconds, minutes, hours };
 	seconds = seconds < 10 ? '0' + seconds : seconds;
 	minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -41,14 +45,33 @@ function getTimeRemianing(clock, deadline) {
 
 let interval = undefined;
 
-const NavBar = ({ team, login, account, paused, gameClock, deadline, info }) => {
+const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastFetch }) => {
 	const [time, setTime] = React.useState('');
 	const [clock, setClock] = React.useState({ hours: 0, minutes: 0, seconds: 0, });
 
 	useEffect(() => {
-		if (paused) clearInterval(interval)
-		if (!paused) interval = setInterval(() => {
+		console.log('Clock Loaded!');
+		clearInterval(interval);
+		interval = undefined;
+		return () => {     
+			clearInterval(interval);
+			interval = undefined;
+			console.log('Clock Un-Loaded!')
+		};
+	}, []);
+
+	useEffect(() => {
+		clearInterval(interval);
+		interval = undefined;
+		if (paused) {
+			console.log('Clearing!')
+			clearInterval(interval);
+			interval = undefined;
+		}
+		if (!paused && (typeof interval != "number")) interval = setInterval(() => {
 			let setter = getTimeRemianing(gameClock, deadline);
+			// console.log('tick!');
+			if (paused || (setter.clock.hours + setter.clock.minutes + setter.clock.seconds <= 0) || interval === undefined) clearInterval(interval)
 			setTime(setter.time);
 			setClock(setter.clock);
 		}, 1000);
@@ -86,6 +109,7 @@ const mapStateToProps = state => ({
 		info: state.entities.clock.info,
 		paused: state.entities.clock.paused,
 		deadline: state.entities.clock.deadline,
+		lastFetch: state.entities.clock.lastFetch,
 
     account: state.auth.team ? getTreasuryAccount(state) : undefined
 });

@@ -76,7 +76,7 @@ const initUpdates = () => {
    socket.on('connect', () => { console.log('UwU I made it') });
 
    socket.on('updateClients', (data) => { 
-    console.log(data);
+    console.log('updateClients');
     for (const el of data) {
         // console.log(el)
         if (el) {
