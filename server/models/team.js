@@ -88,7 +88,7 @@ TeamSchema.methods.assignIncome = async function () {
 	if (this.type !== 'National') throw Error('Only National teams have PR based income');
 	const { turnNum } = clock.getTimeStamp();
 
-	console.log(`Assigning income for ${this.shortName}... ${turnNum} income...`);
+	console.log(`Assigning income for ${this.shortName}... turn ${turnNum} income...`);
 
 	const account = await Account.findOne({ name: 'Treasury', 'team': this._id });
 

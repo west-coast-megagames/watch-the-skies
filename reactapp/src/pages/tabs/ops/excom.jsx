@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from 'react-redux'; // Redux store provider
 import { Divider, Container, Content } from "rsuite";
 import AircraftTable from "../../../components/aircraftTable";
@@ -7,49 +7,15 @@ import { getAircrafts, getContacts } from "../../../store/entities/aircrafts";
 import { showLaunch } from "../../../store/entities/infoPanels";
 import { getCities, getBases } from "../../../store/entities/sites";
 
-class ExcomOps extends Component {
-  state = {
-    data: [],
-    count: 0
-  };
+const ExcomOps = (props) => {
+	const [data, setData] = React.useState([]);
 
-  componentDidMount() {
-    let count = this.props.contacts.length
-    this.loadTable();
-    this.setState({ count });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.count !== prevState.count || this.props.lastFetch !== prevProps.lastFetch) {
-      this.loadTable();
-    }
-  }
-
-  intercept (target) {
-    this.props.assignTarget(this.props.contacts.find(el => el._id === target));
-  }
-
-  render() {
-    return (
-      <Container>
-        <Content>
-          <h5>Global Ex-Com Information</h5>
-          <Divider />
-          <h5>Air Operations</h5>
-          <AircraftTable
-            account={this.props.account}
-          />
-        </Content>
-      </Container>
-    );
-  }
-
-  loadTable() {
+	const loadTable = () => {
     let data = [];
-    let contacts = this.props.contacts;
-    let zones = this.props.zones.filter((el) => el.name !== "Space");
-    zones = this.props.zones.map((item) => Object.assign({}, item, {selected:false}));
-    contacts = this.props.contacts.map((item) => Object.assign({}, item, {selected:false}));
+    let contacts = props.contacts;
+    let zones = props.zones.filter((el) => el.name !== "Space");
+    zones = props.zones.map((item) => Object.assign({}, item, {selected:false}));
+    contacts = props.contacts.map((item) => Object.assign({}, item, {selected:false}));
 
     for (let newZone of zones) {
       let zone = {...newZone}
@@ -62,7 +28,7 @@ class ExcomOps extends Component {
         if (unit.zone.name === checkZone.name) {
           unit.info = `Unknown`;
           unit.location = unit.country.name;
-          unit.intercept = this.intercept
+          unit.intercept = intercept
           zone.children.push(unit);
         }
       }
@@ -71,30 +37,33 @@ class ExcomOps extends Component {
         data.push(zone);
       }
     }
-    this.setState({ data });
+		setData(data);
   }
 
-  show = (context, unit) => {
-    if (context === "info") {
-      this.setState({ unit, showInfo: true });
-    } else {
-      this.setState({ unit: undefined, showInfo: false, isDeploying: false });
-    }
-  };
+	useEffect(() => {
+    loadTable();
+	}, []);
+
+  const intercept = (target) => {
+    props.assignTarget(props.contacts.find(el => el._id === target));
+  }
+
+  return (
+    <Container>
+      <Content>
+        <h5>Global Ex-Com Information</h5>
+        <Divider />
+        <h5>Air Operations</h5>
+        <AircraftTable/>
+      </Content>
+    </Container>
+  );
 }
 
 const mapStateToProps = state => ({
   login: state.auth.login,
-  lastFetch: state.entities.aircrafts.lastFetch,
-  team: state.auth.team,
   zones: state.entities.zones.list,
-  sites: state.entities.sites.list,
-  cities: getCities(state),
-  bases: getBases(state),
-  aircrafts: getAircrafts(state),
   contacts: getContacts(state),
-  military: state.entities.military.list,
-  account: getOpsAccount(state)
 });
 
 const mapDispatchToProps = dispatch => ({

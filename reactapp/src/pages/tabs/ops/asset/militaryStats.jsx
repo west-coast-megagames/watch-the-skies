@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
-import UpgradeDrawer from "./upgradeDrawer";
+import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
-import { gameServer } from "../../config";
-import { socket } from "../../api";
-import TransferForm from "./TransferForm";
+import { gameServer } from "../../../../config";
+import { socket } from "../../../../api";
+import TransferForm from "../../../../components/common/TransferForm";
 
 class MilitaryStats extends Component {
 	state = { 

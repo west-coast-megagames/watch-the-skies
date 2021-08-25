@@ -63,11 +63,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 	useEffect(() => {
 		clearInterval(interval);
 		interval = undefined;
-		if (paused) {
-			console.log('Clearing!')
-			clearInterval(interval);
-			interval = undefined;
-		}
+		
 		if (!paused && (typeof interval != "number")) interval = setInterval(() => {
 			let setter = getTimeRemianing(gameClock, deadline);
 			// console.log('tick!');
