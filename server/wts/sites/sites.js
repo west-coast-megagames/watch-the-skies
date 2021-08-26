@@ -41,7 +41,7 @@ async function generateSite (site) {
 	console.log(newSite);
 }
 
-async function genSiteCode () {
+async function genSiteCode() {
 	const phoneticArray = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot', 'Golf', 'Hotel', 'India', 'Juliet', 'Kilo', 'Lima', 'Mike', 'November', 'Oscar', 'Papa', 'Quebec', 'Romeo', 'Sierra', 'Tango', 'Uniform', 'Victor', 'Whiskey', 'Xray', 'Yankee', 'Zulu'];
 	const desArray = ['Yellow', 'Red', 'Blue', 'Green', 'Cyan', 'Magenta', 'Ruby', 'Sapphire', 'Emerald', 'Violet', 'Purple', 'Brown', 'Almond', 'Gold', 'Silver', 'Platnum'];
 
