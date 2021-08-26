@@ -1,6 +1,5 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const clock = require('../wts/gameClock/gameClock');
-const { d6 } = require('../util/systems/dice');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
