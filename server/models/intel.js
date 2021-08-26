@@ -18,12 +18,11 @@ const IntelSchema = new Schema({
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	document: { type: Schema.Types.Mixed, default: {} },
 	source: { type: Schema.Types.Mixed, default: {} },
-	update: { type: Schema.Types.Mixed, default: {} },
 	lastUpdate: { type: Date, default: Date.now() },
 	dateCreated: { type: Date, default: Date.now() }
 });
 
-IntelSchema.methods.reconIntel = async function (doc, source) {
+IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	this.lastUpdate = Date.now();
 	const commonKeys = ['_id', 'model', 'team'];
 	let modelKeys = [];
@@ -36,12 +35,11 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 
 		this.document.status = {};
 		this.source.status = {};
-		this.update.status = {};
+
 		for (const prop in doc.status) {
 			// Possible spot for partial information on status --
 			this.document.status[prop] = doc.status[prop];
-			this.source.status[prop] = source;
-			this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
+			if (source) this.source.status[prop] = source;
 		}
 		this.document.stats = {};
 		this.source.stats = {};
@@ -49,8 +47,7 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 		for (const prop in doc.stats) {
 			// Possible spot for partial information on stats --
 			this.document.stats[prop] = doc.stats[prop];
-			this.source.stats[prop] = source;
-			this.update.stats[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
+			if (source) this.source.stats[prop] = source;
 		}
 		this.document.systems = {};
 		this.source.systems = {};
@@ -58,8 +55,7 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 		for (const prop in doc.systems) {
 			// Possible spot for partial information on systems
 			this.document.systems[prop] = doc.systems[prop];
-			this.source.systems[prop] = source;
-			this.update.systems[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
+			if (source) this.source.systems[prop] = source;
 		}
 		break;
 	case 'Military':
