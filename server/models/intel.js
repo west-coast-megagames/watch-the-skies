@@ -38,31 +38,28 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 		this.source.status = {};
 		this.update.status = {};
 		for (const prop in doc.status) {
-			if (d6() + d6() > 8) {
-				this.document.status[prop] = doc.status[prop];
-				this.source.status[prop] = source;
-				this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
-			}
+			// Possible spot for partial information on status --
+			this.document.status[prop] = doc.status[prop];
+			this.source.status[prop] = source;
+			this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 		}
 		this.document.stats = {};
 		this.source.stats = {};
 		this.update.stats = {};
 		for (const prop in doc.stats) {
-			if (d6() + d6() > 8) {
-				this.document.stats[prop] = doc.stats[prop];
-				this.source.status[prop] = source;
-				this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
-			}
+			// Possible spot for partial information on stats --
+			this.document.stats[prop] = doc.stats[prop];
+			this.source.stats[prop] = source;
+			this.update.stats[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 		}
 		this.document.systems = {};
 		this.source.systems = {};
 		this.update.systems = {};
 		for (const prop in doc.systems) {
-			if (d6() + d6() > 8) {
-				this.document.systems[prop] = doc.systems[prop];
-				this.source.systems[prop] = source;
-				this.update.systems[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
-			}
+			// Possible spot for partial information on systems
+			this.document.systems[prop] = doc.systems[prop];
+			this.source.systems[prop] = source;
+			this.update.systems[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 		}
 		break;
 	case 'Military':
