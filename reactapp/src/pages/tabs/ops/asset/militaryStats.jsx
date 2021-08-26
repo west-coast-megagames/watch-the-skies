@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
-import UpgradeDrawer from "./upgradeDrawer";
+import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
-import { gameServer } from "../../config";
-import { socket } from "../../api";
-import TransferForm from "./TransferForm";
+import { gameServer } from "../../../../config";
+import { socket } from "../../../../api";
+import TransferForm from "../../../../components/common/TransferForm";
 
 class MilitaryStats extends Component {
 	state = { 
@@ -42,7 +42,7 @@ class MilitaryStats extends Component {
 				<FlexboxGrid>
 						<FlexboxGrid.Item colspan={4}>
 							<img
-								src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" 
+								src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" alt='Failed to Load'
 							/>									
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={16}>

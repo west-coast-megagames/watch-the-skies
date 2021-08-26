@@ -6,7 +6,7 @@ import { articleAdded, articleDeleted, articleUpdated } from './entities/article
 import { blueprintAdded, blueprintDeleted, blueprintUpdated } from './entities/blueprints';
 import { countryAdded, countryDeleted, countryUpdated } from './entities/countries';
 import { facilityAdded, facilityDeleted, facilityUpdated } from './entities/facilities';
-import { logAdded, logDeleted, logUpdated } from './entities/logs';
+
 import { militaryAdded, militaryDeleted, militaryUpdated } from './entities/military';
 import { reportAdded, reportDeleted, reportsUpdated } from './entities/reports';
 import { researchAdded, researchDeleted, researchUpdated } from './entities/research';
@@ -25,7 +25,6 @@ const updaterFunctions = {
 	clock: clockUpdated,
 	country: countryUpdated,
 	facility: facilityUpdated,
-	log: logUpdated,
 	military: militaryUpdated,
 	report: reportsUpdated,
 	research: researchUpdated,
@@ -43,7 +42,6 @@ const adderFunctions = {
 	blueprint: blueprintAdded,
 	country: countryAdded,
 	facility: facilityAdded,
-	log: logAdded,
 	military: militaryAdded,
 	report: reportAdded,
 	research: researchAdded,
@@ -61,7 +59,6 @@ const deleteFunctions = {
 	blueprint: blueprintDeleted,
 	country: countryDeleted,
 	facility: facilityDeleted,
-	log: logDeleted,
 	military: militaryDeleted,
 	report: reportDeleted,
 	research: researchDeleted,

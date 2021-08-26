@@ -67,11 +67,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 
 		clearInterval(interval);
 		interval = undefined;
-		if (paused) {
-			console.log('Clearing!')
-			clearInterval(interval);
-			interval = undefined;
-		}
+		
 		if (!paused && (typeof interval != "number")) interval = setInterval(() => {
 			setter = getTimeRemianing(gameClock, deadline);
 			// console.log('tick!');
