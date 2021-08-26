@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
-const clock = require('../wts/gameClock/gameClock');
-const { d6 } = require('../util/systems/dice');
+const { logger } = require('../middleware/log/winston'); // Loging midddleware
+const { randCode } = require('../util/systems/codes');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -24,15 +24,14 @@ const IntelSchema = new Schema({
 
 IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	this.lastUpdate = Date.now();
+	this.type = doc.model.toLowerCase();
+	if (!this.document.name) this.document.name = randCode(6);
 	const commonKeys = ['_id', 'model', 'team'];
 	let modelKeys = [];
 	const randKeys = [];
 
-	switch (doc.model) {
-	case 'Aircraft':
-		this.type = doc.model.toLowerCase();
-		modelKeys = ['location', 'site,', 'zone', 'country'];
-
+	// If the subject document has status, collect status
+	if (doc.status) {
 		this.document.status = {};
 		this.source.status = {};
 
@@ -41,17 +40,24 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 			this.document.status[prop] = doc.status[prop];
 			if (source) this.source.status[prop] = source;
 		}
+	}
+
+	if (doc.stats) {
 		this.document.stats = {};
 		this.source.stats = {};
-		this.update.stats = {};
 		for (const prop in doc.stats) {
 			// Possible spot for partial information on stats --
 			this.document.stats[prop] = doc.stats[prop];
 			if (source) this.source.stats[prop] = source;
 		}
+	}
+
+	switch (doc.model) {
+	case 'Aircraft':
+		modelKeys = ['location', 'site,', 'zone', 'country', 'stance'];
+
 		this.document.systems = {};
 		this.source.systems = {};
-		this.update.systems = {};
 		for (const prop in doc.systems) {
 			// Possible spot for partial information on systems
 			this.document.systems[prop] = doc.systems[prop];
@@ -59,16 +65,24 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		}
 		break;
 	case 'Military':
-		console.log('This is a military unit!');
+		modelKeys = ['site,', 'origin', 'zone', 'country'];
 		break;
 	case 'Facility':
-		console.log('This is a Facility!');
+		console.log('Currently remaking facility model');
 		break;
 	case 'Squad':
-		console.log('This is a squad!');
+		modelKeys = ['location', 'site', 'origin', 'zone', 'country'];
 		break;
 	case 'Site':
-		console.log('This is a site');
+		modelKeys = ['occupier', 'zone'];
+
+		this.document.facilities = {};
+		this.source.facilities = {};
+		for (const prop in doc.facilities) {
+			// Possible spot for partial information on facilities
+			this.document.facilities[prop] = doc.facilities[prop];
+			if (source) this.source.systems[prop] = source;
+		}
 		break;
 	default:
 		throw Error(`You can't get Recon Intel for a ${doc.model}`);
@@ -77,11 +91,9 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	for (const key of [...commonKeys, ...modelKeys, ...randKeys]) {
 		this.document[key] = doc[key];
 		this.source[key] = source;
-		this.update[key] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 	}
 
 	return await this.save();
-
 };
 
 IntelSchema.methods.servaillanceIntel = async function () {
@@ -94,4 +106,20 @@ IntelSchema.methods.espionageIntel = async function () {
 
 const Intel = mongoose.model('Intel', IntelSchema);
 
-module.exports = { Intel };
+// { Aircraft Selectior Functions }
+const generateIntel = async function (team, subject) {
+	try {
+		let doc = await Intel.findOne({ team, subject });
+		if (!doc) {
+			doc = new Intel({ team, subject });
+			doc = await doc.save();
+		}
+
+		return doc;
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+	}
+};
+
+module.exports = { Intel, generateIntel };
