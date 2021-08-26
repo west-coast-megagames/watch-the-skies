@@ -41,10 +41,10 @@ const AircraftSchema = new Schema({
 		ready: { type: Boolean, default: true },
 		upgrade: { type: Boolean, default: false },
 		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false },
-		action: { type: Boolean, default: true }, // transfer/deployment/repair
-		mission: { type: Boolean, default: true } // invade
+		secret: { type: Boolean, default: false }
 	},
+	actions: { type: Number, default: 1 },
+	missions: { type: Number, default: 1 },
 	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
 	systems: {
 		cockpit: {
