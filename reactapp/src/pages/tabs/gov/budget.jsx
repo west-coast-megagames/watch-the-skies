@@ -53,6 +53,7 @@ const BudgetTab = (props) => {
 	};
 
 	const addTransfer = (schedule) => {
+		console.log('Adding Transaction')
 		let transfer = { id: count, to: undefined, from: undefined, amount: 0, resource: type, note: undefined }
 		if (schedule === true) transfer.schedule = true;
 		let list = transactions;
@@ -78,7 +79,11 @@ const BudgetTab = (props) => {
 
 	// TODO John Review if AutoTransfers needs to be updated for account.autoTransfer change to account.queue
 	return (
+		/* [- Budget Tab -]
+			DESC: Designed to allow for a user to transfer resources between accounts and see the current amounts
+		*/
 		<Container className="budget-tab">
+			{/* Main Container - Holds account information */}
 			<Container className="transfers">
 				<Content>
 					<h4>{account.name} Account</h4>
@@ -91,6 +96,7 @@ const BudgetTab = (props) => {
 						Alert={ props.alert }
 					/>
 				</Content>
+					{/* Left Container - Holds account information */}
 					<Sidebar>
 						<SelectPicker
 							block
@@ -120,7 +126,7 @@ const BudgetTab = (props) => {
 				</Container>
 				{transactions.map(el => (
 					<Modal show={transactions.length > 0} size='xs' onHide={() => delTransfer(el.id)}>
-					<TransferForm key={el.id} transfer={el} delTransfer={delTransfer} {...props} />
+						<TransferForm key={el.id} transfer={el} delTransfer={delTransfer} {...props} />
 					</Modal>
 				))}
 		</Container>
