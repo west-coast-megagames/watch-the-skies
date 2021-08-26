@@ -34,6 +34,7 @@ const treaty = require('./api/treaty');
 const upgrade = require('./api/upgrade');
 const zones = require('./api/zones');
 const logerrors = require('./api/logerrors');
+const intel = require('./api/intel');
 
 // data init and check routes
 const initZones = require('./init/initZones');
@@ -107,6 +108,7 @@ module.exports = function (app) {
 	app.use('/api/treaty', treaty); // treaties
 	app.use('/api/upgrades', upgrade); // Route for upgrades
 	app.use('/api/logerrors', logerrors); // Route for logerrors
+	app.use('/api/intel', intel); // Route for intels
 	app.use('/init/initZones', initZones); // Route for init/check of zones
 	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
 	app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
