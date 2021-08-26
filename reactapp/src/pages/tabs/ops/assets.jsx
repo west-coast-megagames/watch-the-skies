@@ -192,8 +192,6 @@ const AssetTab = (props) => {
 							</List>						
 						</Panel>
 					</PanelGroup>
-
-						
         </Sidebar>
     </Container>
 	);
