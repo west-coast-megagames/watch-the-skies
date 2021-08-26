@@ -14,10 +14,11 @@ const IntelSchema = new Schema({
 		maxlength: 50,
 		enum: ['account', 'aircraft', 'alliance', 'article', 'blueprint', 'country', 'facility', 'intel', 'military', 'report', 'research', 'site', 'squad', 'team', 'trade', 'treaty', 'upgrade', 'zone']
 	},
+	subject: { type: String },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
-	document: { type: Schema.Types.Mixed },
-	source: { type: Schema.Types.Mixed },
-	update: { type: Schema.Types.Mixed },
+	document: { type: Schema.Types.Mixed, default: {} },
+	source: { type: Schema.Types.Mixed, default: {} },
+	update: { type: Schema.Types.Mixed, default: {} },
 	lastUpdate: { type: Date, default: Date.now() },
 	dateCreated: { type: Date, default: Date.now() }
 });
@@ -30,26 +31,37 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 
 	switch (doc.model) {
 	case 'Aircraft':
+		this.type = doc.model.toLowerCase();
 		modelKeys = ['location', 'site,', 'zone', 'country'];
+
+		this.document.status = {};
+		this.source.status = {};
+		this.update.status = {};
 		for (const prop in doc.status) {
 			if (d6() + d6() > 8) {
-				this.status[prop] = doc[prop];
+				this.document.status[prop] = doc.status[prop];
 				this.source.status[prop] = source;
 				this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 			}
 		}
+		this.document.stats = {};
+		this.source.stats = {};
+		this.update.stats = {};
 		for (const prop in doc.stats) {
 			if (d6() + d6() > 8) {
-				this.stats[prop] = doc[prop];
+				this.document.stats[prop] = doc.stats[prop];
 				this.source.status[prop] = source;
 				this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 			}
 		}
+		this.document.systems = {};
+		this.source.systems = {};
+		this.update.systems = {};
 		for (const prop in doc.systems) {
 			if (d6() + d6() > 8) {
-				this.stats[prop] = doc[prop];
-				this.source.status[prop] = source;
-				this.update.status[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
+				this.document.systems[prop] = doc.systems[prop];
+				this.source.systems[prop] = source;
+				this.update.systems[prop] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 			}
 		}
 		break;
@@ -74,6 +86,8 @@ IntelSchema.methods.reconIntel = async function (doc, source) {
 		this.source[key] = source;
 		this.update[key] = { date: Date.now(), timestamp: clock.getTimeStamp() };
 	}
+
+	return await this.save();
 
 };
 
