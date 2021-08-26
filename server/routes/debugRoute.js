@@ -7,9 +7,10 @@ const { logger } = require('../middleware/log/winston');
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
 const { Upgrade } = require('../models/upgrade');
+const { Team } = require('../models/team');
 const { Facility } = require('../models/facility');
 const { Aircraft } = require('../models/aircraft');
-const { Intel } = require('../models/intel');
+const { Intel, generateIntel } = require('../models/intel');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
 const badwordsArray = require('../middleware/badWords');
 
@@ -28,13 +29,10 @@ router.patch('/research', async function (req, res) {
 // @desc    Trigger Intel
 // @access  Public
 router.post('/intel', async function (req, res) {
-	const { model, _id } = req.body;
+	const { model, _id, teamCode } = req.body;
+	const team = await Team.findOne({ code: teamCode });
 	let doc = {};
-	let intelFile = new Intel({
-		team: '6124c23090596642e0341810',
-		subject: _id,
-		type: model.toLowerCase()
-	});
+	let intelFile = await generateIntel(team._id, _id);
 	switch(model) {
 	case 'Aircraft':
 		doc = await Aircraft.findById(_id);
@@ -44,7 +42,7 @@ router.post('/intel', async function (req, res) {
 		console.log(`No ${model} case`);
 	}
 
-	res.status(200).send({ intelFile, doc });
+	res.status(200).send({ intelFile, original: doc });
 });
 
 // @route   PATCH debug/knowledge
