@@ -82,14 +82,13 @@ function PrototypeMap(props) {
 			center={center}
 			options={options}
 			// onClick={mapClick.event}
-			onLoad={onMapLoad}
-		>
+			onLoad={onMapLoad}>
 
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 			{/* The site clusterer... */}
-			<MarkerClusterer options={clusterOptions}
+			{props.siteBoolean && <MarkerClusterer options={clusterOptions}
 			styles={[
 				{
 					url: "Arrays start at zero",
@@ -131,9 +130,10 @@ function PrototypeMap(props) {
 							anchor: new window.google.maps.Point(10, 10)
 						}}
 					/>)}
-			</MarkerClusterer>
+			</MarkerClusterer>}
+
 			{/*The Contact Clusterer*/}
-			<MarkerClusterer options={clusterOptions}
+			{props.contactBoolean && <MarkerClusterer options={clusterOptions}
 			styles={[
 				{
 					url: "XD",
@@ -163,7 +163,7 @@ function PrototypeMap(props) {
 				},
 			]}
 			>
-				{/* {(clusterer) => props.contacts.map(contact => 
+				{(clusterer) => props.contacts.map(contact => 
 					<Marker
 						key={contact._id}
 						clusterer={clusterer}
@@ -179,8 +179,32 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)} */}
+					/>)}
+			</MarkerClusterer>}
+			
+			{/*The Military Clusterer*/}
+			{props.militaryBoolean && <MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.deployedMil.map(unit => 
+					<Marker
+						key={unit._id}
+						clusterer={clusterer}
+						position={unit.location}
+						onClick={()=> {
+							setGeo({latDecimal: unit.location.lat, longDecimal: unit.location.lng})
+							setMenu(unit);
+							// setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMilitaryIcon(unit),
+							scaledSize: new window.google.maps.Size(70, 70),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)}
+			</MarkerClusterer>}
 
+			{/*The Intel Clusterer*/}
+			 {props.intelBoolean && <MarkerClusterer options={clusterOptions}>
 				{(clusterer) => props.intel.map(intel => 
 					<Marker
 						key={intel._id}
@@ -199,29 +223,9 @@ function PrototypeMap(props) {
 							anchor: new window.google.maps.Point(10, 10)
 						}}
 					/>)}
+			</MarkerClusterer>}
 
-			</MarkerClusterer>
-			{/*The Military Clusterer*/}
-			{/* <MarkerClusterer options={clusterOptions}
-			>
-				{(clusterer) => props.deployedMil.map(unit => 
-					<Marker
-						key={unit._id}
-						clusterer={clusterer}
-						position={unit.location}
-						onClick={()=> {
-							setGeo({latDecimal: unit.location.lat, longDecimal: unit.location.lng})
-							setMenu(unit);
-							// setMapClick({event: undefined});
-						}}
-						icon={{
-							url: getMilitaryIcon(unit),
-							scaledSize: new window.google.maps.Size(70, 70),
-							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
-						}}
-					/>)}
-			</MarkerClusterer> */}
+
 			
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
