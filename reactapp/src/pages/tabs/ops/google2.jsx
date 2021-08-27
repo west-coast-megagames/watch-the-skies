@@ -130,8 +130,7 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
+					/>)}
 			</MarkerClusterer>
 			{/*The Contact Clusterer*/}
 			<MarkerClusterer options={clusterOptions}
@@ -164,7 +163,7 @@ function PrototypeMap(props) {
 				},
 			]}
 			>
-				{(clusterer) => props.contacts.map(contact => 
+				{/* {(clusterer) => props.contacts.map(contact => 
 					<Marker
 						key={contact._id}
 						clusterer={clusterer}
@@ -180,11 +179,30 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
+					/>)} */}
+
+				{(clusterer) => props.intel.map(intel => 
+					<Marker
+						key={intel._id}
+						clusterer={clusterer}
+						position={intel.document.location}
+						onClick={()=> {
+							console.log(intel.document.location)
+							setGeo({latDecimal: intel.document.location.lat, longDecimal: intel.document.location.lng})
+							setMenu(intel.document);
+							// setMapClick({event: undefined});
+						}}
+						icon={{
+							url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Bananas.svg/1280px-Bananas.svg.png',
+							scaledSize: new window.google.maps.Size(65, 65),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)}
+
 			</MarkerClusterer>
 			{/*The Military Clusterer*/}
-			<MarkerClusterer options={clusterOptions}
+			{/* <MarkerClusterer options={clusterOptions}
 			>
 				{(clusterer) => props.deployedMil.map(unit => 
 					<Marker
@@ -202,9 +220,9 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
-			</MarkerClusterer>
+					/>)}
+			</MarkerClusterer> */}
+			
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
@@ -232,7 +250,8 @@ const mapStateToProps = state => ({
 	cities: getCities(state),
 	groundSites: getGround(state),
 	crashes: getCrash(state),
-	poi: getPoI(state)
+	poi: getPoI(state),
+	intel: state.entities.intel.list,
 });
 
 const mapDispatchToProps = dispatch => ({

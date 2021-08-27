@@ -15,6 +15,7 @@ import { loadReports } from '../store/entities/reports';
 import { loadUpgrades } from '../store/entities/upgrades';
 import { loadTrades } from '../store/entities/trades';
 import { loadClock } from '../store/entities/clock';
+import { loadIntel } from '../store/entities/intel';
 
 let loader = {
 	accounts: loadaccounts,
@@ -31,7 +32,8 @@ let loader = {
 	teams: loadteams,
 	trades: loadTrades,
 	upgrades: loadUpgrades,
-	zones: loadzones
+	zones: loadzones,
+	intel: loadIntel
 }
 
 //Get all objects from DB collections and store to redux state
