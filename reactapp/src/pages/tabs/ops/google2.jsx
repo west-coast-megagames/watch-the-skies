@@ -82,14 +82,13 @@ function PrototypeMap(props) {
 			center={center}
 			options={options}
 			// onClick={mapClick.event}
-			onLoad={onMapLoad}
-		>
+			onLoad={onMapLoad}>
 
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 			{/* The site clusterer... */}
-			<MarkerClusterer options={clusterOptions}
+			{props.siteBoolean && <MarkerClusterer options={clusterOptions}
 			styles={[
 				{
 					url: "Arrays start at zero",
@@ -130,11 +129,11 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
-			</MarkerClusterer>
+					/>)}
+			</MarkerClusterer>}
+
 			{/*The Contact Clusterer*/}
-			<MarkerClusterer options={clusterOptions}
+			{props.contactBoolean && <MarkerClusterer options={clusterOptions}
 			styles={[
 				{
 					url: "XD",
@@ -180,12 +179,11 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
-			</MarkerClusterer>
+					/>)}
+			</MarkerClusterer>}
+			
 			{/*The Military Clusterer*/}
-			<MarkerClusterer options={clusterOptions}
-			>
+			{props.militaryBoolean && <MarkerClusterer options={clusterOptions}>
 				{(clusterer) => props.deployedMil.map(unit => 
 					<Marker
 						key={unit._id}
@@ -202,9 +200,33 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)
-				}
-			</MarkerClusterer>
+					/>)}
+			</MarkerClusterer>}
+
+			{/*The Intel Clusterer*/}
+			 {props.intelBoolean && <MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.intel.map(intel => 
+					<Marker
+						key={intel._id}
+						clusterer={clusterer}
+						position={intel.document.location}
+						onClick={()=> {
+							console.log(intel.document.location)
+							setGeo({latDecimal: intel.document.location.lat, longDecimal: intel.document.location.lng})
+							setMenu(intel.document);
+							// setMapClick({event: undefined});
+						}}
+						icon={{
+							url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Bananas.svg/1280px-Bananas.svg.png',
+							scaledSize: new window.google.maps.Size(65, 65),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)}
+			</MarkerClusterer>}
+
+
+			
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
 					position={{lat: selected.lat, lng: selected.lng}}
@@ -232,7 +254,8 @@ const mapStateToProps = state => ({
 	cities: getCities(state),
 	groundSites: getGround(state),
 	crashes: getCrash(state),
-	poi: getPoI(state)
+	poi: getPoI(state),
+	intel: state.entities.intel.list,
 });
 
 const mapDispatchToProps = dispatch => ({

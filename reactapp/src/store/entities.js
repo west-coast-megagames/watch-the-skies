@@ -15,6 +15,7 @@ import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
 import upgradeReducer from './entities/upgrades';
 import tradeReducer from './entities/trades';
+import intelReducer from './entities/intel';
 
 
 
@@ -36,4 +37,5 @@ export default combineReducers({
 	blueprints: blueprintReducer,
 	upgrades: upgradeReducer,
 	trades: tradeReducer,
+	intel: intelReducer
 });

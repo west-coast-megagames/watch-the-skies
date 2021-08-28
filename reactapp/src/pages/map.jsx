@@ -1,58 +1,39 @@
 import React, { Component } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, Icon, CheckboxGroup, Checkbox } from 'rsuite';
 // import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
 import PrototypeMap from './tabs/ops/google2'
 
-class MapPage extends Component {
-  constructor() {
-		super();
-		this.state = {
-			tab: 'dashboard',
-			account: {},
-			markers: []
-		};
-		this.handleSelect = this.handleSelect.bind(this);
-		this.setAccount = this.setAccount.bind(this);
+const MapPage = (props) => {
+	const [sites, setSites] = React.useState(true);
+	const [contacts, setContacts] = React.useState(true);
+	const [military, setMilitary] = React.useState(true);
+	const [intel, setIntel] = React.useState(true);
+
+	if (!props.login) {
+		props.history.push('/');
+		return <LoginLink history={props.history} />
 	}
 
-	componentDidMount() {
-		// this.setAccount();
-	}
-
-  setAccount() {
-		let indexOf = this.props.accounts.findIndex(el => el.name === 'Operations');
-		let account = this.props.accounts[indexOf];
-		this.setState({ account })
-  }
-
-	handleSelect(activeKey) {
-		this.setState({ tab: activeKey })
-	}
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
-		}
-		const { tab } = this.state; 
-
-    return (
-			<Container>
-				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
-						<Nav.Item eventKey="excom" icon={<Icon icon='fighter-jet' />}> Filter</Nav.Item>
-					</Nav>
-				</Header>
-				<Content className='tabContent' style={{ paddingLeft: 20 }}>
-					<PrototypeMap></PrototypeMap>
-				</Content>
-			</Container>
+  return (
+		<Container>
+			<Header>
+				<CheckboxGroup inline name="checkboxList">
+					<Checkbox onChange={() => setSites(!sites)} checked={sites}>Sites</Checkbox>
+					<Checkbox onChange={() => setContacts(!contacts)} checked={contacts}>Contacts</Checkbox>
+					<Checkbox onChange={() => setIntel(!intel)} checked={intel}>Intel</Checkbox>
+					<Checkbox onChange={() => setMilitary(!military)} checked={military}>Military</Checkbox>
+  			</CheckboxGroup>
+			</Header>
+			<Content className='tabContent' style={{ paddingLeft: 20 }}>
+				<PrototypeMap siteBoolean={sites} contactBoolean={contacts} intelBoolean={intel} militaryBoolean={military} ></PrototypeMap>
+			</Content>
+		</Container>
     );
-  }
+  
 }
 
 const mapStateToProps = state => ({
