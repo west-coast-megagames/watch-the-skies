@@ -37,6 +37,8 @@ const clusterOptions = {
     'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m', // so you must have m1.png, m2.png, m3.png, m4.png, m5.png and m6.png in that folder
 }
 
+
+// Scott's TODO: add in modal "interrupt for VERY important messages"
 function PrototypeMap(props) {
 	const { isLoaded, loadError } =  useLoadScript ({
 		googleMapsApiKey: mapKey,

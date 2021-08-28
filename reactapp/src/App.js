@@ -1,8 +1,8 @@
-import React, { Component } from 'react'; // React imports
+import React, { useEffect } from 'react'; // React imports
 import { connect } from 'react-redux'; // Redux store provider
 import { Route, Switch, Redirect } from 'react-router-dom'; // React navigation components
 
-import { Header, Container, Content, Alert } from 'rsuite'; // rsuite components
+import { Header, Container, Content, Alert, Modal } from 'rsuite'; // rsuite components
 import socket from './socket';
 import notify from './scripts/notify';
 
@@ -38,16 +38,14 @@ import initUpdates from './store/initUpdate';
 initUpdates()
 
 // React App Component
-class App extends Component {
-  state = {
-    accounts: [],
-  }
+const App = (props) => {
+	const [tab, setTab] = React.useState('dashboard');
 
-  componentDidMount() {
-		if (!this.props.login) {
+	useEffect(() => {
+		if (!props.login) {
 			let token = localStorage.getItem('wtsLoginToken');
 			if (token) {
-				this.props.tokenLogin({ token });
+				props.tokenLogin({ token });
 			}
 		}
 
@@ -66,79 +64,78 @@ class App extends Component {
 					Alert.info(data.message, 6000);
 			}
 		})
-  }
+	}, [])
 
-  render() {
-    return(
-      <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
-        <Header>
-          <NavBar />
-        </Header>
-        <Container>
-					{this.props.login ? <SideNav team={ this.props.team} /> : null}
-					<Content>
-						<Switch>
-							<Route path="/login" render={(props) => (
-								<Registration {...props}
-								/>
-							)}/>
-							<Route path="/home" render={(props) => (
-								<Home {...props}
-									login={this.props.login}
-								/>
-							)}/>
-							<Route path="/map" render={(props) => (
-								<MapPage {...props}
-									login={this.props.login}
-								/>
-							)}/>
-							<Route path="/ops" render={(props) => (
-								<Operations {...props}
-									accounts={ this.state.accounts }
+  return(
+    <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
+      <Header>
+        <NavBar />
+      </Header>
+      <Container>
+				{props.login ? <SideNav team={ props.team} /> : null}
+				<Content>
+					<Switch>
+						<Route path="/login" render={(props) => (
+							<Registration {...props}
+							/>
+						)}/>
+						<Route path="/home" render={(props) => (
+							<Home {...props}
+								login={props.login}
+							/>
+						)}/>
+						<Route path="/map" render={(props) => (
+							<MapPage {...props}
+								login={props.login}
+							/>
+						)}/>
+						<Route path="/ops" render={(props) => (
+							<Operations {...props}
+								alert={ notify }
+							/>
+						)} />
+						<Route path="/gov" render={(props) => (
+							<Governance {...props}
 									alert={ notify }
-								/>
-							)} />
-							<Route path="/gov" render={(props) => (
-								<Governance {...props}
-										accounts = { this.state.accounts }
-										alert={ notify }
-								/>
-							)}/>
-							<Route path="/sci" render={(props) => (
-								<Science {...props}
-										alert={ notify }
-								/>
-							)}/>
-							<Route path="/dip" render={(props) => (
-								<Diplomacy {...props}
-										accounts={ this.state.accounts }
-										alert={ notify }
-								/>
-							)}/>
-							<Route path="/news" render={(props) => (
-								<News {...props} {...this.state}
+							/>
+						)}/>
+						<Route path="/sci" render={(props) => (
+							<Science {...props}
 									alert={ notify }
-									handleArtHide={this.handleArtHide}
-								/>
-							)}/>
-							<Route path="/control" render={(props) => (
-								<Control {...props} {...this.state}
-									alert = { notify }
-								/>
-							)}/>
-							<Route path="/not-found" component={ NotFound } />
-							<Route path="/loading" component={ LoadingPage } />
-							<Redirect from="/" exact to="home" />
-							<Redirect to="/not-found" />
-						</Switch>
-					</Content>
-        </Container>
-        <InfoDrawer />
-        <AlertPage alerts={ this.props.notifications } />
-        <UserList />
-      </div>
-    );
-  }
+							/>
+						)}/>
+						<Route path="/dip" render={(props) => (
+							<Diplomacy {...props}
+									alert={ notify }
+							/>
+						)}/>
+						<Route path="/news" render={(props) => (
+							<News {...props}
+								alert={ notify }
+							/>
+						)}/>
+						<Route path="/control" render={(props) => (
+							<Control {...props}
+								alert = { notify }
+							/>
+						)}/>
+						<Route path="/not-found" component={ NotFound } />
+						<Route path="/loading" component={ LoadingPage } />
+						<Redirect from="/" exact to="home" />
+						<Redirect to="/not-found" />
+					</Switch>
+				</Content>
+      </Container>
+      <InfoDrawer />
+      <AlertPage alerts={ props.notifications } />
+      <UserList />
+
+			<Modal>
+				
+			</Modal>
+    </div>
+  );
+  
 }
 
 const mapStateToProps = state => ({
