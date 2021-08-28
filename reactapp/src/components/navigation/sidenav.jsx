@@ -42,8 +42,8 @@ class SideNav extends Component {
 		else {
 			return (
 				<Sidebar
-					style={{ display: 'flex', flexDirection: 'column', zIndex: 999, }}
-					width={expand ? 500 : 56}
+					style={{ display: 'flex', flexDirection: 'column', zIndex: 999 }}
+					width={expand ? 200 : 56}
 					collapsible
 				>
 					<Sidenav
