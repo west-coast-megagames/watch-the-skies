@@ -50,7 +50,7 @@ export const getMapIcon = (site) => {
 }
 
 export const getAircraftIcon = (aircraft) => {
-	return icon[aircraft]
+	return icon[aircraft];
 }
 
 export const getMilitaryIcon = (unit) => {

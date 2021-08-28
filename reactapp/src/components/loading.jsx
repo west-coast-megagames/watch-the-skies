@@ -4,7 +4,7 @@ import { Progress, Loader, Panel, Icon, IconStack, Row, Col } from 'rsuite';
 import { useHistory } from "react-router-dom";
 
 import loadState from '../scripts/initState';
-import { debugTeam } from '../store/entities/auth';
+import { debugTeam, finishLoading } from '../store/entities/auth';
 
 const { Line } = Progress
 
@@ -22,7 +22,8 @@ const LoadingPage = (props) => {
 
 	if (Math.floor( done.length / sections.length * 100) >= 100) {
 		props.debugTeam(props.entities.teams.list[0]);
-		history.push('/home')
+		props.finishLoading();
+		history.push('/home');
 	} 
 
 	return (
@@ -54,7 +55,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  debugTeam: (payload) => dispatch(debugTeam(payload))
+  debugTeam: (payload) => dispatch(debugTeam(payload)),
+	finishLoading: () => dispatch(finishLoading()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadingPage);

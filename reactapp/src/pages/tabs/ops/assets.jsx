@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input } from 'rsuite';
+import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input, CheckboxGroup, Checkbox } from 'rsuite';
 import FacilityStats from '../../../components/common/facilityStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
 import { getOpsAccount } from '../../../store/entities/accounts';
@@ -16,6 +16,10 @@ const { HeaderCell, Cell, Column } = Table;
 const AssetTab = (props) => {
 	const [selected, setSelected] = React.useState(undefined);
 	const [filter, setFilter] = React.useState('');
+	const [military, setMilitary] = React.useState(true);
+	const [facilites, setFacilities] = React.useState(true);
+	const [upgrades, setUpgrades] = React.useState(true);
+	const [aircraft, setAircraft] = React.useState(true);
 
 	const listStyle = (item) => {
 		if (selected && selected._id === item._id)
@@ -35,42 +39,42 @@ const AssetTab = (props) => {
 	};
 
 	const whisperSelector = (rowData) => {
-	// console.log(rowData);
-	let speak;
-	let img;
-	switch (rowData.type) {
-		case 'attack':
-			speak = (
-				<Popover title="Attack Rating Information">
-					<p>Attack is the power rating for the unit when it attacks.</p>
-				</Popover>
-			);
-			break;
-		case 'defense':
-			speak = (
-				<Popover title="Defense Rating Information">
-					<p>
-						Defense is the power rating for the unit when it is defending from an
-						attack.
-					</p>
-				</Popover>
-			);
-			img = 'shield';
-			break;
-		default:
-			speak = (
-				<Popover title="Unkown">
-					<p>
-						Who knows what this does. Better not touch it. Or maybe.... No. Best not. 
-					</p>
-				</Popover>
-			);
-	}
-	return(
-		<Whisper placement="top" speaker={speak} trigger="click">
-		<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-	</Whisper>
-	)
+		// console.log(rowData);
+		let speak;
+		let img;
+		switch (rowData.type) {
+			case 'attack':
+				speak = (
+					<Popover title="Attack Rating Information">
+						<p>Attack is the power rating for the unit when it attacks.</p>
+					</Popover>
+				);
+				break;
+			case 'defense':
+				speak = (
+					<Popover title="Defense Rating Information">
+						<p>
+							Defense is the power rating for the unit when it is defending from an
+							attack.
+						</p>
+					</Popover>
+				);
+				img = 'shield';
+				break;
+			default:
+				speak = (
+					<Popover title="Unkown">
+						<p>
+							Who knows what this does. Better not touch it. Or maybe.... No. Best not. 
+						</p>
+					</Popover>
+				);
+		}
+		return(
+			<Whisper placement="top" speaker={speak} trigger="click">
+			<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+		</Whisper>
+		)
 	}
 
 	return (
@@ -162,34 +166,54 @@ const AssetTab = (props) => {
 					<PanelGroup>
 						<Panel style={{ marginRight: '0', backgroundColor: "#262327", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', borderTopRightRadius: '0px' }}>
 							<Input onChange={(value)=> setFilter(value)} placeholder="Search"></Input>
+							<CheckboxGroup inline name="checkboxList">
+								<FlexboxGrid>
+									<FlexboxGrid.Item colspan={12}>
+										<Checkbox onChange={() => setMilitary(!military)} checked={military}>Military</Checkbox>
+									</FlexboxGrid.Item>
+									<FlexboxGrid.Item colspan={12}>
+										<Checkbox onChange={() => setFacilities(!facilites)} checked={facilites}>Facilities</Checkbox>
+									</FlexboxGrid.Item>
+									<FlexboxGrid.Item colspan={12}>
+										<Checkbox onChange={() => setUpgrades(!upgrades)} checked={upgrades}>Upgrades</Checkbox>
+									</FlexboxGrid.Item>
+									<FlexboxGrid.Item colspan={12}>
+										<Checkbox onChange={() => setAircraft(!aircraft)} disabled checked={aircraft}>Aircraft</Checkbox>
+									</FlexboxGrid.Item>
+								</FlexboxGrid>
+  						</CheckboxGroup>
 						</Panel>
 						<Panel bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
-							<List hover autoScroll size='sm'>
+							{military && <List hover autoScroll size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units</h6>
 								{props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((unit, index) => (
 									<List.Item key={index}  index={index} size={'md'} style={listStyle(unit)} onClick={()=> setSelected(unit)} >
 										{unit.name}
 									</List.Item>
 								))}
-							</List>		
+							</List>	}	
 
-							<List hover size='sm'>
+							{facilites && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities</h6>
 								{props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((facility, index) => (
 									<List.Item key={index} index={index} size={'md'} style={listStyle(facility)} onClick={()=> setSelected(facility)}>
 										{facility.name}
 									</List.Item>
 								))}
-							</List>	
+							</List>	}
 
-							<List hover size='sm'>
+							{upgrades && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Upgrades</h6>
 								{props.upgrades.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
 									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
 									</List.Item>
 								))}
-							</List>						
+							</List>}	
+
+							{!upgrades && !facilites && !military && <div>
+								Nothing selected...
+							</div>}			
 						</Panel>
 					</PanelGroup>
         </Sidebar>

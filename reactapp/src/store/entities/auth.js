@@ -11,6 +11,7 @@ const slice = createSlice({
   initialState: {
     login: false,
     loading: false,
+		loadComplete : false,
     users: [],
 		user: undefined,
     team: undefined,
@@ -46,6 +47,7 @@ const slice = createSlice({
 			localStorage.removeItem('nexusAuth');
 			auth.login = false;
 			auth.loading = false;
+			auth.loadComplete = false;
 			auth.users = [];
 			auth.user = undefined;
 			auth.team = undefined;
@@ -56,6 +58,10 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       auth.loading = false;
       auth.errors= { login: action.payload };
+    },
+		finishLoading: (auth, action) => {
+      console.log(`${action.type} Dispatched`)
+      auth.loadComplete = true;
     },
     usersRecieved: (auth, action) => {
       console.log(`${action.type} Dispatched`)
@@ -79,6 +85,7 @@ export const {
   loginRequested,
   authRequestFailed,
   usersRecieved,
+	finishLoading,
   loginSocket,
 	signOut
 } = slice.actions;

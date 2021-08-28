@@ -119,9 +119,9 @@ class DeployMilitary extends Component {
 						<Divider />
 						<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
 								<ButtonGroup>
-									<Button color={this.state.deployType === 'deploy' ? 'blue' : ''} onClick={() => this.handleType('deploy')} >Deploy</Button>
-									<Button color={this.state.deployType === 'invade' ? 'red' : ''} onClick={() => this.handleType('invade')} >Invade</Button>
-									<Button color={this.state.deployType === 'transfer' ? 'green' : ''} onClick={() => this.handleType('transfer')} >Transfer</Button>
+									<Button color={this.state.deployType === 'deploy' ? 'blue' : 'grey'} onClick={() => this.handleType('deploy')} >Deploy</Button>
+									<Button color={this.state.deployType === 'invade' ? 'red' : 'grey'} onClick={() => this.handleType('invade')} >Invade</Button>
+									<Button color={this.state.deployType === 'transfer' ? 'green' : 'grey'} onClick={() => this.handleType('transfer')} >Transfer</Button>
 								</ButtonGroup>		
 						</div>
 						<Divider />

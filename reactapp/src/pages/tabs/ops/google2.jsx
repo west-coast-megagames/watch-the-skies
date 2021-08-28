@@ -38,7 +38,7 @@ const clusterOptions = {
 }
 
 function PrototypeMap(props) {
-	const { isLoaded, loadError } = useLoadScript({
+	const { isLoaded, loadError } =  useLoadScript ({
 		googleMapsApiKey: mapKey,
 		libraries
 	});
@@ -113,28 +113,30 @@ function PrototypeMap(props) {
 				},
 			]}
 			>
-				{(clusterer) => props.groundSites.map(site => 
-					<Marker
-						key={site._id}
-						clusterer={clusterer}
-						position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
-						onClick={()=> {
-							setGeo(site.geoDecimal)
-							setMenu(site);
-							// setMapClick({event: undefined});
-						}}
-						icon={{
-							url: getMapIcon(site),
-							scaledSize: new window.google.maps.Size(55, 55),
-							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
-						}}
-					/>)}
+				
+			{/*The Ground Site Clusterer*/}
+			{(clusterer) => props.groundSites.map(site => 
+				<Marker
+					key={site._id}
+					clusterer={clusterer}
+					position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
+					onClick={()=> {
+						setGeo(site.geoDecimal)
+						setMenu(site);
+						// setMapClick({event: undefined});
+					}}
+					icon={{
+						url: getMapIcon(site),
+						scaledSize: new window.google.maps.Size(55, 55),
+						origin: new window.google.maps.Point(0,0),
+						anchor: new window.google.maps.Point(10, 10)
+					}}
+				/>)}
 			</MarkerClusterer>}
 
 			{/*The Contact Clusterer*/}
 			{props.contactBoolean && <MarkerClusterer options={clusterOptions}
-			styles={[
+				styles={[
 				{
 					url: "XD",
 					height: 56,
@@ -161,8 +163,8 @@ function PrototypeMap(props) {
 					width: 61,
 					textColor: 'white'
 				},
-			]}
-			>
+				]}
+				>
 				{(clusterer) => props.contacts.map(contact => 
 					<Marker
 						key={contact._id}
@@ -181,7 +183,7 @@ function PrototypeMap(props) {
 						}}
 					/>)}
 			</MarkerClusterer>}
-			
+
 			{/*The Military Clusterer*/}
 			{props.militaryBoolean && <MarkerClusterer options={clusterOptions}>
 				{(clusterer) => props.deployedMil.map(unit => 
@@ -211,7 +213,6 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={intel.document.location}
 						onClick={()=> {
-							console.log(intel.document.location)
 							setGeo({latDecimal: intel.document.location.lat, longDecimal: intel.document.location.lng})
 							setMenu(intel.document);
 							// setMapClick({event: undefined});
