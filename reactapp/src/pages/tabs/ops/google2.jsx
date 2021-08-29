@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { GoogleMap, useLoadScript, Marker, MarkerClusterer, InfoWindow, OverlayView } from '@react-google-maps/api';
+import { GoogleMap, useLoadScript, Marker, MarkerClusterer, InfoWindow, OverlayView, } from '@react-google-maps/api';
 import { formatRelative } from 'date-fns';
 
 import { mapKey } from '../../../config';
 import mapStyle from './mapStyles';
-import { Alert } from 'rsuite';
+import { Alert, Button } from 'rsuite';
 import { showLaunch } from '../../../store/entities/infoPanels';
-import { getCities, getGround, getPoI, getCrash } from '../../../store/entities/sites';
+import { getCities, getGround, getPoI, getCrash, getCapitol } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
@@ -18,11 +18,6 @@ const mapContainerStyle = {
 	width: '94.5%',
 	height: '90%',
 	position: 'absolute'
-};
-
-const center = {
-	lat: 43.653225,
-	lng: -79.383186
 };
 
 const options = {
@@ -44,12 +39,16 @@ function PrototypeMap(props) {
 		googleMapsApiKey: mapKey,
 		libraries
 	});
-
 	// const [markers, setMarkers] = React.useState([]);
 	const [menu, setMenu] = React.useState(null);
 	const [geo, setGeo] = React.useState(null);
 	// const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
+
+	// useEffect(() => {
+	// 	const { latDecimal, longDecimal } = props.capitol.geoDecimal;
+	// 	setCenter({ lat: latDecimal, long: longDecimal})
+	// }, []);
 
 	// const onMapClick = React.useCallback((event) => {
 	// 	setMenu({
@@ -62,6 +61,16 @@ function PrototypeMap(props) {
 	// 		time: new Date
 	// 	}])
 	// }, []);
+
+	// This Errors out on Load, but is just fine when the map is already loaded
+	// useEffect(() => {
+	// 	const site = props.sites ? props.sites.find(el => el.geoDecimal.latDecimal === props.center.lat && el.geoDecimal.longDecimal === props.center.lng ) : undefined;
+	// 	console.log(site)
+	// 	if (site) {
+	// 		setGeo(site.geoDecimal);
+	// 		setMenu(site);
+	// 	}
+	// }, [props.center]);
 
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')
@@ -81,11 +90,10 @@ function PrototypeMap(props) {
 		<GoogleMap
 			mapContainerStyle={mapContainerStyle}
 			zoom={4}
-			center={center}
+			center={props.center}
 			options={options}
 			// onClick={mapClick.event}
 			onLoad={onMapLoad}>
-
 			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
@@ -258,6 +266,7 @@ const mapStateToProps = state => ({
 	groundSites: getGround(state),
 	crashes: getCrash(state),
 	poi: getPoI(state),
+	capitol: getCapitol(state),
 	intel: state.entities.intel.list,
 });
 

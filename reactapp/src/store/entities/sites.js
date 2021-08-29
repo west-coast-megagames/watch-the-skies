@@ -82,6 +82,12 @@ export const addsite = site =>
     onSuccess: siteAdded.type
   });
 
+	export const getCapitol = createSelector(
+    state => state.entities.sites.list,
+		state => state.auth.team,
+    (sites, team) => sites.find(site => site.capital === true && site.team._id === team._id)
+  );
+
   export const getCities = createSelector(
     state => state.entities.sites.list,
     sites => sites.filter(site => site.subType === 'City')

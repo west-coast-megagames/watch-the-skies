@@ -5,14 +5,32 @@ import { getAircrafts } from '../store/entities/aircrafts';
 import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid } from 'rsuite';
 import { getOpsAccount } from '../store/entities/accounts';
 
-const { HeaderCell, Cell, Column } = Table;
+const { HeaderCell, Cell, Column, } = Table;
 
 const AircraftTable = (props) => {
 	// TODO: Update visuals of table so they look nice-er
-	console.log(document.documentElement.clientHeight * 0.65)
+	const [displayLength, setDisplayLength] = React.useState(5);
+	const [page, setPage] = React.useState(1);
+
+
+
+
 	const getLocation = (aircraft) => {
       let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
       return location;
+  }
+
+	const getData = () => {
+    return props.aircrafts.filter((v, i) => {
+      const start = displayLength * (page - 1);
+      const end = start + displayLength;
+      return i >= start && i < end;
+    });
+  }
+
+  const handleChangeLength = (dataKey) => {
+		setPage(1);
+		setDisplayLength(dataKey);
   }
   
   if (props.aircrafts.length === 0)
@@ -23,8 +41,8 @@ const AircraftTable = (props) => {
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.50}
-          data={ props.aircrafts }
+					height={document.documentElement.clientHeight * 0.36}
+          data={ getData() }
       >
       <Column  flexGrow={2}>
           <HeaderCell>Aircraft</HeaderCell>
@@ -79,6 +97,37 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
       </Table>
+
+			<Table.Pagination
+          lengthMenu={[
+            {
+              value: 3,
+              label: 3
+            },
+						{
+              value: 4,
+              label: 4
+            },
+            {
+              value: 5,
+              label: 5
+            },
+						{
+              value: 6,
+              label: 6
+            },
+						{
+              value: props.aircrafts.length,
+              label: 'All'
+            }
+          ]}
+          activePage={page}
+          displayLength={displayLength}
+					
+          total={props.aircrafts.length}
+					onChangePage={(dataKey) => setPage(dataKey)}
+					onChangeLength={handleChangeLength}
+        />
     </React.Fragment>
   );
     

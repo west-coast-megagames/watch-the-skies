@@ -42,7 +42,7 @@ const Operations  = (props) => {
 			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
 				<FlexboxGrid>
 					<FlexboxGrid.Item colspan={16} >
-						<Panel bordered style={cardStyle}>
+						<Panel bodyFill bordered style={cardStyle}>
 							<h5>Aircraft Operations</h5>
 							<AircraftTable/>
 						</Panel>
@@ -63,7 +63,8 @@ const Operations  = (props) => {
 
 const cardStyle = {
   border: "5px solid black",
-	height: '50vh'
+	height: '50vh',
+	textAlign: 'center'
 }
 
 const mapStateToProps = state => ({
