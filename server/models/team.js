@@ -109,14 +109,12 @@ TeamSchema.methods.endTurn = async function () {
 };
 
 TeamSchema.methods.validateTeam = async function () {
-	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
+	const { validTreaty, validLog } = require('../middleware/util/validateDocument');
 
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
 	}
-	for await (const tradeId of this.trades) {
-		await validTrade(tradeId);
-	}
+
 	for await (const treatyId of this.treaties) {
 		await validTreaty(treatyId);
 	}
