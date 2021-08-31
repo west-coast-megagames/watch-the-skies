@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runfacilityLoad (runFlag) {
+async function runfacilityLoad(runFlag) {
 	try {
 		// logger.debug("Jeff in runfacilityLoad", runFlag);
 		if (!runFlag) return false;
@@ -36,7 +36,7 @@ async function runfacilityLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 	let recReadCount = 0;
 	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
@@ -54,7 +54,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadBase (iData, rCounts) {
+async function loadBase(iData, rCounts) {
 	let loadName = '';
 
 	try {
@@ -70,7 +70,6 @@ async function loadBase (iData, rCounts) {
 				coastal: iData.coastal,
 				type: iData.type,
 				serviceRecord: [],
-				gameState: [],
 				baseDefenses: iData.baseDefenses,
 				public: iData.public,
 				capability: iData.capability
@@ -238,7 +237,7 @@ async function loadBase (iData, rCounts) {
 	}
 }
 
-async function deleteAllBases () {
+async function deleteAllBases() {
 	// logger.debug("Jeff in deleteAllFacilitys", doLoad);
 
 	try {

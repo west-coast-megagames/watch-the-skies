@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runcitySiteLoad (runFlag) {
+async function runcitySiteLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -34,7 +34,7 @@ async function runcitySiteLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	let recReadCount = 0;
@@ -50,7 +50,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadCity (iData, rCounts) {
+async function loadCity(iData, rCounts) {
 	try {
 
 		const { data } = await axios.get(`${gameServer}init/initSites/code/${iData.code}`);
@@ -82,7 +82,7 @@ async function loadCity (iData, rCounts) {
 	}
 }
 
-async function deleteAllCitys () {
+async function deleteAllCitys() {
 	try {
 		let delErrorFlag = false;
 		try {
@@ -105,7 +105,7 @@ async function deleteAllCitys () {
 	}
 }
 
-async function newCity (cData, rCounts) {
+async function newCity(cData, rCounts) {
 
 	// New City(ground) Site here
 	const newLatDMS = convertToDms(cData.latDecimal, false);
@@ -122,7 +122,6 @@ async function newCity (cData, rCounts) {
 		longDecimal: cData.longDecimal
 	};
 	CitySite.serviceRecord = [];
-	CitySite.gameState = [];
 
 	const team = await axios.get(`${gameServer}init/initTeams/code/${cData.teamCode}`);
 	const tData = team.data;

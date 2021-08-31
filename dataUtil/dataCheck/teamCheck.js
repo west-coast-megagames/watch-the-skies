@@ -42,20 +42,12 @@ async function chkTeam(runFlag) {
 			logger.error(`model missing for team ${team.name} ${team._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(team, 'gameState')) {
-			logger.error(`gameState missing for team ${team.name} ${team._id}`);
-		}
-
 		if (!Object.prototype.hasOwnProperty.call(team, 'serviceRecord')) {
 			logger.error(`serviceRecord missing for Team ${team.name} ${team._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(team, 'treaties')) {
 			logger.error(`treaties missing for Team ${team.name} ${team._id}`);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(team, 'trades')) {
-			logger.error(`trades missing for Team ${team.name} ${team._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(team, 'name')) {

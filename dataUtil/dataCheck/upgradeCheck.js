@@ -4,7 +4,7 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-async function chkUpgrade (runFlag) {
+async function chkUpgrade(runFlag) {
 	let uFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initUpgrades/lean`);
@@ -31,12 +31,6 @@ async function chkUpgrade (runFlag) {
 
 		if (!Object.prototype.hasOwnProperty.call(upgrade, 'model')) {
 			logger.error(`model missing for Upgrade ${upgrade.name} ${upgrade._id}`);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(upgrade, 'gameState')) {
-			logger.error(
-				`gameState missing for Upgrade ${upgrade.name} ${upgrade._id}`
-			);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(upgrade, 'serviceRecord')) {

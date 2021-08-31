@@ -26,14 +26,14 @@ const techFields = [
 ];
 const typeVals = ['Knowledge', 'Analysis', 'Technology'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkResearch (runFlag) {
+async function chkResearch(runFlag) {
 
 	let rFinds = [];
 	try {
@@ -50,12 +50,6 @@ async function chkResearch (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(research, 'model')) {
 			logger.error(
 				`model missing for Research ${research.name} ${research.code} ${research._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(research, 'gameState')) {
-			logger.error(
-				`gameState missing for Research ${research.name} ${research.code} ${research._id}`
 			);
 		}
 

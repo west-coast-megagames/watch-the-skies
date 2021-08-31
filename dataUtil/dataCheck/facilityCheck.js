@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeList = ['Hanger', 'Crisis', 'Civilian', 'Research', 'Base'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkFacility (runFlag) {
+async function chkFacility(runFlag) {
 	let fFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initFacilities/lean`);
@@ -29,12 +29,6 @@ async function chkFacility (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(facility, 'model')) {
 			logger.error(
 				`model missing for Facility ${facility.name} ${facility._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(facility, 'gameState')) {
-			logger.error(
-				`gameState missing for Facility ${facility.name} ${facility._id}`
 			);
 		}
 
@@ -75,12 +69,6 @@ async function chkFacility (runFlag) {
 		) {
 			logger.error(
 				`code is blank for Facility ${facility.name} ${facility._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(facility, 'gameState')) {
-			logger.error(
-				`gameState missing for Facility ${facility.name} ${facility._id}`
 			);
 		}
 

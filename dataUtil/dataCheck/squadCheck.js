@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Raid', 'Assault', 'Infiltration', 'Envoy', 'Science'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkSquad (runFlag) {
+async function chkSquad(runFlag) {
 	let sFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSquads/lean`);
@@ -28,10 +28,6 @@ async function chkSquad (runFlag) {
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'model')) {
 			logger.error(`model missing for Squad ${squad.name} ${squad._id}`);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(squad, 'gameState')) {
-			logger.error(`gameState missing for Squad ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'zone')) {

@@ -61,7 +61,6 @@ async function loadArticle(iData, rCounts) {
 			date: Date.now(),
 			agency: iData.publisher
 		};
-		newArticle.gameState = [];
 
 		if (iData.publisher != '') {
 			const team = await axios.get(`${gameServer}init/initTeams/code/${iData.publisher}`);

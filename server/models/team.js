@@ -39,7 +39,6 @@ const TeamSchema = new Schema({
 		maxlength: 3
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	gameState: [],
 	treaties: [{ type: ObjectId, ref: 'Treaties' }]
 });
 

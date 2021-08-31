@@ -7,14 +7,14 @@ require('winston-mongodb');
 // type are Terrestrial(earth) and Alien (T or A)
 const typeVals = ['Ground', 'Space'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkCountry (runFlag) {
+async function chkCountry(runFlag) {
 	// get sites once
 	let sFinds = [];
 	try {
@@ -71,12 +71,6 @@ async function chkCountry (runFlag) {
 					`borderedBy missing for Country ${country.code} ${country._id}`
 				);
 			}
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(country, 'gameState')) {
-			logger.error(
-				`gameState missing for Country ${country.code} ${country._id}`
-			);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(country, 'serviceRecord')) {

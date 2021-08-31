@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-async function runSquadLoad (runFlag) {
+async function runSquadLoad(runFlag) {
 	try {
 		// squadLoadDebugger("Jeff in runSquadLoad", runFlag);
 		if (!runFlag) return false;
@@ -34,7 +34,7 @@ async function runSquadLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// squadLoadDebugger("Jeff in initLoad", doLoad, squadDataIn.length);
 	if (!doLoad) return;
 
@@ -51,7 +51,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadSquad (iData, rCounts) {
+async function loadSquad(iData, rCounts) {
 
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSquads/name/${iData.name}`);
@@ -60,7 +60,6 @@ async function loadSquad (iData, rCounts) {
 			// New Squad/Squad here
 			const newSquad = iData;
 			newSquad.serviceRecord = [];
-			newSquad.gameState = [];
 
 			if (iData.team != '') {
 				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -150,7 +149,7 @@ async function loadSquad (iData, rCounts) {
 	}
 }
 
-async function deleteAllSquads (doLoad) {
+async function deleteAllSquads(doLoad) {
 	if (!doLoad) return;
 
 	try {

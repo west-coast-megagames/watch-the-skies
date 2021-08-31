@@ -46,7 +46,6 @@ const ResearchSchema = new Schema({
 	desc: { type: String },
 	unlocks: [UnlockSchema],
 	breakthrough: [BreakthroughSchema],
-	gameState: [],
 	researchHistory: [{ type: ObjectId, ref: 'Log' }]
 });
 

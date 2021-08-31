@@ -4,7 +4,7 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-async function chkArticle (runFlag) {
+async function chkArticle(runFlag) {
 
 	let aFinds = [];
 	try {
@@ -22,12 +22,6 @@ async function chkArticle (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(article, 'model')) {
 			logger.error(
 				`model missing for Article ${article.headline} ${article._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(article, 'gameState')) {
-			logger.error(
-				`gameState missing for Article ${article.headline} ${article._id}`
 			);
 		}
 

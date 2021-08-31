@@ -29,7 +29,6 @@ const FacilitySchema = new Schema({
 		defenses: { type: Boolean, default: false }
 	},
 	hidden: { type: Boolean, default: false },
-	gameState: [],
 	upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
 	capability: {
 		research: {

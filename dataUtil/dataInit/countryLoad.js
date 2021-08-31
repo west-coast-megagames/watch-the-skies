@@ -17,13 +17,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runCountryLoad (runFlag) {
+async function runCountryLoad(runFlag) {
 	if (!runFlag) return false;
 	if (runFlag) await initLoad(runFlag);
 	return true;
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	// delete old data
@@ -57,7 +57,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadCountry (cData, rCounts) {
+async function loadCountry(cData, rCounts) {
 	let loadName = '';
 
 	try {
@@ -84,7 +84,6 @@ async function loadCountry (cData, rCounts) {
 				coastal: cData.coastal,
 				formalName: cData.formalName,
 				stats: cData.stats,
-				gameState: [],
 				serviceRecord: [],
 				borderedBy_Ids: []
 			};
@@ -153,7 +152,7 @@ async function loadCountry (cData, rCounts) {
 	}
 }
 
-async function deleteAllCountry () {
+async function deleteAllCountry() {
 	try {
 		let delErrorFlag = false;
 		try {
@@ -176,7 +175,7 @@ async function deleteAllCountry () {
 	}
 }
 
-async function setBorderedBy (cData, rCounts) {
+async function setBorderedBy(cData, rCounts) {
 	// don't load if flag is not true
 	/*
   logger.debug(

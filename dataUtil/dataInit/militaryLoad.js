@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runMilitaryLoad (runFlag) {
+async function runMilitaryLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -32,7 +32,7 @@ async function runMilitaryLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// militaryLoadDebugger("Jeff in initLoad", doLoad, militaryDataIn.length);
 	if (!doLoad) return;
 
@@ -49,7 +49,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadMilitary (iData, rCounts) {
+async function loadMilitary(iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/name/${iData.name}`);
 		// type is now on the blueprint
@@ -97,7 +97,7 @@ async function loadMilitary (iData, rCounts) {
 	}
 }
 
-async function deleteAllMilitarys (doLoad) {
+async function deleteAllMilitarys(doLoad) {
 	if (!doLoad) return;
 
 	try {
@@ -122,11 +122,10 @@ async function deleteAllMilitarys (doLoad) {
 	}
 }
 
-async function createFleet (iData, rCounts, bpData) {
+async function createFleet(iData, rCounts, bpData) {
 	// New Fleet/Military here
 	const newFleet = iData;
 	newFleet.serviceRecord = [];
-	newFleet.gameState = [];
 	newFleet.blueprint = bpData._id;
 	newFleet.stats = bpData.stats;
 	newFleet.type = bpData.type;
@@ -206,11 +205,10 @@ async function createFleet (iData, rCounts, bpData) {
 	}
 }
 
-async function createCorps (iData, rCounts, bpData) {
+async function createCorps(iData, rCounts, bpData) {
 	// New Corps/Military here
 	const newCorps = iData;
 	newCorps.serviceRecord = [];
-	newCorps.gameState = [];
 	newCorps.blueprint = bpData._id;
 	newCorps.stats = bpData.stats;
 	newCorps.type = bpData.type;
@@ -290,7 +288,7 @@ async function createCorps (iData, rCounts, bpData) {
 	}
 }
 
-async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+async function findUpgrades(upgrades, unitType, unitName, team, facility) {
 	const upgIds = [];
 	for (const upg of upgrades) {
 		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);

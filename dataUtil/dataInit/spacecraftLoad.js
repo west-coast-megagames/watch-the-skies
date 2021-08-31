@@ -18,7 +18,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runSpacecraftLoad (runFlag) {
+async function runSpacecraftLoad(runFlag) {
 	try {
 		// spacecraftDebugger("Jeff in runSpacecraftLoad", runFlag);
 		if (!runFlag) return false;
@@ -37,7 +37,7 @@ async function runSpacecraftLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 	let recReadCount = 0;
 	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
@@ -52,7 +52,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadSpacecraft (iData, rCounts) {
+async function loadSpacecraft(iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSites/code/${iData.code}`);
 
@@ -75,7 +75,7 @@ async function loadSpacecraft (iData, rCounts) {
 	}
 }
 
-async function deleteAllSpacecraft (doLoad) {
+async function deleteAllSpacecraft(doLoad) {
 	// logger.debug('Jeff in deleteAllSpacecrafts');
 	if (!doLoad) return;
 
@@ -101,14 +101,14 @@ async function deleteAllSpacecraft (doLoad) {
 	}
 }
 
-async function newSpacecraft (sData, rCounts) {
+async function newSpacecraft(sData, rCounts) {
 
 	// New Spacecraft(space) Site here
 
 	const SpaceSite = sData;
 	SpaceSite.type = 'Space';
 	SpaceSite.serviceRecord = [];
-	SpaceSite.gameState = [];
+
 	SpaceSite.subType = sData.shipType;
 	SpaceSite.status = sData.status;
 	SpaceSite.hidden = sData.hidden;

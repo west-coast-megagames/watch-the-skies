@@ -48,8 +48,7 @@ const CountrySchema = new Schema({
 		balance: { type: Number, default: 0 }
 	},
 	formalName: { type: String },
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-	gameState: []
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 CountrySchema.methods.validateCountry = async function () {

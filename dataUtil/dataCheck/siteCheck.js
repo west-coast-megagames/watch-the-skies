@@ -15,14 +15,14 @@ const spaceSubTypeVals = [
 	'Station'
 ];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkSite (runFlag) {
+async function chkSite(runFlag) {
 	let sFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSites/lean`);
@@ -64,10 +64,6 @@ async function chkSite (runFlag) {
         site.code == null
 		) {
 			logger.error(`code is blank for Site ${site.name} ${site._id}`);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(site, 'gameState')) {
-			logger.error(`gameState missing for Site ${site.name} ${site._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(site, 'serviceRecord')) {

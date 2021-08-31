@@ -32,7 +32,6 @@ const UpgradeSchema = new Schema({
 		storage: { type: Boolean, default: true }
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	gameState: [],
 	effects: [
 		{
 			type: { type: String },
