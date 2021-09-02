@@ -14,7 +14,7 @@ import UpgradeTable from './asset/upgradeTable';
 const { HeaderCell, Cell, Column } = Table;
 
 const AssetTab = (props) => {
-	const [selected, setSelected] = React.useState(undefined);
+	const [selected, setSelected] = React.useState(props.selected);
 	const [filter, setFilter] = React.useState('');
 	const [military, setMilitary] = React.useState(true);
 	const [facilites, setFacilities] = React.useState(true);
@@ -28,6 +28,10 @@ const AssetTab = (props) => {
 			return({cursor: 'pointer'});
 	}
 
+
+	useEffect(() => {
+		console.log(props.selected);
+	}, [props.selected]);
 
 	const repair = async (upgrade) => {
 		try {
@@ -89,6 +93,9 @@ const AssetTab = (props) => {
 				}
 				{ selected && selected.model === 'Facility' && 
 					<FacilityStats facility={selected}/>
+				}
+				{ selected && selected.model === 'Aircraft' && 
+					<b>yo</b>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>

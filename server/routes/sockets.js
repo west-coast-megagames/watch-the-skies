@@ -8,8 +8,9 @@ const masterClock = require('../wts/gameClock/gameClock'); // Import of main clo
 const transaction = require('./socket/transactions'); // Import of Socket route for WTS Transaction system
 const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
 const trade = require('./socket/trade'); // Import of Socket route for WTS Clock controls
+const governance = require('./socket/governance'); // Governance sockets
 
-const routes = { clock, transaction, trade }; // Route object for routing to various socket routes
+const routes = { clock, transaction, trade, governance }; // Route object for routing to various socket routes
 
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
@@ -22,6 +23,7 @@ module.exports = function (server) {
 	}); // Creation of websocket Server
 
 	io.use((client, next) => {
+		//     console.log(client.handshake);
 		const { username, character, version } = client.handshake.auth;
 		if (!username) return next(new Error('Invalid Username'));
 		client.username = username;

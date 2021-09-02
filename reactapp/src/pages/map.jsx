@@ -39,9 +39,8 @@ const MapPage = (props) => {
 
   return (
 		<Container>
-			<Header>
-				<FlexboxGrid justify="center" align="middle">
-					<FlexboxGrid.Item colspan={6}>
+				<FlexboxGrid justify="space-around" align="middle">
+					<FlexboxGrid.Item colspan={12}>
 						<CheckboxGroup inline name="checkboxList">
 							<Checkbox onChange={() => setSites(!sites)} checked={sites}>Sites</Checkbox>
 							<Checkbox onChange={() => setContacts(!contacts)} checked={contacts}>Contacts</Checkbox>
@@ -62,8 +61,6 @@ const MapPage = (props) => {
 					/>
 					</FlexboxGrid.Item>
 				</FlexboxGrid>
-
-			</Header>
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
 				<PrototypeMap siteBoolean={sites} contactBoolean={contacts} intelBoolean={intel} militaryBoolean={military} center={center}></PrototypeMap>
 			</Content>
@@ -76,7 +73,7 @@ const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
 	sites: state.entities.sites.list,
-	capitol: getCapitol(state),
+	capitol: state.auth.user ? getCapitol(state) : undefined,
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list
 });

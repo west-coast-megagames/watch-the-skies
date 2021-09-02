@@ -1,27 +1,26 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { showAircraft } from '../store/entities/infoPanels';
-import { getAircrafts } from '../store/entities/aircrafts';
+import { showAircraft } from '../../../../store/entities/infoPanels';
+import { getAircrafts } from '../../../../store/entities/aircrafts';
 import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid } from 'rsuite';
-import { getOpsAccount } from '../store/entities/accounts';
+import { getOpsAccount } from '../../../../store/entities/accounts';
+import { getFacilites } from '../../../../store/entities/facilities';
+import { getMilitary } from '../../../../store/entities/military';
 
 const { HeaderCell, Cell, Column, } = Table;
 
-const AircraftTable = (props) => {
+const MilitaryTable = (props) => {
 	// TODO: Update visuals of table so they look nice-er
-	const [displayLength, setDisplayLength] = React.useState(5);
+	const [displayLength, setDisplayLength] = React.useState(15);
 	const [page, setPage] = React.useState(1);
 
-
-
-
 	const getLocation = (aircraft) => {
-      let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
+      let location = aircraft.site !== undefined ? aircraft.site.name !== undefined ? aircraft.site.name : 'Unknown' : 'The Abyss'
       return location;
   }
 
 	const getData = () => {
-    return props.aircrafts.filter((v, i) => {
+    return props.military.filter((v, i) => {
       const start = displayLength * (page - 1);
       const end = start + displayLength;
       return i >= start && i < end;
@@ -33,23 +32,32 @@ const AircraftTable = (props) => {
 		setDisplayLength(dataKey);
   }
   
-  if (props.aircrafts.length === 0)
+  if (props.military.length === 0)
       return <h4>No aircraft currently available.</h4>
   else return (
     <React.Fragment>
-      <p>You currently have {props.aircrafts.length} aircraft in base.</p>
+      <p>You currently have {props.military.length} units</p>
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.36}
+					height={document.documentElement.clientHeight * 0.78}
           data={ getData() }
       >
       <Column  flexGrow={2}>
-          <HeaderCell>Aircraft</HeaderCell>
+          <HeaderCell>Name</HeaderCell>
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-      <Column flexGrow={2}>
+			<Column flexGrow={2} >
+        <HeaderCell>Location</HeaderCell>
+        <Cell>
+          {rowData => {
+            return getLocation(rowData)
+          }}
+        </Cell>
+      </Column>
+
+      {/* <Column flexGrow={2}>
         <HeaderCell >Integrity</HeaderCell>
         <Cell style={{ padding: 0 }} verticalAlign='middle' >
           {rowData => {
@@ -66,9 +74,9 @@ const AircraftTable = (props) => {
             )
           }}
         </Cell>
-      </Column>
+      </Column> */}
 
-      <Column flexGrow={1} >
+      {/* <Column flexGrow={1} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
@@ -80,7 +88,7 @@ const AircraftTable = (props) => {
       <Column flexGrow={1} >
           <HeaderCell>Status</HeaderCell>
           <Cell dataKey='mission' />
-      </Column>
+      </Column>*/}
 
       <Column flexGrow={1}>
         <HeaderCell>Actions</HeaderCell>
@@ -89,42 +97,41 @@ const AircraftTable = (props) => {
             let aircraft = rowData;
             return (
             <ButtonGroup size='sm'>
-              <IconButton icon={<Icon icon="info-circle" />} onClick={() => props.infoRequest(aircraft)} color="blue"/>
-              <IconButton icon={<Icon icon="fighter-jet" />} onClick={() => Alert.warning('Launching aircraft from this table not been implemented...', 4000)} color="red" />
+              <IconButton icon={<Icon icon="info-circle" />} onClick={() => props.handleTransfer(aircraft)} color="blue"/>
             </ButtonGroup>
             )
           }}    
         </Cell>
-      </Column>
+      </Column> 
       </Table>
 
 			<Table.Pagination
           lengthMenu={[
             {
-              value: 3,
-              label: 3
-            },
-						{
-              value: 4,
-              label: 4
-            },
-            {
               value: 5,
               label: 5
             },
 						{
-              value: 6,
-              label: 6
+              value: 10,
+              label: 10
+            },
+            {
+              value: 15,
+              label: 15
             },
 						{
-              value: props.aircrafts.length,
+              value: 20,
+              label: 20
+            },
+						{
+              value: props.military.length,
               label: 'All'
             }
           ]}
           activePage={page}
           displayLength={displayLength}
 					
-          total={props.aircrafts.length}
+          total={props.military.length}
 					onChangePage={(dataKey) => setPage(dataKey)}
 					onChangeLength={handleChangeLength}
         />
@@ -134,8 +141,7 @@ const AircraftTable = (props) => {
 }
 
 const mapStateToProps = state => ({
-    aircrafts: getAircrafts(state),
-    lastFetch: state.entities.aircrafts.lastFetch,
+		military: getMilitary(state),
 		account: getOpsAccount(state)
 })
 
@@ -144,4 +150,4 @@ const mapDispatchToProps = dispatch => ({
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AircraftTable);
+export default connect(mapStateToProps, mapDispatchToProps)(MilitaryTable);

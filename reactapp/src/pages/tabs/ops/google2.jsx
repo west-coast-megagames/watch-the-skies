@@ -45,11 +45,6 @@ function PrototypeMap(props) {
 	// const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
 
-	// useEffect(() => {
-	// 	const { latDecimal, longDecimal } = props.capitol.geoDecimal;
-	// 	setCenter({ lat: latDecimal, long: longDecimal})
-	// }, []);
-
 	// const onMapClick = React.useCallback((event) => {
 	// 	setMenu({
 	// 			lat: event.latLng.lat(),
@@ -63,14 +58,14 @@ function PrototypeMap(props) {
 	// }, []);
 
 	// This Errors out on Load, but is just fine when the map is already loaded
-	// useEffect(() => {
-	// 	const site = props.sites ? props.sites.find(el => el.geoDecimal.latDecimal === props.center.lat && el.geoDecimal.longDecimal === props.center.lng ) : undefined;
-	// 	console.log(site)
-	// 	if (site) {
-	// 		setGeo(site.geoDecimal);
-	// 		setMenu(site);
-	// 	}
-	// }, [props.center]);
+	useEffect(() => {
+		const site = props.groundSites ? props.groundSites.find(el => el.geoDecimal.latDecimal === props.center.lat && el.geoDecimal.longDecimal === props.center.lng ) : undefined;
+		console.log(site)
+		if (site) {
+			setGeo(site.geoDecimal);
+			setMenu(site);
+		}
+	}, [props.center]);
 
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')

@@ -8,7 +8,10 @@ import LoginLink from '../components/common/loginLink'
 import playTrack from './../scripts/audio';
 import PrototypeMap from './tabs/ops/google2';
 import AssetsTab from './tabs/ops/assets';
-import AircraftTable from '../components/aircraftTable';
+import { getFacilites } from '../store/entities/facilities';
+import AircraftTable from './tabs/ops/asset/AircraftTable';
+import FacilitiesTable from './tabs/ops/asset/FacilitiesTable';
+import MilitaryTable from './tabs/ops/asset/MilitaryTable';
 
 /*
 TODO CHECKLIST
@@ -24,7 +27,14 @@ TODO CHECKLIST
 
 const Operations  = (props) => {
 	const [tab, setTab] = React.useState('dashboard');
+	const [selected, setSelected] = React.useState(undefined);
 	const url = props.match.path;
+
+	const handleTransfer = (thing) => {
+		setSelected(thing);
+		setTab('assets');
+		props.history.push('/ops/assets');
+	}
 
 	if (!props.login) {
 		props.history.push('/');
@@ -40,21 +50,33 @@ const Operations  = (props) => {
 				</Nav>
 			</Header>
 			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
-				<FlexboxGrid>
-					<FlexboxGrid.Item colspan={16} >
-						<Panel bodyFill bordered style={cardStyle}>
-							<h5>Aircraft Operations</h5>
-							<AircraftTable/>
-						</Panel>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={8} >
-						<div>
+				<Switch>
+					<Route path={`${url}/dashboard`} render={() => (
+						<FlexboxGrid>
+							<FlexboxGrid.Item colspan={15} >
+								<Panel bodyFill bordered style={cardStyle}>
+									<h5>Aircraft Operations</h5>
+									<AircraftTable handleTransfer={handleTransfer} />
+								</Panel>
+								<Panel bodyFill bordered style={cardStyle2}>
+									<h5>Facilities</h5>
+									<FacilitiesTable handleTransfer={handleTransfer}/>
+								</Panel>
+							</FlexboxGrid.Item>
+							<FlexboxGrid.Item colspan={9} >
+								<Panel bodyFill bordered style={cardStyle3}>
+									<h5>Military</h5>
+									<MilitaryTable handleTransfer={handleTransfer}/>
+								</Panel>
+							</FlexboxGrid.Item>
+						</FlexboxGrid>
+					)}/>
 
-						</div>
-					</FlexboxGrid.Item>
-				</FlexboxGrid>
-
-
+					<Route path={`${url}/assets`} render={() => (
+						<AssetsTab selected={selected} />
+					)}/>
+					<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
+				</Switch>
 			</Content>
 		</Container>
   );
@@ -62,17 +84,33 @@ const Operations  = (props) => {
 }
 
 const cardStyle = {
-  border: "5px solid black",
+  border: "2px solid black",
 	height: '50vh',
+	borderRadius: '0px',
+	textAlign: 'center'
+}
+
+const cardStyle2 = {
+  border: "2px solid black",
+	height: '39vh',
+	borderRadius: '0px',
+	textAlign: 'center'
+}
+
+const cardStyle3 = {
+  border: "2px solid black",
+	height: '89vh',
+	borderRadius: '0px',
 	textAlign: 'center'
 }
 
 const mapStateToProps = state => ({
-login: state.auth.login,
-team: state.auth.team,
-sites: state.entities.sites.list,
-military: state.entities.military.list,
-aircraft: state.entities.aircrafts.list
+	login: state.auth.login,
+	team: state.auth.team,
+	sites: state.entities.sites.list,
+	military: state.entities.military.list,
+	aircraft: state.entities.aircrafts.list,
+	facilities: getFacilites(state),
 });
 
 const mapDispatchToProps = dispatch => ({});

@@ -114,7 +114,6 @@ module.exports = function (io) {
 		});
 
 
-
 		client.on('bankingTransfer', async (transfer) => {
 			const { to, from, amount, note } = transfer;
 

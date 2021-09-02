@@ -8,6 +8,7 @@ import LoginLink from '../components/common/loginLink';
 
 import Budget from './tabs/gov/budget';
 import GameTimeline from './tabs/gov/GameTimeline';
+import Agreements from './tabs/gov/Agreements';
 
 const Governance = (props) => {
 	const [tab, setTab] = React.useState('dashboard');
@@ -62,7 +63,7 @@ const Governance = (props) => {
 							<h5>The espionage system for the Governance Module has not been created!</h5>
 						)}/>
 						<Route path={`${url}/ratification`}  render={() => (
-							<h5>The treaty system for the Governance Module has not been created!</h5>
+							<Agreements/>
 						)}/>
 						<Route path={`${url}/unrest`}  render={() => (
 							<h5>The unrest system for the Governance Module has not been created!</h5>
