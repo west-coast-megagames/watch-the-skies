@@ -62,8 +62,8 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 
 	useEffect(() => {
 		let setter = getTimeRemianing(gameClock, deadline);
-		setTime(setter.time);
-		setClock(setter.clock);
+		// setTime(setter.time);
+		// setClock(setter.clock);
 
 		clearInterval(interval);
 		interval = undefined;
