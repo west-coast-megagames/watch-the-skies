@@ -23,7 +23,6 @@ const ArticleSchema = new Schema({
 	likes: { type: Number, default: 0 },
 	tags: [{ type: String }],
 	imageSrc: { type: String },
-	gameState: [],
 	agency: { type: String },
 	hidden: { type: Boolean, default: false }
 });

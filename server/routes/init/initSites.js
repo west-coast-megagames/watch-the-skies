@@ -33,7 +33,7 @@ router.get('/:id', validateObjectId, async function (req, res) {
 	const id = req.params.id;
 
 	try {
-		const site = await Site.findById(req.site._id).select('code email name');
+		const site = await Site.findById(req.params.id).select('code email name geoDecimal');
 
 		if (site != null) {
 			logger.info(`Verifying ${site.code}`);

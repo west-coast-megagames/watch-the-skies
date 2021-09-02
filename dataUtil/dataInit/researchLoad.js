@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 const teamArray = [];
 
-async function runResearchLoad (runFlag) {
+async function runResearchLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -37,7 +37,7 @@ async function runResearchLoad (runFlag) {
 	}
 }
 
-async function loadTeams () {
+async function loadTeams() {
 	const team = await axios.get(`${gameServer}api/team/type/National`);
 	const tData = team.data;
 
@@ -47,7 +47,7 @@ async function loadTeams () {
 	logger.debug(`Number of National Teams Loaded: ${teamArray.length}`);
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// logger.debug("Jeff in initLoad", doLoad, researchDataIn.length);
 	if (!doLoad) return;
 
@@ -64,7 +64,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadResearch (iData, rCounts) {
+async function loadResearch(iData, rCounts) {
 	try {
 
 		const { data } = await axios.get(`${gameServer}init/initResearch/code/${iData.code}`);
@@ -119,7 +119,7 @@ async function loadResearch (iData, rCounts) {
 	}
 }
 
-async function deleteAllResearchs (doLoad) {
+async function deleteAllResearchs(doLoad) {
 	if (!doLoad) return;
 
 	try {
@@ -144,11 +144,10 @@ async function deleteAllResearchs (doLoad) {
 	}
 }
 
-async function createTechnology (iData, teamId, rCounts) {
+async function createTechnology(iData, teamId, rCounts) {
 	// New Tech Research here
 	const techResearch = iData;
 	techResearch.team = teamId;
-	techResearch.gameState = [];
 	techResearch.researchHistory = [];
 
 	try {
@@ -162,10 +161,9 @@ async function createTechnology (iData, teamId, rCounts) {
 	}
 }
 
-async function createKnowledge (iData, rCounts) {
+async function createKnowledge(iData, rCounts) {
 	// New Knowledge Research here
 	const knowledgeResearch = iData;
-	knowledgeResearch.gameState = [];
 
 	const teamCode = iData.credit;
 	if (iData.credit != '') {
@@ -206,10 +204,9 @@ async function createKnowledge (iData, rCounts) {
 
 }
 
-async function createAnalysis (iData, rCounts) {
+async function createAnalysis(iData, rCounts) {
 	// New Analysis Research here
 	const analysisResearch = iData;
-	analysisResearch.gameState = [];
 	analysisResearch.salvage = [];
 
 	if (iData.teamCode != '') {

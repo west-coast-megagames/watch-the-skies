@@ -34,8 +34,7 @@ const AccountSchema = new Schema({
 	code: { type: String, minlength: 3, maxlength: 3, required: true },
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
-	queue: [TransferSchema],
-	gameState: []
+	queue: [TransferSchema]
 });
 
 // METHOD - deposit
@@ -44,9 +43,6 @@ AccountSchema.methods.deposit = async function (transaction) {
 	const { resource, amount, note } = transaction;
 
 	try {
-		this.gameState.push(this.toObject());
-		this.markModified('gameState');
-
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
 		accountDebugging(resource);
 
@@ -88,9 +84,6 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 	const { resource, amount, note } = transaction;
 
 	try {
-		this.gameState.push(this.toObject());
-		this.markModified('gameState');
-
 		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
 		accountDebugging(resource);
 

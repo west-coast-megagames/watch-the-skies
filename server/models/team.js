@@ -21,6 +21,14 @@ const RoleSchema = new Schema({
 	user: { type: String }
 });
 
+const AgreementSchema = new Schema({
+	type: {
+		type: String,
+		enum: ['Defense', 'Base', 'Science', 'Open Borders']
+	},
+	with: { type: ObjectId, ref: 'Team' } // or some other name probably
+});
+
 const TeamSchema = new Schema({
 	model: { type: String, default: 'Team' },
 	name: {
@@ -39,8 +47,7 @@ const TeamSchema = new Schema({
 		maxlength: 3
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	gameState: [],
-	treaties: [{ type: ObjectId, ref: 'Treaties' }]
+	agreements: [ AgreementSchema ]
 });
 
 // METHOD - prRoll
@@ -109,17 +116,12 @@ TeamSchema.methods.endTurn = async function () {
 };
 
 TeamSchema.methods.validateTeam = async function () {
-	const { validTrade, validTreaty, validLog } = require('../middleware/util/validateDocument');
+	const { validLog } = require('../middleware/util/validateDocument');
 
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
 	}
-	for await (const tradeId of this.trades) {
-		await validTrade(tradeId);
-	}
-	for await (const treatyId of this.treaties) {
-		await validTreaty(treatyId);
-	}
+
 
 	let schema = {};
 	switch(this.type) {

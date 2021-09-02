@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-async function runaircraftLoad (runFlag) {
+async function runaircraftLoad(runFlag) {
 	try {
 		// logger.debug("Jeff in runaircraftLoad", runFlag);
 		if (!runFlag) return false;
@@ -36,7 +36,7 @@ async function runaircraftLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	let recReadCount = 0;
@@ -52,7 +52,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadAircraft (iData, rCounts) {
+async function loadAircraft(iData, rCounts) {
 	try {
 
 		const { data } = await axios.get(`${gameServer}init/initAircrafts/name/${iData.name}`);
@@ -75,7 +75,7 @@ async function loadAircraft (iData, rCounts) {
 	}
 }
 
-async function deleteAllAircrafts (doLoad) {
+async function deleteAllAircrafts(doLoad) {
 	// logger.debug("Jeff in deleteAllAircrafts", doLoad);
 	if (!doLoad) return;
 
@@ -101,12 +101,12 @@ async function deleteAllAircrafts (doLoad) {
 	}
 }
 
-async function newAircraftCreate (aData, rCounts) {
+async function newAircraftCreate(aData, rCounts) {
 
 	// New Aircraft here
 	const newAircraft = aData;
 	newAircraft.serviceRecord = [];
-	newAircraft.gameState = [];
+	newAircraft.location = {};
 
 	const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${aData.bpCode}`);
 	const bpData = blueprint.data;
@@ -186,6 +186,22 @@ async function newAircraftCreate (aData, rCounts) {
 		newAircraft.site = baseSite;
 	}
 
+	// set aircraft location based on site geoDecimal
+	if (newAircraft.site != '' && newAircraft.site != 'undefined') {
+		const site = await axios.get(`${gameServer}init/initSites/${newAircraft.site}`);
+		const sData = site.data;
+
+		if (!sData.code) {
+			++rCounts.loadErrCount;
+			logger.error(`New Aircraft has Invalid Site for location: ${aData.name} ${aData.site}`);
+			return;
+		}
+		else {
+			newAircraft.location.lat = sData.geoDecimal.latDecimal;
+			newAircraft.location.lng = sData.geoDecimal.longDecimal;
+		}
+	}
+
 	// get upgrades if we have a valid blueprint
 	if (bpData.desc) {
 		const upgrades = await findUpgrades(bpData.upgrades, newAircraft.type, newAircraft.name, newAircraft.team, newAircraft.origin);
@@ -203,7 +219,7 @@ async function newAircraftCreate (aData, rCounts) {
 	}
 }
 
-async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+async function findUpgrades(upgrades, unitType, unitName, team, facility) {
 	const upgIds = [];
 	for (const upg of upgrades) {
 		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);

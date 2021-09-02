@@ -33,8 +33,7 @@ const MilitarySchema = new Schema({
 	location: {
 		lat: { type: Number },
 		lng: { type: Number }
-	},
-	gameState: []
+	}
 });
 
 MilitarySchema.methods.validateMilitary = async function () {

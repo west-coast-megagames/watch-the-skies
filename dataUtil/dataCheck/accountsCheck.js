@@ -59,12 +59,6 @@ async function chkAccount(runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(account, 'gameState')) {
-			logger.error(
-				`gameState missing for Account ${account.name} ${account.owner} ${account._id}`
-			);
-		}
-
 		if (!Object.prototype.hasOwnProperty.call(account, 'resources')) {
 			logger.error(
 				`resources missing for Account ${account.name} ${account.owner} ${account._id}`

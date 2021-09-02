@@ -17,8 +17,7 @@ const ZoneSchema = new Schema({
 		unique: true
 	},
 	name: { type: String, required: true, minlength: 3, maxlength: 50 },
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-	gameState: []
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 // validateZone Method

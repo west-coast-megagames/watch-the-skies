@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Interceptor', 'Transport', 'Decoy', 'Fighter'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkAircraft (runFlag) {
+async function chkAircraft(runFlag) {
 	let aFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initAircrafts/lean`);
@@ -87,10 +87,22 @@ async function chkAircraft (runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(aircraft, 'gameState')) {
+		if (!Object.prototype.hasOwnProperty.call(aircraft, 'location')) {
 			logger.error(
-				`gameState missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				`location missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
+		}
+		else {
+			if (!Object.prototype.hasOwnProperty.call(aircraft.location, 'lat')) {
+				logger.error(
+					`location.lat missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
+			if (!Object.prototype.hasOwnProperty.call(aircraft.location, 'lng')) {
+				logger.error(
+					`locaton.lng missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'type')) {

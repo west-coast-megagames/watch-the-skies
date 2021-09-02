@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Fleet', 'Corps'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkMilitary (runFlag) {
+async function chkMilitary(runFlag) {
 	let mFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/lean`);
@@ -29,12 +29,6 @@ async function chkMilitary (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(military, 'model')) {
 			logger.error(
 				`model missing for Military ${military.name} ${military._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(military, 'gameState')) {
-			logger.error(
-				`gameState missing for Military ${military.name} ${military._id}`
 			);
 		}
 

@@ -84,8 +84,7 @@ const AircraftSchema = new Schema({
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 }
 	},
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-	gameState: []
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 // validateAircraft Method

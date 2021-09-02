@@ -24,8 +24,7 @@ const SiteSchema = new Schema({
 	},
 	hidden: { type: Boolean, default: false }, // just in case and to be consistent
 	facilities: [{ type: ObjectId, ref: 'Facility' }],
-	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	gameState: []
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
 });
 
 // validateSite method

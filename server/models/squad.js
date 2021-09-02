@@ -45,8 +45,7 @@ const SquadSchema = new Schema({
 		destroyed: { type: Boolean, default: false },
 		ready: { type: Boolean, default: true },
 		captured: { type: Boolean, default: false }
-	},
-	gameState: []
+	}
 });
 
 SquadSchema.methods.runMission = async function () {
