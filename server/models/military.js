@@ -25,9 +25,9 @@ const MilitarySchema = new Schema({
 		destroyed: { type: Boolean, default: false },
 		repair: { type: Boolean, default: false },
 		secret: { type: Boolean, default: false },
-		action: { type: Boolean, default: true }, // transfer/deployment/repair
-		mission: { type: Boolean, default: true } // invade
 	},
+	actions: { type: Number, default: 1 },
+	missions: { type: Number, default: 1 },
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	location: {
