@@ -10,6 +10,8 @@ import { getUpgrades } from '../../../store/entities/upgrades';
 import { socket } from '../../../api';
 import MilitaryStats from './asset/militaryStats';
 import UpgradeTable from './asset/upgradeTable';
+import AircraftStats from './asset/AircraftStats';
+import { getAircrafts } from '../../../store/entities/aircrafts';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -95,7 +97,7 @@ const AssetTab = (props) => {
 					<FacilityStats facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<b>yo</b>
+					<AircraftStats unit={selected}/>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>
@@ -185,12 +187,22 @@ const AssetTab = (props) => {
 										<Checkbox onChange={() => setUpgrades(!upgrades)} checked={upgrades}>Upgrades</Checkbox>
 									</FlexboxGrid.Item>
 									<FlexboxGrid.Item colspan={12}>
-										<Checkbox onChange={() => setAircraft(!aircraft)} disabled checked={aircraft}>Aircraft</Checkbox>
+										<Checkbox onChange={() => setAircraft(!aircraft)} checked={aircraft}>Aircraft</Checkbox>
 									</FlexboxGrid.Item>
 								</FlexboxGrid>
   						</CheckboxGroup>
 						</Panel>
 						<Panel bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+						{aircraft && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft</h6>
+								{props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
+									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
+										{upgrade.name}
+									</List.Item>
+								))}
+							</List>}	
+							
+							
 							{military && <List hover autoScroll size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units</h6>
 								{props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((unit, index) => (
@@ -251,6 +263,7 @@ const mapStateToProps = state => ({
 	team: state.auth.team,
 	teams: state.entities.teams.list,
 	account: getOpsAccount(state),
+	aircraft: getAircrafts(state),
 	units: getMilitary(state),
 	upgrades: getUpgrades(state),
 	facilities: getFacilites(state),

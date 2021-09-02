@@ -122,6 +122,7 @@ function PrototypeMap(props) {
 			{/*The Ground Site Clusterer*/}
 			{(clusterer) => props.groundSites.map(site => 
 				<Marker
+					title={site.name}
 					key={site._id}
 					clusterer={clusterer}
 					position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
