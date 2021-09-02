@@ -99,6 +99,10 @@ const GroundSite = Site.discriminator(
 	new Schema({
 		type: { type: String, default: 'Ground' },
 		subType: { type: String, default: 'City', enum: ['City', 'Crash', 'Point of Interest'] },
+		unrest: { type: Number, min: 0, max: 100, default: 25 },
+		loyalty: { type: Number, min: 0, max: 100, default: 85 },
+		repression: { type: Number, min: 0, max: 100, default: 0 },
+		morale: { type: Number, min: 0, max: 100, default: 50 },
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
 			longDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
