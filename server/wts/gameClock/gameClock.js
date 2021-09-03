@@ -279,7 +279,7 @@ class GameTimer {
 		this.broadcastClock();
 	}
 	broadcastClock() {
-		nexusEvent.emit('request', 'clock', [ this.getClockState() ]);
+		nexusEvent.emit('request', 'broadcast', [ this.getClockState() ]);
 	}
 }
 
