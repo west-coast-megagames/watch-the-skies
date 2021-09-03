@@ -86,3 +86,9 @@ export const addteam = team =>
     state => state.entities.teams.list,
     (teams) => teams.filter(team => team.type === 'National')
   );
+
+	export const getMyTeam = createSelector(
+    state => state.entities.teams.list,
+		state => state.auth.team,
+    (teams, team) => teams.find(el => el._id === team._id)
+  );
