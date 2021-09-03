@@ -12,6 +12,8 @@ import { getFacilites } from '../store/entities/facilities';
 import AircraftTable from './tabs/ops/asset/AircraftTable';
 import FacilitiesTable from './tabs/ops/asset/FacilitiesTable';
 import MilitaryTable from './tabs/ops/asset/MilitaryTable';
+import BalanceHeader from '../components/common/BalanceHeader';
+import { getOpsAccount } from '../store/entities/accounts';
 
 /*
 TODO CHECKLIST
@@ -43,12 +45,20 @@ const Operations  = (props) => {
   else return (
 		<Container>
 			<Header>
-				<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
-					<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
-					<Nav.Item eventKey="assets" to={`${url}/assets`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtlas} />}> Asset Manager</Nav.Item>
-					<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
-				</Nav>
+			<FlexboxGrid align="middle">
+				<FlexboxGrid.Item colspan={20} >
+					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
+						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
+						<Nav.Item eventKey="assets" to={`${url}/assets`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtlas} />}> Asset Manager</Nav.Item>
+						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
+					</Nav>							
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={4}>
+					<BalanceHeader account={props.account} />
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
 			</Header>
+			
 			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
 				<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
@@ -111,6 +121,7 @@ const mapStateToProps = state => ({
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list,
 	facilities: getFacilites(state),
+	account: getOpsAccount(state)
 });
 
 const mapDispatchToProps = dispatch => ({});

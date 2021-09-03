@@ -120,8 +120,8 @@ class DeployMilitary extends Component {
 						<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
 								<ButtonGroup>
 									<Button color={this.state.deployType === 'deploy' ? 'blue' : 'grey'} onClick={() => this.handleType('deploy')} >Deploy</Button>
-									<Button color={this.state.deployType === 'invade' ? 'red' : 'grey'} onClick={() => this.handleType('invade')} >Invade</Button>
-									<Button color={this.state.deployType === 'transfer' ? 'green' : 'grey'} onClick={() => this.handleType('transfer')} >Transfer</Button>
+									<Button disabled={this.props.target ? this.props.target.team._id === this.props.team._id : true} color={this.state.deployType === 'invade' ? 'red' : 'grey'} onClick={() => this.handleType('invade')} >Invade</Button>
+									<Button disabled={this.props.target ? this.props.target.team._id !== this.props.team._id : true} color={this.state.deployType === 'transfer' ? 'green' : 'grey'} onClick={() => this.handleType('transfer')} >Transfer</Button>
 								</ButtonGroup>		
 						</div>
 						<Divider />
@@ -171,7 +171,7 @@ class DeployMilitary extends Component {
 			let fleets = [];
 			let corps = [];
 			for (let unit of this.props.military) {
-				if (this.state.team === unit.team.name) {
+				if (this.state.team === unit.team.name) { // why
 					if (deployType !== 'invade' || distance(geoDecimal.latDecimal, geoDecimal.longDecimal, unit.site.geoDecimal.latDecimal, unit.site.geoDecimal.longDecimal) < 1000) {
 						let unitData = {
 							name: unit.name,
