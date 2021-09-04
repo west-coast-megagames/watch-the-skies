@@ -72,11 +72,11 @@ async function dropAll(doDrop) {
 	}
 
 	try {
-		await axios.patch(`${gameServer}api/countries/deleteAll`);
-		logger.info('Delete of All Country done (initDropAll).');
+		await axios.patch(`${gameServer}api/organizations/deleteAll`);
+		logger.info('Delete of All Organization done (initDropAll).');
 	}
 	catch (err) {
-		logger.error(`Catch deleteAll Country in initDropAll: ${err.message}`, { meta: err.stack });
+		logger.error(`Catch deleteAll Organization in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {

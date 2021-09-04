@@ -11,7 +11,7 @@ class InfoSite extends Component {
 
   render() {
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, country, zone, _id, occupier, coastal, capital } = this.props.site;
+      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, coastal, capital } = this.props.site;
     
       return(
         <Drawer
@@ -39,7 +39,7 @@ class InfoSite extends Component {
 						</FlexboxGrid.Item>
 						<hr />
             <FlexboxGrid.Item colspan={12}>
-							<p><b>Country:</b> {`${country.name}`}</p>
+							<p><b>Organization:</b> {`${organization.name}`}</p>
               <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.longDMS}`}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>

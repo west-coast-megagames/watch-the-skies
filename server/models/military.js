@@ -14,7 +14,7 @@ const MilitarySchema = new Schema({
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
 	team: { type: ObjectId, ref: 'Team' },
 	zone: { type: ObjectId, ref: 'Zone' },
-	country: { type: ObjectId, ref: 'Country' },
+	organization: { type: ObjectId, ref: 'Organization' },
 	site: { type: ObjectId, ref: 'Site' },
 	origin: { type: ObjectId, ref: 'Facility' },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
@@ -37,7 +37,7 @@ const MilitarySchema = new Schema({
 });
 
 MilitarySchema.methods.validateMilitary = async function () {
-	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
+	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required()
 	});
@@ -48,7 +48,7 @@ MilitarySchema.methods.validateMilitary = async function () {
 	await validSite(this.site);
 	await validTeam(this.team);
 	await validZone(this.zone);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	await validFacility(this.origin);
 	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
@@ -58,20 +58,20 @@ MilitarySchema.methods.validateMilitary = async function () {
 	}
 };
 
-MilitarySchema.methods.deploy = async (unit, country) => {
+MilitarySchema.methods.deploy = async (unit, organization) => {
 	const banking = require('../../../wts/banking/banking');
 	const { Account } = require('../../account');
 
 	try {
 		logger.info(
-			`Deploying ${unit.name} to ${country.name} in the ${country.zone.name} zone`
+			`Deploying ${unit.name} to ${organization.name} in the ${organization.zone.name} zone`
 		);
 		let cost = 0;
-		if (unit.zone !== country.zone) {
+		if (unit.zone !== organization.zone) {
 			cost = unit.status.localDeploy;
 			unit.status.deployed = true;
 		}
-		else if (unit.zone === country.zone) {
+		else if (unit.zone === organization.zone) {
 			cost = unit.status.globalDeploy;
 			unit.status.deployed = true;
 		}
@@ -85,7 +85,7 @@ MilitarySchema.methods.deploy = async (unit, country) => {
 			cost,
 			`Deploying ${
 				unit.name
-			} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`
+			} to ${organization.name.toLowerCase()} in the ${organization.zone.name.toLowerCase()} zone`
 		);
 
 		logger.info(account);
@@ -115,7 +115,7 @@ MilitarySchema.methods.recall = async function () {
 		this.status.deployed = false;
 		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
 		this.site = home.site;
-		this.country = home.site.country;
+		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
 		this.status.action = true;

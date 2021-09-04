@@ -9,7 +9,7 @@
     "longDMS": "126 56 0.0 E",
     "latDecimal": 37.5167,
     "longDecimal": 126.9333,
-    "countryCode": "KR",
+    "organizationCode": "KR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -24,7 +24,7 @@
     "longDMS": "102 36 0.0 E",
     "latDecimal": 17.9667,
     "longDecimal": 102.6,
-    "countryCode": "LA",
+    "organizationCode": "LA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -39,7 +39,7 @@
     "longDMS": "13 11 0.0 E",
     "latDecimal": 32.1833,
     "longDecimal": 13.6,
-    "countryCode": "LY",
+    "organizationCode": "LY",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -54,7 +54,7 @@
     "longDMS": "1 31 0.0 E",
     "latDecimal": 42.5,
     "longDecimal": 1.5167,
-    "countryCode": "AD",
+    "organizationCode": "AD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -69,7 +69,7 @@
     "longDMS": "61 51 0.0 W",
     "latDecimal": 17.1167,
     "longDecimal": -61.85,
-    "countryCode": "AG",
+    "organizationCode": "AG",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -84,7 +84,7 @@
     "longDMS": "170 42 2.0 W",
     "latDecimal": -14.2794,
     "longDecimal": -170.7006,
-    "countryCode": "AS",
+    "organizationCode": "AS",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -99,7 +99,7 @@
     "longDMS": "77 20 0.0 W",
     "latDecimal": 25.0667,
     "longDecimal": -77.3333,
-    "countryCode": "BS",
+    "organizationCode": "BS",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -114,7 +114,7 @@
     "longDMS": "50 35 0.0 E",
     "latDecimal": 26.2167,
     "longDecimal": 50.5833,
-    "countryCode": "BH",
+    "organizationCode": "BH",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -129,7 +129,7 @@
     "longDMS": "59 37 0.0 W",
     "latDecimal": 13.0975,
     "longDecimal": -59.6167,
-    "countryCode": "BB",
+    "organizationCode": "BB",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -144,7 +144,7 @@
     "longDMS": "64 46 55.2 W",
     "latDecimal": 32.293,
     "longDecimal": -64.782,
-    "countryCode": "BM",
+    "organizationCode": "BM",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -159,7 +159,7 @@
     "longDMS": "89 38 10.0 E",
     "latDecimal": 27.4722,
     "longDecimal": 89.6361,
-    "countryCode": "BT",
+    "organizationCode": "BT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -174,7 +174,7 @@
     "longDMS": "114 56 32.0 E",
     "latDecimal": 4.8903,
     "longDecimal": 114.9422,
-    "countryCode": "BN",
+    "organizationCode": "BN",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -189,7 +189,7 @@
     "longDMS": "11 31 0.0 E",
     "latDecimal": 3.8667,
     "longDecimal": 11.5167,
-    "countryCode": "CM",
+    "organizationCode": "CM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -204,7 +204,7 @@
     "longDMS": "23 31 0.0 W",
     "latDecimal": 14.9167,
     "longDecimal": -23.5167,
-    "countryCode": "CV",
+    "organizationCode": "CV",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -219,7 +219,7 @@
     "longDMS": "70 40 0.0 W",
     "latDecimal": -33.45,
     "longDecimal": -70.6667,
-    "countryCode": "CL",
+    "organizationCode": "CL",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -234,7 +234,7 @@
     "longDMS": "43 16 0.0 E",
     "latDecimal": -11.6833,
     "longDecimal": 43.2667,
-    "countryCode": "KM",
+    "organizationCode": "KM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -249,7 +249,7 @@
     "longDMS": "15 17 0.0 E",
     "latDecimal": -4.2667,
     "longDecimal": 15.2833,
-    "countryCode": "CG",
+    "organizationCode": "CG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -264,7 +264,7 @@
     "longDMS": "15 19 20.0 E",
     "latDecimal": -4.325,
     "longDecimal": 15.3222,
-    "countryCode": "CD",
+    "organizationCode": "CD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -279,7 +279,7 @@
     "longDMS": "16 0 0.0 E",
     "latDecimal": 45.8,
     "longDecimal": 16.0,
-    "countryCode": "HR",
+    "organizationCode": "HR",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -294,7 +294,7 @@
     "longDMS": "33 22 0.0 E",
     "latDecimal": 35.1667,
     "longDecimal": 33.3667,
-    "countryCode": "CY",
+    "organizationCode": "CY",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -309,7 +309,7 @@
     "longDMS": "61 23 0.0 W",
     "latDecimal": 15.3,
     "longDecimal": -61.3833,
-    "countryCode": "DM",
+    "organizationCode": "DM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -324,7 +324,7 @@
     "longDMS": "69 54 0.0 W",
     "latDecimal": 18.4667,
     "longDecimal": -69.9,
-    "countryCode": "DO",
+    "organizationCode": "DO",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -339,7 +339,7 @@
     "longDMS": "38 56 0.0 E",
     "latDecimal": 15.3333,
     "longDecimal": 38.9333,
-    "countryCode": "ER",
+    "organizationCode": "ER",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -354,7 +354,7 @@
     "longDMS": "24 56 0.0 E",
     "latDecimal": 60.1667,
     "longDecimal": 24.9333,
-    "countryCode": "FI",
+    "organizationCode": "FI",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -369,7 +369,7 @@
     "longDMS": "9 27 0.0 E",
     "latDecimal": 0.3833,
     "longDecimal": 9.45,
-    "countryCode": "GA",
+    "organizationCode": "GA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -384,7 +384,7 @@
     "longDMS": "16 36 0.0 W",
     "latDecimal": 13.4667,
     "longDecimal": -16.6,
-    "countryCode": "GM",
+    "organizationCode": "GM",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -399,7 +399,7 @@
     "longDMS": "61 45 15.0 W",
     "latDecimal": 12.05,
     "longDecimal": -61.7542,
-    "countryCode": "GD",
+    "organizationCode": "GD",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -414,7 +414,7 @@
     "longDMS": "15 36 0.00 W",
     "latDecimal": 11.8667,
     "longDecimal": -15.6,
-    "countryCode": "GW",
+    "organizationCode": "GW",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -429,7 +429,7 @@
     "longDMS": "52 19 0.00 W",
     "latDecimal": 4.9333,
     "longDecimal": -52.3167,
-    "countryCode": "GF",
+    "organizationCode": "GF",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -444,7 +444,7 @@
     "longDMS": "19 03 5.00 E",
     "latDecimal": 47.4925,
     "longDecimal": 19.0514,
-    "countryCode": "HU",
+    "organizationCode": "HU",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -459,7 +459,7 @@
     "longDMS": "44 23 0.00 E",
     "latDecimal": 33.3333,
     "longDecimal": 44.3833,
-    "countryCode": "IQ",
+    "organizationCode": "IQ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -474,7 +474,7 @@
     "longDMS": "6 15 11.90 W",
     "latDecimal": 53.3333,
     "longDecimal": -6.2533,
-    "countryCode": "IE",
+    "organizationCode": "IE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -489,7 +489,7 @@
     "longDMS": "76 47 35.0 W",
     "latDecimal": 17.9714,
     "longDecimal": -76.7931,
-    "countryCode": "JM",
+    "organizationCode": "JM",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -504,7 +504,7 @@
     "longDMS": "173 00 0.0 E",
     "latDecimal": 1.3333,
     "longDecimal": 173.0,
-    "countryCode": "KI",
+    "organizationCode": "KI",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -519,7 +519,7 @@
     "longDMS": "9 30 35.0 E",
     "latDecimal": 47.1667,
     "longDecimal": 9.5097,
-    "countryCode": "LI",
+    "organizationCode": "LI",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -534,7 +534,7 @@
     "longDMS": "21 26 0.0 E",
     "latDecimal": 42.0,
     "longDecimal": 21.4333,
-    "countryCode": "MK",
+    "organizationCode": "MK",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -549,7 +549,7 @@
     "longDMS": "73 30 32.0 E",
     "latDecimal": 4.1753,
     "longDecimal": 73.5089,
-    "countryCode": "MV",
+    "organizationCode": "MV",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -564,7 +564,7 @@
     "longDMS": "14 30 45.0 E",
     "latDecimal": 35.8983,
     "longDecimal": 14.5125,
-    "countryCode": "MT",
+    "organizationCode": "MT",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -579,7 +579,7 @@
     "longDMS": "171 4 0.0 E",
     "latDecimal": 7.1167,
     "longDecimal": 171.0667,
-    "countryCode": "MH",
+    "organizationCode": "MH",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -594,7 +594,7 @@
     "longDMS": "57 30 0.0 E",
     "latDecimal": -20.1667,
     "longDecimal": 57.5,
-    "countryCode": "MU",
+    "organizationCode": "MU",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -609,7 +609,7 @@
     "longDMS": "158 10 0.0 E",
     "latDecimal": 6.9167,
     "longDecimal": 158.1667,
-    "countryCode": "FM",
+    "organizationCode": "FM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -624,7 +624,7 @@
     "longDMS": "6 51 0.0 W",
     "latDecimal": 34.0,
     "longDecimal": -6.85,
-    "countryCode": "MA",
+    "organizationCode": "MA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -639,7 +639,7 @@
     "longDMS": "4 53 0.0 E",
     "latDecimal": 52.3667,
     "longDecimal": 4.8833,
-    "countryCode": "NL",
+    "organizationCode": "NL",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -654,7 +654,7 @@
     "longDMS": "58 24 30.0 E",
     "latDecimal": 23.5889,
     "longDecimal": 58.4083,
-    "countryCode": "OM",
+    "organizationCode": "OM",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -669,7 +669,7 @@
     "longDMS": "134 38 0.0 E",
     "latDecimal": 7.5,
     "longDecimal": 134.6333,
-    "countryCode": "PW",
+    "organizationCode": "PW",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -684,7 +684,7 @@
     "longDMS": "77 01 42.0 W",
     "latDecimal": -12.0433,
     "longDecimal": -77.0283,
-    "countryCode": "PE",
+    "organizationCode": "PE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -699,7 +699,7 @@
     "longDMS": "30 3 34.0 E",
     "latDecimal": -1.9439,
     "longDecimal": 30.0595,
-    "countryCode": "RW",
+    "organizationCode": "RW",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -714,7 +714,7 @@
     "longDMS": "62 42 30.0 W",
     "latDecimal": 17.3,
     "longDecimal": -62.7083,
-    "countryCode": "KN",
+    "organizationCode": "KN",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -729,7 +729,7 @@
     "longDMS": "60 59 0.0 W",
     "latDecimal": 14.0167,
     "longDecimal": -60.9833,
-    "countryCode": "LC",
+    "organizationCode": "LC",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -744,7 +744,7 @@
     "longDMS": "61 13 50.0 W",
     "latDecimal": 13.1583,
     "longDecimal": -61.2306,
-    "countryCode": "VC",
+    "organizationCode": "VC",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -759,7 +759,7 @@
     "longDMS": "171 45 0.0 W",
     "latDecimal": 13.8333,
     "longDecimal": -171.75,
-    "countryCode": "WS",
+    "organizationCode": "WS",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -774,7 +774,7 @@
     "longDMS": "12 26 0.0 E",
     "latDecimal": 43.9333,
     "longDecimal": 12.4333,
-    "countryCode": "SM",
+    "organizationCode": "SM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -789,7 +789,7 @@
     "longDMS": "6 44 0.0 E",
     "latDecimal": 0.3333,
     "longDecimal": 6.7333,
-    "countryCode": "ST",
+    "organizationCode": "ST",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -804,7 +804,7 @@
     "longDMS": "20 28 0.0 E",
     "latDecimal": 44.8,
     "longDecimal": 20.4667,
-    "countryCode": "RS",
+    "organizationCode": "RS",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -819,7 +819,7 @@
     "longDMS": "55 27 0.0 E",
     "latDecimal": -4.6167,
     "longDecimal": 55.45,
-    "countryCode": "SC",
+    "organizationCode": "SC",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -834,7 +834,7 @@
     "longDMS": "14 30 0.0 E",
     "latDecimal": 46.05,
     "longDecimal": 14.5,
-    "countryCode": "SI",
+    "organizationCode": "SI",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -849,7 +849,7 @@
     "longDMS": "159 58 0.0 E",
     "latDecimal": -9.4431,
     "longDecimal": 159.9667,
-    "countryCode": "SB",
+    "organizationCode": "SB",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -864,7 +864,7 @@
     "longDMS": "32 32 0.0 E",
     "latDecimal": 15.6333,
     "longDecimal": 32.5333,
-    "countryCode": "SD",
+    "organizationCode": "SD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -879,7 +879,7 @@
     "longDMS": "35 12 0.0 E",
     "latDecimal": 31.9,
     "longDecimal": 35.2,
-    "countryCode": "PS",
+    "organizationCode": "PS",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -894,7 +894,7 @@
     "longDMS": "7 27 0.0 E",
     "latDecimal": 46.95,
     "longDecimal": 7.45,
-    "countryCode": "CH",
+    "organizationCode": "CH",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -909,7 +909,7 @@
     "longDMS": "100 29 0.0 E",
     "latDecimal": 13.75,
     "longDecimal": 100.4833,
-    "countryCode": "TH",
+    "organizationCode": "TH",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -924,7 +924,7 @@
     "longDMS": "125 33 36.0 E",
     "latDecimal": -8.55,
     "longDecimal": 125.56,
-    "countryCode": "TL",
+    "organizationCode": "TL",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -939,7 +939,7 @@
     "longDMS": "1 13 0.0 E",
     "latDecimal": 6.1333,
     "longDecimal": 1.2167,
-    "countryCode": "TG",
+    "organizationCode": "TG",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -954,7 +954,7 @@
     "longDMS": "175 12 0.0 W",
     "latDecimal": -21.1333,
     "longDecimal": -175.2,
-    "countryCode": "TO",
+    "organizationCode": "TO",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -969,7 +969,7 @@
     "longDMS": "61 30 27.0 W",
     "latDecimal": 10.6667,
     "longDecimal": -61.5075,
-    "countryCode": "TT",
+    "organizationCode": "TT",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -984,7 +984,7 @@
     "longDMS": "179 12 0.0 E",
     "latDecimal": -8.5167,
     "longDecimal": 179.2,
-    "countryCode": "TV",
+    "organizationCode": "TV",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -999,7 +999,7 @@
     "longDMS": "168 19 0.0 E",
     "latDecimal": -17.7333,
     "longDecimal": 168.3167,
-    "countryCode": "VU",
+    "organizationCode": "VU",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1014,7 +1014,7 @@
     "longDMS": "13 11 0.0 W",
     "latDecimal": 27.1667,
     "longDecimal": -13.1833,
-    "countryCode": "EH",
+    "organizationCode": "EH",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1029,7 +1029,7 @@
     "longDMS": "27 28 0.00 E",
     "latDecimal": -11.6667,
     "longDecimal": 27.4667,
-    "countryCode": "CD",
+    "organizationCode": "CD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -1044,7 +1044,7 @@
     "longDMS": "12 34 8.48 E",
     "latDecimal": 55.6757,
     "longDecimal": 12.569,
-    "countryCode": "DK",
+    "organizationCode": "DK",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1059,7 +1059,7 @@
     "longDMS": "43 8 34.39 E",
     "latDecimal": 11.5622,
     "longDecimal": 43.1429,
-    "countryCode": "DJ",
+    "organizationCode": "DJ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1074,7 +1074,7 @@
     "longDMS": "78 30 41.38 W",
     "latDecimal": -0.2201,
     "longDecimal": -78.5114,
-    "countryCode": "EC",
+    "organizationCode": "EC",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1089,7 +1089,7 @@
     "longDMS": "89 10 39.76 W",
     "latDecimal": 13.6965,
     "longDecimal": -89.1777,
-    "countryCode": "SV",
+    "organizationCode": "SV",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1104,7 +1104,7 @@
     "longDMS": "8 46 46.64 E",
     "latDecimal": 3.7549,
     "longDecimal": 8.7796,
-    "countryCode": "GQ",
+    "organizationCode": "GQ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1119,7 +1119,7 @@
     "longDMS": "24 43 41.00 E",
     "latDecimal": 59.4339,
     "longDecimal": 24.7281,
-    "countryCode": "EE",
+    "organizationCode": "EE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1134,7 +1134,7 @@
     "longDMS": "31 21 55.0 E",
     "latDecimal": -26.5042,
     "longDecimal": 31.3653,
-    "countryCode": "SZ",
+    "organizationCode": "SZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -1149,7 +1149,7 @@
     "longDMS": "31 07 59.9 E",
     "latDecimal": -26.3167,
     "longDecimal": 31.1333,
-    "countryCode": "SZ",
+    "organizationCode": "SZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1164,7 +1164,7 @@
     "longDMS": "38 45 54.93 E",
     "latDecimal": 9.0099,
     "longDecimal": 38.7653,
-    "countryCode": "ET",
+    "organizationCode": "ET",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1179,7 +1179,7 @@
     "longDMS": "178 25 37.23 E",
     "latDecimal": -18.1363,
     "longDecimal": 178.427,
-    "countryCode": "FJ",
+    "organizationCode": "FJ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1194,7 +1194,7 @@
     "longDMS": "4 50 3.67 E",
     "latDecimal": 45.7673,
     "longDecimal": 4.8344,
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
 		"coastal": false,
 		"capital": false
@@ -1209,7 +1209,7 @@
     "longDMS": "44 48 5.76 E",
     "latDecimal": 41.6934,
     "longDecimal": 44.8016,
-    "countryCode": "GE",
+    "organizationCode": "GE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1224,7 +1224,7 @@
     "longDMS": "13 23 0.0 E",
     "latDecimal": 52.5167,
     "longDecimal": 13.8833,
-    "countryCode": "DE",
+    "organizationCode": "DE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1239,7 +1239,7 @@
     "longDMS": "8 35 0.0 E",
     "latDecimal": 53.5833,
     "longDecimal": 8.5833,
-    "countryCode": "DE",
+    "organizationCode": "DE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -1254,7 +1254,7 @@
     "longDMS": "0 13 0.00 W",
     "latDecimal": 5.55,
     "longDecimal": -0.2167,
-    "countryCode": "GH",
+    "organizationCode": "GH",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1269,7 +1269,7 @@
     "longDMS": "23 43 59.99 E",
     "latDecimal": 37.9833,
     "longDecimal": 23.7333,
-    "countryCode": "GR",
+    "organizationCode": "GR",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1284,7 +1284,7 @@
     "longDMS": "51 42 28.35 W",
     "latDecimal": 64.1839,
     "longDecimal": -51.7079,
-    "countryCode": "GL",
+    "organizationCode": "GL",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1299,7 +1299,7 @@
     "longDMS": "90 30 55.73 W",
     "latDecimal": 14.631,
     "longDecimal": -90.5155,
-    "countryCode": "GT",
+    "organizationCode": "GT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1314,7 +1314,7 @@
     "longDMS": "13 39 16.96 W",
     "latDecimal": 9.567,
     "longDecimal": -13.6547,
-    "countryCode": "GN",
+    "organizationCode": "GN",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1329,7 +1329,7 @@
     "longDMS": "58 9 52.81 W",
     "latDecimal": 6.8094,
     "longDecimal": -58.1647,
-    "countryCode": "GY",
+    "organizationCode": "GY",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1344,7 +1344,7 @@
     "longDMS": "72 20 50.68 W",
     "latDecimal": 18.5461,
     "longDecimal": -72.3474,
-    "countryCode": "HT",
+    "organizationCode": "HT",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1359,7 +1359,7 @@
     "longDMS": "12 27 29.27 E",
     "latDecimal": 41.9023,
     "longDecimal": 12.4581,
-    "countryCode": "VA",
+    "organizationCode": "VA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1374,7 +1374,7 @@
     "longDMS": "87 11 3.85 W",
     "latDecimal": 14.0891,
     "longDecimal": -87.1844,
-    "countryCode": "HN",
+    "organizationCode": "HN",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1389,7 +1389,7 @@
     "longDMS": "21 56 32.63 W",
     "latDecimal": 64.1472,
     "longDecimal": -21.9424,
-    "countryCode": "IS",
+    "organizationCode": "IS",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1404,7 +1404,7 @@
     "longDMS": "77 12 55.42 E",
     "latDecimal": 28.627,
     "longDecimal": 77.2154,
-    "countryCode": "IN",
+    "organizationCode": "IN",
     "teamCode": "IND",
 		"coastal": false,
 		"capital": true
@@ -1419,7 +1419,7 @@
     "longDMS": "72 48 50.0 E",
     "latDecimal": 18.9639,
     "longDecimal": 72.8139,
-    "countryCode": "IN",
+    "organizationCode": "IN",
     "teamCode": "IND",
 		"coastal": true,
 		"capital": false
@@ -1434,7 +1434,7 @@
     "longDMS": "88 22 1.47 E",
     "latDecimal": 22.5614,
     "longDecimal": 88.3671,
-    "countryCode": "IN",
+    "organizationCode": "IN",
     "teamCode": "IND",
 		"coastal": false,
 		"capital": false
@@ -1449,7 +1449,7 @@
     "longDMS": "106 49 37.46 E",
     "latDecimal": -6.1748,
     "longDecimal": 106.8271,
-    "countryCode": "ID",
+    "organizationCode": "ID",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1464,7 +1464,7 @@
     "longDMS": "35 13 3.92 E",
     "latDecimal": 31.7753,
     "longDecimal": 35.2178,
-    "countryCode": "IL",
+    "organizationCode": "IL",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1479,7 +1479,7 @@
     "longDMS": "34 46 0.0 E",
     "latDecimal": 32.0667,
     "longDecimal": 34.7667,
-    "countryCode": "IL",
+    "organizationCode": "IL",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -1494,7 +1494,7 @@
     "longDMS": "9 11 22.79 E",
     "latDecimal": 45.4672,
     "longDecimal": 9.1897,
-    "countryCode": "IT",
+    "organizationCode": "IT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -1509,7 +1509,7 @@
     "longDMS": "12 29 36.76 E",
     "latDecimal": 41.8894,
     "longDecimal": 12.4935,
-    "countryCode": "IT",
+    "organizationCode": "IT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1524,7 +1524,7 @@
     "longDMS": "135 30 8.0 E",
     "latDecimal": 34.6939,
     "longDecimal": 135.5022,
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
 		"coastal": true,
 		"capital": false
@@ -1539,7 +1539,7 @@
     "longDMS": "139 45 30.0 E",
     "latDecimal": 35.7292,
     "longDecimal": 139.7583,
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
 		"coastal": true,
 		"capital": true
@@ -1554,7 +1554,7 @@
     "longDMS": "35 55 16.18 E",
     "latDecimal": 31.9507,
     "longDecimal": 35.9212,
-    "countryCode": "JO",
+    "organizationCode": "JO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1569,7 +1569,7 @@
     "longDMS": "71 25 26.55 E",
     "latDecimal": 51.1773,
     "longDecimal": 71.424,
-    "countryCode": "KZ",
+    "organizationCode": "KZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1584,7 +1584,7 @@
     "longDMS": "36 55 33.00 E",
     "latDecimal": -1.3186,
     "longDecimal": 36.9258,
-    "countryCode": "KE",
+    "organizationCode": "KE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1599,7 +1599,7 @@
     "longDMS": "47 58 58.03 E",
     "latDecimal": 29.3774,
     "longDecimal": 47.9828,
-    "countryCode": "KW",
+    "organizationCode": "KW",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1614,7 +1614,7 @@
     "longDMS": "74 35 56.34 E",
     "latDecimal": 42.8724,
     "longDecimal": 74.599,
-    "countryCode": "KG",
+    "organizationCode": "KG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1629,7 +1629,7 @@
     "longDMS": "24 6 34.34 E",
     "latDecimal": 56.9475,
     "longDecimal": 24.1095,
-    "countryCode": "LV",
+    "organizationCode": "LV",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1644,7 +1644,7 @@
     "longDMS": "35 28 49.24 E",
     "latDecimal": 33.8932,
     "longDecimal": 35.4803,
-    "countryCode": "LB",
+    "organizationCode": "LB",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1659,7 +1659,7 @@
     "longDMS": "27 28 48.00 E",
     "latDecimal": -29.31,
     "longDecimal": 27.48,
-    "countryCode": "LS",
+    "organizationCode": "LS",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1674,7 +1674,7 @@
     "longDMS": "10 48 16.99 W",
     "latDecimal": 6.3106,
     "longDecimal": -10.8047,
-    "countryCode": "LR",
+    "organizationCode": "LR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1689,7 +1689,7 @@
     "longDMS": "25 16 34.54 E",
     "latDecimal": 54.6839,
     "longDecimal": 25.2763,
-    "countryCode": "LT",
+    "organizationCode": "LT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1704,7 +1704,7 @@
     "longDMS": "6 7 55.0 E",
     "latDecimal": 49.6117,
     "longDecimal": 6.1319,
-    "countryCode": "LU",
+    "organizationCode": "LU",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1719,7 +1719,7 @@
     "longDMS": "47 31 0.00 E",
     "latDecimal": -18.9167,
     "longDecimal": 47.5167,
-    "countryCode": "MG",
+    "organizationCode": "MG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1734,7 +1734,7 @@
     "longDMS": "33 46 9.88 E",
     "latDecimal": -13.985,
     "longDecimal": 33.7694,
-    "countryCode": "MW",
+    "organizationCode": "MW",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1749,7 +1749,7 @@
     "longDMS": "101 40 21.68 E",
     "latDecimal": 3.136,
     "longDecimal": 101.6727,
-    "countryCode": "MY",
+    "organizationCode": "MY",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1764,7 +1764,7 @@
     "longDMS": "7 59 55.5 W",
     "latDecimal": 12.6308,
     "longDecimal": -7.9988,
-    "countryCode": "ML",
+    "organizationCode": "ML",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1779,7 +1779,7 @@
     "longDMS": "15 58 46.47 W",
     "latDecimal": 18.0921,
     "longDecimal": -15.9795,
-    "countryCode": "MR",
+    "organizationCode": "MR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1794,7 +1794,7 @@
     "longDMS": "99 8 0.30 W",
     "latDecimal": 19.432,
     "longDecimal": -99.1334,
-    "countryCode": "MX",
+    "organizationCode": "MX",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1809,7 +1809,7 @@
     "longDMS": "100 19 1.80 W",
     "latDecimal": 25.6843,
     "longDecimal": -100.3171,
-    "countryCode": "MX",
+    "organizationCode": "MX",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -1824,7 +1824,7 @@
     "longDMS": "28 50 59.07 E",
     "latDecimal": 47.0167,
     "longDecimal": 28.8497,
-    "countryCode": "MD",
+    "organizationCode": "MD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1839,7 +1839,7 @@
     "longDMS": "7 25 26.82 E",
     "latDecimal": 43.7383,
     "longDecimal": 7.4241,
-    "countryCode": "MC",
+    "organizationCode": "MC",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1854,7 +1854,7 @@
     "longDMS": "106 55 3.41 E",
     "latDecimal": 47.9188,
     "longDecimal": 106.9176,
-    "countryCode": "MN",
+    "organizationCode": "MN",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1869,7 +1869,7 @@
     "longDMS": "19 15 48.99 E",
     "latDecimal": 42.4411,
     "longDecimal": 19.2636,
-    "countryCode": "ME",
+    "organizationCode": "ME",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1884,7 +1884,7 @@
     "longDMS": "32 35 21.00 E",
     "latDecimal": -25.9653,
     "longDecimal": 32.5892,
-    "countryCode": "MZ",
+    "organizationCode": "MZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1899,7 +1899,7 @@
     "longDMS": "96 6 56.34 E",
     "latDecimal": 19.7476,
     "longDecimal": 96.1157,
-    "countryCode": "MM",
+    "organizationCode": "MM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1914,7 +1914,7 @@
     "longDMS": "17 5 0.99 E",
     "latDecimal": -22.57,
     "longDecimal": 17.0836,
-    "countryCode": "NA",
+    "organizationCode": "NA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1929,7 +1929,7 @@
     "longDMS": "85 18 51.59 E",
     "latDecimal": 27.7078,
     "longDecimal": 85.3143,
-    "countryCode": "NP",
+    "organizationCode": "NP",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1944,7 +1944,7 @@
     "longDMS": "166 26 59.99 E",
     "latDecimal": -22.2667,
     "longDecimal": 166.45,
-    "countryCode": "NC",
+    "organizationCode": "NC",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1959,7 +1959,7 @@
     "longDMS": "174 46 24.11 E",
     "latDecimal": -41.2925,
     "longDecimal": 174.7734,
-    "countryCode": "NZ",
+    "organizationCode": "NZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -1974,7 +1974,7 @@
     "longDMS": "86 15 36.11 W",
     "latDecimal": 12.1183,
     "longDecimal": -86.26,
-    "countryCode": "NI",
+    "organizationCode": "NI",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -1989,7 +1989,7 @@
     "longDMS": "2 7 0.00 E",
     "latDecimal": 13.5167,
     "longDecimal": 2.1167,
-    "countryCode": "NE",
+    "organizationCode": "NE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2004,7 +2004,7 @@
     "longDMS": "8 31 0.00 E",
     "latDecimal": 11.9964,
     "longDecimal": 8.5167,
-    "countryCode": "NG",
+    "organizationCode": "NG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -2019,7 +2019,7 @@
     "longDMS": "7 29 2.02 E",
     "latDecimal": 9.0548,
     "longDecimal": 7.4839,
-    "countryCode": "NG",
+    "organizationCode": "NG",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2034,7 +2034,7 @@
     "longDMS": "125 45 8.48 E",
     "latDecimal": 39.0158,
     "longDecimal": 125.7524,
-    "countryCode": "KP",
+    "organizationCode": "KP",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2049,7 +2049,7 @@
     "longDMS": "10 43 59.91 E",
     "latDecimal": 59.9116,
     "longDecimal": 10.7333,
-    "countryCode": "NO",
+    "organizationCode": "NO",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2064,7 +2064,7 @@
     "longDMS": "67 2 59.99 E",
     "latDecimal": 24.8667,
     "longDecimal": 67.05,
-    "countryCode": "PK",
+    "organizationCode": "PK",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -2079,7 +2079,7 @@
     "longDMS": "73 03 50.0 E",
     "latDecimal": 33.6931,
     "longDecimal": 73.0639,
-    "countryCode": "PK",
+    "organizationCode": "PK",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2094,7 +2094,7 @@
     "longDMS": "79 31 37.30 W",
     "latDecimal": 8.9823,
     "longDecimal": -79.527,
-    "countryCode": "PA",
+    "organizationCode": "PA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2109,7 +2109,7 @@
     "longDMS": "147 11 33.81 E",
     "latDecimal": -9.459,
     "longDecimal": 147.1927,
-    "countryCode": "PG",
+    "organizationCode": "PG",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2124,7 +2124,7 @@
     "longDMS": "57 38 0.0 W",
     "latDecimal": -25.3,
     "longDecimal": -57.6333,
-    "countryCode": "PY",
+    "organizationCode": "PY",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2139,7 +2139,7 @@
     "longDMS": "120 58 52.05 E",
     "latDecimal": 14.5893,
     "longDecimal": 120.9811,
-    "countryCode": "PH",
+    "organizationCode": "PH",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2154,7 +2154,7 @@
     "longDMS": "21 0 0.00 E",
     "latDecimal": 52.25,
     "longDecimal": 21.0,
-    "countryCode": "PL",
+    "organizationCode": "PL",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2169,7 +2169,7 @@
     "longDMS": "9 9 0.0 W",
     "latDecimal": 38.7753,
     "longDecimal": -9.15,
-    "countryCode": "PT",
+    "organizationCode": "PT",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2184,7 +2184,7 @@
     "longDMS": "66 3 50.0 W",
     "latDecimal": 18.4064,
     "longDecimal": -66.0639,
-    "countryCode": "PR",
+    "organizationCode": "PR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2199,7 +2199,7 @@
     "longDMS": "51 31 46.62 E",
     "latDecimal": 25.3262,
     "longDecimal": 51.5296,
-    "countryCode": "QA",
+    "organizationCode": "QA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2214,7 +2214,7 @@
     "longDMS": "26 6 14.57 E",
     "latDecimal": 44.4267,
     "longDecimal": 26.104,
-    "countryCode": "RO",
+    "organizationCode": "RO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2229,7 +2229,7 @@
     "longDMS": "46 42 54.33 E",
     "latDecimal": 24.6466,
     "longDecimal": 46.7151,
-    "countryCode": "SA",
+    "organizationCode": "SA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2244,7 +2244,7 @@
     "longDMS": "39 47 55.67 E",
     "latDecimal": 21.4092,
     "longDecimal": 39.7988,
-    "countryCode": "SA",
+    "organizationCode": "SA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -2259,7 +2259,7 @@
     "longDMS": "17 26 26.86 W",
     "latDecimal": 14.6739,
     "longDecimal": -17.4408,
-    "countryCode": "SN",
+    "organizationCode": "SN",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2274,7 +2274,7 @@
     "longDMS": "13 14 3.00 W",
     "latDecimal": 8.49,
     "longDecimal": -13.2342,
-    "countryCode": "SL",
+    "organizationCode": "SL",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2289,7 +2289,7 @@
     "longDMS": "103 49 41.31 E",
     "latDecimal": 1.3562,
     "longDecimal": 103.8281,
-    "countryCode": "SG",
+    "organizationCode": "SG",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2304,7 +2304,7 @@
     "longDMS": "17 7 0.00 E",
     "latDecimal": 48.15,
     "longDecimal": 17.1167,
-    "countryCode": "SK",
+    "organizationCode": "SK",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2319,7 +2319,7 @@
     "longDMS": "45 20 34.07 E",
     "latDecimal": 2.0369,
     "longDecimal": 45.3428,
-    "countryCode": "SO",
+    "organizationCode": "SO",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2334,7 +2334,7 @@
     "longDMS": "28 1 53.87 E",
     "latDecimal": -26.1899,
     "longDecimal": 28.0316,
-    "countryCode": "ZA",
+    "organizationCode": "ZA",
     "teamCode": "RSA",
 		"coastal": false,
 		"capital": false
@@ -2349,7 +2349,7 @@
     "longDMS": "31 37 0.00 E",
     "latDecimal": 4.85,
     "longDecimal": 31.6167,
-    "countryCode": "SS",
+    "organizationCode": "SS",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2364,7 +2364,7 @@
     "longDMS": "3 41 30.54 W",
     "latDecimal": 40.4196,
     "longDecimal": -3.6918,
-    "countryCode": "ES",
+    "organizationCode": "ES",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2379,7 +2379,7 @@
     "longDMS": "2 9 53.52 E",
     "latDecimal": 41.3922,
     "longDecimal": 2.1649,
-    "countryCode": "ES",
+    "organizationCode": "ES",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -2394,7 +2394,7 @@
     "longDMS": "79 51 47.72 E",
     "latDecimal": 6.9152,
     "longDecimal": 79.8633,
-    "countryCode": "LK",
+    "organizationCode": "LK",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2409,7 +2409,7 @@
     "longDMS": "55 10 0.00 W",
     "latDecimal": 5.8333,
     "longDecimal": -55.1667,
-    "countryCode": "SR",
+    "organizationCode": "SR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2424,7 +2424,7 @@
     "longDMS": "18 3 13.11 E",
     "latDecimal": 59.328,
     "longDecimal": 18.0536,
-    "countryCode": "SE",
+    "organizationCode": "SE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2439,7 +2439,7 @@
     "longDMS": "36 17 36.00 E",
     "latDecimal": 33.5185,
     "longDecimal": 36.2933,
-    "countryCode": "SY",
+    "organizationCode": "SY",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2454,7 +2454,7 @@
     "longDMS": "68 46 25.99 E",
     "latDecimal": 38.56,
     "longDecimal": 68.7738,
-    "countryCode": "TJ",
+    "organizationCode": "TJ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2469,7 +2469,7 @@
     "longDMS": "35 44 48.23 E",
     "latDecimal": -6.181,
     "longDecimal": 35.7467,
-    "countryCode": "TZ",
+    "organizationCode": "TZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2484,7 +2484,7 @@
     "longDMS": "39 16 59.99 E",
     "latDecimal": -6.8,
     "longDecimal": 39.2833,
-    "countryCode": "TZ",
+    "organizationCode": "TZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -2499,7 +2499,7 @@
     "longDMS": "10 9 51.11 E",
     "latDecimal": 36.7966,
     "longDecimal": 10.1642,
-    "countryCode": "TN",
+    "organizationCode": "TN",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2514,7 +2514,7 @@
     "longDMS": "32 50 26.20 E",
     "latDecimal": 39.9389,
     "longDecimal": 32.8406,
-    "countryCode": "TR",
+    "organizationCode": "TR",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2529,7 +2529,7 @@
     "longDMS": "58 23 7.82 E",
     "latDecimal": 37.9474,
     "longDecimal": 58.3855,
-    "countryCode": "TM",
+    "organizationCode": "TM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2544,7 +2544,7 @@
     "longDMS": "32 33 56.00 E",
     "latDecimal": 0.3156,
     "longDecimal": 32.5656,
-    "countryCode": "UG",
+    "organizationCode": "UG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2559,7 +2559,7 @@
     "longDMS": "30 31 24.23 E",
     "latDecimal": 50.4501,
     "longDecimal": 30.5234,
-    "countryCode": "UA",
+    "organizationCode": "UA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2574,7 +2574,7 @@
     "longDMS": "54 22 46.64 E",
     "latDecimal": 24.4885,
     "longDecimal": 54.3796,
-    "countryCode": "AE",
+    "organizationCode": "AE",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2589,7 +2589,7 @@
     "longDMS": "56 11 53.98 W",
     "latDecimal": -34.9065,
     "longDecimal": -56.1983,
-    "countryCode": "UY",
+    "organizationCode": "UY",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -2604,7 +2604,7 @@
     "longDMS": "87 37 56.57 W",
     "latDecimal": 41.9337,
     "longDecimal": -87.6324,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -2619,7 +2619,7 @@
     "longDMS": "77 1 55.04 W",
     "latDecimal": 38.8955,
     "longDecimal": -77.032,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": true
@@ -2634,7 +2634,7 @@
     "longDMS": "74 0 25.66 W",
     "latDecimal": 40.713,
     "longDecimal": -74.0071,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2649,7 +2649,7 @@
     "longDMS": "118 14 32.45 W",
     "latDecimal": 34.0533,
     "longDecimal": -118.2423,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2664,7 +2664,7 @@
     "longDMS": "90 4 36.07 W",
     "latDecimal": 29.9525,
     "longDecimal": -90.0767,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2679,7 +2679,7 @@
     "longDMS": "86 47 4.97 W",
     "latDecimal": 36.1694,
     "longDecimal": -86.7847,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -2694,7 +2694,7 @@
     "longDMS": "104 59 25.09 W",
     "latDecimal": 39.7392,
     "longDecimal": -104.9903,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -2709,7 +2709,7 @@
     "longDMS": "80 14 2.57 W",
     "latDecimal": 25.728,
     "longDecimal": -80.234,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2724,7 +2724,7 @@
     "longDMS": "69 16 54.42 E",
     "latDecimal": 41.3106,
     "longDecimal": 69.2818,
-    "countryCode": "UZ",
+    "organizationCode": "UZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2739,7 +2739,7 @@
     "longDMS": "66 54 54.49 W",
     "latDecimal": 10.5057,
     "longDecimal": -66.9151,
-    "countryCode": "VE",
+    "organizationCode": "VE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2754,7 +2754,7 @@
     "longDMS": "105 51 13.44 E",
     "latDecimal": 21.0284,
     "longDecimal": 105.8537,
-    "countryCode": "VN",
+    "organizationCode": "VN",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2769,7 +2769,7 @@
     "longDMS": "106 42 4.35 E",
     "latDecimal": 10.7765,
     "longDecimal": 106.7012,
-    "countryCode": "VN",
+    "organizationCode": "VN",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -2784,7 +2784,7 @@
     "longDMS": "44 12 22.43 E",
     "latDecimal": 15.3533,
     "longDecimal": 44.2062,
-    "countryCode": "YE",
+    "organizationCode": "YE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2799,7 +2799,7 @@
     "longDMS": "28 16 59.99 E",
     "latDecimal": -15.4167,
     "longDecimal": 28.2833,
-    "countryCode": "ZM",
+    "organizationCode": "ZM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2814,7 +2814,7 @@
     "longDMS": "31 03 8.0 E",
     "latDecimal": -17.8292,
     "longDecimal": 31.0522,
-    "countryCode": "ZW",
+    "organizationCode": "ZW",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -2829,7 +2829,7 @@
     "longDMS": "122 25 52.7 W",
     "latDecimal": 37.774,
     "longDecimal": -122.4313,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2844,7 +2844,7 @@
     "longDMS": "117 11 3.1 W",
     "latDecimal": 32.7037,
     "longDecimal": -117.1842,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2859,7 +2859,7 @@
     "longDMS": "157 56 43.1 W",
     "latDecimal": 21.3497,
     "longDecimal": -157.9453,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2874,7 +2874,7 @@
     "longDMS": "081 41 6.7 W",
     "latDecimal": 30.2214,
     "longDecimal": -81.6852,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2889,7 +2889,7 @@
     "longDMS": "075 58 50.5 W",
     "latDecimal": 36.8557,
     "longDecimal": -75.9807,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -2904,7 +2904,7 @@
     "longDMS": "037 37 2.0 E",
     "latDecimal": 55.7558,
     "longDecimal": 37.6172,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": true
@@ -2919,7 +2919,7 @@
     "longDMS": "44 30 50.41 E",
     "latDecimal": 48.7114,
     "longDecimal": 44.514,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -2934,7 +2934,7 @@
     "longDMS": "33 26 14.28 E",
     "latDecimal": 69.0794,
     "longDecimal": 33.4373,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": true,
 		"capital": false
@@ -2949,7 +2949,7 @@
     "longDMS": "44 30 50.41 E",
     "latDecimal": 44.7333,
     "longDecimal": 37.7833,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": true,
 		"capital": false
@@ -2964,7 +2964,7 @@
     "longDMS": "131 54 0.0 E",
     "latDecimal": 43.1333,
     "longDecimal": 131.9,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": true,
 		"capital": false
@@ -2979,7 +2979,7 @@
     "longDMS": "116 22 60.0 E",
     "latDecimal": 39.9167,
     "longDecimal": 116.3833,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": true
@@ -2994,7 +2994,7 @@
     "longDMS": "87 35 18.60 E",
     "latDecimal": 43.7989,
     "longDecimal": 87.5885,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -3009,7 +3009,7 @@
     "longDMS": "75 58 54.30 E",
     "latDecimal": 39.4602,
     "longDecimal": 75.9818,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -3024,7 +3024,7 @@
     "longDMS": "126 39 0.00 E",
     "latDecimal": 45.75,
     "longDecimal": 126.65,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -3039,7 +3039,7 @@
     "longDMS": "106 31 44.56 E",
     "latDecimal": 29.5483,
     "longDecimal": 106.529,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -3054,7 +3054,7 @@
     "longDMS": "121 28 10.75 E",
     "latDecimal": 31.2316,
     "longDecimal": 121.4697,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": true,
 		"capital": false
@@ -3069,7 +3069,7 @@
     "longDMS": "114 9 28.06 E",
     "latDecimal": 22.282,
     "longDecimal": 114.1578,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": true,
 		"capital": false
@@ -3084,7 +3084,7 @@
     "longDMS": "121 38 0.0 E",
     "latDecimal": 25.0333,
     "longDecimal": 121.6333,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": true,
 		"capital": false
@@ -3099,7 +3099,7 @@
     "longDMS": "002 20 56.5 E",
     "latDecimal": 48.8566,
     "longDecimal": 2.3522,
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
 		"coastal": false,
 		"capital": true
@@ -3114,7 +3114,7 @@
     "longDMS": "005 22 12.0 E",
     "latDecimal": 43.2964,
     "longDecimal": 5.37,
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
 		"coastal": true,
 		"capital": false
@@ -3129,7 +3129,7 @@
     "longDMS": "001 51 23.0 E",
     "latDecimal": 50.9481,
     "longDecimal": 1.8564,
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
 		"coastal": true,
 		"capital": false
@@ -3144,7 +3144,7 @@
     "longDMS": "000 7 39.0 W",
     "latDecimal": 51.5072,
     "longDecimal": -0.1275,
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
 		"coastal": false,
 		"capital": true
@@ -3159,7 +3159,7 @@
     "longDMS": "002 59 0.0 W",
     "latDecimal": 53.4,
     "longDecimal": -2.9833,
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
 		"coastal": true,
 		"capital": false
@@ -3174,7 +3174,7 @@
     "longDMS": "004 8 32.0 W",
     "latDecimal": 50.3714,
     "longDecimal": -4.1422,
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
 		"coastal": true,
 		"capital": false
@@ -3189,7 +3189,7 @@
     "longDMS": "139 16 22.41 E",
     "latDecimal": -89.9976,
     "longDecimal": 139.2729,
-    "countryCode": "AQ",
+    "organizationCode": "AQ",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -3204,7 +3204,7 @@
     "longDMS": "018 25 23.88 E",
     "latDecimal": -33.9189,
     "longDecimal": 18.4233,
-    "countryCode": "ZA",
+    "organizationCode": "ZA",
     "teamCode": "RSA",
 		"coastal": true,
 		"capital": true
@@ -3219,7 +3219,7 @@
     "longDMS": "051 09 08.0 E",
     "latDecimal": 35.4161,
     "longDecimal": 51.1522,
-    "countryCode": "IR",
+    "organizationCode": "IR",
     "teamCode": "IRN",
 		"coastal": false,
 		"capital": true
@@ -3234,7 +3234,7 @@
     "longDMS": "056 16 0.0 E",
     "latDecimal": 27.1833,
     "longDecimal": 56.2667,
-    "countryCode": "IR",
+    "organizationCode": "IR",
     "teamCode": "IRN",
 		"coastal": true,
 		"capital": false
@@ -3249,7 +3249,7 @@
     "longDMS": "031 24 20.00 E",
     "latDecimal": 30.1219,
     "longDecimal": 31.4056,
-    "countryCode": "EG",
+    "organizationCode": "EG",
     "teamCode": "EPT",
 		"coastal": false,
 		"capital": true
@@ -3264,7 +3264,7 @@
     "longDMS": "029 55 0.00 E",
     "latDecimal": 31.2,
     "longDecimal": 29.9167,
-    "countryCode": "EG",
+    "organizationCode": "EG",
     "teamCode": "EPT",
 		"coastal": true,
 		"capital": false
@@ -3279,7 +3279,7 @@
     "longDMS": "043 15 02.00 W",
     "latDecimal": -22.81,
     "longDecimal": -43.2506,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": true,
 		"capital": true
@@ -3294,7 +3294,7 @@
     "longDMS": "151 12 34.0 E",
     "latDecimal": -33.865,
     "longDecimal": 151.2094,
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
 		"coastal": true,
 		"capital": false
@@ -3309,7 +3309,7 @@
     "longDMS": "115 51 32.0 E",
     "latDecimal": -31.9522,
     "longDecimal": 115.8589,
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
 		"coastal": false,
 		"capital": false
@@ -3324,7 +3324,7 @@
     "longDMS": "153 1 41.0 E",
     "latDecimal": -27.4678,
     "longDecimal": 152.0281,
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
 		"coastal": false,
 		"capital": false
@@ -3339,7 +3339,7 @@
     "longDMS": "144 57 47.0 E",
     "latDecimal": -37.8136,
     "longDecimal": 144.9631,
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
 		"coastal": true,
 		"capital": false
@@ -3354,7 +3354,7 @@
     "longDMS": "149 07 36.84 E",
     "latDecimal": -35.2931,
     "longDecimal": 149.1269,
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
 		"coastal": false,
 		"capital": true
@@ -3369,7 +3369,7 @@
     "longDMS": "69 13 12.17 E",
     "latDecimal": 34.5613,
     "longDecimal": 69.22,
-    "countryCode": "AF",
+    "organizationCode": "AF",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3384,7 +3384,7 @@
     "longDMS": "19 49 4.0 E",
     "latDecimal": 41.3289,
     "longDecimal": 19.8178,
-    "countryCode": "AL",
+    "organizationCode": "AL",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3399,7 +3399,7 @@
     "longDMS": "3 3 32.0 E",
     "latDecimal": 36.7539,
     "longDecimal": 3.0589,
-    "countryCode": "DZ",
+    "organizationCode": "DZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3414,7 +3414,7 @@
     "longDMS": "13 14 04.0 E",
     "latDecimal": -8.8383,
     "longDecimal": 13.2344,
-    "countryCode": "AO",
+    "organizationCode": "AO",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3429,7 +3429,7 @@
     "longDMS": "64 11 0.0 W",
     "latDecimal": -31.9161,
     "longDecimal": -64.7766,
-    "countryCode": "AR",
+    "organizationCode": "AR",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3444,7 +3444,7 @@
     "longDMS": "58 46 16.90 W",
     "latDecimal": -34.5875,
     "longDecimal": -58.7714,
-    "countryCode": "AR",
+    "organizationCode": "AR",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3459,7 +3459,7 @@
     "longDMS": "44 33 50.32 E",
     "latDecimal": 40.1585,
     "longDecimal": 44.564,
-    "countryCode": "AM",
+    "organizationCode": "AM",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3474,7 +3474,7 @@
     "longDMS": "16 22 0.0 E",
     "latDecimal": 48.2,
     "longDecimal": 16.3667,
-    "countryCode": "AT",
+    "organizationCode": "AT",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3489,7 +3489,7 @@
     "longDMS": "49 50 50.20 E",
     "latDecimal": 40.3742,
     "longDecimal": 49.8473,
-    "countryCode": "AZ",
+    "organizationCode": "AZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3504,7 +3504,7 @@
     "longDMS": "90 22 56.6 E",
     "latDecimal": 23.8084,
     "longDecimal": 90.3824,
-    "countryCode": "BD",
+    "organizationCode": "BD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3519,7 +3519,7 @@
     "longDMS": "27 32 53.58 E",
     "latDecimal": 53.8496,
     "longDecimal": 27.5482,
-    "countryCode": "BY",
+    "organizationCode": "BY",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3534,7 +3534,7 @@
     "longDMS": "4 24 8.74 E",
     "latDecimal": 50.8585,
     "longDecimal": 4.4024,
-    "countryCode": "BE",
+    "organizationCode": "BE",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3549,7 +3549,7 @@
     "longDMS": "88 11 19.00 W",
     "latDecimal": 17.4986,
     "longDecimal": -88.1886,
-    "countryCode": "BZ",
+    "organizationCode": "BZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -3564,7 +3564,7 @@
     "longDMS": "88 46 0.84 W",
     "latDecimal": 17.2514,
     "longDecimal": -88.7669,
-    "countryCode": "BZ",
+    "organizationCode": "BZ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3579,7 +3579,7 @@
     "longDMS": "2 25 11.06 E",
     "latDecimal": 6.3738,
     "longDecimal": 2.4197,
-    "countryCode": "BJ",
+    "organizationCode": "BJ",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -3594,7 +3594,7 @@
     "longDMS": "2 36 18.0 E",
     "latDecimal": 6.4972,
     "longDecimal": 2.605,
-    "countryCode": "BJ",
+    "organizationCode": "BJ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3609,7 +3609,7 @@
     "longDMS": "66 10 38.0 W",
     "latDecimal": -17.4211,
     "longDecimal": -66.1772,
-    "countryCode": "BO",
+    "organizationCode": "BO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3624,7 +3624,7 @@
     "longDMS": "65 15 0.0 W",
     "latDecimal": -19.05,
     "longDecimal": -65.25,
-    "countryCode": "BO",
+    "organizationCode": "BO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3639,7 +3639,7 @@
     "longDMS": "18 25 11.82 E",
     "latDecimal": 43.8582,
     "longDecimal": 18.42,
-    "countryCode": "BA",
+    "organizationCode": "BA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3654,7 +3654,7 @@
     "longDMS": "25 57 8.83 E",
     "latDecimal": -24.6016,
     "longDecimal": 25.9524,
-    "countryCode": "BW",
+    "organizationCode": "BW",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3669,7 +3669,7 @@
     "longDMS": "38 28 15.71 W",
     "latDecimal": -3.7247,
     "longDecimal": -38.471,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": true,
 		"capital": false
@@ -3684,7 +3684,7 @@
     "longDMS": "34 55 56.65 W",
     "latDecimal": -8.0326,
     "longDecimal": -34.9324,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": true,
 		"capital": false
@@ -3699,7 +3699,7 @@
     "longDMS": "38 31 0.0 W",
     "latDecimal": -12.9847,
     "longDecimal": -38.5167,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": true,
 		"capital": false
@@ -3714,7 +3714,7 @@
     "longDMS": "47 57 8.03 W",
     "latDecimal": -15.9265,
     "longDecimal": -47.9522,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": false,
 		"capital": true
@@ -3729,7 +3729,7 @@
     "longDMS": "46 38 10.59 W",
     "latDecimal": -23.5642,
     "longDecimal": -46.6363,
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
 		"coastal": false,
 		"capital": false
@@ -3744,7 +3744,7 @@
     "longDMS": "23 24 30.0 E",
     "latDecimal": 42.695,
     "longDecimal": 23.4083,
-    "countryCode": "BG",
+    "organizationCode": "BG",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3759,7 +3759,7 @@
     "longDMS": "1 30 1.15 W",
     "latDecimal": 12.4065,
     "longDecimal": -1.5003,
-    "countryCode": "BF",
+    "organizationCode": "BF",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3774,7 +3774,7 @@
     "longDMS": "29 22 53.61 E",
     "latDecimal": -3.3752,
     "longDecimal": 29.3816,
-    "countryCode": "BI",
+    "organizationCode": "BI",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3789,7 +3789,7 @@
     "longDMS": "29 53 60.0 E",
     "latDecimal": -3.4333,
     "longDecimal": 29.9,
-    "countryCode": "BI",
+    "organizationCode": "BI",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3804,7 +3804,7 @@
     "longDMS": "104 53 49.62 E",
     "latDecimal": 11.5638,
     "longDecimal": 104.8971,
-    "countryCode": "KH",
+    "organizationCode": "KH",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3819,7 +3819,7 @@
     "longDMS": "123 6 0.0 W",
     "latDecimal": 49.25,
     "longDecimal": -123.1,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -3834,7 +3834,7 @@
     "longDMS": "73 33 12.10 W",
     "latDecimal": 45.509,
     "longDecimal": -73.5534,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3849,7 +3849,7 @@
     "longDMS": "79 22 54.16 W",
     "latDecimal": 43.6519,
     "longDecimal": -79.3817,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3864,7 +3864,7 @@
     "longDMS": "75 41 42.0 W",
     "latDecimal": 45.4247,
     "longDecimal": -75.695,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3879,7 +3879,7 @@
     "longDMS": "18 33 46.0 E",
     "latDecimal": 4.36122,
     "longDecimal": 18.5549,
-    "countryCode": "CF",
+    "organizationCode": "CF",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3894,7 +3894,7 @@
     "longDMS": "15 2 27.96 E",
     "latDecimal": 12.1065,
     "longDecimal": 15.0411,
-    "countryCode": "TD",
+    "organizationCode": "TD",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3909,7 +3909,7 @@
     "longDMS": "75 34 23.63 W",
     "latDecimal": 6.2433,
     "longDecimal": -75.5732,
-    "countryCode": "CO",
+    "organizationCode": "CO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -3924,7 +3924,7 @@
     "longDMS": "74 3 12.04 W",
     "latDecimal": 4.6585,
     "longDecimal": -74.0533,
-    "countryCode": "CO",
+    "organizationCode": "CO",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3939,7 +3939,7 @@
     "longDMS": "84 8 19.68 W",
     "latDecimal": 9.8660,
     "longDecimal": -84.1388,
-    "countryCode": "CR",
+    "organizationCode": "CR",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3954,7 +3954,7 @@
     "longDMS": "4 1 10.83 W",
     "latDecimal": 5.3209,
     "longDecimal": -4.0197,
-    "countryCode": "CI",
+    "organizationCode": "CI",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3969,7 +3969,7 @@
     "longDMS": "82 21 51.00 W",
     "latDecimal": 23.1319,
     "longDecimal": -82.3642,
-    "countryCode": "CU",
+    "organizationCode": "CU",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": true
@@ -3984,7 +3984,7 @@
     "longDMS": "14 25 0.00 E",
     "latDecimal": 50.087,
     "longDecimal": 14.4176,
-    "countryCode": "CZ",
+    "organizationCode": "CZ",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": true
@@ -3999,7 +3999,7 @@
     "longDMS": "122 41 19.32 W",
     "latDecimal": 45.5051,
     "longDecimal": -122.6887,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4014,7 +4014,7 @@
     "longDMS": "122 20 34.08 W",
     "latDecimal": 47.6185,
     "longDecimal": -122.3428,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -4029,7 +4029,7 @@
     "longDMS": "149 53 17.16 W",
     "latDecimal": 61.1647,
     "longDecimal": -149.8881,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -4044,7 +4044,7 @@
     "longDMS": "176 52 56.64 W",
     "latDecimal": 51.7898,
     "longDecimal": -176.8824,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": true,
 		"capital": false
@@ -4059,7 +4059,7 @@
     "longDMS": "147 43 30.0 W",
     "latDecimal": 64.8349,
     "longDecimal": -147.7250,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4074,7 +4074,7 @@
     "longDMS": "125 14 25.44 W",
     "latDecimal": 71.9894,
     "longDecimal": -125.2404,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -4089,7 +4089,7 @@
     "longDMS": "71 12 25.92 W",
     "latDecimal": 46.7777,
     "longDecimal": -71.2072,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -4104,7 +4104,7 @@
     "longDMS": "52 40 53.4 W",
     "latDecimal": 47.4955,
     "longDecimal": -52.6815,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -4119,7 +4119,7 @@
     "longDMS": "81 20 20.4 W",
     "latDecimal": 48.4765,
     "longDecimal": -81.3390,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4134,7 +4134,7 @@
     "longDMS": "97 9 45.0 W",
     "latDecimal": 49.8679,
     "longDecimal": -97.1625,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4149,7 +4149,7 @@
     "longDMS": "106 40 6.6 W",
     "latDecimal": 52.1512,
     "longDecimal": -106.6685,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4164,7 +4164,7 @@
     "longDMS": "113 31 22.44 W",
     "latDecimal": 53.5255,
     "longDecimal": -113.5229,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4179,7 +4179,7 @@
     "longDMS": "135 31 22.44 W",
     "latDecimal": 60.7230,
     "longDecimal": -135.0558,
-    "countryCode": "CA",
+    "organizationCode": "CA",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4194,7 +4194,7 @@
     "longDMS": "115 11 7.08 W",
     "latDecimal": 36.1499,
     "longDecimal": -115.1853,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4209,7 +4209,7 @@
     "longDMS": "112 4 36.84 W",
     "latDecimal": 33.4459,
     "longDecimal": -112.0769,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4224,7 +4224,7 @@
     "longDMS": "111 58 51.24 W",
     "latDecimal": 40.7973,
     "longDecimal": -111.9809,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4239,7 +4239,7 @@
     "longDMS": "106 39 6.48 W",
     "latDecimal": 35.1329,
     "longDecimal": -106.6518,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4254,7 +4254,7 @@
     "longDMS": "96 46 31.8 W",
     "latDecimal": 32.7903,
     "longDecimal": -96.7755,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4269,7 +4269,7 @@
     "longDMS": "94 35 2.4 W",
     "latDecimal": 39.0741,
     "longDecimal": -94.5840,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4284,7 +4284,7 @@
     "longDMS": "93 16 58.08 W",
     "latDecimal": 44.9612,
     "longDecimal": -93.2828,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4299,7 +4299,7 @@
     "longDMS": "84 24 43.2 W",
     "latDecimal": 33.7586,
     "longDecimal": -84.4120,
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
 		"coastal": false,
 		"capital": false
@@ -4314,7 +4314,7 @@
     "longDMS": "103 22 21.0 W",
     "latDecimal": 20.6605,
     "longDecimal": -103.3725,
-    "countryCode": "MX",
+    "organizationCode": "MX",
     "teamCode": "NPC",
 		"coastal": false,
 		"capital": false
@@ -4329,7 +4329,7 @@
     "longDMS": "104 19 59.52 W",
     "latDecimal": 19.1102,
     "longDecimal": -104.3332,
-    "countryCode": "MX",
+    "organizationCode": "MX",
     "teamCode": "NPC",
 		"coastal": true,
 		"capital": false
@@ -4344,7 +4344,7 @@
     "longDMS": "130 21 14.04 E",
     "latDecimal": 33.5681,
     "longDecimal": 130.3539,
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
 		"coastal": true,
 		"capital": false
@@ -4359,7 +4359,7 @@
     "longDMS": "140 57 30.24 E",
     "latDecimal": 38.2303,
     "longDecimal": 140.9584,
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
 		"coastal": true,
 		"capital": false
@@ -4374,7 +4374,7 @@
     "longDMS": "141 57 30.24 E",
     "latDecimal": 43.1373,
     "longDecimal": 141.3002,
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
 		"coastal": true,
 		"capital": false
@@ -4389,7 +4389,7 @@
     "longDMS": "039 26 3.84 E",
     "latDecimal": 68.0791,
     "longDecimal": 39.4344,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": true,
 		"capital": false
@@ -4404,7 +4404,7 @@
     "longDMS": "129 40 52.32 E",
     "latDecimal": 62.0213,
     "longDecimal": 129.6812,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4419,7 +4419,7 @@
     "longDMS": "166 26 47.76 E",
     "latDecimal": 68.0539,
     "longDecimal": 166.4466,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4434,7 +4434,7 @@
     "longDMS": "173 42 28.8 E",
     "latDecimal": 68.9731,
     "longDecimal": 173.7080,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4449,7 +4449,7 @@
     "longDMS": "139 57 29.88 E",
     "latDecimal": 69.3027,
     "longDecimal": 139.9583,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4464,7 +4464,7 @@
     "longDMS": "114 7 11.28 E",
     "latDecimal": 71.9544,
     "longDecimal": 114.1198,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4479,7 +4479,7 @@
     "longDMS": "56 6 43.2 E",
     "latDecimal": 58.0325,
     "longDecimal": 56.1120,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": false,
 		"capital": false
@@ -4494,7 +4494,7 @@
     "longDMS": "30 19 41.16 E",
     "latDecimal": 59.9200,
     "longDecimal": 30.3281,
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
 		"coastal": true,
 		"capital": false
@@ -4509,7 +4509,7 @@
     "longDMS": "104 3 39.96 E",
     "latDecimal": 30.6543,
     "longDecimal": 104.0611,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -4524,7 +4524,7 @@
     "longDMS": "102 50 21.12 E",
     "latDecimal": 24.8688,
     "longDecimal": 102.8392,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": false,
 		"capital": false
@@ -4539,7 +4539,7 @@
     "longDMS": "118 7 39.72 E",
     "latDecimal": 24.5035,
     "longDecimal": 118.1277,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": true,
 		"capital": false
@@ -4554,7 +4554,7 @@
     "longDMS": "109 31 10.92 E",
     "latDecimal": 18.3617,
     "longDecimal": 109.5197,
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
 		"coastal": true,
 		"capital": false

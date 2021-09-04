@@ -115,7 +115,7 @@ class InvasionModal extends Component {
         let sites = this.props.sites;
         for (let site of sites) {
             site.checkZone = site.zone.name;
-            site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
+            site.info = `${site.organization.name} - ${site.name} | ${site.team.shortName}`
             data.push(site);
         }
             

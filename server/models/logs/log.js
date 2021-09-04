@@ -10,7 +10,7 @@ const LogSchema = new Schema({
 	model: { type: String, default: 'Log', minlength: 1, maxlength: 3, required: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' }
 });
 

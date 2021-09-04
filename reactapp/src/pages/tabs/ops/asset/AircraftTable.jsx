@@ -13,7 +13,7 @@ const AircraftTable = (props) => {
 	const [page, setPage] = React.useState(1);
 
 	const getLocation = (aircraft) => {
-      let location = aircraft.country !== undefined ? aircraft.country.name !== undefined ? aircraft.country.name : 'Unknown' : 'The Abyss'
+      let location = aircraft.organization !== undefined ? aircraft.organization.name !== undefined ? aircraft.organization.name : 'Unknown' : 'The Abyss'
       return location;
   }
 

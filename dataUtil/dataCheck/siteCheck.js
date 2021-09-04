@@ -51,8 +51,8 @@ async function chkSite(runFlag) {
 			logger.error(`Zone missing for Site ${site.name} ${site._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(site, 'country')) {
-			logger.error(`Country missing for Site ${site.name} ${site._id}`);
+		if (!Object.prototype.hasOwnProperty.call(site, 'organization')) {
+			logger.error(`Organization missing for Site ${site.name} ${site._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(site, 'code')) {

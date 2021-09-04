@@ -7,21 +7,21 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Country, GroundCountry, SpaceCountry } = require('../../models/country');
+const { Organization, GroundOrganization, SpaceOrganization } = require('../../models/organization');
 const { Site } = require('../../models/site');
 
 // @route   GET api/counties
-// @Desc    Get all countries
+// @Desc    Get all organizations
 // @access  Public
 router.get('/', async (req, res) => {
-	logger.info('GET Route: api/countries requested...');
+	logger.info('GET Route: api/organizations requested...');
 	try {
-		const countries = await Country.find()
+		const organizations = await Organization.find()
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
 			.populate('borderedBy', 'name')
 			.sort('code: 1');
-		res.status(200).json(countries);
+		res.status(200).json(organizations);
 	}
 	catch (err) {
 		logger.error(err.message, { meta: err.stack });
@@ -33,17 +33,17 @@ router.get('/', async (req, res) => {
 // @Desc    Get by property
 // @access  Public
 router.get('/:key/:value', async (req, res) => {
-	logger.info('GET Route: api/countries requested...');
+	logger.info('GET Route: api/organizations requested...');
 	const query = {};
 	query[req.params.key] = req.params.value;
 
 	try {
-		const countries = await Country.find(query)
+		const organizations = await Organization.find(query)
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
 			.populate('borderedBy', 'name')
 			.sort('code: 1');
-		res.status(200).json(countries);
+		res.status(200).json(organizations);
 	}
 	catch (err) {
 		logger.error(err.message, { meta: err.stack });
@@ -51,21 +51,21 @@ router.get('/:key/:value', async (req, res) => {
 	}
 });
 
-// @route   GET api/countries/:id
-// @Desc    Get countries by id
+// @route   GET api/organizations/:id
+// @Desc    Get organizations by id
 // @access  Public
 router.get('/:id', validateObjectId, async (req, res) => {
 	const id = req.params.id;
 	try {
-		const country = await Country.findById(id)
+		const organization = await Organization.findById(id)
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
 			.populate('borderedBy', 'name');
-		if (country != null) {
-			res.status(200).json(country);
+		if (organization != null) {
+			res.status(200).json(organization);
 		}
 		else {
-			res.status(404).send(`The country with the ID ${id} was not found!`);
+			res.status(404).send(`The organization with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
@@ -75,31 +75,31 @@ router.get('/:id', validateObjectId, async (req, res) => {
 
 // TODO: Add GET route that allows for getting by discriminator
 
-// @route   POST api/countries
-// @Desc    Create New Country
+// @route   POST api/organizations
+// @Desc    Create New Organization
 // @access  Public
 router.post('/', async (req, res) => {
-	logger.info('POST Route: api/countries call made...');
+	logger.info('POST Route: api/organizations call made...');
 	const { code } = req.body;
 
 	try {
-		let newCountry;
+		let newOrganization;
 		if (req.body.type === 'Ground') {
-			newCountry = new GroundCountry(req.body);
+			newOrganization = new GroundOrganization(req.body);
 		}
 		if (req.body.type === 'Space') {
-			newCountry = new SpaceCountry(req.body);
+			newOrganization = new SpaceOrganization(req.body);
 		}
-		await newCountry.validateCountry();
-		const docs = await Country.find({ code });
+		await newOrganization.validateOrganization();
+		const docs = await Organization.find({ code });
 
 		if (docs.length < 1) {
-			newCountry = await newCountry.save();
-			res.status(200).json(newCountry);
-			logger.info(`The country ${newCountry.name} created...`);
+			newOrganization = await newOrganization.save();
+			res.status(200).json(newOrganization);
+			logger.info(`The organization ${newOrganization.name} created...`);
 		}
 		else {
-			nexusError(`A country with the code ${newCountry.code} already exists!`, 400);
+			nexusError(`A organization with the code ${newOrganization.code} already exists!`, 400);
 		}
 	}
 	catch (err) {
@@ -107,22 +107,22 @@ router.post('/', async (req, res) => {
 	}
 });
 
-// @route   DELETE api/countries/:id
-// @Desc    Update Existing Country
+// @route   DELETE api/organizations/:id
+// @Desc    Update Existing Organization
 // @access  Public
 router.delete('/:id', validateObjectId, async (req, res) => {
 	logger.info('DEL Route: api/contries/:id call made...');
 	const id = req.params.id;
 
 	try {
-		const country = await Country.findByIdAndRemove(id);
+		const organization = await Organization.findByIdAndRemove(id);
 
-		if (country != null) {
-			logger.info(`The country ${country.name} with the id ${id} was deleted!`);
-			res.status(200).json(country);
+		if (organization != null) {
+			logger.info(`The organization ${organization.name} with the id ${id} was deleted!`);
+			res.status(200).json(organization);
 		}
 		else {
-			nexusError(`The Country with the ID ${id} was not found!`);
+			nexusError(`The Organization with the ID ${id} was not found!`);
 		}
 	}
 	catch (err) {
@@ -130,13 +130,13 @@ router.delete('/:id', validateObjectId, async (req, res) => {
 	}
 });
 
-// @route   PATCH api/countries/deleteAll
-// @desc    Delete All Countrys
+// @route   PATCH api/organizations/deleteAll
+// @desc    Delete All Organizations
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
 	try {
-		await Country.deleteMany();
-		res.status(200).send('All Countrys succesfully deleted!');
+		await Organization.deleteMany();
+		res.status(200).send('All Organizations succesfully deleted!');
 	}
 	catch (err) {
 		console.log(`Error: ${err.message}`);
@@ -144,21 +144,21 @@ router.patch('/deleteAll', async function (req, res) {
 	}
 });
 
-// @route   PATCH api/countries/setCapital
-// @desc    Set Countrys Capital (site id to city)
+// @route   PATCH api/organizations/setCapital
+// @desc    Set Organizations Capital (site id to city)
 // @access  Public
 router.patch('/setCapital/:id', validateObjectId, async function (req, res) {
-	const countryId = req.params.id;
+	const organizationId = req.params.id;
 	try {
 
-		const capital = await Site.findOne({ 'type': 'Ground', 'subType': 'City', 'country': countryId, 'capital': true });
+		const capital = await Site.findOne({ 'type': 'Ground', 'subType': 'City', 'organization': organizationId, 'capital': true });
 
 		if (capital) {
-			const country = await Country.findByIdAndUpdate(countryId,
+			const organization = await Organization.findByIdAndUpdate(organizationId,
 				{ capital: capital._id },
 				{ new: true, omitUndefined: true });
-			logger.info(`The country ${country.name} with the id ${countryId} updated with Capital!`);
-			res.status(200).json(country);
+			logger.info(`The organization ${organization.name} with the id ${organizationId} updated with Capital!`);
+			res.status(200).json(organization);
 		}
 		else {
 			res.status(200);

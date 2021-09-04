@@ -136,18 +136,18 @@ async function newCity(cData, rCounts) {
 		CitySite.team = tData._id;
 	}
 
-	const country = await axios.get(`${gameServer}init/initCountries/code/${cData.countryCode}`);
-	const countryData = country.data;
+	const organization = await axios.get(`${gameServer}init/initOrganizations/code/${cData.organizationCode}`);
+	const organizationData = organization.data;
 
-	if (!countryData.type) {
+	if (!organizationData.type) {
 
 		++rCounts.loadErrCount;
-		logger.error(`New City Site Invalid Country: ${cData.name} ${cData.countryCode}`);
+		logger.error(`New City Site Invalid Organization: ${cData.name} ${cData.organizationCode}`);
 		return;
 	}
 	else {
-		CitySite.country = countryData._id;
-		CitySite.zone = countryData.zone;
+		CitySite.organization = organizationData._id;
+		CitySite.zone = organizationData.zone;
 	}
 
 	try {
@@ -155,7 +155,7 @@ async function newCity(cData, rCounts) {
 		++rCounts.loadCount;
 		logger.debug(`${CitySite.name} add saved to City Site collection.`);
 		if (CitySite.capital) {
-			await axios.patch(`${gameServer}api/Countries/setCapital/${CitySite.country}`);
+			await axios.patch(`${gameServer}api/Organizations/setCapital/${CitySite.organization}`);
 		}
 	}
 	catch (err) {

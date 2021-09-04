@@ -428,7 +428,7 @@ async function transferUnit(data) { // for transferring to other facilities as a
 
 		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
 		unit.site = facility.site;
-		unit.country = facility.site.country;
+		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
 		unit.status.deployed = false;
 
@@ -442,7 +442,7 @@ async function transferUnit(data) { // for transferring to other facilities as a
 
 		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
 		unit.site = facility.site;
-		unit.country = facility.site.country;
+		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
 		unit.status.deployed = false;
 
@@ -473,7 +473,7 @@ async function deployUnit(data, type) {
 	}
 	else {
 		const siteObj = await Site.findById(destination)
-			.populate('country')
+			.populate('organization')
 			.populate('zone');
 		const unitArray = [];
 
@@ -489,7 +489,7 @@ async function deployUnit(data, type) {
 
 
 			update.site = siteObj._id;
-			update.country = siteObj.country._id;
+			update.organization = siteObj.organization._id;
 			update.zone = siteObj.zone._id;
 			update.status.deployed = true;
 			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
@@ -497,7 +497,7 @@ async function deployUnit(data, type) {
 			await update.save();
 		}
 
-		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.` });
+		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.organization.name}, ${unitArray.length} units deployed.` });
 
 		if (type === 'invade') {
 			siteObj.warzone = true;
@@ -510,7 +510,7 @@ async function deployUnit(data, type) {
 
 		report.team = teamObj._id;
 		report.site = siteObj._id;
-		report.country = siteObj.country._id;
+		report.organization = siteObj.organization._id;
 		report.zone = siteObj.zone._id;
 		report.units = unitArray;
 		report.cost = cost;
@@ -523,7 +523,7 @@ async function deployUnit(data, type) {
 		//   await update.save();
 		// }
 
-		return ({ message : `Unit ${type} to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
+		return ({ message : `Unit ${type} to ${siteObj.name} in ${siteObj.organization.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
 	}
 }
 

@@ -301,7 +301,7 @@ async function applyDmg (unit) {
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;
-	update.country = origin.country;
+	update.organization = origin.organization;
 	update.site = update.origin._id;
 	update.zone = origin.zone;
 

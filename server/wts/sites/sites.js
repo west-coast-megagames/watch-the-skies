@@ -5,7 +5,7 @@ const geo = require('../../util/systems/geo');
 let count = 0; // How many sites have happened in the game.
 
 async function generateSite (site) {
-	const currentSite = await Site.findById({ _id: site }).populate('country');
+	const currentSite = await Site.findById({ _id: site }).populate('organization');
 
 	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
 
@@ -22,10 +22,10 @@ async function generateSite (site) {
 	const c0de = await genSiteCode();
 
 	let newSite = {
-		name: `${currentSite.country.code} Site - ${c0de}`,
+		name: `${currentSite.organization.code} Site - ${c0de}`,
 		team: currentSite.team,
 		subType: 'Point of Interest',
-		country: currentSite.country,
+		organization: currentSite.organization,
 		zone: currentSite.zone,
 		code: c0de,
 		geoDMS: newDMS,

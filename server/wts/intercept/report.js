@@ -6,7 +6,7 @@ function interceptLogging (finalReport, attacker, defender) {
 	const atkLog = {
 		team: attacker.team,
 		position: 'Offense',
-		country: defender.country,
+		organization: defender.organization,
 		zone: defender.zone,
 		site: defender.site,
 		report: finalReport.atkReport,
@@ -32,7 +32,7 @@ function interceptLogging (finalReport, attacker, defender) {
 	const defLog = {
 		team: defender.team,
 		position: 'Defense',
-		country: defender.country,
+		organization: defender.organization,
 		zone: defender.zone,
 		site: defender.site,
 		report: finalReport.defReport,

@@ -39,7 +39,7 @@ router.put('/', async (req, res) => {
 	if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Air');
 
 	result = `${aircraft.name} launching...`;
-	aircraft.country = target.country;
+	aircraft.organization = target.organization;
 	aircraft.zone = target.zone;
 	aircraft.mission = mission;
 

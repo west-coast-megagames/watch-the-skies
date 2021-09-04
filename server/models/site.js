@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validCountry, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
+const { validTeam, validOrganization, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -13,7 +13,7 @@ const SiteSchema = new Schema({
 	name: { type: String, required: true, minlength: 2, maxlength: 50 },
 	team: { type: ObjectId, ref: 'Team' },
 	occupier: { type: ObjectId, ref: 'Team' },
-	country: { type: ObjectId, ref: 'Country' },
+	organization: { type: ObjectId, ref: 'Organization' },
 	zone: { type: ObjectId, ref: 'Zone' },
 	code: {
 		type: String,
@@ -71,7 +71,7 @@ SiteSchema.methods.validateSite = async function () {
 	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
 
 	await validTeam(this.team);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	await validZone(this.zone);
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);

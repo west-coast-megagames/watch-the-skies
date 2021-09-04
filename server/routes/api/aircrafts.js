@@ -21,7 +21,7 @@ router.get('/', async function (req, res) {
 			.sort({ team: 1 })
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('systems', 'name category')
 			.populate('site', 'name')
 			.populate('base', 'name');
@@ -44,7 +44,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 			.sort({ team: 1 })
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('systems', 'name category')
 			.populate('site', 'name')
 			.populate('base', 'name');

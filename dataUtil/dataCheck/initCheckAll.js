@@ -2,7 +2,7 @@
 const runBlueprintCheck = require('../dataCheck/blueprintCheck');
 const runZoneCheck = require('../dataCheck/zoneCheck');
 const runTeamCheck = require('../dataCheck/teamCheck');
-const runCountryCheck = require('../dataCheck/countryCheck');
+const runOrganizationCheck = require('../dataCheck/organizationCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
 const runUpgradeCheck = require('../dataCheck/upgradeCheck');
@@ -19,7 +19,7 @@ require('winston-mongodb');
 async function fullInitCheck(selStr) {
 	let blueprintCheckDone = false;
 	let zoneCheckDone = false;
-	let countryCheckDone = false;
+	let organizationCheckDone = false;
 	let teamCheckDone = false;
 	let facilityCheckDone = false;
 	let siteCheckDone = false;
@@ -44,8 +44,8 @@ async function fullInitCheck(selStr) {
 		teamCheckDone = await runTeamCheck(true); // check team records
 		logger.info(`Team Check Done: ${teamCheckDone}`);
 
-		countryCheckDone = await runCountryCheck(true); // check country records
-		logger.info(`Country Check Done: ${countryCheckDone}`);
+		organizationCheckDone = await runOrganizationCheck(true); // check organization records
+		logger.info(`Organization Check Done: ${organizationCheckDone}`);
 
 		facilityCheckDone = await runFacilityCheck(true); // check facility records
 		logger.info(`Facility Check Done: ${facilityCheckDone}`);
@@ -95,9 +95,9 @@ async function fullInitCheck(selStr) {
 
 		break;
 
-	case 'Country':
-		countryCheckDone = await runCountryCheck(true); // check country records
-		logger.info(`Country Check Done: ${countryCheckDone}`);
+	case 'Organization':
+		organizationCheckDone = await runOrganizationCheck(true); // check organization records
+		logger.info(`Organization Check Done: ${organizationCheckDone}`);
 
 		break;
 

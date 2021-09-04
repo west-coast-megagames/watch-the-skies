@@ -23,7 +23,7 @@ async function generateSalvage (system, status) {
 }
 
 async function generateCrash (salvage, site) {
-	const currentSite = await Site.findById({ _id: site }).populate('country');
+	const currentSite = await Site.findById({ _id: site }).populate('organization');
 
 	salvageDebugger(currentSite);
 	salvageDebugger(salvage);
@@ -43,10 +43,10 @@ async function generateCrash (salvage, site) {
 	const c0de = await genSiteCode();
 
 	let crash = {
-		name: `${currentSite.country.code} Crash - ${c0de}`,
+		name: `${currentSite.organization.code} Crash - ${c0de}`,
 		team: currentSite.team,
 		subType: 'Crash',
-		country: currentSite.country,
+		organization: currentSite.organization,
 		zone: currentSite.zone,
 		code: c0de,
 		geoDMS: newDMS,

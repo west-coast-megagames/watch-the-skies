@@ -281,11 +281,11 @@ async function assignKnowledgeCredit() {
 			let highProgress = 0; // Current highest progress
 
 			// For loop that looks through each teams progress towards the knowledge field
-			for await (const country of field.teamProgress) {
-				if (country.progress > highProgress) {
-					highProgress = country.progress; // Assigns the current progress to highProgress if the team has more
-					credit = country.team._id; // Assigns the current country to credit if the team has more
-					creditName = country.team.name;
+			for await (const organization of field.teamProgress) {
+				if (organization.progress > highProgress) {
+					highProgress = organization.progress; // Assigns the current progress to highProgress if the team has more
+					credit = organization.team._id; // Assigns the current organization to credit if the team has more
+					creditName = organization.team.name;
 				}
 			}
 

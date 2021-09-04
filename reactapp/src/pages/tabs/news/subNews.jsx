@@ -25,7 +25,7 @@ class SubNews extends React.Component {
 
   handleInput = (value, id) => {
     if (id === 'location') {
-      let options = [...this.props.sites, ...this.props.countries, ...this.props.zones];
+      let options = [...this.props.sites, ...this.props.organizations, ...this.props.zones];
       let location = options.find(el => el._id === value);
       if (location.model !== 'Site') {
         Alert.warning(`You choose a ${location.model}, you must choose a site.`);
@@ -167,15 +167,15 @@ class SubNews extends React.Component {
   formatPickerData = () => {
     console.log('Formatting Picker...')
     let zones = this.props.zones.filter(el => el.type !== 'Space').map((item) => Object.assign({}, item, {selected:false}));
-    let countries = this.props.countries.map((item) => Object.assign({}, item, {selected:false}));
+    let organizations = this.props.organizations.map((item) => Object.assign({}, item, {selected:false}));
     let sites = this.props.sites.map((item) => Object.assign({}, item, {selected:false}));
     
-    for (let country of countries) {
-      country.children = sites.filter(el => el.country.name === country.name);
+    for (let organization of organizations) {
+      organization.children = sites.filter(el => el.organization.name === organization.name);
     };
 
     for (let zone of zones) {
-      zone.children = countries.filter(el => el.zone.name === zone.name);
+      zone.children = organizations.filter(el => el.zone.name === zone.name);
     };
     this.setState({ data: zones })
   }
@@ -186,7 +186,7 @@ const mapStateToProps = state => ({
   user: state.auth.user.username,
   team: state.auth.team,
   zones: state.entities.zones.list,
-  countries: state.entities.countries.list,
+  organizations: state.entities.organizations.list,
   sites: state.entities.sites.list
 });
 

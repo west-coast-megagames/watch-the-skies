@@ -134,23 +134,23 @@ async function newSpacecraft(sData, rCounts) {
 		return;
 	}
 
-	if (sData.countryCode) {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${sData.countryCode}`);
-		const countryData = country.data;
+	if (sData.organizationCode) {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${sData.organizationCode}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Spacecraft Site Invalid Country: ${sData.name} ${sData.countryCode}`);
+			logger.error(`New Spacecraft Site Invalid Organization: ${sData.name} ${sData.organizationCode}`);
 			return;
 		}
 		else {
-			SpaceSite.country = countryData._id;
+			SpaceSite.organization = organizationData._id;
 		}
 	}
 	else {
 		++rCounts.loadErrCount;
-		logger.error(`New Spacecraft Site Blank Country: ${sData.name} ${sData.countryCode}`);
+		logger.error(`New Spacecraft Site Blank Organization: ${sData.name} ${sData.organizationCode}`);
 		return;
 	}
 

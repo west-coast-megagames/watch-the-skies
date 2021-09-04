@@ -194,7 +194,7 @@ class DeployMilitary extends Component {
 		for (let site of this.props.sites) {
 			let siteData = {
 				checkZone: site.zone.name,
-				info: `${site.country.name} - ${site.name} | ${site.subType}`,
+				info: `${site.organization.name} - ${site.name} | ${site.subType}`,
 				_id: site._id
 			}
 	

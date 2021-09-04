@@ -37,7 +37,7 @@ class InfoMilitary extends Component {
                   <b>Name:</b> {this.props.unit.name}
                 </p>
                 <p>
-                  <b>Location:</b> {this.props.unit.country.name} |{" "}
+                  <b>Location:</b> {this.props.unit.organization.name} |{" "}
                   {this.props.unit.zone.name} zone
                 </p>
               </FlexboxGrid.Item>

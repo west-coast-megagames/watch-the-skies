@@ -21,7 +21,7 @@ const aircraft = require('./api/aircrafts');
 const account = require('./api/accounts');
 const blueprint = require('./api/blueprints');
 const clock = require('./api/clock');
-const country = require('./api/countries');
+const organization = require('./api/organizations');
 const facilities = require('./api/facilities');
 const reports = require('./api/reports');
 const military = require('./api/military');
@@ -39,7 +39,7 @@ const intel = require('./api/intel');
 // data init and check routes
 const initZones = require('./init/initZones');
 const initTeams = require('./init/initTeams');
-const initCountries = require('./init/initCountries');
+const initOrganizations = require('./init/initOrganizations');
 const initBlueprints = require('./init/initBlueprints');
 const initSites = require('./init/initSites');
 const initFacilities = require('./init/initFacilities');
@@ -96,8 +96,8 @@ module.exports = function (app) {
 	app.use('/api/aircrafts', aircraft); // Route for manipulating aircrafts
 	app.use('/api/articles', article); // Route for manipulating articles
 	app.use('/api/blueprints', blueprint);
-	app.use('/api/countries', country); // Route for inputing countries
-	app.use('/api/facilities', facilities); // Route for inputing countries
+	app.use('/api/organizations', organization); // Route for inputing organizations
+	app.use('/api/facilities', facilities); // Route for inputing organizations
 	app.use('/api/reports', reports); // Route for reports
 	app.use('/api/military', military); // Route for manipulating militarys
 	app.use('/api/squad', squad); // Route for manipulating squad
@@ -111,7 +111,7 @@ module.exports = function (app) {
 	app.use('/api/intel', intel); // Route for intels
 	app.use('/init/initZones', initZones); // Route for init/check of zones
 	app.use('/init/initTeams', initTeams); // Route for init/check of Teams
-	app.use('/init/initCountries', initCountries); // Route for init/check of Countrys
+	app.use('/init/initOrganizations', initOrganizations); // Route for init/check of Organizations
 	app.use('/init/initBlueprints', initBlueprints); // Route for init/check of Blueprints
 	app.use('/init/initSites', initSites); // Route for init/check of Sites
 	app.use('/init/initFacilities', initFacilities); // Route for init/check of Facilities

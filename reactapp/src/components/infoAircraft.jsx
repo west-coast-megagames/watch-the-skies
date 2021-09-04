@@ -37,7 +37,7 @@ class InfoAircraft extends Component {
                   <b>Name:</b> {this.props.aircraft.name}
                 </p>
                 <p>
-                  <b>Location:</b> {this.props.aircraft.country.name ? this.props.aircraft.country.name : 'Unknown'} |
+                  <b>Location:</b> {this.props.aircraft.organization.name ? this.props.aircraft.organization.name : 'Unknown'} |
                   {this.props.aircraft.zone.name ? this.props.aircraft.zone.name : 'Unknown'} Zone
                 </p>
               </FlexboxGrid.Item>

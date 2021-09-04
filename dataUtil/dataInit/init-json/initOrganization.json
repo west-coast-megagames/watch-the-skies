@@ -1,6 +1,6 @@
 [
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "F1",
     "name": "Federation",
     "borderedBy": [],
@@ -14,7 +14,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AF",
     "name": "Afghanistan",
     "borderedBy": [
@@ -35,7 +35,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AL",
     "name": "Albania",
     "borderedBy": [
@@ -54,7 +54,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DZ",
     "name": "Algeria",
     "borderedBy": [
@@ -75,7 +75,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AD",
     "name": "Andorra",
     "borderedBy": [{ "code": "FR" }, { "code": "ES" }],
@@ -89,7 +89,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AO",
     "name": "Angola",
     "borderedBy": [
@@ -109,7 +109,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AQ",
     "name": "Antarctica",
     "borderedBy": [],
@@ -123,7 +123,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AG",
     "name": "Antigua and Barbuda",
     "borderedBy": [],
@@ -137,7 +137,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AR",
     "name": "Argentina",
     "borderedBy": [
@@ -158,7 +158,7 @@
   },
 
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AM",
     "name": "Armenia",
     "borderedBy": [
@@ -177,7 +177,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AU",
     "name": "Australia",
     "borderedBy": [],
@@ -191,7 +191,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AT",
     "name": "Austria",
     "borderedBy": [
@@ -214,7 +214,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AZ",
     "name": "Azerbaijan",
     "borderedBy": [
@@ -235,7 +235,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BS",
     "name": "Bahamas",
     "borderedBy": [],
@@ -249,7 +249,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BH",
     "name": "Bahrain",
     "borderedBy": [],
@@ -263,7 +263,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BD",
     "name": "Bangladesh",
     "borderedBy": [{ "code": "IN" }, { "code": "MM" }, { "code": "BT" }],
@@ -277,7 +277,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BB",
     "name": "Barbados",
     "borderedBy": [],
@@ -291,7 +291,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BY",
     "name": "Belarus",
     "borderedBy": [
@@ -311,7 +311,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "name": "Belgium",
     "code": "BE",
     "borderedBy": [
@@ -330,7 +330,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BZ",
     "name": "Belize",
     "borderedBy": [{ "code": "MX" }, { "code": "GT" }],
@@ -344,7 +344,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BJ",
     "name": "Benin",
     "borderedBy": [
@@ -363,7 +363,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BM",
     "name": "Bermuda",
     "borderedBy": [],
@@ -377,7 +377,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BT",
     "name": "Bhutan",
     "borderedBy": [
@@ -396,7 +396,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BO",
     "name": "Bolivia",
     "borderedBy": [
@@ -416,7 +416,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BA",
     "name": "Bosnia and Herzegovina",
     "borderedBy": [{ "code": "HR" }, { "code": "ME" }, { "code": "RS" }],
@@ -430,7 +430,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BW",
     "name": "Botswana",
     "borderedBy": [
@@ -450,7 +450,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BR",
     "name": "Brazil",
     "borderedBy": [
@@ -475,7 +475,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BN",
     "name": "Brunei",
     "borderedBy": [{ "code": "MY" }],
@@ -489,7 +489,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BG",
     "name": "Bulgaria",
     "borderedBy": [
@@ -509,7 +509,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BF",
     "name": "Burkina Faso",
     "borderedBy": [
@@ -531,7 +531,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "BI",
     "name": "Burundi",
     "borderedBy": [{ "code": "CD" }, { "code": "RW" }, { "code": "TZ" }],
@@ -545,7 +545,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KH",
     "name": "Cambodia",
     "borderedBy": [{ "code": "VN" }, { "code": "LA" }, { "code": "TH" }],
@@ -559,7 +559,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CM",
     "name": "Cameroon",
     "borderedBy": [
@@ -580,7 +580,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CA",
     "name": "Canada",
     "borderedBy": [{ "code": "US" }],
@@ -594,7 +594,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CV",
     "name": "Cabo Verde",
     "borderedBy": [],
@@ -608,7 +608,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CF",
     "name": "Central African Republic",
     "borderedBy": [
@@ -629,7 +629,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TD",
     "name": "Chad",
     "borderedBy": [
@@ -650,7 +650,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CL",
     "name": "Chile",
     "borderedBy": [{ "code": "AR" }, { "code": "BO" }, { "code": "PE" }],
@@ -664,7 +664,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CN",
     "name": "China",
     "borderedBy": [
@@ -693,7 +693,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CO",
     "name": "Colombia",
     "borderedBy": [
@@ -713,7 +713,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KM",
     "name": "Comoros",
     "borderedBy": [],
@@ -727,7 +727,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CG",
     "name": "Congo",
     "borderedBy": [
@@ -747,7 +747,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CD",
     "name": "Congo, The Democratic Republic of the",
     "borderedBy": [
@@ -771,7 +771,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CR",
     "name": "Costa Rica",
     "borderedBy": [{ "code": "NI" }, { "code": "PA" }],
@@ -785,7 +785,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CI",
     "name": "Cote D'Ivoire",
     "borderedBy": [
@@ -805,7 +805,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HR",
     "name": "Croatia",
     "borderedBy": [
@@ -825,7 +825,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CU",
     "name": "Cuba",
     "borderedBy": [],
@@ -839,7 +839,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CY",
     "name": "Cyprus",
     "borderedBy": [],
@@ -853,7 +853,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CZ",
     "name": "Czech Republic",
     "borderedBy": [
@@ -872,7 +872,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DK",
     "name": "Denmark",
     "borderedBy": [{ "code": "DE" }],
@@ -886,7 +886,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DJ",
     "name": "Djibouti",
     "borderedBy": [{ "code": "ER" }, { "code": "ET" }, { "code": "SO" }],
@@ -900,7 +900,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DM",
     "name": "Dominica",
     "borderedBy": [],
@@ -914,7 +914,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DO",
     "name": "Dominican Republic",
     "borderedBy": [{ "code": "HT" }],
@@ -928,7 +928,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "EC",
     "name": "Ecuador",
     "borderedBy": [{ "code": "CO" }, { "code": "PE" }],
@@ -942,7 +942,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "EG",
     "name": "Egypt",
     "borderedBy": [
@@ -961,7 +961,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SV",
     "name": "El Salvador",
     "borderedBy": [{ "code": "GT" }, { "code": "HN" }],
@@ -975,7 +975,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GQ",
     "name": "Equatorial Guinea",
     "borderedBy": [{ "code": "CM" }, { "code": "GA" }],
@@ -989,7 +989,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ER",
     "name": "Eritrea",
     "borderedBy": [{ "code": "SD" }, { "code": "ET" }, { "code": "DJ" }],
@@ -1003,7 +1003,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "EE",
     "name": "Estonia",
     "borderedBy": [{ "code": "RU" }, { "code": "LV" }],
@@ -1017,7 +1017,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SZ",
     "name": "eSwatini (Swaziland)",
     "borderedBy": [{ "code": "ZA" }, { "code": "MZ" }],
@@ -1031,7 +1031,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ET",
     "name": "Ethiopia",
     "borderedBy": [
@@ -1052,7 +1052,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "FJ",
     "name": "Fiji",
     "borderedBy": [],
@@ -1066,7 +1066,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "FI",
     "name": "Finland",
     "borderedBy": [{ "code": "NO" }, { "code": "SE" }, { "code": "RU" }],
@@ -1080,7 +1080,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "FR",
     "name": "France",
     "borderedBy": [
@@ -1103,7 +1103,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GA",
     "name": "Gabon",
     "borderedBy": [{ "code": "GQ" }, { "code": "CM" }, { "code": "CG" }],
@@ -1117,7 +1117,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GM",
     "name": "Gambia",
     "borderedBy": [{ "code": "SN" }],
@@ -1131,7 +1131,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GE",
     "name": "Georgia",
     "borderedBy": [
@@ -1150,7 +1150,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "DE",
     "name": "Germany",
     "borderedBy": [
@@ -1174,7 +1174,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GH",
     "name": "Ghana",
     "borderedBy": [{ "code": "CI" }, { "code": "TG" }, { "code": "BF" }],
@@ -1188,7 +1188,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GR",
     "name": "Greece",
     "borderedBy": [
@@ -1207,7 +1207,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GL",
     "name": "Greenland",
     "borderedBy": [],
@@ -1221,7 +1221,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GD",
     "name": "Grenada",
     "borderedBy": [],
@@ -1235,7 +1235,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GT",
     "name": "Guatemala",
     "borderedBy": [
@@ -1254,7 +1254,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GN",
     "name": "Guinea",
     "borderedBy": [
@@ -1275,7 +1275,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GW",
     "name": "Guinea-Bissau",
     "borderedBy": [{ "code": "GN" }, { "code": "SN" }],
@@ -1289,7 +1289,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GY",
     "name": "Guyana",
     "borderedBy": [{ "code": "BR" }, { "code": "SR" }, { "code": "VE" }],
@@ -1303,7 +1303,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GF",
     "name": "French Guiana",
     "borderedBy": [{ "code": "SR" }, { "code": "BR" }],
@@ -1317,7 +1317,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HT",
     "name": "Haiti",
     "borderedBy": [{ "code": "DO" }],
@@ -1331,7 +1331,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HM",
     "name": "Heard Island and Mcdonald Islands",
     "borderedBy": [],
@@ -1345,7 +1345,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VA",
     "name": "Holy See (Vatican City State)",
     "borderedBy": [{ "code": "IT" }],
@@ -1359,7 +1359,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HN",
     "name": "Honduras",
     "borderedBy": [{ "code": "SV" }, { "code": "GT" }, { "code": "NI" }],
@@ -1373,7 +1373,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HK",
     "name": "Hong Kong",
     "borderedBy": [{ "code": "CN" }],
@@ -1387,7 +1387,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "HU",
     "name": "Hungary",
     "borderedBy": [
@@ -1409,7 +1409,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IS",
     "name": "Iceland",
     "borderedBy": [],
@@ -1423,7 +1423,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IN",
     "name": "India",
     "borderedBy": [
@@ -1444,7 +1444,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ID",
     "name": "Indonesia",
     "borderedBy": [{ "code": "MY" }, { "code": "PG" }, { "code": "TL" }],
@@ -1458,7 +1458,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IR",
     "name": "Iran",
     "borderedBy": [
@@ -1480,7 +1480,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IQ",
     "name": "Iraq",
     "borderedBy": [
@@ -1502,7 +1502,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IE",
     "name": "Ireland",
     "borderedBy": [{ "code": "GB" }],
@@ -1516,7 +1516,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IM",
     "name": "Isle of Man",
     "borderedBy": [],
@@ -1530,7 +1530,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IL",
     "name": "Israel",
     "borderedBy": [
@@ -1550,7 +1550,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "IT",
     "name": "Italy",
     "borderedBy": [
@@ -1571,7 +1571,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "JM",
     "name": "Jamaica",
     "borderedBy": [],
@@ -1585,7 +1585,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "JP",
     "name": "Japan",
     "borderedBy": [],
@@ -1599,7 +1599,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "JE",
     "name": "Jersey",
     "borderedBy": [],
@@ -1613,7 +1613,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "JO",
     "name": "Jordan",
     "borderedBy": [
@@ -1633,7 +1633,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KZ",
     "name": "Kazakhstan",
     "borderedBy": [
@@ -1654,7 +1654,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KE",
     "name": "Kenya",
     "borderedBy": [
@@ -1674,7 +1674,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KI",
     "name": "Kiribati",
     "borderedBy": [],
@@ -1688,7 +1688,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KP",
     "name": "North Korea",
     "borderedBy": [{ "code": "CN" }, { "code": "KR" }, { "code": "RU" }],
@@ -1702,7 +1702,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KR",
     "name": "South Korea",
     "borderedBy": [{ "code": "KP" }],
@@ -1716,7 +1716,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KW",
     "name": "Kuwait",
     "borderedBy": [{ "code": "IQ" }, { "code": "SA" }],
@@ -1730,7 +1730,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KG",
     "name": "Kyrgyzstan",
     "borderedBy": [
@@ -1749,7 +1749,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LA",
     "name": "Laos",
     "borderedBy": [
@@ -1770,7 +1770,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LV",
     "name": "Latvia",
     "borderedBy": [
@@ -1789,7 +1789,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LB",
     "name": "Lebanon",
     "borderedBy": [{ "code": "IL" }, { "code": "SY" }],
@@ -1803,7 +1803,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LS",
     "name": "Lesotho",
     "borderedBy": [{ "code": "ZA" }, { "code": "MZ" }, { "code": "BW" }],
@@ -1817,7 +1817,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LR",
     "name": "Liberia",
     "borderedBy": [{ "code": "CI" }, { "code": "GN" }, { "code": "SL" }],
@@ -1831,7 +1831,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LY",
     "name": "Libya",
     "borderedBy": [
@@ -1852,7 +1852,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LI",
     "name": "Liechtenstein",
     "borderedBy": [{ "code": "AT" }, { "code": "CH" }],
@@ -1866,7 +1866,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LT",
     "name": "Lithuania",
     "borderedBy": [
@@ -1885,7 +1885,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LU",
     "name": "Luxembourg",
     "borderedBy": [{ "code": "BE" }, { "code": "DE" }, { "code": "FR" }],
@@ -1899,7 +1899,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MO",
     "name": "Macau",
     "borderedBy": [],
@@ -1913,7 +1913,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MK",
     "name": "Macedonia",
     "borderedBy": [
@@ -1932,7 +1932,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MG",
     "name": "Madagascar",
     "borderedBy": [],
@@ -1946,7 +1946,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MW",
     "name": "Malawi",
     "borderedBy": [{ "code": "TZ" }, { "code": "ZM" }, { "code": "MZ" }],
@@ -1960,7 +1960,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MY",
     "name": "Malaysia",
     "borderedBy": [
@@ -1979,7 +1979,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MV",
     "name": "Maldives",
     "borderedBy": [],
@@ -1993,7 +1993,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ML",
     "name": "Mali",
     "borderedBy": [
@@ -2015,7 +2015,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MT",
     "name": "Malta",
     "borderedBy": [],
@@ -2029,7 +2029,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MH",
     "name": "Marshall Islands",
     "borderedBy": [],
@@ -2043,7 +2043,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MQ",
     "name": "Martinique",
     "borderedBy": [],
@@ -2057,7 +2057,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MR",
     "name": "Mauritania",
     "borderedBy": [
@@ -2076,7 +2076,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MU",
     "name": "Mauritius",
     "borderedBy": [],
@@ -2090,7 +2090,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "YT",
     "name": "Mayotte",
     "borderedBy": [],
@@ -2104,7 +2104,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MX",
     "name": "Mexico",
     "borderedBy": [{ "code": "US" }, { "code": "BZ" }, { "code": "GT" }],
@@ -2118,7 +2118,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "FM",
     "name": "Micronesia",
     "borderedBy": [],
@@ -2132,7 +2132,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MD",
     "name": "Moldova",
     "borderedBy": [{ "code": "UA" }, { "code": "RO" }],
@@ -2146,7 +2146,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MC",
     "name": "Monaco",
     "borderedBy": [{ "code": "FR" }],
@@ -2160,7 +2160,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MN",
     "name": "Mongolia",
     "borderedBy": [{ "code": "CN" }, { "code": "RU" }, { "code": "KZ" }],
@@ -2174,7 +2174,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ME",
     "name": "Montenegro",
     "borderedBy": [
@@ -2193,7 +2193,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MS",
     "name": "Montserrat",
     "borderedBy": [],
@@ -2207,7 +2207,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MA",
     "name": "Morocco",
     "borderedBy": [{ "code": "DZ" }, { "code": "EH" }, { "code": "ES" }],
@@ -2221,7 +2221,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MZ",
     "name": "Mozambique",
     "borderedBy": [
@@ -2243,7 +2243,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MM",
     "name": "Myanmar",
     "borderedBy": [
@@ -2263,7 +2263,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NA",
     "name": "Namibia",
     "borderedBy": [
@@ -2283,7 +2283,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NR",
     "name": "Nauru",
     "borderedBy": [],
@@ -2297,7 +2297,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NP",
     "name": "Nepal",
     "borderedBy": [{ "code": "CN" }, { "code": "IN" }, { "code": "BT" }],
@@ -2311,7 +2311,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NL",
     "name": "Netherlands",
     "borderedBy": [{ "code": "BE" }, { "code": "DE" }],
@@ -2325,7 +2325,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AN",
     "name": "Netherlands Antilles",
     "borderedBy": [],
@@ -2339,7 +2339,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NC",
     "name": "New Caledonia",
     "borderedBy": [],
@@ -2353,7 +2353,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NZ",
     "name": "New Zealand",
     "borderedBy": [],
@@ -2367,7 +2367,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NI",
     "name": "Nicaragua",
     "borderedBy": [{ "code": "CR" }, { "code": "HN" }],
@@ -2381,7 +2381,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NE",
     "name": "Niger",
     "borderedBy": [
@@ -2403,7 +2403,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NG",
     "name": "Nigeria",
     "borderedBy": [
@@ -2422,7 +2422,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NU",
     "name": "Niue",
     "borderedBy": [],
@@ -2436,7 +2436,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NF",
     "name": "Norfolk Island",
     "borderedBy": [],
@@ -2450,7 +2450,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "MP",
     "name": "Northern Mariana Islands",
     "borderedBy": [],
@@ -2464,7 +2464,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "NO",
     "name": "Norway",
     "borderedBy": [{ "code": "SE" }, { "code": "RU" }, { "code": "FI" }],
@@ -2478,7 +2478,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "OM",
     "name": "Oman",
     "borderedBy": [{ "code": "SA" }, { "code": "AE" }, { "code": "YE" }],
@@ -2492,7 +2492,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PK",
     "name": "Pakistan",
     "borderedBy": [
@@ -2511,7 +2511,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PW",
     "name": "Palau",
     "borderedBy": [],
@@ -2525,7 +2525,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PA",
     "name": "Panama",
     "borderedBy": [{ "code": "CR" }, { "code": "CO" }],
@@ -2539,7 +2539,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PG",
     "name": "Papua New Guinea",
     "borderedBy": [{ "code": "ID" }],
@@ -2553,7 +2553,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PY",
     "name": "Paraguay",
     "borderedBy": [{ "code": "BO" }, { "code": "AR" }, { "code": "BR" }],
@@ -2567,7 +2567,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PE",
     "name": "Peru",
     "borderedBy": [
@@ -2588,7 +2588,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PH",
     "name": "Philippines",
     "borderedBy": [],
@@ -2602,7 +2602,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PN",
     "name": "Pitcairn",
     "borderedBy": [],
@@ -2616,7 +2616,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PL",
     "name": "Poland",
     "borderedBy": [
@@ -2638,7 +2638,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PT",
     "name": "Portugal",
     "borderedBy": [{ "code": "ES" }],
@@ -2652,7 +2652,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PR",
     "name": "Puerto Rico",
     "borderedBy": [],
@@ -2666,7 +2666,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "QA",
     "name": "Qatar",
     "borderedBy": [{ "code": "AE" }, { "code": "SA" }],
@@ -2680,7 +2680,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "RE",
     "name": "Reunion",
     "borderedBy": [],
@@ -2694,7 +2694,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "RO",
     "name": "Romania",
     "borderedBy": [
@@ -2714,7 +2714,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "RU",
     "name": "Russia",
     "borderedBy": [
@@ -2743,7 +2743,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "RW",
     "name": "Rwanda",
     "borderedBy": [
@@ -2762,7 +2762,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SH",
     "name": "Saint Helena",
     "borderedBy": [],
@@ -2776,7 +2776,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "KN",
     "name": "Saint Kitts and Nevis",
     "borderedBy": [],
@@ -2790,7 +2790,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LC",
     "name": "Saint Lucia",
     "borderedBy": [],
@@ -2804,7 +2804,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PM",
     "name": "Saint Pierre and Miquelon",
     "borderedBy": [],
@@ -2818,7 +2818,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VC",
     "name": "Saint Vincent and the Grenadines",
     "borderedBy": [],
@@ -2832,7 +2832,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "WS",
     "name": "Samoa and American Samoa",
     "borderedBy": [],
@@ -2846,7 +2846,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AS",
     "name": "American Samoa",
     "borderedBy": [],
@@ -2860,7 +2860,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SM",
     "name": "San Marino",
     "borderedBy": [{ "code": "IT" }],
@@ -2874,7 +2874,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ST",
     "name": "Sao Tome and Principe",
     "borderedBy": [],
@@ -2888,7 +2888,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SA",
     "name": "Saudi Arabia",
     "borderedBy": [
@@ -2910,7 +2910,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SN",
     "name": "Senegal",
     "borderedBy": [
@@ -2930,7 +2930,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "RS",
     "name": "Serbia",
     "borderedBy": [
@@ -2953,7 +2953,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SC",
     "name": "Seychelles",
     "borderedBy": [],
@@ -2967,7 +2967,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SL",
     "name": "Sierra Leone",
     "borderedBy": [{ "code": "LR" }, { "code": "GN" }],
@@ -2981,7 +2981,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SG",
     "name": "Singapore",
     "borderedBy": [{ "code": "MY" }],
@@ -2995,7 +2995,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SK",
     "name": "Slovakia",
     "borderedBy": [
@@ -3015,7 +3015,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SI",
     "name": "Slovenia",
     "borderedBy": [
@@ -3034,7 +3034,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SB",
     "name": "Solomon Islands",
     "borderedBy": [],
@@ -3048,7 +3048,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SO",
     "name": "Somalia",
     "borderedBy": [{ "code": "DJ" }, { "code": "ET" }, { "code": "KE" }],
@@ -3062,7 +3062,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ZA",
     "name": "South Africa",
     "borderedBy": [
@@ -3083,7 +3083,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SS",
     "name": "South Sudan",
     "borderedBy": [
@@ -3104,7 +3104,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GS",
     "name": "South Georgia and the South Sandwich Islands",
     "borderedBy": [],
@@ -3118,7 +3118,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ES",
     "name": "Spain",
     "borderedBy": [
@@ -3137,7 +3137,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "LK",
     "name": "Sri Lanka",
     "borderedBy": [],
@@ -3151,7 +3151,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SD",
     "name": "Sudan",
     "borderedBy": [
@@ -3173,7 +3173,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "PS",
     "name": "State of Palestine",
     "borderedBy": [{ "code": "IL" }, { "code": "EG" }, { "code": "JO" }],
@@ -3187,7 +3187,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SR",
     "name": "Suriname",
     "borderedBy": [{ "code": "GF" }, { "code": "GY" }, { "code": "BR" }],
@@ -3201,7 +3201,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SJ",
     "name": "Svalbard and Jan Mayen",
     "borderedBy": [],
@@ -3215,7 +3215,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SE",
     "name": "Sweden",
     "borderedBy": [{ "code": "NO" }, { "code": "FI" }],
@@ -3229,7 +3229,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "CH",
     "name": "Switzerland",
     "borderedBy": [
@@ -3249,7 +3249,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "SY",
     "name": "Syria",
     "borderedBy": [
@@ -3269,7 +3269,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TW",
     "name": "Taiwan, Province of China",
     "borderedBy": [],
@@ -3283,7 +3283,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TJ",
     "name": "Tajikistan",
     "borderedBy": [
@@ -3302,7 +3302,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TZ",
     "name": "Tanzania",
     "borderedBy": [
@@ -3325,7 +3325,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TH",
     "name": "Thailand",
     "borderedBy": [
@@ -3344,7 +3344,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TL",
     "name": "Timor-Leste",
     "borderedBy": [{ "code": "ID" }],
@@ -3358,7 +3358,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TG",
     "name": "Togo",
     "borderedBy": [{ "code": "GH" }, { "code": "BJ" }, { "code": "BF" }],
@@ -3372,7 +3372,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TK",
     "name": "Tokelau",
     "borderedBy": [],
@@ -3386,7 +3386,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TO",
     "name": "Tonga",
     "borderedBy": [],
@@ -3400,7 +3400,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TT",
     "name": "Trinidad and Tobago",
     "borderedBy": [],
@@ -3414,7 +3414,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TN",
     "name": "Tunisia",
     "borderedBy": [{ "code": "DZ" }, { "code": "LY" }],
@@ -3428,7 +3428,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TR",
     "name": "Turkey",
     "borderedBy": [
@@ -3451,7 +3451,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TM",
     "name": "Turkmenistan",
     "borderedBy": [
@@ -3470,7 +3470,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TC",
     "name": "Turks and Caicos Islands",
     "borderedBy": [],
@@ -3484,7 +3484,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "TV",
     "name": "Tuvalu",
     "borderedBy": [],
@@ -3498,7 +3498,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "UG",
     "name": "Uganda",
     "borderedBy": [
@@ -3518,7 +3518,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "UA",
     "name": "Ukraine",
     "borderedBy": [
@@ -3540,7 +3540,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "AE",
     "name": "United Arab Emirates",
     "borderedBy": [{ "code": "OM" }, { "code": "SA" }, { "code": "QA" }],
@@ -3554,7 +3554,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "GB",
     "name": "United Kingdom",
     "borderedBy": [{ "code": "IE" }],
@@ -3568,7 +3568,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "US",
     "name": "United States",
     "borderedBy": [{ "code": "MX" }, { "code": "CA" }],
@@ -3582,7 +3582,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "UM",
     "name": "United States Minor Outlying Islands",
     "borderedBy": [],
@@ -3596,7 +3596,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "UY",
     "name": "Uruguay",
     "borderedBy": [{ "code": "BR" }, { "code": "AR" }],
@@ -3610,7 +3610,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "UZ",
     "name": "Uzbekistan",
     "borderedBy": [
@@ -3631,7 +3631,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VU",
     "name": "Vanuatu",
     "borderedBy": [],
@@ -3645,7 +3645,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VE",
     "name": "Venezuela",
     "borderedBy": [{ "code": "CO" }, { "code": "BR" }, { "code": "GY" }],
@@ -3659,7 +3659,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VN",
     "name": "Viet Nam",
     "borderedBy": [{ "code": "CN" }, { "code": "LA" }, { "code": "KH" }],
@@ -3673,7 +3673,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VG",
     "name": "Virgin Islands, British",
     "borderedBy": [],
@@ -3687,7 +3687,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "VI",
     "name": "Virgin Islands, U.S.",
     "borderedBy": [],
@@ -3701,7 +3701,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "WF",
     "name": "Wallis and Futuna",
     "borderedBy": [],
@@ -3715,7 +3715,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "EH",
     "name": "Western Sahara",
     "borderedBy": [{ "code": "MA" }, { "code": "MR" }],
@@ -3729,7 +3729,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "YE",
     "name": "Yemen",
     "borderedBy": [{ "code": "OM" }, { "code": "SA" }],
@@ -3743,7 +3743,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ZM",
     "name": "Zambia",
     "borderedBy": [
@@ -3766,7 +3766,7 @@
     "unrest": 0
   },
   {
-    "loadType": "country",
+    "loadType": "organization",
     "code": "ZW",
     "name": "Zimbabwe",
     "borderedBy": [

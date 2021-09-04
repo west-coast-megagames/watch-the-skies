@@ -3,7 +3,7 @@
     "model": "Squad",
     "name": "FFG Raid Squad 1",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Raid"
   },
@@ -11,7 +11,7 @@
     "model": "Squad",
     "name": "FFG Raid Squad 2",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Raid"
   },
@@ -19,7 +19,7 @@
     "model": "Squad",
     "name": "FFG Raid Squad 3",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Raid"
   },
@@ -27,7 +27,7 @@
     "model": "Squad",
     "name": "FFG Assault Squad 1",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Assault"
   },
@@ -35,7 +35,7 @@
     "model": "Squad",
     "name": "FFG Assault Squad 2",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Assault"
   },
@@ -43,7 +43,7 @@
     "model": "Squad",
     "name": "FFG Assault Squad 3",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Assault"
   },
@@ -51,7 +51,7 @@
     "model": "Squad",
     "name": "FFG Infiltration Squad 1",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Infiltration"
   },
@@ -59,7 +59,7 @@
     "model": "Squad",
     "name": "FFG Infiltration Squad 2",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Infiltration"
   },
@@ -67,7 +67,7 @@
     "model": "Squad",
     "name": "FFG Infiltration Squad 3",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Infiltration"
   },
@@ -75,7 +75,7 @@
     "model": "Squad",
     "name": "FFG Envoy Squad 1",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Envoy"
   },
@@ -83,7 +83,7 @@
     "model": "Squad",
     "name": "FFG Envoy Squad 2",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Envoy"
   },
@@ -91,7 +91,7 @@
     "model": "Squad",
     "name": "FFG Envoy Squad 3",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Envoy"
   },
@@ -99,7 +99,7 @@
     "model": "Squad",
     "name": "FFG Science Squad 1",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Science"
   },
@@ -107,7 +107,7 @@
     "model": "Squad",
     "name": "FFG Science Squad 2",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBB",
     "type": "Science"
   },
@@ -115,7 +115,7 @@
     "model": "Squad",
     "name": "FFG Science Squad 3",
     "team": "FFG",
-    "country": "F1",
+    "organization": "F1",
     "origin": "FFGBA",
     "type": "Science"
   }
