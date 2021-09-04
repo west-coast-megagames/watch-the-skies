@@ -4,7 +4,7 @@ import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal, Butto
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
 import AccountGraph from '../../../components/common/GraphAccounts';
 import  socket  from '../../../socket';
-import { getNational } from '../../../store/entities/teams';
+import { getMyTeam, getNational } from '../../../store/entities/teams';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -25,6 +25,16 @@ const Agreements = (props) => {
 		setAccount(props.accounts[accountIndex]);
 	};
 
+	const getButton = (type, otherTeam) => {
+		console.log(type)
+		if (props.team.agreements.some(el => el.with === otherTeam.shortName && el.type === type)) {
+			return (<Button size='sm' color='red' onClick={() => socket.emit('request', { route: 'governance', action: 'treaty', data: { approver: props.team._id, approved: otherTeam.shortName, type} })}>Revoke Agreement</Button>);
+
+		}
+		else 
+			return (<Button onClick={() => socket.emit('request', { route: 'governance', action: 'treaty', data: { approver: props.team._id, approved: otherTeam.shortName, type} })}>Approve Agreement</Button>);
+}
+
 	const handleIt = () => {
 		let data = {
 
@@ -44,12 +54,28 @@ const Agreements = (props) => {
 					height={document.documentElement.clientHeight * 0.80}
           data={ props.natTeams }
       >
-      <Column  flexGrow={2}>
+      <Column style={{ textAlign: 'left' }} flexGrow={2}>
           <HeaderCell>Nation</HeaderCell>
-          <Cell style={{ textAlign: 'left' }} dataKey='name' />
+          <Cell  dataKey='name' />
       </Column>
 
+			<Column flexGrow={1} >
+        <HeaderCell>Open Borders</HeaderCell>
+        <Cell>
+          {rowData => {
+            return getButton('Open Borders', rowData)
+          }}
+        </Cell>
+      </Column>
 
+			<Column flexGrow={1} >
+        <HeaderCell>Science</HeaderCell>
+        <Cell>
+          {rowData => {
+            return getButton('Science', rowData)
+          }}
+        </Cell>
+      </Column>
 
       </Table>
 			<ButtonGroup>
@@ -60,7 +86,7 @@ const Agreements = (props) => {
 }
 
 const mapStateToProps = state => ({
-	team: state.auth.team,
+	team: getMyTeam(state),
 	natTeams: getNational(state)
 });
 

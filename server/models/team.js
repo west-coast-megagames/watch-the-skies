@@ -26,7 +26,7 @@ const AgreementSchema = new Schema({
 		type: String,
 		enum: ['Defense', 'Base', 'Science', 'Open Borders']
 	},
-	with: { type: ObjectId, ref: 'Team' } // or some other name probably
+	with: { type: String } // or some other name probably
 });
 
 const TeamSchema = new Schema({
