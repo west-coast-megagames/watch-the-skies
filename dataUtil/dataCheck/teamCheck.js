@@ -46,8 +46,8 @@ async function chkTeam(runFlag) {
 			logger.error(`serviceRecord missing for Team ${team.name} ${team._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(team, 'treaties')) {
-			logger.error(`treaties missing for Team ${team.name} ${team._id}`);
+		if (!Object.prototype.hasOwnProperty.call(team, 'agreements')) {
+			logger.error(`agreements missing for Team ${team.name} ${team._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(team, 'name')) {
