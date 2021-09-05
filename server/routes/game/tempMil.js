@@ -37,8 +37,11 @@ router.patch('/resethealth', async function (req, res) {
 router.patch('/resetsites', async function (req, res) {
 	for await (const site of Site.find()) {
 		console.log(`Resetting ${site.name}`);
-		site.status.warzone = false;
-		site.status.occupied = false;
+		for (var i = 0; i < site.status.length; i++) {
+			if ((site.status[i] === 'warzone') || (site.status[i] === 'occupied')) {
+					const spliced = site.status.splice(i, 1);
+			}
+		}
 		site.occupier = await Team.findOne({ code: 'TCN' });
 		await site.save();
 	}

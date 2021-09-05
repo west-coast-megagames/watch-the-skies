@@ -11,7 +11,7 @@ class InfoSite extends Component {
 
   render() {
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, coastal, capital } = this.props.site;
+      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = this.props.site;
     
       return(
         <Drawer
@@ -30,11 +30,11 @@ class InfoSite extends Component {
 						<FlexboxGrid.Item colspan={12}>
 							<b>Status:</b>
 							<TagGroup>
-								{ !status.occupied && <Tag color='green'>Un-Occupied</Tag> }
-								{ status.occupied && <Tag color='red'>Occupied</Tag> }
-								{ status.warzone && <Tag color='orange'>Warzone</Tag> }
-								{ coastal && <Tag color='blue'>Costal</Tag> }
-								{ capital && <Tag color='violet'>Capital</Tag> }
+								{ !status.some('occupied') && <Tag color='green'>Un-Occupied</Tag> }
+								{ status.some('occupied') && <Tag color='red'>Occupied</Tag> }
+								{ status.some('warzone') && <Tag color='orange'>Warzone</Tag> }
+								{ tags.some('coastal') && <Tag color='blue'>Costal</Tag> }
+								{ tags.some('capital') && <Tag color='violet'>Capital</Tag> }
 							</TagGroup>									
 						</FlexboxGrid.Item>
 						<hr />
@@ -46,7 +46,7 @@ class InfoSite extends Component {
 							<p><b>Zone:</b> {`${zone.name}`}</p>
 							<p><b>Unrest:</b> 0</p> 
             </FlexboxGrid.Item>
-						{status.occupied && <FlexboxGrid.Item colspan={12}>
+						{status.some('occupied') && <FlexboxGrid.Item colspan={12}>
 							<p><b>Occupier:</b> {`${occupier.shortName}`}</p>
             </FlexboxGrid.Item>}
             </FlexboxGrid>

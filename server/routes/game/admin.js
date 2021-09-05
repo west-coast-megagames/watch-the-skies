@@ -138,7 +138,7 @@ router.patch('/load/tech/seed', async function (req, res) {
 
 router.get('/test', async function (req, res) {
 	let count = 0;
-	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
+	for (const site of await Site.find({ 'status': 'warzone', 'hidden': false })) {
 		console.log(site);
 		count++;
 		if (site.subType === 'Point of Interest') {
@@ -146,8 +146,12 @@ router.get('/test', async function (req, res) {
 			console.log('Site hidden');
 		}
 		else {
-			site.stats.warzone = false;
-			console.log('Site De-Warzoned');
+			for (var i = 0; i < site.status.length; i++) {
+        if (site.status[i] === 'warzone') {
+            const spliced = site.status.splice(i, 1);
+        }
+      }
+	  	console.log('Site De-Warzoned');
 		}
 		await site.save();
 	}

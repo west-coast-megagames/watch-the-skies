@@ -38,7 +38,9 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('City', 'Crash', 'Point of Interest')
+			subType: Joi.string().valid('City', 'Crash', 'Point of Interest'),
+			tags: Joi.array().items(Joi.string().valid('coastal', 'capital')),
+			status: Joi.array().items(Joi.string().valid('public', 'warzone', 'secret', 'occupied'))
 		});
 
 		geoDMSSchema = Joi.object({
@@ -57,7 +59,8 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station')
+			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station'),
+			status: Joi.array().items(Joi.string().valid('damaged', 'destroyed', 'upgrade', 'repair', 'secret'))
 		});
 
 		break;
@@ -111,22 +114,10 @@ const GroundSite = Site.discriminator(
 			latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
 			longDecimal: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
 		},
-		coastal: {
-			type: Boolean,
-			default: false
-		},
-		capital: {
-			type: Boolean,
-			default: false
-		},
+		tags: [ {type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },
 		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
-		status: {
-			public: { type: Boolean, default: false },
-			warzone: { type: Boolean, default: false },
-			secret: { type: Boolean, default: false },
-			occupied: { type: Boolean, default: false }
-		}
+		status: [ {type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
 	})
 );
 
@@ -141,13 +132,7 @@ const SpaceSite = Site.discriminator(
 			maxlength: 50,
 			enum: ['Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station']
 		},
-		status: {
-			damaged: { type: Boolean, default: false },
-			destroyed: { type: Boolean, default: false },
-			upgrade: { type: Boolean, default: false },
-			repair: { type: Boolean, default: false },
-			secret: { type: Boolean }
-		}
+		status: [ {type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']} ]
 	})
 );
 

@@ -118,12 +118,8 @@ async function chkSite(runFlag) {
 			}
 
 			if (site.type === 'Ground') {
-				if (!Object.prototype.hasOwnProperty.call(site, 'coastal')) {
-					logger.error(`coastal missing for Site ${site.name} ${site._id}`);
-				}
-
-				if (!Object.prototype.hasOwnProperty.call(site, 'capital')) {
-					logger.error(`capital missing for Site ${site.name} ${site._id}`);
+				if (!Object.prototype.hasOwnProperty.call(site, 'tags')) {
+					logger.error(`tags missing for Site ${site.name} ${site._id}`);
 				}
 
 				if (!Object.prototype.hasOwnProperty.call(site, 'geoDMS')) {
@@ -224,18 +220,6 @@ async function chkSite(runFlag) {
 						`status missing for ${site.subType} Site ${site.name} ${site._id}`
 					);
 				}
-				else {
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'public')) {
-						logger.error(
-							`status.public missing for ${site.subType} Site ${site.name} ${site._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'secret')) {
-						logger.error(
-							`status.secret missing for ${site.subType} Site ${site.name} ${site._id}`
-						);
-					}
-				}
 			}
 
 			if (site.type === 'Space') {
@@ -243,33 +227,6 @@ async function chkSite(runFlag) {
 					logger.error(
 						`status missing for Space Site ${site.name} ${site._id}`
 					);
-				}
-				else {
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'damaged')) {
-						logger.error(
-							`status.damaged missing for Space Site ${site.name} ${site._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'destroyed')) {
-						logger.error(
-							`status.destroyed missing for Space Site ${site.name} ${site._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'upgrade')) {
-						logger.error(
-							`status.upgrade missing for Space Site ${site.name} ${site._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'repair')) {
-						logger.error(
-							`status.repair missing for Space Site ${site.name} ${site._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(site.status, 'secret')) {
-						logger.error(
-							`status.secret missing for Space Site ${site.name} ${site._id}`
-						);
-					}
 				}
 			}
 		}

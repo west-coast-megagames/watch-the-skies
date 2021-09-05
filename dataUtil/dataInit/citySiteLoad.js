@@ -122,6 +122,15 @@ async function newCity(cData, rCounts) {
 		longDecimal: cData.longDecimal
 	};
 	CitySite.serviceRecord = [];
+	CitySite.tags = [];
+	CitySite.status = [];
+
+	if (cData.coastal) {
+		CitySite.tags.push('coastal');
+	}
+	if (cData.capital) {
+		CitySite.tags.push('capital');
+	}
 
 	const team = await axios.get(`${gameServer}init/initTeams/code/${cData.teamCode}`);
 	const tData = team.data;
@@ -154,8 +163,8 @@ async function newCity(cData, rCounts) {
 		await axios.post(`${gameServer}api/sites`, CitySite);
 		++rCounts.loadCount;
 		logger.debug(`${CitySite.name} add saved to City Site collection.`);
-		if (CitySite.capital) {
-			await axios.patch(`${gameServer}api/Organizations/setCapital/${CitySite.organization}`);
+		if (cData.capital) {
+			await axios.patch(`${gameServer}api/organizations/setCapital/${CitySite.organization}`);
 		}
 	}
 	catch (err) {

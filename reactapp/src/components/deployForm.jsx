@@ -90,17 +90,17 @@ class DeployMilitary extends Component {
 							<FlexboxGrid>
 								<FlexboxGrid.Item colspan={12}>
 									<h4>{ this.state.target.name }</h4> 	
-									{!this.state.target.status.occupied && <p>{this.state.target.team.name}</p>	}			
-									{ this.state.target.status.occupied && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
+									{!this.state.target.status.some('occupied') && <p>{this.state.target.team.name}</p>	}			
+									{ this.state.target.status.some('occupied') && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
 								</FlexboxGrid.Item>
 								<FlexboxGrid.Item colspan={12}>
 									<b>Status:</b>
 									<TagGroup>
-										{ !this.state.target.status.occupied && <Tag color='green'>Un-Occupied</Tag> }
-										{ this.state.target.status.occupied && <Tag color='red'>Occupied</Tag> }
-										{ this.state.target.status.warzone && <Tag color='orange'>Warzone</Tag> }
-										{ this.state.target.coastal && <Tag color='blue'>Costal</Tag> }
-										{ this.state.target.capital && <Tag color='violet'>Capital</Tag> }
+										{ !this.state.target.status.some('occupied') && <Tag color='green'>Un-Occupied</Tag> }
+										{ this.state.target.status.some('occupied') && <Tag color='red'>Occupied</Tag> }
+										{ this.state.target.status.some('warzone') && <Tag color='orange'>Warzone</Tag> }
+										{ this.state.target.tags.some('coastal') && <Tag color='blue'>Costal</Tag> }
+										{ this.state.target.tags.some('capital') && <Tag color='violet'>Capital</Tag> }
 									</TagGroup>									
 								</FlexboxGrid.Item>
 							</FlexboxGrid>
@@ -149,7 +149,7 @@ class DeployMilitary extends Component {
 						}
 						<h6>Select Units</h6>
 						{ this.state.target && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
-								data={ this.state.target.coastal ? [...this.state.fleets, ...this.state.corps] : this.state.corps }
+								data={ this.state.target.tags.some('coastal') ? [...this.state.fleets, ...this.state.corps] : this.state.corps }
 								onChange={this.handleUnits}
 								valueKey='_id'
 								labelKey='info'

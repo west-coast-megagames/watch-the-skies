@@ -110,9 +110,26 @@ async function newSpacecraft(sData, rCounts) {
 	SpaceSite.serviceRecord = [];
 
 	SpaceSite.subType = sData.shipType;
-	SpaceSite.status = sData.status;
+	SpaceSite.status = [];
 	SpaceSite.hidden = sData.hidden;
 	SpaceSite.facilities = [];
+
+	// current valid status to push   ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']
+  if (sData.status.damaged) {
+		SpaceSite.tags.push('damaged');
+	}
+	if (sData.status.destroyed) {
+		SpaceSite.tags.push('destroyed');
+	}
+	if (sData.status.upgrade) {
+		SpaceSite.tags.push('upgrade');
+	}
+	if (sData.status.repair) {
+		SpaceSite.tags.push('repair');
+	}
+	if (sData.status.secret) {
+		SpaceSite.tags.push('secret');
+	}
 
 	if (sData.teamCode) {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${sData.teamCode}`);

@@ -212,7 +212,7 @@ async function resolveBattle(attackers, defenders) {
 async function runMilitary() {
 	let report = '';
 	let data = {};
-	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
+	for (const site of await Site.find({ 'status': 'warzone' })) { // find all the sites that are a warzone
 		// collect all the attackers
 		report = '';
 		const leadArmy = {
@@ -238,7 +238,7 @@ async function runMilitary() {
 
 		let defenders = [];
 		let attackers = [];
-		if (site.status.occupied === true) {
+		if (site.status.some('occupied')) {
 			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && el.status.destroyed === false);
 			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && el.status.destroyed === false);
 		}
@@ -271,8 +271,16 @@ async function runMilitary() {
 			report += 'The Attackers are victorious!\n';
 			militaryReport.winner = 'The Attackers are victorious';
 			let liberated = false;
-			site.status.warzone = false;
-			site.status.occupied = true;
+			if (site.status.some('warzone')) {
+				for (var i = 0; i < site.status.length; i++) {
+					if (site.status[i] === 'warzone') {
+							const spliced = site.status.splice(i, 1);
+					}
+				}
+			}
+			if (!site.status.some('occupied')) {
+			  site.status.push('occupied');
+			}
 
 			// determine who now owns the site.
 			for (const team of attackerTeams) {
@@ -293,6 +301,14 @@ async function runMilitary() {
 			if (site.occupier.toHexString() === site.team.toHexString()) {
 				militaryReport.winner += ', and the site was liberated';
 				site.status.occupied = false;
+
+				if (site.status.some('occupied')) {
+					for (var i = 0; i < site.status.length; i++) {
+						if (site.status[i] === 'occupied') {
+								const spliced = site.status.splice(i, 1);
+						}
+					}
+				}
 				liberated = true;
 			}
 
@@ -327,7 +343,14 @@ async function runMilitary() {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			militaryReport.winner = 'The Defenders are victorious';
-			site.status.warzone = false;
+			if (site.status.some('warzone')) {
+				for (var i = 0; i < site.status.length; i++) {
+					if (site.status[i] === 'warzone') {
+							const spliced = site.status.splice(i, 1);
+					}
+				}
+			}
+
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {
 					upgrade = await Upgrade.findById(upgrade);

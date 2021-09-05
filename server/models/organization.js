@@ -55,7 +55,8 @@ OrganizationSchema.methods.validateOrganization = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(3).max(75).required(),
 			code: Joi.string().min(2).max(2).required().uppercase(),
-			unrest: Joi.number().min(0).max(250)
+			unrest: Joi.number().min(0).max(250),
+			tags: Joi.array().items(Joi.string().valid('coastal'))
 		});
 		for await (const bBy of this.borderedBy) {
 			await validOrganization(bBy);

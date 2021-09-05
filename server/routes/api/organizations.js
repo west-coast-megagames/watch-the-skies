@@ -151,7 +151,7 @@ router.patch('/setCapital/:id', validateObjectId, async function (req, res) {
 	const organizationId = req.params.id;
 	try {
 
-		const capital = await Site.findOne({ 'type': 'Ground', 'subType': 'City', 'organization': organizationId, 'capital': true });
+		const capital = await Site.findOne({ 'type': 'Ground', 'subType': 'City', 'organization': organizationId, 'tags': 'capital' });
 
 		if (capital) {
 			const organization = await Organization.findByIdAndUpdate(organizationId,
