@@ -30,11 +30,11 @@ class InfoSite extends Component {
 						<FlexboxGrid.Item colspan={12}>
 							<b>Status:</b>
 							<TagGroup>
-								{ !status.some('occupied') && <Tag color='green'>Un-Occupied</Tag> }
-								{ status.some('occupied') && <Tag color='red'>Occupied</Tag> }
-								{ status.some('warzone') && <Tag color='orange'>Warzone</Tag> }
-								{ tags.some('coastal') && <Tag color='blue'>Costal</Tag> }
-								{ tags.some('capital') && <Tag color='violet'>Capital</Tag> }
+								{ !status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
+								{ status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
+								{ status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
+								{ tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
+								{ tags.some(el => el === 'capital') && <Tag color='violet'>Capital</Tag> }
 							</TagGroup>									
 						</FlexboxGrid.Item>
 						<hr />
@@ -46,7 +46,7 @@ class InfoSite extends Component {
 							<p><b>Zone:</b> {`${zone.name}`}</p>
 							<p><b>Unrest:</b> 0</p> 
             </FlexboxGrid.Item>
-						{status.some('occupied') && <FlexboxGrid.Item colspan={12}>
+						{status.some(el => el === 'occupied') && <FlexboxGrid.Item colspan={12}>
 							<p><b>Occupier:</b> {`${occupier.shortName}`}</p>
             </FlexboxGrid.Item>}
             </FlexboxGrid>

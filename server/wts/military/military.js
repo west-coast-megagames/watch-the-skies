@@ -238,7 +238,7 @@ async function runMilitary() {
 
 		let defenders = [];
 		let attackers = [];
-		if (site.status.some('occupied')) {
+		if (site.status.some(el => el === 'occupied')) {
 			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && el.status.destroyed === false);
 			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && el.status.destroyed === false);
 		}
@@ -278,7 +278,7 @@ async function runMilitary() {
 					}
 				}
 			}
-			if (!site.status.some('occupied')) {
+			if (!site.status.some(el => el === 'occupied')) {
 			  site.status.push('occupied');
 			}
 
@@ -302,7 +302,7 @@ async function runMilitary() {
 				militaryReport.winner += ', and the site was liberated';
 				site.status.occupied = false;
 
-				if (site.status.some('occupied')) {
+				if (site.status.some(el => el === 'occupied')) {
 					for (var i = 0; i < site.status.length; i++) {
 						if (site.status[i] === 'occupied') {
 								const spliced = site.status.splice(i, 1);
@@ -343,7 +343,7 @@ async function runMilitary() {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			militaryReport.winner = 'The Defenders are victorious';
-			if (site.status.some('warzone')) {
+			if (site.status.some(el => el === 'warzone')) {
 				for (var i = 0; i < site.status.length; i++) {
 					if (site.status[i] === 'warzone') {
 							const spliced = site.status.splice(i, 1);
