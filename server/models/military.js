@@ -113,7 +113,7 @@ MilitarySchema.methods.recall = async function () {
 			.populate('site');
 
 		this.status.deployed = false;
-		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
 		this.organization = home.site.organization;
 		this.zone = home.site.zone;

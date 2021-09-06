@@ -45,12 +45,12 @@ SiteSchema.methods.validateSite = async function () {
 
 		geoDMSSchema = Joi.object({
 			latDMS: Joi.string().min(7).max(13),
-			longDMS: Joi.string().min(7).max(14)
+			lngDMS: Joi.string().min(7).max(14)
 		});
 
 		geoDecimalSchema = Joi.object({
-			latDecimal: Joi.number().min(-90).max(90),
-			longDecimal: Joi.number().min(-180).max(180)
+			lat: Joi.number().min(-90).max(90),
+			lng: Joi.number().min(-180).max(180)
 		});
 
 		break;
@@ -108,11 +108,11 @@ const GroundSite = Site.discriminator(
 		morale: { type: Number, min: 0, max: 100, default: 50 },
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
-			longDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
+			lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
 		},
 		geoDecimal: {
-			latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
-			longDecimal: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
+			lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
+			lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
 		},
 		tags: [{ type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },

@@ -28,16 +28,16 @@ async function generateCrash (salvage, site) {
 	salvageDebugger(currentSite);
 	salvageDebugger(salvage);
 
-	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
+	const newDecimal = randomCords(currentSite.geoDecimal.lat, currentSite.geoDecimal.lng);
 
 	const newNewDecimal = {
-		latDecimal: newDecimal.lat,
-		longDecimal: newDecimal.lng
+		lat: newDecimal.lat,
+		lng: newDecimal.lng
 	};
 
 	const newDMS = {
 		latDMS: geo.convertToDms(newDecimal.lat, false),
-		longDMS: geo.convertToDms(newDecimal.lng, true)
+		lngDMS: geo.convertToDms(newDecimal.lng, true)
 	};
 
 	const c0de = await genSiteCode();

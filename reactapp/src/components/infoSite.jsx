@@ -40,7 +40,7 @@ class InfoSite extends Component {
 						<hr />
             <FlexboxGrid.Item colspan={12}>
 							<p><b>Organization:</b> {`${organization.name}`}</p>
-              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.longDMS}`}</p>
+              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.lngDMS}`}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
 							<p><b>Zone:</b> {`${zone.name}`}</p>

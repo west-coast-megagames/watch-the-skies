@@ -141,7 +141,7 @@ class DeployMilitary extends Component {
 								<h6>Your facilities closest to {this.state.target.name} </h6>
 								<List>
 									{ this.props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
-										{facility.name} - {`${Math.trunc(distance(this.props.target.geoDecimal.latDecimal, this.props.target.geoDecimal.longDecimal, facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal))}km away`}
+										{facility.name} - {`${Math.trunc(distance(this.props.target.geoDecimal.lat, this.props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
 									</List.Item>))}
 								</List>
 								<Divider />
@@ -172,7 +172,7 @@ class DeployMilitary extends Component {
 			let corps = [];
 			for (let unit of this.props.military) {
 				if (this.state.team === unit.team.name) { // why
-					if (deployType !== 'invade' || distance(geoDecimal.latDecimal, geoDecimal.longDecimal, unit.site.geoDecimal.latDecimal, unit.site.geoDecimal.longDecimal) < 1000) {
+					if (deployType !== 'invade' || distance(geoDecimal.lat, geoDecimal.lng, unit.site.geoDecimal.lat, unit.site.geoDecimal.lng) < 1000) {
 						let unitData = {
 							name: unit.name,
 							checkZone: unit.site.name,

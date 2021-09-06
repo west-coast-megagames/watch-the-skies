@@ -28,12 +28,12 @@ router.put('/', async (req, res) => {
 	if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
 		target = await Aircraft.findById(target).populate('upgrades').populate('site');
 		aircraft.site = target.site._id;
-		aircraft.location = randomCords(target.site.geoDecimal.latDecimal, target.site.geoDecimal.longDecimal);
+		aircraft.location = randomCords(target.site.geoDecimal.lat, target.site.geoDecimal.lng);
 	}
 	else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
 		target = await Site.findById(target);
 		aircraft.site = target._id;
-		aircraft.location = randomCords(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal);
+		aircraft.location = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 	}
 
 	if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Air');

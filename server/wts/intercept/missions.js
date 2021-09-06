@@ -42,14 +42,14 @@ async function start(aircraft, target, mission) {
 	else {
 		target.model === 'Aircraft' || target.model === 'Facility' ? targetGeo = target.site.geoDecimal : targetGeo = target.geoDecimal; // Assign targets geo position
 
-		const { latDecimal, longDecimal } = origin.site.geoDecimal; // Destructure aircrafts launch position
+		const { lat, lng } = origin.site.geoDecimal; // Destructure aircrafts launch position
 
 		aircraft = aircraft._id; // Saves just the _ID of the aircraft
 		target = target._id; // Saves just the _ID of the target
 
 		missionDebugger(targetGeo);
 		missionDebugger(origin.site.geoDecimal);
-		distance = getDistance(latDecimal, longDecimal, targetGeo.latDecimal, targetGeo.longDecimal); // Get distance to target in KM
+		distance = getDistance(lat, lng, targetGeo.lat, targetGeo.lng); // Get distance to target in KM
 		missionDebugger(`Mission distance ${distance}km`);
 	}
 

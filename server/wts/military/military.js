@@ -431,7 +431,7 @@ async function transferUnit(data) { // for transferring to other facilities as a
 		unit.origin = data.facility;
 		unit.status.action = false;
 
-		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
 		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
@@ -445,7 +445,7 @@ async function transferUnit(data) { // for transferring to other facilities as a
 		unit.status.mission = false;
 		unit.status.ready = false;
 
-		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
 		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
@@ -497,7 +497,7 @@ async function deployUnit(data, type) {
 			update.organization = siteObj.organization._id;
 			update.zone = siteObj.zone._id;
 			update.status.deployed = true;
-			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
+			update.location = randomCords(siteObj.geoDecimal.lat, siteObj.geoDecimal.lng);
 			unitArray.push(update._id);
 			await update.save();
 		}

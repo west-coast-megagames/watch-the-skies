@@ -108,18 +108,18 @@ async function deleteAllCitys() {
 async function newCity(cData, rCounts) {
 
 	// New City(ground) Site here
-	const newLatDMS = convertToDms(cData.latDecimal, false);
-	const newLongDMS = convertToDms(cData.longDecimal, true);
+	const newLatDMS = convertToDms(cData.lat, false);
+	const newLongDMS = convertToDms(cData.lng, true);
 
 	const CitySite = cData;
 	CitySite.type = 'Ground';
 	CitySite.geoDMS = {
 		latDMS: newLatDMS,
-		longDMS: newLongDMS
+		lngDMS: newLongDMS
 	};
 	CitySite.geoDecimal = {
-		latDecimal: cData.latDecimal,
-		longDecimal: cData.longDecimal
+		lat: cData.lat,
+		lng: cData.lng
 	};
 	CitySite.serviceRecord = [];
 	CitySite.tags = [];

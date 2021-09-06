@@ -139,17 +139,17 @@ async function chkSite(runFlag) {
 					}
 
 
-					if (!Object.prototype.hasOwnProperty.call(site.geoDMS, 'longDMS')) {
+					if (!Object.prototype.hasOwnProperty.call(site.geoDMS, 'lngDMS')) {
 						logger.error(
-							`citySite Site ${site.name} ${site._id} has missing geoDMS longDMS ${site.geoDMS.latDMS}`
+							`citySite Site ${site.name} ${site._id} has missing geoDMS lngDMS ${site.geoDMS.latDMS}`
 						);
 					}
 					else if (
-						site.geoDMS.longDMS === '' ||
-              site.geoDMS.longDMS === 'undefined'
+						site.geoDMS.lngDMS === '' ||
+              site.geoDMS.lngDMS === 'undefined'
 					) {
 						logger.error(
-							`citySite Site ${site.name} ${site._id} has an invalid or blankk geoDMS longDMS ${site.geoDMS.longDMS}`
+							`citySite Site ${site.name} ${site._id} has an invalid or blankk geoDMS lngDMS ${site.geoDMS.lngDMS}`
 						);
 					}
 				}
@@ -158,41 +158,41 @@ async function chkSite(runFlag) {
 					logger.error(`geoDecimal missing for Site ${site.name} ${site._id}`);
 				}
 				else {
-					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'latDecimal')) {
+					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'lat')) {
 						logger.error(
-							`citySite Site ${site.name} ${site._id} has missing geoDecimal latDecimal`
+							`citySite Site ${site.name} ${site._id} has missing geoDecimal lat`
 						);
 					}
 					else {
-						if (isNaN(site.geoDecimal.latDecimal)) {
+						if (isNaN(site.geoDecimal.lat)) {
 							logger.error(
-								`Site ${site.name} ${site._id} latDecimal is not a number ${site.geoDecimal.latDecimal}`
+								`Site ${site.name} ${site._id} lat is not a number ${site.geoDecimal.lat}`
 							);
 						}
-						if (site.geoDecimal.latDecimal < -90 ||
-              site.geoDecimal.latDecimal > 90
+						if (site.geoDecimal.lat < -90 ||
+              site.geoDecimal.lat > 90
 						) {
 							logger.error(
-								`Site ${site.name} ${site._id} has an invalid geoDecimal latDecimal ${site.geoDecimal.latDecimal}`
+								`Site ${site.name} ${site._id} has an invalid geoDecimal lat ${site.geoDecimal.lat}`
 							);
 						}
 					}
-					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'longDecimal')) {
+					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'lng')) {
 						logger.error(
-							`citySite Site ${site.name} ${site._id} has missing geoDecimal longDecimal`
+							`citySite Site ${site.name} ${site._id} has missing geoDecimal lng`
 						);
 					}
 					else {
-						if (isNaN(site.geoDecimal.longDecimal)) {
+						if (isNaN(site.geoDecimal.lng)) {
 							logger.error(
-								`Site ${site.name} ${site._id} longDecimal is not a number ${site.geoDecimal.longDecimal}`
+								`Site ${site.name} ${site._id} lng is not a number ${site.geoDecimal.lng}`
 							);
 						}
-						if (site.geoDecimal.longDecimal < -180 ||
-              site.geoDecimal.longDecimal > 180
+						if (site.geoDecimal.lng < -180 ||
+              site.geoDecimal.lng > 180
 						) {
 							logger.error(
-								`Site ${site.name} ${site._id} has an invalid geoDecimal longDecimal ${site.geoDecimal.longDecimal}`
+								`Site ${site.name} ${site._id} has an invalid geoDecimal lng ${site.geoDecimal.lng}`
 							);
 						}
 					}

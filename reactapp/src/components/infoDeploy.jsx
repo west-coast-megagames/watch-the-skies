@@ -90,7 +90,7 @@ class InfoDeploy extends Component {
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}
-              {model === "Site" && <p>{this.props.target.geoDMS.latDMS}, {this.props.target.geoDMS.longDMS}</p>}
+              {model === "Site" && <p>{this.props.target.geoDMS.latDMS}, {this.props.target.geoDMS.lngDMS}</p>}
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24}>
             <br /><br /><br />

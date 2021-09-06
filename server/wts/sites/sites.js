@@ -7,16 +7,16 @@ let count = 0; // How many sites have happened in the game.
 async function generateSite (site) {
 	const currentSite = await Site.findById({ _id: site }).populate('organization');
 
-	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
+	const newDecimal = randomCords(currentSite.geoDecimal.lat, currentSite.geoDecimal.lng);
 
 	const newNewDecimal = {
-		latDecimal: newDecimal.lat,
-		longDecimal: newDecimal.lng
+		lat: newDecimal.lat,
+		lng: newDecimal.lng
 	};
 
 	const newDMS = {
 		latDMS: geo.convertToDms(newDecimal.lat, false),
-		longDMS: geo.convertToDms(newDecimal.lng, true)
+		lngDMS: geo.convertToDms(newDecimal.lng, true)
 	};
 
 	const c0de = await genSiteCode();

@@ -97,5 +97,5 @@ export default slice.reducer; // Reducer Export
 			state => state.info.Site,
 			state => state.entities.facilities.list,
 			state => state.auth.team, 
-			(target, facilities, team) => target ? facilities.filter(facility => facility.team._id === team._id).sort((a, b) => { if (distance(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal, a.site.geoDecimal.latDecimal, a.site.geoDecimal.longDecimal) < distance(target.geoDecimal.latDecimal, target.geoDecimal.longDecimal, b.site.geoDecimal.latDecimal, b.site.geoDecimal.longDecimal)) { return -1 } else { return 1 }  }) : []
+			(target, facilities, team) => target ? facilities.filter(facility => facility.team._id === team._id).sort((a, b) => { if (distance(target.geoDecimal.lat, target.geoDecimal.lng, a.site.geoDecimal.lat, a.site.geoDecimal.lng) < distance(target.geoDecimal.lat, target.geoDecimal.lng, b.site.geoDecimal.lat, b.site.geoDecimal.lng)) { return -1 } else { return 1 }  }) : []
 		);

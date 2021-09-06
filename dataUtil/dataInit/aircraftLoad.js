@@ -197,8 +197,8 @@ async function newAircraftCreate(aData, rCounts) {
 			return;
 		}
 		else {
-			newAircraft.location.lat = sData.geoDecimal.latDecimal;
-			newAircraft.location.lng = sData.geoDecimal.longDecimal;
+			newAircraft.location.lat = sData.geoDecimal.lat;
+			newAircraft.location.lng = sData.geoDecimal.lng;
 		}
 	}
 

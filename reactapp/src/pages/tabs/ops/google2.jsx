@@ -59,7 +59,7 @@ function PrototypeMap(props) {
 
 	// This Errors out on Load, but is just fine when the map is already loaded
 	useEffect(() => {
-		const site = props.groundSites ? props.groundSites.find(el => el.geoDecimal.latDecimal === props.center.lat && el.geoDecimal.longDecimal === props.center.lng ) : undefined;
+		const site = props.groundSites ? props.groundSites.find(el => el.geoDecimal.lat === props.center.lat && el.geoDecimal.lng === props.center.lng ) : undefined;
 		console.log(site)
 		if (site) {
 			setGeo(site.geoDecimal);
@@ -89,7 +89,7 @@ function PrototypeMap(props) {
 			options={options}
 			// onClick={mapClick.event}
 			onLoad={onMapLoad}>
-			{menu && <OverlayView position={{lat: geo.latDecimal, lng: geo.longDecimal}} mapPaneName='floatPane'>
+			{menu && <OverlayView position={{lat: geo.lat, lng: geo.lng}} mapPaneName='floatPane'>
 			<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 			{/* The site clusterer... */}
@@ -125,7 +125,7 @@ function PrototypeMap(props) {
 					title={site.name}
 					key={site._id}
 					clusterer={clusterer}
-					position={{ lat: site.geoDecimal.latDecimal, lng: site.geoDecimal.longDecimal }}
+					position={{ lat: site.geoDecimal.lat, lng: site.geoDecimal.lng }}
 					onClick={()=> {
 						setGeo(site.geoDecimal)
 						setMenu(site);
@@ -177,7 +177,7 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={contact.location}
 						onClick={()=> {
-							setGeo({latDecimal: contact.location.lat, longDecimal: contact.location.lng})
+							setGeo({lat: contact.location.lat, lng: contact.location.lng})
 							setMenu(contact);
 							// setMapClick({event: undefined});
 						}}
@@ -198,7 +198,7 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={unit.location}
 						onClick={()=> {
-							setGeo({latDecimal: unit.location.lat, longDecimal: unit.location.lng})
+							setGeo({lat: unit.location.lat, lng: unit.location.lng})
 							setMenu(unit);
 							// setMapClick({event: undefined});
 						}}
@@ -219,7 +219,7 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={intel.document.location}
 						onClick={()=> {
-							setGeo({latDecimal: intel.document.location.lat, longDecimal: intel.document.location.lng})
+							setGeo({lat: intel.document.location.lat, lng: intel.document.location.lng})
 							setMenu(intel.document);
 							// setMapClick({event: undefined});
 						}}
