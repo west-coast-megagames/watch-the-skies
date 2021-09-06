@@ -114,10 +114,10 @@ const GroundSite = Site.discriminator(
 			latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
 			longDecimal: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
 		},
-		tags: [ {type: String, enum: ['coastal', 'capital']} ],
+		tags: [{ type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },
 		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
-		status: [ {type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
+		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
 	})
 );
 

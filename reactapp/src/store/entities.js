@@ -8,7 +8,7 @@ import articleReducer from './entities/articles';
 import zoneReducer from './entities/zones';
 import militaryReducer from './entities/military';
 import facilityReducer from './entities/facilities';
-import countryReducer from './entities/countries';
+import organizationReducer from './entities/organizations';
 import clockReducer from './entities/clock';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
@@ -31,7 +31,7 @@ export default combineReducers({
   military: militaryReducer,
   facilities: facilityReducer,
 	clock: clockReducer,
-  countries: countryReducer,
+  organizations: organizationReducer,
   research: researchReducer,
 	accounts: accountReducer,
 	blueprints: blueprintReducer,

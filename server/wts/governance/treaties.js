@@ -1,17 +1,9 @@
-
-
 const nexusEvent = require('../../middleware/events/events');
-const { Military } = require('../../models/military');
-const { MilitaryMission } = require('../../models/report');
 const { Team } = require('../../models/team');
-
-
 
 async function treatyCheck(data) {
 	let team = await Team.findById(data.approver).populate('trades');
-	console.log(data.approved)
 	const index = team.agreements.findIndex(el => el.with === data.approved && el.type === data.type)
-	console.log(index)
 	if (index > -1) {
 		console.log(`${team.shortName} removing treaty`);
 		team.agreements.splice(index, 1);
