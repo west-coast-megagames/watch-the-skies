@@ -26,7 +26,6 @@ const Agreements = (props) => {
 	};
 
 	const getButton = (type, otherTeam) => {
-		console.log(type)
 		if (props.team.agreements.some(el => el.with === otherTeam.shortName && el.type === type)) {
 			return (<Button size='sm' color='red' onClick={() => socket.emit('request', { route: 'governance', action: 'treaty', data: { approver: props.team._id, approved: otherTeam.shortName, type} })}>Revoke Agreement</Button>);
 

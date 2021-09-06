@@ -47,7 +47,7 @@ const mapStateToProps = state => ({
     team: state.auth.team,
     sites: state.entities.sites.list,
     zones: state.entities.zones.list,
-    countries: state.entities.countries.list
+    organizations: state.entities.organizations.list
 });
   
 const mapDispatchToProps = dispatch => ({});
