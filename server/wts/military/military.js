@@ -10,6 +10,7 @@ const { Account } = require('../../models/account');
 const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
 const { DeploymentReport } = require('../../models/report');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 async function resolveBattle(attackers, defenders) {
 	let attackerTotal = 0;
@@ -271,16 +272,8 @@ async function runMilitary() {
 			report += 'The Attackers are victorious!\n';
 			militaryReport.winner = 'The Attackers are victorious';
 			let liberated = false;
-			if (site.status.some('warzone')) {
-				for (var i = 0; i < site.status.length; i++) {
-					if (site.status[i] === 'warzone') {
-							const spliced = site.status.splice(i, 1);
-					}
-				}
-			}
-			if (!site.status.some(el => el === 'occupied')) {
-			  site.status.push('occupied');
-			}
+			await clearArrayValue(site.status, 'warzone');
+			await addArrayValue(site.status, 'occupied');
 
 			// determine who now owns the site.
 			for (const team of attackerTeams) {
@@ -302,13 +295,7 @@ async function runMilitary() {
 				militaryReport.winner += ', and the site was liberated';
 				site.status.occupied = false;
 
-				if (site.status.some(el => el === 'occupied')) {
-					for (var i = 0; i < site.status.length; i++) {
-						if (site.status[i] === 'occupied') {
-								const spliced = site.status.splice(i, 1);
-						}
-					}
-				}
+				await clearArrayValue(site.status, 'occupied');
 				liberated = true;
 			}
 
@@ -343,13 +330,8 @@ async function runMilitary() {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			militaryReport.winner = 'The Defenders are victorious';
-			if (site.status.some(el => el === 'warzone')) {
-				for (var i = 0; i < site.status.length; i++) {
-					if (site.status[i] === 'warzone') {
-							const spliced = site.status.splice(i, 1);
-					}
-				}
-			}
+			
+			await clearArrayValue(site.status, 'warzone');
 
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {

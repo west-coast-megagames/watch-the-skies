@@ -4,6 +4,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 const nexusEvent = require('../../middleware/events/events');
+const { clearArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Mongoose Models - Database models
 const { Aircraft } = require('../../models/aircraft');
@@ -146,11 +147,8 @@ router.get('/test', async function (req, res) {
 			console.log('Site hidden');
 		}
 		else {
-			for (var i = 0; i < site.status.length; i++) {
-        if (site.status[i] === 'warzone') {
-            const spliced = site.status.splice(i, 1);
-        }
-      }
+			await clearArrayValue(site.status, 'warzone');
+			
 	  	console.log('Site De-Warzoned');
 		}
 		await site.save();
