@@ -20,13 +20,6 @@ const MilitarySchema = new Schema({
 	origin: { type: ObjectId, ref: 'Facility' },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
-	status: {
-		damaged: { type: Boolean, default: false },
-		deployed: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false },
-	},
 	actions: { type: Number, default: 1 },
 	missions: { type: Number, default: 1 },
 	mission: {
@@ -38,6 +31,14 @@ const MilitarySchema = new Schema({
 	location: {
 		lat: { type: Number },
 		lng: { type: Number }
+	},
+	status: {
+		type: [String],
+		enum: ['damaged', 'deployed', 'destroyed', 'repairing']
+	},
+	tags: { 
+		type: [String],
+		enum: ['secret']
 	}
 });
 
@@ -51,6 +52,7 @@ MilitarySchema.methods.mission = async function () {
 			const account = await Account.find({ name: 'Operations', 'team': this.team });
 			await account.spend({ amount: 1, note: `${this.name} deployed for ${mission.type}`, resource: 'Megabucks' });
 			this.missions -= 1;
+			if (this.)
 			return;
 		} catch (error) {
 			console.log(error);
