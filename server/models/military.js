@@ -7,6 +7,7 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
+const { Account } = require('./account'); // Import of Facility model [Mongoose]
 const randomCords = require('../util/systems/lz');
 
 const MilitarySchema = new Schema({
@@ -28,6 +29,10 @@ const MilitarySchema = new Schema({
 	},
 	actions: { type: Number, default: 1 },
 	missions: { type: Number, default: 1 },
+	mission: {
+		target: { type: ObjectId, ref: 'Site' },
+		type: { type: String, default: 'Garrison', enum: ['Attack', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison']}
+	},
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	location: {
@@ -35,6 +40,31 @@ const MilitarySchema = new Schema({
 		lng: { type: Number }
 	}
 });
+
+// METHOD - Mission
+// IN - N/A | OUT: VOID
+// PROCESS: Checks to see if the UNIT is able to go on the mission, pays the cost.
+MilitarySchema.methods.mission = async function () {
+	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`);
+	else {
+		try {
+			const account = await Account.find({ name: 'Operations', 'team': this.team });
+			await account.spend({ amount: 1, note: `${this.name} deployed for ${mission.type}`, resource: 'Megabucks' });
+			this.missions -= 1;
+			return;
+		} catch (error) {
+			console.log(error);
+	};
+}
+
+// METHOD - Action
+// IN - N/A | OUT: VOID
+// PROCESS: Checks to see if the UNIT can take an action, pays the cost.
+MilitarySchema.methods.mission = async function () {
+	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`);
+	else this.missions -= 1;
+	return;
+}
 
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
