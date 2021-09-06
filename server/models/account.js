@@ -84,7 +84,7 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 	const { resource, amount, note } = transaction;
 
 	try {
-		accountDebugging(`Attempting to deposit ${amount} ${resource} into ${this.name}.`);
+		accountDebugging(`Attempting to withdrawl ${amount} ${resource} from ${this.name}.`);
 		accountDebugging(resource);
 
 		const index = this.resources.findIndex(el => el.type === resource);
@@ -101,6 +101,44 @@ AccountSchema.methods.withdrawal = async function (transaction) {
 		accountDebugging(`Reason: ${note}`);
 
 		await this.report(transaction, transaction.to ? 'Withdrawal' : 'Expense');
+
+		let account = await this.save();
+		account = await account.populateMe();
+
+		nexusEvent.emit('request', 'update', [ account ]); // Notify/Update team via socket-event
+		return account;
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
+};
+
+// METHOD - spend
+// IN - Spend Object { amount, note, resource }
+// OUT: Modified Accounts Object - From the Team Object
+// PROCESS: This method of the Account Model removes the appropriate resource from the account
+AccountSchema.methods.spend = async function (transaction) {
+	const { resource, amount, note } = transaction;
+
+	try {
+		accountDebugging(`Attempting to spend ${amount} ${resource} from ${this.name}.`);
+		accountDebugging(resource);
+
+		const index = this.resources.findIndex(el => el.type === resource);
+		if (index < 0) {
+			throw Error(`Account doesn't currently have a balance of ${resource}`);
+		}
+		else {
+			if (this.resources[index].balance < amount) throw Error(`Less then ${amount} ${resource} in ${this.name}`);
+			this.resources[index].balance -= parseInt(amount);
+			this.markModified('resources');
+		}
+
+		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
+		accountDebugging(`Reason: ${note}`);
+
+		await this.report(transaction, 'spend');
 
 		let account = await this.save();
 		account = await account.populateMe();
