@@ -96,33 +96,6 @@ async function chkMilitary(runFlag) {
 				`status missing for Military ${military.name} ${military._id}`
 			);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'repair')) {
-				logger.error(
-					`status.repair missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Military ${military.name} ${military._id}`
-				);
-			}
-		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'hidden')) {
 			logger.error(
@@ -188,11 +161,6 @@ async function chkMilitary(runFlag) {
 					if (!Object.prototype.hasOwnProperty.call(military.stats, 'globalDeploy')) {
 						logger.error(
 							`stats.globalDeploy missing for Military ${military.name} ${military._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(military.stats, 'invasion')) {
-						logger.error(
-							`stats.invasion missing for Military ${military.name} ${military._id}`
 						);
 					}
 				}

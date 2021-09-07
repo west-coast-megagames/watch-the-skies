@@ -18,6 +18,7 @@ const team = {
   BRZ: 'https://cdn.countryflags.com/thumbs/brazil/flag-square-250.png',
   AUS: 'https://cdn.countryflags.com/thumbs/australia/flag-square-250.png',
   RSA: 'https://cdn.countryflags.com/thumbs/south-africa/flag-square-250.png',
+	none: '/images/xmark.png',
   BNC: BNC_logo,
   GNN: GNN_logo
 };
