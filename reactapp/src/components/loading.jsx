@@ -21,7 +21,7 @@ const LoadingPage = (props) => {
 	}, []);
 
 	if (Math.floor( done.length / sections.length * 100) >= 100) {
-		props.debugTeam(props.entities.teams.list[0]);
+		props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
 		props.finishLoading();
 		history.push('/home');
 	} 
