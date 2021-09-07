@@ -138,7 +138,7 @@ AccountSchema.methods.spend = async function (transaction) {
 		accountDebugging(`${amount} ${resource} withdrawn from ${this.owner}'s ${this.name} account.`);
 		accountDebugging(`Reason: ${note}`);
 
-		await this.report(transaction, 'spend');
+		await this.report(transaction, 'Expense');
 
 		let account = await this.save();
 		account = await account.populateMe();
