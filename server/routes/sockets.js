@@ -9,8 +9,9 @@ const transaction = require('./socket/transactions'); // Import of Socket route 
 const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
 const trade = require('./socket/trade'); // Import of Socket route for WTS Clock controls
 const governance = require('./socket/governance'); // Governance sockets
+const military = require('./socket/military') // Military sockets
 
-const routes = { clock, transaction, trade, governance }; // Route object for routing to various socket routes
+const routes = { clock, governance, military, transaction, trade }; // Route object for routing to various socket routes
 
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
