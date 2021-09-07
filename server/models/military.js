@@ -52,16 +52,16 @@ const MilitarySchema = new Schema({
 MilitarySchema.methods.mission = async function (assignment) {
 	if (!this.status.some(el => el === 'mobilized')) throw new Error(`${this.name} is not mobilized.`) // Checks if the UNIT is mobalized
 	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`); // Checks if the UNIT has a mission availible
+	if (this.site._id !== assignment.target) throw new Error(`${this.name} must be deployed or garrisoned at target site to do a mission.`)
 
 	try {
 		this.missions -= 1; // Reduces the availible missions by 1
-		if (this.site._id.toString() !== assignment.target) this = await this.deploy(assignment.target);
 
-		this.assignment = assignment;
+		this.assignment = assignment; // Sets assignment as current mission
 
-		await this.save();
+		await this.save(); // Saves the UNIT
 		
-		// TODO - Add populate & socket update
+		nexusEvent.emit('request', 'update', [ this ]);
 
 		return this;
 	} catch (error) {
@@ -73,11 +73,15 @@ MilitarySchema.methods.mission = async function (assignment) {
 // IN: Site _id | OUT: VOID
 // PROCESS: Deploys a UNIT to a site.
 MilitarySchema.methods.deploy = async function(site) {
-	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
+	if (this.actions < 1) {
+		if (this.missions < 1) return;
+	}
 	const target = await Site.findById(site).populate('country').populate('zone'); // Finds deployment target in the DB
+	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
+	
 	try {
 		let cost = 0;
-		let distance = getDistance(this.location.latDecimal, this.location.longDecimal, target.geoDecimal.latDecimal, target.geoDecimal.longDecimal); // Get distance to target in KM
+		let distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
 		if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
 		else if (distance > this.range) cost = this.stats.globalDeploy;
 		else if (distance > 0) cost = this.stats.localDeploy;
@@ -87,19 +91,25 @@ MilitarySchema.methods.deploy = async function(site) {
 			this.markModified('status');
 		}
 
-		const account = await Account.find({ name: 'Operations', 'team': this.team }); // Finds the operations account for the owner of the UNIT
-		await account.spend({ amount: cost, note: `${this.name} deployed to ${target.name} for ${mission.type}`, resource: 'Megabucks' }); // Attempt to spend the money to go
+		this.site = target._id;
+		this.country = target.country;
+		this.zone = target.zone;
+		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng)
+	
+		this.location.lat = lat;
+		this.location.lng = lng;
 
-		await account.save();
+		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: cost, note: `${this.name} deployed to ${target.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
 		await this.save();
 
 		// TODO - Add populate & socket update
 		return this;
 	}
 	catch (err) {
-		logger.info('Error:', err.message);
 		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
-			meta: err
+			meta: err.stack
 		});
 	}
 };
@@ -187,6 +197,4 @@ const Corps = Military.discriminator(
 	})
 );
 
-module.exports = {
-	Military, Fleet, Corps
-};
+module.exports = { Military, Fleet, Corps };
