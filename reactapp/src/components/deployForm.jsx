@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button, TagGroup, FlexboxGrid, RadioGroup, Radio, List, ButtonGroup, Loader } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
-import { socket } from '../api';
+import socket from '../socket';
 import distance from '../scripts/range';
 class DeployMilitary extends Component {
 	state = {
@@ -96,11 +96,16 @@ class DeployMilitary extends Component {
 								<FlexboxGrid.Item colspan={12}>
 									<b>Status:</b>
 									<TagGroup>
-										{ !this.state.target.status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
-										{ this.state.target.status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
-										{ this.state.target.status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
-										{ this.state.target.tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
-										{ this.state.target.tags.some(el => el === 'occupied') && <Tag color='violet'>Capital</Tag> }
+										{ this.state.target.status.map((tag, index) => (
+											<Tag key={index} color={ tag === 'occupied' || tag === 'warzone' ? 'red' : 'green'}>
+												<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
+											</Tag>
+										))}
+										{ this.state.target.tags.map((tag, index) => (
+											<Tag key={index} color={ tag === 'coastal' ? 'blue' : tag === 'capital' ? 'yellow' : 'violet'}>
+												<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
+											</Tag>
+										))}
 									</TagGroup>									
 								</FlexboxGrid.Item>
 							</FlexboxGrid>
@@ -208,7 +213,10 @@ class DeployMilitary extends Component {
 		let deployment = { cost, units: mobilization, destination, team };
 
 		try {
-				socket.emit( 'militarySocket', this.state.deployType, deployment);
+			if (this.state.deployType === 'deploy') {
+				socket.emit('request', { route: 'military', action: 'deploy', data: { units: mobilization, destination }});
+			}
+				// socket.emit( 'militarySocket', this.state.deployType, deployment);
 				this.setState({mobilization: [], cost: 0});
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
