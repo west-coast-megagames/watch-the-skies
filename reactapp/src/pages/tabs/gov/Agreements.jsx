@@ -110,12 +110,12 @@ const Agreements = (props) => {
 
 						<Divider vertical />
 						<FlexboxGrid.Item colspan={11}>
-							{thing.team.agreements.some(el => el.with === props.team.shortName && el.type === thing.type) && <div style={{ position: 'relative' }}>				
-								<img src={team[thing.team.code]} alt='failed to load flag' style={img2} ></img>
-								<div style={center} >No Agreeement Approved</div>
-							</div>}
 							{!thing.team.agreements.some(el => el.with === props.team.shortName && el.type === thing.type) && <div style={{ position: 'relative' }}>				
 								<img src={team[thing.team.code]} alt='failed to load flag' style={img} ></img>
+								<div style={center} >No Agreeement Approved</div>
+							</div>}
+							{thing.team.agreements.some(el => el.with === props.team.shortName && el.type === thing.type) && <div style={{ position: 'relative' }}>				
+								<img src={team[thing.team.code]} alt='failed to load flag' style={img2} ></img>
 								<div style={center} >Agreeement Approved</div>
 							</div>}
 						</FlexboxGrid.Item>
