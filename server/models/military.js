@@ -3,6 +3,7 @@ const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCalls');
+const nexusEvent = require('../middleware/events/events');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -103,13 +104,14 @@ MilitarySchema.methods.deploy = async function(site) {
 
 		await this.save();
 
-		// TODO - Add populate & socket update
+		nexusEvent.emit('request', 'update', [ this ]); 
 		return this;
 	}
 	catch (err) {
 		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
 			meta: err.stack
 		});
+		throw err;
 	}
 };
 
