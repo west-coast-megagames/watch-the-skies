@@ -110,9 +110,26 @@ async function newSpacecraft(sData, rCounts) {
 	SpaceSite.serviceRecord = [];
 
 	SpaceSite.subType = sData.shipType;
-	SpaceSite.status = sData.status;
+	SpaceSite.status = [];
 	SpaceSite.hidden = sData.hidden;
 	SpaceSite.facilities = [];
+
+	// current valid status to push   ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']
+  if (sData.status.damaged) {
+		SpaceSite.tags.push('damaged');
+	}
+	if (sData.status.destroyed) {
+		SpaceSite.tags.push('destroyed');
+	}
+	if (sData.status.upgrade) {
+		SpaceSite.tags.push('upgrade');
+	}
+	if (sData.status.repair) {
+		SpaceSite.tags.push('repair');
+	}
+	if (sData.status.secret) {
+		SpaceSite.tags.push('secret');
+	}
 
 	if (sData.teamCode) {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${sData.teamCode}`);
@@ -134,23 +151,23 @@ async function newSpacecraft(sData, rCounts) {
 		return;
 	}
 
-	if (sData.countryCode) {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${sData.countryCode}`);
-		const countryData = country.data;
+	if (sData.organizationCode) {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${sData.organizationCode}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Spacecraft Site Invalid Country: ${sData.name} ${sData.countryCode}`);
+			logger.error(`New Spacecraft Site Invalid Organization: ${sData.name} ${sData.organizationCode}`);
 			return;
 		}
 		else {
-			SpaceSite.country = countryData._id;
+			SpaceSite.organization = organizationData._id;
 		}
 	}
 	else {
 		++rCounts.loadErrCount;
-		logger.error(`New Spacecraft Site Blank Country: ${sData.name} ${sData.countryCode}`);
+		logger.error(`New Spacecraft Site Blank Organization: ${sData.name} ${sData.organizationCode}`);
 		return;
 	}
 

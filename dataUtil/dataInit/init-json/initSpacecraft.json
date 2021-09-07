@@ -6,7 +6,7 @@
     "baseDefenses": true,
     "facilities": [{ "code": "SL-1", "name": "FFG Lab A-1" }],
     "loadout": [],
-    "countryCode": "F1",
+    "organizationCode": "F1",
     "teamCode": "FFG",
     "status": {
       "damaged": false,
@@ -28,7 +28,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "TCN",
     "status": {
       "damaged": false,
@@ -50,7 +50,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "CL",
+    "organizationCode": "CL",
     "teamCode": "TCN",
     "status": {
       "damaged": false,
@@ -72,7 +72,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "status": {
       "damaged": false,
@@ -94,7 +94,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "F1",
+    "organizationCode": "F1",
     "teamCode": "FFG",
     "status": {
       "damaged": false,
@@ -116,7 +116,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
     "status": {
       "damaged": false,
@@ -138,7 +138,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RSA",
     "status": {
       "damaged": false,
@@ -160,7 +160,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "status": {
       "damaged": false,
@@ -182,7 +182,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "status": {
       "damaged": false,
@@ -204,7 +204,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
     "status": {
       "damaged": false,
@@ -226,7 +226,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "IN",
+    "organizationCode": "IN",
     "teamCode": "IND",
     "status": {
       "damaged": false,
@@ -248,7 +248,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
     "status": {
       "damaged": false,
@@ -270,7 +270,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "EG",
+    "organizationCode": "EG",
     "teamCode": "EPT",
     "status": {
       "damaged": false,
@@ -292,7 +292,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "status": {
       "damaged": false,
@@ -314,7 +314,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "BR",
+    "organizationCode": "BR",
     "teamCode": "BRZ",
     "status": {
       "damaged": false,
@@ -336,7 +336,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
     "status": {
       "damaged": false,
@@ -358,7 +358,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "countryCode": "BZ",
+    "organizationCode": "BZ",
     "teamCode": "NPC",
     "status": {
       "damaged": false,

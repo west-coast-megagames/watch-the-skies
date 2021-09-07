@@ -208,7 +208,7 @@ router.put('/treaties/modify', async function (req, res) {
 					cNum++;
 				}
 				break;
-			case 'excluded':// block country from ratifying this treaty
+			case 'excluded':// block organization from ratifying this treaty
 				// COME BACK AND DO THIS CODE YOU COWARD
 				break;
 			case 'expiration':// change the expiration date

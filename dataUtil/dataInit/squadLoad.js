@@ -78,23 +78,23 @@ async function loadSquad(iData, rCounts) {
 				newSquad.team = undefined;
 			}
 
-			if (iData.country != '') {
-				const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-				const countryData = country.data;
+			if (iData.organization != '') {
+				const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+				const organizationData = organization.data;
 
-				if (!countryData.type) {
+				if (!organizationData.type) {
 
 					++rCounts.loadErrCount;
-					logger.error(`New Squad Invalid Country: ${iData.name} ${iData.country}`);
+					logger.error(`New Squad Invalid Organization: ${iData.name} ${iData.organization}`);
 					return;
 				}
 				else {
-					newSquad.country = countryData._id;
-					newSquad.zone = countryData.zone;
+					newSquad.organization = organizationData._id;
+					newSquad.zone = organizationData.zone;
 				}
 			}
 			else {
-				newSquad.country = undefined;
+				newSquad.organization = undefined;
 				newSquad.zone = undefined;
 			}
 

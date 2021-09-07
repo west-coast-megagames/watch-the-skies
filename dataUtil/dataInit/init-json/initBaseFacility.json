@@ -45,7 +45,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": false,
     "siteCode": "US CHI"
@@ -102,7 +102,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US SFO"
@@ -159,7 +159,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US SAN"
@@ -216,7 +216,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US HNL"
@@ -273,7 +273,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US JAX"
@@ -330,7 +330,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US VAB"
@@ -375,7 +375,7 @@
         "damage": []
       }
     },
-    "countryCode": "US",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": false,
     "siteCode": "US BNA"
@@ -426,7 +426,7 @@
         "damage": []
       }
     },
-    "countryCode": "GB",
+    "organizationCode": "GB",
     "teamCode": "TUK",
     "coastal": false,
     "siteCode": "GB LHR"
@@ -477,7 +477,7 @@
         "damage": []
       }
     },
-    "countryCode": "ZA",
+    "organizationCode": "ZA",
     "teamCode": "RSA",
     "coastal": false,
     "siteCode": "ZA JNB"
@@ -522,7 +522,7 @@
         "damage": []
       }
     },
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU BKA"
@@ -573,7 +573,7 @@
         "damage": []
       }
     },
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU NOI"
@@ -624,7 +624,7 @@
         "damage": []
       }
     },
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU SRM"
@@ -675,7 +675,7 @@
         "damage": []
       }
     },
-    "countryCode": "RU",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU GRH"
@@ -726,7 +726,7 @@
         "damage": []
       }
     },
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP OSA"
@@ -777,7 +777,7 @@
         "damage": []
       }
     },
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP NRT"
@@ -828,7 +828,7 @@
         "damage": []
       }
     },
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP SPK"
@@ -879,7 +879,7 @@
         "damage": []
       }
     },
-    "countryCode": "JP",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP FUK"
@@ -930,7 +930,7 @@
         "damage": []
       }
     },
-    "countryCode": "IR",
+    "organizationCode": "IR",
     "teamCode": "IRN",
     "coastal": false,
     "siteCode": "IR BND"
@@ -981,7 +981,7 @@
         "damage": []
       }
     },
-    "countryCode": "IN",
+    "organizationCode": "IN",
     "teamCode": "IND",
     "coastal": true,
     "siteCode": "IN BOM"
@@ -1032,7 +1032,7 @@
         "damage": []
       }
     },
-    "countryCode": "FR",
+    "organizationCode": "FR",
     "teamCode": "TFR",
     "coastal": true,
     "siteCode": "FR MRS"
@@ -1083,7 +1083,7 @@
         "damage": []
       }
     },
-    "countryCode": "EG",
+    "organizationCode": "EG",
     "teamCode": "EPT",
     "coastal": true,
     "siteCode": "EG ALY"
@@ -1134,7 +1134,7 @@
         "damage": []
       }
     },
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN SHA"
@@ -1185,7 +1185,7 @@
         "damage": []
       }
     },
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN TPE"
@@ -1236,7 +1236,7 @@
         "damage": []
       }
     },
-    "countryCode": "CN",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN SY1"
@@ -1287,7 +1287,7 @@
         "damage": []
       }
     },
-    "countryCode": "BZ",
+    "organizationCode": "BZ",
     "teamCode": "BRZ",
     "coastal": true,
     "siteCode": "BR FOR"
@@ -1338,7 +1338,7 @@
         "damage": []
       }
     },
-    "countryCode": "AU",
+    "organizationCode": "AU",
     "teamCode": "AUS",
     "coastal": true,
     "siteCode": "AU MEL"
@@ -1383,7 +1383,7 @@
         "damage": []
       }
     },
-    "countryCode": "PE",
+    "organizationCode": "PE",
     "teamCode": "FFG",
     "coastal": false,
     "siteCode": "PE LIM"
@@ -1428,7 +1428,7 @@
         "damage": []
       }
     },
-    "countryCode": "MN",
+    "organizationCode": "MN",
     "teamCode": "FFG",
     "coastal": false,
     "siteCode": "MN ULN"
@@ -1479,7 +1479,7 @@
         "damage": []
       }
     },
-    "countryCode": "MX",
+    "organizationCode": "MX",
     "teamCode": "TCN",
     "coastal": false,
     "siteCode": "MX MEX"

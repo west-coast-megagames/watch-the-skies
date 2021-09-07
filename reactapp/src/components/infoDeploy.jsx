@@ -54,7 +54,7 @@ class InfoDeploy extends Component {
       for (let ship of ships) {
         //console.log(ship)
         let data = { 
-          label: `${ship.name} (${ ship.country.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
+          label: `${ship.name} (${ ship.organization.name } | ${100 - Math.round(ship.stats.hull / ship.stats.hullMax * 100)}% damage)`,
           value: ship._id
         }
         aircrafts.push(data);
@@ -66,7 +66,7 @@ class InfoDeploy extends Component {
   render() {
     let disable = false;
     if (this.props.target !== null) {
-      let { country, zone, model, name, type } = this.props.target;
+      let { organization, zone, model, name, type } = this.props.target;
 
       if (this.state.aircrafts.length < 1 ) disable = true;
     
@@ -86,11 +86,11 @@ class InfoDeploy extends Component {
               <hr />
             </ FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <p><b>Location:</b> {model === "Aircraft" ? `${country.name} Airspace` : `${country.name}`} - {zone.name}</p>
+              <p><b>Location:</b> {model === "Aircraft" ? `${organization.name} Airspace` : `${organization.name}`} - {zone.name}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}
-              {model === "Site" && <p>{this.props.target.geoDMS.latDMS}, {this.props.target.geoDMS.longDMS}</p>}
+              {model === "Site" && <p>{this.props.target.geoDMS.latDMS}, {this.props.target.geoDMS.lngDMS}</p>}
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={24}>
             <br /><br /><br />
@@ -100,7 +100,7 @@ class InfoDeploy extends Component {
             <FlexboxGrid.Item colspan={12}>
               <InputPicker
                 disabled={disable}
-                placeholder={ this.state.aircrafts.length < 1 ? `${this.props.team.shortName} has no aircraft...` : `Scramble a aircraft over ${country.name}`}
+                placeholder={ this.state.aircrafts.length < 1 ? `${this.props.team.shortName} has no aircraft...` : `Scramble a aircraft over ${organization.name}`}
                 data={this.state.aircrafts} 
                 labelKey='label'
                 value={this.state.unit}

@@ -19,7 +19,7 @@ router.get('/', async function (req, res) {
 		const squad = await Squad.find()
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('site', 'name')
 			.populate('origin')
 			.sort({ team: 1 });
@@ -43,7 +43,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 		const squad = await Squad.findById(id)
 			.populate('team', 'name shortName')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('gear', 'name category')
 			.populate('site', 'name')
 			.populate('origin', 'name')

@@ -7,7 +7,7 @@ import { loadarticles } from '../store/entities/articles';
 import { loadzones } from '../store/entities/zones';
 import { loadfacilities } from '../store/entities/facilities';
 import { loadmilitary } from '../store/entities/military';
-import { loadcountries } from '../store/entities/countries';
+import { loadOrganizations } from '../store/entities/organizations';
 import { loadresearch } from '../store/entities/research';
 import { loadaccounts } from '../store/entities/accounts';
 import { loadBlueprints } from '../store/entities/blueprints';
@@ -23,7 +23,7 @@ let loader = {
 	articles: loadarticles,
 	blueprints: loadBlueprints,
 	clock: loadClock,
-	countries: loadcountries,
+	organizations: loadOrganizations,
 	facilities: loadfacilities,
 	military: loadmilitary,
 	reports: loadReports,

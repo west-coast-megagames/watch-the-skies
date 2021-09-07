@@ -39,7 +39,7 @@ async function intercept (attacker, atkStance, atkReport, defender, defStance, d
 	const interceptReport = await interceptDmg(offense, defense); // Calculates damage and applies it | damage.js
 
 	if (interceptReport.salvage.length > 0) {
-		await generateCrash(interceptReport.salvage, attacker.site, attacker.country);
+		await generateCrash(interceptReport.salvage, attacker.site, attacker.organization);
 	}
 
 	interceptReport.atkReport = `${atkReport} ${interceptReport.atkReport}`;

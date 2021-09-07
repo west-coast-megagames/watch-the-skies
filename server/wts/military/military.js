@@ -10,6 +10,7 @@ const { Account } = require('../../models/account');
 const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
 const { DeploymentReport } = require('../../models/report');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 async function resolveBattle(attackers, defenders) {
 	let attackerTotal = 0;
@@ -212,7 +213,7 @@ async function resolveBattle(attackers, defenders) {
 async function runMilitary() {
 	let report = '';
 	let data = {};
-	for (const site of await Site.find({ 'status.warzone': true })) { // find all the sites that are a warzone
+	for (const site of await Site.find({ 'status': 'warzone' })) { // find all the sites that are a warzone
 		// collect all the attackers
 		report = '';
 		const leadArmy = {
@@ -238,7 +239,7 @@ async function runMilitary() {
 
 		let defenders = [];
 		let attackers = [];
-		if (site.status.occupied === true) {
+		if (site.status.some(el => el === 'occupied')) {
 			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && el.status.destroyed === false);
 			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && el.status.destroyed === false);
 		}
@@ -271,8 +272,8 @@ async function runMilitary() {
 			report += 'The Attackers are victorious!\n';
 			militaryReport.winner = 'The Attackers are victorious';
 			let liberated = false;
-			site.status.warzone = false;
-			site.status.occupied = true;
+			await clearArrayValue(site.status, 'warzone');
+			await addArrayValue(site.status, 'occupied');
 
 			// determine who now owns the site.
 			for (const team of attackerTeams) {
@@ -293,6 +294,8 @@ async function runMilitary() {
 			if (site.occupier.toHexString() === site.team.toHexString()) {
 				militaryReport.winner += ', and the site was liberated';
 				site.status.occupied = false;
+
+				await clearArrayValue(site.status, 'occupied');
 				liberated = true;
 			}
 
@@ -327,7 +330,9 @@ async function runMilitary() {
 		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			militaryReport.winner = 'The Defenders are victorious';
-			site.status.warzone = false;
+			
+			await clearArrayValue(site.status, 'warzone');
+
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {
 					upgrade = await Upgrade.findById(upgrade);
@@ -426,9 +431,9 @@ async function transferUnit(data) { // for transferring to other facilities as a
 		unit.origin = data.facility;
 		unit.status.action = false;
 
-		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
-		unit.country = facility.site.country;
+		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
 		unit.status.deployed = false;
 
@@ -440,9 +445,9 @@ async function transferUnit(data) { // for transferring to other facilities as a
 		unit.status.mission = false;
 		unit.status.ready = false;
 
-		unit.location = randomCords(facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal);
+		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
-		unit.country = facility.site.country;
+		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
 		unit.status.deployed = false;
 
@@ -473,7 +478,7 @@ async function deployUnit(data, type) {
 	}
 	else {
 		const siteObj = await Site.findById(destination)
-			.populate('country')
+			.populate('organization')
 			.populate('zone');
 		const unitArray = [];
 
@@ -489,15 +494,15 @@ async function deployUnit(data, type) {
 
 
 			update.site = siteObj._id;
-			update.country = siteObj.country._id;
+			update.organization = siteObj.organization._id;
 			update.zone = siteObj.zone._id;
 			update.status.deployed = true;
-			update.location = randomCords(siteObj.geoDecimal.latDecimal, siteObj.geoDecimal.longDecimal);
+			update.location = randomCords(siteObj.geoDecimal.lat, siteObj.geoDecimal.lng);
 			unitArray.push(update._id);
 			await update.save();
 		}
 
-		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.country.name}, ${unitArray.length} units deployed.` });
+		account = await account.withdrawal({ from: account._id, amount: cost, note: `Unit ${type} to ${siteObj.name} in ${siteObj.organization.name}, ${unitArray.length} units deployed.` });
 
 		if (type === 'invade') {
 			siteObj.warzone = true;
@@ -510,7 +515,7 @@ async function deployUnit(data, type) {
 
 		report.team = teamObj._id;
 		report.site = siteObj._id;
-		report.country = siteObj.country._id;
+		report.organization = siteObj.organization._id;
 		report.zone = siteObj.zone._id;
 		report.units = unitArray;
 		report.cost = cost;
@@ -523,7 +528,7 @@ async function deployUnit(data, type) {
 		//   await update.save();
 		// }
 
-		return ({ message : `Unit ${type} to ${siteObj.name} in ${siteObj.country.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
+		return ({ message : `Unit ${type} to ${siteObj.name} in ${siteObj.organization.name} succesful, ${unitArray.length} units deployed.`, type: 'success' });
 	}
 }
 

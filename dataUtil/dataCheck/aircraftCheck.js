@@ -38,9 +38,9 @@ async function chkAircraft(runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(aircraft, 'country')) {
+		if (!Object.prototype.hasOwnProperty.call(aircraft, 'organization')) {
 			logger.error(
-				`Country missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				`Organization missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
 		}
 

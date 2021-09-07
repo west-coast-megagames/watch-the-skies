@@ -89,18 +89,18 @@ class DeployMilitary extends Component {
 						{ this.state.target && <div>
 							<FlexboxGrid>
 								<FlexboxGrid.Item colspan={12}>
-									<h4>{ this.state.target.name }</h4> 	
-									{!this.state.target.status.occupied && <p>{this.state.target.team.name}</p>	}			
-									{ this.state.target.status.occupied && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
+									<h4>{ this.state.target.name }</h4> 	0
+									{!this.state.target.status.some(el => el === 'occupied') && <p>{this.state.target.team.name}</p>	}			
+									{ this.state.target.status.some(el => el === 'occupied') && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
 								</FlexboxGrid.Item>
 								<FlexboxGrid.Item colspan={12}>
 									<b>Status:</b>
 									<TagGroup>
-										{ !this.state.target.status.occupied && <Tag color='green'>Un-Occupied</Tag> }
-										{ this.state.target.status.occupied && <Tag color='red'>Occupied</Tag> }
-										{ this.state.target.status.warzone && <Tag color='orange'>Warzone</Tag> }
-										{ this.state.target.coastal && <Tag color='blue'>Costal</Tag> }
-										{ this.state.target.capital && <Tag color='violet'>Capital</Tag> }
+										{ !this.state.target.status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
+										{ this.state.target.status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
+										{ this.state.target.status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
+										{ this.state.target.tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
+										{ this.state.target.tags.some(el => el === 'occupied') && <Tag color='violet'>Capital</Tag> }
 									</TagGroup>									
 								</FlexboxGrid.Item>
 							</FlexboxGrid>
@@ -141,7 +141,7 @@ class DeployMilitary extends Component {
 								<h6>Your facilities closest to {this.state.target.name} </h6>
 								<List>
 									{ this.props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
-										{facility.name} - {`${Math.trunc(distance(this.props.target.geoDecimal.latDecimal, this.props.target.geoDecimal.longDecimal, facility.site.geoDecimal.latDecimal, facility.site.geoDecimal.longDecimal))}km away`}
+										{facility.name} - {`${Math.trunc(distance(this.props.target.geoDecimal.lat, this.props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
 									</List.Item>))}
 								</List>
 								<Divider />
@@ -149,7 +149,7 @@ class DeployMilitary extends Component {
 						}
 						<h6>Select Units</h6>
 						{ this.state.target && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
-								data={ this.state.target.coastal ? [...this.state.fleets, ...this.state.corps] : this.state.corps }
+								data={ this.state.target.tags.some(el => el === 'coastal') ? [...this.state.fleets, ...this.state.corps] : this.state.corps }
 								onChange={this.handleUnits}
 								valueKey='_id'
 								labelKey='info'
@@ -172,7 +172,7 @@ class DeployMilitary extends Component {
 			let corps = [];
 			for (let unit of this.props.military) {
 				if (this.state.team === unit.team.name) { // why
-					if (deployType !== 'invade' || distance(geoDecimal.latDecimal, geoDecimal.longDecimal, unit.site.geoDecimal.latDecimal, unit.site.geoDecimal.longDecimal) < 1000) {
+					if (deployType !== 'invade' || distance(geoDecimal.lat, geoDecimal.lng, unit.site.geoDecimal.lat, unit.site.geoDecimal.lng) < 1000) {
 						let unitData = {
 							name: unit.name,
 							checkZone: unit.site.name,
@@ -194,7 +194,7 @@ class DeployMilitary extends Component {
 		for (let site of this.props.sites) {
 			let siteData = {
 				checkZone: site.zone.name,
-				info: `${site.country.name} - ${site.name} | ${site.subType}`,
+				info: `${site.organization.name} - ${site.name} | ${site.subType}`,
 				_id: site._id
 			}
 	

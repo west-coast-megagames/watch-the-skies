@@ -24,7 +24,7 @@ async function newUnit (name, facility, type, team) {
 			name,
 			team,
 			zone: base.site.zone._id,
-			country: base.site.country._id,
+			organization: base.site.organization._id,
 			site: base.site._id,
 			origin: facility,
 			mission: 'Under Construction',

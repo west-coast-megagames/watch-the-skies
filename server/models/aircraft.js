@@ -30,7 +30,7 @@ const AircraftSchema = new Schema({
 	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
-	country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization', required: true },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	mission: { type: String, default: 'Docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
@@ -89,7 +89,7 @@ const AircraftSchema = new Schema({
 
 // validateAircraft Method
 AircraftSchema.methods.validateAircraft = async function () {
-	const { validTeam, validFacility, validSite, validZone, validCountry, validUpgrade, validLog } = require('../middleware/util/validateDocument');
+	const { validTeam, validFacility, validSite, validZone, validOrganization, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
@@ -105,7 +105,7 @@ AircraftSchema.methods.validateAircraft = async function () {
 	await validFacility(this.origin);
 	await validSite(this.site);
 	await validZone(this.zone);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
 	}
@@ -159,9 +159,9 @@ AircraftSchema.methods.recall = async function () {
 		this.mission = 'Docked';
 		this.status.ready = true;
 		this.status.deployed = false;
-		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
-		this.country = home.site.country;
+		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
 		this.status.mission = false; // Nex Action/Mission system
@@ -212,7 +212,7 @@ AircraftSchema.methods.populateAircraft = function () {
 	return this
 		.populate('team', 'name shortName code')
 		.populate('zone', 'name')
-		.populate('country', 'name')
+		.populate('organization', 'name')
 		.populate('site', 'name geoDecimal')
 		.populate('origin', 'name')
 		.execPopulate();
@@ -227,7 +227,7 @@ const getAircrafts = async function () {
 			.sort({ team: 1 })
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('site', 'name geoDecimal')
 			.populate('origin', 'name');
 		return aircrafts;

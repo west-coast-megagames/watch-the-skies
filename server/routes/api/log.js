@@ -12,7 +12,7 @@ router.get('/', async function (req, res) {
 	routeDebugger('Sending the logs!');
 	const logs = await Log.find()
 		.populate('team')
-		.populate('country', 'name')
+		.populate('organization', 'name')
 		.populate('zone')
 		.populate('project')
 		.populate('lab')

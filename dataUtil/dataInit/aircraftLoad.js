@@ -134,18 +134,18 @@ async function newAircraftCreate(aData, rCounts) {
 		newAircraft.team = tData._id;
 	}
 
-	const country = await axios.get(`${gameServer}init/initCountries/code/${aData.country}`);
-	const countryData = country.data;
+	const organization = await axios.get(`${gameServer}init/initOrganizations/code/${aData.organization}`);
+	const organizationData = organization.data;
 
-	if (!countryData.type) {
+	if (!organizationData.type) {
 
 		++rCounts.loadErrCount;
-		logger.error(`New Aircraft Invalid Country: ${aData.name} ${aData.country}`);
+		logger.error(`New Aircraft Invalid Organization: ${aData.name} ${aData.organization}`);
 		return;
 	}
 	else {
-		newAircraft.country = countryData._id;
-		newAircraft.zone = countryData.zone;
+		newAircraft.organization = organizationData._id;
+		newAircraft.zone = organizationData.zone;
 	}
 
 	let baseSite = undefined;
@@ -197,8 +197,8 @@ async function newAircraftCreate(aData, rCounts) {
 			return;
 		}
 		else {
-			newAircraft.location.lat = sData.geoDecimal.latDecimal;
-			newAircraft.location.lng = sData.geoDecimal.longDecimal;
+			newAircraft.location.lat = sData.geoDecimal.lat;
+			newAircraft.location.lng = sData.geoDecimal.lng;
 		}
 	}
 

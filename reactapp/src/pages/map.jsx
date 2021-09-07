@@ -17,8 +17,8 @@ const MapPage = (props) => {
 
 	const handleThing = (value) => {
 		const site = props.sites.find(el => el._id === value);
-		if ( site && site.geoDecimal && site.geoDecimal.latDecimal && site.geoDecimal.longDecimal) {
-			setCenter({ lat: site.geoDecimal.latDecimal, lng:  site.geoDecimal.longDecimal });
+		if ( site && site.geoDecimal && site.geoDecimal.lat && site.geoDecimal.lng) {
+			setCenter({ lat: site.geoDecimal.lat, lng:  site.geoDecimal.lng });
 		}
 		else {
 			Alert.error('No Geo Data Found', 6000);
@@ -28,7 +28,7 @@ const MapPage = (props) => {
 
 	useEffect(() => {
 		if (props.capitol) {
-				setCenter({ lat: props.capitol.geoDecimal.latDecimal, lng: props.capitol.geoDecimal.longDecimal });
+				setCenter({ lat: props.capitol.geoDecimal.lat, lng: props.capitol.geoDecimal.lng });
 		}
 	}, []);
 

@@ -7,8 +7,8 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 
 // type values are Ground or Space
-const CountrySchema = new Schema({
-	model: { type: String, default: 'Country' },
+const OrganizationSchema = new Schema({
+	model: { type: String, default: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
 	capital: { type: Schema.Types.ObjectId, ref: 'Site' },
@@ -35,12 +35,7 @@ const CountrySchema = new Schema({
 		max: 250,
 		default: 0
 	},
-	type: { type: String, default: 'Ground' },
-	coastal: {
-		type: Boolean,
-		default: false
-	},
-	borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }],
+	borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Organization' }],
 	milAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	sciAlliance: [{ type: Schema.Types.ObjectId, ref: 'Team' }],
 	stats: {
@@ -51,8 +46,8 @@ const CountrySchema = new Schema({
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
-CountrySchema.methods.validateCountry = async function () {
-	const { validTeam, validZone, validLog, validCountry } = require('../middleware/util/validateDocument');
+OrganizationSchema.methods.validateOrganization = async function () {
+	const { validTeam, validZone, validLog, validOrganization } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	let schema = {};
 	switch (this.type) {
@@ -60,10 +55,11 @@ CountrySchema.methods.validateCountry = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(3).max(75).required(),
 			code: Joi.string().min(2).max(2).required().uppercase(),
-			unrest: Joi.number().min(0).max(250)
+			unrest: Joi.number().min(0).max(250),
+			tags: Joi.array().items(Joi.string().valid('coastal'))
 		});
 		for await (const bBy of this.borderedBy) {
-			await validCountry(bBy);
+			await validOrganization(bBy);
 		}
 		break;
 
@@ -95,25 +91,22 @@ CountrySchema.methods.validateCountry = async function () {
 	}
 };
 
-const Country = mongoose.model('Country', CountrySchema);
+const Organization = mongoose.model('Organization', OrganizationSchema);
 
-const GroundCountry = Country.discriminator(
-	'GroundCountry',
+const GroundOrganization = Organization.discriminator(
+	'GroundOrganization',
 	new Schema({
 		type: { type: String, default: 'Ground' },
-		coastal: {
-			type: Boolean,
-			default: false
-		},
-		borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Country' }]
+		tags: [ {type: String, enum: ['coastal']} ],
+		borderedBy: [{ type: Schema.Types.ObjectId, ref: 'Organization' }]
 	})
 );
 
-const SpaceCountry = Country.discriminator(
-	'SpaceCountry',
+const SpaceOrganization = Organization.discriminator(
+	'SpaceOrganization',
 	new Schema({
 		type: { type: String, default: 'Space' }
 	})
 );
 
-module.exports = { Country, GroundCountry, SpaceCountry };
+module.exports = { Organization, GroundOrganization, SpaceOrganization };

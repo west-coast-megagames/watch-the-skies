@@ -11,12 +11,12 @@ async function validAccount(account) {
 	if (document == null) nexusError(`No account exists with the ID: ${account}`, 400);
 }
 
-async function validCountry(country) {
-	const { Country } = require('../../models/country'); // Import of Country model [Mongoose]
-	if (country === undefined) nexusError('No country ID given...', 400);
-	if (!mongoose.Types.ObjectId.isValid(country)) nexusError('Invalid country ID given...', 400);
-	const document = await Country.findById(country);
-	if (document == null) nexusError(`No country exists with the ID: ${country}`, 400);
+async function validOrganization(organization) {
+	const { Organization } = require('../../models/organization'); // Import of Organization model [Mongoose]
+	if (organization === undefined) nexusError('No organization ID given...', 400);
+	if (!mongoose.Types.ObjectId.isValid(organization)) nexusError('Invalid organization ID given...', 400);
+	const document = await Organization.findById(organization);
+	if (document == null) nexusError(`No organization exists with the ID: ${organization}`, 400);
 }
 
 async function validFacility(facility) {
@@ -107,6 +107,6 @@ async function validMilitary(military) {
 	if (document == null) nexusError(`No military exists with the ID: ${military}`, 400);
 }
 
-module.exports = { validAccount, validCountry, validFacility, validSite,
+module.exports = { validAccount, validOrganization, validFacility, validSite,
 	validTeam, validZone, validLog, validUpgrade, validTrade, validTreaty,
 	validResearch, validAircraft, validMilitary };

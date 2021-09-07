@@ -11,7 +11,7 @@ class InfoSite extends Component {
 
   render() {
     if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, country, zone, _id, occupier, coastal, capital } = this.props.site;
+      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = this.props.site;
     
       return(
         <Drawer
@@ -30,23 +30,23 @@ class InfoSite extends Component {
 						<FlexboxGrid.Item colspan={12}>
 							<b>Status:</b>
 							<TagGroup>
-								{ !status.occupied && <Tag color='green'>Un-Occupied</Tag> }
-								{ status.occupied && <Tag color='red'>Occupied</Tag> }
-								{ status.warzone && <Tag color='orange'>Warzone</Tag> }
-								{ coastal && <Tag color='blue'>Costal</Tag> }
-								{ capital && <Tag color='violet'>Capital</Tag> }
+								{ !status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
+								{ status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
+								{ status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
+								{ tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
+								{ tags.some(el => el === 'capital') && <Tag color='violet'>Capital</Tag> }
 							</TagGroup>									
 						</FlexboxGrid.Item>
 						<hr />
             <FlexboxGrid.Item colspan={12}>
-							<p><b>Country:</b> {`${country.name}`}</p>
-              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.longDMS}`}</p>
+							<p><b>Organization:</b> {`${organization.name}`}</p>
+              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.lngDMS}`}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
 							<p><b>Zone:</b> {`${zone.name}`}</p>
 							<p><b>Unrest:</b> 0</p> 
             </FlexboxGrid.Item>
-						{status.occupied && <FlexboxGrid.Item colspan={12}>
+						{status.some(el => el === 'occupied') && <FlexboxGrid.Item colspan={12}>
 							<p><b>Occupier:</b> {`${occupier.shortName}`}</p>
             </FlexboxGrid.Item>}
             </FlexboxGrid>

@@ -12,7 +12,7 @@ const ReportSchema = new Schema({
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	status: {
 		complete: { type: Boolean, default: false },

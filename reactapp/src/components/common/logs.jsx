@@ -249,7 +249,7 @@ const InterceptLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
         <p>
           <b>Report:</b> {report.report}
@@ -284,7 +284,7 @@ const ConstructionLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -316,7 +316,7 @@ const DeployLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -351,7 +351,7 @@ const CrisisLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -383,7 +383,7 @@ const TerrorLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -415,7 +415,7 @@ const TreatyLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -447,7 +447,7 @@ const TradeLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
       </Panel>
     </Timeline.Item>
@@ -535,7 +535,7 @@ const FailedLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.country.name} - {report.zone.name}
+          <b>Location:</b> {report.organization.name} - {report.zone.name}
         </p>
         <p>
           <b>Report:</b> {report.report}

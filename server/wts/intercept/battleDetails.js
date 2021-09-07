@@ -113,13 +113,13 @@ function escortDesc (unit, target) {
 	const intro = [
 		`${unit.name} has assumed an escort formation with ${target.name}.`,
 		`${unit.name} reports condition green, target formation established.`,
-		`${unit.name} in formation with ${target.name}, en route to ${unit.country.name} airspace.`,
+		`${unit.name} in formation with ${target.name}, en route to ${unit.organization.name} airspace.`,
 		`${unit.name} establshed ecort pattern ${IRDS[rand(IRDS.length) - 1]}-${rand(100)}.`
 	];
 	let desc = intro[rand(intro.length - 1)];
 	const outro = [
 		`${desc}`,
-		`${desc} ${target.name} has entered ${unit.country.name} airspace and been engaged, intercepting incoming aircraft.`,
+		`${desc} ${target.name} has entered ${unit.organization.name} airspace and been engaged, intercepting incoming aircraft.`,
 		`${desc} ${unit.name} broke away from ${target.name} to engage incoming aircraft.`
 	];
 	desc = outro[rand(outro.length) - 1];

@@ -147,23 +147,23 @@ async function createFleet(iData, rCounts, bpData) {
 		newFleet.team = undefined;
 	}
 
-	if (iData.country != '') {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-		const countryData = country.data;
+	if (iData.organization != '') {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Fleet Military Invalid Country: ${iData.name} ${iData.country}`);
+			logger.error(`New Fleet Military Invalid Organization: ${iData.name} ${iData.organization}`);
 			return;
 		}
 		else {
-			newFleet.country = countryData._id;
-			newFleet.zone = countryData.zone;
+			newFleet.organization = organizationData._id;
+			newFleet.zone = organizationData.zone;
 		}
 	}
 	else {
-		newFleet.country = undefined;
+		newFleet.organization = undefined;
 		newFleet.zone = undefined;
 	}
 
@@ -230,23 +230,23 @@ async function createCorps(iData, rCounts, bpData) {
 		newCorps.team = undefined;
 	}
 
-	if (iData.country != '') {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-		const countryData = country.data;
+	if (iData.organization != '') {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Corps Military Invalid Country: ${iData.name} ${iData.country}`);
+			logger.error(`New Corps Military Invalid Organization: ${iData.name} ${iData.organization}`);
 			return;
 		}
 		else {
-			newCorps.country = countryData._id;
-			newCorps.zone = countryData.zone;
+			newCorps.organization = organizationData._id;
+			newCorps.zone = organizationData.zone;
 		}
 	}
 	else {
-		newCorps.country = undefined;
+		newCorps.organization = undefined;
 		newCorps.zone = undefined;
 	}
 

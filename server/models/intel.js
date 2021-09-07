@@ -13,7 +13,7 @@ const IntelSchema = new Schema({
 		type: String,
 		min: 2,
 		maxlength: 50,
-		enum: ['account', 'aircraft', 'alliance', 'article', 'blueprint', 'country', 'facility', 'intel', 'military', 'report', 'research', 'site', 'squad', 'team', 'trade', 'treaty', 'upgrade', 'zone']
+		enum: ['account', 'aircraft', 'alliance', 'article', 'blueprint', 'organization', 'facility', 'intel', 'military', 'report', 'research', 'site', 'squad', 'team', 'trade', 'treaty', 'upgrade', 'zone']
 	},
 	subject: { type: String },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
@@ -55,7 +55,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 
 	switch (doc.model) {
 	case 'Aircraft':
-		modelKeys = ['location', 'site,', 'zone', 'country', 'stance'];
+		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance'];
 
 		this.document.systems = {};
 		this.source.systems = {};
@@ -66,13 +66,13 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		}
 		break;
 	case 'Military':
-		modelKeys = ['site,', 'origin', 'zone', 'country'];
+		modelKeys = ['site,', 'origin', 'zone', 'organization'];
 		break;
 	case 'Facility':
 		console.log('Currently remaking facility model');
 		break;
 	case 'Squad':
-		modelKeys = ['location', 'site', 'origin', 'zone', 'country'];
+		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
 		modelKeys = ['occupier', 'zone'];

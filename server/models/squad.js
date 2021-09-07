@@ -33,7 +33,7 @@ const SquadSchema = new Schema({
 		priorities: [{ type: String, enum: ['clandestine', 'effectiveness', 'survivability'] }]
 	},
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
 	location: {
@@ -112,7 +112,7 @@ SquadSchema.methods.runMission = async function () {
 
 // validateSquad Method
 SquadSchema.methods.validateSquad = async function () {
-	const { validTeam, validSite, validFacility, validCountry, validZone, validUpgrade } = require('../middleware/util/validateDocument');
+	const { validTeam, validSite, validFacility, validOrganization, validZone, validUpgrade } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
@@ -124,7 +124,7 @@ SquadSchema.methods.validateSquad = async function () {
 
 	await validSite(this.site);
 	await validTeam(this.team);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	await validZone(this.zone);
 	await validFacility(this.origin);
 	for await (const upg of this.upgrades) {

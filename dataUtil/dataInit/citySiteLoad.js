@@ -108,20 +108,29 @@ async function deleteAllCitys() {
 async function newCity(cData, rCounts) {
 
 	// New City(ground) Site here
-	const newLatDMS = convertToDms(cData.latDecimal, false);
-	const newLongDMS = convertToDms(cData.longDecimal, true);
+	const newLatDMS = convertToDms(cData.lat, false);
+	const newLongDMS = convertToDms(cData.lng, true);
 
 	const CitySite = cData;
 	CitySite.type = 'Ground';
 	CitySite.geoDMS = {
 		latDMS: newLatDMS,
-		longDMS: newLongDMS
+		lngDMS: newLongDMS
 	};
 	CitySite.geoDecimal = {
-		latDecimal: cData.latDecimal,
-		longDecimal: cData.longDecimal
+		lat: cData.lat,
+		lng: cData.lng
 	};
 	CitySite.serviceRecord = [];
+	CitySite.tags = [];
+	CitySite.status = [];
+
+	if (cData.coastal) {
+		CitySite.tags.push('coastal');
+	}
+	if (cData.capital) {
+		CitySite.tags.push('capital');
+	}
 
 	const team = await axios.get(`${gameServer}init/initTeams/code/${cData.teamCode}`);
 	const tData = team.data;
@@ -136,26 +145,26 @@ async function newCity(cData, rCounts) {
 		CitySite.team = tData._id;
 	}
 
-	const country = await axios.get(`${gameServer}init/initCountries/code/${cData.countryCode}`);
-	const countryData = country.data;
+	const organization = await axios.get(`${gameServer}init/initOrganizations/code/${cData.organizationCode}`);
+	const organizationData = organization.data;
 
-	if (!countryData.type) {
+	if (!organizationData.type) {
 
 		++rCounts.loadErrCount;
-		logger.error(`New City Site Invalid Country: ${cData.name} ${cData.countryCode}`);
+		logger.error(`New City Site Invalid Organization: ${cData.name} ${cData.organizationCode}`);
 		return;
 	}
 	else {
-		CitySite.country = countryData._id;
-		CitySite.zone = countryData.zone;
+		CitySite.organization = organizationData._id;
+		CitySite.zone = organizationData.zone;
 	}
 
 	try {
 		await axios.post(`${gameServer}api/sites`, CitySite);
 		++rCounts.loadCount;
 		logger.debug(`${CitySite.name} add saved to City Site collection.`);
-		if (CitySite.capital) {
-			await axios.patch(`${gameServer}api/Countries/setCapital/${CitySite.country}`);
+		if (cData.capital) {
+			await axios.patch(`${gameServer}api/organizations/setCapital/${CitySite.organization}`);
 		}
 	}
 	catch (err) {

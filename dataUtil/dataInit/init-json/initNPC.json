@@ -8,7 +8,7 @@
 "sciLevel": 2,
 "balance" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["AO"]}]
+"parent" : [{"type" : "organization", "code" : ["AO"]}]
 },
 {
 "loadType" : "team", 
@@ -19,7 +19,7 @@
 "sciLevel": 0,
 "balance" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["KG"]}]
+"parent" : [{"type" : "organization", "code" : ["KG"]}]
 },
 {
 "loadType" : "team", 
@@ -30,7 +30,7 @@
 "sciLevel": 2,
 "balance" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["MG"]}]
+"parent" : [{"type" : "organization", "code" : ["MG"]}]
 },
 {
 "loadType" : "team", 
@@ -41,7 +41,7 @@
 "sciLevel": 4,
 "balance" : 1,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["NO"]}]
+"parent" : [{"type" : "organization", "code" : ["NO"]}]
 },
 {
 "loadType" : "team", 
@@ -52,7 +52,7 @@
 "sciLevel": 5,
 "balance" : 8,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["CH"]}]
+"parent" : [{"type" : "organization", "code" : ["CH"]}]
 },
 {
 "loadType" : "team", 
@@ -63,7 +63,7 @@
 "sciLevel": 1,
 "balance" : 0,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["TZ"]}]
+"parent" : [{"type" : "organization", "code" : ["TZ"]}]
 },
 {
 "loadType" : "team", 
@@ -74,7 +74,7 @@
 "sciLevel": 0,
 "balance" : 0,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["EH"]}]
+"parent" : [{"type" : "organization", "code" : ["EH"]}]
 },
 {
 "loadType" : "team", 
@@ -85,7 +85,7 @@
 "sciLevel": 3,
 "balance" : 3,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["CF"]}]
+"parent" : [{"type" : "organization", "code" : ["CF"]}]
 },
 {
 "loadType" : "team", 
@@ -96,7 +96,7 @@
 "sciLevel": 2,
 "balance" : 2,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["SZ"]}]
+"parent" : [{"type" : "organization", "code" : ["SZ"]}]
 },
 {
 "loadType" : "team", 
@@ -107,6 +107,6 @@
 "sciLevel": 1,
 "balance" : 4,
 "loadFlag" : "true",
-"parent" : [{"type" : "country", "code" : ["CZ"]}]
+"parent" : [{"type" : "organization", "code" : ["CZ"]}]
 }
 ]

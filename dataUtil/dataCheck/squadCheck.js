@@ -38,8 +38,8 @@ async function chkSquad(runFlag) {
 			logger.error(`team missing for Squad ${squad.name} ${squad._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(squad, 'country')) {
-			logger.error(`country missing for Squad ${squad.name} ${squad._id}`);
+		if (!Object.prototype.hasOwnProperty.call(squad, 'organization')) {
+			logger.error(`organization missing for Squad ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'origin')) {

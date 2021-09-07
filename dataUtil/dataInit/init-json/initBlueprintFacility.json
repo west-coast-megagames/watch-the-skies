@@ -234,7 +234,7 @@
     "code": "BT-1",
     "cost": 2,
     "buildTime": 1,
-    "unitType": ["Country"],
+    "unitType": ["Organization"],
     "desc": "Standard National Base",
     "capacity": 2,
     "facilityStats": {
@@ -256,7 +256,7 @@
     "code": "HBT-1",
     "cost": 2,
     "buildTime": 1,
-    "unitType": ["Country"],
+    "unitType": ["Organization"],
     "desc": "Hidden National Base",
     "capacity": 2,
     "facilityStats": {

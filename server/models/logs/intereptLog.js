@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const InterceptLog = Log.discriminator('InterceptLog', new Schema({
 	type: { type: String, default: 'Interception', enum: ['Interception', 'Recon', 'Failure'] },
 	position: { type: String },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	report: { type: String, required: true },

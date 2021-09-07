@@ -17,7 +17,7 @@ router.get('/', async function (req, res) {
 
 	try {
 		const sites = await Site.find()
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('team', 'shortName name')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
@@ -40,7 +40,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 
 	try {
 		const site = await Site.findById(id)
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('team', 'shortName name')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
@@ -68,7 +68,7 @@ router.get('/type/:type', async function (req, res) {
 	try {
 		const type = req.params.type;
 		const sites = await Site.find(type)
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('team', 'shortName name')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')

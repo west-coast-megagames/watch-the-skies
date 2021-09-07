@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validCountry, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
+const { validTeam, validOrganization, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -13,7 +13,7 @@ const SiteSchema = new Schema({
 	name: { type: String, required: true, minlength: 2, maxlength: 50 },
 	team: { type: ObjectId, ref: 'Team' },
 	occupier: { type: ObjectId, ref: 'Team' },
-	country: { type: ObjectId, ref: 'Country' },
+	organization: { type: ObjectId, ref: 'Organization' },
 	zone: { type: ObjectId, ref: 'Zone' },
 	code: {
 		type: String,
@@ -38,17 +38,19 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('City', 'Crash', 'Point of Interest')
+			subType: Joi.string().valid('City', 'Crash', 'Point of Interest'),
+			tags: Joi.array().items(Joi.string().valid('coastal', 'capital')),
+			status: Joi.array().items(Joi.string().valid('public', 'warzone', 'secret', 'occupied'))
 		});
 
 		geoDMSSchema = Joi.object({
 			latDMS: Joi.string().min(7).max(13),
-			longDMS: Joi.string().min(7).max(14)
+			lngDMS: Joi.string().min(7).max(14)
 		});
 
 		geoDecimalSchema = Joi.object({
-			latDecimal: Joi.number().min(-90).max(90),
-			longDecimal: Joi.number().min(-180).max(180)
+			lat: Joi.number().min(-90).max(90),
+			lng: Joi.number().min(-180).max(180)
 		});
 
 		break;
@@ -57,7 +59,8 @@ SiteSchema.methods.validateSite = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(2).max(20).required(),
-			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station')
+			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station'),
+			status: Joi.array().items(Joi.string().valid('damaged', 'destroyed', 'upgrade', 'repair', 'secret'))
 		});
 
 		break;
@@ -71,7 +74,7 @@ SiteSchema.methods.validateSite = async function () {
 	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
 
 	await validTeam(this.team);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	await validZone(this.zone);
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
@@ -105,28 +108,16 @@ const GroundSite = Site.discriminator(
 		morale: { type: Number, min: 0, max: 100, default: 50 },
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
-			longDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
+			lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
 		},
 		geoDecimal: {
-			latDecimal: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
-			longDecimal: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
+			lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
+			lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
 		},
-		coastal: {
-			type: Boolean,
-			default: false
-		},
-		capital: {
-			type: Boolean,
-			default: false
-		},
+		tags: [{ type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },
 		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
-		status: {
-			public: { type: Boolean, default: false },
-			warzone: { type: Boolean, default: false },
-			secret: { type: Boolean, default: false },
-			occupied: { type: Boolean, default: false }
-		}
+		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
 	})
 );
 
@@ -141,13 +132,7 @@ const SpaceSite = Site.discriminator(
 			maxlength: 50,
 			enum: ['Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station']
 		},
-		status: {
-			damaged: { type: Boolean, default: false },
-			destroyed: { type: Boolean, default: false },
-			upgrade: { type: Boolean, default: false },
-			repair: { type: Boolean, default: false },
-			secret: { type: Boolean }
-		}
+		status: [ {type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']} ]
 	})
 );
 

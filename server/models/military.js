@@ -19,7 +19,7 @@ const MilitarySchema = new Schema({
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
 	team: { type: ObjectId, ref: 'Team' },
 	zone: { type: ObjectId, ref: 'Zone' },
-	country: { type: ObjectId, ref: 'Country' },
+	organization: { type: ObjectId, ref: 'Organization' },
 	site: { type: ObjectId, ref: 'Site' },
 	origin: { type: ObjectId, ref: 'Facility' },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
@@ -105,7 +105,7 @@ MilitarySchema.methods.deploy = async function(site) {
 };
 
 MilitarySchema.methods.validateMilitary = async function () {
-	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
+	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required()
 	});
@@ -116,7 +116,7 @@ MilitarySchema.methods.validateMilitary = async function () {
 	await validSite(this.site);
 	await validTeam(this.team);
 	await validZone(this.zone);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	await validFacility(this.origin);
 	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
@@ -136,9 +136,9 @@ MilitarySchema.methods.recall = async function () {
 			.populate('site');
 
 		this.status.deployed = false;
-		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
-		this.country = home.site.country;
+		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
 		this.status.action = true;

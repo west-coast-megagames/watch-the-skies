@@ -85,7 +85,7 @@ export const addsite = site =>
 	export const getCapitol = createSelector(
     state => state.entities.sites.list,
 		state => state.auth.team,
-    (sites, team) => sites.find(site => site.capital === true && site.team._id === team._id)
+    (sites, team) => sites.find(site => site.tags === 'capital' && site.team._id === team._id)
   );
 
   export const getCities = createSelector(

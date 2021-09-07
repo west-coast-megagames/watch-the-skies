@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { clearArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Military } = require('../../models/military');
 const { Site } = require('../../models/site');
@@ -37,8 +38,8 @@ router.patch('/resethealth', async function (req, res) {
 router.patch('/resetsites', async function (req, res) {
 	for await (const site of Site.find()) {
 		console.log(`Resetting ${site.name}`);
-		site.status.warzone = false;
-		site.status.occupied = false;
+		await clearArrayValue(site.status, 'warzone');
+		await clearArrayValue(site.status, 'occupied');
 		site.occupier = await Team.findOne({ code: 'TCN' });
 		await site.save();
 	}

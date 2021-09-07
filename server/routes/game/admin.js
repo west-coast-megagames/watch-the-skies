@@ -4,6 +4,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 const nexusEvent = require('../../middleware/events/events');
+const { clearArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Mongoose Models - Database models
 const { Aircraft } = require('../../models/aircraft');
@@ -138,7 +139,7 @@ router.patch('/load/tech/seed', async function (req, res) {
 
 router.get('/test', async function (req, res) {
 	let count = 0;
-	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
+	for (const site of await Site.find({ 'status': 'warzone', 'hidden': false })) {
 		console.log(site);
 		count++;
 		if (site.subType === 'Point of Interest') {
@@ -146,8 +147,9 @@ router.get('/test', async function (req, res) {
 			console.log('Site hidden');
 		}
 		else {
-			site.stats.warzone = false;
-			console.log('Site De-Warzoned');
+			await clearArrayValue(site.status, 'warzone');
+			
+	  	console.log('Site De-Warzoned');
 		}
 		await site.save();
 	}

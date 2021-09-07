@@ -59,9 +59,9 @@ async function chkMilitary(runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(military, 'country')) {
+		if (!Object.prototype.hasOwnProperty.call(military, 'organization')) {
 			logger.error(
-				`country missing for Military ${military.name} ${military._id}`
+				`organization missing for Military ${military.name} ${military._id}`
 			);
 		}
 
