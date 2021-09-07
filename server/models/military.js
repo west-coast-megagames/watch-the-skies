@@ -2,6 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCalls');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -13,6 +14,7 @@ const { Site } = require('./site'); // Import of Site model [Mongoose]
 // Utility Imports
 const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
 const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
+
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
@@ -36,10 +38,7 @@ const MilitarySchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
-	status: {
-		type: [String],
-		enum: ['damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational']
-	},
+	status: [{ type: String, enum:  ['damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission'] } ],
 	tags: { 
 		type: [String],
 		enum: ['secret']
@@ -117,7 +116,8 @@ MilitarySchema.methods.deploy = async function(site) {
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
-		name: Joi.string().min(2).max(50).required()
+		name: Joi.string().min(2).max(50).required(),
+		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });
@@ -145,15 +145,16 @@ MilitarySchema.methods.recall = async function () {
 		const home = await Facility.findById(origin)
 			.populate('site');
 
-		this.status.deployed = false;
+		await clearArrayValue(this.status, 'deployed');
 		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
 		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
-		this.status.action = true;
-		this.status.mission = true;
-
+		await addArrayValue(this.status, 'action');
+		await addArrayValue(this.status, 'mission');
+		this.markModified('status');
+		
 		const aircraft = await this.save();
 		logger.info(`${this.name} returned to ${home.name}...`);
 

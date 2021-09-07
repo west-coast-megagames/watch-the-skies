@@ -87,6 +87,6 @@ export const loadmilitary = () => (dispatch, getState) => {
 		state => state.entities.military.list,
 		state => state.auth.team,
 		(military, team) => military.filter(
-			military => military.status.deployed === true
+			military => military.status.some(el => el === 'deployed')
 		)
 	);
