@@ -7,8 +7,12 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
-const { Account } = require('./account'); // Import of Facility model [Mongoose]
-const randomCords = require('../util/systems/lz');
+const { Account } = require('./account'); // Import of Account model [Mongoose]
+const { Site } = require('./site'); // Import of Site model [Mongoose]
+
+// Utility Imports
+const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
+const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
@@ -22,7 +26,7 @@ const MilitarySchema = new Schema({
 	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	actions: { type: Number, default: 1 },
 	missions: { type: Number, default: 1 },
-	mission: {
+	assignment: {
 		target: { type: ObjectId, ref: 'Site' },
 		type: { type: String, default: 'Garrison', enum: ['Attack', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison']}
 	},
@@ -34,7 +38,7 @@ const MilitarySchema = new Schema({
 	},
 	status: {
 		type: [String],
-		enum: ['damaged', 'deployed', 'destroyed', 'repairing']
+		enum: ['damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational']
 	},
 	tags: { 
 		type: [String],
@@ -43,30 +47,62 @@ const MilitarySchema = new Schema({
 });
 
 // METHOD - Mission
-// IN - N/A | OUT: VOID
+// IN - Mission Object { target, type } | OUT: VOID
 // PROCESS: Checks to see if the UNIT is able to go on the mission, pays the cost.
-MilitarySchema.methods.mission = async function () {
-	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`);
-	else {
-		try {
-			const account = await Account.find({ name: 'Operations', 'team': this.team });
-			await account.spend({ amount: 1, note: `${this.name} deployed for ${mission.type}`, resource: 'Megabucks' });
-			this.missions -= 1;
-			if (this.)
-			return;
-		} catch (error) {
-			console.log(error);
-	};
-}
+MilitarySchema.methods.mission = async function (assignment) {
+	if (!this.status.some(el => el === 'mobilized')) throw new Error(`${this.name} is not mobilized.`) // Checks if the UNIT is mobalized
+	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`); // Checks if the UNIT has a mission availible
 
-// METHOD - Action
-// IN - N/A | OUT: VOID
-// PROCESS: Checks to see if the UNIT can take an action, pays the cost.
-MilitarySchema.methods.mission = async function () {
-	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`);
-	else this.missions -= 1;
-	return;
-}
+	try {
+		this.missions -= 1; // Reduces the availible missions by 1
+		if (this.site._id.toString() !== assignment.target) this = await this.deploy(assignment.target);
+
+		this.assignment = assignment;
+
+		await this.save();
+		
+		// TODO - Add populate & socket update
+
+		return this;
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+// METHOD - Deploy
+// IN: Site _id | OUT: VOID
+// PROCESS: Deploys a UNIT to a site.
+MilitarySchema.methods.deploy = async function(site) {
+	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
+	const target = await Site.findById(site).populate('country').populate('zone'); // Finds deployment target in the DB
+	try {
+		let cost = 0;
+		let distance = getDistance(this.location.latDecimal, this.location.longDecimal, target.geoDecimal.latDecimal, target.geoDecimal.longDecimal); // Get distance to target in KM
+		if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
+		else if (distance > this.range) cost = this.stats.globalDeploy;
+		else if (distance > 0) cost = this.stats.localDeploy;
+
+		if (!this.status.some(el => el === 'deployed')) { 
+			this.status.push('deployed');
+			this.markModified('status');
+		}
+
+		const account = await Account.find({ name: 'Operations', 'team': this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: cost, note: `${this.name} deployed to ${target.name} for ${mission.type}`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
+		await account.save();
+		await this.save();
+
+		// TODO - Add populate & socket update
+		return this;
+	}
+	catch (err) {
+		logger.info('Error:', err.message);
+		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
+			meta: err
+		});
+	}
+};
 
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validCountry, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
@@ -87,51 +123,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 	}
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
-	}
-};
-
-MilitarySchema.methods.deploy = async (unit, country) => {
-	const banking = require('../../../wts/banking/banking');
-	const { Account } = require('../../account');
-
-	try {
-		logger.info(
-			`Deploying ${unit.name} to ${country.name} in the ${country.zone.name} zone`
-		);
-		let cost = 0;
-		if (unit.zone !== country.zone) {
-			cost = unit.status.localDeploy;
-			unit.status.deployed = true;
-		}
-		else if (unit.zone === country.zone) {
-			cost = unit.status.globalDeploy;
-			unit.status.deployed = true;
-		}
-
-		let account = await Account.findOne({
-			name: 'Operations',
-			team: unit.team
-		});
-		account = await banking.withdrawal(
-			account,
-			cost,
-			`Deploying ${
-				unit.name
-			} to ${country.name.toLowerCase()} in the ${country.zone.name.toLowerCase()} zone`
-		);
-
-		logger.info(account);
-		await account.save();
-		await unit.save();
-		logger.info(`${unit.name} deployed...`);
-
-		return unit;
-	}
-	catch (err) {
-		logger.info('Error:', err.message);
-		logger.error(`Catch Military Model deploy Error: ${err.message}`, {
-			meta: err
-		});
 	}
 };
 
@@ -175,7 +166,7 @@ const Fleet = Military.discriminator(
 			defense: { type: Number, default: 2 },
 			localDeploy: { type: Number, default: 2 },
 			globalDeploy: { type: Number, default: 5 },
-			invasion: { type: Number, default: 2 }
+			range: { type: Number, default: 5000 }
 		}
 	})
 );
@@ -191,9 +182,11 @@ const Corps = Military.discriminator(
 			defense: { type: Number, default: 2 },
 			localDeploy: { type: Number, default: 2 },
 			globalDeploy: { type: Number, default: 5 },
-			invasion: { type: Number, default: 2 }
+			range: { type: Number, default: 2000 }
 		}
 	})
 );
 
-module.exports = { Military, Fleet, Corps };
+module.exports = {
+	Military, Fleet, Corps
+};
