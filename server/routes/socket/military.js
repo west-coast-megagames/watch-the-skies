@@ -12,17 +12,27 @@ module.exports = async function (client, req) {
 		case('mission'):
 			// Deploy action expects UNITS & ASSSIGNMENT
 			for (const _id of req.data.units) {
+				try {
 				let unit = await Military.findById(_id);
-				// TODO - Call population method
-				await unit.mission(req.data.assignment);
+					// TODO - Call population method
+					unit = await unit.mission(req.data.assignment);
+					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${assignment}.` });
+				} catch (error) {
+					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+				}
 			}
 			break;
 		case('deploy'):
 			// Deploy action expects UNITS & DESTINATION
 			for (const _id of req.data.units) {
-				let unit = await Military.findById(_id);
-				// TODO - Call population method
-				await unit.deploy(req.data.destination);
+				try {
+					let unit = await Military.findById(_id);
+					// TODO - Call population method
+					unit = await unit.deploy(req.data.destination);
+					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
+				} catch (error) {
+					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+				}
 			}
 			break;
 		default:
