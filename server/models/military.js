@@ -16,7 +16,6 @@ const { Site } = require('./site'); // Import of Site model [Mongoose]
 const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
 const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
 
-
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
@@ -73,9 +72,7 @@ MilitarySchema.methods.mission = async function (assignment) {
 // IN: Site _id | OUT: VOID
 // PROCESS: Deploys a UNIT to a site.
 MilitarySchema.methods.deploy = async function(site) {
-	if (this.actions < 1) {
-		if (this.missions < 1) return;
-	}
+	await this.takeAction();
 	const target = await Site.findById(site).populate('country').populate('zone'); // Finds deployment target in the DB
 	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
 	
@@ -94,7 +91,7 @@ MilitarySchema.methods.deploy = async function(site) {
 		this.site = target._id;
 		this.country = target.country;
 		this.zone = target.zone;
-		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng)
+		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 	
 		this.location.lat = lat;
 		this.location.lng = lng;
@@ -112,6 +109,56 @@ MilitarySchema.methods.deploy = async function(site) {
 			meta: err.stack
 		});
 		throw err;
+	}
+};
+
+// METHOD - recall
+// IN: forced <<Boolean>> | OUT: VOID
+// PROCESS: Returns the unit to origin base
+MilitarySchema.methods.recall = async function (forced = false) {
+	if (!forced) await this.takeAction();
+	try {
+		const { origin } = this;
+		const home = await Facility.findById(origin)
+			.populate('site');
+
+		logger.info(`Recalling ${this.name} to ${home.name}...`);
+
+		await clearArrayValue(this.status, 'deployed');
+		await clearArrayValue(this.status, 'mobilized');
+		const { lat, lng } = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
+		this.location.lat = lat;
+		this.location.lng = lng;
+		this.site = home.site;
+		this.organization = home.site.organization;
+		this.zone = home.site.zone;
+
+		this.markModified('status');
+		
+		const unit = await this.save();
+		nexusEvent.emit('request', 'update', [ this ]); 
+		logger.info(`${this.name} returned to ${home.name}...`);
+
+		return ;
+	}
+	catch (err) {
+		nexusError(`${err.message}`, 500);
+	}
+};
+
+// METHOD - takeAction
+// IN: VOID | OUT: VOID
+// PROCESS: Expends mission/action pts or errors if there are none
+MilitarySchema.methods.takeAction = async function () {
+	if (this.actions < 1) {
+		// Trigger user check?
+		if (this.missions < 1) {
+			throw Error(`${this.name} has no mission or action pts left this turn.`);
+		} else {
+			this.missions -= 1;
+		}
+	} else {
+		this.actions -= 1;
 	}
 };
 
@@ -138,34 +185,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 	}
 };
 
-// Recall method - Returns the craft to origin
-MilitarySchema.methods.recall = async function () {
-	logger.info(`Recalling ${this.name} to base...`);
-
-	try {
-		const { origin } = this;
-		const home = await Facility.findById(origin)
-			.populate('site');
-
-		await clearArrayValue(this.status, 'deployed');
-		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
-		this.site = home.site;
-		this.organization = home.site.organization;
-		this.zone = home.site.zone;
-
-		await addArrayValue(this.status, 'action');
-		await addArrayValue(this.status, 'mission');
-		this.markModified('status');
-		
-		const aircraft = await this.save();
-		logger.info(`${this.name} returned to ${home.name}...`);
-
-		return aircraft;
-	}
-	catch (err) {
-		nexusError(`${err.message}`, 500);
-	}
-};
 const Military = mongoose.model('Military', MilitarySchema);
 
 const Fleet = Military.discriminator(
