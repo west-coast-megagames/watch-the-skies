@@ -6,28 +6,19 @@ import TeamAvatar from "../../../components/common/teamAvatar";
 import { articleHidden } from '../../../store/entities/articles';
 import ViewArticle from "../../../components/common/viewArticle";
 import SubNews from './subNews'
-class NewsFeed extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      article: this.props.articles[0],
-      filtered: this.props.articles,
-      agency: this.props.team.name,
-      agencyFilter: [],
-      typeFilter: [],
-      tagFilter: [],
-      view: false,
-      editor: false,
-      edit: false,
-    }
-  }
-
+import socket from "../../../socket";
+const NewsFeed = (props) => {
+	const [article, setArticle] = React.useState(props.articles[0]);
+	const [filtered, setFiltered] = React.useState(props.articles);
+	const [agencyFilter, setAgencyFilter] = React.useState([]);
+	const [view, setView] = React.useState(false);
+	const [editor, setEditor] = React.useState(false);
+	const [edit, setEdit] = React.useState(false);
+	
     
-  render() {
-    const buttonTxt = this.props.team.type === 'Media' ? 'Draft new Article' : 'Draft new Press Release';
+    const buttonTxt = props.team.type === 'Media' ? 'Draft new Article' : 'Draft new Press Release';
     const dummyArticle = {
-      publisher: this.props.team._id,
-      agency: this.props.team.code,
+      publisher: props.team._id,
       location: '',
       headline: '',
       body: '',
@@ -35,12 +26,34 @@ class NewsFeed extends Component {
       imageSrc: ''
     }
 
+		const handleEdit = (arti) => {
+			setEditor(true);
+			setEdit(true);
+			setArticle(arti);
+		}
+
+		const handleOpen = (arti) => {
+			setView(true);
+			setArticle(arti);
+		}
+
+		const handleThis = () => {
+			setEditor(true);
+			setEdit(false);
+			setArticle(dummyArticle);
+		}
+
+		const handleHide = (article) => {
+			props.hideArticle(article);
+			socket.emit('request', { route: 'news', action: 'delete', data: { id: article._id } });
+		}
+
     return (
       <Container>
         <Content>
-          {this.props.articles.length === 0 ? <h5>No articles published by {this.state.agency}</h5> : null }
-          {this.props.articles.length > 0 ? <PanelGroup>
-          {this.props.articles.map(article => (
+          {props.articles.length === 0 ? <h5>No articles published</h5> : null }
+          {props.articles.length > 0 ? <PanelGroup>
+          {props.articles.map(article => (
               <Panel
                 key={article._id}
                 header={
@@ -48,11 +61,11 @@ class NewsFeed extends Component {
                     <TeamAvatar size={"sm"} code={article.agency} /><h5 style={{marginLeft:'10px', display: 'inline', verticalAlign:'super'}}>{article.headline}</h5>
                     <ButtonToolbar style={{float: 'right'}}>
                       <ButtonGroup>
-                        {article.publisher.name === this.props.team.name ? <IconButton icon={<Icon icon="edit" />} onClick={() => this.setState({editor: true, edit: true, article })} /> : null}
-                        <IconButton icon={<Icon icon="eye-slash" />} onClick={() => this.props.hideArticle(article)} />
-                        <IconButton icon={<Icon icon="trash" />} onClick={() => this.props.hideArticle(article)} color="red"/>
+                        {article.publisher.name === props.team.name ? <IconButton icon={<Icon icon="edit" />} onClick={() => handleEdit(article)} /> : null}
+                        {/* <IconButton icon={<Icon icon="eye-slash" />} onClick={() => props.hideArticle(article)} /> */}
+                        <IconButton icon={<Icon icon="trash" />} onClick={() => handleHide(article)} color="red"/>
                       </ButtonGroup>
-                      <IconButton icon={<Icon icon="file-text" />} onClick={() => this.setState({view: true, article})} color="green">Open Article</IconButton>
+                      <IconButton icon={<Icon icon="file-text" />} onClick={() => handleOpen(article)} color="green">Open Article</IconButton>
                     </ButtonToolbar>
                   </span>}
                 bordered
@@ -63,17 +76,17 @@ class NewsFeed extends Component {
         </PanelGroup> : null}
         </Content>
         <Sidebar>
-          <IconButton block icon={<Icon icon='file-text' />} onClick={() => this.setState({editor: true, edit: false, article: dummyArticle })}>{buttonTxt}</IconButton>
+          <IconButton block icon={<Icon icon='file-text' />} onClick={() => handleThis()}>{buttonTxt}</IconButton>
         </Sidebar>
-        <Modal overflow edit={this.pr} size='lg' show={this.state.editor} onHide={() => this.setState({editor: false})}>
-          <SubNews edit={this.state.edit} article={this.state.article} onClose={() => this.setState({editor: false})} />
+        <Modal overflow edit={edit} size='lg' show={editor} onHide={() => setEditor(false)}>
+          <SubNews edit={edit} article={article} onClose={() => setEditor(false)} />
         </Modal>
-        <Modal overflow size='lg' show={this.state.view} onHide={() => this.setState({view: false})}>
-          <ViewArticle article={this.state.article} user={this.props.user} onClose={() => this.setState({view: false})} />
+        <Modal overflow size='lg' show={view} onHide={() => setView(false)}>
+          <ViewArticle id={article._id} articles={props.articles} user={props.user} onClose={() => setView(false)} />
         </Modal>
       </Container>
     );
-  }
+  
 }
 
 const mapStateToProps = state => ({

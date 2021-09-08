@@ -43,7 +43,7 @@ const ArticleSchema = new Schema({
 			phase: { type: String },
 			turnNum: { type: Number },
 			clock: { type: String }
-		},
+		}
 	}],
 	published: { type: Boolean, default: false }
 });
@@ -68,7 +68,7 @@ ArticleSchema.statics.post = async function (article) {
 	nexusEvent.emit('request', 'create', [ newArticle ]);
 	logger.info(`The ${this.headline} article has been created`);
 	return newArticle;
-}
+};
 
 ArticleSchema.methods.edit = async function (articleUpdate) {
 	this.publisher = articleUpdate.publisher;
@@ -77,7 +77,7 @@ ArticleSchema.methods.edit = async function (articleUpdate) {
 	this.body = articleUpdate.body;
 	this.tags = articleUpdate.tags;
 	this.imageSrc = articleUpdate.imageSrc;
-	
+
 	const team = await Team.findById(this.publisher);
 	this.agency = team.code;
 
@@ -91,14 +91,14 @@ ArticleSchema.methods.edit = async function (articleUpdate) {
 	nexusEvent.emit('request', 'update', [ article ]);
 	logger.info(`The ${this.headline} article has been edited`);
 	return article;
-}
+};
 
 ArticleSchema.methods.publish = async function () {
 	this.published = true;
 
 	let article = await this.save();
 	article = await article.populateMe();
-	
+
 	nexusEvent.emit('request', 'update', [ article ]);
 	logger.info(`The ${this.headline} article has been published`);
 	return article;
@@ -108,7 +108,7 @@ ArticleSchema.methods.react = async function (user, emoji) {
 	if (user == undefined) throw Error(`An undefined user cannot react to ${this.headline}`);
 	if (emoji == undefined) throw Error(`${user} cannot react to ${this.headline} with an undefined emoji`);
 
-	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
+	const index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
 	if (index >= 0) throw Error(`${user} has already reacted to ${this.headline} with ${emoji}`);
 
 	this.reactions.push({
@@ -118,7 +118,7 @@ ArticleSchema.methods.react = async function (user, emoji) {
 
 	let article = await this.save();
 	article = await article.populateMe();
-	
+
 	nexusEvent.emit('request', 'update', [ article ]);
 	logger.info(`The ${this.headline} article has been reacted to by ${user} with ${emoji}`);
 	return article;
@@ -128,10 +128,10 @@ ArticleSchema.methods.unreact = async function (user, emoji) {
 	if (user == undefined) throw Error(`An undefined user cannot unreact to ${this.headline}`);
 	if (emoji == undefined) throw Error(`${user} cannot unreact to ${this.headline} with an undefined emoji`);
 
-	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
+	const index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
 	if (index < 0) throw Error(`${user} has not reacted to ${this.headline} with ${emoji}`);
 
-	let reactionId = this.reactions[index]._id;
+	const reactionId = this.reactions[index]._id;
 
 	this.reactions.pull({
 		_id: reactionId
@@ -145,7 +145,7 @@ ArticleSchema.methods.unreact = async function (user, emoji) {
 	return article;
 };
 
-ArticleSchema.methods.comment = async function(user, comment) {
+ArticleSchema.methods.comment = async function (user, comment) {
 	if (user == undefined) throw Error(`An undefined user cannot comment on ${this.headline}`);
 	if (comment == undefined) throw Error(`${user} cannot react to ${this.headline} with an undefined comment`);
 
@@ -165,10 +165,10 @@ ArticleSchema.methods.comment = async function(user, comment) {
 	return article;
 };
 
-ArticleSchema.methods.deleteComment = async function(id) {
+ArticleSchema.methods.deleteComment = async function (id) {
 	if (id == undefined) throw Error(`Cannot delete a comment with an undefined id on ${this.headline}`);
 
-	let index = this.comments.findIndex(comment => comment._id == id);
+	const index = this.comments.findIndex(comment => comment._id == id);
 	if (index < 0) throw Error(`There does not exist a comment with the id ${id} on ${this.headline}`);
 
 	this.comments.pull({
@@ -190,7 +190,7 @@ ArticleSchema.methods.delete = async function () {
 	article = await article.populateMe();
 
 	nexusEvent.emit('request', 'update', [ article ]);
-	logger.info(`The ${this.headline} article has been deleted`);
+	logger.info(`The ${this.headline} article has been ''deleted''`);
 
 	return article;
 };

@@ -35,7 +35,6 @@ const Governance = (props) => {
 					<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
 							<div>
-									<Button onClick={()=> socket.emit('request', { route: 'news', action: 'react',})}>Test</Button>
 									<h5>No dashboard has been coded for the Governance Module!</h5>
 									<hr />
 									<u><b>Implemented Features</b></u>

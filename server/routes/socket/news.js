@@ -1,8 +1,5 @@
-const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const masterClock = require('../../wts/gameClock/gameClock');
 
-const { Military } = require('../../models/military');
 const { Article } = require('../../models/article');
 
 module.exports = async function (client, req) {
@@ -10,7 +7,7 @@ module.exports = async function (client, req) {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		switch(req.action) {
 		case('post'): {
-			const { publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
+			const { publisher, location, headline, body, tags, imageSrc } = req.data.article; // REQ Destructure
 
 			await Article.post({
 				publisher,
@@ -20,12 +17,13 @@ module.exports = async function (client, req) {
 				tags,
 				imageSrc
 			});
-			client.emit('alert', { type: 'success', message: `Posted Article` });
+			client.emit('alert', { type: 'success', message: 'Posted Article' });
+			break;
 		}
 		case('edit'): {
-			const { id, publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
+			const { _id, publisher, location, headline, body, tags, imageSrc } = req.data.article; // REQ Destructure
 
-			let article = await Article.findById(id);
+			let article = await Article.findById(_id);
 
 			article = await article.edit({
 				publisher,
@@ -36,12 +34,14 @@ module.exports = async function (client, req) {
 				imageSrc
 			});
 			client.emit('alert', { type: 'success', message: `Edited Article` });
+			break;
 		}
 		case('publish'): {
 			let article = await Article.findById(req.data.id);
 
 			article = await article.publish();
 			client.emit('alert', { type: 'success', message: `Published Article` });
+			break;
 		}
 		case('react'): {
 			let article = await Article.findById(req.data.id);
@@ -50,7 +50,7 @@ module.exports = async function (client, req) {
 			if (reacted) {
 				article = await article.unreact(req.data.user, req.data.emoji);
 				client.emit('alert', { type: 'success', message: `Unreacted with ${req.data.emoji}`});
-			} 
+			}
 			else {
 				article = await article.react(req.data.user, req.data.emoji);
 				client.emit('alert', { type: 'success', message: `Reacted with ${req.data.emoji}`});
@@ -59,9 +59,9 @@ module.exports = async function (client, req) {
 		}
 		case('comment'): {
 			let article = await Article.findById(req.data.id);
-	
-			article = await article.comment(req.data.user, req.data.emoji);
-			client.emit('alert', { type: 'success', message: `Posted Comment` });
+
+			article = await article.comment(req.data.user, req.data.comment);
+			client.emit('alert', { type: 'success', message: 'Posted Comment' });
 			break;
 		}
 		case('deleteComment'): {
@@ -81,10 +81,11 @@ module.exports = async function (client, req) {
 		default: {
 			let message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
-		}}
+		}
+		}
 	}
 	catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-		logger.error(erorr);
+		logger.error(error);
 	}
 };
