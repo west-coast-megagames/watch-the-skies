@@ -5,6 +5,8 @@ const { logger } = require('../middleware/log/winston'); // Loging midddleware
 // Function Import
 const clock = require('../wts/gameClock/gameClock');
 const nexusEvent = require('../middleware/events/events');
+const { Site } = require('./site');
+const { Team } = require('./team');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -50,9 +52,8 @@ ArticleSchema.statics.post = async function (article) {
 	const Article = mongoose.model('article');
 	let newArticle = new Article(article);
 
-	newArticle.data = Date.now();
+	newArticle.date = Date.now();
 	newArticle.timestamp = clock.getTimeStamp();
-	logger.info(`new Article time stamp ${newArticle.timestamp}`);
 
 	const team = await Team.findById(newArticle.publisher);
 	newArticle.agency = team.code;
@@ -61,20 +62,35 @@ ArticleSchema.statics.post = async function (article) {
 	newArticle.dateline = location.dateline;
 
 	await newArticle.validateArticle();
+	newArticle = await newArticle.save();
+	newArticle = await newArticle.populateMe();
 
-	const docs = await Article.find({ headline: newArticle.headline, publisher: newArticle.publisher });
+	nexusEvent.emit('request', 'create', [ newArticle ]);
+	logger.info(`The ${this.headline} article has been created`);
+	return newArticle;
+}
 
-	if (docs.length < 1) {
-		newArticle = await newArticle.save();
-		newArticle = await newArticle.populateMe();
+ArticleSchema.methods.edit = async function (articleUpdate) {
+	this.publisher = articleUpdate.publisher;
+	this.location = articleUpdate.location;
+	this.headline = articleUpdate.headline;
+	this.body = articleUpdate.body;
+	this.tags = articleUpdate.tags;
+	this.imageSrc = articleUpdate.imageSrc;
+	
+	const team = await Team.findById(this.publisher);
+	this.agency = team.code;
 
-		nexusEvent.emit('request', 'create', [ newArticle ]);
-		logger.info(`The ${this.headline} article has been created`);
-		return newArticle;
-	}
-	else {
-		throw Error(`An article with the headline ${newArticle.headline} has already been published!`, 400);
-	}
+	const location = await Site.findById(this.location);
+	this.dateline = location.dateline;
+
+	await this.validateArticle();
+	let article = await this.save();
+	article = await article.populateMe();
+
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been edited`);
+	return article;
 }
 
 ArticleSchema.methods.publish = async function () {

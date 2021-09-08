@@ -22,6 +22,21 @@ module.exports = async function (client, req) {
 			});
 			client.emit('alert', { type: 'success', message: `Posted Article` });
 		}
+		case('edit'): {
+			const { publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
+
+			let article = await Article.findById(id);
+
+			article = await article.edit({
+				publisher,
+				location,
+				headline,
+				body,
+				tags,
+				imageSrc
+			});
+			client.emit('alert', { type: 'success', message: `Edited Article` });
+		}
 		case('publish'): {
 			let article = await Article.findById(req.data.id);
 
