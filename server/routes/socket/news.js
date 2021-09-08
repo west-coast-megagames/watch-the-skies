@@ -8,28 +8,68 @@ const { Article } = require('../../models/article');
 module.exports = async function (client, req) {
 	try {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
-		let message;
 		switch(req.action) {
-		case('react'):
-			// Deploy action expects UNITS & ASSSIGNMENT
-			try {
-				let article = await Article.findById(req.data.id);
-				// TODO - Call population method
-				let reacted = article.reactions.some(reaction => reaction.user == req.data.user && reaction.emoji == req.data.emoji);
-				article = await !reacted ? article.react(req.data.user, req.data.emoji) : article.unreact(req.data.user, req.data.emoji);
-				client.emit('alert', { type: 'success', message: `Article got a reaction of ${req.data.emoji}.` });
-			}
-			catch (error) {
-				client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+		case('post'): {
+			const { publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
+
+			await Article.post({
+				publisher,
+				location,
+				headline,
+				body,
+				tags,
+				imageSrc
+			});
+			client.emit('alert', { type: 'success', message: `Posted Article` });
+		}
+		case('publish'): {
+			let article = await Article.findById(req.data.id);
+
+			article = await article.publish();
+			client.emit('alert', { type: 'success', message: `Published Article` });
+		}
+		case('react'): {
+			let article = await Article.findById(req.data.id);
+
+			let reacted = article.reactions.some(reaction => reaction.user == req.data.user && reaction.emoji == req.data.emoji);
+			if (reacted) {
+				article = await article.unreact(req.data.user, req.data.emoji);
+				client.emit('alert', { type: 'success', message: `Unreacted with ${req.data.emoji}`});
+			} 
+			else {
+				article = await article.react(req.data.user, req.data.emoji);
+				client.emit('alert', { type: 'success', message: `Reacted with ${req.data.emoji}`});
 			}
 			break;
-		default:
-			message = `No ${req.action} is in the ${req.route} route.`;
-			throw new Error(message);
 		}
+		case('comment'): {
+			let article = await Article.findById(req.data.id);
+	
+			article = await article.comment(req.data.user, req.data.emoji);
+			client.emit('alert', { type: 'success', message: `Posted Comment` });
+			break;
+		}
+		case('deleteComment'): {
+			let article = await Article.findById(req.data.id);
+
+			article = await article.deleteComment(req.data.commentId);
+			client.emit('alert', { type: 'success', message: `Deleted Comment` });
+			break;
+		}
+		case('delete'): {
+			let article = await Article.findById(req.data.id);
+
+			article = await article.delete();
+			client.emit('alert', { type: 'success', message: 'Deleted Article' });
+			break;
+		}
+		default: {
+			let message = `No ${req.action} is in the ${req.route} route.`;
+			throw new Error(message);
+		}}
 	}
 	catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-		console.log(error);
+		logger.error(erorr);
 	}
 };

@@ -1,7 +1,6 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
-const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 
 // Function Import
 const clock = require('../wts/gameClock/gameClock');
@@ -49,39 +48,136 @@ const ArticleSchema = new Schema({
 
 ArticleSchema.statics.post = async function (article) {
 	const Article = mongoose.model('article');
-	let newArticle = new Article(req.body);
+	let newArticle = new Article(article);
 
-	newArticle.date = new Date();
-	const retTimestamp = clock.getTimeStamp();
-	if (retTimestamp) {
-		newArticle.timestamp = retTimestamp;
-	}
-	else {
-		newArticle.timestamp = req.body.timestamp;
-	}
-
+	newArticle.data = Date.now();
+	newArticle.timestamp = clock.getTimeStamp();
 	logger.info(`new Article time stamp ${newArticle.timestamp}`);
+
+	const team = await Team.findById(newArticle.publisher);
+	newArticle.agency = team.code;
+
 	const location = await Site.findById(newArticle.location);
 	newArticle.dateline = location.dateline;
-	logger.info(`new Article time stamp ${newArticle.timestamp}`);
+
 	await newArticle.validateArticle();
-	logger.info(`new Article time stamp ${newArticle.timestamp}`);
 
 	const docs = await Article.find({ headline: newArticle.headline, publisher: newArticle.publisher });
 
 	if (docs.length < 1) {
 		newArticle = await newArticle.save();
-		// TODO: Team.populate is NOT working ... avoiding error on logger.info
-		await Team.populate(newArticle, { path: 'publisher', model: 'Team', select: 'name' });
-		if (newArticle.team) {
-			logger.info(`${newArticle.headline} article created for ${newArticle.team.name} ...`);
-		}
+		newArticle = await newArticle.populateMe();
+
+		nexusEvent.emit('request', 'create', [ newArticle ]);
+		logger.info(`The ${this.headline} article has been created`);
 		return newArticle;
 	}
 	else {
-		nexusError(`An article with the headline ${newArticle.headline} has already been published!`, 400);
+		throw Error(`An article with the headline ${newArticle.headline} has already been published!`, 400);
 	}
 }
+
+ArticleSchema.methods.publish = async function () {
+	this.published = true;
+
+	let article = await this.save();
+	article = await article.populateMe();
+	
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been published`);
+	return article;
+};
+
+ArticleSchema.methods.react = async function (user, emoji) {
+	if (user == undefined) throw Error(`An undefined user cannot react to ${this.headline}`);
+	if (emoji == undefined) throw Error(`${user} cannot react to ${this.headline} with an undefined emoji`);
+
+	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
+	if (index >= 0) throw Error(`${user} has already reacted to ${this.headline} with ${emoji}`);
+
+	this.reactions.push({
+		user: user,
+		emoji: emoji
+	});
+
+	let article = await this.save();
+	article = await article.populateMe();
+	
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been reacted to by ${user} with ${emoji}`);
+	return article;
+};
+
+ArticleSchema.methods.unreact = async function (user, emoji) {
+	if (user == undefined) throw Error(`An undefined user cannot unreact to ${this.headline}`);
+	if (emoji == undefined) throw Error(`${user} cannot unreact to ${this.headline} with an undefined emoji`);
+
+	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
+	if (index < 0) throw Error(`${user} has not reacted to ${this.headline} with ${emoji}`);
+
+	let reactionId = this.reactions[index]._id;
+
+	this.reactions.pull({
+		_id: reactionId
+	});
+
+	let article = await this.save();
+	article = await article.populateMe();
+
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been unreacted to by ${user} with ${emoji}`);
+	return article;
+};
+
+ArticleSchema.methods.comment = async function(user, comment) {
+	if (user == undefined) throw Error(`An undefined user cannot comment on ${this.headline}`);
+	if (comment == undefined) throw Error(`${user} cannot react to ${this.headline} with an undefined comment`);
+
+	const timestamp = clock.getTimeStamp();
+
+	this.comments.push({
+		user: user,
+		comment: comment,
+		timestamp: timestamp
+	});
+
+	let article = await this.save();
+	article = await article.populateMe();
+
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been commented on by ${user}`);
+	return article;
+};
+
+ArticleSchema.methods.deleteComment = async function(id) {
+	if (id == undefined) throw Error(`Cannot delete a comment with an undefined id on ${this.headline}`);
+
+	let index = this.comments.findIndex(comment => comment._id == id);
+	if (index < 0) throw Error(`There does not exist a comment with the id ${id} on ${this.headline}`);
+
+	this.comments.pull({
+		_id: id
+	});
+
+	let article = await this.save();
+	article = await article.populateMe();
+
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has had the comment with the id ${id} deleted`);
+	return article;
+};
+
+ArticleSchema.methods.delete = async function () {
+	this.hidden = true;
+
+	let article = await this.save();
+	article = await article.populateMe();
+
+	nexusEvent.emit('request', 'update', [ article ]);
+	logger.info(`The ${this.headline} article has been deleted`);
+
+	return article;
+};
 
 // validateArticle method
 ArticleSchema.methods.validateArticle = async function () {
@@ -96,7 +192,7 @@ ArticleSchema.methods.validateArticle = async function () {
 	});
 
 	const mainCheck = schema.validate(this, { allowUnknown: true });
-	if (mainCheck.error != undefined) nexusError(`${mainCheck.error}`, 400);
+	if (mainCheck.error != undefined) throw Error(`${mainCheck.error}`, 400);
 
 	const timestampSchma = Joi.object({
 		turn: Joi.string().min(1),
@@ -106,89 +202,10 @@ ArticleSchema.methods.validateArticle = async function () {
 	});
 
 	const timestampCheck = timestampSchma.validate(this, { allowUnknown: true });
-	if (timestampCheck.error != undefined) nexusError(`${timestampCheck.error}`, 400);
+	if (timestampCheck.error != undefined) throw Error(`${timestampCheck.error}`, 400);
 
 	await validTeam(this.publisher);
 	await validSite(this.location);
-};
-
-ArticleSchema.methods.publish = async function () {
-	this.published = true;
-
-	await this.save();
-	logger.info(`The ${this.headline} article has been published`);
-};
-
-ArticleSchema.methods.react = async function (user, emoji) {
-	if (user == undefined) nexusError(`An undefined user cannot react to ${this.headline}`);
-	if (emoji == undefined) nexusError(`${user} cannot react to ${this.headline} with an undefined emoji`);
-
-	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
-	if (index >= 0) nexusError(`${user} has already reacted to ${this.headline} with ${emoji}`);
-
-	this.reactions.push({
-		user: user,
-		emoji: emoji
-	});
-
-	let article = await this.save();
-	article = await article.populateMe();
-	nexusEvent.emit('request', 'update', [ article ]);
-	logger.info(`The ${this.headline} article has been reacted to by ${user} with ${emoji}`);
-};
-
-ArticleSchema.methods.unreact = async function (user, emoji) {
-	if (user == undefined) nexusError(`An undefined user cannot unreact to ${this.headline}`);
-	if (emoji == undefined) nexusError(`${user} cannot unreact to ${this.headline} with an undefined emoji`);
-
-	let index = this.reactions.findIndex(reaction => reaction.user == user && reaction.emoji == emoji);
-	if (index < 0) nexusError(`${user} has not reacted to ${this.headline} with ${emoji}`);
-
-	let reactionId = this.reactions[index]._id;
-
-	this.reactions.pull({
-		_id: reactionId
-	});
-
-	await this.save();
-	logger.info(`The ${this.headline} article has been unreacted to by ${user} with ${emoji}`);
-};
-
-ArticleSchema.methods.comment = async function(user, comment) {
-	if (user == undefined) nexusError(`An undefined user cannot comment on ${this.headline}`);
-	if (comment == undefined) nexusError(`${user} cannot react to ${this.headline} with an undefined comment`);
-
-	const timestamp = clock.getTimeStamp();
-
-	this.comments.push({
-		user: user,
-		comment: comment,
-		timestamp: timestamp
-	});
-
-	await this.save();
-	logger.info(`The ${this.headline} article has been commented on by ${user}`);
-};
-
-ArticleSchema.methods.deleteComment = async function(id) {
-	if (id == undefined) nexusError(`Cannot delete a comment with an undefined id on ${this.headline}`);
-
-	let index = this.comments.findIndex(comment => comment._id == id);
-	if (index < 0) nexusError(`There does not exist a comment with the id ${id} on ${this.headline}`);
-
-	this.comments.pull({
-		_id: id
-	});
-
-	await this.save();
-	logger.info(`The ${this.headline} article has had the comment with the id ${id} deleted`);
-};
-
-ArticleSchema.methods.delete = async function () {
-	this.hidden = true;
-
-	await this.save();
-	logger.info(`The ${this.headline} article has been deleted`);
 };
 
 ArticleSchema.methods.populateMe = async function () {
