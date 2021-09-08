@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, Icon, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +9,7 @@ import LoginLink from '../components/common/loginLink';
 import Budget from './tabs/gov/budget';
 import GameTimeline from './tabs/gov/GameTimeline';
 import Agreements from './tabs/gov/Agreements';
+import socket from '../socket';
 
 const Governance = (props) => {
 	const [tab, setTab] = React.useState('dashboard');
@@ -34,6 +35,7 @@ const Governance = (props) => {
 					<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
 							<div>
+									<Button onClick={()=> socket.emit('request', { route: 'news', action: 'react',})}>Test</Button>
 									<h5>No dashboard has been coded for the Governance Module!</h5>
 									<hr />
 									<u><b>Implemented Features</b></u>

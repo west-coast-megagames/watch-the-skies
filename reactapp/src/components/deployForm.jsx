@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
 import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader } from 'rsuite';
 
@@ -6,177 +6,54 @@ import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
 import socket from '../socket';
 import distance from '../scripts/range';
-class DeployMilitary extends Component {
-	state = {
-		team: undefined,
-		sites: [],
-		target: undefined,
-		destination: null,
-		corps: [],
-		fleets: [],
-		mobilization: [],
-		deployType: 'deploy',
-		cost: 0
+
+const DeployMilitary = (props) => {
+	const [team, setTeam] = React.useState(props.team.name); 
+	const [cost, setCost] = React.useState(0); 
+	const [deployType, setDeployType] = React.useState('deploy'); 
+	const [corps, setCorps] = React.useState([]); 
+	const [fleets, setFleets] = React.useState([]); 
+	const [mobilization, setMobilization] = React.useState([]); 
+
+
+	useEffect(() => {
+	filterUnits();
+	}, [])
+
+	useEffect(() => {
+		if (props.target) {
+			let cost = 0 // Gets the current displayed cost
+			let target = props.sites.find(el => el._id === props.target._id); // Looks up the target site via the stored _id
+			Alert.warning(target.name) // Gives me site name
+			for (let unit of mobilization) {
+					unit = props.military.find(el => el._id === unit) // Looks up current unit
+					if (unit.zone.name === target.zone.name) { cost += unit.stats.localDeploy };
+					if (unit.zone.name !== target.zone.name) { cost += unit.stats.globalDeploy }; 
+			}
+			setCost(cost); 
 	}
+	}, [mobilization])
 
-	componentDidMount() {
-		this.setState({team: this.props.team.name, target: this.props.target, deployType: 'deploy' });
-		this.filterLocations();
-		this.filterUnits();
-	}
-
-	componentDidUpdate(prevProps, prevState) {
-		if (this.props.target !== prevProps.target) this.setState({ destination: this.props.target._id, target: this.props.target })
-		if (this.state.target !== prevState.target) this.filterUnits();
-		if (this.state.team !== prevState.team) this.filterUnits();
-		if (this.state.mobilization.length !== prevState.mobilization.length && this.state.destination !== null) {
-				let cost = 0 // Gets the current displayed cost
-				let target = this.props.sites.find(el => el._id === this.state.destination); // Looks up the target site via the stored _id
-				Alert.warning(target.name) // Gives me site name
-				for (let unit of this.state.mobilization) {
-						unit = this.props.military.find(el => el._id === unit) // Looks up current unit
-						if (unit.zone.name === target.zone.name) { cost += unit.stats.localDeploy };
-						if (unit.zone.name !== target.zone.name) { cost += unit.stats.globalDeploy }; 
-				}
-				this.setState({cost, target});
-		}
-}
-
-	handleTeam = (value) => { this.setState({team: value, cost: 0}); this.filterUnits();};
-	handleType = (value) => { 
-		this.setState({deployType: value, mobilization: [], cost: 0});
-		this.filterUnits(value);
+	const handleTeam = (value) => { 
+		setTeam(value);
+		setCost(0); 
+		filterUnits();
 	};
-	handleDestination = (value) => { 
-		let target = this.props.sites.find(el => el._id === value); // Looks up the target site via the stored _id
-		this.setState ({destination: value, target});
-	};
-	handleUnits = (value) => {
-		let cost = this.state.cost;
-		let mobilization = value;
-		for (let unit of mobilization) {
-			unit = this.props.military.find(el => el._id === unit) // Looks up current unit
-			if (unit.zone.name === this.state.target.zone.name) { cost += unit.stats.localDeploy };
-			if (unit.zone.name !== this.state.target.zone.name) { cost += unit.stats.globalDeploy }; 
-		}
-		this.setState({mobilization, cost});
-	};
-	handleExit = () => {
-		this.setState({mobilization: [], cost: 0});
-		this.props.hide();
-	}
 
-	render() { 
-		return (
-			<Drawer size='sm' placement='right' show={this.props.show} onHide={this.handleExit}>
-				<Drawer.Header>
-					{ this.state.team && <Drawer.Title>{ this.state.deployType === 'deploy' ? 'Military Deployment' : this.state.deployType === 'invade' ?  `Invade ${this.state.target.name}` : `Transfer to facility in ${this.state.target.name}` } - { this.props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${this.state.cost}`}</Tag></Drawer.Title> }
-				</Drawer.Header>
-				{ !this.state.team && <Drawer.Body><Loader /></Drawer.Body>}
-				{ this.state.team && <Drawer.Body>
-						{ this.props.user.roles.some(el => el === 'Control') && <div>
-							<h6>Select Team</h6>
-							<SelectPicker block placeholder='Select Team'
-									data={[...this.props.teams].filter(el => el.type === 'National')}
-									labelKey='name'
-									valueKey='name'
-									onChange={this.handleTeam}
-									disabled={!this.props.user.roles.some(el => el === 'Control')}
-									value={this.state.team}
-							/>
-						</div> }
-						<Divider />
-						{ this.state.target && <div>
-							<FlexboxGrid>
-								<FlexboxGrid.Item colspan={12}>
-									<h4>{ this.state.target.name }</h4> 	0
-									{!this.state.target.status.some(el => el === 'occupied') && <p>{this.state.target.team.name}</p>	}			
-									{ this.state.target.status.some(el => el === 'occupied') && <p>Occupied by {this.state.target.occupier.shortName}</p> }				
-								</FlexboxGrid.Item>
-								<FlexboxGrid.Item colspan={12}>
-									<b>Status:</b>
-									<TagGroup>
-										{ this.state.target.status.map((tag, index) => (
-											<Tag key={index} color={ tag === 'occupied' || tag === 'warzone' ? 'red' : 'green'}>
-												<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
-											</Tag>
-										))}
-										{ this.state.target.tags.map((tag, index) => (
-											<Tag key={index} color={ tag === 'coastal' ? 'blue' : tag === 'capital' ? 'yellow' : 'violet'}>
-												<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
-											</Tag>
-										))}
-									</TagGroup>									
-								</FlexboxGrid.Item>
-							</FlexboxGrid>
-						</div> }
-						{ !this.props.target && <div>
-							<h6>Select Destination</h6>
-							<SelectPicker block disabled={this.state.team == null} placeholder='Select Destination'
-									data={this.state.sites.sort((el_a, el_b) => (el_a.name > el_b.name) ? 1 : -1)}
-									onChange={this.handleDestination}
-									value={this.state.destination}
-									valueKey='_id'
-									labelKey='info'
-									groupBy='checkZone'
-							/>
-						</div> }
-						<Divider />
-						<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
-								<ButtonGroup>
-									<Button color={this.state.deployType === 'deploy' ? 'blue' : 'grey'} onClick={() => this.handleType('deploy')} >Deploy</Button>
-									<Button disabled={this.props.target ? this.props.target.team._id === this.props.team._id : true} color={this.state.deployType === 'invade' ? 'red' : 'grey'} onClick={() => this.handleType('invade')} >Invade</Button>
-									<Button disabled={this.props.target ? this.props.target.team._id !== this.props.team._id : true} color={this.state.deployType === 'transfer' ? 'green' : 'grey'} onClick={() => this.handleType('transfer')} >Transfer</Button>
-								</ButtonGroup>		
-						</div>
-						<Divider />
-						{ this.state.deployType === 'transfer' &&
-							<div>
-								<h6>Facilities in {this.state.target.name} </h6>
-								<List>
-									{ this.props.facilities.map((facility, index) => (<List.Item key={index}>
-										{facility.name}
-									</List.Item>))}
-								</List>
-								<Divider />
-							</div>
-						}
-						{ this.state.deployType === 'invade' &&
-							<div>
-								<h6>Your facilities closest to {this.state.target.name} </h6>
-								<List>
-									{ this.props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
-										{facility.name} - {`${Math.trunc(distance(this.props.target.geoDecimal.lat, this.props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
-									</List.Item>))}
-								</List>
-								<Divider />
-							</div>
-						}
-						<h6>Select Units</h6>
-						{ this.state.target && <CheckPicker block disabled={this.state.team == null || this.state.destination == null} placeholder='Select Units'
-								data={ this.state.target.tags.some(el => el === 'coastal') ? [...this.state.fleets, ...this.state.corps] : this.state.corps }
-								onChange={this.handleUnits}
-								valueKey='_id'
-								labelKey='info'
-								groupBy='checkZone'
-								value={ this.state.mobilization }
-						/> }
-				</Drawer.Body>}
-				<Drawer.Footer>
-						<Button onClick={this.submitDeployment} appearance="primary">Confirm</Button>
-						<Button onClick={this.handleExit} appearance="subtle">Cancel</Button>
-				</Drawer.Footer>
-		</Drawer>
-		);
-	}
+	const handleType = (value) => { 
+		setDeployType(value);
+		setMobilization([]);
+		setCost(0); 
+		filterUnits(value);
+	};
 
-	filterUnits = (deployType = this.state.deployType) => {
-		if (this.state.target) { // console.log('Filtering Units...')
-			const { geoDecimal } = this.state.target
+	const filterUnits = () => {
+		if (props.target) { // console.log('Filtering Units...')
+			const { geoDecimal } = props.target
 			let fleets = [];
 			let corps = [];
-			for (let unit of this.props.military) {
-				if (this.state.team === unit.team.name) { // why
+			for (let unit of props.military) {
+				if (team === unit.team.name) { // why
 					if (deployType !== 'invade' || distance(geoDecimal.lat, geoDecimal.lng, unit.site.geoDecimal.lat, unit.site.geoDecimal.lng) < 1000) {
 						let unitData = {
 							name: unit.name,
@@ -189,40 +66,128 @@ class DeployMilitary extends Component {
 					}
 				}
 			}
-			this.setState({corps, fleets});
+			setFleets(fleets);
+			setCorps(corps);
 		}
 	}
 
-	filterLocations = () => {
-		// console.log('Filtering Sites..')
-		let sites = []
-		for (let site of this.props.sites) {
-			let siteData = {
-				checkZone: site.zone.name,
-				info: `${site.organization.name} - ${site.name} | ${site.subType}`,
-				_id: site._id
-			}
-	
-			sites.push(siteData);
-			this.setState({sites})
+	const handleUnits = (mobilization) => {
+		let tempCost = cost;
+		for (let unit of mobilization) {
+			unit = props.military.find(el => el._id === unit) // Looks up current unit
+			if (unit.zone.name === props.target.zone.name) { tempCost += unit.stats.localDeploy };
+			if (unit.zone.name !== props.target.zone.name) { tempCost += unit.stats.globalDeploy }; 
 		}
+		setMobilization(mobilization);
+		setCost(tempCost); 
+	};
+
+	const handleExit = () => {
+		setMobilization([]);
+		setCost(0); 
+		props.hide();
 	}
 
-	submitDeployment = async () => { 
-		let { cost, mobilization, destination, team } = this.state;
-		let deployment = { cost, units: mobilization, destination, team };
-
+	const submitDeployment = async () => { 
 		try {
-			if (this.state.deployType === 'deploy') {
-				socket.emit('request', { route: 'military', action: 'deploy', data: { units: mobilization, destination }});
-			}
-				// socket.emit( 'militarySocket', this.state.deployType, deployment);
-				this.setState({mobilization: [], cost: 0});
+			socket.emit('request', { route: 'military', action: 'deploy', data: { units: mobilization, destination: props.target._id }});
+				// socket.emit( 'militarySocket', state.deployType, deployment);
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 		}
-		this.props.hide();
+		handleExit();
 	}   
+
+	return (
+		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
+			<Drawer.Header>
+				{ team && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Drawer.Title> }
+			</Drawer.Header>
+			{ !team && <Drawer.Body><Loader /></Drawer.Body>}
+			{ team && <Drawer.Body>
+					{ props.user.roles.some(el => el === 'Control') && <div>
+						<h6>Select Team</h6>
+						<SelectPicker block placeholder='Select Team'
+								data={[...props.teams].filter(el => el.type === 'National')}
+								labelKey='name'
+								valueKey='name'
+								onChange={handleTeam}
+								disabled={!props.user.roles.some(el => el === 'Control')}
+								value={team}
+						/>
+					</div> }
+					<Divider />
+					{ props.target && <div>
+						<FlexboxGrid>
+							<FlexboxGrid.Item colspan={12}>
+								<h4>{ props.target.name }</h4>
+								{!props.target.status.some(el => el === 'occupied') && <p>{props.target.team.name}</p>	}			
+								{ props.target.status.some(el => el === 'occupied') && <p>Occupied by {props.target.occupier.shortName}</p> }				
+							</FlexboxGrid.Item>
+							<FlexboxGrid.Item colspan={12}>
+								<b>Status:</b>
+								<TagGroup>
+									{ props.target.status.map((tag, index) => (
+										<Tag key={index} color={ tag === 'occupied' || tag === 'warzone' ? 'red' : 'green'}>
+											<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
+										</Tag>
+									))}
+									{ props.target.tags.map((tag, index) => (
+										<Tag key={index} color={ tag === 'coastal' ? 'blue' : tag === 'capital' ? 'yellow' : 'violet'}>
+											<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
+										</Tag>
+									))}
+								</TagGroup>									
+							</FlexboxGrid.Item>
+						</FlexboxGrid>
+					</div> }
+					<Divider />
+					<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
+							<ButtonGroup>
+								<Button color={deployType === 'deploy' ? 'blue' : 'grey'} onClick={() => handleType('deploy')} >Deploy</Button>
+								<Button disabled={props.target ? props.target.team._id === props.team._id : true} color={deployType === 'invade' ? 'red' : 'grey'} onClick={() => handleType('invade')} >Invade</Button>
+								<Button disabled={false} color={deployType === 'transfer' ? 'green' : 'grey'} onClick={() => handleType('transfer')} >Transfer</Button>
+							</ButtonGroup>		
+					</div>
+					<Divider />
+					{ deployType === 'transfer' &&
+						<div>
+							<h6>Facilities in {props.target.name} </h6>
+							<List>
+								{ props.facilities.map((facility, index) => (<List.Item key={index}>
+									{facility.name}
+								</List.Item>))}
+							</List>
+							<Divider />
+						</div>
+					}
+					{ deployType === 'invade' &&
+						<div>
+							<h6>Your facilities closest to {props.target.name} </h6>
+							<List>
+								{ props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
+									{facility.name} - {`${Math.trunc(distance(props.target.geoDecimal.lat, props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
+								</List.Item>))}
+							</List>
+							<Divider />
+						</div>
+					}
+					<h6>Select Units</h6>
+					{ props.target && <CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
+							data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
+							onChange={handleUnits}
+							valueKey='_id'
+							labelKey='info'
+							groupBy='checkZone'
+							value={ mobilization }
+					/> }
+			</Drawer.Body>}
+			<Drawer.Footer>
+					<Button onClick={submitDeployment} appearance="primary">Confirm</Button>
+					<Button onClick={handleExit} appearance="subtle">Cancel</Button>
+			</Drawer.Footer>
+	</Drawer>
+	);
 }
 const mapStateToProps = state => ({
 	login: state.auth.login,

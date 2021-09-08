@@ -5,6 +5,7 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 
 // Function Import
 const clock = require('../wts/gameClock/gameClock');
+const nexusEvent = require('../middleware/events/events');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -130,7 +131,9 @@ ArticleSchema.methods.react = async function (user, emoji) {
 		emoji: emoji
 	});
 
-	await this.save();
+	let article = await this.save();
+	article = await article.populateMe();
+	nexusEvent.emit('request', 'update', [ article ]);
 	logger.info(`The ${this.headline} article has been reacted to by ${user} with ${emoji}`);
 };
 
@@ -149,7 +152,7 @@ ArticleSchema.methods.unreact = async function (user, emoji) {
 
 	await this.save();
 	logger.info(`The ${this.headline} article has been unreacted to by ${user} with ${emoji}`);
-}
+};
 
 ArticleSchema.methods.comment = async function(user, comment) {
 	if (user == undefined) nexusError(`An undefined user cannot comment on ${this.headline}`);
@@ -186,7 +189,13 @@ ArticleSchema.methods.delete = async function () {
 
 	await this.save();
 	logger.info(`The ${this.headline} article has been deleted`);
-}
+};
+
+ArticleSchema.methods.populateMe = async function () {
+	return this.populate('publisher', 'name shortName')
+		.populate('location', 'name dateline')
+		.execPopulate();
+};
 
 const Article = mongoose.model('article', ArticleSchema);
 

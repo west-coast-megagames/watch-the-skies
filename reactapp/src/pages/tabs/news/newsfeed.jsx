@@ -69,7 +69,7 @@ class NewsFeed extends Component {
           <SubNews edit={this.state.edit} article={this.state.article} onClose={() => this.setState({editor: false})} />
         </Modal>
         <Modal overflow size='lg' show={this.state.view} onHide={() => this.setState({view: false})}>
-          <ViewArticle article={this.state.article} onClose={() => this.setState({view: false})} />
+          <ViewArticle article={this.state.article} user={this.props.user} onClose={() => this.setState({view: false})} />
         </Modal>
       </Container>
     );
@@ -79,6 +79,7 @@ class NewsFeed extends Component {
 const mapStateToProps = state => ({
   login: state.auth.login,
   team: state.auth.team,
+	user: state.auth.user.username,
   articles: state.entities.articles.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
   teams: state.entities.teams.list,
   lastFetch: state.entities.articles.lastFetch

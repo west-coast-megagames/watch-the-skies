@@ -1,5 +1,6 @@
 import React from 'react';
 import { IconButton, ButtonToolbar, Icon, Alert, Button, Modal, Divider } from "rsuite";
+import socket from '../../socket';
 import TeamAvatar from "./teamAvatar";
 
 const ViewArticle = (props) => {
@@ -19,7 +20,7 @@ const ViewArticle = (props) => {
           </Modal.Body>
           <Modal.Footer>
             <ButtonToolbar style={{float: 'right'}}>
-              <IconButton icon={<Icon icon='thumbs-up' />} onClick={() => Alert.success(`You liked the acrticle, good for you...`)}>{article.likes}</IconButton>
+              <IconButton icon={<Icon icon='thumbs-up' />} onClick={() => socket.emit('request', { route: 'news', action: 'react', data: { id: article._id, user: props.user, emoji: 'thumbs-up'} })}>{article.likes}</IconButton>
               <Button color='red' onClick={() => props.onClose()} appearance="subtle"> Close </Button>
             </ButtonToolbar>
           </Modal.Footer>
