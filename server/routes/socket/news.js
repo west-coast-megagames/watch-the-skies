@@ -23,7 +23,7 @@ module.exports = async function (client, req) {
 			client.emit('alert', { type: 'success', message: `Posted Article` });
 		}
 		case('edit'): {
-			const { publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
+			const { id, publisher, location, headline, body, tags, imageSrc } = req.data; // REQ Destructure
 
 			let article = await Article.findById(id);
 
