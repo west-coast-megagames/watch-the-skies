@@ -58,9 +58,9 @@ MilitarySchema.methods.mission = async function (assignment) {
 
 		this.assignment = assignment; // Sets assignment as current mission
 
-		await this.save(); // Saves the UNIT
+		const unit = await this.save(); // Saves the UNIT
 		
-		nexusEvent.emit('request', 'update', [ this ]);
+		nexusEvent.emit('request', 'update', [ unit ]);
 
 		return this;
 	} catch (error) {
@@ -99,9 +99,9 @@ MilitarySchema.methods.deploy = async function(site) {
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: cost, note: `${this.name} deployed to ${target.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
-		await this.save();
+		const unit = await this.save();
 
-		nexusEvent.emit('request', 'update', [ this ]); 
+		nexusEvent.emit('request', 'update', [ unit ]); 
 		return this;
 	}
 	catch (err) {
@@ -136,13 +136,34 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		this.markModified('status');
 		
 		const unit = await this.save();
-		nexusEvent.emit('request', 'update', [ this ]); 
+		nexusEvent.emit('request', 'update', [ unit ]);
 		logger.info(`${this.name} returned to ${home.name}...`);
 
 		return ;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
+	}
+};
+
+// METHOD - mobilize
+// IN: VOID | OUT: VOID
+// PROCESS: Mobilizes unit in preporation for action
+MilitarySchema.methods.mobilize = async function () {
+	try {
+		logger.info(`${this.name} is mobilizing...`);
+
+		await addArrayValue(this.status, 'mobilized');
+		this.markModified('status');
+
+		const unit = await this.save();
+		nexusEvent.emit('request', 'update', [ unit ]);
+
+		return ;
+	}
+	catch (err) {
+		logger.error(`${err.message}`, { meta: err.stack });
+		throw err;
 	}
 };
 
@@ -160,6 +181,17 @@ MilitarySchema.methods.takeAction = async function () {
 	} else {
 		this.actions -= 1;
 	}
+};
+
+// METHOD - endTurn
+// IN - VOID | OUT: VOID
+// PROCESS: Standard WTS method for end of turn maintanance for the military object
+MilitarySchema.methods.endTurn = async function () {
+	this.actions = 1;
+	this.missions = 1;
+
+	if (this.status.some(el => el === 'recall')) await this.recall(true);
+	await this.save();
 };
 
 MilitarySchema.methods.validateMilitary = async function () {
