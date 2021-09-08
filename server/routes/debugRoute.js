@@ -10,6 +10,7 @@ const { Upgrade } = require('../models/upgrade');
 const { Team } = require('../models/team');
 const { Facility } = require('../models/facility');
 const { Aircraft } = require('../models/aircraft');
+const { Military } = require('../models/military');
 const { Intel, generateIntel } = require('../models/intel');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
 const badwordsArray = require('../middleware/badWords');
@@ -23,6 +24,35 @@ const { resolveMissions } = require('../wts/intercept/missions');
 router.patch('/research', async function (req, res) {
 	startResearch();
 	res.status(200).send('We triggered the research system!');
+});
+
+// @route   PATCH debug/mobilize
+// @desc    Trigger mobilize sequence
+// @access  Public
+router.patch('/mobilize', async function (req, res) {
+	let count = 0;
+	const military = await Military.findOne();
+	military.mobilize();
+	res.status(200).send(`${military.name} mobilized.`);
+});
+
+// @route   PATCH debug/endTurn
+// @desc    Trigger endTurn sequence
+// @access  Public
+router.patch('/endTurn', async function (req, res) {
+	let count = 0;
+	const military = await Military.find();
+	for (let unit of military) {
+		try{
+			await unit.endTurn();
+			count++;
+		} catch (err) {
+			logger.error(`${err.message}`, {
+				meta: err.stack
+			});
+		}
+	}
+	res.status(200).send(`${count} objects iterated over for endTurn`);
 });
 
 // @route   PATCH debug/intel
@@ -135,6 +165,19 @@ router.patch('/return/aircrafts', async function (req, res) {
 	}
 	res.status(200).send(`${count} aircrafts succesfully returned!`);
 	nexusEvent.emit('updateAircrafts');
+});
+
+// @route   PATCH debug/return/aircraft
+// @desc    Update all aircrafts to return to base
+// @access  Public
+router.patch('/return/military', async function (req, res) {
+	routeDebugger('Returning all military base!');
+	let count = 0;
+	for await (const military of await Military.find()) {
+		const response = await military.recall(true);
+		count++;
+	}
+	res.status(200).send(`${count} military succesfully returned!`);
 });
 
 router.get('/badword', async function (req, res) {
