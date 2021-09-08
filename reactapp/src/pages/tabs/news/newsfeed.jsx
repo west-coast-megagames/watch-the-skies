@@ -14,6 +14,15 @@ const NewsFeed = (props) => {
 	const [view, setView] = React.useState(false);
 	const [editor, setEditor] = React.useState(false);
 	const [edit, setEdit] = React.useState(false);
+
+	/*
+	Scott's TODO list:
+	Fix comments looking dumb
+	Add more reactions (flags, dislike, alien, ect)
+	Add in filtering based on published/hidden booleans
+	change user from username to player's actual name or in-game title
+	Figure out AvatarIcons and how to use user to get proper flag
+	*/
 	
     
     const buttonTxt = props.team.type === 'Media' ? 'Draft new Article' : 'Draft new Press Release';
