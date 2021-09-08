@@ -148,6 +148,7 @@ AccountSchema.methods.spend = async function (transaction) {
 	}
 	catch (err) {
 		console.log(err); // TODO: Add error handling
+		throw err;
 		return err;
 	}
 };
