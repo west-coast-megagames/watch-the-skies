@@ -16,24 +16,6 @@ const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
 const { Site } = require('../../models/site');
 
-// Game State - Server side template items
-
-// MUST BUILD - Initiation
-router.get('/initialteGame', async (req, res) => {
-	try {
-		// Load Knowledge
-		// Load Tech
-		// Seed Research
-		// Load upgrades
-		// Load Facilities
-		// Log Game state
-		res.status(200).send('Successful Initiation...');
-	}
-	catch (err) {
-		res.send(err);
-	}
-});
-
 // @route   PATCH game/admin/resethull
 // @desc    Update all aircrafts to max health
 // @access  Public
