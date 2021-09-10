@@ -120,7 +120,6 @@ module.exports = function (server) {
 		}
 		io.emit('clients', users);
 	}
-	// require('./socket/update')(io);
-	// require('./socket/main')(io);
+
 	logger.info('Sockets Online...');
 };
