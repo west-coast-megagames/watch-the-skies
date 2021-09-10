@@ -8,6 +8,15 @@ const { validTeam, validOrganization, validZone, validLog, validFacility, validU
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
+const FavorSchema = new Schema({
+	team: {
+		_id: { type: ObjectId, ref: 'Team', required: true },
+		name: { type: String, required: true }
+	},
+	favor: { type: Number, default: 25, required: true },
+	status: [{ type: String, enum:  ['occupier', 'liberator'] } ]
+});
+
 const SiteSchema = new Schema({
 	model: { type: String, default: 'Site' },
 	name: { type: String, required: true, minlength: 2, maxlength: 50 },
@@ -106,6 +115,7 @@ const GroundSite = Site.discriminator(
 		loyalty: { type: Number, min: 0, max: 100, default: 85 },
 		repression: { type: Number, min: 0, max: 100, default: 0 },
 		morale: { type: Number, min: 0, max: 100, default: 50 },
+		favor: [FavorSchema],
 		geoDMS: {
 			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
 			lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
@@ -116,7 +126,6 @@ const GroundSite = Site.discriminator(
 		},
 		tags: [{ type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },
-		salvage: [{ type: String }], // type: ObjectId, ref: 'Upgrade'
 		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
 	})
 );
