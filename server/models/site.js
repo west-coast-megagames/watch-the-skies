@@ -98,9 +98,6 @@ SiteSchema.methods.validateSite = async function () {
 		const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
 		if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
 
-		for await (const salv of this.salvage) {
-			await validUpgrade(salv);
-		}
 	}
 };
 

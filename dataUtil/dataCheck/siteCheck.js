@@ -198,12 +198,6 @@ async function chkSite(runFlag) {
 					}
 				}
 
-				if (!Object.prototype.hasOwnProperty.call(site, 'salvage')) {
-					logger.error(
-						`salvage missing for ${site.subType} Site ${site.name} ${site._id}`
-					);
-				}
-
 				if (!Object.prototype.hasOwnProperty.call(site, 'dateline')) {
 					logger.error(
 						`dateline missing for Ground Site ${site.name} ${site._id}`
