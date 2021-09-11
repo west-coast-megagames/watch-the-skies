@@ -3,6 +3,7 @@ const router = express.Router();
 const nexusEvent = require('../middleware/events/events');
 const routeDebugger = require('debug')('app:routes:debug');
 const { logger } = require('../middleware/log/winston');
+const { clearArrayValue } = require('../middleware/util/arrayCalls');
 
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
@@ -137,9 +138,10 @@ router.patch('/return/aliens', async function (req, res) {
 	let aircrafts = await Aircraft.find().populate('team');
 	aircrafts = aircrafts.filter((i) => i.team.type === 'Alien');
 	for await (const aircraft of aircrafts) {
-		if (aircraft.status.deployed === true) {
+		if (aircraft.status.some(el => el === 'deployed')) {
 			count++;
-			aircraft.status.deployed = false;
+			await clearArrayValue(aircraft.status, 'deployed');
+
 			await aircraft.save();
 		}
 	}
@@ -167,7 +169,7 @@ router.patch('/return/aircrafts', async function (req, res) {
 	nexusEvent.emit('updateAircrafts');
 });
 
-// @route   PATCH debug/return/aircraft
+// @route   PATCH debug/return/military
 // @desc    Update all aircrafts to return to base
 // @access  Public
 router.patch('/return/military', async function (req, res) {

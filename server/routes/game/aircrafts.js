@@ -4,6 +4,7 @@ const routeDebugger = require('debug')('app:routes');
 const airMission = require('../../wts/intercept/missions');
 const nexusEvent = require('../../middleware/events/events');
 const nexusError = require('../../middleware/util/throwError');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Account } = require('../../models/account');
 const { Aircraft } = require('../../models/aircraft');
@@ -81,8 +82,8 @@ router.put('/transfer', async (req, res) => {// work in progress, still broken
 			nexusError('Could not find aircraft!', 404);
 		}
 
-		aircraft.status.deployed = true;
-		aircraft.status.ready = false;
+		await addArrayValue(aircraft.status, 'deployed');
+		await clearArrayValue(aircraft.status, 'ready');
 		aircraft.site = target._id;
 
 		const mission = 'Transfer';
@@ -122,8 +123,8 @@ router.put('/repair', async function (req, res) {
 		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${aircraft.name}` });
 		routeDebugger(account);
 
-		aircraft.status.repair = true;
-		aircraft.status.ready = false;
+		await addArrayValue(aircraft.status, 'repair');
+    await clearArrayValue(aircraft.status, 'ready');
 		await aircraft.save();
 
 		routeDebugger(`${aircraft.name} put in for repairs...`);

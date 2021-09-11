@@ -16,6 +16,7 @@ const dynReport = require('./battleDetails');
 const { generateSite } = require('../sites/sites');
 const { AirMission } = require('../../models/report');
 const { randCode } = require('./battleDetails');
+const { addArrayValue } = require('../../middleware/util/arrayCalls');
 
 
 let interceptionMissions = []; // Attempted Interception missions for the round
@@ -130,7 +131,7 @@ async function runInterceptions() {
 		});
 
 		// Skips mission if the current aircraft is dead
-		if (aircraft.status.destroyed) {
+		if (aircraft.status.some(el => el === 'destroyed')) {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
 			atkReport.type = 'Failure';
 			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
@@ -149,7 +150,7 @@ async function runInterceptions() {
 		const defReport = escortCheck.defReport;
 
 
-		if (target.status.destroyed || target.systems.length < 1) {
+		if (target.status.some(el => el === 'destroyed') || target.systems.length < 1) {
 			atkReport.type = 'Failure';
 			atkReport.report += ' Mission target was destroyed prior to intercept.',
 			atkReport.status.complete = true;
@@ -173,7 +174,7 @@ async function runTransports() {
 
 		const aircraft = await Aircraft.findById(transport.aircraft).populate('organization', 'name').populate('upgrades').populate('team');
 
-		if (aircraft.status.destroyed) {
+		if (aircraft.status.some(el => el === 'destroyed')) {
 			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
 			continue;
 		}
@@ -246,7 +247,7 @@ async function runRecon() {
 				position: 'offense'							// Designates this aircraft as the offense or defense
 			});
 
-			if (target.status.destroyed || target.systems.length < 1) {
+			if (target.status.some(el => el === 'destroyed') || target.systems.length < 1) {
 				atkReport.report = `${atkReport.report} Target has been shot down prior to recon.`;
 				atkReport = atkReport.createTimestamp(atkReport);
 				await atkReport.save();
@@ -478,13 +479,17 @@ async function checkEscort(target, defReport, atkReport) {
 }
 
 async function clearMissions() {
-	for (const aircraft of await Aircraft.find({ 'status.deployed': true })) {
+	for (const aircraft of await Aircraft.find({ 'status': 'deployed' })) {
 		await aircraft.recall();
 	}
 
-	for (const aircraft of await Aircraft.find({ 'status.action': false } || { 'status.mission': false })) {
-		aircraft.status.action = true;
-		aircraft.status.mission = true;
+	// TODO: this coding logic needs to be verified
+	for (const aircraft of await Aircraft.find( !({ 'status': 'action' }) )) {
+		await addArrayValue(aircraft.status, 'action');
+		await aircraft.save();
+	}
+	for (const aircraft of await Aircraft.find( !({ 'status': 'mission' }) )) {
+		await addArrayValue(aircraft.status, 'mission');
 		await aircraft.save();
 	}
 

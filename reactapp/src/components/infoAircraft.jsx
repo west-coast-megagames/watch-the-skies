@@ -108,7 +108,7 @@ class InfoAircraft extends Component {
                   <IconButton
                     size="xs"
                     onClick={() => this.repair()}
-                    disabled={stats.hull === stats.hullMax || status.repair}
+                    disabled={stats.hull === stats.hullMax || status.some(el => el === 'repair') }
                     icon={<Icon icon="wrench" />}
                   >
                     Repair
@@ -156,11 +156,11 @@ class InfoAircraft extends Component {
           <FlexboxGrid.Item colspan={24}>
             <br />
             <TagGroup>
-              {status.ready && <Tag color="green">Mission Ready</Tag>}
-              {status.deployed && <Tag color="yellow">Deployed</Tag>}
-              {status.repair && <Tag color="yellow">Repairing</Tag>}
-              {status.upgrade && <Tag color="yellow">Upgrading</Tag>}
-              {status.destroyed && <Tag color="red">Destroyed</Tag>}
+              {status.some(el => el === 'ready') && <Tag color="green">Mission Ready</Tag>}
+              {status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
+              {status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+              {status.some(el => el === 'upgrade') && <Tag color="yellow">Upgrading</Tag>}
+              {status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
             </TagGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>

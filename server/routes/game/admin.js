@@ -23,7 +23,7 @@ router.patch('/resethull', async function (req, res) {
 	for await (const aircraft of Aircraft.find()) {
 		console.log(`${aircraft.name} has ${aircraft.stats.hull} hull points`);
 		aircraft.stats.hull = aircraft.stats.hullMax;
-		aircraft.status.destroyed = false;
+		await clearArrayValue(aircraft.status, 'destroyed');
 		console.log(`${aircraft.name} now has ${aircraft.stats.hull} hull points`);
 		await aircraft.save();
 	}

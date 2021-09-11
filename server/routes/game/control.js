@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const nexusEvent = require('../../middleware/events/events');
+const { addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Aircraft Model - Using Mongoose Model
 const { Aircraft } = require('../../models/aircraft');
@@ -14,9 +15,9 @@ router.patch('/alien/deploy', async function (req, res) {
 	aircrafts = aircrafts.filter((i) => i.team.type === 'Alien');
 	for await (const aircraft of aircrafts) {
 		console.log(aircraft);
-		if (aircraft.status.deployed === false) {
+		if (!aircraft.status.some(el => el === 'deployed')) {
 			count++;
-			aircraft.status.deployed = true;
+			await addArrayValue(this.status, 'deployed');
 			await aircraft.save();
 		}
 	}

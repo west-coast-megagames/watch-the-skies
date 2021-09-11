@@ -138,43 +138,6 @@ async function chkAircraft(runFlag) {
 				`status missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'ready')) {
-				logger.error(
-					`status.ready missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'upgrade')) {
-				logger.error(
-					`status.upgrade missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'repair')) {
-				logger.error(
-					`status.repair missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-		}
 
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'upgrades')) {
 			logger.error(
