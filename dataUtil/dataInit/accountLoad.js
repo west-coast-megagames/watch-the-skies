@@ -99,11 +99,11 @@ async function loadAccount(t_id, tName, aData, rCounts) {
 			const newAccount = {
 				code: bigCode,
 				name: aData.name,
-				balance: aData.balance,
 				owner: tName,
 				team: t_id,
 				resources: [],
-				queue: []
+				queue: [],
+				tags: []
 			};
 			const resource = 'Megabucks';
 			newAccount.resources.push({ type: resource, balance: aData.balance });

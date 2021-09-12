@@ -26,8 +26,11 @@ const dataTemplate = [
 function formatData(account) {
 	let data = [...dataTemplate];
 	for (let [index] in data) {
+		// TODO John Review how to update for resources
+		/*
 		data[index][1] = account.deposits[index]
 		data[index][2] = account.withdrawals[index]
+		*/
 	};
 	return data
 }

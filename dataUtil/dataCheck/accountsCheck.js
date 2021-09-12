@@ -140,6 +140,12 @@ async function chkAccount(runFlag) {
 			);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(account, 'tags')) {
+			logger.error(
+				`tags missing for Account ${account.name} ${account.owner} ${account._id}`
+			);
+		}
+
 		// validate call
 		try {
 			const valMessage = await axios.get(`${gameServer}init/initAccounts/validate/${account._id}`);

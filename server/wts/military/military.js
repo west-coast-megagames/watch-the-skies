@@ -404,21 +404,31 @@ async function repairUnit(data) {
 		name: 'Operations',
 		team: unit.team
 	});
-	if (account.balance < 2) {
-		// error send here
-		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
-	}
-	else {
-		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
 
-		// unit.status.repair = true;
-		// unit.status.ready = false;
-		unit.status.ready = true;
-		unit.status.destroyed = false;
-		unit.status.damaged = false;
-		unit.stats.health = unit.stats.healthMax;
-		await unit.save();
-		return ({ message : `${unit.name} repaired!`, type: 'success' });
+	// TODO John Review how to update for resources
+	let resource = 'Megabucks';
+	let index = account.resources.findIndex(el => el.type === resource);
+	if (index < 0) {
+		// error send here
+		return ({ message : `Balance not found for operations account to repair ${unit.name}.`, type: 'error' });
+	} 
+	else {
+		if (account.balance < 2) {
+			// error send here
+			return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
+		}
+		else {
+			account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
+	
+			// unit.status.repair = true;
+			// unit.status.ready = false;
+			unit.status.ready = true;
+			unit.status.destroyed = false;
+			unit.status.damaged = false;
+			unit.stats.health = unit.stats.healthMax;
+			await unit.save();
+			return ({ message : `${unit.name} repaired!`, type: 'success' });
+		}
 	}
 }
 

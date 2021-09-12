@@ -122,8 +122,18 @@ AircraftSchema.methods.launch = async function (mission) {
 		await clearArrayValue(this.status, 'mission');
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
-		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
-		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+		// TODO John Review how to update for resources
+		let resource = 'Megabucks';
+		let index = account.resources.findIndex(el => el.type === resource);
+		if (index < 0) {
+			nexusError('Balance Not Found to launch', 400);
+		} 
+		else {
+			if (account.resources[index].balance < 1) nexusError('Insefficient Funds to launch', 400);
+			else {
+				await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+			}
+		}
 
 		const aircraft = await this.save();
 		await aircraft.populateAircraft();
