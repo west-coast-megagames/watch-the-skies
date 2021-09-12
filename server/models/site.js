@@ -64,11 +64,12 @@ SiteSchema.methods.validateSite = async function () {
 		});
 
 		favorSchema = Joi.object({
-		  team: Joi.object({
-				name: Joi.string().required()
-			}),
 			favor: Joi.number(),
 			status: Joi.string().valid('occupier', 'liberator', '')
+		});
+
+		favorTeamSchema = Joi.object({
+			name: Joi.string().required()
 		});
 
 		break;
@@ -110,11 +111,11 @@ SiteSchema.methods.validateSite = async function () {
 		for await (const fav of this.favor) {
 		  await validTeam(fav.team._id);
 
-			// TODO: this is losing the team object somehow ... skip for now
-			/*
 			const favorCheck = favorSchema.validate(fav, { allowUnknown: true });
 		  if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
-      */
+
+			const favorTeamCheck = favorSchema.validate(fav.team, { allowUnknown: true });
+		  if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
 		}
 	}
 };
