@@ -381,32 +381,11 @@ async function chkFacility(runFlag) {
 				`status missing for Facility ${facility.name} ${facility._id}`
 			);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(facility.status, 'repair')) {
-				logger.error(
-					`status.building missing for Facility ${facility.name} ${facility._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(facility.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Facility ${facility.name} ${facility._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(facility.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Facility ${facility.name} ${facility._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(facility.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Facility ${facility.name} ${facility._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(facility.status, 'defenses')) {
-				logger.error(
-					`status.defenses missing for Facility ${facility.name} ${facility._id}`
-				);
-			}
+
+		if (!Object.prototype.hasOwnProperty.call(facility, 'tags')) {
+			logger.error(
+				`tags missing for Facility ${facility.name} ${facility._id}`
+			);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(facility, 'hidden')) {
