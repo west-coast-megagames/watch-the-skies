@@ -18,10 +18,13 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const teamArray = [];
+
 async function runcitySiteLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
+			await loadTeams(); // get all teams once
 			await deleteAllCitys(runFlag);
 			await initLoad(runFlag);
 		}
@@ -32,6 +35,16 @@ async function runcitySiteLoad(runFlag) {
 
 		return false;
 	}
+}
+
+async function loadTeams() {
+	const team = await axios.get(`${gameServer}api/team/type/National`);
+	const tData = team.data;
+
+	for await (const teams of tData) {
+		teamArray.push({ _id: teams._id, name: teams.name });
+	}
+	logger.debug(`Number of National Teams Loaded: ${teamArray.length}`);
 }
 
 async function initLoad(doLoad) {
@@ -157,6 +170,15 @@ async function newCity(cData, rCounts) {
 	else {
 		CitySite.organization = organizationData._id;
 		CitySite.zone = organizationData.zone;
+	}
+
+	CitySite.favor = [];
+	// set favor for each national team
+	let rand = 0;
+	for (let j = 0; j < teamArray.length; ++j) {
+		rand = Math.floor(Math.random() * 25);
+		rand = Math.max(rand, 0); // don't go negative
+		CitySite.favor.push({ team: { _id: teamArray[j]._id, name: teamArray[j].name }, favor: rand, status: '' });
 	}
 
 	try {
