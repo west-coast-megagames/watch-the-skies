@@ -74,56 +74,9 @@ async function chkSquad(runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(squad, 'status')) {
 			logger.error(`Squad status is missing ${squad.name} ${squad._id}`);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (
-				squad.status.destroyed === undefined ||
-          squad.status.destroyed === null
-			) {
-				logger.error(
-					`Squad status.destroyed is not set ${squad.name} ${squad._id}`
-				);
-			}
 
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (
-				squad.status.deployed === undefined ||
-          squad.status.deployed === null
-			) {
-				logger.error(
-					`Squad status.deployed is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'ready')) {
-				logger.error(
-					`status.ready missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (squad.status.ready === undefined || squad.status.ready === null) {
-				logger.error(
-					`Squad status.ready is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'captured')) {
-				logger.error(
-					`status.captured missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (squad.status.ready === undefined || squad.status.ready === null) {
-				logger.error(
-					`Squad status.captured is not set ${squad.name} ${squad._id}`
-				);
-			}
+		if (!Object.prototype.hasOwnProperty.call(squad, 'tags')) {
+			logger.error(`Squad tags is missing ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'type')) {

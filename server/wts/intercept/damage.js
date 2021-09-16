@@ -1,6 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept - damage');
 const { generateSalvage } = require('./salvage');
 const { d6, rand } = require('../../util/systems/dice');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Intercepter Model
 const { Aircraft } = require('../../models/aircraft');
@@ -142,7 +143,7 @@ async function dmgCalc (unit, report) {
 
 	if (unit.stats.hull <= 0 || crash === true) {
 		interceptDebugger(`${unit.name} shot down in combat...`);
-		unit.status.destroyed = true;
+		await addArrayValue(unit.status, 'destroyed');
 		dmgReport.outcome = `${unit.name} shot down in combat...`;
 		dmgReport.destroyed = true,
 		dmgReport.aarUnit = `${dmgReport.aar}${unit.name} shot down in combat...`;
@@ -177,7 +178,8 @@ async function applyDmg (unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = unit.status.destroyed;
+	// TODO - Revisit when update model status is changed
+	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;

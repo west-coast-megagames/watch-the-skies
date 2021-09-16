@@ -350,7 +350,8 @@ MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
-		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission'))
+		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission')),
+		tags: Joi.array().items(Joi.string().valid('secret'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

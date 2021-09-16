@@ -97,6 +97,12 @@ async function chkMilitary(runFlag) {
 			);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(military, 'tags')) {
+			logger.error(
+				`tags missing for Military ${military.name} ${military._id}`
+			);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(military, 'hidden')) {
 			logger.error(
 				`hidden missing for Military ${military.name} ${military._id}`

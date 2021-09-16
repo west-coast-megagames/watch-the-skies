@@ -130,6 +130,7 @@ async function createFleet(iData, rCounts, bpData) {
 	newFleet.stats = bpData.stats;
 	newFleet.type = bpData.type;
 	newFleet.status = [];
+	newFleet.tags = [];
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -214,6 +215,7 @@ async function createCorps(iData, rCounts, bpData) {
 	newCorps.stats = bpData.stats;
 	newCorps.type = bpData.type;
 	newCorps.status = [];
+	newCorps.tags = [];
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);

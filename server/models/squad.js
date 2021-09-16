@@ -40,16 +40,12 @@ const SquadSchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
-	status: {
-		deployed: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		ready: { type: Boolean, default: true },
-		captured: { type: Boolean, default: false }
-	}
+	status: [ {type: String, enum: ['deployed', 'destroyed', 'ready', 'captured', 'damaged']} ],
+	tags: [ {type: String, enum: ['']} ]
 });
 
 SquadSchema.methods.runMission = async function () {
-	if (!this.status.mission) throw Error(`The ${this.name} squad has no misssion...`);
+	if (!this.status.some(el => el === 'mission')) throw Error(`The ${this.name} squad has no misssion...`);
 	let cland = false;	// boolean for mission secrecy
 	let surv = false;		// boolean for squad survival
 	let succ = false;		// boolean for mission success
@@ -116,7 +112,9 @@ SquadSchema.methods.validateSquad = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
-		type: Joi.string().valid('Raid', 'Assault', 'Infiltration', 'Envoy', 'Science')
+		type: Joi.string().valid('Raid', 'Assault', 'Infiltration', 'Envoy', 'Science'),
+		status: Joi.array().items(Joi.string().valid('deployed', 'destroyed', 'ready', 'captured', 'damaged')),
+		tags: Joi.array().items(Joi.string().valid(''))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

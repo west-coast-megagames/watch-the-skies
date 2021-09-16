@@ -15,7 +15,8 @@ const BlueprintSchema = new Schema({
 	buildTime: { type: Number, default: 0 },
 	desc: { type: String, min: 1, maxlength: 255, default: 'Blueprint' },
 	prereq: [],
-	hidden: { type: Boolean, default: false }
+	hidden: { type: Boolean, default: false },
+	tags: [{ type: String, enum: ['']} ],
 });
 
 // validateBlueprint method
@@ -34,7 +35,8 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 			cost: Joi.number() .min(0) .required(),
 			buildTime: Joi.number() .min(0) .required(),
 			desc: Joi.string() .min(1) .max(255) .required(),
-			buildModel: Joi.string() .min(1) .required()
+			buildModel: Joi.string() .min(1) .required(),
+			tags: Joi.array().items(Joi.string().valid(''))
 		});
 		break;
 
@@ -45,7 +47,8 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 			cost: Joi.number().min(0).required(),
 			buildTime: Joi.number().min(0).required(),
 			desc: Joi.string().min(1).max(255).required(),
-			buildModel: Joi.string() .min(1) .required()
+			buildModel: Joi.string() .min(1) .required(),
+			status: Joi.array().items(Joi.string().valid(''))
 		});
 		break;
 
@@ -112,7 +115,7 @@ const FacilityBlueprint = Blueprint.discriminator(
 		site: { type: ObjectId, ref: 'Site' },
 		upgrades: [Schema.Types.Mixed],
 		capacity: { type: Number, default: 0 },
-		status: { type: Schema.Types.Mixed },
+		status: { type: String, enum:  [''] },
 		unitType: [{ type: String, min: 2, maxlength: 50 }],
 		funding: [Number],
 		sciRate: { type: Number, default: 0 },

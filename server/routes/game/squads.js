@@ -11,6 +11,7 @@ const { Team } = require('../../models/team');
 // const nexusEvent = require('../../middleware/events/events');
 const banking = require('../../wts/banking/banking');
 const { runSquadActions } = require('../../wts/squads/squads');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // @route   PUT game/squads/deploy
 // @Desc    Deploy an squad to a mission
@@ -40,8 +41,8 @@ router.put('/deploy', async function (req, res) {
 	}
 	else {
 		squad.missionType = missionType;
-		squad.status.deployed = true;
-		squad.status.ready = false;
+		await addArrayValue(squad.status, 'deployed');
+		await clearArrayValue(squad.status, 'ready');
 		squad.site = destination;
 		squad.mission.priorities = [priority1, priority2, priority3];
 
@@ -64,10 +65,10 @@ router.patch('/runSquads', async function (req, res) {
 
 router.patch('/resetSquads', async function (req, res) {
 	for await (const unit of Squad.find()) {
-		unit.status.destroyed = false;
-		unit.status.deployed = false;
-		unit.status.captured = false;
-		unit.status.ready = true;
+		await addArrayValue(unit.status, 'ready');
+		await clearArrayValue(unit.status, 'destroyed');
+		await clearArrayValue(unit.status, 'deployed');
+		await clearArrayValue(unit.status, 'captured');
 		console.log(`${unit.name} has been healed`);
 		await unit.save();
 	}

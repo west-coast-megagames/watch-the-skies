@@ -15,9 +15,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+    "status": [],
     "hidden": false,
     "site": ""
   },
@@ -37,9 +35,7 @@
       "effect": [{ "type": "pr", "effect": 1 }]
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "site": ""
   },
@@ -59,9 +55,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "site": ""
   },
@@ -81,9 +75,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "sciRate": 3,
     "sciBonus": 0,
@@ -106,9 +98,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false
   },
   {
@@ -127,9 +117,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": true,
     "sciRate": 3,
     "sciBonus": 0,
@@ -151,9 +139,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false
   },
   {
@@ -172,9 +158,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "sciRate": 3,
     "sciBonus": 0,
@@ -196,9 +180,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false
   },
   {
@@ -241,9 +223,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "site": ""
 	},
@@ -263,9 +243,7 @@
       "effect": []
     },
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+		"status": [],
     "hidden": false,
     "site": ""
 	}
