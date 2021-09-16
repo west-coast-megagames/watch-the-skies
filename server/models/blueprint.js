@@ -115,7 +115,7 @@ const FacilityBlueprint = Blueprint.discriminator(
 		site: { type: ObjectId, ref: 'Site' },
 		upgrades: [Schema.Types.Mixed],
 		capacity: { type: Number, default: 0 },
-		status: { type: String, enum:  [''] },
+		status: [ { type: String, enum:  [''] } ],
 		unitType: [{ type: String, min: 2, maxlength: 50 }],
 		funding: [Number],
 		sciRate: { type: Number, default: 0 },
