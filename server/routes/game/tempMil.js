@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { clearArrayValue } = require('../../middleware/util/arrayCalls');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Military } = require('../../models/military');
 const { Site } = require('../../models/site');
@@ -26,8 +26,8 @@ router.patch('/resethealth', async function (req, res) {
 	for await (const unit of Military.find()) {
 		console.log(`${unit.name} has ${unit.stats.health} health points`);
 		unit.stats.health = unit.stats.healthMax;
-		unit.status.destroyed = false;
-		unit.stats.damaged = false;
+		await clearArrayValue(unit.status, 'destroyed');
+		await clearArrayValue(unit.status, 'damaged');
 		console.log(`${unit.name} now has ${unit.stats.health} health points`);
 		await unit.save();
 	}

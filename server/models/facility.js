@@ -21,13 +21,7 @@ const FacilitySchema = new Schema({
 		required: true,
 		unique: true
 	},
-	status: {
-		repair: { type: Boolean, default: true },
-		damaged: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false },
-		defenses: { type: Boolean, default: false }
-	},
+	status: [ {type: String, enum: ['repair','damaged', 'destroyed', 'secret', 'defenses']} ],
 	hidden: { type: Boolean, default: false },
 	upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
 	capability: {
@@ -72,7 +66,8 @@ const FacilitySchema = new Schema({
 			active: { type: Boolean, default: false }
 		}
 	},
-	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	tags: [ {type: String, enum: ['coastal']} ]
 });
 
 FacilitySchema.methods.validateFacility = async function () {
@@ -82,7 +77,9 @@ FacilitySchema.methods.validateFacility = async function () {
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
 		type: Joi.string().min(2).max(50).valid('Civilian', 'Crises', 'Hanger', 'Research', 'Base'),
-		code: Joi.string().min(2).max(20).required()
+		code: Joi.string().min(2).max(20).required(),
+		tags: Joi.array().items(Joi.string().valid('coastal')),
+		status: Joi.array().items(Joi.string().valid('repair', 'damaged', 'destroyed', 'secret', 'defenses'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

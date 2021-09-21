@@ -91,7 +91,7 @@ export const getContacts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   (aircrafts, team) => aircrafts.filter(
-    aircraft => aircraft.status.deployed === true && aircraft.status.destroyed === false
+    aircraft => (aircraft.status.some(el => el === 'deployed') && (!aircraft.status.some(el => el === 'destroyed')))
   )
 );
 
@@ -99,5 +99,5 @@ export const getAircrafts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   state => state.auth.login,
-  (aircrafts, team, login) => aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false)
+  (aircrafts, team, login) => aircrafts.filter(aircraft => aircraft.team.name === team.name && (!aircraft.status.some(el => el === 'destroyed')))
 );

@@ -67,13 +67,17 @@ async function loadBase(iData, rCounts) {
 			const newFacility = {
 				name: iData.name,
 				code: iData.code,
-				coastal: iData.coastal,
 				type: iData.type,
 				serviceRecord: [],
 				baseDefenses: iData.baseDefenses,
 				public: iData.public,
-				capability: iData.capability
+				capability: iData.capability,
+				tags: []
 			};
+
+			if (iData.coastal) {
+				newFacility.tags.push('coastal');
+			}
 
 			// John's additional settings
 			const {

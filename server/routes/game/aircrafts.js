@@ -4,6 +4,7 @@ const routeDebugger = require('debug')('app:routes');
 const airMission = require('../../wts/intercept/missions');
 const nexusEvent = require('../../middleware/events/events');
 const nexusError = require('../../middleware/util/throwError');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Account } = require('../../models/account');
 const { Aircraft } = require('../../models/aircraft');
@@ -81,8 +82,8 @@ router.put('/transfer', async (req, res) => {// work in progress, still broken
 			nexusError('Could not find aircraft!', 404);
 		}
 
-		aircraft.status.deployed = true;
-		aircraft.status.ready = false;
+		await addArrayValue(aircraft.status, 'deployed');
+		await clearArrayValue(aircraft.status, 'ready');
 		aircraft.site = target._id;
 
 		const mission = 'Transfer';
@@ -110,26 +111,39 @@ router.put('/repair', async function (req, res) {
 		name: 'Operations',
 		team: aircraft.team
 	});
-	if (account.balance < 2) {
-		routeDebugger('Not enough funding...');
+
+	// TODO John Review how to update for resources
+	let resource = 'Megabucks';
+	let index = account.resources.findIndex(el => el.type === resource);
+	if (index < 0) {
 		res
-			.status(402)
+			.status(400)
 			.send(
-				`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`
+				`No Balance found for operations account to repair ${aircraft.name}.`
 			);
-	}
+	} 
 	else {
-		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${aircraft.name}` });
-		routeDebugger(account);
-
-		aircraft.status.repair = true;
-		aircraft.status.ready = false;
-		await aircraft.save();
-
-		routeDebugger(`${aircraft.name} put in for repairs...`);
-
-		res.status(200).send(`${aircraft.name} put in for repairs...`);
-		nexusEvent.emit('updateAircrafts');
+		if (account.resources[index].balance < 2) {
+			routeDebugger('Not enough funding...');
+		  res
+				.status(402)
+				.send(
+					`No Funding! Assign more money to your operations account to repair ${aircraft.name}.`
+				);
+		}
+		else {
+			account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${aircraft.name}` });
+			routeDebugger(account);
+	
+			await addArrayValue(aircraft.status, 'repair');
+			await clearArrayValue(aircraft.status, 'ready');
+			await aircraft.save();
+	
+			routeDebugger(`${aircraft.name} put in for repairs...`);
+	
+			res.status(200).send(`${aircraft.name} put in for repairs...`);
+			nexusEvent.emit('updateAircrafts');
+		}
 	}
 });
 

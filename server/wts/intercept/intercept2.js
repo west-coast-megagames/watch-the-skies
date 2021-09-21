@@ -1,6 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept');
 const { d10, rand } = require('../../util/systems/dice');
 const dynReport = require('./battleDetails');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
@@ -129,7 +130,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 		}
 
 		// Combat ends if either aircraft is destroyed and a crash is generated for each destroyed aircraft
-		if (attacker.status.destroyed || defender.status.destroyed) {
+		if ((attacker.status.some(el => el === 'destroyed')) || (defender.status.some(el => el === 'destroyed'))) {
 			// Generate Crash Site
 			combat = false;
 		}
@@ -274,7 +275,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 
 	if (unit.stats.hull <= 0 || crash === true) {
 		interceptDebugger(`${unit.name} shot down in combat...`);
-		unit.status.destroyed = true;
+		await addArrayValue(unit.status, 'destroyed');
 		// TODO: Add dynamic report for crash
 		for (const upgrade of unit.upgrades) {
 			upgrade.status.damaged = true;
@@ -297,7 +298,7 @@ async function applyDmg (unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = unit.status.destroyed;
+	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;

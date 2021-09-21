@@ -137,10 +137,10 @@ class FacilityStats extends Component{
 						<b>Location:</b> {site.name}
 					</p>
 					<TagGroup>
-						{!status.damaged && !status.deployed && <Tag color="green">Mission Ready</Tag>}
-						{status.secret && <Tag color="blue">Hidden</Tag>}
-						{status.repair && <Tag color="yellow">Repairing</Tag>}
-						{status.defenses && <Tag color="green">Defenses Active</Tag>}
+						{!status.some(el => el === 'damaged') && <Tag color="green">Mission Ready</Tag>}
+						{status.some(el => el === 'secret' && <Tag color="blue">Hidden</Tag>}
+						{status.some(el => el === 'repair' && <Tag color="yellow">Repairing</Tag>}
+						{status.some(el => el === 'defenses' && <Tag color="green">Defenses Active</Tag>}
 					</TagGroup>
 				</FlexboxGrid.Item>
 				<FlexboxGrid.Item colspan={4}>

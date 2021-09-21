@@ -3,6 +3,7 @@ const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
 const nexusEvent = require('../middleware/events/events');
+const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCalls');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -34,15 +35,7 @@ const AircraftSchema = new Schema({
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	mission: { type: String, default: 'Docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
-	status: {
-		damaged: { type: Boolean, default: false },
-		deployed: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		ready: { type: Boolean, default: true },
-		upgrade: { type: Boolean, default: false },
-		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false }
-	},
+	status: [ {type: String, enum: ['damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action']} ],
 	actions: { type: Number, default: 1 },
 	missions: { type: Number, default: 1 },
 	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
@@ -84,6 +77,7 @@ const AircraftSchema = new Schema({
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 }
 	},
+	tags: [ {type: String, enum: ['']} ],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
@@ -95,7 +89,9 @@ AircraftSchema.methods.validateAircraft = async function () {
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
 		type: Joi.string().min(2).max(50).required().valid('Recon', 'Transport', 'Decoy', 'Fighter'),
-		mission: Joi.string().required()
+		mission: Joi.string().required(),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });
@@ -119,15 +115,25 @@ AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);
 
 	try {
-		this.status.deployed = true;
-		this.status.ready = false;
-		this.mission = mission;
 
-		this.status.mission = false; // Nex Action/Mission system
+		await addArrayValue(this.status, 'deployed');
+		await clearArrayValue(this.status, 'ready');
+		this.mission = mission;
+		await clearArrayValue(this.status, 'mission');
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
-		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
-		await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+		// TODO John Review how to update for resources
+		let resource = 'Megabucks';
+		let index = account.resources.findIndex(el => el.type === resource);
+		if (index < 0) {
+			nexusError('Balance Not Found to launch', 400);
+		} 
+		else {
+			if (account.resources[index].balance < 1) nexusError('Insefficient Funds to launch', 400);
+			else {
+				await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+			}
+		}
 
 		const aircraft = await this.save();
 		await aircraft.populateAircraft();
@@ -157,15 +163,16 @@ AircraftSchema.methods.recall = async function () {
 			.populate('site');
 
 		this.mission = 'Docked';
-		this.status.ready = true;
-		this.status.deployed = false;
+
+    await addArrayValue(this.status, 'ready');
+		await clearArrayValue(this.status, 'deployed');
 		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
 		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
-		this.status.mission = false; // Nex Action/Mission system
-		this.status.action = false;
+		await clearArrayValue(this.status, 'mission');
+		await clearArrayValue(this.status, 'action');
 
 		const aircraft = await this.save();
 		await aircraft.populateAircraft();

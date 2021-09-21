@@ -23,7 +23,7 @@ router.patch('/resethull', async function (req, res) {
 	for await (const aircraft of Aircraft.find()) {
 		console.log(`${aircraft.name} has ${aircraft.stats.hull} hull points`);
 		aircraft.stats.hull = aircraft.stats.hullMax;
-		aircraft.status.destroyed = false;
+		await clearArrayValue(aircraft.status, 'destroyed');
 		console.log(`${aircraft.name} now has ${aircraft.stats.hull} hull points`);
 		await aircraft.save();
 	}
@@ -73,15 +73,20 @@ router.patch('/load/tech', async function (req, res) {
 	return res.status(200).send(response);
 });
 
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 // @route   PATCH game/admin/accounts/reset
 // @desc    Update all teams to base income and PR
 // @access  Public
 router.patch('/accounts/reset', async function (req, res) {
 	for await (const account of Account.find()) {
-		{
-			account.balance = 0;
-			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+		account.resources = [];
+		const resource = 'Megabucks';
+		if (account.code === "TRE") {
+	  	account.resources.push({ type: resource, balance: 1000 });
+		}
+		else {
+			account.resources.push({ type: resource, balance: 0 });
 		}
 
 		await account.save();

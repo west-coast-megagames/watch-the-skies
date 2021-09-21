@@ -34,7 +34,8 @@ const AccountSchema = new Schema({
 	code: { type: String, minlength: 3, maxlength: 3, required: true },
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
-	queue: [TransferSchema]
+	queue: [TransferSchema],
+	tags: [{ type: String, enum: ['']} ]
 });
 
 // METHOD - deposit
@@ -263,7 +264,8 @@ AccountSchema.methods.validateAccount = async function () {
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
 		code: Joi.string().min(3).max(3).required().uppercase(),
-		owner: Joi.string()
+		owner: Joi.string(),
+		tags: Joi.array().items(Joi.string().valid(''))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

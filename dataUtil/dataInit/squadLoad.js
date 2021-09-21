@@ -60,6 +60,7 @@ async function loadSquad(iData, rCounts) {
 			// New Squad/Squad here
 			const newSquad = iData;
 			newSquad.serviceRecord = [];
+			newSquad.tags = [];
 
 			if (iData.team != '') {
 				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);

@@ -26,7 +26,7 @@ router.get('/accounts', async function (req, res) {
 // @access  Public
 // TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 router.post('/account', async function (req, res) {
-	const { teamId, name, code, balance, deposits, withdrawals, queue } = req.body;
+	const { teamId, name, code, resources, queue } = req.body;
 
 	const team = await Team.findById({ _id: teamId });
 	if (!team) {
@@ -36,7 +36,7 @@ router.post('/account', async function (req, res) {
 
 	const newAccount = new Account(
 		// eslint-disable-next-line no-undef
-		{ team: teamId, name, code, balance, deposits, withdrawals, queue, owner }
+		{ team: teamId, name, code, resources, queue, owner }
 	);
 	const { error } = validateAccount(newAccount);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -101,15 +101,19 @@ router.get('/accounts/:id', validateObjectId, async function (req, res) {
 	res.json(account);
 });
 
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 // @route   PATCH api/banking/accounts
 // @desc    Update all teams to base income and PR
 // @access  Public
 router.patch('/accounts', async function (req, res) {
 	for await (const account of Account.find()) {
-		{
-			account.balance = 1000;
-			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		account.resources = [];
+		const resource = 'Megabucks';
+		if (account.code === "TRE") {
+	  	account.resources.push({ type: resource, balance: 1000 });
+		}
+		else {
+			account.resources.push({ type: resource, balance: 0 });
 		}
 
 		await account.save();

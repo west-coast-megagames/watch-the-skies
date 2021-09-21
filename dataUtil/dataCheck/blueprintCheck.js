@@ -52,6 +52,12 @@ async function chkBlueprint (runFlag) {
 			);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(blueprint, 'tags')) {
+			logger.error(
+				`tags missing for blueprint ${blueprint.name} ${blueprint._id}`
+			);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(blueprint, 'cost')) {
 			logger.error(
 				`cost missing for blueprint ${blueprint.name} ${blueprint._id}`
@@ -103,6 +109,12 @@ async function chkBlueprint (runFlag) {
 				if (!Object.prototype.hasOwnProperty.call(blueprint, 'type')) {
 					logger.error(
 						`type missing for facility blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'status')) {
+					logger.error(
+						`status missing for facility blueprint ${blueprint.name} ${blueprint._id}`
 					);
 				}
 

@@ -131,6 +131,7 @@ async function newAircraftBP (bpData, rCounts) {
 
 	// New Aircraft Blueprint here
 	const bpAircraft = bpData;
+	bpAircraft.tags = [];
 	try {
 		await axios.post(`${gameServer}api/blueprints`, bpAircraft);
 		++rCounts.loadCount;
@@ -147,6 +148,7 @@ async function newMilitaryBP (bpData, rCounts) {
 
 	// New Military Blueprint here
 	const bpMilitary = bpData;
+	bpMilitary.tags = [];
 	try {
 		await axios.post(`${gameServer}api/blueprints`, bpMilitary);
 		++rCounts.loadCount;
@@ -187,6 +189,8 @@ async function newFacilityBP (bpData, rCounts) {
 			bpFacility.site = undefined;
 		}
 
+		bpFacility.tags = [];
+		bpFacility.status = [];
 		await axios.post(`${gameServer}api/blueprints`, bpFacility);
 		++rCounts.loadCount;
 		logger.debug(`${bpFacility.name} add saved to Facility Blueprint collection.`);
@@ -201,6 +205,7 @@ async function newSquadBP (bpData, rCounts) {
 
 	// New Squad Blueprint here
 	const bpSquad = bpData;
+	bpSquad.tags = [];
 	try {
 		await axios.post(`${gameServer}api/blueprints`, bpSquad);
 		++rCounts.loadCount;
@@ -216,6 +221,7 @@ async function newSquadBP (bpData, rCounts) {
 async function newUpgradeBP (bpData, rCounts) {
 	// New Upgrade Blueprint here
 	const bpUpgrade = bpData;
+	bpUpgrade.tags = [];
 	try {
 		await axios.post(`${gameServer}api/blueprints`, bpUpgrade);
 		++rCounts.loadCount;

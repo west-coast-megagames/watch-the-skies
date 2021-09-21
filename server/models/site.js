@@ -14,7 +14,7 @@ const FavorSchema = new Schema({
 		name: { type: String, required: true }
 	},
 	favor: { type: Number, default: 25, required: true },
-	status: [{ type: String, enum:  ['occupier', 'liberator'] } ]
+	status: { type: String, enum:  ['occupier', 'liberator', ''] }
 });
 
 const SiteSchema = new Schema({
@@ -42,6 +42,7 @@ SiteSchema.methods.validateSite = async function () {
 	let schema = {};
 	let geoDMSSchema = {};
 	let geoDecimalSchema = {};
+	let favorSchema = {};
 	switch (this.type) {
 	case 'Ground':
 		schema = Joi.object({
@@ -60,6 +61,15 @@ SiteSchema.methods.validateSite = async function () {
 		geoDecimalSchema = Joi.object({
 			lat: Joi.number().min(-90).max(90),
 			lng: Joi.number().min(-180).max(180)
+		});
+
+		favorSchema = Joi.object({
+			favor: Joi.number(),
+			status: Joi.string().valid('occupier', 'liberator', '')
+		});
+
+		favorTeamSchema = Joi.object({
+			name: Joi.string().required()
 		});
 
 		break;
@@ -98,8 +108,14 @@ SiteSchema.methods.validateSite = async function () {
 		const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
 		if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
 
-		for await (const salv of this.salvage) {
-			await validUpgrade(salv);
+		for await (const fav of this.favor) {
+		  await validTeam(fav.team._id);
+
+			const favorCheck = favorSchema.validate(fav, { allowUnknown: true });
+		  if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
+
+			const favorTeamCheck = favorSchema.validate(fav.team, { allowUnknown: true });
+		  if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
 		}
 	}
 };

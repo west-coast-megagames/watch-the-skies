@@ -95,7 +95,7 @@ async function resolveBattle(attackers, defenders) {
 					report += `${unit.name} has been DESTROYED!\n`;
 					result.defendersDestroyed.push(unit.name);
 
-					unit.status.destroyed = true;
+					await addArrayValue(unit.status, 'destroyed');
 					defenders.splice(cas, 1);
 					while (unit.upgrades.length > 0) {
 						const up = unit.upgrades.pop();
@@ -160,7 +160,7 @@ async function resolveBattle(attackers, defenders) {
 					report += `${unit.name} has been DESTROYED!\n`;
 					result.attackersDestroyed.push(unit.name);
 
-					unit.status.destroyed = true;
+					await addArrayValue(unit.status, 'destroyed');
 					attackers.splice(cas, 1);
 					while (unit.upgrades.length > 0) {
 						const up = unit.upgrades.pop();
@@ -239,13 +239,14 @@ async function runMilitary() {
 
 		let defenders = [];
 		let attackers = [];
+		// TODO need to verify these status changes work correctly
 		if (site.status.some(el => el === 'occupied')) {
-			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && el.status.destroyed === false);
-			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && el.status.destroyed === false);
+			defenders = army.filter(el=> el.team.toHexString() === site.occupier.toHexString() && !el.status.some(el2 => el2 === 'destroyed'));
+			attackers = army.filter(el=> el.team.toHexString() != site.occupier.toHexString() && !el.status.some(el2 => el2 === 'destroyed'));
 		}
 		else {
-			defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && el.status.destroyed === false);
-			attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && el.status.destroyed === false);
+			defenders = army.filter(el=> el.team.toHexString() === site.team.toHexString() && !el.status.some(el2 => el2 === 'destroyed'));
+			attackers = army.filter(el=> el.team.toHexString() != site.team.toHexString() && !el.status.some(el2 => el2 === 'destroyed'));
 		}
 
 		const attackerTeams = [];
@@ -301,7 +302,7 @@ async function runMilitary() {
 
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
-				if (unit.status.destroyed === true || (liberated && unit.team.toHexString() === site.team.toHexString())) {
+				if (unit.status.some(el => el === 'destroyed') || (liberated && unit.team.toHexString() === site.team.toHexString())) {
 					await unit.recall();
 				}
 			}
@@ -345,7 +346,7 @@ async function runMilitary() {
 
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
-				if (attackerTeams.some(el => el.toHexString() === unit.team.toHexString()) || unit.status.destroyed === true) {
+				if (attackerTeams.some(el => el.toHexString() === unit.team.toHexString()) || unit.status.some(el => el === 'destroyed')) {
 					await unit.recall();
 				}
 			}
@@ -404,21 +405,29 @@ async function repairUnit(data) {
 		name: 'Operations',
 		team: unit.team
 	});
-	if (account.balance < 2) {
-		// error send here
-		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
-	}
-	else {
-		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
 
-		// unit.status.repair = true;
-		// unit.status.ready = false;
-		unit.status.ready = true;
-		unit.status.destroyed = false;
-		unit.status.damaged = false;
-		unit.stats.health = unit.stats.healthMax;
-		await unit.save();
-		return ({ message : `${unit.name} repaired!`, type: 'success' });
+	// TODO John Review how to update for resources
+	let resource = 'Megabucks';
+	let index = account.resources.findIndex(el => el.type === resource);
+	if (index < 0) {
+		// error send here
+		return ({ message : `Balance not found for operations account to repair ${unit.name}.`, type: 'error' });
+	} 
+	else {
+		if (account.balance < 2) {
+			// error send here
+			return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
+		}
+		else {
+			account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
+	
+			await addArrayValue(unit.status, 'ready');
+			await clearArrayValue(unit.status, 'destroyed');
+			await clearArrayValue(unit.status, 'damaged');
+			unit.stats.health = unit.stats.healthMax;
+			await unit.save();
+			return ({ message : `${unit.name} repaired!`, type: 'success' });
+		}
 	}
 }
 
@@ -427,29 +436,29 @@ async function transferUnit(data) { // for transferring to other facilities as a
 	const unit = await Military.findById(data.unit);
 	const facility = await Facility.findById(data.facility).populate('site');
 
-	if (unit.status.action) {
+	if (unit.status.some(el => el === 'action')) {
 		unit.origin = data.facility;
-		unit.status.action = false;
+		await clearArrayValue(unit.status, 'action');
 
 		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
 		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
-		unit.status.deployed = false;
+		await clearArrayValue(unit.status, 'deployed');
 
 		await unit.save();
 		return ({ message : `Used ${unit.name}'s action to transfer to ${facility.name}!`, type: 'success' });
 	}
-	else if (unit.status.mission) {
+	else if (unit.status.some(el => el === 'mission')) {
 		unit.origin = data.facility;
-		unit.status.mission = false;
-		unit.status.ready = false;
+		await clearArrayValue(unit.status, 'mission');
+		await clearArrayValue(unit.status, 'ready');
 
 		unit.location = randomCords(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng);
 		unit.site = facility.site;
 		unit.organization = facility.site.organization;
 		unit.zone = facility.site.zone;
-		unit.status.deployed = false;
+		await clearArrayValue(unit.status, 'deployed');
 
 		await unit.save();
 		return ({ message : `Used ${unit.name}'s mission to transfer to ${facility.name}!`, type: 'success' });
@@ -486,17 +495,18 @@ async function deployUnit(data, type) {
 			const update = await Military.findById(unit);
 
 			if (type === 'invade') {
+				await clearArrayValue(update.status, 'mission');
 				update.status.mission = false;
 			}
 			else {
-				update.status.action = false;
+				await clearArrayValue(update.status, 'action');
 			}
 
 
 			update.site = siteObj._id;
 			update.organization = siteObj.organization._id;
 			update.zone = siteObj.zone._id;
-			update.status.deployed = true;
+			await addArrayValue(update.status, 'deployed');
 			update.location = randomCords(siteObj.geoDecimal.lat, siteObj.geoDecimal.lng);
 			unitArray.push(update._id);
 			await update.save();
