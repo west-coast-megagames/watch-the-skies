@@ -14,10 +14,8 @@ const ReportSchema = new Schema({
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	status: {
-		complete: { type: Boolean, default: false },
-		hidden: { type: Boolean, default: false }
-	}
+	tags: [{ type: String, enum: ['']} ],
+	status: [ {type: String, enum: ['complete', 'hidden']} ],
 });
 
 ReportSchema.methods.createTimestamp = (report) => {
@@ -36,7 +34,9 @@ ReportSchema.methods.createTimestamp = (report) => {
 
 ReportSchema.methods.validateReport = async function () {
 	const schema = Joi.object({
-		model: Joi.string().min(1).max(3)
+		model: Joi.string().min(1).max(3),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('complete', 'hidden'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

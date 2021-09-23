@@ -135,7 +135,7 @@ async function runInterceptions() {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
 			atkReport.type = 'Failure';
 			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
-			atkReport.status.complete = true;
+			await addArrayValue(atkReport.status, 'complete');
 			atkReport = atkReport.createTimestamp(atkReport);
 			await atkReport.save();
 			continue;
@@ -153,7 +153,7 @@ async function runInterceptions() {
 		if (target.status.some(el => el === 'destroyed') || target.systems.length < 1) {
 			atkReport.type = 'Failure';
 			atkReport.report += ' Mission target was destroyed prior to intercept.',
-			atkReport.status.complete = true;
+			await addArrayValue(atkReport.status, 'complete');
 			atkReport = atkReport.createTimestamp(atkReport);
 			await atkReport.save();
 			continue;

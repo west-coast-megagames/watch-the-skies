@@ -72,8 +72,10 @@ async function loadBase(iData, rCounts) {
 				baseDefenses: iData.baseDefenses,
 				public: iData.public,
 				capability: iData.capability,
-				tags: []
+				tags: [],
+				status: []
 			};
+			newFacility.status.push('repair');
 
 			if (iData.coastal) {
 				newFacility.tags.push('coastal');

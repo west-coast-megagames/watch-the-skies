@@ -107,6 +107,11 @@ async function newAircraftCreate(aData, rCounts) {
 	const newAircraft = aData;
 	newAircraft.serviceRecord = [];
 	newAircraft.location = {};
+	newAircraft.tags = [];
+	newAircraft.status = [];
+	newAircraft.status.push('ready');
+	newAircraft.status.push('action');
+	newAircraft.status.push('mission');
 
 	const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${aData.bpCode}`);
 	const bpData = blueprint.data;
