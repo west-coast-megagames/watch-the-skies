@@ -25,6 +25,9 @@ const techFields = [
 	'Analysis'
 ];
 const typeVals = ['Knowledge', 'Analysis', 'Technology'];
+const knowledgeStatus = ['pending', 'available', 'completed', 'published'];
+const analysisStatus = ['available', 'completed'];
+const technologyStatus = ['visible', 'available', 'completed'];
 
 function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
@@ -50,6 +53,18 @@ async function chkResearch(runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(research, 'model')) {
 			logger.error(
 				`model missing for Research ${research.name} ${research.code} ${research._id}`
+			);
+		}
+
+		if (!Object.prototype.hasOwnProperty.call(research, 'tags')) {
+			logger.error(
+				`tags missing for Research ${research.name} ${research.code} ${research._id}`
+			);
+		}
+
+		if (!Object.prototype.hasOwnProperty.call(research, 'status')) {
+			logger.error(
+				`status is missing for Research  ${research.name} ${research.code} ${research._id}`
 			);
 		}
 
@@ -131,10 +146,18 @@ async function chkResearch(runFlag) {
 			}
 
 			if (research.type === 'Knowledge') {
-				if (research.status.completed) {
+				for (var j = 0; j < research.status.length; j++) {
+				  if (!inArray(knowledgeStatus, research.status[j])) {
+						logger.error(
+							`Invalid status ${research.status[j]} for Knowledge Research ${research.name} ${research._id}`
+						);
+					}
+				}
+
+				if (research.status.some(el => el === 'completed')) {
 					if (!Object.prototype.hasOwnProperty.call(research, 'credit')) {
 						logger.error(
-							`Credit Team Field missing for Knowledge Research ${research.name} ${research._id}`
+							`Credit Team Field missing for completed Knowledge Research ${research.name} ${research._id}`
 						);
 					}
 				}
@@ -147,55 +170,6 @@ async function chkResearch(runFlag) {
 					logger.error(
 						`Invalid field ${research.field} for Knowledge Research ${research.name} ${research._id}`
 					);
-				}
-
-				if (!Object.prototype.hasOwnProperty.call(research, 'status')) {
-					logger.error(
-						`Knowledge Research status is missing  ${research.name} ${research._id}`
-					);
-				}
-				else {
-					if (!Object.prototype.hasOwnProperty.call(research.status, 'available')) {
-						logger.error(
-							`status.available missing for Research ${research.name} ${research._id}`
-						);
-					}
-					else if (
-						research.status.available === undefined ||
-              research.status.available === null
-					) {
-						logger.error(
-							`Knowledge Research status.available is not set ${research.name} ${research._id}`
-						);
-					}
-
-					if (!Object.prototype.hasOwnProperty.call(research.status, 'completed')) {
-						logger.error(
-							`status.completed missing for Research ${research.name} ${research._id}`
-						);
-					}
-					else if (
-						research.status.completed === undefined ||
-              research.status.completed === null
-					) {
-						logger.error(
-							`Knowledge Research status.completed is not set ${research.name} ${research._id}`
-						);
-					}
-
-					if (!Object.prototype.hasOwnProperty.call(research.status, 'published')) {
-						logger.error(
-							`status.published missing for Research ${research.name} ${research._id}`
-						);
-					}
-					else if (
-						research.status.published === undefined ||
-              research.status.published === null
-					) {
-						logger.error(
-							`Knowledge Research status.published is not set ${research.name} ${research._id}`
-						);
-					}
 				}
 
 				if (!Object.prototype.hasOwnProperty.call(research, 'teamProgress')) {
@@ -298,58 +272,25 @@ async function chkResearch(runFlag) {
 					);
 				}
 
-				if (!Object.prototype.hasOwnProperty.call(research, 'status')) {
-					logger.error(
-						`${research.type} Research status is missing  ${research.name} ${research._id}`
-					);
-				}
-				else {
-					if (!Object.prototype.hasOwnProperty.call(research.status, 'available')) {
-						logger.error(
-							`status.available missing for Research ${research.name} ${research._id}`
-						);
-					}
-					else if (
-						research.status.available === undefined ||
-              research.status.available === null
-					) {
-						logger.error(
-							`${research.type} Research status.available is not set ${research.name} ${research._id}`
-						);
-					}
 
-					if (!Object.prototype.hasOwnProperty.call(research.status, 'completed')) {
-						logger.error(
-							`status.available missing for Research ${research.name} ${research._id}`
-						);
-					}
-					else if (
-						research.status.completed === undefined ||
-              research.status.completed === null
-					) {
-						logger.error(
-							`${research.type} Research status.completed is not set ${research.name} ${research._id}`
-						);
-					}
-
-					if (research.type === 'Technology') {
-						if (!Object.prototype.hasOwnProperty.call(research.status, 'visible')) {
+				if (research.type === 'Technology') {
+					for (var j = 0; j < research.status.length; j++) {
+						if (!inArray(technologyStatus, research.status[j])) {
 							logger.error(
-								`status.visible missing for Technology Research ${research.name} ${research._id}`
-							);
-						}
-						else if (
-							research.status.visible === undefined ||
-                research.status.visible === null
-						) {
-							logger.error(
-								`${research.type} Research status.visible is not set ${research.name} ${research._id}`
+								`Invalid status ${research.status[j]} for Technology Research ${research.name} ${research._id}`
 							);
 						}
 					}
 				}
-
+				
 				if (research.type === 'Analysis') {
+					for (var j = 0; j < research.status.length; j++) {
+						if (!inArray(analysisStatus, research.status[j])) {
+							logger.error(
+								`Invalid status ${research.status[j]} for Analysis Research ${research.name} ${research._id}`
+							);
+						}
+					}
 					if (!Object.prototype.hasOwnProperty.call(research, 'salvage')) {
 						logger.error(
 							`Analysis Research salvage is missing  ${research.name} ${research._id}`

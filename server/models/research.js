@@ -46,7 +46,8 @@ const ResearchSchema = new Schema({
 	desc: { type: String },
 	unlocks: [UnlockSchema],
 	breakthrough: [BreakthroughSchema],
-	researchHistory: [{ type: ObjectId, ref: 'Log' }]
+	researchHistory: [{ type: ObjectId, ref: 'Log' }],
+	tags: [{ type: String, enum: ['']} ]
 });
 
 // validateResearch method
@@ -73,7 +74,9 @@ ResearchSchema.methods.validateResearch = async function () {
 				'Quantum Mechanics'),
 			teamProgress: Joi.array().items(Joi.object({ 	progress: Joi.number().required(),
 				funding: Joi.number().required(),
-				totalFunding:	Joi.number().required() }))
+				totalFunding:	Joi.number().required() })),
+				tags: Joi.array().items(Joi.string().valid('')),
+				status: Joi.array().items(Joi.string().valid('pending', 'available', 'completed', 'published'))
 		});
 
 		break;
@@ -82,7 +85,9 @@ ResearchSchema.methods.validateResearch = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(1).max(40).required(),
-			salvage: Joi.array().items(Joi.object({ outcome: Joi.string().valid('Destroy', 'Damage', 'Kill', 'Preserve') }))
+			salvage: Joi.array().items(Joi.object({ outcome: Joi.string().valid('Destroy', 'Damage', 'Kill', 'Preserve') })),
+			tags: Joi.array().items(Joi.string().valid('')),
+			status: Joi.array().items(Joi.string().valid('available', 'completed'))
 		});
 		break;
 
@@ -90,7 +95,9 @@ ResearchSchema.methods.validateResearch = async function () {
 		schema = Joi.object({
 			name: Joi.string().min(2).max(50).required(),
 			code: Joi.string().min(1).max(40).required(),
-			field: Joi.string().valid('Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis', 'Placeholder')
+			field: Joi.string().valid('Military', 'Infrastructure', 'Biomedical', 'Agriculture', 'Analysis', 'Placeholder'),
+			tags: Joi.array().items(Joi.string().valid('')),
+			status: Joi.array().items(Joi.string().valid('visible', 'available', 'completed'))
 		});
 		break;
 
@@ -159,12 +166,7 @@ const KnowledgeResearch = Research.discriminator(
 			'Social Science',
 			'Quantum Mechanics'] },
 		credit: { type: ObjectId, ref: 'Team' },
-		status: {
-			pending: { type: Boolean, default: false },
-			available: { type: Boolean, default: true },
-			completed: { type: Boolean, default: false },
-			published: { type: Boolean, default: false }
-		},
+		status: [ {type: String, enum: ['pending', 'available', 'completed', 'published']} ],
 		teamProgress: [ProgressSchema]
 	})
 );
@@ -184,10 +186,7 @@ const AnalysisResearch = Research.discriminator(
 				outcome: { type: String, enum: ['Destroy', 'Damage', 'Kill', 'Preserve'] }
 			}
 		],
-		status: {
-			available: { type: Boolean },
-			completed: { type: Boolean }
-		}
+		status: [ {type: String, enum: ['available', 'completed']} ]
 	})
 );
 
@@ -216,12 +215,7 @@ const TechResearch = Research.discriminator(
 		},
 		team: { type: ObjectId, ref: 'Team' },
 		funding: { type: Number, default: 0 },
-		status: {
-			visible: { type: Boolean, default: true },
-			available: { type: Boolean, default: false },
-			completed: { type: Boolean, default: false }
-
-		},
+		status: [ {type: String, enum: ['visible', 'available', 'completed']} ],
 		theoretical: [TheorySchema],
 		knowledge: [FieldSchema]
 	})

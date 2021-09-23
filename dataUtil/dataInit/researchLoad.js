@@ -149,6 +149,9 @@ async function createTechnology(iData, teamId, rCounts) {
 	const techResearch = iData;
 	techResearch.team = teamId;
 	techResearch.researchHistory = [];
+	techResearch.tags = [];
+	techResearch.status = [];
+	techResearch.status.push('visible');
 
 	try {
 		await axios.post(`${gameServer}api/research`, techResearch);
@@ -164,6 +167,9 @@ async function createTechnology(iData, teamId, rCounts) {
 async function createKnowledge(iData, rCounts) {
 	// New Knowledge Research here
 	const knowledgeResearch = iData;
+	knowledgeResearch.tags = [];
+	knowledgeResearch.status = [];
+	knowledgeResearch.status.push('available');
 
 	const teamCode = iData.credit;
 	if (iData.credit != '') {
@@ -208,6 +214,8 @@ async function createAnalysis(iData, rCounts) {
 	// New Analysis Research here
 	const analysisResearch = iData;
 	analysisResearch.salvage = [];
+	analysisResearch.tags = [];
+	analysisResearch.status = [];
 
 	if (iData.teamCode != '') {
 		const tData = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);

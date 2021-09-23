@@ -1,6 +1,7 @@
 const researchDebugger = require('debug')('app:research');
 const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Research } = require('../../models/research'); // Imports the Research object which is the base Model for Technology, Knowledge and Analysis
 const { d6 } = require('../../util/systems/dice'); // Import of the dice randomizer found in `dice.js`
@@ -38,7 +39,7 @@ async function startResearch() {
 
 				if (lab.project.toHexString() === placeholder._id.toHexString()) {
 					researchDebugger(`${lab.name} labs have no research to conduct...`);
-					const projects = await Research.find({ team: facility.team, 'status.completed': false, type: 'Technology' });
+					const projects = await Research.find({ team: facility.team, 'status': 'completed', type: 'Technology' });
 					const rand = Math.floor(Math.random() * (projects.length - 1));
 
 					if (projects.length > 0) {
@@ -93,14 +94,14 @@ async function conductResearch(lab) {
 				tech.progress += progressInfo.progress; // Adds progress to the current Research
 			}
 
-			if (tech.progress >= techCost[tech.level] && tech.type !== 'Knowledge') tech.status.completed = true;
-			if (tech.progress >= techCost[tech.level * 5] && tech.type === 'Knowledge') tech.status.pending = true; // Checks for compleation of current research
+			if (tech.progress >= techCost[tech.level] && tech.type !== 'Knowledge') await addArrayValue(tech.status, 'completed'); 
+			if (tech.progress >= techCost[tech.level * 5] && tech.type === 'Knowledge') await addArrayValue(tech.status, 'pending'); // Checks for compleation of current research
 
 			const facility = await Facility.findById(lab._id);
 			facility.capability.research.funding.set(lab.index, 0);
 			facility.capability.research.status.pending.set(lab.index, false);
 
-			if (tech.status.completed === true) {
+			if (tech.status.some(el => el === 'completed')) {
 				researchDebugger(`${tech.name} completed!`);
 				const placeholder = await Research.findOne({ name: 'Empty Lab' });
 				facility.capability.research.projects.set(lab.index, placeholder._id);
@@ -118,7 +119,7 @@ async function conductResearch(lab) {
 			report.progress.endingProgress = tech.progress;
 			report.stats.sciRate = sciRate;
 			report.stats.sciBonus = sciBonus;
-			report.stats.completed = tech.status.completed;
+			report.stats.completed = tech.status.some(el => el === 'completed');
 			report.stats.finalMultiplyer = progressInfo.finalMultiplier;
 			report.rolls = progressInfo.rolls;
 			report.outcomes = progressInfo.outcomes;
@@ -197,11 +198,11 @@ function calculateProgress(sciRate, funding, sciBonus) {
 // FUNCTION for finalizing a completed tech
 async function completeResearch(research) {
 	researchDebugger(`Enough progress has been made to complete ${research.name}...`);
-	research.status.available = false;
+	await clearArrayValue(research.status, 'available');
 
 	if (research.type === 'Knowledge') {
-		research.status.pending = false;
-		research.status.completed = true;
+		await clearArrayValue(research.status, 'pending');
+		await addArrayValue(research.status, 'completed');
 		if (research.level < 5) {
 			const nextKnowledge = knowledgeTree.find(el => el.field === research.field && el.level === research.level + 1);
 			const check = await Research.find({ name: nextKnowledge.name });
@@ -213,7 +214,7 @@ async function completeResearch(research) {
 	if (research.type === 'Technology') {
 		for await (const item of research.unlocks) {
 			if (item.type === 'Technology') {
-				research.status.completed = true;
+				await addArrayValue(research.status, 'completed');
 				const team = await Team.findById({ _id: research.team._id });
 				const newTech = techTree.find(el => el.code === item.code);
 				researchDebugger(`New Theory: ${item.type} - ${newTech.name}`);
@@ -232,8 +233,8 @@ async function advanceKnowledge(research, lab) {
 		const project = await Research.findOne({
 			type: 'Knowledge',
 			field: knowledge.field,
-			'status.available': true,
-			'status.completed': false
+			'status': 'available',
+			'status': !'completed'
 		});
 		if (project !== null) {
 			lab.project = project._id;
@@ -271,7 +272,7 @@ async function produceBreakthrough(research, lab, count) {
 // Assigns credit for all pending knowledge fields
 async function assignKnowledgeCredit() {
 	try {
-		const research = await Research.find({ 'status.pending': true, type: 'Knowledge' }); // Gets all pending knowledge from the DB
+		const research = await Research.find({ 'status': 'pending', type: 'Knowledge' }); // Gets all pending knowledge from the DB
 		researchDebugger(`${research.length} research to give credit for!`);
 
 		// For loop that looks through each field that is pending
