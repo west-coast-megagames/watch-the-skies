@@ -7,7 +7,7 @@ module.exports = async function (client, req) {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		switch(req.action) {
 		case('post'): {
-			const { publisher, location, headline, body, tags, imageSrc } = req.data.article; // REQ Destructure
+			const { publisher, location, headline, body, tags, imageSrc } = req.data.article;
 
 			await Article.post({
 				publisher,
@@ -21,9 +21,10 @@ module.exports = async function (client, req) {
 			break;
 		}
 		case('edit'): {
-			const { _id, publisher, location, headline, body, tags, imageSrc } = req.data.article; // REQ Destructure
+			const { id } = req.data;
+			const { publisher, location, headline, body, tags, imageSrc } = req.data.article;
 
-			let article = await Article.findById(_id);
+			let article = await Article.findById(id);
 
 			article = await article.edit({
 				publisher,
@@ -37,42 +38,52 @@ module.exports = async function (client, req) {
 			break;
 		}
 		case('publish'): {
-			let article = await Article.findById(req.data.id);
+			const { id } = req.data;
+
+			let article = await Article.findById(id);
 
 			article = await article.publish();
 			client.emit('alert', { type: 'success', message: `Published Article` });
 			break;
 		}
 		case('react'): {
-			let article = await Article.findById(req.data.id);
+			const { id, user, emoji } = req.data;
 
-			let reacted = article.reactions.some(reaction => reaction.user == req.data.user && reaction.emoji == req.data.emoji);
+			let article = await Article.findById(id);
+
+			let reacted = article.reactions.some(reaction => reaction.user == user && reaction.emoji == emoji);
 			if (reacted) {
-				article = await article.unreact(req.data.user, req.data.emoji);
-				client.emit('alert', { type: 'success', message: `Unreacted with ${req.data.emoji}`});
+				article = await article.unreact(user, emoji);
+				client.emit('alert', { type: 'success', message: `Unreacted with ${emoji}`});
 			}
 			else {
-				article = await article.react(req.data.user, req.data.emoji);
-				client.emit('alert', { type: 'success', message: `Reacted with ${req.data.emoji}`});
+				article = await article.react(user, emoji);
+				client.emit('alert', { type: 'success', message: `Reacted with ${emoji}`});
 			}
 			break;
 		}
 		case('comment'): {
-			let article = await Article.findById(req.data.id);
+			const { id, user, comment } = req.data;
 
-			article = await article.comment(req.data.user, req.data.comment);
+			let article = await Article.findById(id);
+
+			article = await article.comment(user, comment);
 			client.emit('alert', { type: 'success', message: 'Posted Comment' });
 			break;
 		}
 		case('deleteComment'): {
-			let article = await Article.findById(req.data.id);
+			const { id, commentId } = req.data;
 
-			article = await article.deleteComment(req.data.commentId);
+			let article = await Article.findById(id);
+
+			article = await article.deleteComment(commentId);
 			client.emit('alert', { type: 'success', message: `Deleted Comment` });
 			break;
 		}
 		case('delete'): {
-			let article = await Article.findById(req.data.id);
+			const { id } = req.data; 
+
+			let article = await Article.findById(id);
 
 			article = await article.delete();
 			client.emit('alert', { type: 'success', message: 'Deleted Article' });

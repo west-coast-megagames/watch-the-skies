@@ -41,7 +41,7 @@ const Trade = ({ trades, team, teams, account }) => {
 		};
 		try {
 			// console.log(trade)
-			socket.emit('request', { route: 'trade', action: 'newTrade', data});
+			socket.emit('request', { route: 'trade', action: 'new', data});
 			setNewTrade(false);
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
@@ -61,7 +61,7 @@ const Trade = ({ trades, team, teams, account }) => {
 		};
 		try {
 			// console.log(trade)
-			socket.emit('request', { route: 'trade', action: 'editTrade', data});
+			socket.emit('request', { route: 'trade', action: 'edit', data});
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -74,7 +74,7 @@ const Trade = ({ trades, team, teams, account }) => {
 		};
 		try {
 			// console.log(trade)
-			socket.emit('request', { route: 'trade', action: 'approveTrade', data});
+			socket.emit('request', { route: 'trade', action: 'approve', data});
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -87,7 +87,7 @@ const Trade = ({ trades, team, teams, account }) => {
 		};
 		try {
 			// console.log(trade)
-			socket.emit('request', { route: 'trade', action: 'rejectTrade', data});
+			socket.emit('request', { route: 'trade', action: 'reject', data});
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -99,7 +99,7 @@ const Trade = ({ trades, team, teams, account }) => {
 			trade: selectedTrade._id,
 			trasher: team.shortName
 		};
-		socket.emit('request', { route: 'trade', action: 'trashTrade', data});
+		socket.emit('request', { route: 'trade', action: 'trash', data});
 		setSelectedTrade(false);
 	}
 

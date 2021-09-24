@@ -38,7 +38,7 @@ const Agreements = (props) => {
 			approved: otherTeam.shortName, 
 			type
 		}
-		socket.emit('request', { route: 'governance', action: 'treaty', data});
+		socket.emit('request', { route: 'treaty', action: 'agree', data});
 	}
 
 	// TODO John Review if AutoTransfers needs to be updated for account.autoTransfer change to account.queue

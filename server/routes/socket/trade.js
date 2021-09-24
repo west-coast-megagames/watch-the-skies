@@ -5,23 +5,23 @@ module.exports = async function (client, req) {
 	logger.info(`${client.username} has made a ${req.action} request!`);
 	let message;
 	switch(req.action) {
-	case 'newTrade': {
+	case 'new': {
 		message = await createTrade(req.data);
 		break;
 	}
-	case 'approveTrade': {
+	case 'approve': {
 		message = await approveTrade(req.data);
 		break;
 	}
-	case 'editTrade': {
+	case 'edit': {
 		message = await editTrade(req.data);
 		break;
 	}
-	case 'rejectTrade': {
+	case 'reject': {
 		message = await rejectTrade(req.data);
 		break;
 	}
-	case 'trashTrade': {
+	case 'trash': {
 		message = await trashTrade(req.data);
 		break;
 	}

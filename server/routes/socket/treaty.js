@@ -6,7 +6,7 @@ module.exports = async function (client, req) {
 	logger.info(`${client.username} has made a ${req.action} request!`);
 	let message;
 	switch(req.action) {
-	case 'treaty': {
+	case 'agree': {
 		message = await treatyCheck(req.data);
 		break;
 	}

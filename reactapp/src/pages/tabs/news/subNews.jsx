@@ -43,6 +43,7 @@ class SubNews extends React.Component {
     // e.preventDefault(); // ????????
     let edit = this.props.edit;
 		const data = { 
+			id: this.state.article._id,
 			article: this.state.article,
 			team: this.props.team,
 			// publisher: props.user,
