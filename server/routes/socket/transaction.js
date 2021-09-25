@@ -4,7 +4,7 @@ const { Account } = require('../../models/account'); // Account Model
 const bankDebugging = require('debug')('sockets:Transactions'); // Debug console log
 
 module.exports = async function (client, req) {
-	logger.info(`${client.username} has made a ${req.action} request!`);
+	logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 
 	const { from } = req.data;
 	const account = await Account.findOne({ _id: from });

@@ -54,7 +54,7 @@ const NewsFeed = (props) => {
 
 		const handleHide = (article) => {
 			props.hideArticle(article);
-			socket.emit('request', { route: 'news', action: 'delete', data: { id: article._id } });
+			socket.emit('request', { route: 'article', action: 'delete', data: { id: article._id } });
 		}
 
     return (

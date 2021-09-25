@@ -55,11 +55,11 @@ class SubNews extends React.Component {
 		}
     try {
       if (!edit) {
-				socket.emit('request', { route: 'news', action: 'post', data });
+				socket.emit('request', { route: 'article', action: 'post', data });
         // resArticle = await axios.put(`${gameServer}game/news/${this.state.article._id}`, this.state.article);
       } 
 			else {
-				socket.emit('request', { route: 'news', action: 'edit', data });
+				socket.emit('request', { route: 'article', action: 'edit', data });
         // resArticle = await axios.post(`${gameServer}game/news`, this.state.article);
       }
       // this.setState({article: {

@@ -4,7 +4,7 @@ const masterClock = require('../../wts/gameClock/gameClock');
 
 module.exports = async function (client, req) {
 	try {
-		logger.info(`${client.username} has made a ${req.action} request!`);
+		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		let message;
 		switch(req.action) {
 		case('getState'):

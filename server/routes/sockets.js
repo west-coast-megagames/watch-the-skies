@@ -5,14 +5,23 @@ const config = require('config'); // Import of config modules to pull config var
 const nexusEvent = require('../middleware/events/events'); // Local NODE event trigger
 const masterClock = require('../wts/gameClock/gameClock'); // Import of main clock class
 
-const transaction = require('./socket/transactions'); // Import of Socket route for WTS Transaction system
+const transaction = require('./socket/transaction'); // Import of Socket route for WTS Transaction system
 const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
 const trade = require('./socket/trade'); // Import of Socket route for WTS Clock controls
 const treaty = require('./socket/treaty'); // Treaty sockets
-const military = require('./socket/military') // Military sockets
-const news = require('./socket/news') // News sockets
+const military = require('./socket/military'); // Military sockets
+const article = require('./socket/article'); // News sockets
+const aircraft = require('./socket/aircraft'); // Aircraft sockets
+const wmd = require('./socket/wmd'); // WMD sockets
+const squad = require('./socket/squad'); // Squad sockets
+const construction = require('./socket/construction'); // Construction sockets
+const resource = require('./socket/resource'); // Resource sockets
+const resolution = require('./socket/resolution'); // Resoulution sockets
+const research = require('./socket/research'); // Research sockets
+const site = require('./socket/site'); // Site sockets
+const facility = require('./socket/facility'); // Facility sockets
 
-const routes = { clock, treaty, military, transaction, trade, news }; // Route object for routing to various socket routes
+const routes = { clock, treaty, military, transaction, trade, article, aircraft, wmd, squad, construction, resource, resolution, research, site, facility }; // Route object for routing to various socket routes
 
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {

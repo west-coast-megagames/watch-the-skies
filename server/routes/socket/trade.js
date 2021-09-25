@@ -2,7 +2,7 @@ const { logger } = require('../../middleware/log/winston'); // middleware/error.
 const { createTrade, trashTrade, editTrade, approveTrade, rejectTrade } = require('../../wts/trades/trade');
 
 module.exports = async function (client, req) {
-	logger.info(`${client.username} has made a ${req.action} request!`);
+	logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 	let message;
 	switch(req.action) {
 	case 'new': {

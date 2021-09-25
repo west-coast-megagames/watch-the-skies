@@ -14,7 +14,7 @@ const ViewArticle = (props) => {
 	}
 
 	const handleComment = () => {
-		socket.emit('request', { route: 'news', action: 'comment', data: { id: article._id, user: props.user, comment, } });
+		socket.emit('request', { route: 'article', action: 'comment', data: { id: article._id, user: props.user, comment, } });
 		setComment(false);
 	}
 
@@ -71,7 +71,7 @@ const ViewArticle = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <ButtonToolbar style={{float: 'right'}}>
-            <IconButton icon={<Icon icon='thumbs-up' />} onClick={() => socket.emit('request', { route: 'news', action: 'react', data: { id: article._id, user: props.user, emoji: 'thumbs-up'} })}>{calculate(article.reactions, 'thumbs-up')}</IconButton>
+            <IconButton icon={<Icon icon='thumbs-up' />} onClick={() => socket.emit('request', { route: 'article', action: 'react', data: { id: article._id, user: props.user, emoji: 'thumbs-up'} })}>{calculate(article.reactions, 'thumbs-up')}</IconButton>
             <Button color='red' onClick={() => props.onClose()} appearance="subtle"> Close </Button>
           </ButtonToolbar>
         </Modal.Footer>
