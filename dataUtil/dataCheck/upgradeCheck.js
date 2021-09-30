@@ -33,6 +33,10 @@ async function chkUpgrade(runFlag) {
 			logger.error(`model missing for Upgrade ${upgrade.name} ${upgrade._id}`);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(upgrade, 'tags')) {
+			logger.error(`tags missing for Upgrade ${upgrade.name} ${upgrade._id}`);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(upgrade, 'serviceRecord')) {
 			logger.error(
 				`serviceRecord missing for Upgrade ${upgrade.name} ${upgrade._id}`

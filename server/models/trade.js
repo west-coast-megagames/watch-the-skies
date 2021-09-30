@@ -29,6 +29,7 @@ const TradeSchema = new Schema({
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
 			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
+			tags: [{ type: String, enum: ['']} ],
 			comments: { type: String, default: 'No Comments' }
 		} // initiator
 	},
@@ -57,6 +58,7 @@ TradeSchema.methods.validateTrade = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		// TODO: Add trade rules to Joi validation schema
+		tags: Joi.array().items(Joi.string().valid(''))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

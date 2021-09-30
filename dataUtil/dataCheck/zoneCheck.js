@@ -25,6 +25,10 @@ async function chkZone(runFlag) {
 			logger.error(`Model is not 'Zone' ${zone.name} ${zone._id}`);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(zone, 'tags')) {
+			logger.error(`tags missing for zone ${zone.name} ${zone._id}`);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(zone, 'code')) {
 			logger.error(`code missing for zone ${zone.name} ${zone._id}`);
 		}

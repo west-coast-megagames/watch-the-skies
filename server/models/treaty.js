@@ -30,6 +30,7 @@ const TreatySchema = new Schema({
 	violation: { type: String },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() },
+	tags: [{ type: String, enum: ['']} ],
 	status: {
 		draft: { type: Boolean, default: true },
 		proposal: { type: Boolean, default: false },
@@ -44,7 +45,8 @@ TreatySchema.methods.validateTreaty = async function () {
 	const { validTeam } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
-		name: Joi.string().min(2).max(50).required()
+		name: Joi.string().min(2).max(50).required(),
+		tags: Joi.array().items(Joi.string().valid(''))
 		// TODO: Add code rules to Joi validation schema
 	});
 

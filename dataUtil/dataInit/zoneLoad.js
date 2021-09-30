@@ -89,6 +89,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 					code: zCode,
 					name: zName,
 					serviceRecord: [],
+					tags: [],
 					type: 'Space'
 				};
 
@@ -109,6 +110,7 @@ async function loadZone(zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 					name: zName,
 					terror: randomTerror, // zTerror
 					serviceRecord: [],
+					tags: [],
 					type: 'Ground'
 				};
 				try {
