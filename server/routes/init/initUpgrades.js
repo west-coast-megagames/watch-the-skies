@@ -5,6 +5,7 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 const validateObjectId = require('../../middleware/util/validateObjectId');
 const httpErrorHandler = require('../../middleware/util/httpError');
 const { newUpgrade } = require('../../wts/construction/construction');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Mongoose Model Import
 const { Upgrade } = require('../../models/upgrade');
@@ -98,7 +99,8 @@ router.post('/build', async function (req, res) {
 	try {
 		const data = { code: code, team: team, facility: facility };
 		let upgrade = await newUpgrade(data); // just the facility ID
-		upgrade.status.building = false;	// init upgrades are assumed to be built
+		await clearArrayValue(upgrade.status, 'building');   // init upgrades are assumed to be built
+		await addArrayValue(upgrade.status, 'storage');   // default
 		upgrade = await upgrade.save();
 
 		res.status(200).json(upgrade);

@@ -222,6 +222,11 @@ async function newUpgradeBP (bpData, rCounts) {
 	// New Upgrade Blueprint here
 	const bpUpgrade = bpData;
 	bpUpgrade.tags = [];
+	bpUpgrade.status = [];
+	/* shouldn't set upgrade defaults on blueprint
+	bpUpgrade.status.push('building');
+	bpUpgrade.status.push('storage');
+	*/
 	try {
 		await axios.post(`${gameServer}api/blueprints`, bpUpgrade);
 		++rCounts.loadCount;

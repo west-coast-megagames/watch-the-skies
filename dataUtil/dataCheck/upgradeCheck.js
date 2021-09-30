@@ -125,35 +125,8 @@ async function chkUpgrade(runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(upgrade, 'status')) {
 			logger.error(`status missing for upgrade ${upgrade.name} ${upgrade._id}`);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'building')) {
-				logger.error(
-					`status.building missing for upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'salvage')) {
-				logger.error(
-					`status.salvage missing for upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(upgrade.status, 'storage')) {
-				logger.error(
-					`status.storage missing for upgrade ${upgrade.name} ${upgrade._id}`
-				);
-			}
-
-			if (upgrade.status.building) {
+    else {	
+			if (upgrade.status.some(el => el === 'building')) {
 				logger.info(
 					`upgrade Status Is Building For ${upgrade.name} ${upgrade._id}`
 				);

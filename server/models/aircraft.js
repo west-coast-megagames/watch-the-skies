@@ -199,7 +199,7 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	for (let upgrade of this.upgrades) {
 		try {
 			upgrade = await Upgrade.findById(upgrade);
-			upgrade.status.storage = true;
+			await addArrayValue(upgrade.status, 'storage');
 			await upgrade.save();
 		}
 		catch (err) {

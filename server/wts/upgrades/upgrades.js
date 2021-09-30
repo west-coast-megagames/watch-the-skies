@@ -4,6 +4,7 @@ const { Squad } = require('../../models/squad');
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const { Account } = require('../../models/account');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 /*
 function that applies upgrade to any unit
@@ -27,7 +28,7 @@ async function addUpgrade (data) {
 	let { upgrade, unit, model } = data;
 	upgrade = await Upgrade.findById(upgrade);
 
-	if (!upgrade.status.storage) return 'This Upgrade is already in use somewhere!';
+	if (!upgrade.status.some(el => el === 'storage')) return 'This Upgrade is already in use somewhere!';
 
 	switch(model) {
 	case 'Military':
@@ -47,7 +48,7 @@ async function addUpgrade (data) {
 	}
 	try{
 		unit.upgrades.push(upgrade);
-		upgrade.status.storage = false;
+		await clearArrayValue(upgrade.status, 'storage');
 		upgrade.team = unit.team; // this is in case an upgrade is made by control, the team still gets it
 		for (const element of upgrade.effects) {// add all unit types and effects here
 			switch (element.type) {
@@ -109,7 +110,7 @@ async function removeUpgrade (data) {
 	}
 	try{
 		unit = await unit.save();
-		upgrade.status.storage = true;
+		await addArrayValue(upgrade.status, 'storage');
 		upgrade = await upgrade.save();
 		return ({ message : response, type: 'success' });
 	}
@@ -143,10 +144,10 @@ async function repairUpgrade (data) {
 			account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${upgrade.name}` });
 			await account.save();
 
-			// upgrade.status.repair = true;
-			// upgrade.status.ready = false;
-			upgrade.status.destroyed = false;
-			upgrade.status.damaged = false;
+			// await addArrayValue(upgrade.status, 'repair');
+			// await clearArrayValue(upgrade.status, 'ready');
+			await clearArrayValue(upgrade.status, 'destroyed');
+			await clearArrayValue(upgrade.status, 'damaged');
 			await upgrade.save();
 			return ({ message : `${upgrade.name} repaired!`, type: 'success' });
 		}
