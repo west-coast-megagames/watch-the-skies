@@ -255,15 +255,15 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 				interceptDebugger(`Damaging ${sysName} system...`);
 				// TODO: Add dynamic report of system hit and status of system
 			}
-			else if (upgrade.status.damaged === false) {
-				upgrade.status.damaged = true;
-				upgrade.status.salvage = true;
+			else if (!upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'damaged');
+				await addArrayValue(upgrade.status, 'salvage');
 				interception.salvage.push(upgrade._id);
 				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
 				// TODO: Add dynamic report of upgrade loss and status of system
 			}
-			else if (upgrade.status.damaged === true) {
-				upgrade.status.destroyed = true;
+			else if (upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'destroyed');
 				// TODO: add dynamic of upgrade destruction of the upgrade and status of the system
 			}
 		}
@@ -278,8 +278,8 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 		await addArrayValue(unit.status, 'destroyed');
 		// TODO: Add dynamic report for crash
 		for (const upgrade of unit.upgrades) {
-			upgrade.status.damaged = true;
-			upgrade.status.salvage = true;
+			await addArrayValue(upgrade.status, 'damaged');
+			await addArrayValue(upgrade.status, 'salvage');
 			interception.salvage.push(upgrade._id);
 		}
 	}

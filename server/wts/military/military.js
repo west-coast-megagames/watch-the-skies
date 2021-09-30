@@ -319,8 +319,8 @@ async function runMilitary() {
 				for (let upgrade of data.spoils) { // give out any spoils to the remainging attacker teams
 					const unit = rand(attackers.length) - 1;
 					upgrade = await Upgrade.findById(upgrade);
-					upgrade.status.damaged = true;
-					upgrade.status.storage = true;
+					await addArrayValue(upgrade.status, 'damaged');
+					await addArrayValue(upgrade.status, 'storage');
 					upgrade.team = attackers[unit].team._id;
 					await upgrade.save();
 				}
@@ -337,8 +337,8 @@ async function runMilitary() {
 			if (data.spoils && data.spoils.length > 0) {
 				for (let upgrade of data.spoils) {
 					upgrade = await Upgrade.findById(upgrade);
-					upgrade.status.damaged = true;
-					upgrade.status.storage = true;
+					await addArrayValue(upgrade.status, 'damaged');
+					await addArrayValue(upgrade.status, 'storage');
 					upgrade.team = site.team._id;
 					await upgrade.save();
 				}
@@ -358,8 +358,8 @@ async function runMilitary() {
 				for (let upgrade of data.spoils) {
 					const unit = rand(army.length) - 1;
 					upgrade = await Upgrade.findById(upgrade);
-					upgrade.status.damaged = true;
-					upgrade.status.storage = true;
+					await addArrayValue(upgrade.status, 'damaged');
+					await addArrayValue(upgrade.status, 'storage');
 					upgrade.team = army[unit].team._id;
 					await upgrade.save();
 				}

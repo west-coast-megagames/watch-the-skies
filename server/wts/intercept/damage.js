@@ -108,14 +108,14 @@ async function dmgCalc (unit, report) {
 				unit.systems[systemKeys[index]].damaged ? unit.systems[systemKeys[index]].destroyed = true : unit.systems[systemKeys[index]].damaged = true;
 				hullDmg += 1;
 			}
-			else if (upgrade.status.damaged === false) {
-				upgrade.status.damaged = true;
-				upgrade.status.salvage = true;
+			else if (!upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'damaged');
+				await addArrayValue(upgrade.status, 'salvage');
 				salvageArray.push(upgrade._id);
 				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
 			}
-			else if (upgrade.status.damaged === true) {
-				upgrade.status.destroyed = true;
+			else if (upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'destroyed');
 				// no salvage from destroyed systems? idk, might want to prevent "double dipping"
 			}
 		}
@@ -149,8 +149,8 @@ async function dmgCalc (unit, report) {
 		dmgReport.aarUnit = `${dmgReport.aar}${unit.name} shot down in combat...`;
 		dmgReport.aarOpponent = `${dmgReport.aar}Target shot down in combat...`;
 		for (const upgrade of unit.upgrades) {
-			upgrade.status.damaged = true;
-			upgrade.status.destroyed = true;
+			await addArrayValue(upgrade.status, 'damaged');
+			await addArrayValue(upgrade.status, 'destroyed');
 			salvageArray.push(upgrade._id);
 		}
 		// a few default salvage
