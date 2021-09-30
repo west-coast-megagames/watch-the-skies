@@ -1,6 +1,7 @@
 const routeDebugger = require('debug')('app:routes');
 const express = require('express');
 const router = express.Router();
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Treaty } = require('../../models/treaty');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
@@ -23,6 +24,7 @@ router.post('/', async function (req, res) {
 	let { creator } = req.body;
 	try{
 		let treaties = new Treaty(req.body);
+		await addArrayValue(treaties.status, 'draft');   // draft default status
 		creator = await Team.findById({ _id: creator }); // populate creator's team so we can pass it back
 		creator.treaties.push(treaties._id);
 		creator = await creator.save();
@@ -59,13 +61,13 @@ router.delete('/', async function (req, res) {
 // EXPECTATIONS: The treaty itself (at least the ID and the status of the Treaty)
 // This DELETE should only be called by the creator of a treaty and only while the treaty is a draft. Once a treaty is 'live' there should be no way to delete a treaty
 router.delete('/id', async function (req, res) {
-	if (req.body.status.proposal) {
+	if (req.body.status.some(el => el === 'proposal')) {
 		res.status(400).send('You cannot delete a Treaty once it has been published');
 	}
 	try{
 		let treaty = await Treaty.findById({ _id: req.body._id });
 
-		treaty.status.deleted = true;
+		await addArrayValue(this.status, 'deleted');
 		treaty = await treaty.saveActivity(treaty, `Treaty Deleted By ${treaty.creator}`);
 		const temp = treaty.name;
 		await Treaty.findByIdAndDelete({ _id: req.body._id });

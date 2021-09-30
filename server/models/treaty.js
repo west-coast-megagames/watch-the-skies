@@ -31,13 +31,7 @@ const TreatySchema = new Schema({
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() },
 	tags: [{ type: String, enum: ['']} ],
-	status: {
-		draft: { type: Boolean, default: true },
-		proposal: { type: Boolean, default: false },
-		rejected: { type: Boolean, default: false },
-		complete: { type: Boolean, default: false },
-		deleted: { type: Boolean, default: false }
-	}
+	status: [ {type: String, enum: ['draft', 'proposal', 'rejected', 'complete', 'deleted']} ],
 });
 
 // validateTreaty method
@@ -46,7 +40,9 @@ TreatySchema.methods.validateTreaty = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
-		tags: Joi.array().items(Joi.string().valid(''))
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('draft', 'proposal', 'rejected', 'complete', 'deleted'))
+
 		// TODO: Add code rules to Joi validation schema
 	});
 
