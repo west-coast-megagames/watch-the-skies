@@ -47,6 +47,7 @@ const TeamSchema = new Schema({
 		maxlength: 3
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	tags: [{ type: String, enum: ['']} ],
 	agreements: [ AgreementSchema ]
 });
 
@@ -136,6 +137,7 @@ TeamSchema.methods.validateTeam = async function () {
 			agents: Joi.number().min(0),
 			prLevel: Joi.number(),
 			sciRate: Joi.number(),
+			tags: Joi.array().items(Joi.string().valid('')),
 			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
 			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
@@ -151,6 +153,7 @@ TeamSchema.methods.validateTeam = async function () {
 			actionPts: Joi.number(),
 			agents: Joi.number().min(0),
 			sciRate: Joi.number(),
+			tags: Joi.array().items(Joi.string().valid('')),
 			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
 			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
@@ -164,6 +167,7 @@ TeamSchema.methods.validateTeam = async function () {
 			code: Joi.string().min(2).max(3).required().uppercase(),
 			type: Joi.string().min(1).max(10),
 			sciRate: Joi.number(),
+			tags: Joi.array().items(Joi.string().valid('')),
 			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
 			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
@@ -176,6 +180,7 @@ TeamSchema.methods.validateTeam = async function () {
 			code: Joi.string().min(2).max(3).required().uppercase(),
 			type: Joi.string().min(1).max(10),
 			agents: Joi.number().min(0),
+			tags: Joi.array().items(Joi.string().valid('')),
 			roles: Joi.array().items(Joi.object({ role: Joi.string(), type: Joi.string().valid('Head of State', 'Diplomat', 'Ambassador', 'Scientist', 'Military') })),
 			users: Joi.array().items(Joi.string().min(2).max(30))
 		});
@@ -186,6 +191,7 @@ TeamSchema.methods.validateTeam = async function () {
 			name: Joi.string().min(2).max(50).required(),
 			shortName: Joi.string().min(2).max(30),
 			code: Joi.string().min(2).max(3).required().uppercase(),
+			tags: Joi.array().items(Joi.string().valid('')),
 			type: Joi.string().min(1).max(10)
 		});
 		// no further validation for NPC currently

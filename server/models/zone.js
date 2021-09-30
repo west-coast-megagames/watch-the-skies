@@ -17,6 +17,7 @@ const ZoneSchema = new Schema({
 		unique: true
 	},
 	name: { type: String, required: true, minlength: 3, maxlength: 50 },
+	tags: [{ type: String, enum: ['']} ],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
@@ -32,6 +33,7 @@ ZoneSchema.methods.validateZone = async function () {
 		schema = Joi.object({
 			code: Joi.string().min(2).max(2).required().uppercase(),
 			name: Joi.string().min(3).max(50).required(),
+			tags: Joi.array().items(Joi.string().valid('')),
 			terror: Joi.number().min(0).max(250)
 		});
 
@@ -40,7 +42,8 @@ ZoneSchema.methods.validateZone = async function () {
 	case 'Space':
 		schema = Joi.object({
 			code: Joi.string().min(2).max(2).required().uppercase(),
-			name: Joi.string().min(3).max(50).required()
+			name: Joi.string().min(3).max(50).required(),
+			tags: Joi.array().items(Joi.string().valid(''))
 		});
 		break;
 

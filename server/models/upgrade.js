@@ -32,6 +32,7 @@ const UpgradeSchema = new Schema({
 		storage: { type: Boolean, default: true }
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	tags: [{ type: String, enum: ['']} ],
 	effects: [
 		{
 			type: { type: String },
@@ -46,7 +47,8 @@ UpgradeSchema.methods.validateUpgrade = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
 	const schema = Joi.object({
-		name: Joi.string().min(2).max(50).required()
+		name: Joi.string().min(2).max(50).required(),
+		tags: Joi.array().items(Joi.string().valid(''))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });
