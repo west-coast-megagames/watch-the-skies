@@ -5,7 +5,7 @@ import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
 import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
-import AccountGraph from '../../../components/common/GraphAccounts';
+// import AccountGraph from '../../../components/common/GraphAccounts';
 
 let count = 0;
 
@@ -56,7 +56,7 @@ const BudgetTab = (props) => {
 		console.log('Adding Transaction')
 		let transfer = { id: count, to: undefined, from: undefined, amount: 0, resource: type, note: undefined }
 		if (schedule === true) transfer.schedule = true;
-		let list = transactions;
+		let list = [...transactions];
 		list.push(transfer);
 		setTransactions(list);
 		count++;
@@ -119,8 +119,8 @@ const BudgetTab = (props) => {
 							placeholder='Select Desired resource'
 							onChange={ value => setType(value) }
 						/>
-						<Button block onClick={() => addTransfer(false)}>New Transfer</Button>
-						<Button block onClick={() => addTransfer(true)}>Set Automatic Transfer</Button>
+						<Button block onClick={() => addTransfer(false)}>Transfer {type}</Button>
+						<Button block onClick={() => addTransfer(true)}>schedule {type} Transfer</Button>
 						<AccountsTable accounts={ props.accounts } resource={ type } />
 					</Sidebar>
 				</Container>
