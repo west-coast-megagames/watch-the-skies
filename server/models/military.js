@@ -39,7 +39,7 @@ const MilitarySchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
-	status: [{ type: String, enum:  ['damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission'] } ],
+	status: [{ type: String, enum:  ['damaged', 'deployed', 'destroyed', 'repair', 'mobilized', 'operational', 'action', 'mission'] } ],
 	tags: { 
 		type: [String],
 		enum: ['secret']
@@ -88,7 +88,7 @@ MilitarySchema.methods.deploy = async function (site) {
 		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.localDeploy;
 
 		if (!this.status.some(el => el === 'deployed')) { 
-			this.status.push('deployed');
+			addArrayValue(this.status, 'deployed');
 			this.markModified('status');
 		}
 
@@ -350,7 +350,7 @@ MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
-		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'repairing', 'mobilized', 'operational', 'action', 'mission')),
+		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'repair', 'mobilized', 'operational', 'action', 'mission')),
 		tags: Joi.array().items(Joi.string().valid('secret'))
 	});
 

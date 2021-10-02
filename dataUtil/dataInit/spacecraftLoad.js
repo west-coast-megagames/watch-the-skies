@@ -116,19 +116,19 @@ async function newSpacecraft(sData, rCounts) {
 
 	// current valid status to push   ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']
   if (sData.status.damaged) {
-		SpaceSite.tags.push('damaged');
+		SpaceSite.status.push('damaged');
 	}
 	if (sData.status.destroyed) {
-		SpaceSite.tags.push('destroyed');
+		SpaceSite.status.push('destroyed');
 	}
 	if (sData.status.upgrade) {
-		SpaceSite.tags.push('upgrade');
+		SpaceSite.status.push('upgrade');
 	}
 	if (sData.status.repair) {
-		SpaceSite.tags.push('repair');
+		SpaceSite.status.push('repair');
 	}
 	if (sData.status.secret) {
-		SpaceSite.tags.push('secret');
+		SpaceSite.status.push('secret');
 	}
 
 	if (sData.teamCode) {

@@ -81,7 +81,8 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 			cost: Joi.number().min(0).required(),
 			buildTime: Joi.number().min(0).required(),
 			desc: Joi.string().min(1).max(255).required(),
-			buildModel: Joi.string() .min(1) .required()
+			buildModel: Joi.string() .min(1) .required(),
+			status: Joi.array().items(Joi.string().valid('building', 'salvage', 'damaged', 'destroyed', 'storage'))
 		});
 		break;
 

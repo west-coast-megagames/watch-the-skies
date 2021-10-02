@@ -112,10 +112,10 @@ const AircraftStats = (props) => {
 					<FlexboxGrid.Item colspan={24}>
 						<br />
 						<TagGroup>
-							{!status.damaged && !status.deployed && <Tag color="green">Mission Ready</Tag>}
-							{status.deployed && <Tag color="yellow">Deployed</Tag>}
-							{status.repair && <Tag color="yellow">Repairing</Tag>}
-							{status.destroyed && <Tag color="red">Destroyed</Tag>}
+							{!status.some(el => el === 'damaged') && !status.some(el => el === 'deployed') && <Tag color="green">Mission Ready</Tag>}
+							{status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
+							{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+							{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
 						</TagGroup>
 					</FlexboxGrid.Item>
 				</FlexboxGrid>

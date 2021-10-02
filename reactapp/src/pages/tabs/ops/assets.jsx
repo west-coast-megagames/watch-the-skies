@@ -118,13 +118,13 @@ const AssetTab = (props) => {
 								<b>Status:</b>
 							</p>									
 								<TagGroup>
-									{selected.status.damaged && <Tag color='orange'>Damaged</Tag>}
-									{selected.status.storage && <Tag color='green'>Stored</Tag>}
-									{!selected.status.storage && <Tag color='violet'>Attached</Tag>}
-									{selected.status.destroyed && <Tag color='red'>Destroyed</Tag>}
-									{selected.status.salvage && <Tag color='blue'>Salvage</Tag>}
+									{selected.status.some(el => el === 'damaged') && <Tag color='orange'>Damaged</Tag>}
+									{selected.status.some(el => el === 'storage') && <Tag color='green'>Stored</Tag>}
+									{!selected.status.some(el => el === 'storage') && <Tag color='violet'>Attached</Tag>}
+									{selected.status.some(el => el === 'destroyed') && <Tag color='red'>Destroyed</Tag>}
+									{selected.status.some(el => el === 'salvage') && <Tag color='blue'>Salvage</Tag>}
 								</TagGroup>
-							{selected.status.damaged && <IconButton
+							{selected.status.some(el => el === 'damaged') && <IconButton
 									size="xs"
 									onClick={() =>
 										repair(selected)
