@@ -27,7 +27,7 @@ class TeamAvatar extends Component {
   state = {};
   render() {
     return (
-      <Avatar size={this.props.size} circle src={team[this.props.code]}>
+      <Avatar style={{ border: '1.5px solid #3c3f43', }} size={this.props.size} circle src={team[this.props.code]}>
         !
       </Avatar>
     );

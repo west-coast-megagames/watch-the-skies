@@ -127,12 +127,12 @@ const DeployMilitary = (props) => {
 							<FlexboxGrid.Item colspan={12}>
 								<b>Status:</b>
 								<TagGroup>
-									{ props.target.status.map((tag, index) => (
+									{ props.target.status && props.target.status.map((tag, index) => (
 										<Tag key={index} color={ tag === 'occupied' || tag === 'warzone' ? 'red' : 'green'}>
 											<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
 										</Tag>
 									))}
-									{ props.target.tags.map((tag, index) => (
+									{  props.target.tags && props.target.tags.map((tag, index) => (
 										<Tag key={index} color={ tag === 'coastal' ? 'blue' : tag === 'capital' ? 'yellow' : 'violet'}>
 											<p style={{ 'textTransform': 'capitalize'}}>{tag}</p>
 										</Tag>

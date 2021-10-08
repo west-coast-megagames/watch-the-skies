@@ -12,8 +12,9 @@ import { getAircrafts } from '../../../store/entities/aircrafts';
 import { rand } from '../../../scripts/dice';
 import socket from '../../../socket';
 import TradeOffer from './tradeOffer';
+import { getMyTrades, tradesRequested } from '../../../store/entities/trades';
 
-const Trade = ({ trades, team, teams, account }) => {
+const Trade = ({ trades, team, teams, account, tradeLoading, tradeDispatched }) => {
 	const [selectedTrade, setSelectedTrade] = React.useState(null);
 	const [newTrade, setNewTrade] = React.useState(false);
 	const [partner, setPartner] = React.useState(false);
@@ -35,6 +36,7 @@ const Trade = ({ trades, team, teams, account }) => {
 
 	const createTrade = async () => {
 		console.log('Creating a new Trade...');
+		tradeDispatched();
 		let data = {
 			initiator: team._id,
 			tradePartner: partner
@@ -43,6 +45,7 @@ const Trade = ({ trades, team, teams, account }) => {
 			// console.log(trade)
 			socket.emit('request', { route: 'trade', action: 'new', data});
 			setNewTrade(false);
+			console.log(data);
 		} catch (err) {
 			Alert.error(`${err.data} - ${err.message}`)
 		};
@@ -68,6 +71,7 @@ const Trade = ({ trades, team, teams, account }) => {
 	}
 
 	const submitApproval = async () => {
+		tradeDispatched();
 		let data = {
 			trade: selectedTrade._id,
 			ratifier: team._id
@@ -81,6 +85,7 @@ const Trade = ({ trades, team, teams, account }) => {
 	}
 
 	const rejectProposal = async () => {
+		tradeDispatched();
 		let data = {
 			trade: selectedTrade._id,
 			rejecter: team._id
@@ -113,27 +118,33 @@ const Trade = ({ trades, team, teams, account }) => {
 						<TradeOffer 
 							submitApproval={submitApproval}
 							rejectProposal={rejectProposal}
+							myTeam={team}
+							team={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.team : selectedTrade.initiator.team} 
+							offer={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.offer : selectedTrade.initiator.offer} 
+							ratified={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.ratified : selectedTrade.initiator.ratified} 
+							status={selectedTrade.status}
+							loading={tradeLoading}
+							onOfferEdit={onOfferEdit}/>
+					</FlexboxGrid.Item>
+					
+					<FlexboxGrid.Item colspan={12}>
+						<TradeOffer 
+							submitApproval={submitApproval}
+							rejectProposal={rejectProposal}
 							offer={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.offer : selectedTrade.tradePartner.offer} 
 							ratified={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.ratified : selectedTrade.tradePartner.ratified} 
 							account={account} 
 							myTeam={team}
 							team={selectedTrade.initiator._id === team._id ? selectedTrade.initiator.team : selectedTrade.tradePartner.team} 
+							status={selectedTrade.status}
+							loading={tradeLoading}
 							onOfferEdit={onOfferEdit}/>
 					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={12}>
-						<TradeOffer 
-							submitApproval={submitApproval}
-							rejectProposal={rejectProposal}
-							myTeam={team}
-							team={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.team : selectedTrade.initiator.team} 
-							offer={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.offer : selectedTrade.initiator.offer} 
-							ratified={selectedTrade.initiator._id === team._id ? selectedTrade.tradePartner.ratified : selectedTrade.initiator.ratified} 
-							onOfferEdit={onOfferEdit}/>
-					</FlexboxGrid.Item>
+
 				</FlexboxGrid>}
 			</Content>
 			<Sidebar style={{ backgroundColor: '#a3a3a3', height: '80vh' }}>
-				{ selectedTrade && <IconButton  color={'red'} block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
+				{ selectedTrade && selectedTrade.status !== 'Completed' &&  <IconButton  color={'red'} block size='sm' icon={<Icon icon="trash" />} onClick={() => trashProposal()}>Trash Trade</IconButton>}
 				{ selectedTrade && <IconButton  color={'blue'} block size='sm' icon={<Icon icon="window-close-o" />} onClick={() => setSelectedTrade(null)}>Close Trade</IconButton>}
 				<br />
 				{ selectedTrade && <PanelGroup>
@@ -205,7 +216,7 @@ const Trade = ({ trades, team, teams, account }) => {
 					/>
 				</Modal.Body>
 				<Modal.Footer>
-					<Button disabled={!partner} onClick={() => createTrade()}>Create Trade</Button>
+					<Button disabled={!partner} loading={tradeLoading} onClick={() => createTrade()}>Create Trade</Button>
 					<Button onClick={() => setNewTrade(false)}>Cancel</Button>
 				</Modal.Footer>
 			</Modal>
@@ -215,13 +226,15 @@ const Trade = ({ trades, team, teams, account }) => {
 
 const mapStateToProps = state => ({
 	login: state.auth.login,
+	tradeLoading: state.entities.trades.loading,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
-	trades: state.entities.trades.list,
-	account: getTreasuryAccount(state)
+	trades: getMyTrades(state),
+	account: getTreasuryAccount(state),
 });
 
 const mapDispatchToProps = dispatch => ({
+	tradeDispatched: () => dispatch(tradesRequested())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trade);
