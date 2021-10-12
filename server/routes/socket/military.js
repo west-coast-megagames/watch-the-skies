@@ -14,7 +14,7 @@ module.exports = async function (client, req) {
 			for (const _id of req.data.units) {
 				try {
 				let unit = await Military.findById(_id);
-					// TODO - Call population method
+					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${assignment}.` });
 				} catch (error) {
@@ -28,6 +28,7 @@ module.exports = async function (client, req) {
 				try {
 				let unit = await Military.findById(_id);
 					// TODO - Call mobilize method
+					await unit.populateMe();
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
 				} catch (error) {
@@ -40,7 +41,7 @@ module.exports = async function (client, req) {
 			for (const _id of req.data.units) {
 				try {
 					let unit = await Military.findById(_id);
-					// TODO - Call population method
+					await unit.populateMe();
 					unit = await unit.deploy(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
 				} catch (error) {
