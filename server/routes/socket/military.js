@@ -22,6 +22,19 @@ module.exports = async function (client, req) {
 				}
 			}
 			break;
+		case('mobilize'):
+			// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
+			for (const _id of req.data.units) {
+				try {
+				let unit = await Military.findById(_id);
+					// TODO - Call mobilize method
+					unit = await unit.mobilize();
+					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
+				} catch (error) {
+					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+				}
+			}
+			break;
 		case('deploy'):
 			// Deploy action expects UNITS & DESTINATION
 			for (const _id of req.data.units) {
