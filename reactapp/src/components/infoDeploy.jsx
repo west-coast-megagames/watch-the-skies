@@ -98,24 +98,24 @@ class InfoDeploy extends Component {
             <hr />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <InputPicker
+              {/* <InputPicker
                 disabled={disable}
                 placeholder={ this.state.aircrafts.length < 1 ? `${this.props.team.shortName} has no aircraft...` : `Scramble a aircraft over ${organization.name}`}
                 data={this.state.aircrafts} 
                 labelKey='label'
                 value={this.state.unit}
                 valueKey='value'
-                onChange={value => (this.setState({ unit: value }))} block />
+                onChange={value => (this.setState({ unit: value }))} block /> */}
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-              <InputPicker
+              {/* <InputPicker
                 disabled = {disable || this.state.unit === null} 
                 placeholder="Mission Type Selection"
                 data={this.props.target !== null && model === 'Site' ? this.state.siteMissions : this.state.airMissions}
                 value={this.state.mission}
                 onChange={value => (this.setState({ mission: value }))}
                 block
-              />
+              /> */}
             </FlexboxGrid.Item>
             </FlexboxGrid>
             <br /><br /><br />

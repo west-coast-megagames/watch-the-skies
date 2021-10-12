@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { gameServer } from "../../../config";
 import TeamAvatar from '../../../components/common/teamAvatar';
-import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip } from 'rsuite';
+import { Container, Content, Alert, Sidebar, FlexboxGrid, SelectPicker, Button, Modal, IconButton, Icon, Tag, TagGroup, Panel, PanelGroup, List, Whisper, Tooltip, Divider } from 'rsuite';
 import { Form, ControlLabel, FormGroup, FormControl, TagPicker, Slider } from 'rsuite';
 import { getTreasuryAccount } from '../../../store/entities/accounts';
 import { getCompletedResearch } from '../../../store/entities/research';
@@ -42,8 +42,8 @@ const TradeOffer = (props) => { //trade object
 
 	const [formValue, setFormValue] = useState({
 		comments: props.offer.comments,
-		megabucks: props.offer.megabucks,
-		aircraft: [],
+		megabucks: props.offer.megabucks, 
+		aircraft: props.offer.aircraft,
 		intel: [],
 		research: [],
 		sites: [],
@@ -67,6 +67,7 @@ const TradeOffer = (props) => { //trade object
 	return(
 		<div className='trade' style={{padding: '8px'}}>
 			<h3><TeamAvatar size='md' code={props.team.code} />{props.team.name}</h3>
+			{props.status === 'Completed' && <Divider style={{ textAlign: 'center' }}>Traded away these items</Divider>}
 			<Form fluid formValue={formValue} onChange={formValue => setFormValue(formValue)}>
 
 				{!disabled ? <FormGroup>
@@ -84,11 +85,11 @@ const TradeOffer = (props) => { //trade object
 				</FormGroup> : null }
 				{disabled ? <PanelGroup>
 					<Panel>
-						<h5><Icon icon="money" /> M$: {formValue.slider}</h5>
+						<h5><Icon icon="money" /> M$: {formValue.megabucks}</h5>
 					</Panel>
 				</PanelGroup> : null }
 
-				{!disabled && aircraft.length > 0 ? <FormGroup>
+				{!disabled && aircraft && aircraft.length > 0 ? <FormGroup>
 					<ControlLabel>Aircraft</ControlLabel>
 					<FormControl
 					block
@@ -178,24 +179,27 @@ const TradeOffer = (props) => { //trade object
 					disabled={disabled}
 					readOnly={readOnly}
 					/>
+
 				</FormGroup>
-				<FlexboxGrid>
+				{props.status !== 'Completed' && <FlexboxGrid>
 					<FlexboxGrid.Item colspan={12} >
+					{props.myTeam._id === props.team._id && <div>
 						{disabled && <IconButton size='sm' icon={<Icon icon="pencil" />} onClick={() => onEdit()}>Edit Trade</IconButton>}
 						{!disabled && <IconButton size='sm' icon={<Icon icon="check" />} onClick={() => submitEdit()}>Save Offer</IconButton> }
+					</div>}
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={12} >
 						{props.myTeam._id === props.team._id && <div>
-							{ props.ratified && <IconButton  color={'orange'} block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => props.rejectProposal()}>Reject Proposal</IconButton>}
-							{ !props.ratified && <IconButton  color={'green'} block size='sm' icon={<Icon icon="check" />} onClick={() => props.submitApproval()}>Approve Proposal</IconButton>}
+							{ props.ratified &&<IconButton loading={props.loading} color={'orange'} disabled={!disabled || props.loading} block size='sm' icon={<Icon icon="thumbs-down" />} onClick={() => props.rejectProposal()}>Reject Proposal</IconButton>}
+							{ !props.ratified && <IconButton loading={props.loading} color={'green'} disabled={!disabled || props.loading} block size='sm' icon={<Icon icon="check" />} onClick={() => props.submitApproval()}>Approve Proposal</IconButton>}
 						</div>}
 						{props.myTeam._id !== props.team._id && <div>
-							{ props.ratified && <Tag color='green'>Ratify</Tag>}
-							{ !props.ratified && <Tag color='red'>Reject</Tag>}
+							{ props.ratified && <Tag color='green'>Deal Approved by {props.team.shortName}</Tag>}
+							{ !props.ratified && <Tag color='red'>Awaiting approval by {props.team.shortName}</Tag>}
 						</div>}
 
 					</FlexboxGrid.Item>
-				</FlexboxGrid>
+				</FlexboxGrid>}
 			</Form>
 		</div>
 	)

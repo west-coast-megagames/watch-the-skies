@@ -32,6 +32,7 @@ const slice = createSlice({
     tradeAdded: (trades, action) => {
       console.log(`${action.type} Dispatched`)
       trades.list.push(action.payload);
+			trades.loading = false;
     },
     tradeDeleted: (trades, action) => {
       console.log(`${action.type} Dispatched`)
@@ -42,6 +43,7 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       const index = trades.list.findIndex(el => el._id === action.payload._id);
       trades.list[index] = action.payload;
+			trades.loading = false;
     }
   }
 });
@@ -63,10 +65,10 @@ const url = `api/trade`;
 
 // Selector
 export const getMyTrades = createSelector(
-  state => state.trades.list,
+  state => state.entities.trades.list,
   state => state.auth.team,
-  (trades, team) => trades.find(
-    trade => trade.initiator._id === team.username._id
+  (trades, team) => trades.filter(
+    trade => trade.initiator.team._id === team._id || trade.tradePartner.team._id === team._id
   )
 );
 

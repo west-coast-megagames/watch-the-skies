@@ -24,12 +24,12 @@ const TradeSchema = new Schema({
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: ObjectId, ref: 'Aircraft' }],
+			aircraft: [{ type: Schema.Types.Mixed }], // [{ type: ObjectId, ref: 'Aircraft' }],
 			// TODO: Add intel here
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
 			upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
-			tags: [{ type: String, enum: ['']} ],
+			tags: [{ type: String, enum: [''] }],
 			comments: { type: String, default: 'No Comments' }
 		} // initiator
 	},
@@ -39,7 +39,7 @@ const TradeSchema = new Schema({
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: ObjectId, ref: 'Aircraft' }],
+			aircraft: [{ type: Schema.Types.Mixed }], // [{ type: ObjectId, ref: 'Aircraft' }],
 			// TODO: Add intel here
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
