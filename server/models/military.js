@@ -85,7 +85,7 @@ MilitarySchema.methods.deploy = async function (site) {
 		let cost = 0; 
 		let distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
 		// if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
-		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.localDeploy;
+		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.globalDeploy;
 
 		if (!this.status.some(el => el === 'deployed')) { 
 			addArrayValue(this.status, 'deployed');
@@ -143,7 +143,7 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		logger.info(`${this.name} returned to ${home.name}...`);
 
-		return ;
+		return;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
