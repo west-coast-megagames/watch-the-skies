@@ -129,7 +129,7 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		logger.info(`${this.name} is being recalled to ${home.name}...`);
 
 		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
-		await clearArrayValue(this.status, 'mobilized'); // Clears the MOILIZED status if it exists
+		await clearArrayValue(this.status, 'mobilized'); // Clears the MOBILIZED status if it exists
 		const { lat, lng } = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.location.lat = lat; // Updates LAT
 		this.location.lng = lng; // Updates LNG
@@ -346,6 +346,16 @@ MilitarySchema.methods.endTurn = async function () {
 	await this.save();
 };
 
+MilitarySchema.methods.populateMe = async function () {
+	return this.populate.populate('team', 'name shortName code')
+	.populate('zone', 'name')
+	.populate('organization', 'name')
+	.populate('site', 'name geoDecimal')
+	.populate('origin')
+	.populate('upgrades', 'name effects')
+		.execPopulate();
+};
+
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
@@ -369,6 +379,8 @@ MilitarySchema.methods.validateMilitary = async function () {
 		await validLog(servRec);
 	}
 };
+
+
 
 const Military = mongoose.model('Military', MilitarySchema);
 
