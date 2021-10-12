@@ -133,6 +133,7 @@ async function resolveTrade(id) {// I have not tested this much at all will need
 		.populate('initiator.team', 'shortName name code')
 		.populate('tradePartner.team', 'shortName name code');
 
+	// TODO: John re-implement reports
 	// initiatorReport.saveReport(initiator.team, initiator.offer);
 	// tradePartnerReport.saveReport(tradePartner.team, tradePartner.offer);
 	nexusEvent.emit('request', 'broadcast', { type: 'success', message: 'Trade deal Completed!' });

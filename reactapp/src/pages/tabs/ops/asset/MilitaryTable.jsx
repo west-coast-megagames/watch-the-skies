@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showAircraft } from '../../../../store/entities/infoPanels';
 import { getAircrafts } from '../../../../store/entities/aircrafts';
-import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid } from 'rsuite';
+import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid, Toggle, Button, Whisper, Popover, Tooltip } from 'rsuite';
 import { getOpsAccount } from '../../../../store/entities/accounts';
 import { getFacilites } from '../../../../store/entities/facilities';
 import { getMilitary } from '../../../../store/entities/military';
+import MobilizeForm from './MobilizeForm';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -13,6 +14,7 @@ const MilitaryTable = (props) => {
 	// TODO: Update visuals of table so they look nice-er
 	const [displayLength, setDisplayLength] = React.useState(15);
 	const [page, setPage] = React.useState(1);
+	const [show, setShow] = React.useState(false);
 
 	const getLocation = (aircraft) => {
       let location = aircraft.site !== undefined ? aircraft.site.name !== undefined ? aircraft.site.name : 'Unknown' : 'The Abyss'
@@ -37,6 +39,7 @@ const MilitaryTable = (props) => {
   else return (
     <React.Fragment>
       <p>You currently have {props.military.length} units</p>
+			<Button onClick={() => setShow(true)}>Deploy Units</Button>
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
@@ -56,6 +59,50 @@ const MilitaryTable = (props) => {
           }}
         </Cell>
       </Column>
+
+			<Column flexGrow={2} >
+        <HeaderCell>Status</HeaderCell>
+        <Cell>
+					{rowData => {
+            let { status, name } = rowData
+            return(
+							<div>
+								<ButtonGroup size='sm'>
+									{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
+										<IconButton icon={<Icon icon="plane"/>} color='orange' style={{ cursor: 'help' }} />
+									</Whisper>}	
+									{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
+										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help' }} color="orange"/>
+									</Whisper>}
+
+									{status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
+									</Whisper>}	
+									{!status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='blue' appearance="ghost"  style={{ cursor: 'help' }}><b>A</b></Button>
+									</Whisper>}
+
+									{status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
+									</Whisper>}	
+									{!status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help' }}><b>M</b></Button>
+									</Whisper>}
+								</ButtonGroup>								
+							</div> 
+            )
+          }}
+        </Cell>
+      </Column>
+
+						{/* 		<div>
+								<ButtonGroup size='sm'>
+									<Whisper placement="top" speaker={mobilizedSpeaker} trigger="click">
+										{status.some(el => el === 'mobilized') && <IconButton icon={<Icon icon="check"/>} color="blue"/>}
+										{!status.some(el => el === 'mobilized') && <IconButton icon={<Icon icon="close"/>} color="red"/>}
+									</Whisper>	
+								</ButtonGroup>								
+							</div> */}
 
       {/* <Column flexGrow={2}>
         <HeaderCell >Integrity</HeaderCell>
@@ -91,7 +138,7 @@ const MilitaryTable = (props) => {
       </Column>*/}
 
       <Column flexGrow={1}>
-        <HeaderCell>Actions</HeaderCell>
+        <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {
             let aircraft = rowData;
@@ -135,10 +182,38 @@ const MilitaryTable = (props) => {
 					onChangePage={(dataKey) => setPage(dataKey)}
 					onChangeLength={handleChangeLength}
         />
+
+				<MobilizeForm hide={() => setShow(false)} show={show}/>
     </React.Fragment>
   );
     
 }
+
+const mobilizedSpeaker = (
+  <Popover title="Mobilization">
+		<b style={{ backgroundColor: 'green', color: 'white' }}>Ready!</b>
+    <p>
+			A unit's ready status for missions or deployment [PUBLIC INFORMATION]
+    </p>
+  </Popover>
+);
+
+const actionSpeaker = (
+  <Popover title="Action">
+    <p>
+			
+    </p>
+  </Popover>
+);
+
+const missionSpeaker = (
+  <Popover title="Mission">
+    <p>
+			
+    </p>
+  </Popover>
+);
+
 
 const mapStateToProps = state => ({
 		military: getMilitary(state),
