@@ -11,7 +11,7 @@ const { Account } = require('./account');
 
 const clock = require('../wts/gameClock/gameClock');
 const die = require('../util/systems/dice');
-const nexusEvent = require('../middleware/events/events');
+const { addArrayValue, clearArrayValue } = require('../middleware/util/arrayCalls');
 
 const RoleSchema = new Schema({
 	role: { type: String },
@@ -111,9 +111,12 @@ TeamSchema.methods.assignIncome = async function () {
 
 TeamSchema.methods.assignUser = async function (user) {
 	if (!this.users.some(el => el === user)) {
-		this.users.push(user);
-		this.markModified('users');
+		await addArrayValue(this.users, user);
+	} else {
+		await clearArrayValue(this.users, user);
 	}
+	
+	this.markModified('users');
 
 	const team = await this.save();
 	nexusEvent.emit('request', 'update', [ team ]);
