@@ -20,8 +20,9 @@ const resolution = require('./socket/resolution'); // Resoulution sockets
 const research = require('./socket/research'); // Research sockets
 const site = require('./socket/site'); // Site sockets
 const facility = require('./socket/facility'); // Facility sockets
+const team = require('./socket/team');
 
-const routes = { clock, treaty, military, transaction, trade, article, aircraft, wmd, squad, construction, resource, resolution, research, site, facility }; // Route object for routing to various socket routes
+const routes = { clock, treaty, military, transaction, trade, article, aircraft, wmd, squad, construction, resource, resolution, research, site, facility, team }; // Route object for routing to various socket routes
 
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
