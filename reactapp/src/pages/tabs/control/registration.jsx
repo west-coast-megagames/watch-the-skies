@@ -61,7 +61,6 @@ class Registration extends Component {
 								<b>Username: {this.state.selected.username} </b>
 								<SelectPicker placeholder="Select a Team" onChange={(event) => this.setState({ target: event })} block labelKey='name' valueKey="_id" data={this.props.team}/>
 								{this.state.target && <b>Selected: {this.state.target}</b>}			
-								<b>TODO: Make the selector save the stupid object rather than the ID, then register players to specific roles. I got stuck</b>
 								<Divider />
 								<Button color='blue' disabled={(!this.state.target)} onClick={()=> this.handleReg()} >Register this Player!</Button>		
 							</Panel>
@@ -156,13 +155,11 @@ class Registration extends Component {
 
 	handleReg = async () => {
 		const data = {
-			character: this.state.target,
-			username: this.state.selected.username,
-			playerName: this.state.selected.name.first,
-			email: this.state.selected.email,
+			user: this.state.selected._id,
+			team: this.state.target,
 		}
 		try{
-			//socket.emit('characterRequest', 'register',  data ); // new Socket event
+			// socket.emit('request', { route: 'team', action: 'register', data});
 			this.setState({ selected: null, target: null });
 		}
 		catch (err) {
