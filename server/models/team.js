@@ -11,6 +11,7 @@ const { Account } = require('./account');
 
 const clock = require('../wts/gameClock/gameClock');
 const die = require('../util/systems/dice');
+const nexusEvent = require('../middleware/events/events');
 
 const RoleSchema = new Schema({
 	role: { type: String },
@@ -131,7 +132,7 @@ TeamSchema.methods.endTurn = async function () {
 
 TeamSchema.methods.populateMe = async function () {
 	return this;
-}
+};
 
 TeamSchema.methods.validateTeam = async function () {
 	const { validLog } = require('../middleware/util/validateDocument');

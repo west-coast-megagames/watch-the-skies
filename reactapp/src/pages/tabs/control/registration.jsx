@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Content, Container, Sidebar, PanelGroup, Panel, Input, FlexboxGrid, List, Alert, SelectPicker, Button, Loader, Toggle, Divider } from 'rsuite';
-
+import socket from '../../../../src/socket';
 
 class Registration extends Component {
 	state = { 
@@ -159,7 +159,7 @@ class Registration extends Component {
 			team: this.state.target,
 		}
 		try{
-			// socket.emit('request', { route: 'team', action: 'register', data});
+			socket.emit('request', { route: 'team', action: 'register', data });
 			this.setState({ selected: null, target: null });
 		}
 		catch (err) {
