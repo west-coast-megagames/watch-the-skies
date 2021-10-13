@@ -69,24 +69,25 @@ const MilitaryTable = (props) => {
 							<div>
 								<ButtonGroup size='sm'>
 									{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} color='orange' style={{ cursor: 'help' }} />
+										<IconButton icon={<Icon icon="plane"/>} color='orange' 
+										 />
 									</Whisper>}	
 									{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help' }} color="orange"/>
+										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help', color: 'grey' }} color="orange"/>
 									</Whisper>}
 
 									{status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
 										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
 									</Whisper>}	
 									{!status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='blue' appearance="ghost"  style={{ cursor: 'help' }}><b>A</b></Button>
+										<Button color='blue' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
 									</Whisper>}
 
 									{status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
 										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
 									</Whisper>}	
 									{!status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help' }}><b>M</b></Button>
+										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
 									</Whisper>}
 								</ButtonGroup>								
 							</div> 
