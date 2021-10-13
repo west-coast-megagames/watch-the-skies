@@ -114,7 +114,8 @@ TeamSchema.methods.assignUser = async function (user) {
 		this.markModified('users');
 	}
 
-	let team = await this.save();
+	const team = await this.save();
+	nexusEvent.emit('request', 'update', [ team ]);
 	return team;
 };
 
