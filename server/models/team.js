@@ -109,13 +109,14 @@ TeamSchema.methods.assignIncome = async function () {
 	return;
 };
 
+// TODO - Correctly assign user to ROLE~!
 TeamSchema.methods.assignUser = async function (user) {
 	if (!this.users.some(el => el === user)) {
 		await addArrayValue(this.users, user);
 	} else {
 		await clearArrayValue(this.users, user);
 	}
-	
+
 	this.markModified('users');
 
 	const team = await this.save();

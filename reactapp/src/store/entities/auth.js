@@ -48,6 +48,7 @@ const slice = createSlice({
 			auth.login = false;
 			auth.loading = false;
 			auth.loadComplete = false;
+			auth.control = false;
 			auth.users = [];
 			auth.user = undefined;
 			auth.team = undefined;
@@ -72,6 +73,9 @@ const slice = createSlice({
       auth.users = action.payload.userList;
       auth.socket = action.payload.me;
     },
+		setControl: (auth, action) => {
+			auth.control = action.payload.control;
+		},
 		debugTeam: (auth, action) => {
 			auth.team = action.payload;
 		}
@@ -87,6 +91,7 @@ export const {
   usersRecieved,
 	finishLoading,
   loginSocket,
+	setControl,
 	signOut
 } = slice.actions;
 
