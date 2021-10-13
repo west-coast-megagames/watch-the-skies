@@ -136,7 +136,7 @@ TeamSchema.methods.endTurn = async function () {
 
 TeamSchema.methods.populateMe = async function () {
 	return this;
-}
+};
 
 TeamSchema.methods.validateTeam = async function () {
 	const { validLog } = require('../middleware/util/validateDocument');
