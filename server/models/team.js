@@ -48,6 +48,8 @@ const TeamSchema = new Schema({
 	},
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	tags: [{ type: String, enum: ['']} ],
+	roles: [RoleSchema],
+	users:  [{ type: String, minlength: 2, maxlength: 30 }],
 	agreements: [ AgreementSchema ]
 });
 
@@ -104,6 +106,16 @@ TeamSchema.methods.assignIncome = async function () {
 	await account.deposit({ to: account._id, amount: income, resource: 'Megabucks', note: `Turn ${turnNum} income.` });
 
 	return;
+};
+
+TeamSchema.methods.assignUser = async function (user) {
+	if (!this.users.some(el => el === user)) {
+		this.users.push(user);
+		this.markModified('users');
+	}
+
+	let team = await this.save();
+	return team;
 };
 
 // METHOD - endTurn
@@ -212,7 +224,6 @@ const National = Team.discriminator(
 	'National',
 	new Schema({
 		type: { type: String, default: 'National' },
-		roles: [RoleSchema],
 		prTrack: [Number],
 		agents: { type: Number, min: 0, default: 0 },
 		prLevel: { type: Number },
@@ -229,7 +240,6 @@ const Alien = Team.discriminator(
 		actionPts: { type: Number, default: 25 },
 		agents: { type: Number, min: 0, default: 0 },
 		sciRate: { type: Number, default: 25 },
-		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -238,8 +248,6 @@ const Control = Team.discriminator(
 	new Schema({
 		type: { type: String, default: 'Control' },
 		sciRate: { type: Number, default: 25 },
-		roles: [RoleSchema],
-		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
@@ -248,8 +256,6 @@ const Media = Team.discriminator(
 	new Schema({
 		type: { type: String, default: 'Media' },
 		agents: { type: Number, min: 0, default: 0 },
-		roles: [RoleSchema],
-		users:  [{ type: String, minlength: 2, maxlength: 30 }]
 	})
 );
 
