@@ -12,6 +12,7 @@ const { Account } = require('./account');
 const clock = require('../wts/gameClock/gameClock');
 const die = require('../util/systems/dice');
 const { addArrayValue, clearArrayValue } = require('../middleware/util/arrayCalls');
+const nexusEvent = require('../middleware/events/events');
 
 const RoleSchema = new Schema({
 	role: { type: String },
