@@ -63,7 +63,7 @@ const Operations  = (props) => {
 				<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
 						<FlexboxGrid>
-							<FlexboxGrid.Item colspan={15} >
+							<FlexboxGrid.Item colspan={13} >
 								<Panel bodyFill bordered style={cardStyle}>
 									<h5>Aircraft Operations</h5>
 									<AircraftTable handleTransfer={handleTransfer} />
@@ -73,7 +73,7 @@ const Operations  = (props) => {
 									<FacilitiesTable handleTransfer={handleTransfer}/>
 								</Panel>
 							</FlexboxGrid.Item>
-							<FlexboxGrid.Item colspan={9} >
+							<FlexboxGrid.Item colspan={11} >
 								<Panel bodyFill bordered style={cardStyle3}>
 									<h5>Military</h5>
 									<MilitaryTable handleTransfer={handleTransfer}/>

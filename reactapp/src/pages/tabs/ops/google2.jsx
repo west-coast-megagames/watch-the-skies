@@ -212,7 +212,7 @@ function PrototypeMap(props) {
 			</MarkerClusterer>}
 
 			{/*The Intel Clusterer*/}
-			 {props.intelBoolean && <MarkerClusterer options={clusterOptions}>
+			 {/* {props.intelBoolean && <MarkerClusterer options={clusterOptions}>
 				{(clusterer) => props.intel.map(intel => 
 					<Marker
 						key={intel._id}
@@ -230,7 +230,7 @@ function PrototypeMap(props) {
 							anchor: new window.google.maps.Point(10, 10)
 						}}
 					/>)}
-			</MarkerClusterer>}
+			</MarkerClusterer>} */}
 
 
 			

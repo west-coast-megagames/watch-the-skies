@@ -347,12 +347,12 @@ MilitarySchema.methods.endTurn = async function () {
 };
 
 MilitarySchema.methods.populateMe = async function () {
-	return this.populate.populate('team', 'name shortName code')
-	.populate('zone', 'name')
-	.populate('organization', 'name')
-	.populate('site', 'name geoDecimal')
-	.populate('origin')
-	.populate('upgrades', 'name effects')
+	return this.populate('team', 'name shortName code')
+		.populate('zone', 'name')
+		.populate('organization', 'name')
+		.populate('site', 'name geoDecimal')
+		.populate('origin')
+		.populate('upgrades', 'name effects')
 		.execPopulate();
 };
 
