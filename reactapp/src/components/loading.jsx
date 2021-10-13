@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Progress, Loader, Panel, Icon, IconStack, Row, Col } from 'rsuite';
+import { Progress, Loader, Panel, Icon, IconStack, Row, Col, Alert } from 'rsuite';
 import { useHistory } from "react-router-dom";
 
 import loadState from '../scripts/initState';
-import { debugTeam, finishLoading } from '../store/entities/auth';
+import { debugTeam, finishLoading, setControl } from '../store/entities/auth';
 
 const { Line } = Progress
 
@@ -21,9 +21,19 @@ const LoadingPage = (props) => {
 	}, []);
 
 	if (Math.floor( done.length / sections.length * 100) >= 100) {
-		props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
-		props.finishLoading();
-		history.push('/home');
+		const controlTeam = props.entities.teams.list.find(el => el.type === 'Control');
+		let myTeam = undefined;
+		for (let team of props.entities.teams.list) {
+			if (team.users.some(el => el === props.appState.auth.user._id)) myTeam = team;
+		}
+		if (myTeam) {
+			props.isControl(controlTeam.users.some(el => el === props.entities.auth))
+			props.debugTeam(myTeam); // Forces your TEAM to USA
+			props.finishLoading();
+			history.push('/home');
+		} else {
+			Alert.error('You do not have an assigned team!', 1000);
+		}
 	} 
 
 	return (
@@ -57,6 +67,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   debugTeam: (payload) => dispatch(debugTeam(payload)),
 	finishLoading: () => dispatch(finishLoading()),
+	isControl: (payload) => dispatch(setControl(payload))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoadingPage);
