@@ -12,8 +12,8 @@ module.exports = async function (client, req) {
 		case('register'):
 				try { 
 					let team = await Team.findById(req.data.team);
-					team = await team.assignUser(req.data.user);
-					client.emit('alert', { type: 'success', message: `${team.shortnName} got a new user (${team.users.length} members on team!).` });
+					team = await team.assignUsers(req.data.users);
+					client.emit('alert', { type: 'success', message: `Assigned ${req.data.users.length} to ${team.shortnName}. (${team.users.length} members on team!).` });
 				} catch (error) {
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
