@@ -10,8 +10,7 @@ module.exports = async function (client, req) {
 		let message;
 		switch(req.action) {
 		case('register'):
-			console.log(req.data)				
-			try { 
+			try {
 				let team = await Team.findById(req.data.team);
 				team = await team.assignUsers(req.data.users);
 				client.emit('alert', { type: 'success', message: `Assigned ${req.data.users.length} to ${team.shortnName}. (${team.users.length} members on team!).` });
