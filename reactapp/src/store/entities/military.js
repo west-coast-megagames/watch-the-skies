@@ -90,3 +90,11 @@ export const loadmilitary = () => (dispatch, getState) => {
 			military => military.status.some(el => el === 'deployed')
 		)
 	);
+
+	export const getMobilized = createSelector(
+		state => state.entities.military.list,
+		state => state.auth.team,
+		(military, team) => military.filter(
+			military => military.status.some(el => el === 'mobilized')
+		)
+	);

@@ -33,6 +33,13 @@ const LoadingPage = (props) => {
 			history.push('/home');
 		} else {
 			Alert.error('You do not have an assigned team!', 1000);
+			return (
+				<div style={{ display: 'flex', justifyContent: 'center', }}>
+					<h5>Could not find a team with id {props.appState.auth.user.username}</h5>
+					{/* <img height={500} src='https://live.staticflickr.com/4782/40236389964_fe77df66a3_b.jpg' alt='failed to find team assigned'/> */}
+					
+				</div>
+			)
 		}
 	} 
 

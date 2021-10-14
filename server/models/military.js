@@ -162,11 +162,13 @@ MilitarySchema.methods.mobilize = async function () {
 
 		await addArrayValue(this.status, 'mobilized'); // Adds the MOBILIZED status into the STATUS array
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
-
+		const { lat, lng } = randomCords(this.site.geoDecimal.lat, this.site.geoDecimal.lng);
+		this.location.lat = lat; // Updates LAT
+		this.location.lng = lng; // Updates LNG
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
-		return ;
+		return unit;
 	}
 	catch (err) {
 		logger.error(`${err.message}`, { meta: err.stack });

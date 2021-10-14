@@ -49,7 +49,7 @@ class Registration extends Component {
 					<Content style={{ ...styleCenter, backgroundColor: "#343a40", color: 'white' }} >
 					{this.state.selected && <React.Fragment>
 							<Panel style={{padding: "0px", textAlign: "center", backgroundColor: "#343a40",}}>
-								<b>id: {this.state.selected._id} </b>
+								<b>id: {this.state.selected.name} </b>
 								 <CheckPicker block placeholder='Select Units'
 										data={this.state.users}
 										onChange={value => this.setState({ value }) }

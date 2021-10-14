@@ -10,10 +10,10 @@ import distance from '../scripts/range';
 const DeployMilitary = (props) => {
 	const [team, setTeam] = React.useState(props.team.name); 
 	const [cost, setCost] = React.useState(0); 
-	const [deployType, setDeployType] = React.useState('deploy'); 
+	const [deployType, setDeployType] = React.useState(''); 
 	const [corps, setCorps] = React.useState([]); 
 	const [fleets, setFleets] = React.useState([]); 
-	const [mobilization, setMobilization] = React.useState([]); 
+	const [units, setUnits] = React.useState([]); 
 
 
 	useEffect(() => {
@@ -21,18 +21,18 @@ const DeployMilitary = (props) => {
 	}, [])
 
 	useEffect(() => {
-		if (props.target) {
+		if (props.target && deployType === 'invade') {
 			let cost = 0 // Gets the current displayed cost
 			let target = props.sites.find(el => el._id === props.target._id); // Looks up the target site via the stored _id
 			Alert.warning(target.name) // Gives me site name
-			for (let unit of mobilization) {
+			for (let unit of units) {
 					unit = props.military.find(el => el._id === unit) // Looks up current unit
 					if (unit.zone.name === target.zone.name) { cost += unit.stats.localDeploy };
 					if (unit.zone.name !== target.zone.name) { cost += unit.stats.globalDeploy }; 
 			}
 			setCost(cost); 
-	}
-	}, [mobilization])
+		}
+	}, [units])
 
 	const handleTeam = (value) => { 
 		setTeam(value);
@@ -42,12 +42,12 @@ const DeployMilitary = (props) => {
 
 	const handleType = (value) => { 
 		setDeployType(value);
-		setMobilization([]);
+		setUnits([]);
 		setCost(0); 
 		filterUnits(value);
 	};
 
-	const filterUnits = () => {
+	const filterUnits = (value) => {
 		if (props.target) { // console.log('Filtering Units...')
 			const { geoDecimal } = props.target
 			let fleets = [];
@@ -71,37 +71,49 @@ const DeployMilitary = (props) => {
 		}
 	}
 
-	const handleUnits = (mobilization) => {
+	const handleUnits = (units) => {
 		let tempCost = cost;
-		for (let unit of mobilization) {
+		for (let unit of units) {
 			unit = props.military.find(el => el._id === unit) // Looks up current unit
 			if (unit.zone.name === props.target.zone.name) { tempCost += unit.stats.localDeploy };
 			if (unit.zone.name !== props.target.zone.name) { tempCost += unit.stats.globalDeploy }; 
 		}
-		setMobilization(mobilization);
+		setUnits(units);
 		setCost(tempCost); 
 	};
 
+	const handleMobilize = (units) => {
+		setUnits(units);
+	};
+
+
 	const handleExit = () => {
-		setMobilization([]);
+		setUnits([]);
 		setCost(0); 
 		props.hide();
 	}
 
 	const submitDeployment = async () => { 
-		try {
-			socket.emit('request', { route: 'military', action: 'deploy', data: { units: mobilization, destination: props.target._id }});
-				// socket.emit( 'militarySocket', state.deployType, deployment);
-		} catch (err) {
-				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+		switch (deployType) {
+			case 'mobilize': 
+				try {
+					socket.emit('request', { route: 'military', action: 'mobilize', data: { units }});
+					// socket.emit('request', { route: 'military', action: 'deploy', data: { units: units, destination: props.target._id }});
+						// socket.emit( 'militarySocket', state.deployType, deployment);
+				} catch (err) {
+						Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+				}
+				handleExit();
+				break;
+			default:
+				Alert.error(`Please select a valid Mission or Action`, 5000)
 		}
-		handleExit();
 	}   
 
 	return (
 		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
 			<Drawer.Header>
-				{ team && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Drawer.Title> }
+				{ team && props.target && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Drawer.Title> }
 			</Drawer.Header>
 			{ !team && <Drawer.Body><Loader /></Drawer.Body>}
 			{ team && <Drawer.Body>
@@ -141,15 +153,27 @@ const DeployMilitary = (props) => {
 							</FlexboxGrid.Item>
 						</FlexboxGrid>
 					</div> }
-					<Divider />
-					<div style={{display: 'flex', justifyContent: 'center', color: '#fffff'}}>
+					<Divider /> 
+					<FlexboxGrid justify="space-around" align="middle" >
+						<FlexboxGrid.Item colspan={12} >
+							<h5>Actions</h5>
 							<ButtonGroup>
-								<Button color={deployType === 'deploy' ? 'blue' : 'grey'} onClick={() => handleType('deploy')} >Deploy</Button>
-								<Button disabled={props.target ? props.target.team._id === props.team._id : true} color={deployType === 'invade' ? 'red' : 'grey'} onClick={() => handleType('invade')} >Invade</Button>
-								<Button disabled={false} color={deployType === 'transfer' ? 'green' : 'grey'} onClick={() => handleType('transfer')} >Transfer</Button>
-							</ButtonGroup>		
-					</div>
+									{/* <Button appearance={deployType !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
+									<Button disabled={false} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
+									<Button disabled={false} appearance={deployType !== 'mobilize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('mobilize')} >Mobilize</Button>
+								</ButtonGroup>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={12}>
+						<h5>Missions</h5>
+							<ButtonGroup>
+									<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'invade' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('invade')} >Invade</Button>
+								</ButtonGroup>
+							</FlexboxGrid.Item>
+					</FlexboxGrid>
+
 					<Divider />
+
 					{ deployType === 'transfer' &&
 						<div>
 							<h6>Facilities in {props.target.name} </h6>
@@ -161,7 +185,19 @@ const DeployMilitary = (props) => {
 							<Divider />
 						</div>
 					}
-					{ deployType === 'invade' &&
+					{ deployType === 'mobilize' &&
+						<div>
+							<h6>Select Units to mobilize in {props.target.name}</h6>
+							<CheckPicker block placeholder='Select Units'
+								data={ props.military.filter(el => el.site._id === props.target._id && !el.status.some(el2 => el2 === 'mobilized')) }
+								onChange={handleMobilize}
+								valueKey='_id'
+								labelKey='name'
+								value={ units }
+						/>
+						</div>
+					}
+					{ props.target && deployType === 'invade' &&
 						<div>
 							<h6>Your facilities closest to {props.target.name} </h6>
 							<List>
@@ -170,20 +206,21 @@ const DeployMilitary = (props) => {
 								</List.Item>))}
 							</List>
 							<Divider />
+							<h6>Select Units to invade {props.target.name}</h6>
+							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
+								data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
+								onChange={handleUnits}
+								valueKey='_id'
+								labelKey='info'
+								groupBy='checkZone'
+								value={ units }
+							/> 
 						</div>
 					}
-					<h6>Select Units</h6>
-					{ props.target && <CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
-							data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
-							onChange={handleUnits}
-							valueKey='_id'
-							labelKey='info'
-							groupBy='checkZone'
-							value={ mobilization }
-					/> }
+
 			</Drawer.Body>}
 			<Drawer.Footer>
-					<Button onClick={submitDeployment} appearance="primary">Confirm</Button>
+					<Button disabled={deployType === ''} onClick={submitDeployment} appearance="primary">Confirm</Button>
 					<Button onClick={handleExit} appearance="subtle">Cancel</Button>
 			</Drawer.Footer>
 	</Drawer>

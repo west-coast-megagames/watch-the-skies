@@ -11,7 +11,7 @@ import { getCities, getGround, getPoI, getCrash, getCapitol } from '../../../sto
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
-import { getDeployed } from '../../../store/entities/military';
+import { getDeployed, getMobilized } from '../../../store/entities/military';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -60,7 +60,7 @@ function PrototypeMap(props) {
 	// This Errors out on Load, but is just fine when the map is already loaded
 	useEffect(() => {
 		const site = props.groundSites ? props.groundSites.find(el => el.geoDecimal.lat === props.center.lat && el.geoDecimal.lng === props.center.lng ) : undefined;
-		console.log(site)
+		//console.log(site)
 		if (site) {
 			setGeo(site.geoDecimal);
 			setMenu(site);
@@ -72,6 +72,16 @@ function PrototypeMap(props) {
 		// setMapClick({event: onMapClick});
 		setMenu(null);
 	}
+
+	const randomCords = (lat, lng) => {
+		console.log(lat, lng)
+		let coinToss = 1 + Math.floor(Math.random() * 2);
+		const randLat = coinToss === 2 ? lat + (1 + Math.floor(Math.random() * 200) * 0.008) : lat - (1 + Math.floor(Math.random() * 200) * 0.008);
+		coinToss = 1 + Math.floor(Math.random() * 2);
+		const randLng = coinToss === 2 ? lng + (1 + Math.floor(Math.random() * 200) * 0.008) : lng - (1 + Math.floor(Math.random() * 200) * 0.008);
+	
+		return { lat: randLat, lng: randLng };
+	};
 
 	const mapRef = React.useRef();
 	const onMapLoad = React.useCallback((map) => {
@@ -177,13 +187,34 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={contact.location}
 						onClick={()=> {
-							setGeo({lat: contact.location.lat, lng: contact.location.lng})
+							setGeo(randomCords(contact.location.lat, contact.location.lng))
 							setMenu(contact);
 							// setMapClick({event: undefined});
 						}}
 						icon={{
 							url: getAircraftIcon(contact.team.code),
 							scaledSize: new window.google.maps.Size(65, 65),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					/>)}
+			</MarkerClusterer>}
+
+			{/*The Deployed Military Clusterer*/}
+			{props.militaryBoolean && <MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.mobilizedMil.map(unit => 
+					<Marker
+						key={unit._id}
+						clusterer={clusterer}
+						position={unit.location ? unit.location : unit.site.geoDecimal}
+						onClick={()=> {
+							setGeo(unit.location ? unit.location : {lat: unit.site.geoDecimal.lat, lng: unit.site.geoDecimal.lng})
+							setMenu(unit);
+							// setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMilitaryIcon(unit),
+							scaledSize: new window.google.maps.Size(70, 70),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
@@ -198,7 +229,7 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={unit.location}
 						onClick={()=> {
-							setGeo({lat: unit.location.lat, lng: unit.location.lng})
+							setGeo(unit.location)
 							setMenu(unit);
 							// setMapClick({event: undefined});
 						}}
@@ -257,6 +288,7 @@ const mapStateToProps = state => ({
   sites: state.entities.sites.list,
 	military: state.entities.military.list,
 	deployedMil: getDeployed(state),
+	mobilizedMil: getMobilized(state),
 	contacts: getContacts(state),
 	cities: getCities(state),
 	groundSites: getGround(state),
