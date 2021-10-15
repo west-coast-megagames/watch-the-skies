@@ -18,6 +18,7 @@ module.exports = async function (client, req) {
 					unit = await unit.mission(req.data.assignment);
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
 				} catch (error) {
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -32,6 +33,7 @@ module.exports = async function (client, req) {
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
 				} catch (error) {
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -45,6 +47,7 @@ module.exports = async function (client, req) {
 					unit = await unit.deploy(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
 				} catch (error) {
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -55,6 +58,6 @@ module.exports = async function (client, req) {
 		}
 	} catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-		console.log(error);
+		logger.error(`SOCKET-${req.route}: ${err.message}`, { meta: err.stack });
 	}
 };
