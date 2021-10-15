@@ -16,7 +16,7 @@ module.exports = async function (client, req) {
 				let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
-					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${assignment}.` });
+					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${assignment.type}.` });
 				} catch (error) {
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
