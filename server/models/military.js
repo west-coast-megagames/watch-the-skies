@@ -83,7 +83,7 @@ MilitarySchema.methods.deploy = async function (site) {
 	
 	try {
 		let cost = 0; 
-		let distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
+		const distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
 		// if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
 		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.globalDeploy;
 
@@ -233,7 +233,7 @@ MilitarySchema.methods.recon = async function (site) {
 		const facilities = await Facilities.find({ site: target._id, team: { $ne: this.team._id } }) // Finds all Facilities that don't belong to us.
 		const squads = await Squads.find({ site: target._id, team: { $ne: this.team._id } }) // Finds all Squads at the site that don't belong to us.
 
-		for (let item of [...units, ...facilities, ...squads]) {
+		for (const item of [...units, ...facilities, ...squads]) {
 			// Options
 		}
 		// TODO - Create algorytmic method to translate a RECON stat to actual INTEL
@@ -254,14 +254,14 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
 	try {
 		// Mechanics: Repairs damage to a military unit when they are at a facility with repair capabilities.
-		let cost = 1 + upgrades.length;
+		const cost = 1 + upgrades.length;
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		this.stats.health = this.stats.healthMax; // Restores the units health to max
 
-		for (let item of upgrades) {
-			let upgrade = await Upgrade.findById(item);
+		for (const item of upgrades) {
+			const upgrade = await Upgrade.findById(item);
 			// upgrade.repair() // Call repair method of upgrade | TODO - Make repair method of upgrade
 			console.log(`${upgrade.name} has been repaired while equiped to ${this.name}`);
 		}
@@ -282,7 +282,7 @@ MilitarySchema.methods.equip = async function (upgrades = []) {
 	// TODO add the mechanics of adding things to the UNIT
 	// Mechanics: Changes out existing upgrades with anything currently stored.
 	try {
-		for (let upgrade of upgrades) {
+		for (const upgrade of upgrades) {
 			if (this.upgrades.some( el => el.toString() !== upgrade )) this.upgrades.push();
 		}
 
