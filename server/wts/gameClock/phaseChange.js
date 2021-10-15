@@ -14,14 +14,20 @@ const { Team } = require('../../models/team');
 /* This file handles all the events triggered on phase change.
     Each phase has a function that handles that phase. */
 
+
+// FUNCTION - teamPhase
+// ARGS - Void | RETURN 0
+// DESC - Does initial calculations at the start of the phase, then reports them to players
 async function teamPhase() {
 	phaseChangeDebugging(`Now changing to the team phase for ${clock.currentTurn}...`);
+	// PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
 	setTimeout(async () => {
 		for await (const team of Team.find()) {
 			if (team.type === 'National') await team.endTurn();
 		}
-	}, 2000); // PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
-	// setTimeout(async () => { await banking.automaticTransfer(); }, 4000); // Iterate through set-automatic transfers [Implemented]
+	}, 2000);
+	// Iterate through set-automatic transfers [Implemented]
+	// setTimeout(async () => { await banking.automaticTransfer(); }, 4000);
 	phaseChangeDebugging(`Done with team phase change for ${clock.currentTurn}!`);
 	logger.info(`Turn ${clock.currentTurn} team phase has begun...`);
 	return 0;
