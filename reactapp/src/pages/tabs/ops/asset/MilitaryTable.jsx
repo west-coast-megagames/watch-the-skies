@@ -35,15 +35,15 @@ const MilitaryTable = (props) => {
   }
   
   if (props.military.length === 0)
-      return <h4>No aircraft currently available.</h4>
+      return <h4>No military found</h4>
   else return (
     <React.Fragment>
-			<div>
+			{!props.control && <div>
 			<p style={slimText}>You currently have {props.military.length} units</p>
 				<Button color={'green'} onClick={() => setShow(true)}>
 					<h5>Mobilize Units</h5>
 				</Button>
-			</div>
+			</div>}
       
 			
       <Table 
@@ -226,7 +226,7 @@ const slimText = {
 };
 
 const mapStateToProps = state => ({
-		military: getMilitary(state),
+		allMilitary: state.entities.military.list,
 		account: getOpsAccount(state)
 })
 
