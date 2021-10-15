@@ -15,6 +15,8 @@ const DeployMilitary = (props) => {
 	const [fleets, setFleets] = React.useState([]); 
 	const [units, setUnits] = React.useState([]); 
 
+	const [transferFleets, setTransferFleets] = React.useState([]); 
+	const [transferCorps, setTransferCorps] = React.useState([]); 
 
 	useEffect(() => {
 	filterUnits();
@@ -52,6 +54,8 @@ const DeployMilitary = (props) => {
 			const { geoDecimal } = props.target
 			let fleets = [];
 			let corps = [];
+			let transferFleets = [];
+			let transferCorps = [];
 			for (let unit of props.military) {
 				if (team === unit.team.name) { // why
 					if (deployType !== 'invade' || distance(geoDecimal.lat, geoDecimal.lng, unit.site.geoDecimal.lat, unit.site.geoDecimal.lng) < 1000) {
@@ -61,12 +65,15 @@ const DeployMilitary = (props) => {
 							info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 							_id: unit._id
 						}
-						if (unit.type === 'Fleet' && unit.status.some(el => el === 'deployed') ) fleets.push(unitData);
-						if (unit.type === 'Corps' && unit.status.some(el => el === 'deployed')) corps.push(unitData);
+						if (unit.type === 'Fleet' && unit.status.some(el => el === 'mobilized') && unit.missions > 0) fleets.push(unitData);
+						if (unit.type === 'Corps' && unit.status.some(el => el === 'mobilized') && unit.missions > 0) corps.push(unitData);
+						if (unit.type === 'Fleet' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferFleets.push(unitData);
+						if (unit.type === 'Corps' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferCorps.push(unitData);
 					}
 				}
 			}
-
+			setTransferFleets(transferFleets);
+			setTransferCorps(transferCorps);
 			setFleets(fleets);
 			setCorps(corps);
 		}
@@ -95,6 +102,10 @@ const DeployMilitary = (props) => {
 		props.hide();
 	}
 
+	const getTransferData = () => {
+		return props.military
+	}
+
 	const submitDeployment = async () => { 
 		switch (deployType) {
 			case 'mobilize': 
@@ -110,7 +121,7 @@ const DeployMilitary = (props) => {
 
 				case 'invade': 
 				try {
-					socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'invade'}, units: units, }});
+					socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
 				} catch (err) {
 						Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 				}
@@ -170,7 +181,7 @@ const DeployMilitary = (props) => {
 							<h5>Actions</h5>
 							<ButtonGroup>
 									{/* <Button appearance={deployType !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
-									<Button disabled={false} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
+									<Button disabled={props.facilities.length === 0} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
 									<Button disabled={false} appearance={deployType !== 'mobilize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('mobilize')} >Mobilize</Button>
 								</ButtonGroup>
 						</FlexboxGrid.Item>
@@ -194,6 +205,15 @@ const DeployMilitary = (props) => {
 								</List.Item>))}
 							</List>
 							<Divider />
+							<h6>Select Units to transfer to {props.target.name}</h6>
+							<CheckPicker block placeholder='Select Units'
+								data={ props.target.tags.some(el => el === 'coastal') ? [...transferFleets, ...transferCorps] : transferCorps }
+								onChange={handleMobilize}
+								valueKey='_id'
+								labelKey='name'
+								groupBy='checkZone'
+								value={ units }
+							/>
 						</div>
 					}
 					{ deployType === 'mobilize' &&
