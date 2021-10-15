@@ -82,7 +82,7 @@ MilitarySchema.methods.deploy = async function (site) {
 	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
 	
 	try {
-		let cost = 0; 
+		let cost = 0;
 		const distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
 		// if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
 		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.globalDeploy;
@@ -105,6 +105,15 @@ MilitarySchema.methods.deploy = async function (site) {
 
 		const unit = await this.save();
 		await unit.populateMe();
+
+		if (unit.assignment.type === 'Invade' || unit.assignment.type === 'Siege') {
+			if (!target.status.some(el => el === 'warzone')) {
+				addArrayValue(target.status, 'warzone');
+				await target.save()
+
+				nexusEvent.emit('request', 'update', [ target ]);
+			}
+		}
 
 		nexusEvent.emit('request', 'update', [ unit ]);
 		return unit;
