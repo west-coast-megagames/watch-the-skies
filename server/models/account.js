@@ -248,7 +248,7 @@ AccountSchema.methods.report = async function (transaction, type) {
 		// report = await report.populateMe();
 
 		// Notify/Update team via socket-event
-		nexusEvent.emit('request', 'update', [ report ]); // Scott Note: Untested might not work
+		nexusEvent.emit('request', 'create', [ report ]); // Scott Note: Untested might not work
 		console.log(`${type} report created...`);
 	}
 	catch (err) {
