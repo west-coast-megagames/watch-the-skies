@@ -70,7 +70,7 @@ const MilitaryTable = (props) => {
         <HeaderCell>Status</HeaderCell>
         <Cell>
 					{rowData => {
-            let { status, name } = rowData
+            let { status, name, actions, missions } = rowData
             return(
 							<div>
 								<ButtonGroup size='sm'>
@@ -82,17 +82,17 @@ const MilitaryTable = (props) => {
 										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help', color: 'grey' }} color="orange"/>
 									</Whisper>}
 
-									{status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+									{actions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
 										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
 									</Whisper>}	
-									{!status.some(el => el === 'action') && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+									{actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
 										<Button color='blue' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
 									</Whisper>}
 
-									{status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+									{missions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
 										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
 									</Whisper>}	
-									{!status.some(el => el === 'mission') && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+									{missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
 										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
 									</Whisper>}
 								</ButtonGroup>								

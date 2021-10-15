@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress, ButtonGroup, Tooltip } from "rsuite";
 import axios from "axios";
 import { militaryClosed } from "../store/entities/infoPanels";
 import { gameServer } from "../config";
@@ -69,12 +69,31 @@ class InfoMilitary extends Component {
                 />
               </FlexboxGrid.Item>
               <FlexboxGrid.Item colspan={12}>
-                <p>Placeholder Bar</p>
-                <Progress.Line
-                  percent={100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
+							<div>
+								<ButtonGroup size='sm'>
+									{this.props.unit.status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
+										<IconButton icon={<Icon icon="plane"/>} color='orange' 
+										 />
+									</Whisper>}	
+									{!this.props.unit.status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
+										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help', color: 'grey' }} color="orange"/>
+									</Whisper>}
+
+									{this.props.unit.actions > 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
+									</Whisper>}	
+									{this.props.unit.actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='blue' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
+									</Whisper>}
+
+									{this.props.unit.missions > 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
+									</Whisper>}	
+									{this.props.unit.missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
+									</Whisper>}
+								</ButtonGroup>								
+							</div> 
               </FlexboxGrid.Item>
             </FlexboxGrid>
             {this.unitStats(this.props.unit)}
