@@ -38,12 +38,18 @@ const MilitaryTable = (props) => {
       return <h4>No aircraft currently available.</h4>
   else return (
     <React.Fragment>
-      <p>You currently have {props.military.length} units</p>
-			<Button onClick={() => setShow(true)}>Deploy Units</Button>
+			<div>
+			<p style={slimText}>You currently have {props.military.length} units</p>
+				<Button color={'green'} onClick={() => setShow(true)}>
+					<h5>Mobilize Units</h5>
+				</Button>
+			</div>
+      
+			
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.78}
+					height={document.documentElement.clientHeight * 0.70}
           data={ getData() }
       >
       <Column  flexGrow={2}>
@@ -215,6 +221,9 @@ const missionSpeaker = (
   </Popover>
 );
 
+const slimText = {	
+	fontSize: '0.905em',
+};
 
 const mapStateToProps = state => ({
 		military: getMilitary(state),

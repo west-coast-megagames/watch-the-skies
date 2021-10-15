@@ -73,16 +73,6 @@ function PrototypeMap(props) {
 		setMenu(null);
 	}
 
-	const randomCords = (lat, lng) => {
-		console.log(lat, lng)
-		let coinToss = 1 + Math.floor(Math.random() * 2);
-		const randLat = coinToss === 2 ? lat + (1 + Math.floor(Math.random() * 200) * 0.008) : lat - (1 + Math.floor(Math.random() * 200) * 0.008);
-		coinToss = 1 + Math.floor(Math.random() * 2);
-		const randLng = coinToss === 2 ? lng + (1 + Math.floor(Math.random() * 200) * 0.008) : lng - (1 + Math.floor(Math.random() * 200) * 0.008);
-	
-		return { lat: randLat, lng: randLng };
-	};
-
 	const mapRef = React.useRef();
 	const onMapLoad = React.useCallback((map) => {
 		// setMapClick({event: onMapClick})
@@ -187,7 +177,7 @@ function PrototypeMap(props) {
 						clusterer={clusterer}
 						position={contact.location}
 						onClick={()=> {
-							setGeo(randomCords(contact.location.lat, contact.location.lng))
+							setGeo(contact.location.lat, contact.location.lng)
 							setMenu(contact);
 							// setMapClick({event: undefined});
 						}}

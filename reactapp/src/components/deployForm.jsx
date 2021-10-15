@@ -89,6 +89,7 @@ const DeployMilitary = (props) => {
 
 	const handleExit = () => {
 		setUnits([]);
+		setDeployType('')
 		setCost(0); 
 		props.hide();
 	}
@@ -105,6 +106,15 @@ const DeployMilitary = (props) => {
 				}
 				handleExit();
 				break;
+
+				// case 'invade': 
+				// try {
+				// 	socket.emit('request', { route: 'military', action: 'deploy', data: { units: units, destination: props.target._id }});
+				// } catch (err) {
+				// 		Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+				// }
+				// handleExit();
+				// break;
 			default:
 				Alert.error(`Please select a valid Mission or Action`, 5000)
 		}
