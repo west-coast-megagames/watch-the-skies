@@ -31,7 +31,7 @@ const MilitarySchema = new Schema({
 	missions: { type: Number, default: 1 },
 	assignment: {
 		target: { type: ObjectId, ref: 'Site' },
-		type: { type: String, default: 'Garrison', enum: ['Attack', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison']}
+		type: { type: String, default: 'Garrison', enum: ['Invade', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison']}
 	},
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
@@ -56,17 +56,17 @@ MilitarySchema.methods.mission = async function (assignment) {
 	let unit = this;
 	if (this.site._id.toString() !== assignment.target) unit = await unit.deploy(assignment.target);
 
-
 	try {
 		unit.missions -= 1; // Reduces the availible missions by 1
 
 		unit.assignment = assignment; // Sets assignment as current mission
 
 		unit = await unit.save(); // Saves the UNIT
+		await unit.populateMe();
 		
 		nexusEvent.emit('request', 'update', [ unit ]);
 
-		return this;
+		return unit;
 	} catch (error) {
 		console.log(error);
 	}
@@ -104,8 +104,9 @@ MilitarySchema.methods.deploy = async function (site) {
 		await account.spend({ amount: cost, note: `${this.name} deployed to ${target.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		const unit = await this.save();
+		await unit.populateMe();
 
-		nexusEvent.emit('request', 'update', [ unit ]); 
+		nexusEvent.emit('request', 'update', [ unit ]);
 		return unit;
 	}
 	catch (err) {
