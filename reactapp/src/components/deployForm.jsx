@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader, Row, Col } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
@@ -61,11 +61,12 @@ const DeployMilitary = (props) => {
 							info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 							_id: unit._id
 						}
-						if (unit.type === 'Fleet') fleets.push(unitData);
-						if (unit.type === 'Corps') corps.push(unitData);
+						if (unit.type === 'Fleet' && unit.status.some(el => el === 'deployed') ) fleets.push(unitData);
+						if (unit.type === 'Corps' && unit.status.some(el => el === 'deployed')) corps.push(unitData);
 					}
 				}
 			}
+
 			setFleets(fleets);
 			setCorps(corps);
 		}
@@ -123,7 +124,7 @@ const DeployMilitary = (props) => {
 	return (
 		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
 			<Drawer.Header>
-				{ team && props.target && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }<Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Drawer.Title> }
+				{ team && props.target && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }</Drawer.Title> }
 			</Drawer.Header>
 			{ !team && <Drawer.Body><Loader /></Drawer.Body>}
 			{ team && <Drawer.Body>
@@ -209,14 +210,20 @@ const DeployMilitary = (props) => {
 					}
 					{ props.target && deployType === 'invade' &&
 						<div>
-							<h6>Your facilities closest to {props.target.name} </h6>
+							{/* <h6>Your facilities closest to {props.target.name} </h6>
 							<List>
 								{ props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
 									{facility.name} - {`${Math.trunc(distance(props.target.geoDecimal.lat, props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
 								</List.Item>))}
 							</List>
-							<Divider />
-							<h6>Select Units to invade {props.target.name}</h6>
+							<Divider /> */}
+							<div>
+								<Row>
+									<Col md={12}><h6>Select Units to invade {props.target.name}</h6></Col>
+									<Col md={12}><Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Col>
+								</Row>			
+							</div>
+							
 							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
 								data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
 								onChange={handleUnits}
