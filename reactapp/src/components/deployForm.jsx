@@ -107,14 +107,14 @@ const DeployMilitary = (props) => {
 				handleExit();
 				break;
 
-				// case 'invade': 
-				// try {
-				// 	socket.emit('request', { route: 'military', action: 'deploy', data: { units: units, destination: props.target._id }});
-				// } catch (err) {
-				// 		Alert.error(`Error: ${err.body} ${err.message}`, 5000)
-				// }
-				// handleExit();
-				// break;
+				case 'invade': 
+				try {
+					socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'invade'}, units: units, }});
+				} catch (err) {
+						Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+				}
+				handleExit();
+				break;
 			default:
 				Alert.error(`Please select a valid Mission or Action`, 5000)
 		}
