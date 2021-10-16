@@ -5,9 +5,7 @@ import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
-import playTrack from './../scripts/audio';
-import PrototypeMap from './tabs/ops/google2';
-import AssetsTab from './tabs/ops/assets';
+import AssetsTab from './tabs/ops/AssetTab';
 import { getFacilites } from '../store/entities/facilities';
 import AircraftTable from './tabs/ops/asset/AircraftTable';
 import FacilitiesTable from './tabs/ops/asset/FacilitiesTable';
@@ -35,8 +33,8 @@ const Operations  = (props) => {
 
 	const handleTransfer = (thing) => {
 		setSelected(thing);
-		setTab('assets');
-		props.history.push('/ops/assets');
+		setTab('unit');
+		props.history.push('/control/unit');
 	}
 
 	if (!props.login) {

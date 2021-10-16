@@ -258,15 +258,15 @@ const defenseSpeaker = (
 );
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
 	account: getOpsAccount(state),
-	aircraft: getAircrafts(state),
-	units: getMilitary(state),
-	upgrades: getUpgrades(state),
-	facilities: getFacilites(state),
+	aircraft: props.control ? state.entities.aircrafts.list : getAircrafts(state),
+	units: props.control ? state.entities.military.list : getMilitary(state),
+	upgrades: props.control ? state.entities.upgrades.list : getUpgrades(state),
+	facilities: props.control ? state.entities.facilities.list : getFacilites(state),
 	lastFetch: state.entities.military.lastFetch
 });
 

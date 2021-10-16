@@ -8,17 +8,55 @@ const { Team } = require('../../models/team');
 
 // Game Systems - Used to run Game functions
 const nexusEvent = require('../../middleware/events/events');
-// const { d6 } = require('../../../dataUtil/systems/dice');
+const { d6 } = require('../../../dataUtil/systems/dice');
 
 // Report Classes - Used to log game interactions
 const { runMilitary } = require('../../wts/military/military');
 
-router.patch('/recall', async function (req, res) {
-	for (const unit of await Military.find({ 'status.deployed': true })) {
-		console.log(unit.name);
-		await unit.recall();
+router.patch('/battleSim', async function (req, res) {
+	let attackerTotal = 0;
+	let defenderTotal = 0;
+	let attackerResult = 0;
+	let defenderResult = 0;
+	let report = '';
+	const { attackers, defenders } = req.body;
+	for (let unit of attackers) {
+		unit = await Military.findById(unit).populate('upgrades');
+		attackerTotal = attackerTotal + unit.stats.attack;
 	}
-	nexusEvent.emit('updateMilitary');
+	// 2) calculate total defense value of attackers
+	for (let unit of defenders) {
+		unit = await Military.findById(unit).populate('upgrades');
+		defenderTotal = defenderTotal + unit.stats.defense;
+	}
+	// 3) roll both sides and save results
+	for (let i = 0; i < attackerTotal; i++) {
+		const result = d6();
+		if (result > 2) {
+			attackerResult++;
+		}
+	}
+	for (let i = 0; i < defenderTotal; i++) {
+		const result = d6();
+		if (result > 2) {
+			defenderResult++;
+		}
+	}
+	report += `Attacker hit ${attackerResult} out of ${attackerTotal} rolls!\nDefender hit ${defenderResult} out of ${defenderTotal}!\n`;
+	res.status(200).send(report);
+});
+
+router.patch('/resolve', async function (req, res) {
+	await runMilitary();
+	res.status(200).send('Battles resolved');
+});
+
+router.patch('/recall', async function (req, res) {
+	let mil = await Military.find();
+	for (const unit of await mil.filter(el => el.status.some(el2 => el2 === 'deployed'))) {
+		await unit.recall(true);
+		await unit.endTurn();
+	}
 	res.status(200).send('Military Units Recalled');
 });
 

@@ -19,6 +19,7 @@ const LoadingPage = (props) => {
 		setSections(Object.keys(props.entities).sort());
 		loadState();
 	}, []);
+	
 
 	if (Math.floor( done.length / sections.length * 100) >= 100) {
 		const controlTeam = props.entities.teams.list.find(el => el.type === 'Control');
@@ -32,6 +33,11 @@ const LoadingPage = (props) => {
 			props.finishLoading();
 			history.push('/home');
 		} else {
+			// Leave this in just in case login fucks up again
+			// props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
+			// props.finishLoading();
+			// history.push('/home');
+	
 			Alert.error('You do not have an assigned team!', 1000);
 			return (
 				<div style={{ display: 'flex', justifyContent: 'center', }}>

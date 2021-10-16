@@ -6,6 +6,7 @@ import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
 import socket from '../socket';
 import distance from '../scripts/range';
+import { getMilitary } from '../store/entities/military';
 
 const DeployMilitary = (props) => {
 	const [team, setTeam] = React.useState(props.team.name); 
@@ -58,7 +59,6 @@ const DeployMilitary = (props) => {
 			let transferCorps = [];
 			for (let unit of props.military) {
 				if (team === unit.team.name) { // why
-					if (deployType !== 'invade' || distance(geoDecimal.lat, geoDecimal.lng, unit.site.geoDecimal.lat, unit.site.geoDecimal.lng) < 1000) {
 						let unitData = {
 							name: unit.name,
 							checkZone: unit.site.name,
@@ -69,7 +69,7 @@ const DeployMilitary = (props) => {
 						if (unit.type === 'Corps' && unit.status.some(el => el === 'mobilized') && unit.missions > 0) corps.push(unitData);
 						if (unit.type === 'Fleet' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferFleets.push(unitData);
 						if (unit.type === 'Corps' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferCorps.push(unitData);
-					}
+					
 				}
 			}
 			setTransferFleets(transferFleets);
@@ -100,10 +100,6 @@ const DeployMilitary = (props) => {
 		setDeployType('')
 		setCost(0); 
 		props.hide();
-	}
-
-	const getTransferData = () => {
-		return props.military
 	}
 
 	const submitDeployment = async () => { 
@@ -237,7 +233,12 @@ const DeployMilitary = (props) => {
 								</List.Item>))}
 							</List>
 							<Divider /> */}
+							<p>Mobilized units:</p>
+							<b>Fleets: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Fleet').length} | Corps: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Corps').length} </b>
+							<p>Mission ready units:</p>
+							<b>Fleets: {fleets.length} | Corps: {corps.length} </b>
 							<div>
+								<Divider />
 								<Row>
 									<Col md={12}><h6>Select Units to invade {props.target.name}</h6></Col>
 									<Col md={12}><Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Col>
@@ -271,6 +272,7 @@ const mapStateToProps = state => ({
 	sites: state.entities.sites.list,
 	account: getOpsAccount(state),
 	military: state.entities.military.list,
+	myMil: getMilitary(state),
 	aircraft: state.entities.aircrafts.list,
 	show: state.info.showDeploy,
 	target: state.info.Site,

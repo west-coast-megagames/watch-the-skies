@@ -10,7 +10,6 @@ import MilitaryTable from '../ops/asset/MilitaryTable';
 const MilitaryControl = (props) => {
 	const [units, setUnit] = React.useState(props.military );
 
-
 	const handleThing = (value) => {
 		const site = props.sites.find(el => el._id === value);
 		const team = props.teams.find(el => el._id === value);
@@ -25,11 +24,6 @@ const MilitaryControl = (props) => {
 			setUnit(props.military)
 		}
 	}
-
-	const handleTransfer = (thing) => {
-		Alert.error('This info button is not hooked up yet!', 6000);
-	}
-
 
 	return (
 		<Container>
@@ -52,7 +46,7 @@ const MilitaryControl = (props) => {
 				style={{ width: 224 }}
 				onChange={(value) => handleThing(value)}
 			/>
-			<MilitaryTable control={true} handleTransfer={handleTransfer} military={units}/>
+			<MilitaryTable control={true} handleTransfer={props.handleTransfer} military={units}/>
 			</Panel>
 			{/* <InvasionModal show={this.state.showInvade}
 				military={this.props.military}
