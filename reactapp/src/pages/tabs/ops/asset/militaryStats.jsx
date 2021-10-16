@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
+import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress, ButtonToolbar, ButtonGroup} from 'rsuite';
 import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
 import { gameServer } from "../../../../config";
 import { socket } from "../../../../api";
 import TransferForm from "../../../../components/common/TransferForm";
+import { getMilitaryIcon } from "../../../../scripts/mapIcons";
 
 class MilitaryStats extends Component {
 	state = { 
@@ -35,15 +36,17 @@ class MilitaryStats extends Component {
 	};
 
 	render() {
-		let { stats, status, name, zone, type, origin, site } = this.props.unit;
+		let { stats, status, name, zone, type, origin, site, team } = this.props.unit;
 		return (
 			<Container>
 				<Panel>
 				<FlexboxGrid>
 						<FlexboxGrid.Item colspan={4}>
-							<img
-								src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" alt='Failed to Load'
-							/>									
+						<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
+								<img 
+									src={getMilitaryIcon(this.props.unit)} width="90%" alt='Failed to Load'
+								/>		
+							</div>								
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={16}>
 							<p>
@@ -65,6 +68,7 @@ class MilitaryStats extends Component {
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={4}>
 							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
+							{ this.props.control && <IconButton block color='red' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Control</IconButton>}
 						</FlexboxGrid.Item>
 				 </FlexboxGrid>
 					<br />
