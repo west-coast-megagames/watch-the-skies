@@ -189,7 +189,7 @@ async function chkTeam(runFlag) {
 					);
 				}
 				else if (team.users.length < 1) {
-					logger.error(
+					logger.info(
 						`No users assigned for National Team ${team.name} ${team._id}`
 					);
 				}
@@ -244,7 +244,7 @@ async function chkTeam(runFlag) {
 					);
 				}
 				else if (team.users.length < 1) {
-					logger.error(
+					logger.info(
 						`No users assigned for Alien Team ${team.name} ${team._id}`
 					);
 				}
@@ -279,7 +279,7 @@ async function chkTeam(runFlag) {
 					);
 				}
 				else if (team.users.length < 1) {
-					logger.error(
+					logger.info(
 						`No users assigned for Control Team ${team.name} ${team._id}`
 					);
 				}
@@ -314,7 +314,7 @@ async function chkTeam(runFlag) {
 					);
 				}
 				else if (team.users.length < 1) {
-					logger.error(
+					logger.info(
 						`No users assigned for Media Team ${team.name} ${team._id}`
 					);
 				}
