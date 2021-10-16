@@ -5,6 +5,7 @@ import axios from 'axios';
 import { gameServer } from "../../../../config";
 import { socket } from "../../../../api";
 import TransferForm from "../../../../components/common/TransferForm";
+import { getAircraftIcon } from "../../../../scripts/mapIcons";
 
 const AircraftStats = (props) => {
 	const [showUpgrade, setShowUpgrade] = React.useState(false);
@@ -20,15 +21,18 @@ const AircraftStats = (props) => {
 		}
 	};
 
-		let { stats, status, name, zone, type, origin, site } = props.unit;
+		let { stats, status, name, zone, type, origin, site, team } = props.unit;
 		return (
 			<Container>
 				<Panel>
 				<FlexboxGrid>
-						<FlexboxGrid.Item colspan={4}>
-							<img
-								src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" alt='Failed to Load'
-							/>									
+						<FlexboxGrid.Item colspan={4} style={{  }}>
+							<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
+								<img 
+									src={getAircraftIcon(team.code)} width="90%" alt='Failed to Load'
+								/>		
+							</div>
+							
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={16}>
 							<p>
@@ -50,6 +54,7 @@ const AircraftStats = (props) => {
 						</FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={4}>
 							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}>Upgrade Unit</IconButton>}
+							{ props.control && <IconButton block color='red' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}>Control Button</IconButton>}
 						</FlexboxGrid.Item>
 				 </FlexboxGrid>
 					<br />

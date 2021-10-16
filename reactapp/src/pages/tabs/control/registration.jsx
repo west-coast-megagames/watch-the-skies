@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Content, Container, Sidebar, PanelGroup, Panel, Input, FlexboxGrid, List, Alert, SelectPicker, Button, Loader, Toggle, Divider, CheckPicker, TagPicker } from 'rsuite';
+import { Content, Container, Sidebar, PanelGroup, Panel, Input, FlexboxGrid, List, Alert, SelectPicker, Button, Loader, Toggle, Divider, CheckPicker, } from 'rsuite';
 import socket from '../../../../src/socket';
 
 class Registration extends Component {
