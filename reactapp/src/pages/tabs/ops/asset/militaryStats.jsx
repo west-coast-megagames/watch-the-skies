@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
+import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress, ButtonToolbar, ButtonGroup, Tooltip, Button} from 'rsuite';
 import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
 import { gameServer } from "../../../../config";
-import { socket } from "../../../../api";
+import socket from "../../../../socket";
 import TransferForm from "../../../../components/common/TransferForm";
+import { getMilitaryIcon } from "../../../../scripts/mapIcons";
+import StatusBar from "./StatusBar";
 
 class MilitaryStats extends Component {
 	state = { 
@@ -24,6 +26,7 @@ class MilitaryStats extends Component {
 		this.setState({showTransfer: false}) 
 		};
 
+
 	repair = async () => {
 		try {
 			socket.emit( 'militarySocket', 'repair', {_id: this.props.unit._id });
@@ -35,44 +38,18 @@ class MilitaryStats extends Component {
 	};
 
 	render() {
-		let { stats, status, name, zone, type, origin, site } = this.props.unit;
+		let { stats, status, name, zone, type, origin, site, actions, missions } = this.props.unit;
 		return (
 			<Container>
 				<Panel>
 				<FlexboxGrid>
 						<FlexboxGrid.Item colspan={4}>
-							<img
-								src={'https://preview.redd.it/rgtrs9tube361.jpg?width=513&auto=webp&s=4c0d6ba5218ce19f7b4918e2ec27aa04ab26a3d1'} width="160" height="160" alt='Failed to Load'
-							/>									
-						</FlexboxGrid.Item>
-						<FlexboxGrid.Item colspan={16}>
-							<p>
-								<b>Name:</b> {name}
-							</p>
-							<p>
-								<b>Location:</b> {site.name} |{" "}
-								{zone.name} zone
-							</p>
-							<p>
-								<b>Type:</b> {type}
-							</p>
-							<p>
-								<b>Base:</b> {origin.name}{" "}
-								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
-									Transfer Unit
-								</IconButton>
-							</p>
-						</FlexboxGrid.Item>
-						<FlexboxGrid.Item colspan={4}>
-							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
-						</FlexboxGrid.Item>
-				 </FlexboxGrid>
-					<br />
-				</Panel>
-				<Panel header="Unit Statistics">
-				<FlexboxGrid>
-					<FlexboxGrid.Item colspan={12}>
-						<div>
+						<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
+								<img 
+									src={getMilitaryIcon(this.props.unit)} width="90%" alt='Failed to Load'
+								/>		
+							</div>		
+							<div>
 							<Whisper placement="top" speaker={healthSpeaker} trigger="click">
 								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 							</Whisper>
@@ -98,51 +75,90 @@ class MilitaryStats extends Component {
 									</IconButton>
 								</span>
 							)}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={attackSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Attack Rating:</b> {stats.attack}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>
-							<b> Defense Rating:</b> {stats.defense}
-						</div>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={12}>
-					<div>
-							<Whisper placement="top" speaker={localSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Local Deployment Cost:</b> $M{stats.localDeploy}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={globalSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Global Deployment Cost:</b> $M{stats.globalDeploy}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>
-							<b> Invasion Cost:</b> $M{stats.invasion}
-						</div>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={24}>
-						<br />
-						<TagGroup>
-							{!status.some(el => el === 'damaged') && !status.some(el => el === 'deployed') && <Tag color="green">Mission Ready</Tag>}
-							{status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
-							{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
-							{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
-						</TagGroup>
-					</FlexboxGrid.Item>
-				</FlexboxGrid>
-			</Panel>
+						</div>						
+						</FlexboxGrid.Item>
+						<FlexboxGrid.Item colspan={8}>
+						<Panel bordered >
+							<p>
+								<b>Name:</b> {name}
+							</p>
+							<p>
+								<b>Location:</b> {site.name} |{" "}
+								{zone.name} zone
+							</p>
+							<p>
+								<b>Type:</b> {type}
+							</p>
+							<p>
+								<b>Base:</b> {origin.name}{" "}
+								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
+									Transfer Unit
+								</IconButton>
+							</p>
+							</Panel>
+							<Panel bordered >
+							<FlexboxGrid>
+								<FlexboxGrid.Item colspan={24}>
+									<br />
+									<TagGroup>
+										{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+										{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
+									</TagGroup>
+								</FlexboxGrid.Item>
+								<FlexboxGrid.Item colspan={12}>
+									<div>
+										<Whisper placement="top" speaker={attackSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Attack Rating:</b> {stats.attack}
+									</div>
+									<div>
+										<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>
+										<b> Defense Rating:</b> {stats.defense}
+									</div>
+								</FlexboxGrid.Item>
+								<FlexboxGrid.Item colspan={12}>
+								<div>
+										<Whisper placement="top" speaker={localSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Local Deployment Cost:</b> $M{stats.localDeploy}
+									</div>
+									<div>
+										<Whisper placement="top" speaker={globalSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Global Deployment Cost:</b> $M{stats.globalDeploy}
+									</div>
+									{/* <div>
+										<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>
+										<b> Invasion Cost:</b> $M{stats.invasion}
+									</div> */}
+								</FlexboxGrid.Item>
+							</FlexboxGrid>
+						</Panel>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={8}>
+								<Panel style={{ height: '100%'}} bordered>
+									<h5>Current Mission</h5>
+									Mission not made
+								</Panel>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={4}>
+							<StatusBar  control={this.props.control} unit={this.props.unit}/>
+							<br/>
+							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
+						</FlexboxGrid.Item>
+				 </FlexboxGrid>
+					<br />
+				</Panel>
+
 			{this.state.showUpgrade && <UpgradeDrawer show={this.state.showUpgrade}
 				closeUpgrade={this.closeUpgrade}
 				unit={this.props.unit}

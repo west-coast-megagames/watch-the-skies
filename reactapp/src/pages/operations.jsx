@@ -5,15 +5,14 @@ import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
-import playTrack from './../scripts/audio';
-import PrototypeMap from './tabs/ops/google2';
-import AssetsTab from './tabs/ops/assets';
+import AssetsTab from './tabs/ops/AssetTab';
 import { getFacilites } from '../store/entities/facilities';
 import AircraftTable from './tabs/ops/asset/AircraftTable';
 import FacilitiesTable from './tabs/ops/asset/FacilitiesTable';
 import MilitaryTable from './tabs/ops/asset/MilitaryTable';
 import BalanceHeader from '../components/common/BalanceHeader';
 import { getOpsAccount } from '../store/entities/accounts';
+import { getMilitary } from '../store/entities/military';
 
 /*
 TODO CHECKLIST
@@ -34,7 +33,7 @@ const Operations  = (props) => {
 
 	const handleTransfer = (thing) => {
 		setSelected(thing);
-		setTab('assets');
+		setTab('unit');
 		props.history.push('/ops/assets');
 	}
 
@@ -76,7 +75,7 @@ const Operations  = (props) => {
 							<FlexboxGrid.Item colspan={11} >
 								<Panel bodyFill bordered style={cardStyle3}>
 									<h5>Military</h5>
-									<MilitaryTable handleTransfer={handleTransfer}/>
+									<MilitaryTable handleTransfer={handleTransfer} military={props.military}/>
 								</Panel>
 							</FlexboxGrid.Item>
 						</FlexboxGrid>
@@ -118,7 +117,7 @@ const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
 	sites: state.entities.sites.list,
-	military: state.entities.military.list,
+	military: getMilitary(state),
 	aircraft: state.entities.aircrafts.list,
 	facilities: getFacilites(state),
 	account: getOpsAccount(state)

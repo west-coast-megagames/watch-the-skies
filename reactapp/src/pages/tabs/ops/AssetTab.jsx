@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input, CheckboxGroup, Checkbox } from 'rsuite';
+import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input, CheckboxGroup, Checkbox, CheckPicker, InputGroup } from 'rsuite';
 import FacilityStats from '../../../components/common/facilityStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
 import { getOpsAccount } from '../../../store/entities/accounts';
@@ -18,6 +18,7 @@ const { HeaderCell, Cell, Column } = Table;
 const AssetTab = (props) => {
 	const [selected, setSelected] = React.useState(props.selected);
 	const [filter, setFilter] = React.useState('');
+	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades' ]);
 	const [military, setMilitary] = React.useState(true);
 	const [facilites, setFacilities] = React.useState(true);
 	const [upgrades, setUpgrades] = React.useState(true);
@@ -32,8 +33,16 @@ const AssetTab = (props) => {
 
 
 	useEffect(() => {
-		console.log(props.selected);
-	}, [props.selected]);
+		if (props.units && selected) {
+			const updated = props.units.find(el => el._id === selected._id);
+			setSelected(updated);
+		}
+	}, [props.units]);
+
+	const handleTags = (units) => {
+		setTags(units);
+	};
+
 
 	const repair = async (upgrade) => {
 		try {
@@ -84,20 +93,20 @@ const AssetTab = (props) => {
 	}
 
 	return (
-		<Container style={{padddingRight: '0px', overflow: 'auto', height: 'calc(100vh)'}}>
-			<Content>
+		<Container style={{padddingRight: '0px', }}>
+			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Asset</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
-						<MilitaryStats unit={selected}/>
+						<MilitaryStats control={props.control} unit={selected}/>
 						<UpgradeTable unit={selected}/>
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
 				}
 				{ selected && selected.model === 'Facility' && 
-					<FacilityStats facility={selected}/>
+					<FacilityStats  control={props.control} facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<AircraftStats unit={selected}/>
+					<AircraftStats control={props.control}  unit={selected}/>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>
@@ -174,27 +183,22 @@ const AssetTab = (props) => {
 			<Sidebar>
 					<PanelGroup>
 						<Panel style={{ marginRight: '0', backgroundColor: "#262327", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', borderTopRightRadius: '0px' }}>
-							<Input onChange={(value)=> setFilter(value)} placeholder="Search"></Input>
-							<CheckboxGroup inline name="checkboxList">
-								<FlexboxGrid>
-									<FlexboxGrid.Item colspan={12}>
-										<Checkbox onChange={() => setMilitary(!military)} checked={military}>Military</Checkbox>
-									</FlexboxGrid.Item>
-									<FlexboxGrid.Item colspan={12}>
-										<Checkbox onChange={() => setFacilities(!facilites)} checked={facilites}>Facilities</Checkbox>
-									</FlexboxGrid.Item>
-									<FlexboxGrid.Item colspan={12}>
-										<Checkbox onChange={() => setUpgrades(!upgrades)} checked={upgrades}>Upgrades</Checkbox>
-									</FlexboxGrid.Item>
-									<FlexboxGrid.Item colspan={12}>
-										<Checkbox onChange={() => setAircraft(!aircraft)} checked={aircraft}>Aircraft</Checkbox>
-									</FlexboxGrid.Item>
-								</FlexboxGrid>
-  						</CheckboxGroup>
+							<InputGroup>
+								<Input style={{ width: '60%' }} onChange={(value)=> setFilter(value)} placeholder="Search"></Input>
+								<CheckPicker style={{ width: '40%', borderRadius: '0px',  }} placeholder='_'
+									data={ checkerData }
+									placement="bottomEnd"
+									onChange={handleTags}
+									valueKey='name'
+									labelKey='name'
+									searchable={false} 
+									value={ tags }
+							/>								
+							</InputGroup>
 						</Panel>
-						<Panel bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
-						{aircraft && <List hover size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft</h6>
+						<div bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
 									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
@@ -203,8 +207,8 @@ const AssetTab = (props) => {
 							</List>}	
 							
 							
-							{military && <List hover autoScroll size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units</h6>
+							{tags.some(el => el === 'Military') && <List hover autoScroll size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units ({props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((unit, index) => (
 									<List.Item key={index}  index={index} size={'md'} style={listStyle(unit)} onClick={()=> setSelected(unit)} >
 										{unit.name}
@@ -212,8 +216,8 @@ const AssetTab = (props) => {
 								))}
 							</List>	}	
 
-							{facilites && <List hover size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities</h6>
+							{tags.some(el => el === 'Facilities') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((facility, index) => (
 									<List.Item key={index} index={index} size={'md'} style={listStyle(facility)} onClick={()=> setSelected(facility)}>
 										{facility.name}
@@ -221,8 +225,8 @@ const AssetTab = (props) => {
 								))}
 							</List>	}
 
-							{upgrades && <List hover size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Upgrades</h6>
+							{tags.some(el => el === 'Upgrades') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Upgrades ({props.upgrades.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.upgrades.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
 									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
@@ -230,10 +234,10 @@ const AssetTab = (props) => {
 								))}
 							</List>}	
 
-							{!upgrades && !facilites && !military && <div>
+							{tags.length === 0 && <div>
 								Nothing selected...
 							</div>}			
-						</Panel>
+						</div>
 					</PanelGroup>
         </Sidebar>
     </Container>
@@ -257,16 +261,32 @@ const defenseSpeaker = (
   </Popover>
 );
 
+const checkerData = [
+	{
+		name: 'Aircraft'
+	},
+	{
+		name: 'Military'
+	},
+	{
+		name: 'Facilities'
+	},
+	{
+		name: 'Upgrades'
+	},
+]
 
-const mapStateToProps = state => ({
+
+
+const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
 	account: getOpsAccount(state),
-	aircraft: getAircrafts(state),
-	units: getMilitary(state),
-	upgrades: getUpgrades(state),
-	facilities: getFacilites(state),
+	aircraft: props.control ? state.entities.aircrafts.list : getAircrafts(state),
+	units: props.control ? state.entities.military.list : getMilitary(state),
+	upgrades: props.control ? state.entities.upgrades.list : getUpgrades(state),
+	facilities: props.control ? state.entities.facilities.list : getFacilites(state),
 	lastFetch: state.entities.military.lastFetch
 });
 

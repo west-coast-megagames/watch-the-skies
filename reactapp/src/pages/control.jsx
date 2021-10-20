@@ -7,12 +7,13 @@ import ClockControls from './../components/clockControls';
 import { gameServer } from '../config';
 import TransactionList from '../components/common/transactionList';
 import MilitaryControl from './tabs/control/militaryControl';
-import UnitControl from './tabs/control/unitControl';
+import UnitControl from './tabs/control/UnitControl';
 import LoginLink from '../components/common/loginLink';
 import Registration from './tabs/control/registration';
 
 const Control = (props) => {
 	const [tab, setTab] = React.useState('feed');
+	const [selected, setSelected] = React.useState(undefined);
 	const url = props.match.path;
 
 	// functions
@@ -23,6 +24,15 @@ const Control = (props) => {
 			props.alert({type: 'success', title: 'Aliens Deployed', body: response.data })
 		} catch (err) {
 			props.alert({type: 'error', title: 'Aliens Failed to Deploy', body: `${err.response.data} - ${err.message}` })
+		};
+	}
+
+	const runMilitary = async () => {
+		try {
+			const response = await axios.patch(`${gameServer}game/tempMil/resolve`)
+			props.alert({type: 'success', title: 'Ran the Military', body: response.data })
+		} catch (err) {
+			props.alert({type: 'error', title: 'Uh oh', body: `${err.response.data} - ${err.message}` })
 		};
 	}
 
@@ -134,6 +144,12 @@ const Control = (props) => {
 		};
 	}
 
+	const handleTransfer = (thing) => {
+		setSelected(thing);
+		setTab('unit');
+		props.history.push('/control/unit');
+	}
+
 	//render
 	if (!props.login) {
 		props.history.push('/');
@@ -175,6 +191,15 @@ const Control = (props) => {
 									</Button>
 									<Button color="blue" size="sm" onClick={ () => updateAircraft() }>
 										Update Aircraft
+									</Button>
+								</ButtonGroup>
+							</div>
+							<hr />
+							<div>
+								<h5>Military Controls</h5>
+								<ButtonGroup>
+									<Button color="violet" size="sm" onClick={ () => runMilitary() }>
+										Run Military
 									</Button>
 								</ButtonGroup>
 							</div>
@@ -224,13 +249,13 @@ const Control = (props) => {
 						<TransactionList />
 					)}/>
 					<Route path={`${url}/military`}  render={() => (
-						<MilitaryControl {...props}/>
+						<MilitaryControl  handleTransfer={handleTransfer} {...props}/>
 					)}/>
 					<Route path={`${url}/alien`}  render={() => (
 						<h5>Grrr...</h5>
 					)}/>
 					<Route path={`${url}/unit`}  render={() => (
-						<UnitControl {...props} />
+						<UnitControl selected={selected} {...props} />
 					)}/>
 					<Route path={`${url}/registration`}  render={() => (
 						<Registration  {...props} />
