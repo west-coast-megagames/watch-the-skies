@@ -56,7 +56,21 @@ module.exports = async function (client, req) {
 					let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.deploy(req.data.destination);
-					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
+					client.emit('alert', { type: 'success', message: `${unit.name} deployed to ${unit.site.name}.` });
+				} catch (error) {
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
+					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+				}
+			}
+			break;
+		case('transfer'):
+			// Deploy action expects UNITS & DESTINATION
+			for (const _id of req.data.units) {
+				try {
+					let unit = await Military.findById(_id);
+					await unit.populateMe();
+					unit = await unit.transfer(req.data.destination);
+					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
 				} catch (error) {
 					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
