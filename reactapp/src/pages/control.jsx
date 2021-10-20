@@ -27,6 +27,15 @@ const Control = (props) => {
 		};
 	}
 
+	const runMilitary = async () => {
+		try {
+			const response = await axios.patch(`${gameServer}game/tempMil/resolve`)
+			props.alert({type: 'success', title: 'Ran the Military', body: response.data })
+		} catch (err) {
+			props.alert({type: 'error', title: 'Uh oh', body: `${err.response.data} - ${err.message}` })
+		};
+	}
+
 	const returnAliens = async () => {
 		try {
 			const response = await axios.patch(`${gameServer}debug/return/aliens`)
@@ -182,6 +191,15 @@ const Control = (props) => {
 									</Button>
 									<Button color="blue" size="sm" onClick={ () => updateAircraft() }>
 										Update Aircraft
+									</Button>
+								</ButtonGroup>
+							</div>
+							<hr />
+							<div>
+								<h5>Military Controls</h5>
+								<ButtonGroup>
+									<Button color="violet" size="sm" onClick={ () => runMilitary() }>
+										Run Military
 									</Button>
 								</ButtonGroup>
 							</div>

@@ -3,6 +3,7 @@ const { logger } = require('../../middleware/log/winston'); // middleware/error.
 const masterClock = require('../../wts/gameClock/gameClock');
 
 const { Military } = require('../../models/military');
+const { Site } = require('../../models/site');
 
 module.exports = async function (client, req) {
 	try {
@@ -16,6 +17,16 @@ module.exports = async function (client, req) {
 					let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
+
+
+					// 	socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
+					if (req.data.assignment.type === 'Invade') {
+						console.log('Invade Time!');
+						const target = await Site.findById(req.data.assignment.target).populate('country').populate('zone'); // Finds deployment target in the DB
+						target.status.push('warzone');
+						await target.save();
+					}
+
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
 				} catch (error) {
 					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });

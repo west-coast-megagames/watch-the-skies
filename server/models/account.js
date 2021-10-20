@@ -64,7 +64,7 @@ AccountSchema.methods.deposit = async function (transaction) {
 
 		let account = await this.save();
 		account = await account.populateMe();
-		console.log(account);
+		// console.log(account);
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ account ]); //

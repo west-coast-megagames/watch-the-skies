@@ -247,6 +247,7 @@ const DeployMilitary = (props) => {
 							
 							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
 								data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
+								placement={'leftEnd'}
 								onChange={handleUnits}
 								valueKey='_id'
 								labelKey='info'

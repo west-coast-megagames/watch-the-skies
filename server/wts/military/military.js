@@ -11,6 +11,7 @@ const { Facility } = require('../../models/facility');
 const randomCords = require('../../util/systems/lz');
 const { DeploymentReport } = require('../../models/report');
 const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
+const { logger } = require('../../middleware/log/winston');
 
 async function resolveBattle(attackers, defenders) {
 	let attackerTotal = 0;
@@ -211,9 +212,12 @@ async function resolveBattle(attackers, defenders) {
 }
 
 async function runMilitary() {
+	logger.info('Starting to run the Military!');
 	let report = '';
 	let data = {};
-	for (const site of await Site.find({ 'status': 'warzone' })) { // find all the sites that are a warzone
+	let sites = await Site.find();
+	sites = sites.filter(site => site.status.some(el => el === 'warzone'));
+	for (const site of sites) { // find all the sites that are a warzone
 		// collect all the attackers
 		report = '';
 		const leadArmy = {
