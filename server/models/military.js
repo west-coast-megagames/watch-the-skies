@@ -31,7 +31,7 @@ const MilitarySchema = new Schema({
 	missions: { type: Number, default: 1 },
 	assignment: {
 		target: { type: ObjectId, ref: 'Site' },
-		type: { type: String, default: 'Garrison', enum: ['Invade', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison']}
+		type: { type: String, default: 'Garrison', enum: ['Invade', 'Siege', 'Terrorize', 'Raze', 'Humanitarian', 'Garrison'] }
 	},
 	hidden: { type: Boolean, default: false },
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
@@ -45,6 +45,41 @@ const MilitarySchema = new Schema({
 		enum: ['secret']
 	}
 });
+
+// METHOD - Control
+// IN - string of what is getting reset | OUT: VOID
+// PROCESS: reset aspect based on type, Control only
+MilitarySchema.methods.control = async function (type) {
+	let unit = this;
+	try {
+		switch(type) {
+		case 'mission':
+			// do mission reset logic
+			(unit.missions <= 0) ? unit.missions = 1 : unit.missions = 0; // Reduces the availible missions by 1
+			unit.assignment = { type: 'Garrison' }; // Sets assignment as current mission
+			break;
+		case 'action':
+			// do mission reset logic
+			(unit.actions <= 0) ? unit.actions = 1 : unit.actions = 0; // Reduces the availible missions by 1
+			break;
+		case 'mobilized':
+			// do mission reset logic
+			(!this.status.some(el => el === 'mobilized')) ?
+				await this.mobilize(true) : await this.recall(true);
+			break;
+		default:
+			throw new Error(`ERROR ${type}.`);
+		}
+
+		unit = await unit.save(); // Saves the UNIT
+		await unit.populateMe();
+		nexusEvent.emit('request', 'update', [ unit ]);
+		return unit;
+	}
+	catch (error) {
+		console.log(error);
+	}
+};
 
 // METHOD - Mission
 // IN - Mission Object { target, type } | OUT: VOID
@@ -67,7 +102,8 @@ MilitarySchema.methods.mission = async function (assignment) {
 		nexusEvent.emit('request', 'update', [ unit ]);
 
 		return unit;
-	} catch (error) {
+	}
+ catch (error) {
 		console.log(error);
 	}
 };
@@ -163,8 +199,8 @@ MilitarySchema.methods.recall = async function (forced = false) {
 // METHOD - Mobilize
 // IN: VOID | OUT: VOID
 // PROCESS: Mobilizes unit in preporation for action
-MilitarySchema.methods.mobilize = async function () {
-	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+MilitarySchema.methods.mobilize = async function (forced = false) {
+	if (!forced) await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
 
 	// Switch a military unit to the mobilized status, making it more visible on the map but ready to do missions.
 	try {
@@ -335,10 +371,12 @@ MilitarySchema.methods.takeAction = async function () {
 		// Trigger user check?
 		if (this.missions < 1) {
 			throw Error(`${this.name} has no mission or action pts left this turn.`);
-		} else {
+		}
+ else {
 			this.missions -= 1;
 		}
-	} else {
+	}
+ else {
 		this.actions -= 1;
 	}
 };

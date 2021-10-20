@@ -34,7 +34,7 @@ const Operations  = (props) => {
 	const handleTransfer = (thing) => {
 		setSelected(thing);
 		setTab('unit');
-		props.history.push('/control/unit');
+		props.history.push('/ops/assets');
 	}
 
 	if (!props.login) {

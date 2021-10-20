@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress, ButtonToolbar, ButtonGroup} from 'rsuite';
+import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress, ButtonToolbar, ButtonGroup, Tooltip, Button} from 'rsuite';
 import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
 import { gameServer } from "../../../../config";
-import { socket } from "../../../../api";
+import socket from "../../../../socket";
 import TransferForm from "../../../../components/common/TransferForm";
 import { getMilitaryIcon } from "../../../../scripts/mapIcons";
 
@@ -25,6 +25,10 @@ class MilitaryStats extends Component {
 		this.setState({showTransfer: false}) 
 		};
 
+	handleControl = (type) => { 
+		socket.emit('request', { route: 'military', action: 'control', data: { id: this.props.unit._id, type  }});
+		};
+
 	repair = async () => {
 		try {
 			socket.emit( 'militarySocket', 'repair', {_id: this.props.unit._id });
@@ -36,7 +40,7 @@ class MilitaryStats extends Component {
 	};
 
 	render() {
-		let { stats, status, name, zone, type, origin, site, team } = this.props.unit;
+		let { stats, status, name, zone, type, origin, site, actions, missions } = this.props.unit;
 		return (
 			<Container>
 				<Panel>
@@ -46,37 +50,8 @@ class MilitaryStats extends Component {
 								<img 
 									src={getMilitaryIcon(this.props.unit)} width="90%" alt='Failed to Load'
 								/>		
-							</div>								
-						</FlexboxGrid.Item>
-						<FlexboxGrid.Item colspan={16}>
-							<p>
-								<b>Name:</b> {name}
-							</p>
-							<p>
-								<b>Location:</b> {site.name} |{" "}
-								{zone.name} zone
-							</p>
-							<p>
-								<b>Type:</b> {type}
-							</p>
-							<p>
-								<b>Base:</b> {origin.name}{" "}
-								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
-									Transfer Unit
-								</IconButton>
-							</p>
-						</FlexboxGrid.Item>
-						<FlexboxGrid.Item colspan={4}>
-							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
-							{ this.props.control && <IconButton block color='red' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Control</IconButton>}
-						</FlexboxGrid.Item>
-				 </FlexboxGrid>
-					<br />
-				</Panel>
-				<Panel header="Unit Statistics">
-				<FlexboxGrid>
-					<FlexboxGrid.Item colspan={12}>
-						<div>
+							</div>		
+							<div>
 							<Whisper placement="top" speaker={healthSpeaker} trigger="click">
 								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 							</Whisper>
@@ -102,51 +77,114 @@ class MilitaryStats extends Component {
 									</IconButton>
 								</span>
 							)}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={attackSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Attack Rating:</b> {stats.attack}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>
-							<b> Defense Rating:</b> {stats.defense}
-						</div>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={12}>
-					<div>
-							<Whisper placement="top" speaker={localSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Local Deployment Cost:</b> $M{stats.localDeploy}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={globalSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>{" "}
-							<b> Global Deployment Cost:</b> $M{stats.globalDeploy}
-						</div>
-						<div>
-							<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
-								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
-							</Whisper>
-							<b> Invasion Cost:</b> $M{stats.invasion}
-						</div>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={24}>
-						<br />
-						<TagGroup>
-							{!status.some(el => el === 'damaged') && !status.some(el => el === 'deployed') && <Tag color="green">Mission Ready</Tag>}
-							{status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
-							{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
-							{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
-						</TagGroup>
-					</FlexboxGrid.Item>
-				</FlexboxGrid>
-			</Panel>
+						</div>						
+						</FlexboxGrid.Item>
+						<FlexboxGrid.Item colspan={8}>
+						<Panel bordered >
+							<p>
+								<b>Name:</b> {name}
+							</p>
+							<p>
+								<b>Location:</b> {site.name} |{" "}
+								{zone.name} zone
+							</p>
+							<p>
+								<b>Type:</b> {type}
+							</p>
+							<p>
+								<b>Base:</b> {origin.name}{" "}
+								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
+									Transfer Unit
+								</IconButton>
+							</p>
+							</Panel>
+							<Panel bordered >
+							<FlexboxGrid>
+								<FlexboxGrid.Item colspan={24}>
+									<br />
+									<TagGroup>
+										{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+										{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
+									</TagGroup>
+								</FlexboxGrid.Item>
+								<FlexboxGrid.Item colspan={12}>
+									<div>
+										<Whisper placement="top" speaker={attackSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Attack Rating:</b> {stats.attack}
+									</div>
+									<div>
+										<Whisper placement="top" speaker={defenseSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>
+										<b> Defense Rating:</b> {stats.defense}
+									</div>
+								</FlexboxGrid.Item>
+								<FlexboxGrid.Item colspan={12}>
+								<div>
+										<Whisper placement="top" speaker={localSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Local Deployment Cost:</b> $M{stats.localDeploy}
+									</div>
+									<div>
+										<Whisper placement="top" speaker={globalSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>{" "}
+										<b> Global Deployment Cost:</b> $M{stats.globalDeploy}
+									</div>
+									{/* <div>
+										<Whisper placement="top" speaker={invadeSpeaker} trigger="click">
+											<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+										</Whisper>
+										<b> Invasion Cost:</b> $M{stats.invasion}
+									</div> */}
+								</FlexboxGrid.Item>
+							</FlexboxGrid>
+						</Panel>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={8}>
+								<Panel style={{ height: '100%'}} bordered>
+									<h5>Current Mission</h5>
+									Mission not made
+								</Panel>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={4}>
+							<div >
+								<ButtonGroup justified size='sm'>
+									{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
+										{<Button onClick={() => this.props.control ? this.handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help',  }} color='orange'><Icon icon="plane"/></Button>}
+									</Whisper>}	
+
+									{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
+										<Button onClick={() => this.props.control ? this.handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help', color: 'grey'  }} appearance="ghost" color='orange' ><Icon icon="plane"/></Button>
+									</Whisper>}
+
+									{actions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='blue' onClick={() => this.props.control ? this.handleControl('action') : console.log('nope')} style={{ cursor: 'help' }}><b>A</b></Button>
+									</Whisper>}	
+									{actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='blue' onClick={() => this.props.control ? this.handleControl('action') : console.log('nope')} appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
+									</Whisper>}
+
+									{missions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' onClick={() => this.props.control ? this.handleControl('mission') : console.log('nope')} style={{ cursor: 'help' }}><b>M</b></Button>
+									</Whisper>}	
+									{missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
+										<Button color='cyan' appearance="ghost" onClick={() => this.props.control ? this.handleControl('mission') : console.log('nope')} style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
+									</Whisper>}
+								</ButtonGroup>								
+							</div> 
+							<br/>
+							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
+						</FlexboxGrid.Item>
+				 </FlexboxGrid>
+					<br />
+				</Panel>
+
 			{this.state.showUpgrade && <UpgradeDrawer show={this.state.showUpgrade}
 				closeUpgrade={this.closeUpgrade}
 				unit={this.props.unit}

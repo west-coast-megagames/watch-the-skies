@@ -33,8 +33,11 @@ const AssetTab = (props) => {
 
 
 	useEffect(() => {
-		console.log(props.selected);
-	}, [props.selected]);
+		if (props.units && selected) {
+			const updated = props.units.find(el => el._id === selected._id);
+			setSelected(updated);
+		}
+	}, [props.units]);
 
 	const handleTags = (units) => {
 		setTags(units);

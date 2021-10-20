@@ -13,12 +13,12 @@ module.exports = async function (client, req) {
 			// Deploy action expects UNITS & ASSSIGNMENT
 			for (const _id of req.data.units) {
 				try {
-				let unit = await Military.findById(_id);
+					let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
 				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -27,13 +27,13 @@ module.exports = async function (client, req) {
 			// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
 			for (const _id of req.data.units) {
 				try {
-				let unit = await Military.findById(_id);
+					let unit = await Military.findById(_id);
 					// TODO - Call mobilize method
 					await unit.populateMe();
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
 				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -47,9 +47,22 @@ module.exports = async function (client, req) {
 					unit = await unit.deploy(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
 				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
+			}
+			break;
+		case('control'):
+			// pass control method type for a unit
+			try {
+				let unit = await Military.findById(req.data.id);
+				await unit.populateMe();
+				unit = await unit.control(req.data.type);
+				client.emit('alert', { type: 'success', message: `${unit.name} control reset ${req.data.type}` });
+			}
+			catch (error) {
+				logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
+				client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 			}
 			break;
 		default:
@@ -58,6 +71,6 @@ module.exports = async function (client, req) {
 		}
 	} catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-		logger.error(`SOCKET-${req.route}: ${err.message}`, { meta: err.stack });
+		logger.error(`SOCKET-${req.route}: ${error.message}`, { meta: error.stack });
 	}
 };
