@@ -7,6 +7,7 @@ import { getOpsAccount } from '../../../../store/entities/accounts';
 import { getFacilites } from '../../../../store/entities/facilities';
 import { getMilitary } from '../../../../store/entities/military';
 import MobilizeForm from './MobilizeForm';
+import StatusBar from './StatusBar';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -66,37 +67,12 @@ const MilitaryTable = (props) => {
         </Cell>
       </Column>
 
-			<Column flexGrow={2} >
+			<Column flexGrow={1} >
         <HeaderCell>Status</HeaderCell>
         <Cell>
 					{rowData => {
-            let { status, name, actions, missions } = rowData
             return(
-							<div>
-								<ButtonGroup size='sm'>
-									{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} color='orange' 
-										 />
-									</Whisper>}	
-									{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help', color: 'grey' }} color="orange"/>
-									</Whisper>}
-
-									{actions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
-									</Whisper>}	
-									{actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='blue' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
-									</Whisper>}
-
-									{missions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
-									</Whisper>}	
-									{missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
-									</Whisper>}
-								</ButtonGroup>								
-							</div> 
+							<StatusBar control={props.control} unit={rowData} />
             )
           }}
         </Cell>

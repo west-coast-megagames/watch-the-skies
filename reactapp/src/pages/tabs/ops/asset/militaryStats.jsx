@@ -6,6 +6,7 @@ import { gameServer } from "../../../../config";
 import socket from "../../../../socket";
 import TransferForm from "../../../../components/common/TransferForm";
 import { getMilitaryIcon } from "../../../../scripts/mapIcons";
+import StatusBar from "./StatusBar";
 
 class MilitaryStats extends Component {
 	state = { 
@@ -25,9 +26,6 @@ class MilitaryStats extends Component {
 		this.setState({showTransfer: false}) 
 		};
 
-	handleControl = (type) => { 
-		socket.emit('request', { route: 'military', action: 'control', data: { id: this.props.unit._id, type  }});
-		};
 
 	repair = async () => {
 		try {
@@ -153,31 +151,7 @@ class MilitaryStats extends Component {
 						</FlexboxGrid.Item>
 
 						<FlexboxGrid.Item colspan={4}>
-							<div >
-								<ButtonGroup justified size='sm'>
-									{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
-										{<Button onClick={() => this.props.control ? this.handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help',  }} color='orange'><Icon icon="plane"/></Button>}
-									</Whisper>}	
-
-									{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
-										<Button onClick={() => this.props.control ? this.handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help', color: 'grey'  }} appearance="ghost" color='orange' ><Icon icon="plane"/></Button>
-									</Whisper>}
-
-									{actions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='blue' onClick={() => this.props.control ? this.handleControl('action') : console.log('nope')} style={{ cursor: 'help' }}><b>A</b></Button>
-									</Whisper>}	
-									{actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='blue' onClick={() => this.props.control ? this.handleControl('action') : console.log('nope')} appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
-									</Whisper>}
-
-									{missions > 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' onClick={() => this.props.control ? this.handleControl('mission') : console.log('nope')} style={{ cursor: 'help' }}><b>M</b></Button>
-									</Whisper>}	
-									{missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' appearance="ghost" onClick={() => this.props.control ? this.handleControl('mission') : console.log('nope')} style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
-									</Whisper>}
-								</ButtonGroup>								
-							</div> 
+							<StatusBar  control={this.props.control} unit={this.props.unit}/>
 							<br/>
 							{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => this.showUpgrade()}>Upgrade Unit</IconButton>}
 						</FlexboxGrid.Item>
