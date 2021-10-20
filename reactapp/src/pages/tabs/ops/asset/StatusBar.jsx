@@ -11,15 +11,24 @@ const StatusBar = (props) => {
 		socket.emit('request', { route: 'military', action: 'control', data: { id: props.unit._id, type  }});
 	};
 
-	let { status, name, actions, missions } = props.unit;
+	let { status, name, actions, missions, model } = props.unit;
   return (
 		<div >
 		<ButtonGroup justified size='sm'>
-			{status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
+
+			{status.some(el => el === 'mobilized') && model === 'Military' && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
 				{<Button onClick={() => props.control ? handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help',  }} color='orange'><Icon icon="plane"/></Button>}
 			</Whisper>}	
 
-			{!status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
+			{!status.some(el => el === 'mobilized') && model === 'Military' && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
+				<Button onClick={() => props.control ? handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help', color: 'grey'  }} appearance="ghost" color='orange' ><Icon icon="plane"/></Button>
+			</Whisper>}
+
+			{status.some(el => el === 'deployed') && model === 'Aircraft' && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >on a Mission!</b></Tooltip>} trigger="hover">
+				{<Button onClick={() => props.control ? handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help',  }} color='orange'><Icon icon="plane"/></Button>}
+			</Whisper>}	
+
+			{!status.some(el => el === 'deployed') && model === 'Aircraft' && <Whisper placement="top" speaker={<Tooltip>{name} is <b>Not on a Mission!</b></Tooltip>} trigger="hover">
 				<Button onClick={() => props.control ? handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help', color: 'grey'  }} appearance="ghost" color='orange' ><Icon icon="plane"/></Button>
 			</Whisper>}
 

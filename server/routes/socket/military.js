@@ -18,11 +18,6 @@ module.exports = async function (client, req) {
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
 
-<<<<<<< HEAD
-					if (req.data.assignment.type === 'Invade') {
-						const site = await Site.findById(req.data.assignment.target);
-						await site.warzone();
-=======
 
 					// 	socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
 					if (req.data.assignment.type === 'Invade') {
@@ -30,7 +25,6 @@ module.exports = async function (client, req) {
 						const target = await Site.findById(req.data.assignment.target).populate('country').populate('zone'); // Finds deployment target in the DB
 						target.status.push('warzone');
 						await target.save();
->>>>>>> 7afbb2fca1007c78188c993ca3513dde3f7f3865
 					}
 
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });

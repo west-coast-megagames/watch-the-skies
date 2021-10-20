@@ -4,6 +4,7 @@ import { showAircraft } from '../../../../store/entities/infoPanels';
 import { getAircrafts } from '../../../../store/entities/aircrafts';
 import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid } from 'rsuite';
 import { getOpsAccount } from '../../../../store/entities/accounts';
+import StatusBar from './StatusBar';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -76,7 +77,13 @@ const AircraftTable = (props) => {
 
       <Column flexGrow={1} >
           <HeaderCell>Status</HeaderCell>
-          <Cell dataKey='mission' />
+					<Cell>
+					{rowData => {
+            return(
+							<StatusBar control={props.control} unit={rowData} />
+            )
+          }}
+        </Cell>
       </Column>
 
       <Column flexGrow={1}>

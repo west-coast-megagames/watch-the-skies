@@ -77,6 +77,7 @@ class MilitaryStats extends Component {
 							)}
 						</div>						
 						</FlexboxGrid.Item>
+						
 						<FlexboxGrid.Item colspan={8}>
 						<Panel bordered >
 							<p>
