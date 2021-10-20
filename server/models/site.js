@@ -36,6 +36,17 @@ const SiteSchema = new Schema({
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
 });
 
+SiteSchema.methods.warzone = async function () {
+	const status = this.status.some(el => el === 'warzone')
+	if (!status) {
+		addArrayValue(this.status, 'warzone');
+		this.markModified('status');
+		let site = await target.save();
+
+		nexusEvent.emit('request', 'update', [ site ]);
+	}
+}
+
 // validateSite method
 SiteSchema.methods.validateSite = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
