@@ -3,6 +3,7 @@ const { logger } = require('../../middleware/log/winston'); // middleware/error.
 const masterClock = require('../../wts/gameClock/gameClock');
 
 const { Military } = require('../../models/military');
+const { Site } = require('../../models/site');
 
 module.exports = async function (client, req) {
 	try {
@@ -16,6 +17,12 @@ module.exports = async function (client, req) {
 				let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
+
+					if (req.data.assignment.type === 'Invade') {
+						const site = await Site.findById(req.data.assignment.target);
+						await site.warzone();
+					}
+
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
 				} catch (error) {
 					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
@@ -33,7 +40,7 @@ module.exports = async function (client, req) {
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
 				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -47,7 +54,7 @@ module.exports = async function (client, req) {
 					unit = await unit.deploy(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} deployed to {unit.site.name once populated}.` });
 				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${err.message}`, { meta: err.stack });
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
@@ -58,6 +65,6 @@ module.exports = async function (client, req) {
 		}
 	} catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-		logger.error(`SOCKET-${req.route}: ${err.message}`, { meta: err.stack });
+		logger.error(`SOCKET-${req.route}: ${error.message}`, { meta: error.stack });
 	}
 };

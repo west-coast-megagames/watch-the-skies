@@ -54,12 +54,11 @@ MilitarySchema.methods.mission = async function (assignment) {
 	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`); // Checks if the UNIT has a mission availible
 	
 	let unit = this;
+	unit.assignment = assignment; // Sets assignment as current mission
 	if (this.site._id.toString() !== assignment.target) unit = await unit.deploy(assignment.target);
 
 	try {
 		unit.missions -= 1; // Reduces the availible missions by 1
-
-		unit.assignment = assignment; // Sets assignment as current mission
 
 		unit = await unit.save(); // Saves the UNIT
 		await unit.populateMe();
@@ -94,7 +93,7 @@ MilitarySchema.methods.deploy = async function (site) {
 
 		this.site = target._id;
 		this.country = target.country;
-		this.zone = target.zone;
+		this.zone = target.zone;w
 		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 	
 		this.location.lat = lat;
@@ -105,15 +104,6 @@ MilitarySchema.methods.deploy = async function (site) {
 
 		const unit = await this.save();
 		await unit.populateMe();
-
-		if (unit.assignment.type === 'Invade' || unit.assignment.type === 'Siege') {
-			if (!target.status.some(el => el === 'warzone')) {
-				addArrayValue(target.status, 'warzone');
-				await target.save()
-
-				nexusEvent.emit('request', 'update', [ target ]);
-			}
-		}
 
 		nexusEvent.emit('request', 'update', [ unit ]);
 		return unit;
