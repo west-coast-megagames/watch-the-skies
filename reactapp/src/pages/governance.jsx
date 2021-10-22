@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink';
 
-import Budget from './tabs/gov/budget';
+import BudgetTab from './tabs/gov/BudgetTab';
 import GameTimeline from './tabs/gov/GameTimeline';
 import Agreements from './tabs/gov/Agreements';
 import socket from '../socket';
@@ -58,7 +58,7 @@ const Governance = (props) => {
 							<GameTimeline />
 						)}/>
 						<Route path={`${url}/budget`}  render={() => (
-							<Budget />
+							<BudgetTab />
 						)}/>
 						<Route path={`${url}/espionage`}  render={() => (
 							<h5>The espionage system for the Governance Module has not been created!</h5>

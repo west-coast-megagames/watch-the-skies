@@ -276,7 +276,7 @@ AccountSchema.methods.validateAccount = async function () {
 
 AccountSchema.methods.populateMe = function () {
 	return this
-		.populate('team', 'name shortName')
+		.populate('team', 'name shortName code')
 		.execPopulate();
 };
 

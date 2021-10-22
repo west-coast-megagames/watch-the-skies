@@ -121,7 +121,7 @@ const BudgetTab = (props) => {
 						/>
 						<Button block onClick={() => addTransfer(false)}>Transfer {type}</Button>
 						<Button block onClick={() => addTransfer(true)}>schedule {type} Transfer</Button>
-						<AccountsTable accounts={ props.accounts } resource={ type } />
+						<AccountsTable control={props.control} accounts={ props.accounts } resource={ type } />
 					</Sidebar>
 				</Container>
 				{transactions.map(el => (
@@ -133,9 +133,9 @@ const BudgetTab = (props) => {
 	);
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
 	login: state.auth.login,
-	accounts: getAccountsForTeam(state),
+	accounts: props.control ? state.entities.accounts.list : getAccountsForTeam(state),
 	account: getTreasuryAccount(state),
 	lastFetch: state.entities.accounts.lastFetch
 });

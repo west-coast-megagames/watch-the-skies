@@ -284,7 +284,7 @@ const mapStateToProps = state => ({
 	groundSites: getGround(state),
 	crashes: getCrash(state),
 	poi: getPoI(state),
-	capitol: getCapitol(state),
+
 	intel: state.entities.intel.list,
 });
 

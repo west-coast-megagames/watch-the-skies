@@ -73,7 +73,7 @@ const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
 	sites: state.entities.sites.list,
-	capitol: getCapitol(state),
+	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : undefined,
 	military: state.entities.military.list,
 	aircraft: state.entities.aircrafts.list
 });

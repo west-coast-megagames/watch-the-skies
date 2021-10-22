@@ -74,12 +74,19 @@ router.patch('/resethealth', async function (req, res) {
 });
 
 router.patch('/resetsites', async function (req, res) {
-	for await (const site of Site.find()) {
+	const sites = await Site.find()
+		.populate('organization', 'name')
+		.populate('team', 'shortName name')
+		.populate('facilities', 'name type')
+		.populate('zone', 'model name code')
+		.populate('occupier', 'name shortName code');
+	for await (let site of await sites.filter(el => el.status.some(el2 => el2 === 'warzone') || el.status.some(el2 => el2 === 'occupied'))) {
 		console.log(`Resetting ${site.name}`);
 		await clearArrayValue(site.status, 'warzone');
 		await clearArrayValue(site.status, 'occupied');
 		site.occupier = await Team.findOne({ code: 'TCN' });
-		await site.save();
+		site = await site.save();
+		nexusEvent.emit('request', 'update', [ site ]); // Triggers the update socket the front-end
 	}
 	console.log('All done');
 	res.send('All sites succesfully reset!');
