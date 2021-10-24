@@ -137,6 +137,8 @@ const AircraftStats = (props) => {
 				unit={props.unit}
 			/>}
 			{showTransfer && <TransferForm 
+				units={props.units}
+				aircrafts={props.aircrafts}
 				show={showTransfer} 
 				closeTransfer={()=> setShowTransfer(!showTransfer)}
 				unit={props.unit} />}

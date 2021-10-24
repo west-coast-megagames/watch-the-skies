@@ -92,7 +92,7 @@ class MilitaryStats extends Component {
 							</p>
 							<p>
 								<b>Base:</b> {origin.name}{" "}
-								<IconButton	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
+								<IconButton disabled={actions + missions <= 0} appearance={"ghost"}	size="xs"	onClick={() => this.setState({ showTransfer: true })} icon={<Icon icon="send" />}>
 									Transfer Unit
 								</IconButton>
 							</p>
@@ -165,6 +165,8 @@ class MilitaryStats extends Component {
 				unit={this.props.unit}
 			/>}
 			{this.state.showTransfer && <TransferForm 
+				units={this.props.units}
+				aircrafts={this.props.aircrafts}
 				show={this.state.showTransfer} 
 				closeTransfer={this.closeTransfer}
 				unit={this.props.unit} />}
