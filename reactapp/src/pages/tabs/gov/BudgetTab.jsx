@@ -3,8 +3,9 @@ import { connect } from 'react-redux'; // Redux store provider
 import TransferForm from '../../../components/transferForm';
 import AccountsTable from '../../../components/accountsTable'
 import AutoTransfers from '../../../components/transfersTable';
-import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal } from 'rsuite';
+import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal, Input, InputGroup, Icon, Alert } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
+import socket from '../../../socket';
 // import AccountGraph from '../../../components/common/GraphAccounts';
 
 let count = 0;
@@ -24,9 +25,21 @@ const formatPickerData = (accounts) => {
 const BudgetTab = (props) => {
 	const [account, setAccount] = React.useState(props.account); // The currently selected account
 	const [type, setType] = React.useState('Megabucks'); // The currently selected resource
-	const [resourceList, setResourceList] = React.useState([{ value: 'Megabucks', label: 'Megabucks' }, { value: 'Red Murcury', label: 'Red Murcury' }]); // List of resources
+	const [resourceList, setResourceList] = React.useState([]); // List of resources
 	const [options, setOptions] = React.useState([]); // The selection options
-	const [transactions, setTransactions] = React.useState([]); // Transactions to be pushed
+	const [transactions, setTransactions] = React.useState([]); // Transactions to be pushed	
+	const [newResource, setNewResource] = React.useState(false); // The selection options
+
+	useEffect(() => {
+		console.log('booting')
+		let accountOptions = []
+		for (let account of props.accounts) {
+			for (const resource of account.resources) {
+				if (!accountOptions.some(el => el.value === resource.type)) accountOptions.push({ value: resource.type, label: resource.type })
+			}
+		}
+		setResourceList(accountOptions);
+	}, []);
 
 	useEffect(() => {
 		setOptions(formatPickerData(props.accounts))
@@ -121,6 +134,16 @@ const BudgetTab = (props) => {
 						/>
 						<Button block onClick={() => addTransfer(false)}>Transfer {type}</Button>
 						<Button block onClick={() => addTransfer(true)}>schedule {type} Transfer</Button>
+						{props.control && <Button color='blue' block onClick={() => typeof newResource === 'string' ? setNewResource(false) : setNewResource('')}>Create New Resource</Button>}
+						{newResource !== false && 
+						<InputGroup >
+						<Input placeholder="Name of Resource" style={{ width: '40%' }} value={newResource} onChange={(value)=> setNewResource(value)} ></Input>
+							<Button appearance='primary' color='green' onClick={ () => { socket.emit('request', { route: 'transaction', action: 'init', data: { account: props.account._id, resource: newResource }}); setNewResource(false)}}>
+								<Icon  icon="plus" />	
+							</Button>			
+					</InputGroup>
+						
+						}
 						<AccountsTable control={props.control} accounts={ props.accounts } resource={ type } />
 					</Sidebar>
 				</Container>

@@ -77,9 +77,11 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 		}, 1000);
 	}, [paused, gameClock, deadline]);
 
-	const rawr = account !== undefined ? account.resources.find(el => el.type === 'Megabucks') : undefined
 
-	const megabucks = account !== undefined ? rawr.balance : 0
+	const rawr = account !== undefined ? account.resources.find(el => el.type === 'Megabucks') : undefined
+	console.log(rawr)
+	
+	const megabucks = rawr ? rawr.balance : 0
 	const pr = !team ? 'PR Level: Unknown |' : `PR Level: ${team.prLevel} | `;
 	const megabuckDisplay = ` $M${megabucks} | `
 	const brandLink = !team ? '/' : '/home';

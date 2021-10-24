@@ -86,7 +86,7 @@ AccountSchema.methods.initResource = async function (resource) {
 		let response;
 		accountDebugging(`Attempting to init ${resource} into ${this.name}.`);
 
-		let index = this.resources.findIndex(el => el.type = resource);
+		let index = this.resources.findIndex(el => el.type === resource);
 		if (index < 0) {
 			console.log(`Account doesn't currently have a balance of ${resource}`);
 			this.resources.push({ type: resource, balance: 0 });
