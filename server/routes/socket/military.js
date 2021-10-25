@@ -38,7 +38,7 @@ module.exports = async function (client, req) {
 		case('action'):
 			for (const _id of req.data.units) {
 				let unit = await Military.findById(_id);
-				switch (req.data.type) {
+				switch (req.type) {
 				case('mobilize'):
 					// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
 					// TODO - Call mobilize method
@@ -62,13 +62,13 @@ module.exports = async function (client, req) {
 				}
 			}
 			break;
-		case('control'):
+		case('reset'):
 			// pass control method type for a unit
 			try {
 				let unit = await Military.findById(req.data.id);
 				await unit.populateMe();
-				unit = await unit.control(req.data.type);
-				client.emit('alert', { type: 'success', message: `${unit.name} control reset ${req.data.type}` });
+				unit = await unit.reset(req.data.type);
+				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });
 			}
 			catch (error) {
 				logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });

@@ -17,13 +17,11 @@ const TransferForm = (props) => {
 	const [aircraft, setAircraft] = React.useState([]); 
 
 	useEffect(() => {
-		console.log(props.unit)
 		filterUnits();
-		setUnits([props.unit])
-		}, [])
+		}, [selected])
 
-	const filterUnits = (value) => {
-		console.log('Filtering Units...')
+	const filterUnits = () => {
+		console.log('Filtering Units...');
 		if (selected) { // console.log('Filtering Units...')
 			let transferFleets = [];
 			let transferCorps = [];
@@ -36,8 +34,8 @@ const TransferForm = (props) => {
 					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 					_id: unit._id
 				}
-				if (unit.type === 'Fleet' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferFleets.push(unitData);
-				if (unit.type === 'Corps' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferCorps.push(unitData);
+				if (unit.type === 'Fleet' && !unit.status.some(el => el === 'mobilized') && unit.actions + unit.missions > 0) transferFleets.push(unitData);
+				if (unit.type === 'Corps' && !unit.status.some(el => el === 'mobilized') && unit.actions + unit.missions > 0) transferCorps.push(unitData);
 			}
 
 			for (let unit of props.aircrafts) {
@@ -57,14 +55,32 @@ const TransferForm = (props) => {
 			if (props.unit) {
 				const combined = [ ...transferFleets, ...transferCorps, ...transferAir ]
 				const found = combined.find(el => el._id === props.unit._id);
-				setUnits([found._id]);
+				found ? setUnits([found._id]) : console.log(found);
 			}
 		}
 	}
 
 	const handleSubmit = async () => {
+		let milArray = [];
+		let airArray = [];
+		for (const el of units) {
+			const combined = [ ...transferFleets, ...transferCorps, ];
+			let mil = combined.find(unit => unit._id === el);
+			let air = aircraft.find(unit => unit._id === el);
+			if (mil) {
+				milArray.push(el)
+			}
+			else if (air) {
+				airArray.push(el)
+			}
+			else {
+				Alert.error(`${el} was not found`)
+			}
+		}
+
 		try{
-			socket.emit('request', { route: 'military', action: 'transfer', data: { destination: selected._id, units }});
+			socket.emit('request', { route: 'military', action: 'action', type: 'transfer', data: { destination: selected._id, units: milArray }});
+			socket.emit('request', { route: 'aircraft', action: 'transfer', data: { destination: selected._id, units: airArray }});
 			props.closeTransfer()
 		}
 		catch (err) {
@@ -72,10 +88,8 @@ const TransferForm = (props) => {
 		}
 	}
 
-	const handleFacility = (facility) => {
-		console.log(facility)
+	const handleFacility = async (facility) => {
 		setSelected(facility);
-		filterUnits()
 	}
 
 	return ( 
@@ -91,7 +105,7 @@ const TransferForm = (props) => {
 					{<Panel bodyFill >
 						<List hover autoScroll bordered style={{scrollbarWidth: 'none', textAlign: 'center', cursor: 'pointer' }}>
 							{props.facilities.map((facility, index) => (
-								<List.Item key={index} index={index} onClick={() => handleFacility(facility)}>
+								<List.Item style={selected && selected._id === facility._id ? { backgroundColor: '#4caf50', color: 'white'} : {}} key={index} index={index} onClick={() => handleFacility(facility)}>
 									{facility.name} | {facility.site.name}
 								</List.Item>
 							))}

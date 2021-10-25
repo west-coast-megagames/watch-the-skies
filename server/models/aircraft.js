@@ -134,7 +134,7 @@ AircraftSchema.methods.launch = async function (mission) {
 		}
 
 		const aircraft = await this.save();
-		await aircraft.populateAircraft();
+		await aircraft.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
@@ -172,7 +172,7 @@ AircraftSchema.methods.recall = async function () {
 		await clearArrayValue(this.status, 'action');
 
 		const aircraft = await this.save();
-		await aircraft.populateAircraft();
+		await aircraft.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
@@ -244,14 +244,14 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	}
 	this.upgrades = [];
 	const aircraft = await this.save();
-	await aircraft.populateAircraft();
+	await aircraft.populateMe();
 
 	// Notify/Update team via socket-event
 	nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 	return aircraft;
 };
 
-AircraftSchema.methods.populateAircraft = function () {
+AircraftSchema.methods.populateMe = function () {
 	return this
 		.populate('team', 'name shortName code')
 		.populate('zone', 'name')

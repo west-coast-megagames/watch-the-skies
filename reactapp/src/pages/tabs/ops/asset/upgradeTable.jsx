@@ -72,6 +72,7 @@ return (
 				isTree
 				defaultExpandAllRows
 				rowKey="id"
+				cellBordered
 				autoHeight
 				data={data}
 				renderTreeToggle={(icon, rowData) => {

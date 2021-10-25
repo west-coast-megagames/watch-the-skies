@@ -15,7 +15,6 @@ const MilitaryTable = (props) => {
 	// TODO: Update visuals of table so they look nice-er
 	const [displayLength, setDisplayLength] = React.useState(15);
 	const [page, setPage] = React.useState(1);
-	const [show, setShow] = React.useState(false);
 
 	const getLocation = (aircraft) => {
       let location = aircraft.site !== undefined ? aircraft.site.name !== undefined ? aircraft.site.name : 'Unknown' : 'The Abyss'
@@ -41,9 +40,7 @@ const MilitaryTable = (props) => {
     <React.Fragment>
 			{!props.control && <div>
 			<p style={slimText}>You currently have {props.military.length} units</p>
-				<Button color={'green'} onClick={() => setShow(true)}>
-					<h5>Mobilize Units</h5>
-				</Button>
+
 			</div>}
       
 			
@@ -166,7 +163,6 @@ const MilitaryTable = (props) => {
 					onChangeLength={handleChangeLength}
         />
 
-				<MobilizeForm hide={() => setShow(false)} show={show}/>
     </React.Fragment>
   );
     

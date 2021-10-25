@@ -8,7 +8,7 @@ const StatusBar = (props) => {
 	const [displayLength, setDisplayLength] = React.useState(10);
 
 	const handleControl = (type) => { 
-		socket.emit('request', { route: 'military', action: 'control', data: { id: props.unit._id, type  }});
+		socket.emit('request', { route: 'military', action: 'reset', data: { id: props.unit._id, type  }});
 	};
 
 	let { status, name, actions, missions, model } = props.unit;

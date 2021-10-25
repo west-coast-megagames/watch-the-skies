@@ -49,7 +49,7 @@ const MilitarySchema = new Schema({
 // METHOD - Control
 // IN - string of what is getting reset | OUT: VOID
 // PROCESS: reset aspect based on type, Control only
-MilitarySchema.methods.control = async function (type) {
+MilitarySchema.methods.reset = async function (type) {
 	let unit = this;
 	try {
 		switch(type) {
@@ -129,7 +129,7 @@ MilitarySchema.methods.deploy = async function (site) {
 
 		this.site = target._id;
 		this.country = target.country;
-		this.zone = target.zone;w
+		this.zone = target.zone;
 		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 	
 		this.location.lat = lat;

@@ -31,6 +31,11 @@ const AssetTab = (props) => {
 			return({cursor: 'pointer'});
 	}
 
+	useEffect(() => {
+			setSelected(props.selected);
+			console.log('hello')
+			console.log(props.selected)
+	}, [props.selected]);
 
 	useEffect(() => {
 		if (props.units && selected) {
@@ -95,10 +100,10 @@ const AssetTab = (props) => {
 	return (
 		<Container style={{padddingRight: '0px', }}>
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
-        { !selected && <h4>Select an Asset</h4> }
+        { !selected && <h4>Select an Asset???</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
 						<MilitaryStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
-						<UpgradeTable unit={selected}/>
+						{/* <UpgradeTable unit={selected}/> */}
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
 				}
@@ -200,7 +205,7 @@ const AssetTab = (props) => {
 						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
-									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
+									<List.Item key={upgrade._id}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
 									</List.Item>
 								))}
@@ -210,7 +215,7 @@ const AssetTab = (props) => {
 							{tags.some(el => el === 'Military') && <List hover autoScroll size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military Units ({props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.units.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((unit, index) => (
-									<List.Item key={index}  index={index} size={'md'} style={listStyle(unit)} onClick={()=> setSelected(unit)} >
+									<List.Item key={unit._id}  index={index} size={'md'} style={listStyle(unit)} onClick={()=> setSelected(unit)} >
 										{unit.name}
 									</List.Item>
 								))}
@@ -219,7 +224,7 @@ const AssetTab = (props) => {
 							{tags.some(el => el === 'Facilities') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((facility, index) => (
-									<List.Item key={index} index={index} size={'md'} style={listStyle(facility)} onClick={()=> setSelected(facility)}>
+									<List.Item key={facility._id} index={index} size={'md'} style={listStyle(facility)} onClick={()=> setSelected(facility)}>
 										{facility.name}
 									</List.Item>
 								))}
@@ -228,7 +233,7 @@ const AssetTab = (props) => {
 							{tags.some(el => el === 'Upgrades') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Upgrades ({props.upgrades.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.upgrades.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
-									<List.Item key={index}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
+									<List.Item key={upgrade._id}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
 									</List.Item>
 								))}

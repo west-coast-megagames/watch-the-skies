@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Button, Divider, Panel, FlexboxGrid } from 'rsuite';
+import { Nav, Container, Header, Content, Button, Divider, Panel, FlexboxGrid, ButtonToolbar, ButtonGroup } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +13,8 @@ import MilitaryTable from './tabs/ops/asset/MilitaryTable';
 import BalanceHeader from '../components/common/BalanceHeader';
 import { getOpsAccount } from '../store/entities/accounts';
 import { getMilitary } from '../store/entities/military';
+import MobilizeForm from './tabs/ops/asset/MobilizeForm';
+import TransferForm from '../components/common/TransferForm';
 
 /*
 TODO CHECKLIST
@@ -29,6 +31,7 @@ TODO CHECKLIST
 const Operations  = (props) => {
 	const [tab, setTab] = React.useState('dashboard');
 	const [selected, setSelected] = React.useState(undefined);
+	const [show, setShow] = React.useState(false);
 	const url = props.match.path;
 
 	const handleTransfer = (thing) => {
@@ -61,7 +64,29 @@ const Operations  = (props) => {
 			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
 				<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
-						<FlexboxGrid>
+						<FlexboxGrid justify="center">
+							<FlexboxGrid.Item justify="center" style={{ 	textAlign: 'center'}} colspan={24} >
+								<Panel bodyFill bordered style={{ border: "2px solid black", borderRadius: '0px',	textAlign: 'center'}}>
+									<ButtonToolbar style={{ margin: '10px' }}>
+										<ButtonGroup>
+											<Button size='md' color={'green'} onClick={() => setShow('transfer')}>
+												Transfer Units
+											</Button>		
+											<Button size='md' color={'orange'} style={{ color: 'black'}} onClick={() => setShow('mobilize')}>
+												Mobilize Military
+											</Button>			
+											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>				
+											<TransferForm 
+												units={props.military}
+												aircrafts={props.aircraft}
+												show={show === 'transfer'} 
+												closeTransfer={() => setShow(false)}
+												unit={props.unit} />		
+										</ButtonGroup>
+									</ButtonToolbar>
+								</Panel>
+
+							</FlexboxGrid.Item>
 							<FlexboxGrid.Item colspan={13} >
 								<Panel bodyFill bordered style={cardStyle}>
 									<h5>Aircraft Operations</h5>

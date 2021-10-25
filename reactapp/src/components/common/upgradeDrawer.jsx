@@ -83,7 +83,7 @@ class UpgradeDrawer extends Component {
 						{!this.state.selected &&  <Panel bodyFill >
 							<List hover autoScroll bordered style={{scrollbarWidth: 'none', textAlign: 'center', cursor: 'pointer' }}>
 								{this.state.eligibleUps.map((upgrade, index) => (
-									<List.Item key={index} index={index} onClick={() => this.setState({ selected: upgrade })}>
+									<List.Item key={upgrade._id} index={index} onClick={() => this.setState({ selected: upgrade })}>
 										{upgrade.name}
 									</List.Item>
 								))}

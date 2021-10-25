@@ -14,9 +14,8 @@ const FacilityTable = (props) => {
 	const [page, setPage] = React.useState(1);
 
 	const getLocation = (aircraft) => {
-		console.log(aircraft)
-      let location = aircraft.site !== undefined ? aircraft.site.name !== undefined ? aircraft.site.name : 'Unknown' : 'The Abyss'
-      return location;
+    let location = aircraft.site !== undefined ? aircraft.site.name !== undefined ? aircraft.site.name : 'Unknown' : 'The Abyss'
+    return location;
   }
 
 	const getData = () => {
