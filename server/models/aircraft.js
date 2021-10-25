@@ -217,8 +217,8 @@ MilitarySchema.methods.transfer = async function (facility) {
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
-
-		return ;
+		const message = `${this.name} transferred to ${this.site.name}.`
+		return message;
 	}
 	catch (err) {
 		logger.error(`${err.message}`, { meta: err.stack });
