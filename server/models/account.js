@@ -35,7 +35,7 @@ const AccountSchema = new Schema({
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
 	queue: [TransferSchema],
-	tags: [{ type: String, enum: ['']} ]
+	tags: [{ type: String, enum: [''] } ]
 });
 
 // METHOD - deposit
@@ -70,6 +70,42 @@ AccountSchema.methods.deposit = async function (transaction) {
 		nexusEvent.emit('request', 'update', [ account ]); //
 		return account;
 
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
+};
+
+// METHOD - initResource
+// IN - Resource <<String>>
+// OUT: Modified Accounts Object
+// PROCESS: This method of the Account Model takes resource and gives an initial value for it if it doesn't exist.
+AccountSchema.methods.initResource = async function (resource) {
+	try {
+		let response;
+		accountDebugging(`Attempting to init ${resource} into ${this.name}.`);
+
+		let index = this.resources.findIndex(el => el.type === resource);
+		if (index < 0) {
+			console.log(`Account doesn't currently have a balance of ${resource}`);
+			this.resources.push({ type: resource, balance: 0 });
+			index = this.resources.findIndex(el => el.type = resource);
+
+			response = `${resource} ledger created for ${this.owner}'s ${this.name} account.`; // Report the descovery of a new resource type
+			this.markModified('resources');
+		}
+		else {
+			response = `${resource} ledger already exists in ${this.owner}'s ${this.name} account.`; // Report the descovery of a new resource type
+		}
+
+		let account = await this.save();
+		account = await account.populateMe();
+		console.log(response);
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ account ]); //
+		return response;
 	}
 	catch (err) {
 		console.log(err); // TODO: Add error handling
@@ -150,7 +186,6 @@ AccountSchema.methods.spend = async function (transaction) {
 	catch (err) {
 		console.log(err); // TODO: Add error handling
 		throw err;
-		return err;
 	}
 };
 
@@ -209,16 +244,18 @@ AccountSchema.methods.resolveQueue = async function () {
 // PROCESS: Transfers resources from the initiator to the counterparty
 AccountSchema.methods.transfer = async function (transaction) {
 	const { to } = transaction; // {} resource, to, amount, note }
+	let response;
 
 	try {
 		await this.withdrawal(transaction);
 
 		const counterparty = await Account.findOne({ _id: to });
+		await counterparty.populateMe();
 		await counterparty.deposit(transaction);
 
-		accountDebugging(`${this.owner}s transfer completed!`);
+		response = `${this.owner}s transfer from ${this.name} to ${counterparty.team.shortName} completed!`;
 
-		return true;
+		return response;
 	}
 	catch (err) {
 		console.log(err); // TODO: Add error handling
@@ -276,7 +313,7 @@ AccountSchema.methods.validateAccount = async function () {
 
 AccountSchema.methods.populateMe = function () {
 	return this
-		.populate('team', 'name shortName')
+		.populate('team', 'name shortName code')
 		.execPopulate();
 };
 

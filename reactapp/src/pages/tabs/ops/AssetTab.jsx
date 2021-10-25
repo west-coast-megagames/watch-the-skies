@@ -97,7 +97,7 @@ const AssetTab = (props) => {
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Asset</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
-						<MilitaryStats control={props.control} unit={selected}/>
+						<MilitaryStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
 						<UpgradeTable unit={selected}/>
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
@@ -106,7 +106,7 @@ const AssetTab = (props) => {
 					<FacilityStats  control={props.control} facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<AircraftStats control={props.control}  unit={selected}/>
+					<AircraftStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>

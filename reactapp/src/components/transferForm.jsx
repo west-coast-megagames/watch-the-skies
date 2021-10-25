@@ -12,7 +12,7 @@ const formatPickerData = (accounts, type) => {
 		let wallet = account.resources.find(el => el.type === type);
 		let option = {
 			_id: account._id,
-			name: `${account.name} | Balance: ${wallet ? wallet.balance : 'N/A'}`
+			name: `${account.team.code} | ${account.name} | Balance: ${wallet ? wallet.balance : 'N/A'}`
 		}
 			data.push(option);
 	}

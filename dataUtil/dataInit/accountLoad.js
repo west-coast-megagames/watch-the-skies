@@ -62,13 +62,14 @@ async function initLoad(doLoad) {
 	for await (const team of data) {
 		const found_team_id = team._id;
 		const found_owner = team.shortName;
+		const found_owner_type = team.type;
 
 		let recReadCount = 0;
 		const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
 		for (let i = 0; i < accounts.length; ++i) {
 			++recReadCount;
-			await loadAccount(found_team_id, found_owner, accounts[i], recCounts);
+			await loadAccount(found_team_id, found_owner, found_owner_type, accounts[i], recCounts);
 		}
 		totRecReadCount += recReadCount;
 		totRecCounts.loadCount += recCounts.loadCount;
@@ -84,7 +85,7 @@ async function initLoad(doLoad) {
 	);
 }
 
-async function loadAccount(t_id, tName, aData, rCounts) {
+async function loadAccount(t_id, tName, tType, aData, rCounts) {
 	let loadName = '';
 
 	try {
@@ -106,7 +107,11 @@ async function loadAccount(t_id, tName, aData, rCounts) {
 				tags: []
 			};
 			const resource = 'Megabucks';
-			newAccount.resources.push({ type: resource, balance: aData.balance });
+			let postBal = aData.balance;
+			if (tType === 'Control' && newAccount.code === 'TRE' ) {
+				postBal = 999999999999999;
+			}
+			newAccount.resources.push({ type: resource, balance: postBal });
 			try {
 				await axios.post(`${gameServer}api/accounts`, newAccount);
 				++rCounts.loadCount;

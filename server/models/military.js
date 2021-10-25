@@ -202,6 +202,7 @@ MilitarySchema.methods.mobilize = async function (forced = false) {
 		this.location.lat = lat; // Updates LAT
 		this.location.lng = lng; // Updates LNG
 		const unit = await this.save(); // Saves the UNIT into a new variable
+		await unit.populateMe();
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
 		return unit;
@@ -240,9 +241,10 @@ MilitarySchema.methods.transfer = async function (facility) {
 		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
+		await unit.populateMe();
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
-		return ;
+		return unit;
 	}
 	catch (err) {
 		logger.error(`${err.message}`, { meta: err.stack });
@@ -388,6 +390,7 @@ MilitarySchema.methods.endTurn = async function () {
 
 MilitarySchema.methods.populateMe = async function () {
 	return this.populate('team', 'name shortName code')
+		.populate('team', 'name shortName code')
 		.populate('zone', 'name')
 		.populate('organization', 'name')
 		.populate('site', 'name geoDecimal')

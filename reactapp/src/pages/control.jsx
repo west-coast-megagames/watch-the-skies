@@ -10,6 +10,7 @@ import MilitaryControl from './tabs/control/militaryControl';
 import UnitControl from './tabs/control/UnitControl';
 import LoginLink from '../components/common/loginLink';
 import Registration from './tabs/control/registration';
+import BudgetTab from './tabs/gov/BudgetTab';
 
 const Control = (props) => {
 	const [tab, setTab] = React.useState('feed');
@@ -31,6 +32,24 @@ const Control = (props) => {
 		try {
 			const response = await axios.patch(`${gameServer}game/tempMil/resolve`)
 			props.alert({type: 'success', title: 'Ran the Military', body: response.data })
+		} catch (err) {
+			props.alert({type: 'error', title: 'Uh oh', body: `${err.response.data} - ${err.message}` })
+		};
+	}
+
+	const recallMilitary = async () => {
+		try {
+			const response = await axios.patch(`${gameServer}game/tempMil/recall`)
+			props.alert({type: 'success', title: 'Ran the Military', body: response.data })
+		} catch (err) {
+			props.alert({type: 'error', title: 'Uh oh', body: `${err.response.data} - ${err.message}` })
+		};
+	}
+
+	const resetSites = async () => {
+		try {
+			const response = await axios.patch(`${gameServer}game/tempMil/resetsites`)
+			props.alert({type: 'success', title: 'Reset the Sites', body: response.data })
 		} catch (err) {
 			props.alert({type: 'error', title: 'Uh oh', body: `${err.response.data} - ${err.message}` })
 		};
@@ -200,6 +219,12 @@ const Control = (props) => {
 								<ButtonGroup>
 									<Button color="violet" size="sm" onClick={ () => runMilitary() }>
 										Run Military
+									</Button>			
+									<Button color="violet" size="sm" onClick={ () => recallMilitary() }>
+										Recall Military
+									</Button>							
+									<Button color="orange" size="sm" onClick={ () => resetSites() }>
+										Reset Sites
 									</Button>
 								</ButtonGroup>
 							</div>
@@ -246,7 +271,7 @@ const Control = (props) => {
 					)}/>
 					
 					<Route path={`${url}/national`}  render={() => (
-						<TransactionList />
+						<BudgetTab control={true}  {...props} />
 					)}/>
 					<Route path={`${url}/military`}  render={() => (
 						<MilitaryControl  handleTransfer={handleTransfer} {...props}/>
