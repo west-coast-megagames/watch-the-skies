@@ -119,10 +119,10 @@ const TransferForm = (props) => {
 							groupBy='checkZone'
 							value={ units }
 						/>}
-					{selected && <React.Fragment>
-					 <h4>{selected.name}</h4>
-					 <b>Transfer {props.unit.name} to Facility {selected.name}?</b>
-				 </React.Fragment>}
+					{selected && <div style={{ textAlign: 'center' }}>
+					 <h4>Transfer {units.length} units to {selected.name}</h4>
+					 
+				 </div>}
 				</Drawer.Body>
 				<Drawer.Footer>
 					<ButtonGroup>
