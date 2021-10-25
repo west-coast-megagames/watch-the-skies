@@ -10,14 +10,13 @@ module.exports = async function (client, req) {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		let message;
 		switch(req.action) {
+		// MISSION <<socket action>> for the MILITARY <<Socket Route>>
 		case('mission'):
 			// Deploy action expects UNITS & ASSSIGNMENT
 			for (const _id of req.data.units) {
-				try {
 					let unit = await Military.findById(_id);
 					await unit.populateMe();
 					unit = await unit.mission(req.data.assignment);
-
 
 					// 	socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
 					if (req.data.assignment.type === 'Invade') {
@@ -28,40 +27,48 @@ module.exports = async function (client, req) {
 					}
 
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
-				}
-				catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-				}
 			}
 			break;
+		// ACTION <<socket action>> for the MILITARY <<Socket Route>>
 		case('action'):
 			for (const _id of req.data.units) {
 				let unit = await Military.findById(_id);
+				await unit.populateMe();
+				// Switch for the Military Actions, triggered off of the TYPE of action being done
 				switch (req.type) {
-				case('mobilize'):
-					// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
-					// TODO - Call mobilize method
-					await unit.populateMe();
-					unit = await unit.mobilize();
-					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
+				case('equip'): // Equip Action Trigger
+					unit = await unit.equip(req.data.upgrades)
+					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
-				case('transfer'):
-					await unit.populateMe();
+				case('recon'): // Recon Action Trigger
+					unit = await unit.recon(req.data.target);
+					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
+					break;
+				case('rapiar'): // Repair Action Trigger
+					unit = await unit.repair(req.data.upgrades);
+					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });
+					break;
+				case('transfer'): // Transfer Action Trigger
 					unit = await unit.transfer(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
 					break;
-				case('deploy'):
-					await unit.populateMe();
+				case('mobilize'): // Mobilize Action Trigger
+					// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
+					// TODO - Call mobilize method
+					unit = await unit.mobilize();
+					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
+					break;
+				case('deploy'): // Deploy Action Trigger - THIS IS NO LONGER AN ACTION!!!
 					unit = await unit.deploy(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} deployed to ${unit.site.name}.` });
 					break;
-				default:
+				default: // ERROR - No ACTION of this TYPE in the MILITARY <<socket route>>
 					message = `No ${req.type} in the '${req.action}' action the ${req.route} route.`;
 					throw new Error(message);
-				}
 			}
 			break;
+		}
+		// RESET <<Socket Action>> for the MILITARY <<Socket Route>>
 		case('reset'):
 			// pass control method type for a unit
 			try {
