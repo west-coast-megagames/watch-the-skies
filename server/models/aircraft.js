@@ -152,7 +152,6 @@ AircraftSchema.methods.launch = async function (mission) {
 	}
 };
 
-
 // Recall method - Returns the craft to origin
 AircraftSchema.methods.recall = async function () {
 	logger.info(`Recalling ${this.name} to base...`);
@@ -188,6 +187,45 @@ AircraftSchema.methods.recall = async function () {
 		nexusError(`${err.message}`, 500);
 	}
 };
+
+// METHOD - Transfer
+// IN: Target Facility | OUT: VOID
+// PROCESS: Transfers aircraft to a new facility
+MilitarySchema.methods.transfer = async function (facility) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+
+	// Mechanics: Re-bases a military unit to a friendly facility around the world and sets the destination as the new home base.
+	try {
+		this.origin = facility; // Changes origin to target SITE
+		const home = await Facility.findById(facility)
+			.populate('site'); // Finds the new home site
+
+		logger.info(`Transferring ${this.name} to ${home.name}...`);
+
+		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
+		const { lat, lng } = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
+		this.location.lat = lat; // Updates LAT
+		this.location.lng = lng; // Updates LNG
+		this.site = home.site; // Updates current site
+		this.organization = home.site.organization; // Updates the current organization
+		this.zone = home.site.zone; // Updates current site
+	
+		this.markModified('status'); // Marks the STATUS array as modified so it will save
+
+		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+
+		return ;
+	}
+	catch (err) {
+		logger.error(`${err.message}`, { meta: err.stack });
+		throw err;
+	}
+};
+
 
 // stripUpgrades method - Removes all upgrades from a craft
 AircraftSchema.methods.stripUpgrades = async function () {
