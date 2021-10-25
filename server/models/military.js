@@ -277,7 +277,6 @@ MilitarySchema.methods.recon = async function (site) {
 		for (let i; i < this.stats.recon; i++) {
 			console.log('Attempting to generate INTEL')
 		}
-
 	}
 	catch (err) {
 		throw err;
