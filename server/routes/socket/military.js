@@ -1,6 +1,6 @@
-const nexusEvent = require('../../middleware/events/events');
+// const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const masterClock = require('../../wts/gameClock/gameClock');
+// const masterClock = require('../../wts/gameClock/gameClock');
 
 const { Military } = require('../../models/military');
 const { Site } = require('../../models/site');
@@ -28,52 +28,37 @@ module.exports = async function (client, req) {
 					}
 
 					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
-				} catch (error) {
+				}
+				catch (error) {
 					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
 					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 				}
 			}
 			break;
-		case('mobilize'):
-			// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
+		case('action'):
 			for (const _id of req.data.units) {
-				try {
-					let unit = await Military.findById(_id);
+				let unit = await Military.findById(_id);
+				switch (req.data.type) {
+				case('mobilize'):
+					// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
 					// TODO - Call mobilize method
 					await unit.populateMe();
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
-				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-				}
-			}
-			break;
-		case('deploy'):
-			// Deploy action expects UNITS & DESTINATION
-			for (const _id of req.data.units) {
-				try {
-					let unit = await Military.findById(_id);
-					await unit.populateMe();
-					unit = await unit.deploy(req.data.destination);
-					client.emit('alert', { type: 'success', message: `${unit.name} deployed to ${unit.site.name}.` });
-				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-				}
-			}
-			break;
-		case('transfer'):
-			// Deploy action expects UNITS & DESTINATION
-			for (const _id of req.data.units) {
-				try {
-					let unit = await Military.findById(_id);
+					break;
+				case('transfer'):
 					await unit.populateMe();
 					unit = await unit.transfer(req.data.destination);
 					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
-				} catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+					break;
+				case('deploy'):
+					await unit.populateMe();
+					unit = await unit.deploy(req.data.destination);
+					client.emit('alert', { type: 'success', message: `${unit.name} deployed to ${unit.site.name}.` });
+					break;
+				default:
+					message = `No ${req.type} in the '${req.action}' action the ${req.route} route.`;
+					throw new Error(message);
 				}
 			}
 			break;
@@ -94,7 +79,8 @@ module.exports = async function (client, req) {
 			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 		logger.error(`SOCKET-${req.route}: ${error.message}`, { meta: error.stack });
 	}
