@@ -35,7 +35,7 @@ const AircraftSchema = new Schema({
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	mission: { type: String, default: 'Docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
-	status: [ {type: String, enum: ['damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action']} ],
+	status: [ { type: String, enum: ['damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action'] } ],
 	actions: { type: Number, default: 1 },
 	missions: { type: Number, default: 1 },
 	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
@@ -77,7 +77,7 @@ const AircraftSchema = new Schema({
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 }
 	},
-	tags: [ {type: String, enum: ['']} ],
+	tags: [ { type: String, enum: [''] } ],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
@@ -123,16 +123,14 @@ AircraftSchema.methods.launch = async function (mission) {
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
 		// TODO John Review how to update for resources
-		let resource = 'Megabucks';
-		let index = account.resources.findIndex(el => el.type === resource);
+		const resource = 'Megabucks';
+		const index = account.resources.findIndex(el => el.type === resource);
 		if (index < 0) {
 			nexusError('Balance Not Found to launch', 400);
-		} 
+		}
+		else if (account.resources[index].balance < 1) {nexusError('Insefficient Funds to launch', 400);}
 		else {
-			if (account.resources[index].balance < 1) nexusError('Insefficient Funds to launch', 400);
-			else {
-				await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
-			}
+			await account.withdrawal({ amount: 1, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
 		}
 
 		const aircraft = await this.save();
@@ -163,7 +161,7 @@ AircraftSchema.methods.recall = async function () {
 
 		this.mission = 'Docked';
 
-    await addArrayValue(this.status, 'ready');
+		await addArrayValue(this.status, 'ready');
 		await clearArrayValue(this.status, 'deployed');
 		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
@@ -191,7 +189,7 @@ AircraftSchema.methods.recall = async function () {
 // METHOD - Transfer
 // IN: Target Facility | OUT: VOID
 // PROCESS: Transfers aircraft to a new facility
-MilitarySchema.methods.transfer = async function (facility) {
+AircraftSchema.methods.transfer = async function (facility) {
 	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
 
 	// Mechanics: Re-bases a military unit to a friendly facility around the world and sets the destination as the new home base.
@@ -209,7 +207,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 		this.site = home.site; // Updates current site
 		this.organization = home.site.organization; // Updates the current organization
 		this.zone = home.site.zone; // Updates current site
-	
+
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
 
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
@@ -217,7 +215,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
-		const message = `${this.name} transferred to ${this.site.name}.`
+		const message = `${this.name} transferred to ${this.site.name}.`;
 		return message;
 	}
 	catch (err) {
