@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
-import { Alert, Panel, Container, Header, Content, Sidebar, ButtonToolbar, Icon, SelectPicker, Button } from 'rsuite';
+import React, { useEffect } from 'react';
+import { Alert, Panel, Container, SelectPicker,  } from 'rsuite';
 import { connect } from 'react-redux'; // Redux store provider
-import InvasionModal from '../../../components/InvasionForm';
-import { gameServer } from '../../../config';
 import { showDeploy } from '../../../store/entities/infoPanels';
-import axios from 'axios';
 import MilitaryTable from '../ops/asset/MilitaryTable';
 
 const MilitaryControl = (props) => {
-	const [units, setUnit] = React.useState(props.military );
+	const [units, setUnit] = React.useState(props.military);
+
+	useEffect(() => {
+		if (props.military) {
+			setUnit(props.military)
+		}
+	}, [props.military]);
+
 
 	const handleThing = (value) => {
 		const site = props.sites.find(el => el._id === value);
