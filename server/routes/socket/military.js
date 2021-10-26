@@ -72,7 +72,9 @@ module.exports = async function (client, req) {
 		case('reset'):
 			// pass control method type for a unit
 			for (const _id of req.data.units) {
+				console.log(_id)
 				let unit = await Military.findById(_id);
+				console.log(unit)
 				await unit.populateMe();
 				unit = await unit.reset(req.data.type);
 				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });

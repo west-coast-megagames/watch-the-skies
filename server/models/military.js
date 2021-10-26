@@ -337,7 +337,7 @@ MilitarySchema.methods.endTurn = async function () {
 // METHOD - reset
 // IN - string of what is getting reset | OUT: VOID
 // PROCESS: reset aspect based on type, Control only
-MilitarySchema.methods.control = async function (type) {
+MilitarySchema.methods.reset = async function (type) {
 	let unit = this;
 	try {
 		switch(type) {
