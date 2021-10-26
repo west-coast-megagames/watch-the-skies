@@ -14,19 +14,19 @@ module.exports = async function (client, req) {
 		case('mission'):
 			// Deploy action expects UNITS & ASSSIGNMENT
 			for (const _id of req.data.units) {
-					let unit = await Military.findById(_id);
-					await unit.populateMe();
-					unit = await unit.mission(req.data.assignment);
+				let unit = await Military.findById(_id);
+				await unit.populateMe();
+				unit = await unit.mission(req.data.assignment);
 
-					// 	socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
-					if (req.data.assignment.type === 'Invade') {
-						console.log('Invade Time!');
-						const target = await Site.findById(req.data.assignment.target).populate('country').populate('zone'); // Finds deployment target in the DB
-						target.status.push('warzone');
-						await target.save();
-					}
+				// 	socket.emit('request', { route: 'military', action: 'mission', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
+				if (req.data.assignment.type === 'Invade') {
+					console.log('Invade Time!');
+					const target = await Site.findById(req.data.assignment.target).populate('country').populate('zone'); // Finds deployment target in the DB
+					target.status.push('warzone');
+					await target.save();
+				}
 
-					client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
+				client.emit('alert', { type: 'success', message: `${unit.name} participating in ${req.data.assignment.type}.` });
 			}
 			break;
 		// ACTION <<socket action>> for the MILITARY <<Socket Route>>
@@ -37,7 +37,7 @@ module.exports = async function (client, req) {
 				// Switch for the Military Actions, triggered off of the TYPE of action being done
 				switch (req.type) {
 				case('equip'): // Equip Action Trigger
-					unit = await unit.equip(req.data.upgrades)
+					unit = await unit.equip(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
 				case('recon'): // Recon Action Trigger
@@ -65,21 +65,17 @@ module.exports = async function (client, req) {
 				default: // ERROR - No ACTION of this TYPE in the MILITARY <<socket route>>
 					message = `No ${req.type} in the '${req.action}' action the ${req.route} route.`;
 					throw new Error(message);
+				}
 			}
 			break;
-		}
 		// RESET <<Socket Action>> for the MILITARY <<Socket Route>>
 		case('reset'):
 			// pass control method type for a unit
-			try {
-				let unit = await Military.findById(req.data.id);
+			for (const _id of req.data.units) {
+				let unit = await Military.findById(_id);
 				await unit.populateMe();
 				unit = await unit.reset(req.data.type);
 				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });
-			}
-			catch (error) {
-				logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-				client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 			}
 			break;
 		default:
