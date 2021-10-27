@@ -44,6 +44,10 @@ module.exports = async function (client, req) {
 					unit = await unit.recon(req.data.target);
 					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
 					break;
+				case('recall'): // Recon Action Trigger
+					unit = await unit.recall();
+					client.emit('alert', { type: 'success', message: `${unit.name} recalled.` });
+					break;
 				case('rapiar'): // Repair Action Trigger
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });

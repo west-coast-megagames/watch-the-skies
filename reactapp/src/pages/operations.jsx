@@ -15,6 +15,7 @@ import { getOpsAccount } from '../store/entities/accounts';
 import { getMilitary } from '../store/entities/military';
 import MobilizeForm from './tabs/ops/asset/MobilizeForm';
 import TransferForm from '../components/common/TransferForm';
+import RecallForm from './tabs/ops/asset/RecallForm';
 
 /*
 TODO CHECKLIST
@@ -75,7 +76,11 @@ const Operations  = (props) => {
 											<Button size='md' color={'orange'} style={{ color: 'black'}} onClick={() => setShow('mobilize')}>
 												Mobilize Military
 											</Button>			
-											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>				
+											<Button size='md' color={'violet'} onClick={() => setShow('recall')}>
+												Recall Military
+											</Button>	
+											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>	
+											<RecallForm hide={() => setShow(false)} show={show === 'recall'}/>			
 											<TransferForm 
 												units={props.military}
 												aircrafts={props.aircraft}

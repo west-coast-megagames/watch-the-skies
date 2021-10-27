@@ -33,8 +33,6 @@ const AssetTab = (props) => {
 
 	useEffect(() => {
 			setSelected(props.selected);
-			console.log('hello')
-			console.log(props.selected)
 	}, [props.selected]);
 
 	useEffect(() => {
