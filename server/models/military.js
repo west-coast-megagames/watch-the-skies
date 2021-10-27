@@ -127,6 +127,7 @@ MilitarySchema.methods.recall = async function (forced = false) {
 
 	// Returns a military unit to their home-base, removing the mobilized status.
 	try {
+		logger.info(`${this.name} is recalling...`);
 		const { origin } = this;
 		const home = await Facility.findById(origin)
 			.populate('site'); // Finds the new home site
@@ -148,7 +149,7 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		logger.info(`${this.name} returned to ${home.name}...`);
 
-		return;
+		return unit;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
