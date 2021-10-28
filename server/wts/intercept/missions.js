@@ -484,11 +484,11 @@ async function clearMissions() {
 	}
 
 	// TODO: this coding logic needs to be verified
-	for (const aircraft of await Aircraft.find( !({ 'status': 'action' }) )) {
+	for (const aircraft of await Aircraft.find({ 'status': '-action' })) {
 		await addArrayValue(aircraft.status, 'action');
 		await aircraft.save();
 	}
-	for (const aircraft of await Aircraft.find( !({ 'status': 'mission' }) )) {
+	for (const aircraft of await Aircraft.find({ 'status': '-mission' })) {
 		await addArrayValue(aircraft.status, 'mission');
 		await aircraft.save();
 	}
