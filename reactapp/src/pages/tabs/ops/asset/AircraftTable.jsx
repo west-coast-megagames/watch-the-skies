@@ -39,7 +39,7 @@ const AircraftTable = (props) => {
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.36}
+					height={document.documentElement.clientHeight * 0.34}
           data={ getData() }
       >
       <Column  flexGrow={2}>
