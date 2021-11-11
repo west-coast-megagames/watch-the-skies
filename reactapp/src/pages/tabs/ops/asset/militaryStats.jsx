@@ -15,7 +15,7 @@ const MilitaryStats = (props) => {
 
 	const repair = async () => {
 		try {
-			socket.emit( 'militarySocket', 'repair', {_id: props.unit._id });
+			socket.emit('request', { route: 'military', action: 'action', type: 'repair', data: { units: [props.unit._id] }});
 		}
 		catch (err) {
 			console.log(err.response.data);
@@ -53,7 +53,7 @@ const MilitaryStats = (props) => {
 									onClick={() =>
 										repair()
 									}
-									disabled={stats.health === stats.healthMax || status.some(el => el === 'repair')}
+									disabled={stats.health === stats.healthMax || (props.unit.actions <= 0 && props.unit.missions <= 0)}
 									icon={<Icon icon="wrench" />}
 								>
 									Repair

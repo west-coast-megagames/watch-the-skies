@@ -36,7 +36,6 @@ const MapPage = (props) => {
 		props.history.push('/');
 		return <LoginLink history={props.history} />
 	}
-
   return (
 		<Container>
 				<FlexboxGrid justify="space-around" align="middle">
