@@ -32,14 +32,14 @@ const FacilityTable = (props) => {
   }
   
   if (props.facilities.length === 0)
-      return <h4>No aircraft currently available.</h4>
+      return <h4>No facilities currently available.</h4>
   else return (
     <React.Fragment>
       <p>You currently have {props.facilities.length} facilities</p>
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.39}
+					height={document.documentElement.clientHeight * 0.28}
           data={ getData() }
       >
       <Column  flexGrow={2}>

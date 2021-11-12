@@ -49,7 +49,7 @@ const MilitarySchema = new Schema({
 // METHOD - Control
 // IN - string of what is getting reset | OUT: VOID
 // PROCESS: reset aspect based on type, Control only
-MilitarySchema.methods.control = async function (type) {
+MilitarySchema.methods.reset = async function (type) {
 	let unit = this;
 	try {
 		switch(type) {
@@ -129,7 +129,7 @@ MilitarySchema.methods.deploy = async function (site) {
 
 		this.site = target._id;
 		this.country = target.country;
-		this.zone = target.zone;w
+		this.zone = target.zone;
 		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 	
 		this.location.lat = lat;
@@ -172,14 +172,15 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		this.site = home.site; // Updates current site
 		this.organization = home.site.organization; // Updates the current organization
 		this.zone = home.site.zone; // Updates current site
+		this.assignment = { type: 'Garrison' }; // Sets assignment as current mission
 
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
-		
+
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		logger.info(`${this.name} returned to ${home.name}...`);
 
-		return;
+		return unit;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
@@ -233,7 +234,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 		this.site = home.site; // Updates current site
 		this.organization = home.site.organization; // Updates the current organization
 		this.zone = home.site.zone; // Updates current site
-	
+
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
 
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
@@ -242,7 +243,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
-		return ;
+		return unit;
 	}
 	catch (err) {
 		logger.error(`${err.message}`, { meta: err.stack });
@@ -302,6 +303,7 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 
 		const unit = await this.save(); // Saves the unit into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
+		return unit;
 	}
 	catch (err) {
 		throw err;

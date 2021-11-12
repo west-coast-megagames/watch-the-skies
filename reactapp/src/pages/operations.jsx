@@ -124,21 +124,21 @@ const Operations  = (props) => {
 
 const cardStyle = {
   border: "2px solid black",
-	height: '50vh',
+	height: '45vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }
 
 const cardStyle2 = {
   border: "2px solid black",
-	height: '39vh',
+	height: '35vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }
 
 const cardStyle3 = {
   border: "2px solid black",
-	height: '89vh',
+	height: '80vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }

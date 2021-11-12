@@ -141,6 +141,7 @@ const AssetTab = (props) => {
 									onClick={() =>
 										repair(selected)
 									}
+									
 									icon={<Icon icon="wrench" />}
 								>
 									Repair

@@ -14,7 +14,7 @@ const AircraftStats = (props) => {
 
 	const repair = async () => {
 		try {
-			socket.emit( 'militarySocket', 'repair', {_id: props.unit._id });
+			socket.emit('request', { route: 'aircraft', action: 'action', type: 'repair', data: { units: [props.unit._id] }});
 		}
 		catch (err) {
 			console.log(err.response.data);
