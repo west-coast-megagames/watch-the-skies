@@ -56,41 +56,8 @@ const FacilityTable = (props) => {
         </Cell>
       </Column>
 
-      {/* <Column flexGrow={2}>
-        <HeaderCell >Integrity</HeaderCell>
-        <Cell style={{ padding: 0 }} verticalAlign='middle' >
-          {rowData => {
-            let { stats } = rowData
-            return(
-							<FlexboxGrid justify="center" align='middle'>
-								<FlexboxGrid.Item colspan={20}>
-									<Progress.Line percent={stats.hull / stats.hullMax * 100} showInfo={false}/>	
-								</FlexboxGrid.Item>
-								<FlexboxGrid.Item colspan={4} >
-									<b>{stats.hull} / {stats.hullMax}</b>
-								</FlexboxGrid.Item>
-							</FlexboxGrid>
-            )
-          }}
-        </Cell>
-      </Column> */}
-
-      {/* <Column flexGrow={1} >
-        <HeaderCell>Location</HeaderCell>
-        <Cell>
-          {rowData => {
-            return getLocation(rowData)
-          }}
-        </Cell>
-      </Column>
-
-      <Column flexGrow={1} >
-          <HeaderCell>Status</HeaderCell>
-          <Cell dataKey='mission' />
-      </Column>*/}
-
       <Column flexGrow={1}>
-        <HeaderCell>Actions</HeaderCell>
+        <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {
             let facility = rowData;

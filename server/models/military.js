@@ -308,7 +308,7 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 	catch (err) {
 		throw err;
 	}
-}
+};
 
 // Method - Equip
 // IN: VOID | OUT: VOID
@@ -332,7 +332,7 @@ MilitarySchema.methods.equip = async function (upgrades = []) {
 	catch (err) {
 		throw err;
 	}
-}
+};
 
 // Method - Aid
 // IN: VOID | OUT: VOID
@@ -352,7 +352,7 @@ MilitarySchema.methods.aid = async function (site) {
 	catch (err) {
 		throw err;
 	}
-}
+};
 
 // METHOD - takeAction
 // IN: VOID | OUT: VOID
