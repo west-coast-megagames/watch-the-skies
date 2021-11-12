@@ -8,6 +8,7 @@ import { getFacilites } from '../../../../store/entities/facilities';
 import { getMilitary } from '../../../../store/entities/military';
 import MobilizeForm from './MobilizeForm';
 import StatusBar from './StatusBar';
+import socket from '../../../../socket';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -32,6 +33,10 @@ const MilitaryTable = (props) => {
   const handleChangeLength = (dataKey) => {
 		setPage(1);
 		setDisplayLength(dataKey);
+  }
+
+	const submitCancel = (id) => {
+		socket.emit('request', { route: 'military', action: 'reset', data: { units: [ id ], type: 'mission' }});
   }
   
   if (props.military.length === 0)
@@ -59,10 +64,14 @@ const MilitaryTable = (props) => {
         <HeaderCell >Mission</HeaderCell>
         <Cell style={{ padding: 0 }} verticalAlign='middle' >
           {rowData => {
-            let { assignment } = rowData
-            return(
-							assignment.type
-            )
+            let { assignment, _id, name } = rowData
+            return( 
+						<div>
+							{assignment.type}
+							{assignment.type !== 'Garrison' && <Whisper placement="top" speaker={<Tooltip>Cancel {name}'s mission (does not recall)</Tooltip>} trigger="hover">
+								<IconButton size="xs" icon={<Icon icon="exit" />} onClick={() => submitCancel(_id)} color="red"/>
+							</Whisper>}
+						</div>)
           }}
         </Cell>
       </Column>
