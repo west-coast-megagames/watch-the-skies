@@ -80,7 +80,7 @@ const TransferForm = (props) => {
 
 		try{
 			socket.emit('request', { route: 'military', action: 'action', type: 'transfer', data: { destination: selected._id, units: milArray }});
-			socket.emit('request', { route: 'aircraft', action: 'transfer', data: { destination: selected._id, units: airArray }});
+			socket.emit('request', { route: 'aircraft', action: 'action', type: 'transfer', data: { destination: selected._id, aircraft: airArray }});
 			props.closeTransfer()
 		}
 		catch (err) {

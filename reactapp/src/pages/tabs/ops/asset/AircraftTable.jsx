@@ -2,15 +2,16 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { showAircraft } from '../../../../store/entities/infoPanels';
 import { getAircrafts } from '../../../../store/entities/aircrafts';
-import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid } from 'rsuite';
+import { Table, Progress, IconButton, Icon, ButtonGroup, Alert, FlexboxGrid, Whisper, Tooltip } from 'rsuite';
 import { getOpsAccount } from '../../../../store/entities/accounts';
 import StatusBar from './StatusBar';
+import socket from '../../../../socket';
 
 const { HeaderCell, Cell, Column, } = Table;
 
 const AircraftTable = (props) => {
 	// TODO: Update visuals of table so they look nice-er
-	const [displayLength, setDisplayLength] = React.useState(5);
+	const [displayLength, setDisplayLength] = React.useState(props.control ? 13 : 5);
 	const [page, setPage] = React.useState(1);
 
 	const getLocation = (aircraft) => {
@@ -26,6 +27,10 @@ const AircraftTable = (props) => {
     });
   }
 
+	const submitCancel = (id) => {
+		socket.emit('request', { route: 'military', action: 'reset', data: { units: [ id ], type: 'mission' }});
+  }
+
   const handleChangeLength = (dataKey) => {
 		setPage(1);
 		setDisplayLength(dataKey);
@@ -39,10 +44,10 @@ const AircraftTable = (props) => {
       <Table 
 			style={{ textAlign: 'center' }}
           rowKey='_id'
-					height={document.documentElement.clientHeight * 0.34}
+					height={props.control ? document.documentElement.clientHeight * 0.7 : document.documentElement.clientHeight * 0.34}
           data={ getData() }
       >
-      <Column  flexGrow={2}>
+      <Column  flexGrow={1}>
           <HeaderCell>Aircraft</HeaderCell>
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
@@ -53,24 +58,41 @@ const AircraftTable = (props) => {
           {rowData => {
             let { stats } = rowData
             return(
-							<FlexboxGrid justify="center" align='middle'>
-								<FlexboxGrid.Item colspan={20}>
-									<Progress.Line percent={stats.hull / stats.hullMax * 100} showInfo={false}/>	
-								</FlexboxGrid.Item>
-								<FlexboxGrid.Item colspan={4} >
-									<b>{stats.hull} / {stats.hullMax}</b>
-								</FlexboxGrid.Item>
-							</FlexboxGrid>
+							<div>
+								<b style={{position: 'absolute', left: '45%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
+									{/* <b>{stats.hull} / {stats.hullMax}</b> */}
+									<Progress.Line style={{ padding: 0 }} strokeWidth={25} percent={stats.hull / stats.hullMax * 100} strokeColor={(stats.hull / stats.hullMax * 100) < 100 ? '#ffc107' : "#4caf50"} showInfo={false}/>									
+							</div>
             )
           }}
         </Cell>
       </Column>
 
+			{/* <Column flexGrow={1}>
+        <HeaderCell >Mission</HeaderCell>
+        <Cell style={{ padding: 0 }} verticalAlign='middle' >
+          {rowData => {
+            let { assignment, _id, name } = rowData
+            return( 
+						<div>
+							{assignment.type}
+							{assignment.type !== 'Garrison' && <Whisper placement="top" speaker={<Tooltip>Cancel {name}'s mission (does not recall)</Tooltip>} trigger="hover">
+								<IconButton size="xs" icon={<Icon icon="exit" />} onClick={() => submitCancel(_id)} color="red"/>
+							</Whisper>}
+						</div>)
+          }}
+        </Cell>
+      </Column> */}
+
       <Column flexGrow={1} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
-            return getLocation(rowData)
+						let { site } = rowData
+						return( 
+							<div>
+								{site.name}
+							</div>)
           }}
         </Cell>
       </Column>
@@ -87,7 +109,7 @@ const AircraftTable = (props) => {
       </Column>
 
       <Column flexGrow={1}>
-        <HeaderCell>Actions</HeaderCell>
+        <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {
             let aircraft = rowData;
@@ -138,7 +160,6 @@ const AircraftTable = (props) => {
 }
 
 const mapStateToProps = state => ({
-    aircrafts: getAircrafts(state),
     lastFetch: state.entities.aircrafts.lastFetch,
 		account: getOpsAccount(state)
 })

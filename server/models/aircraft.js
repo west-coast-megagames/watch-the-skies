@@ -110,6 +110,40 @@ AircraftSchema.methods.validateAircraft = async function () {
 	}
 };
 
+// METHOD - Control
+// IN - string of what is getting reset | OUT: VOID
+// PROCESS: reset aspect based on type, Control only
+AircraftSchema.methods.reset = async function (type) {
+	let unit = this;
+	try {
+		switch(type) {
+		case 'mission':
+			// do mission reset logic
+			(unit.missions <= 0) ? unit.missions = 1 : unit.missions = 0; // Reduces the availible missions by 1
+			unit.assignment = { type: 'Garrison' }; // Sets assignment as current mission
+			break;
+		case 'action':
+			// do mission reset logic
+			(unit.actions <= 0) ? unit.actions = 1 : unit.actions = 0; // Reduces the availible missions by 1
+			break;
+		case 'mobilized':
+			// do mission reset logic
+			await this.recall(true);
+			break;
+		default:
+			throw new Error(`ERROR ${type}.`);
+		}
+
+		unit = await unit.save(); // Saves the UNIT
+		await unit.populateMe();
+		nexusEvent.emit('request', 'update', [ unit ]);
+		return unit;
+	}
+	catch (error) {
+		console.log(error);
+	}
+};
+
 // Launch Method - Changes the status of the craft and pays for the launch.
 AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);

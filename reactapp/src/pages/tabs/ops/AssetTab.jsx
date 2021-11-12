@@ -37,7 +37,8 @@ const AssetTab = (props) => {
 
 	useEffect(() => {
 		if (props.units && selected) {
-			const updated = props.units.find(el => el._id === selected._id);
+			const combined = [ ...props.units, ...props.aircraft, ...props.facilities ]
+			let updated = combined.find(el => el._id === selected._id);		
 			setSelected(updated);
 		}
 	}, [props.units]);

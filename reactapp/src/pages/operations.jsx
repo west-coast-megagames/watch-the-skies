@@ -16,6 +16,7 @@ import { getMilitary } from '../store/entities/military';
 import MobilizeForm from './tabs/ops/asset/MobilizeForm';
 import TransferForm from '../components/common/TransferForm';
 import RecallForm from './tabs/ops/asset/RecallForm';
+import { getAircrafts } from '../store/entities/aircrafts';
 
 /*
 TODO CHECKLIST
@@ -37,7 +38,7 @@ const Operations  = (props) => {
 
 	const handleTransfer = (thing) => {
 		setSelected(thing);
-		setTab('unit');
+		setTab('assets');
 		props.history.push('/ops/assets');
 	}
 
@@ -83,7 +84,7 @@ const Operations  = (props) => {
 											<RecallForm hide={() => setShow(false)} show={show === 'recall'}/>			
 											<TransferForm 
 												units={props.military}
-												aircrafts={props.aircraft}
+												aircrafts={props.aircrafts}
 												show={show === 'transfer'} 
 												closeTransfer={() => setShow(false)}
 												unit={props.unit} />		
@@ -95,7 +96,7 @@ const Operations  = (props) => {
 							<FlexboxGrid.Item colspan={13} >
 								<Panel bodyFill bordered style={cardStyle}>
 									<h5>Aircraft Operations</h5>
-									<AircraftTable handleTransfer={handleTransfer} />
+									<AircraftTable handleTransfer={handleTransfer} aircrafts={props.aircrafts}/>
 								</Panel>
 								<Panel bodyFill bordered style={cardStyle2}>
 									<h5>Facilities</h5>
@@ -148,7 +149,7 @@ const mapStateToProps = state => ({
 	team: state.auth.team,
 	sites: state.entities.sites.list,
 	military: getMilitary(state),
-	aircraft: state.entities.aircrafts.list,
+	aircrafts: getAircrafts(state),
 	facilities: getFacilites(state),
 	account: getOpsAccount(state)
 });

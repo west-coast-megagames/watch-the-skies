@@ -35,6 +35,15 @@ module.exports = async function (client, req) {
 				}
 			}
 			break;
+		case('reset'):
+			// pass control method type for a unit
+			for (const _id of req.data.units) {
+				let unit = await Aircraft.findById(_id);
+				await unit.populateMe();
+				unit = await unit.reset(req.data.type);
+				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });
+			}
+			break;
 		default: {
 			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
