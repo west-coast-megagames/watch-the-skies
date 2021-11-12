@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, InputPicker, FlexboxGrid, Alert } from 'rsuite'
+import { Drawer, Button, InputPicker, FlexboxGrid, Alert, Divider, ButtonGroup, CheckPicker, Panel, Tag } from 'rsuite'
 import { gameServer } from '../config';
 import axios from 'axios';
 import { launchClosed } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
+import socket from '../socket';
 
 let missions = [
   { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false, ground: false, type: 'Fighter' },
@@ -21,33 +22,95 @@ let missions = [
 ]
 
 // let groundMission = []
-class InfoDeploy extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      aircrafts: this.props.aircrafts,
-      unit: this.props.unit,
-      target: this.props.target,
-      mission: undefined,
-      groundMission: undefined,
-      siteMissions: [],
-      airMissions: [],
-      groundMissions: []
-    }
-    this.filterOptions = this.filterOptions.bind(this);
-}
+const InfoAircraftDeploy = (props) => {
+	const [units, setUnits] = React.useState(props.unit); 
+	const [cost, setCost] = React.useState(0); 
+	const [target, setTarget] = React.useState(props.target); 
+	const [aircrafts, setAircrafts] = React.useState(props.aircrafts); 
+	const [mission, setMission] = React.useState(undefined); 
+	// groundMission: undefined,
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.aircrafts !== this.props.aircrafts || prevProps.target !== this.props.target) {
-      this.filterOptions();
-    }
+	useEffect(() => {
+		filterOptions();
+	}, [props.aircrafts, props.target]);
+
+	
+  const handleSubmit = async () => {
+    let stats = {
+      aircraft: units,
+      target: props.target._id,
+      mission
+    };
+    try {
+			socket.emit('request', { route: 'aircraft', action: 'action', type: mission, data: { aircraft: units }});
+			handleExit();
+		} catch (err) {
+      Alert.error(`${err.data} - ${err.message}`)
+    };
   }
 
-  filterOptions() {
-    let siteMissions = missions.filter(mission => mission.site === true);
-    let airMissions = missions.filter(mission => mission.aircraft === true);
-    let groundMissions = missions.filter(mission => mission.ground === true);
-		let ships = this.props.aircrafts.filter(aircraft => ((!aircraft.status.some(el => el === 'deployed')) && (aircraft.status.some(el => el === 'ready'))));
+	const handleType = (value) => { 
+		setMission(value);
+		setUnits([]);
+	};
+
+	const handleUnits = (units) => {
+		let tempCost = cost;
+		// for (let unit of units) {
+		// 	unit = props.military.find(el => el._id === unit) // Looks up current unit
+		// 	if (unit.zone.name === props.target.zone.name) { tempCost += unit.stats.localDeploy };
+		// 	if (unit.zone.name !== props.target.zone.name) { tempCost += unit.stats.globalDeploy }; 
+		// }
+		setUnits(units);
+		setCost(tempCost); 
+	};
+
+	const handleExit = () => {
+		setUnits([]);
+		setMission(undefined)
+		setCost(0); 
+		props.hideDeploy();
+	}
+
+	const renderMission = () => {
+		switch (mission) {
+			case 'intercept':
+				return (
+				<Panel bordered >
+					<b>Intercept</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Engage a target in combat and attempt to shoot it down</p>
+				</Panel>)
+			case 'escort':
+				return (
+				<Panel bordered >
+					<b>Escort</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Protect a target from hostile interceptions</p>
+				</Panel>)
+			case 'patrol':
+				return (
+				<Panel bordered >
+					<b>Patrol</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Protect target site from any hostile air missions.</p>
+				</Panel>)
+			case 'recon':
+				return (
+				<Panel bordered >
+					<b>Recon</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Investigate a site and generate intel on it.</p>
+				</Panel>)
+			case 'transport':
+				return (
+				<Panel bordered >
+					<b>Transport</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Move troops or equiptment between atmospheres</p>
+				</Panel>)
+			default: 
+				return (<Panel bordered style={cardStyle}>No Mission Selected</Panel>)
+		}
+	}
+
+  const filterOptions = () => {
+		let ships = props.aircrafts.filter(aircraft => ((!aircraft.status.some(el => el === 'deployed')) && (aircraft.status.some(el => el === 'ready'))));
     let aircrafts = [];
     //console.log(ships);
     if (ships.length > 0) {
@@ -60,21 +123,20 @@ class InfoDeploy extends Component {
         aircrafts.push(data);
       }
     }
-    this.setState({ siteMissions, airMissions, aircrafts, groundMissions });
+    setAircrafts(aircrafts);
   }
 
-  render() {
     let disable = false;
-    if (this.props.target !== null) {
-      let { organization, zone, model, name, type } = this.props.target;
+    if (props.target !== null) {
+      let { organization, zone, model, name, type } = props.target;
 
-      if (this.state.aircrafts.length < 1 ) disable = true;
+      if (aircrafts.length < 1 ) disable = true;
     
       return(
         <Drawer
           size='sm'
-          show={this.props.show}
-          onHide={() => this.props.hideDeploy()}
+          show={props.show}
+          onHide={() => handleExit()}
         >
           <Drawer.Header>
             <Drawer.Title>{type} - {name}</Drawer.Title>
@@ -83,60 +145,62 @@ class InfoDeploy extends Component {
           <FlexboxGrid>
             <FlexboxGrid.Item colspan={24}>
               <h6>Mission Target - Information</h6>
-              <hr />
             </ FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               <p><b>Location:</b> {model === "Aircraft" ? `${organization.name} Airspace` : `${organization.name}`} - {zone.name}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
               {model === "Aircraft" && <p><b>Projected Destination:</b> Unknown...</p>}
-              {model === "Site" && <p>{this.props.target.geoDMS.latDMS}, {this.props.target.geoDMS.lngDMS}</p>}
+              {model === "Site" && <p>{props.target.geoDMS.latDMS}, {props.target.geoDMS.lngDMS}</p>}
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={24}>
-            <br /><br /><br />
-            <h6>Air Mission - Mission Perameters</h6>
-            <hr />
-            </FlexboxGrid.Item>
+					</FlexboxGrid>
+					<Divider />
+					<FlexboxGrid>
             <FlexboxGrid.Item colspan={12}>
-              {/* <InputPicker
-                disabled={disable}
-                placeholder={ this.state.aircrafts.length < 1 ? `${this.props.team.shortName} has no aircraft...` : `Scramble a aircraft over ${organization.name}`}
-                data={this.state.aircrafts} 
-                labelKey='label'
-                value={this.state.unit}
-                valueKey='value'
-                onChange={value => (this.setState({ unit: value }))} block /> */}
-            </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={12}>
-              {/* <InputPicker
-                disabled = {disable || this.state.unit === null} 
-                placeholder="Mission Type Selection"
-                data={this.props.target !== null && model === 'Site' ? this.state.siteMissions : this.state.airMissions}
-                value={this.state.mission}
-                onChange={value => (this.setState({ mission: value }))}
-                block
-              /> */}
-            </FlexboxGrid.Item>
-            </FlexboxGrid>
-            <br /><br /><br />
-            { model === 'Site' && this.state.unit !== null && this.state.mission === 'Transport' &&
-              <React.Fragment>
-              <b>Ground Mission - Mission Perameters</b>
-              <hr />
-              <div className='row' style={{ display: 'flex', flex: '80%' }}>
-                <div className='col' style={{ flex: '50%' }}>
-                  <InputPicker placeholder={`Ground Unit`} data={this.state.aircraft} labelKey='label' value={this.state.unit} valueKey='value' onChange={value => (this.setState({ unit: value }))} block />
-                </div>
-                <div className='col' style={{ flex: '50%' }}>
-                  <InputPicker placeholder="Mission Type Selection" data={this.state.groundMissions} value={this.state.mission} onChange={value => (this.setState({ groundMission: value }))} block />
-                </div>
-              </div>
-            </React.Fragment>
-            }
+							<h6>Air Missions</h6>
+							<ButtonGroup>
+									<Button disabled={model === "Site"} appearance={mission !== 'Intercept' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('Intercept')} >Intercept</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'Escort' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('Escort')} >Escort</Button>
+								</ButtonGroup>
+						</FlexboxGrid.Item>
+
+						<FlexboxGrid.Item colspan={12} style={{ marginBottom: '15px' }} >
+							<h6>Ground Missions</h6>
+							<ButtonGroup>
+									{/* <Button appearance={mission !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
+									<Button disabled={model === "Aircraft"} appearance={mission !== 'patrol' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('patrol')} >Patrol</Button>
+									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon')} >Recon</Button>
+									<Button disabled={model === "Aircraft"} appearance={mission !== 'transport' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transport')} >Transport</Button>
+								</ButtonGroup>
+						</FlexboxGrid.Item>
+					</FlexboxGrid>
+					{renderMission()}
+					<Divider />
+
+					{mission && <div>
+						<CheckPicker block placeholder='Select Units'
+								data={ aircrafts }
+								onChange={handleUnits}
+								valueKey='value'
+								labelKey='label'
+								value={ units }
+						/>		
+					</div>}
+
+					{mission === 'Escort' && <div>
+					</div>}
+
+					{mission === 'patrol' && <div>
+
+					</div>}
+
+					{mission === 'Transport' && <div>
+					</div>}
+
           </Drawer.Body>
           <Drawer.Footer>
-            <Button disabled={disable || this.state.unit === null} onClick={ this.handleSubmit } appearance="primary">Confirm</Button>
-            <Button onClick={ () => this.props.hideDeploy() } appearance="subtle">Cancel</Button>
+            <Button disabled={disable || units === null || units.length < 1} onClick={ handleSubmit } appearance="primary">Confirm</Button>
+            <Button onClick={ () => handleExit() } appearance="subtle">Cancel</Button>
           </Drawer.Footer>
         </Drawer> 
       )
@@ -144,8 +208,8 @@ class InfoDeploy extends Component {
       return(
         <Drawer
           size='md'
-          show={this.props.show}
-          onHide={() => this.props.hideDeploy()}
+          show={props.show}
+          onHide={() => props.hideDeploy()}
         >
           <Drawer.Body>
             Nothing to see here...
@@ -153,36 +217,14 @@ class InfoDeploy extends Component {
         </Drawer>
       )
     }
-  };
-
-  handleSubmit = async () => {
-    console.log('Submitting Interception');
-    let stats = {
-      aircraft: this.state.unit,
-      target: this.props.target._id,
-      mission: this.state.mission
-    };
-    try {
-      //console.log(stats)
-      let response = await axios.put(`${gameServer}game/aircrafts`, stats);    
-      Alert.success(response.data);
-      this.setState({mission: null, unit: null});
-      this.props.hideDeploy();
-    } catch (err) {
-      Alert.error(`${err.data} - ${err.message}`)
-    };
-  }
-
-  handleChange = event => {
-    console.log(`Handling change...`)
-    let unit = this.state.unit;
-    unit = event.currentTarget.value;
-
-    this.setState({
-      unit
-    });
-  }
 };
+
+const cardStyle = {
+	height: '10vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center' 
+}
 
 const mapStateToProps = state => ({
   aircrafts: getAircrafts(state),
@@ -196,4 +238,4 @@ const mapDispatchToProps = dispatch => ({
   hideDeploy: () => dispatch(launchClosed())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoDeploy);
+export default connect(mapStateToProps, mapDispatchToProps)(InfoAircraftDeploy);

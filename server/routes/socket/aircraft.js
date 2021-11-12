@@ -6,21 +6,6 @@ module.exports = async function (client, req) {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		let message;
 		switch(req.action) {
-		case('transfer'):
-		// Deploy action expects UNITS & DESTINATION
-			for (const _id of req.data.units) {
-				try {
-					const unit = await Aircraft.findById(_id);
-					await unit.populateMe();
-					message = await unit.transfer(req.data.destination);
-					client.emit('alert', { type: 'success', message });
-				}
-				catch (error) {
-					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-				}
-			}
-			break;
 		case('action'):
 			for (const _id of req.data.aircraft) {
 				let unit = await Aircraft.findById(_id);
@@ -30,6 +15,15 @@ module.exports = async function (client, req) {
 				case('repair'): // Repair Action Trigger
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });
+					break;
+				case('patrol'): // Patrol Action Trigger
+					client.emit('alert', { type: 'success', message: `Patrol not hooked up on backend!` });
+					break;
+				case('recon'): // recon Action Trigger
+					client.emit('alert', { type: 'success', message: `recon not hooked up on backend!` });
+					break;
+				case('transport'): // transport Action Trigger
+					client.emit('alert', { type: 'success', message: `transport not hooked up on backend!` });
 					break;
 				case('transfer'): // Transfer Action Trigger
 					message = await unit.transfer(req.data.destination);

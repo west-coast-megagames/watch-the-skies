@@ -58,7 +58,6 @@ module.exports = async function (client, req) {
 					break;
 				case('mobilize'): // Mobilize Action Trigger
 					// Makes the unit capable of doing MISSIONS by moving its status to MOBILIZED
-					// TODO - Call mobilize method
 					unit = await unit.mobilize();
 					client.emit('alert', { type: 'success', message: `${unit.name} has been mobilized.` });
 					break;

@@ -83,7 +83,7 @@ export const addsite = site =>
   });
 
 	export const getCapitol = createSelector(
-    state => state.entities.sites.list,
+    state => state.entities.sites.list.filter(el => el.tags),
 		state => state.auth.team,
     (sites, team) => sites.find(site => site.tags.some(el=> el === 'capital') && site.team._id === team._id)
   );
