@@ -2,9 +2,9 @@
 async function clearArrayValue(arr, arrVal) {
 	if (arr === undefined) throw new Error('Array not defined in array/clearValue');
 	if (arrVal === undefined) throw new Error('Array Element Value not defined in array/clearValue');
-	for (var i = 0; i < arr.length; i++) {
+	for (let i = 0; i < arr.length; i++) {
 		if (arr[i] === arrVal) {
-				const spliced = arr.splice(i, 1);
+			arr.splice(i, 1);
 		}
 	}
 }
