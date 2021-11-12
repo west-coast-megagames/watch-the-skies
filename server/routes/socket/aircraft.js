@@ -7,20 +7,21 @@ module.exports = async function (client, req) {
 		switch(req.action) {
 		case('transfer'):
 		// Deploy action expects UNITS & DESTINATION
-		for (const _id of req.data.units) {
-			try {
-				let unit = await Aircraft.findById(_id);
-				await unit.populateMe();
-				let message = await unit.transfer(req.data.destination);
-				client.emit('alert', { type: 'success', message });
-			} catch (error) {
-				logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
-				client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+			for (const _id of req.data.units) {
+				try {
+					const unit = await Aircraft.findById(_id);
+					await unit.populateMe();
+					const message = await unit.transfer(req.data.destination);
+					client.emit('alert', { type: 'success', message });
+				}
+				catch (error) {
+					logger.error(`SOCKET-${req.route} [${req.action}]: ${error.message}`, { meta: error.stack });
+					client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+				}
 			}
-		}
-		break;
+			break;
 		default: {
-			let message = `No ${req.action} is in the ${req.route} route.`;
+			const message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
 		}
 		}
