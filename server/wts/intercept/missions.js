@@ -111,6 +111,7 @@ async function resolveMissions() {
 
 // Iterate over all submitted Interceptions in range order
 async function runInterceptions() {
+	missionDebugger('Running Interceptions...');
 	for await (const interception of interceptionMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each interception
 		const missionCode = randCode(5); // Generates a unique code for this interception

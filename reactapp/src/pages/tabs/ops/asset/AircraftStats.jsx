@@ -3,10 +3,10 @@ import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton,
 import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import axios from 'axios';
 import { gameServer } from "../../../../config";
-import { socket } from "../../../../api";
 import TransferForm from "../../../../components/common/TransferForm";
 import { getAircraftIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
+import socket from "../../../../socket";
 
 const AircraftStats = (props) => {
 	const [showUpgrade, setShowUpgrade] = React.useState(false);
@@ -14,7 +14,7 @@ const AircraftStats = (props) => {
 
 	const repair = async () => {
 		try {
-			socket.emit('request', { route: 'aircraft', action: 'action', type: 'repair', data: { units: [props.unit._id] }});
+			socket.emit('request', { route: 'aircraft', action: 'action', type: 'repair', data: { aircrafts: [props.unit._id] }});
 		}
 		catch (err) {
 			console.log(err.response.data);
@@ -38,9 +38,25 @@ const AircraftStats = (props) => {
 								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 							</Whisper>
 							<b> Health:</b> {stats.hull}/{stats.hullMax}{" "}
+							{stats.hull < stats.hullMax && (
+							<span>
+								{" "}
+								<Badge content="Damaged" />{" "}
+								<IconButton
+									size="xs"
+									onClick={() =>
+										repair()
+									}
+									disabled={stats.hull === stats.hullMax || (props.unit.actions <= 0 && props.unit.missions <= 0)}
+									icon={<Icon icon="wrench" />}
+								>
+									Repair
+								</IconButton>
+							</span>
+						)}
 							<Progress.Line
 									percent={(stats.hull/stats.hullMax) * 100}
-									strokeColor={(stats.hull/stats.hullMax) * 100 < 40 ? 'red' : "#32a844"}
+									strokeColor={(stats.hull/stats.hullMax) * 100 < 40 ? 'red' : (stats.hull/stats.hullMax) * 100 < 90 ? 'orange' : "#32a844"}
 									showInfo={false}
 								/>
 						</div>			

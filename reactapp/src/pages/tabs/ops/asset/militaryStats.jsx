@@ -12,7 +12,6 @@ const MilitaryStats = (props) => {
 	const [showUpgrade, setShowUpgrade] = React.useState(false);
 	const [showTransfer, setShowTransfer] = React.useState(false);
 
-
 	const repair = async () => {
 		try {
 			socket.emit('request', { route: 'military', action: 'action', type: 'repair', data: { units: [props.unit._id] }});

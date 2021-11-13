@@ -4,7 +4,7 @@ const { Site } = require('../../models/site');
 const randomCords = require('../../util/systems/lz');
 
 const terror = require('../../wts/terror/terror');
-const { resolveMissions } = require('../../wts/intercept/missions');
+const missionFunc = require('../../wts/intercept/missions');
 
 module.exports = async function (client, req) {
 	try {
@@ -71,7 +71,7 @@ module.exports = async function (client, req) {
 			}
 			break;
 		case('runMissions'):
-			await resolveMissions(); // Resolve Interceptions that have been sent [coded]
+			await missionFunc.resolveMissions(); // Resolve Interceptions that have been sent [coded]
 			break;
 		default: {
 			message = `No ${req.action} is in the ${req.route} route.`;

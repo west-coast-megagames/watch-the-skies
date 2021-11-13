@@ -257,6 +257,34 @@ AircraftSchema.methods.transfer = async function (facility) {
 	}
 };
 
+// Method - Repair
+// IN: VOID | OUT: VOID
+// PROCESS: Repairs units hull (Does it repair upgrades?) not currently
+AircraftSchema.methods.repair = async function (upgrades = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// eslint-disable-next-line no-useless-catch
+	try {
+		// Mechanics: Repairs damage to a military unit when they are at a facility with repair capabilities.
+		const cost = 1 + upgrades.length;
+		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
+		this.stats.hull = this.stats.hullMax; // Restores the units hull to max
+
+		for (const item of upgrades) {
+			const upgrade = await Upgrade.findById(item);
+			// upgrade.repair() // Call repair method of upgrade | TODO - Make repair method of upgrade
+			console.log(`${upgrade.name} has been repaired while equiped to ${this.name}`);
+		}
+
+		const unit = await this.save(); // Saves the unit into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
 
 // stripUpgrades method - Removes all upgrades from a craft
 AircraftSchema.methods.stripUpgrades = async function () {
@@ -282,6 +310,24 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	// Notify/Update team via socket-event
 	nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 	return aircraft;
+};
+
+// METHOD - takeAction
+// IN: VOID | OUT: VOID
+// PROCESS: Expends mission/action pts or errors if there are none
+AircraftSchema.methods.takeAction = async function () {
+	if (this.actions < 1) {
+		// Trigger user check?
+		if (this.missions < 1) {
+			throw Error(`${this.name} has no mission or action pts left this turn.`);
+		}
+		else {
+			this.missions -= 1;
+		}
+	}
+	else {
+		this.actions -= 1;
+	}
 };
 
 AircraftSchema.methods.populateMe = function () {

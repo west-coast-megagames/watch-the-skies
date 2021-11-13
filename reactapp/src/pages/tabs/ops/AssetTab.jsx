@@ -41,7 +41,7 @@ const AssetTab = (props) => {
 			let updated = combined.find(el => el._id === selected._id);		
 			setSelected(updated);
 		}
-	}, [props.units]);
+	}, [props.units, props.aircraft, props.facilities]);
 
 	const handleTags = (units) => {
 		setTags(units);
