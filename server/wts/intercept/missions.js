@@ -57,27 +57,27 @@ async function start(aircraft, target, mission) {
 	// SWITCH Sorts the mission into the correct mission
 	const newMission = [{ aircraft, target, distance, origin, mission }]; // Saves the mission combination
 	switch (true) {
-	case mission === 'Interception':
+	case mission === 'interception':
 		interceptionMissions = [...interceptionMissions, ...newMission]; // Adds Interception to be resolved
 		missionDebugger(interceptionMissions);
 		break;
-	case mission === 'Escort':
+	case mission === 'escort':
 		escortMissions = [...escortMissions, ...newMission]; // Adds Escort to be resolved
 		missionDebugger(escortMissions);
 		break;
-	case mission === 'Patrol':
+	case mission === 'patrol':
 		patrolMissions = [...patrolMissions, ...newMission]; // Adds Patrol to be resolved
 		missionDebugger(patrolMissions);
 		break;
-	case mission === 'Transport':
+	case mission === 'transport':
 		transportMissions = [...transportMissions, ...newMission]; // Adds Transport to be resolved
 		missionDebugger(transportMissions);
 		break;
-	case mission === 'Recon Site' || mission === 'Recon Aircraft':
+	case mission === 'recon site' || mission === 'recon aircraft':
 		reconMissions = [...reconMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(reconMissions);
 		break;
-	case mission === 'Diversion':
+	case mission === 'diversion':
 		diversionMissions = [...diversionMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(diversionMissions);
 		break;
