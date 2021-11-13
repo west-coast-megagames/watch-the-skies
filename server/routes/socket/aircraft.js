@@ -34,9 +34,9 @@ module.exports = async function (client, req) {
 		case('mission'):
 			let result = '';
 			let { aircrafts, target, mission } = req.data;
-			for (let aircraft of aircrafts) {
+			for (let unit of aircrafts) {
 
-				aircraft = await Aircraft.findById(aircraft).populate('upgrades').populate('site').populate('origin').populate('team');
+				let aircraft = await Aircraft.findById(unit).populate('upgrades').populate('site').populate('origin').populate('team');
 
 				if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
 					target = await Aircraft.findById(target).populate('upgrades').populate('site');
