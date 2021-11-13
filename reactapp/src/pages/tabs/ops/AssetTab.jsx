@@ -9,7 +9,7 @@ import { getMilitary } from '../../../store/entities/military';
 import { getUpgrades } from '../../../store/entities/upgrades';
 import { socket } from '../../../api';
 import MilitaryStats from './asset/militaryStats';
-import UpgradeTable from './asset/upgradeTable';
+import UpgradeTable from './asset/UpgradeTable';
 import AircraftStats from './asset/AircraftStats';
 import { getAircrafts } from '../../../store/entities/aircrafts';
 
@@ -102,7 +102,7 @@ const AssetTab = (props) => {
         { !selected && <h4>Select an Asset???</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
 						<MilitaryStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
-						{/* <UpgradeTable unit={selected}/> */}
+						<UpgradeTable unit={selected}/>
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
 				}
