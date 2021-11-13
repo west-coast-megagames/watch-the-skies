@@ -1,10 +1,10 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const { Aircraft } = require('../../models/aircraft');
-const { AirMission } = require('../../models/report');
 const { Site } = require('../../models/site');
 const randomCords = require('../../util/systems/lz');
 
 const terror = require('../../wts/terror/terror');
+const missionFunc = require('../../wts/intercept/missions');
 
 module.exports = async function (client, req) {
 	try {
@@ -32,7 +32,7 @@ module.exports = async function (client, req) {
 			}
 			break;
 		case('mission'):
-			for (let unit in req.data.aircrafts) {
+			for (const unit of req.data.aircrafts) {
 
 				let aircraft = await Aircraft.findById(unit).populate('upgrades').populate('site').populate('origin').populate('team');
 
@@ -57,7 +57,7 @@ module.exports = async function (client, req) {
 				aircraft = await aircraft.launch(req.data.mission); // Changes attacker status
 				result = `${result} ${aircraft.name} en route to attempt ${req.data.mission.toLowerCase()}.`;
 
-				await AirMission.start(aircraft, target, req.data.mission);
+				await missionFunc.start(aircraft, target, req.data.mission);
 				client.emit('alert', { type: 'success', message: result });
 			}
 			break;
