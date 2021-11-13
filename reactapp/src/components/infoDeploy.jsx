@@ -37,10 +37,11 @@ const InfoAircraftDeploy = (props) => {
 	
   const handleSubmit = async () => {
     let data = {
-      aircraft: units,
+      aircrafts: units,
       target: props.target._id,
       mission
     };
+		console.log(data)
     try {
 			socket.emit('request', { route: 'aircraft', action: 'mission', mission, data });
 			handleExit();
