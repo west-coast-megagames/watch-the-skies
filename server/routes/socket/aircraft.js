@@ -9,7 +9,7 @@ const terror = require('../../wts/terror/terror');
 module.exports = async function (client, req) {
 	try {
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
-		let message;
+		let message, target, result;
 		switch(req.action) {
 		case('action'):
 			for (const _id of req.data.aircraft) {
@@ -32,19 +32,17 @@ module.exports = async function (client, req) {
 			}
 			break;
 		case('mission'):
-			let result = '';
-			let { aircrafts, target, mission } = req.data;
-			for (let unit of aircrafts) {
+			for (let unit in req.data.aircrafts) {
 
 				let aircraft = await Aircraft.findById(unit).populate('upgrades').populate('site').populate('origin').populate('team');
 
-				if (mission === 'interception' || mission === 'escort' || mission === 'recon aircraft') {
-					target = await Aircraft.findById(target).populate('upgrades').populate('site');
+				if (req.data.mission === 'interception' || req.data.mission === 'escort' || req.data.mission === 'recon aircraft') {
+					target = await Aircraft.findById(req.data.target).populate('upgrades').populate('site');
 					aircraft.site = target.site._id;
 					aircraft.location = randomCords(target.site.geoDecimal.lat, target.site.geoDecimal.lng);
 				}
-				else if (mission === 'diversion' || mission === 'transport' || mission === 'recon site' || mission === 'patrol') {
-					target = await Site.findById(target);
+				else if (req.data.mission === 'diversion' || req.data.mission === 'transport' || req.data.mission === 'recon site' || req.data.mission === 'patrol') {
+					target = await Site.findById(req.data.target);
 					aircraft.site = target._id;
 					aircraft.location = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 				}
@@ -54,12 +52,12 @@ module.exports = async function (client, req) {
 				result = `${aircraft.name} launching...`;
 				aircraft.organization = target.organization;
 				aircraft.zone = target.zone;
-				aircraft.mission = mission;
+				aircraft.mission = req.data.mission;
 
-				aircraft = await aircraft.launch(mission); // Changes attacker status
-				result = `${result} ${aircraft.name} en route to attempt ${mission.toLowerCase()}.`;
+				aircraft = await aircraft.launch(req.data.mission); // Changes attacker status
+				result = `${result} ${aircraft.name} en route to attempt ${req.data.mission.toLowerCase()}.`;
 
-				await AirMission.start(aircraft, target, mission);
+				await AirMission.start(aircraft, target, req.data.mission);
 				client.emit('alert', { type: 'success', message: result });
 			}
 			break;
