@@ -32,9 +32,9 @@ module.exports = async function (client, req) {
 			}
 			break;
 		case('mission'):
-			for (const unit of req.data.aircrafts) {
+			for (const _id of req.data.aircrafts) {
 
-				let aircraft = await Aircraft.findById(unit).populate('upgrades').populate('site').populate('origin').populate('team');
+				let aircraft = await Aircraft.findById(_id).populate('upgrades').populate('site').populate('origin').populate('team');
 
 				if (req.data.mission === 'interception' || req.data.mission === 'escort' || req.data.mission === 'recon aircraft') {
 					target = await Aircraft.findById(req.data.target).populate('upgrades').populate('site');
