@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert } from 'rsuite';
+import BalanceHeader from '../components/common/BalanceHeader';
 // import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
+import { getOpsAccount } from '../store/entities/accounts';
 import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
 
@@ -48,7 +50,7 @@ const MapPage = (props) => {
 						</CheckboxGroup>	
 					</FlexboxGrid.Item>
 
-					<FlexboxGrid.Item colspan={12}>
+					<FlexboxGrid.Item colspan={8}>
 					<SelectPicker
    				  data={props.sites}
 						valueKey='_id'
@@ -59,6 +61,11 @@ const MapPage = (props) => {
 						onChange={(value) => handleThing(value)}
 					/>
 					</FlexboxGrid.Item>
+
+					<FlexboxGrid.Item colspan={4}>
+						<BalanceHeader account={props.account} />
+					</FlexboxGrid.Item>
+					
 				</FlexboxGrid>
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
 				<PrototypeMap siteBoolean={sites} contactBoolean={contacts} intelBoolean={intel} militaryBoolean={military} center={center}></PrototypeMap>
@@ -74,7 +81,8 @@ const mapStateToProps = state => ({
 	sites: state.entities.sites.list,
 	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : undefined,
 	military: state.entities.military.list,
-	aircraft: state.entities.aircrafts.list
+	aircraft: state.entities.aircrafts.list,
+	account: getOpsAccount(state)
 });
 
 const mapDispatchToProps = dispatch => ({});
