@@ -287,6 +287,7 @@ AircraftSchema.methods.stripUpgrades = async function () {
 AircraftSchema.methods.populateMe = function () {
 	return this
 		.populate('team', 'name shortName code')
+		.populate('upgrades')
 		.populate('zone', 'name')
 		.populate('organization', 'name')
 		.populate('site', 'name geoDecimal')
