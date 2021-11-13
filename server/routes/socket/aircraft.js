@@ -1,5 +1,10 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const { Aircraft } = require('../../models/aircraft');
+const { AirMission } = require('../../models/report');
+const { Site } = require('../../models/site');
+const randomCords = require('../../util/systems/lz');
+
+const terror = require('../../wts/terror/terror');
 
 module.exports = async function (client, req) {
 	try {
@@ -16,15 +21,6 @@ module.exports = async function (client, req) {
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });
 					break;
-				case('patrol'): // Patrol Action Trigger
-					client.emit('alert', { type: 'success', message: `Patrol not hooked up on backend!` });
-					break;
-				case('recon'): // recon Action Trigger
-					client.emit('alert', { type: 'success', message: `recon not hooked up on backend!` });
-					break;
-				case('transport'): // transport Action Trigger
-					client.emit('alert', { type: 'success', message: `transport not hooked up on backend!` });
-					break;
 				case('transfer'): // Transfer Action Trigger
 					message = await unit.transfer(req.data.destination);
 					client.emit('alert', { type: 'success', message });
@@ -33,6 +29,38 @@ module.exports = async function (client, req) {
 					message = `No ${req.type} in the '${req.action}' action the ${req.route} route.`;
 					throw new Error(message);
 				}
+			}
+			break;
+		case('mission'):
+			let result = '';
+			let { aircrafts, target, mission } = req.data;
+			for (let aircraft of aircrafts) {
+
+				aircraft = await Aircraft.findById(aircraft).populate('upgrades').populate('site').populate('origin').populate('team');
+
+				if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
+					target = await Aircraft.findById(target).populate('upgrades').populate('site');
+					aircraft.site = target.site._id;
+					aircraft.location = randomCords(target.site.geoDecimal.lat, target.site.geoDecimal.lng);
+				}
+				else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
+					target = await Site.findById(target);
+					aircraft.site = target._id;
+					aircraft.location = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
+				}
+
+				if (aircraft.team.type === 'Alien') terror.alienActivity(aircraft.site, 'Air');
+
+				result = `${aircraft.name} launching...`;
+				aircraft.organization = target.organization;
+				aircraft.zone = target.zone;
+				aircraft.mission = mission;
+
+				aircraft = await aircraft.launch(mission); // Changes attacker status
+				result = `${result} ${aircraft.name} en route to attempt ${mission.toLowerCase()}.`;
+
+				await AirMission.start(aircraft, target, mission);
+				client.emit('alert', { type: 'success', message: result });
 			}
 			break;
 		case('reset'):
