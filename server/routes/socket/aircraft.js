@@ -34,16 +34,16 @@ module.exports = async function (client, req) {
 		case('mission'):
 			let result = '';
 			let { aircrafts, target, mission } = req.data;
-			for (let aircraft of aircrafts) {
+			for (let unit of aircrafts) {
 
-				aircraft = await Aircraft.findById(aircraft).populate('upgrades').populate('site').populate('origin').populate('team');
+				let aircraft = await Aircraft.findById(unit).populate('upgrades').populate('site').populate('origin').populate('team');
 
-				if (mission === 'Interception' || mission === 'Escort' || mission === 'Recon Aircraft') {
+				if (mission === 'interception' || mission === 'escort' || mission === 'recon aircraft') {
 					target = await Aircraft.findById(target).populate('upgrades').populate('site');
 					aircraft.site = target.site._id;
 					aircraft.location = randomCords(target.site.geoDecimal.lat, target.site.geoDecimal.lng);
 				}
-				else if (mission === 'Diversion' || mission === 'Transport' || mission === 'Recon Site' || mission === 'Patrol') {
+				else if (mission === 'diversion' || mission === 'transport' || mission === 'recon site' || mission === 'patrol') {
 					target = await Site.findById(target);
 					aircraft.site = target._id;
 					aircraft.location = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
