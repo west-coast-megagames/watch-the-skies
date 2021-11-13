@@ -79,7 +79,6 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 
 
 	const rawr = account !== undefined ? account.resources.find(el => el.type === 'Megabucks') : undefined
-	console.log(rawr)
 	
 	const megabucks = rawr ? rawr.balance : 0
 	const pr = !team ? 'PR Level: Unknown |' : `PR Level: ${team.prLevel} | `;

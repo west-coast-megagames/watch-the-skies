@@ -75,7 +75,7 @@ const InfoAircraftDeploy = (props) => {
 
 	const renderMission = () => {
 		switch (mission) {
-			case 'intercept':
+			case 'interception':
 				return (
 				<Panel bordered >
 					<b>Intercept</b> | <Tag color={'green'}>$1M</Tag>
@@ -96,8 +96,14 @@ const InfoAircraftDeploy = (props) => {
 			case 'recon site':
 				return (
 				<Panel bordered >
-					<b>Recon</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Recon Site</b> | <Tag color={'green'}>$1M</Tag>
 					<p>Investigate a site and generate intel on it.</p>
+				</Panel>)
+			case 'recon aircraft':
+				return (
+				<Panel bordered >
+					<b>Recon Aircraft</b> | <Tag color={'green'}>$1M</Tag>
+					<p>Investigate an aircraft and generate intel on it.</p>
 				</Panel>)
 			case 'transport':
 				return (
@@ -160,9 +166,9 @@ const InfoAircraftDeploy = (props) => {
             <FlexboxGrid.Item colspan={12}>
 							<h6>Air Missions</h6>
 							<ButtonGroup>
-									<Button disabled={model === "Site"} appearance={mission !== 'Intercept' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('intercept')} >Intercept</Button>
-									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon aircraft' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon aircraft')} >Recon</Button>
-									<Button disabled={model === "Site"} appearance={mission !== 'Escort' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('escort')} >Escort</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'interception' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('interception')} >Intercept</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'recon aircraft' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon aircraft')} >Recon</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'escort' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('escort')} >Escort</Button>
 								</ButtonGroup>
 						</FlexboxGrid.Item>
 
