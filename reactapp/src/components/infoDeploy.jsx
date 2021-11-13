@@ -36,13 +36,13 @@ const InfoAircraftDeploy = (props) => {
 
 	
   const handleSubmit = async () => {
-    let stats = {
+    let data = {
       aircraft: units,
       target: props.target._id,
       mission
     };
     try {
-			socket.emit('request', { route: 'aircraft', action: 'action', type: mission, data: { aircraft: units }});
+			socket.emit('request', { route: 'aircraft', action: 'mission', mission, data });
 			handleExit();
 		} catch (err) {
       Alert.error(`${err.data} - ${err.message}`)
@@ -92,7 +92,7 @@ const InfoAircraftDeploy = (props) => {
 					<b>Patrol</b> | <Tag color={'green'}>$1M</Tag>
 					<p>Protect target site from any hostile air missions.</p>
 				</Panel>)
-			case 'recon':
+			case 'recon site':
 				return (
 				<Panel bordered >
 					<b>Recon</b> | <Tag color={'green'}>$1M</Tag>
@@ -159,8 +159,9 @@ const InfoAircraftDeploy = (props) => {
             <FlexboxGrid.Item colspan={12}>
 							<h6>Air Missions</h6>
 							<ButtonGroup>
-									<Button disabled={model === "Site"} appearance={mission !== 'Intercept' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('Intercept')} >Intercept</Button>
-									<Button disabled={model === "Site"} appearance={mission !== 'Escort' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('Escort')} >Escort</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'Intercept' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('intercept')} >Intercept</Button>
+									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon aircraft' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon aircraft')} >Recon</Button>
+									<Button disabled={model === "Site"} appearance={mission !== 'Escort' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('escort')} >Escort</Button>
 								</ButtonGroup>
 						</FlexboxGrid.Item>
 
@@ -169,7 +170,7 @@ const InfoAircraftDeploy = (props) => {
 							<ButtonGroup>
 									{/* <Button appearance={mission !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
 									<Button disabled={model === "Aircraft"} appearance={mission !== 'patrol' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('patrol')} >Patrol</Button>
-									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon')} >Recon</Button>
+									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon site' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon site')} >Recon</Button>
 									<Button disabled={model === "Aircraft"} appearance={mission !== 'transport' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transport')} >Transport</Button>
 								</ButtonGroup>
 						</FlexboxGrid.Item>
@@ -187,8 +188,6 @@ const InfoAircraftDeploy = (props) => {
 						/>		
 					</div>}
 
-					{mission === 'Escort' && <div>
-					</div>}
 
 					{mission === 'patrol' && <div>
 
