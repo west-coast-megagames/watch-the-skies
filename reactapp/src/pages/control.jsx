@@ -12,6 +12,7 @@ import LoginLink from '../components/common/loginLink';
 import Registration from './tabs/control/registration';
 import BudgetTab from './tabs/gov/BudgetTab';
 import AircraftControl from './tabs/control/AircraftControl';
+import socket from '../socket';
 
 const Control = (props) => {
 	const [tab, setTab] = React.useState('feed');
@@ -197,7 +198,10 @@ const Control = (props) => {
 							<hr />
 							<div>
 								<h5>Interception Controls</h5>
-								<ButtonGroup>
+								<ButtonGroup>									
+									<Button color="blue" size="sm" onClick={ () => socket.emit('request', { route: 'aircraft', action: 'runMissions' }) }>
+										Run Interceptions
+									</Button>
 									<Button color="blue" size="sm" onClick={ () => deployAliens() }>
 										Deploy Aliens
 									</Button>

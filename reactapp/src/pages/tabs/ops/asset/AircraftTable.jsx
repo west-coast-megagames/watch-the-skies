@@ -59,7 +59,7 @@ const AircraftTable = (props) => {
             let { stats } = rowData
             return(
 							<div>
-								<b style={{position: 'absolute', left: '45%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
+								<b style={{position: 'absolute', left: '47%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
 									{/* <b>{stats.hull} / {stats.hullMax}</b> */}
 									<Progress.Line style={{ padding: 0 }} strokeWidth={25} percent={stats.hull / stats.hullMax * 100} strokeColor={(stats.hull / stats.hullMax * 100) < 100 ? '#ffc107' : "#4caf50"} showInfo={false}/>									
 							</div>
