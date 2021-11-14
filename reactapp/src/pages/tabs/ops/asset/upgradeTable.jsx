@@ -14,7 +14,7 @@ const UpgradeTable = (props) => {
 
 const handleRemove = () => {
 	try {
-		socket.emit('request', { route: 'military', action: 'action', type: 'unequip', data: { units: [ props.unit._id ], upgrades }});
+		socket.emit('request', { route: props.unit.model.toLowerCase(), action: 'action', type: 'unequip', data: { units: [ props.unit._id ], aircrafts: [ props.unit._id ], upgrades }});
 	}
 	catch (err) {
 		Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -25,21 +25,22 @@ return (
 	<div>
 		<Panel bordered>
 		<h5 style={{ textAlign: 'center' }}>Upgrades ({props.upArray.length}) 
-				<ButtonGroup>
-					{!edit && 						
-						<Whisper placement="top" speaker={editSpeaker} trigger="hover">
-							<IconButton disabled={props.upArray.length === 0} color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
-						</Whisper>}
-					{edit && 
-						<Whisper placement="top" speaker={cancelSpeaker} trigger="hover">
-							<Button color='red' size='sm' onClick={() => setEdit(!edit)}><b>X</b></Button>
-						</Whisper>}	
-					{edit && 
-						<Whisper placement="top" speaker={submitSpeaker} trigger="hover">
-							<IconButton disabled={upgrades.length === 0} color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleRemove()}></IconButton>
-						</Whisper>}				
-				</ButtonGroup>
+			<ButtonGroup>
+				{!edit && 						
+					<Whisper placement="top" speaker={editSpeaker} trigger="hover">
+						<IconButton disabled={props.upArray.length === 0} color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
+					</Whisper>}
+				{edit && 
+					<Whisper placement="top" speaker={cancelSpeaker} trigger="hover">
+						<Button color='red' size='sm' onClick={() => setEdit(!edit)}><b>X</b></Button>
+					</Whisper>}	
+				{edit && 
+					<Whisper placement="top" speaker={submitSpeaker} trigger="hover">
+						<IconButton disabled={upgrades.length === 0} color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleRemove()}></IconButton>
+					</Whisper>}				
+			</ButtonGroup>
 		</h5>
+		{!edit && <b style={{ color: 'white' }}>Bazinga</b>}
 		{edit && <b>Select Upgrades to remove</b>}
 		{props.upArray.map((upgrade, index) => {
 			let up = upgrade;
@@ -71,7 +72,7 @@ return (
 		})}
 		<div style={{ border: "1px solid black", display: 'flex', height: '8vh',  justifyContent: 'center',  alignItems: 'center'  }}>
 			<Whisper placement="top" speaker={addSpeaker} trigger="hover">
-				<IconButton color='green' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}></IconButton>
+				<IconButton disabled={edit} color='green' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}></IconButton>
 			</Whisper>
 		</div>
 		</Panel>	
