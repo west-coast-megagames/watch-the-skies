@@ -33,7 +33,7 @@ const AircraftSchema = new Schema({
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
 	organization: { type: Schema.Types.ObjectId, ref: 'Organization', required: true },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
-	mission: { type: String, default: 'Docked' },
+	mission: { type: String, default: 'docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
 	status: [ { type: String, enum: ['damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action'] } ],
 	actions: { type: Number, default: 1 },
@@ -120,7 +120,8 @@ AircraftSchema.methods.reset = async function (type) {
 		case 'mission':
 			// do mission reset logic
 			(unit.missions <= 0) ? unit.missions = 1 : unit.missions = 0; // Reduces the availible missions by 1
-			unit.assignment = { type: 'Garrison' }; // Sets assignment as current mission
+			unit.mission = 'docked'; // Sets assignment as current mission TODO update when John redoes missions for aircraft
+			await this.recall(true);
 			break;
 		case 'action':
 			// do mission reset logic

@@ -3,13 +3,13 @@ import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton,
 import UpgradeDrawer from "../../../../components/common/upgradeDrawer";
 import socket from "../../../../socket";
 import TransferForm from "../../../../components/common/TransferForm";
+import UpgradeTable from './UpgradeTable';
 import { getMilitaryIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
 import { connect } from "react-redux";
 import { getMilitary } from "../../../../store/entities/military";
 
 const MilitaryStats = (props) => {
-	const [showUpgrade, setShowUpgrade] = React.useState(false);
 	const [showTransfer, setShowTransfer] = React.useState(false);
 
 	const repair = async () => {
@@ -22,7 +22,7 @@ const MilitaryStats = (props) => {
 		}
 	};
 
-	let { stats, status, name, zone, type, origin, site, actions, missions, assignment } = props.unit;
+	let { stats, status, name, zone, type, origin, site, actions, missions, assignment, upgrades } = props.unit;
 	return (
 		<Container>
 			<Panel>
@@ -33,6 +33,7 @@ const MilitaryStats = (props) => {
 								src={getMilitaryIcon(props.unit)} width="90%" alt='Failed to Load'
 							/>		
 						</div>		
+						<StatusBar  control={props.control} unit={props.unit}/>
 						<div>
 						<Whisper placement="top" speaker={healthSpeaker} trigger="click">
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
@@ -76,7 +77,7 @@ const MilitaryStats = (props) => {
 						</p>
 						<p>
 							<b>Base:</b> {origin.name}{" "}
-							<IconButton disabled={actions + missions <= 0} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true)} icon={<Icon icon="send" />}>
+							<IconButton disabled={(actions + missions <= 0) || status.some(el => el === 'mobilized')} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true)} icon={<Icon icon="send" />}>
 								Transfer Unit
 							</IconButton>
 						</p>
@@ -127,25 +128,20 @@ const MilitaryStats = (props) => {
 						</FlexboxGrid>
 					</Panel>
 					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={8}>
+					<FlexboxGrid.Item colspan={12}>
 							<Panel style={{ height: '100%'}} bordered>
 								<h5>Current Mission</h5>
 								{assignment.type && <b>{assignment.type}</b>}
 								{assignment.target && <p>{assignment.target}</p>}
 							</Panel>
-					</FlexboxGrid.Item>
-					<FlexboxGrid.Item colspan={4}>
-						<StatusBar  control={props.control} unit={props.unit}/>
-						<br/>
-						{ true && <IconButton block color='blue' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}>Upgrade Unit</IconButton>}
+
+							<UpgradeTable unit={props.unit} upgrades={props.upgrades} upArray={upgrades} />
+
 					</FlexboxGrid.Item>
 			 </FlexboxGrid>
 				<br />
 			</Panel>
-		{showUpgrade && <UpgradeDrawer show={showUpgrade}
-			closeUpgrade={() => setShowUpgrade(false)}
-			unit={props.unit}
-		/>}
+
 		{showTransfer && <TransferForm 
 			units={props.units}
 			aircrafts={props.aircrafts}

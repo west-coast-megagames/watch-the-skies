@@ -38,6 +38,10 @@ module.exports = async function (client, req) {
 				switch (req.type) {
 				case('equip'): // Equip Action Trigger
 					unit = await unit.equip(req.data.upgrades);
+					client.emit('alert', { type: 'success', message: `${unit.name} un - equip completed.` });
+					break;
+				case('unequip'): // Equip Action Trigger
+					unit = await unit.unequip(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
 				case('recon'): // Recon Action Trigger

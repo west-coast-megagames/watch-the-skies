@@ -1,62 +1,20 @@
 import React, { useEffect } from 'react';
-import { Container, Content, Icon, Table, Button, Alert, Panel } from 'rsuite';
+import { Container, Content, Icon, Table, Button, Alert, Panel, IconButton, ButtonToolbar, ButtonGroup, Checkbox } from 'rsuite';
+import UpgradeDrawer from '../../../../components/common/upgradeDrawer';
 import socket from '../../../../socket';
 
 const { HeaderCell, Cell, Column } = Table;
 
 const UpgradeTable = (props) => {
-	const [data, setData] = React.useState();
+	const [edit, setEdit] = React.useState(false);
+	const [showUpgrade, setShowUpgrade] = React.useState(false);
+	const [upgrades, setUpgrades] = React.useState([]);
 
-	useEffect(() => {
-		loadTable();
-	}, [props]);
 
-	const loadTable = () => {
-		let obj = {};               // Object to add to the data array
-		let someData = [];                  // Data to populate the table with
-		let id_count = 0;        // A unique count to assign to the fields
-		for (let upgrade of props.unit.upgrades) { 
-			id_count++;   
-				obj = {
-						id: upgrade._id,
-						name: upgrade.name,
-						effect: '',
-						children: []
-				}
-				for (let effect of upgrade.effects) {
-					let thisType = 'Unknown'
-					switch (effect.type) {
-						case 'attack': 
-							thisType = 'Attack'
-							break;
-						case 'defense': 
-							thisType = 'Defense'
-							break;
-						case 'terror': 
-							thisType = 'Terror'
-							break;
-						case 'pr': 
-							thisType = 'PR'
-							break;
-						default:
-							thisType = 'Unknown'
-							break;
-					}
-					let ob2 = {
-						id: id_count,
-						effect: effect.effect,
-						type: thisType
-					}
-					obj.children.push(ob2);
-				}
-				someData.push(obj);
-		}  
-		setData(someData);
-}
 
-const handleRemove = async (upgrade) => {
+const handleRemove = () => {
 	try {
-		socket.emit( 'upgradeSocket', 'remove', { upgrade, unit: props.selected, model: props.unit.model });
+		socket.emit('request', { route: 'military', action: 'action', type: 'unequip', data: { units: [ props.unit._id ], upgrades }});
 	}
 	catch (err) {
 		Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -64,56 +22,58 @@ const handleRemove = async (upgrade) => {
 }
 
 return (
-	<Container>
-		<Content>
-			<hr />
-			<p>Upgrades</p>
-			{data && data.length > 0 && <Table
-				isTree
-				defaultExpandAllRows
-				rowKey="id"
-				cellBordered
-				autoHeight
-				data={data}
-				renderTreeToggle={(icon, rowData) => {
-					// console.log(rowData);
-					if (rowData.children && rowData.children.length === 0) {
-					return <Icon icon="spinner" spin />;
-					}
-					return icon;
-				}}
-			>
-				<Column flexGrow={1} >
-					<HeaderCell>Name</HeaderCell>
-					<Cell dataKey="name" />
-				</Column>
-				<Column flexGrow={1} >
-					<HeaderCell>Type</HeaderCell>
-					<Cell dataKey="type" />
-				</Column>
-				<Column flexGrow={1} >
-					<HeaderCell>Effects</HeaderCell>
-					<Cell dataKey="effect" />
-				</Column>
-				<Column>
-					<HeaderCell>Delete</HeaderCell>
-						<Cell style={{padding: '8px'}}>
-							{rowData => {
-								if (typeof rowData.id === 'string') return (<Button color='red' size='xs' onClick={() => handleRemove(rowData.id)}>Remove</Button>)
-								else return '';
-							}}
-						</Cell>
-				</Column>
-			</Table>
-			}
-			{!data && <Panel>
-				No Upgrades Equipped
-			</Panel>}
-		<br></br>
-		</Content>
-	</Container>
+	<div>
+		<Panel bordered>
+		<h5 style={{ textAlign: 'center' }}>Upgrades 
+			<ButtonToolbar>
+				<ButtonGroup>
+					<IconButton color='green' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}></IconButton>		
+					{!edit && <IconButton color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>}
+					{edit && <IconButton color='red' size='sm' icon={<Icon icon="exit" />} onClick={() => setEdit(!edit)}></IconButton>}	
+					{edit && <IconButton color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleRemove()}></IconButton>}				
+				</ButtonGroup>
+			</ButtonToolbar>
+		</h5>
+		{props.upArray.length === 0 && <b>No Upgrades equipped</b>}
+		{props.upArray.map((upgrade, index) => {
+			let up = upgrade;
+			if (!up.name) up = props.upgrades.find(el => el._id === upgrade); 
+			
+			return( // if the upgrade is not populated from the unit we gotta find
+				<div style={{ border: "1px solid black", display: 'flex' }}>
+					{edit && <Checkbox checked={upgrades.some(el => el === up._id)} 
+					onClick={() => {
+						if(upgrades.some(el => el === up._id)) {
+							const index = upgrades.findIndex(el => el === up._id);
+							const temp =  [ ...upgrades ];
+							temp.splice(index, 1);
+							setUpgrades(temp);
+						}
+						else {
+							setUpgrades([ ...upgrades, up._id ]);
+						}
+						// setUpgrades([up])
+						}} 
+						/>}
+					<div>
+						<h5 style={{ margin: '5px' }}>{up.name}</h5>{up._id}
+						{up.effects.map(effect => (<p style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.effect}  {effect.type}</p>))}						
+					</div>
+
+				</div>
+			) 
+		})}
+		</Panel>	
+		{<UpgradeDrawer show={showUpgrade}
+				closeUpgrade={()=> setShowUpgrade(!showUpgrade)}
+				unit={props.unit}
+				upgrades={props.upgrades}
+			/>}	
+	</div>
+
 );
 	
 }
+ 
 
 export default UpgradeTable;

@@ -28,7 +28,7 @@ const AircraftTable = (props) => {
   }
 
 	const submitCancel = (id) => {
-		socket.emit('request', { route: 'military', action: 'reset', data: { units: [ id ], type: 'mission' }});
+		socket.emit('request', { route: 'aircraft', action: 'reset', data: { units: [ id ], type: 'mission' }});
   }
 
   const handleChangeLength = (dataKey) => {
@@ -52,37 +52,37 @@ const AircraftTable = (props) => {
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-      <Column flexGrow={2}>
+      <Column flexGrow={1}>
         <HeaderCell >Integrity</HeaderCell>
         <Cell style={{ padding: 0 }} verticalAlign='middle' >
           {rowData => {
             let { stats } = rowData
             return(
 							<div>
-								<b style={{position: 'absolute', left: '47%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
+								<b style={{position: 'absolute', bottom: '15px', left: '47%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
 									{/* <b>{stats.hull} / {stats.hullMax}</b> */}
-									<Progress.Line style={{ padding: 0 }} strokeWidth={25} percent={stats.hull / stats.hullMax * 100} strokeColor={(stats.hull / stats.hullMax * 100) < 100 ? '#ffc107' : "#4caf50"} showInfo={false}/>									
+									<Progress.Line style={{ padding: 0 }}  percent={stats.hull / stats.hullMax * 100} strokeColor={(stats.hull / stats.hullMax * 100) < 100 ? '#ffc107' : "#4caf50"} showInfo={false}/>									
 							</div>
             )
           }}
         </Cell>
       </Column>
 
-			{/* <Column flexGrow={1}>
-        <HeaderCell >Mission</HeaderCell>
-        <Cell style={{ padding: 0 }} verticalAlign='middle' >
-          {rowData => {
-            let { assignment, _id, name } = rowData
-            return( 
-						<div>
-							{assignment.type}
-							{assignment.type !== 'Garrison' && <Whisper placement="top" speaker={<Tooltip>Cancel {name}'s mission (does not recall)</Tooltip>} trigger="hover">
-								<IconButton size="xs" icon={<Icon icon="exit" />} onClick={() => submitCancel(_id)} color="red"/>
-							</Whisper>}
-						</div>)
-          }}
-        </Cell>
-      </Column> */}
+			<Column  flexGrow={1}>
+          <HeaderCell>Mission</HeaderCell>
+          <Cell >
+        	  {rowData => {
+        	    let { mission, name, _id } = rowData
+        	    return( 
+							<div> 
+								<b style={{ textTransform: 'capitalize' }}>{mission}</b>
+								{mission.toLowerCase() !== 'docked' && props.control && <Whisper placement="top" speaker={<Tooltip>Cancel {name}'s mission (does not recall)</Tooltip>} trigger="hover">
+									<IconButton size="xs" icon={<Icon icon="exit" />} onClick={() => submitCancel(_id)} color="red"/>
+								</Whisper>}
+							</div>)
+        	  }}
+					</Cell>
+      </Column>
 
       <Column flexGrow={1} >
         <HeaderCell>Location</HeaderCell>

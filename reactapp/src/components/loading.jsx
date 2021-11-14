@@ -34,7 +34,7 @@ const LoadingPage = (props) => {
 		// 	history.push('/home');
 		// } else {
 			// Leave this in just in case login fucks up again
-			props.debugTeam(props.entities.teams.list[1]); // Forces your TEAM to USA
+			props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
 			props.finishLoading();
 			history.push('/home');
 	

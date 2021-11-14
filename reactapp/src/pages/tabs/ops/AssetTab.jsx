@@ -9,7 +9,6 @@ import { getMilitary } from '../../../store/entities/military';
 import { getUpgrades } from '../../../store/entities/upgrades';
 import { socket } from '../../../api';
 import MilitaryStats from './asset/militaryStats';
-import UpgradeTable from './asset/UpgradeTable';
 import AircraftStats from './asset/AircraftStats';
 import { getAircrafts } from '../../../store/entities/aircrafts';
 
@@ -101,16 +100,15 @@ const AssetTab = (props) => {
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Asset???</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
-						<MilitaryStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
-						<UpgradeTable unit={selected}/>
+						<MilitaryStats upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
 				}
 				{ selected && selected.model === 'Facility' && 
-					<FacilityStats  control={props.control} facility={selected}/>
+					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<AircraftStats control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
+					<AircraftStats upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>
