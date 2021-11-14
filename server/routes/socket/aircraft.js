@@ -12,7 +12,7 @@ module.exports = async function (client, req) {
 		let message, target, result;
 		switch(req.action) {
 		case('action'):
-			for (const _id of req.data.aircraft) {
+			for (const _id of req.data.aircrafts) {
 				let unit = await Aircraft.findById(_id);
 				await unit.populateMe();
 				// Switch for the Military Actions, triggered off of the TYPE of action being done
