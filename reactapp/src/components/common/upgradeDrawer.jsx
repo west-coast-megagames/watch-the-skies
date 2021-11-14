@@ -75,7 +75,7 @@ const UpgradeDrawer = (props) => {
 
 	const handleSubmit = async (blueprint) => {
 		try{
-			socket.emit('request', { route: 'military', action: 'action', type: 'equip', data: { units: [ props.unit._id ], upgrades: selected }});
+			socket.emit('request', { route: props.unit.model.toLowerCase(), action: 'action', type: 'equip', data: { units: [ props.unit._id ], aircrafts: [ props.unit._id ], upgrades: selected }});
 			
 			// props.closeUpgrade()
 		}
