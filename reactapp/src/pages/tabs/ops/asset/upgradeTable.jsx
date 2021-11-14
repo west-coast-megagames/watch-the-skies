@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Content, Icon, Table, Button, Alert, Panel, IconButton, ButtonToolbar, ButtonGroup, Checkbox } from 'rsuite';
+import { Container, Content, Icon, Table, Button, Alert, Panel, IconButton, ButtonToolbar, ButtonGroup, Checkbox, Popover, Whisper } from 'rsuite';
 import UpgradeDrawer from '../../../../components/common/upgradeDrawer';
 import socket from '../../../../socket';
 
@@ -24,23 +24,29 @@ const handleRemove = () => {
 return (
 	<div>
 		<Panel bordered>
-		<h5 style={{ textAlign: 'center' }}>Upgrades 
-			<ButtonToolbar>
+		<h5 style={{ textAlign: 'center' }}>Upgrades ({props.upArray.length}) 
 				<ButtonGroup>
-					<IconButton color='green' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}></IconButton>		
-					{!edit && <IconButton color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>}
-					{edit && <IconButton color='red' size='sm' icon={<Icon icon="exit" />} onClick={() => setEdit(!edit)}></IconButton>}	
-					{edit && <IconButton color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleRemove()}></IconButton>}				
+					{!edit && 						
+						<Whisper placement="top" speaker={editSpeaker} trigger="hover">
+							<IconButton disabled={props.upArray.length === 0} color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
+						</Whisper>}
+					{edit && 
+						<Whisper placement="top" speaker={cancelSpeaker} trigger="hover">
+							<Button color='red' size='sm' onClick={() => setEdit(!edit)}><b>X</b></Button>
+						</Whisper>}	
+					{edit && 
+						<Whisper placement="top" speaker={submitSpeaker} trigger="hover">
+							<IconButton disabled={upgrades.length === 0} color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleRemove()}></IconButton>
+						</Whisper>}				
 				</ButtonGroup>
-			</ButtonToolbar>
 		</h5>
-		{props.upArray.length === 0 && <b>No Upgrades equipped</b>}
+		{edit && <b>Select Upgrades to remove</b>}
 		{props.upArray.map((upgrade, index) => {
 			let up = upgrade;
 			if (!up.name) up = props.upgrades.find(el => el._id === upgrade); 
 			
 			return( // if the upgrade is not populated from the unit we gotta find
-				<div style={{ border: "1px solid black", display: 'flex' }}>
+				<div style={{ border: "1px solid black", display: 'flex', height: '8vh' }}>
 					{edit && <Checkbox checked={upgrades.some(el => el === up._id)} 
 					onClick={() => {
 						if(upgrades.some(el => el === up._id)) {
@@ -56,13 +62,18 @@ return (
 						}} 
 						/>}
 					<div>
-						<h5 style={{ margin: '5px' }}>{up.name}</h5>{up._id}
-						{up.effects.map(effect => (<p style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.effect}  {effect.type}</p>))}						
+						<h5 style={{ margin: '5px' }}>{up.name}</h5>
+						{up.effects.map(effect => (<b style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.effect}  {effect.type}</b>))}						
 					</div>
 
 				</div>
 			) 
 		})}
+		<div style={{ border: "1px solid black", display: 'flex', height: '8vh',  justifyContent: 'center',  alignItems: 'center'  }}>
+			<Whisper placement="top" speaker={addSpeaker} trigger="hover">
+				<IconButton color='green' size='sm' icon={<Icon icon="plus" />} onClick={() => setShowUpgrade(true)}></IconButton>
+			</Whisper>
+		</div>
 		</Panel>	
 		{<UpgradeDrawer show={showUpgrade}
 				closeUpgrade={()=> setShowUpgrade(!showUpgrade)}
@@ -72,8 +83,35 @@ return (
 	</div>
 
 );
-	
 }
+
+const editSpeaker = (
+  <Popover title="Edit">
+    <p>
+      Remove upgrades
+    </p>
+  </Popover>
+);
+
+const cancelSpeaker = (
+  <Popover title="Cancel">
+  </Popover>
+);
+
+const addSpeaker = (
+  <Popover title="Add">
+    <p>
+      Add upgrades
+    </p>
+  </Popover>
+);
+
+const submitSpeaker = (
+  <Popover title="Submit">
+		Must select at least one upgrade
+  </Popover>
+);
+
  
 
 export default UpgradeTable;
