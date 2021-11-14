@@ -21,6 +21,14 @@ module.exports = async function (client, req) {
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });
 					break;
+				case('equip'): // Equip Action Trigger
+					unit = await unit.equip(req.data.upgrades);
+					client.emit('alert', { type: 'success', message: `${unit.name} un - equip completed.` });
+					break;
+				case('unequip'): // Equip Action Trigger
+					unit = await unit.unequip(req.data.upgrades);
+					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
+					break;
 				case('transfer'): // Transfer Action Trigger
 					message = await unit.transfer(req.data.destination);
 					client.emit('alert', { type: 'success', message });
