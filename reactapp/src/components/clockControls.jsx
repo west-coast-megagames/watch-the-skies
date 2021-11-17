@@ -16,8 +16,8 @@ const ClockControls = ({paused}) => {
 		<ButtonToolbar>
 			<ButtonGroup>
 				<IconButton icon={ <Icon icon='step-backward' />} onClick={ () => socket.emit('request', { route: 'clock', action: 'revert'}) } />
-				<IconButton disabled={paused} icon={ <Icon icon='pause' />} onClick={ () => { socket.emit('request', { route: 'clock', action: 'pause'}); Alert.success('woo')}} />
-				<IconButton disabled={!paused} icon={ <Icon icon='play' />} onClick={ () => { socket.emit('request', { route: 'clock', action: 'play'}); Alert.success('woo')} } />
+				<IconButton disabled={paused} icon={ <Icon icon='pause' />} onClick={ () => { socket.emit('request', { route: 'clock', action: 'pause'}); }} />
+				<IconButton disabled={!paused} icon={ <Icon icon='play' />} onClick={ () => { socket.emit('request', { route: 'clock', action: 'play'}); } } />
 				<IconButton icon={ <Icon icon='step-forward' />} onClick={ () => socket.emit('request', { route: 'clock', action: 'skip'}) } />
 			</ButtonGroup>
 			<Button icon={ <Icon icon='play' />} onClick={ () => socket.emit('request', { route: 'clock', action: 'reset'}) }>Reset</Button>
