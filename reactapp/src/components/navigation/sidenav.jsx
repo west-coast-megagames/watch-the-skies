@@ -4,6 +4,7 @@ import { Sidenav, Sidebar, Icon, Nav, Navbar, Dropdown, Whisper, Popover, Loader
 import { NavLink } from 'react-router-dom'; // React navigation components
 import ClockControls from '../clockControls';
 import { signOut, } from '../../store/entities/auth';
+import { getMyTeam } from '../../store/entities/teams';
 
 const iconStyles = { width: 56, height: 56, lineHeight: '56px', textAlign: 'center' };
 
@@ -64,7 +65,7 @@ class SideNav extends Component {
 								<Whisper placement="right" trigger="click" speaker={clock}>
 									<Nav.Item eventKey="8" icon={<Icon icon="clock-o"/>}>Game Clock</Nav.Item>
 								</Whisper>
-								{this.props.user.roles.some(el => el === 'Control') ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
+								{(this.props.user.roles.some(el => el === 'Control') || this.props.team.type === 'Control') ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
 							</Nav>
 						</Sidenav.Body>
 					</Sidenav>
@@ -81,6 +82,7 @@ class SideNav extends Component {
 const mapStateToProps = state => ({
   login: state.auth.login,
 	user: state.auth.user,
+	team: getMyTeam(state),
 	loadComplete: state.auth.loadComplete
 });
 
