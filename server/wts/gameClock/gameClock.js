@@ -216,6 +216,8 @@ class GameTimer {
 	setSeconds(secs = 0) {
 		this.roundEnd = new Date(Date.now());
 		this.roundEnd.setSeconds(this.roundEnd.getSeconds() + secs);
+
+		return;
 	}
 
 	setHours(hours = 0) {
