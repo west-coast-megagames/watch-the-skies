@@ -12,6 +12,7 @@ import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
 import { getDeployed, getMobilized } from '../../../store/entities/military';
+import socket from '../../../socket';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -44,9 +45,11 @@ function PrototypeMap(props) {
 	const [geo, setGeo] = React.useState(null);
 	// const [mapClick, setMapClick] = React.useState({event: undefined})
 	const [selected, setSelected] = React.useState(null);
-	const [sites, setSites] = React.useState([ ...props.sites ]);
+	const [sites, setSites] = React.useState([ ...props.groundSites ]);
 	const [contacts, setContacts] = React.useState([ ...props.contacts ]);
 	const [military, setMilitary] = React.useState([ ...props.military ]);
+	
+	const [dragGeo, setDragGeo] = React.useState(null);
 
 	// const onMapClick = React.useCallback((event) => {
 	// 	setMenu({
@@ -70,11 +73,9 @@ function PrototypeMap(props) {
 	}, [props.center]);
 
 	useEffect(() => { // props.display.some(el => el !== site.subType)
-		console.log(props.display)
-		let sites = [ ...props.sites ];
+		let sites = [ ...props.groundSites ];
 		let contacts = [ ...props.contacts ];
 		let military = [ ...props.military ];
-		console.log(military)
 		if (!props.display.some(el => el === 'sites')) {
 			sites = sites.filter(site => props.display.some(el => el === site.subType));
 		}
@@ -100,6 +101,17 @@ function PrototypeMap(props) {
 		// console.log('Closing the menu!')
 		// setMapClick({event: onMapClick});
 		setMenu(null);
+	}
+
+	const handleOnDragEnd = (data, sat) => {
+		// setDragGeo({ id: sat._id, geoDecimal: data.latLng.toJSON()})
+		socket.emit('request', { route: 'site', action: 'space', actionType: 'geoPosition', data: { _id: sat._id, geoPosition: data.latLng.toJSON() }});
+		console.log(sat.geoDecimal)
+		console.log(data.latLng.toJSON())
+	}
+
+	const handlenDrag = (data) => {
+		console.log(dragGeo)
 	}
 
 	const mapRef = React.useRef();
@@ -168,10 +180,62 @@ function PrototypeMap(props) {
 						anchor: new window.google.maps.Point(10, 10)
 					}}
 				>
-					{site.subType === 'Satellite' &&  <div>
+				</Marker>
+			)}
+			</MarkerClusterer>}
+
+			{/* The Satellite clusterer... */}
+			{props.display.some(el => el === 'Satellite') && <MarkerClusterer options={clusterOptions}
+			styles={[
+				{
+					url: "Arrays start at zero",
+					height: 56,
+					width: 55,
+				},
+				{
+					url: "https://i.imgur.com/h2t00jl.png",
+					height: 56,
+					width: 55,
+					position: 'absolute',
+					left: '100px',
+					top: '100px'
+				},
+				{
+					url: "https://i.imgur.com/Cn8zTPb.png",
+					height: 62,
+					width: 63,
+					position: 'absolute',
+					left: '100px',
+					top: '100px'
+				},
+			]}
+			>
+				
+			{/*The Marker*/}
+			{(clusterer) => props.satellites.map(satellite => 
+				<Marker
+					title={satellite.name}
+					key={satellite._id}
+					clusterer={clusterer}
+					position={{ lat: satellite.geoDecimal.lat, lng: satellite.geoDecimal.lng }}
+					draggable
+					onDragEnd={(data) => handleOnDragEnd(data, satellite)}
+					onClick={()=> {
+						setGeo(satellite.geoDecimal)
+						setMenu(satellite);
+						// setMapClick({event: undefined});
+					}}
+					icon={{
+						url: getMapIcon(satellite),
+						scaledSize: new window.google.maps.Size(55, 55),
+						origin: new window.google.maps.Point(0,0),
+						anchor: new window.google.maps.Point(10, 10)
+					}}
+				>
+					{satellite.subType === 'Satellite' &&  <div>
 						<Circle
     				  // required
-    				  center={site.geoDecimal}
+    				  center={ (dragGeo && dragGeo.id === satellite._id) ? dragGeo.geoDecimal :  satellite.geoDecimal}
     				  // required
     				  options={{
 								strokeColor: '#FF0000',
@@ -191,6 +255,7 @@ function PrototypeMap(props) {
 				</Marker>
 			)}
 			</MarkerClusterer>}
+
 
 			{/*The Contact Clusterer*/}
 			{<MarkerClusterer options={clusterOptions}

@@ -87,10 +87,6 @@ const data = [
         value: 'City'
       },
 			{
-        label: "Satellites",
-        value: 'Satellite'
-      },
-			{
         label: "Points of Interest",
         value: 'Point of Interest'
       },
@@ -113,6 +109,10 @@ const data = [
         value: 'aliens'
       },
 		]
+	},
+	{
+		label: "Satellites",
+		value: 'Satellite'
 	},
 	{
 		label: "Intel",
