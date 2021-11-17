@@ -3,7 +3,6 @@ const { logger } = require('../middleware/log/winston'); // middleware/error.js 
 const config = require('config'); // Import of config modules to pull config variables
 
 const nexusEvent = require('../middleware/events/events'); // Local NODE event trigger
-const masterClock = require('../wts/gameClock/gameClock'); // Import of main clock class
 
 const transaction = require('./socket/transaction'); // Import of Socket route for WTS Transaction system
 const clock = require('./socket/clock'); // Import of Socket route for WTS Clock controls
