@@ -9,7 +9,7 @@ const ClockControls = ({paused}) => {
 	const [info, setInfo] = React.useState({ phase: 'Test Phase', turn:  'Test Turn', turnNum: 0, year: 2021 });
 
 	useEffect(() => {
-		socket.emit('request', {route: 'clock', action:'getState'})
+		socket.emit('request', {route: 'clock', action:'getState'});
 	}, []);
 
 	return (

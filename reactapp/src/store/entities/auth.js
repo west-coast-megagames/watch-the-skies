@@ -66,7 +66,7 @@ const slice = createSlice({
     },
     usersRecieved: (auth, action) => {
       console.log(`${action.type} Dispatched`)
-      auth.users = action.payload
+      auth.users = action.payload;
     },
     loginSocket: (auth, action) => {
       console.log(`${action.type} Dispatched`);

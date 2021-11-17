@@ -351,7 +351,6 @@ MilitarySchema.methods.unequip = async function (upgrades = []) {
 		// this.populate('upgrades').execPopulate(); // Populates the upgrads
 		this.upgrades = temp;
 
-		console.log(this.upgrades)
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		return unit; // unit;

@@ -11,10 +11,6 @@ import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
 
 const MapPage = (props) => {
-	const [sites, setSites] = React.useState(true);
-	const [contacts, setContacts] = React.useState(true);
-	const [military, setMilitary] = React.useState(true);
-	const [intel, setIntel] = React.useState(true);
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts']);
 
