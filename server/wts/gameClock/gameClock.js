@@ -137,6 +137,7 @@ class GameTimer {
 		this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
 		nexusEvent.emit('phaseChange', this.currentPhase);
 		logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
+		this.broadcastClock();
 
 		return;
 	}
@@ -150,6 +151,9 @@ class GameTimer {
 			this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
 			this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
 			logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
+			this.broadcastClock();
+
+			return;
 		}
 		else {
 			throw Error('Cannot revert, at start of game');
@@ -160,6 +164,8 @@ class GameTimer {
 		this.turnNum++;
 		this.currentTurn = `${this.turnNames[this.turnNum % this.turnNames.length]}`;
 		logger.info(`${this.currentTurn} has begun!`);
+
+		return;
 	}
 
 	revertTurn() {
@@ -171,6 +177,8 @@ class GameTimer {
 		else {
 			throw Error('Cannot revert, at start of game');
 		}
+
+		return;
 	}
 
 	getTimeRemaining() {
@@ -263,6 +271,10 @@ class GameTimer {
 		else {
 			this.addSeconds(hours * 60 * 60);
 		}
+	}
+
+	broadcastClock() {
+		nexusEvent.emit('request', 'broadcast', [ this.getClockState() ]);
 	}
 }
 
