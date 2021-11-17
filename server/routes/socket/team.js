@@ -10,19 +10,16 @@ module.exports = async function (client, req) {
 		let message;
 		switch(req.action) {
 		case('register'):
-			try {
-				let team = await Team.findById(req.data.team);
-				team = await team.assignUsers(req.data.users);
-				client.emit('alert', { type: 'success', message: `Assigned ${req.data.users.length} to ${team.shortnName}. (${team.users.length} members on team!).` });
-			} catch (error) {
-				client.emit('alert', { type: 'error', message: error.message ? error.message : error });
-			}
+			let team = await Team.findById(req.data.team);
+			team = await team.assignUsers(req.data.users);
+			client.emit('alert', { type: 'success', message: `Assigned ${req.data.users.length} to ${team.shortnName}. (${team.users.length} members on team!).` });
 			break;
 		default:
 			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
 		}
-	} catch (error) {
+	}
+	catch (error) {
 		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 		console.log(error);
 	}
