@@ -2,7 +2,10 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validOrganization, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
+const { validTeam, validOrganization, validZone, validLog, validFacility } = require('../middleware/util/validateDocument');
+const { addArrayValue } = require('../middleware/util/arrayCalls');
+const nexusEvent = require('../middleware/events/events');
+const { convertToDms } = require('../util/systems/geo');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -44,16 +47,29 @@ const SiteSchema = new Schema({
 	}
 });
 
-SiteSchema.methods.warzone = async function () {
-	const status = this.status.some(el => el === 'warzone')
-	if (!status) {
-		addArrayValue(this.status, 'warzone');
+SiteSchema.methods.addStatus = async function (status) {
+	const present = this.status.some(el => el === status);
+	if (!present) {
+		addArrayValue(this.status, status);
 		this.markModified('status');
-		let site = await target.save();
+		const site = await this.save();
 
 		nexusEvent.emit('request', 'update', [ site ]);
 	}
-}
+};
+
+SiteSchema.methods.geoPosition = async function (geoDecimal) {
+	this.geoDecimal = geoDecimal;
+	this.geoDMS = {
+		latDMS: convertToDms(geoDecimal.lat, false),
+		lngDMS: convertToDms(geoDecimal.lng, true)
+	};
+
+	const site = await this.save();
+	nexusEvent.emit('request', 'update', [ site ]);
+
+	return;
+};
 
 // validateSite method
 SiteSchema.methods.validateSite = async function () {
@@ -87,9 +103,9 @@ SiteSchema.methods.validateSite = async function () {
 			status: Joi.string().valid('occupier', 'liberator', '')
 		});
 
-		favorTeamSchema = Joi.object({
-			name: Joi.string().required()
-		});
+		// favorTeamSchema = Joi.object({
+		// 	name: Joi.string().required()
+		// });
 
 		break;
 
@@ -140,13 +156,13 @@ SiteSchema.methods.validateSite = async function () {
 	if (this.type === 'Ground') {
 
 		for await (const fav of this.favor) {
-		  await validTeam(fav.team._id);
+			await validTeam(fav.team._id);
 
 			const favorCheck = favorSchema.validate(fav, { allowUnknown: true });
-		  if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
+			if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
 
 			const favorTeamCheck = favorSchema.validate(fav.team, { allowUnknown: true });
-		  if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
+			if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
 		}
 	}
 };
@@ -163,9 +179,9 @@ const GroundSite = Site.discriminator(
 		repression: { type: Number, min: 0, max: 100, default: 0 },
 		morale: { type: Number, min: 0, max: 100, default: 50 },
 		favor: [FavorSchema],
-		tags: [{ type: String, enum: ['coastal', 'capital']} ],
+		tags: [{ type: String, enum: ['coastal', 'capital'] } ],
 		dateline: { type: String, default: 'Dateline' },
-		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
+		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied'] } ]
 	})
 );
 
@@ -180,7 +196,7 @@ const SpaceSite = Site.discriminator(
 			maxlength: 50,
 			enum: ['Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station']
 		},
-		status: [ {type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']} ]
+		status: [ { type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret'] } ]
 	})
 );
 
