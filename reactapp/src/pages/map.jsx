@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert } from 'rsuite';
+import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker } from 'rsuite';
 import BalanceHeader from '../components/common/BalanceHeader';
 // import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ const MapPage = (props) => {
 	const [military, setMilitary] = React.useState(true);
 	const [intel, setIntel] = React.useState(true);
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
+	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts']);
 
 	const handleThing = (value) => {
 		const site = props.sites.find(el => el._id === value);
@@ -34,6 +35,10 @@ const MapPage = (props) => {
 		}
 	}, []);
 
+	const handleDis = (dis) => {
+		setDisplay(dis);
+	};
+
 	if (!props.login) {
 		props.history.push('/');
 		return <LoginLink history={props.history} />
@@ -42,12 +47,14 @@ const MapPage = (props) => {
 		<Container>
 				<FlexboxGrid justify="space-around" align="middle">
 					<FlexboxGrid.Item colspan={12}>
-						<CheckboxGroup inline name="checkboxList">
-							<Checkbox onChange={() => setSites(!sites)} checked={sites}>Sites</Checkbox>
-							<Checkbox onChange={() => setContacts(!contacts)} checked={contacts}>Contacts</Checkbox>
-							<Checkbox onChange={() => setIntel(!intel)} checked={intel}>Intel</Checkbox>
-							<Checkbox onChange={() => setMilitary(!military)} checked={military}>Military</Checkbox>		
-						</CheckboxGroup>	
+						<CheckTreePicker 
+							defaultExpandAll
+							data={data}
+							defaultValue={display}
+							placeholder="Select Map Elements"
+							valueKey='value'
+							onChange={handleDis}
+						/>
 					</FlexboxGrid.Item>
 
 					<FlexboxGrid.Item colspan={8}>
@@ -68,12 +75,71 @@ const MapPage = (props) => {
 					
 				</FlexboxGrid>
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
-				<PrototypeMap siteBoolean={sites} contactBoolean={contacts} intelBoolean={intel} militaryBoolean={military} center={center}></PrototypeMap>
+				<PrototypeMap display={display} center={center}></PrototypeMap>
 			</Content>
 		</Container>
     );
-  
 }
+
+const data = [
+	{
+		label: "Sites",
+    value: "sites",
+    "children": [
+			{
+        label: "Cities",
+        value: 'City'
+      },
+			{
+        label: "Satellites",
+        value: 'Satellite'
+      },
+			{
+        label: "Points of Interest",
+        value: 'Point of Interest'
+      },
+			{
+        label: "Crash Sites",
+        value: 'Crash'
+      },
+		]
+	},
+	{
+		label: "Air Contacts",
+    value: "contacts",
+    "children": [
+			{
+        label: "Interceptors",
+        value: 'interceptors'
+      },
+			{
+        label: "Aliens",
+        value: 'aliens'
+      },
+		]
+	},
+	{
+		label: "Intel",
+    value: "intel",
+    "children": [
+
+		]
+	},
+	{
+		label: "Military",
+    value: "military",
+    // "children": [
+		// 	{
+    //     label: "Deployed",
+    //     value: 'deployed'
+    //   },
+		// 	{
+    //     label: "Un-Deployed",
+    //     value: 'undeployed'
+    //   },
+		// ]
+	},
+]
 
 const mapStateToProps = state => ({
 	login: state.auth.login,

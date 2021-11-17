@@ -113,3 +113,8 @@ export const addsite = site =>
     state => state.entities.sites.list,
 		sites => sites.filter(site => (site.subType === 'Crash'))
   );
+
+	export const getSatellites = createSelector(
+    state => state.entities.sites.list,
+		sites => sites.filter(site => (site.subType === 'Satellite'))
+  );

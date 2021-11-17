@@ -5,6 +5,7 @@ const icon = {
 	FFG: 'https://cdn.discordapp.com/attachments/481529413482315777/774161302259892234/UFO_generic.png',
 	Unknown: 'https://cdn.discordapp.com/attachments/481529413482315777/774161297972527104/unknown_generic.png',
 	PoI: 'https://cdn.discordapp.com/attachments/483851642605928449/775640807738310666/interest_site2.png',
+	Satellite: 'https://cdn.discordapp.com/attachments/857862435096100884/910396164862533633/test.png',
 	City: 'https://cdn.discordapp.com/attachments/483851642605928449/774234464548945940/City_site.png',
 	Crash: 'https://cdn.discordapp.com/attachments/483851642605928449/775640725400453120/crash_site2.png',
 	USA: 'https://cdn.discordapp.com/attachments/582043597281427466/776279382368845824/USA_fighter.png',
