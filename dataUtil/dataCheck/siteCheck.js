@@ -222,6 +222,82 @@ async function chkSite(runFlag) {
 						`status missing for Space Site ${site.name} ${site._id}`
 					);
 				}
+
+				if (!Object.prototype.hasOwnProperty.call(site, 'geoDMS')) {
+					logger.error(`geoDMS missing for Site ${site.name} ${site._id}`);
+				}
+				else {
+					if (!Object.prototype.hasOwnProperty.call(site.geoDMS, 'latDMS')) {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has missing geoDMS latDMS`
+						);
+					}
+					else if (site.geoDMS.latDMS === '' ||
+              site.geoDMS.latDMS === 'undefined') {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has an invalid or blank geoDMS latDMS ${site.geoDMS.latDMS}`
+						);
+					}
+
+
+					if (!Object.prototype.hasOwnProperty.call(site.geoDMS, 'lngDMS')) {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has missing geoDMS lngDMS ${site.geoDMS.latDMS}`
+						);
+					}
+					else if (
+						site.geoDMS.lngDMS === '' ||
+              site.geoDMS.lngDMS === 'undefined'
+					) {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has an invalid or blankk geoDMS lngDMS ${site.geoDMS.lngDMS}`
+						);
+					}
+				}
+
+				if (!Object.prototype.hasOwnProperty.call(site, 'geoDecimal')) {
+					logger.error(`geoDecimal missing for Site ${site.name} ${site._id}`);
+				}
+				else {
+					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'lat')) {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has missing geoDecimal lat`
+						);
+					}
+					else {
+						if (isNaN(site.geoDecimal.lat)) {
+							logger.error(
+								`Site ${site.name} ${site._id} lat is not a number ${site.geoDecimal.lat}`
+							);
+						}
+						if (site.geoDecimal.lat < -90 ||
+              site.geoDecimal.lat > 90
+						) {
+							logger.error(
+								`Site ${site.name} ${site._id} has an invalid geoDecimal lat ${site.geoDecimal.lat}`
+							);
+						}
+					}
+					if (!Object.prototype.hasOwnProperty.call(site.geoDecimal, 'lng')) {
+						logger.error(
+							`spaceSite Site ${site.name} ${site._id} has missing geoDecimal lng`
+						);
+					}
+					else {
+						if (isNaN(site.geoDecimal.lng)) {
+							logger.error(
+								`Site ${site.name} ${site._id} lng is not a number ${site.geoDecimal.lng}`
+							);
+						}
+						if (site.geoDecimal.lng < -180 ||
+              site.geoDecimal.lng > 180
+						) {
+							logger.error(
+								`Site ${site.name} ${site._id} has an invalid geoDecimal lng ${site.geoDecimal.lng}`
+							);
+						}
+					}
+				}
 			}
 		}
 

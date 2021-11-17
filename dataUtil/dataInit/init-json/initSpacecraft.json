@@ -19,7 +19,11 @@
     },
     "hidden": false,
     "shipType": "Cruiser",
-    "siteCode": "BM BDA"
+    "siteCode": "BM BDA",
+		"latDMS": "32 17 34.8 N",
+    "lngDMS": "64 46 55.2 W",
+    "lat": 32.293,
+    "lng": -64.782
   },
   {
     "loadType": "spacecraft",
@@ -41,7 +45,11 @@
     },
     "hidden": false,
     "shipType": "Station",
-    "siteCode": "US NYC"
+    "siteCode": "US NYC",
+		"latDMS": "40 42 46.84 N",
+    "lngDMS": "74 0 25.66 W",
+    "lat": 40.713,
+    "lng": -74.0071
   },
   {
     "loadType": "spacecraft",
@@ -63,7 +71,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "DZ ALG"
+    "siteCode": "CL SCL",
+		"latDMS": "33 27 0.0 S",
+    "lngDMS": "70 40 0.0 W",
+    "lat": -33.45,
+    "lng": -70.6667
   },
   {
     "loadType": "spacecraft",
@@ -85,7 +97,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "US LAX"
+    "siteCode": "US LAX",
+		"latDMS": "34 3 12.04 N",
+    "lngDMS": "118 14 32.45 W",
+    "lat": 34.0533,
+    "lng": -118.2423
   },
   {
     "loadType": "spacecraft",
@@ -107,7 +123,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "ZW HRE"
+    "siteCode": "ZW HRE",
+		"latDMS": "17 49 45.0 S",
+    "lngDMS": "31 03 8.0 E",
+    "lat": -17.8292,
+    "lng": 31.0522
   },
   {
     "loadType": "spacecraft",
@@ -129,7 +149,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "GB PLY"
+    "siteCode": "GB PLY",
+		"latDMS": "50 22 17.0 N",
+    "lngDMS": "004 8 32.0 W",
+    "lat": 50.3714,
+    "lng": -4.1422
   },
   {
     "loadType": "spacecraft",
@@ -138,7 +162,7 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "organizationCode": "RU",
+    "organizationCode": "ZA",
     "teamCode": "RSA",
     "status": {
       "damaged": false,
@@ -151,7 +175,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "ZA CPT"
+    "siteCode": "ZA CPT",
+		"latDMS": "33 55 07.89 S",
+    "lngDMS": "018 25 23.88 E",
+    "lat": -33.9189,
+    "lng": 18.4233
   },
   {
     "loadType": "spacecraft",
@@ -173,7 +201,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "RU BKA"
+    "siteCode": "RU BKA",
+		"latDMS": "55 45 21.0 N",
+    "lngDMS": "037 37 2.0 E",
+    "lat": 55.7558,
+    "lng": 37.6172
   },
   {
     "loadType": "spacecraft",
@@ -195,7 +227,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "JP NRT"
+    "siteCode": "JP NRT",
+		"latDMS": "35 43 45.0 N",
+    "lngDMS": "139 45 30.0 E",
+    "lat": 35.7292,
+    "lng": 139.7583
   },
   {
     "loadType": "spacecraft",
@@ -204,8 +240,8 @@
     "baseDefenses": false,
     "facilities": [],
     "loadout": [],
-    "organizationCode": "GB",
-    "teamCode": "TUK",
+    "organizationCode": "IR",
+    "teamCode": "IRN",
     "status": {
       "damaged": false,
       "deployed": false,
@@ -217,7 +253,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "IR IKA"
+    "siteCode": "IR IKA",
+		"latDMS": "35 24 58.00 N",
+    "lngDMS": "051 09 08.0 E",
+    "lat": 35.4161,
+    "lng": 51.1522
   },
   {
     "loadType": "spacecraft",
@@ -239,7 +279,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "IN BOM"
+    "siteCode": "IN BOM",
+		"latDMS": "18 57 50.0 N",
+    "lngDMS": "72 48 50.0 E",
+    "lat": 18.9639,
+    "lng": 72.8139
   },
   {
     "loadType": "spacecraft",
@@ -261,7 +305,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "FR MRS"
+    "siteCode": "FR MRS",
+		"latDMS": "43 17 47.0 N",
+    "lngDMS": "005 22 12.0 E",
+    "lat": 43.2964,
+    "lng": 5.37
   },
   {
     "loadType": "spacecraft",
@@ -283,7 +331,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "EG CAI"
+    "siteCode": "EG CAI",
+		"latDMS": "30 07 19.00 N",
+    "lngDMS": "031 24 20.00 E",
+    "lat": 30.1219,
+    "lng": 31.4056
   },
   {
     "loadType": "spacecraft",
@@ -305,7 +357,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "CN URC"
+    "siteCode": "CN URC",
+		"latDMS": "43 47 55.87 N",
+    "lngDMS": "87 35 18.60 E",
+    "lat": 43.7989,
+    "lng": 87.5885
   },
   {
     "loadType": "spacecraft",
@@ -327,7 +383,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "BR FOR"
+    "siteCode": "BR FOR",
+		"latDMS": "3 43 28.89 S",
+    "lngDMS": "38 28 15.71 W",
+    "lat": -3.7247,
+    "lng": -38.471
   },
   {
     "loadType": "spacecraft",
@@ -349,7 +409,11 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "AU PER"
+    "siteCode": "AU PER",
+		"latDMS": "31 57 8.0 S",
+    "lngDMS": "115 51 32.0 E",
+    "lat": -31.9522,
+    "lng": 115.8589
   },
   {
     "loadType": "spacecraft",
@@ -371,6 +435,10 @@
     },
     "hidden": false,
     "shipType": "Satellite",
-    "siteCode": "AF KBL"
+    "siteCode": "BZ BZE",
+		"latDMS": "17 29 55.0 N",
+    "lngDMS": "88 11 19.00 W",
+    "lat": 17.4986,
+    "lng": -88.1886
   }
 ]

@@ -33,7 +33,15 @@ const SiteSchema = new Schema({
 	},
 	hidden: { type: Boolean, default: false }, // just in case and to be consistent
 	facilities: [{ type: ObjectId, ref: 'Facility' }],
-	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	geoDMS: {
+		latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
+		lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
+	},
+	geoDecimal: {
+		lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
+		lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
+	}
 });
 
 SiteSchema.methods.warzone = async function () {
@@ -93,6 +101,16 @@ SiteSchema.methods.validateSite = async function () {
 			status: Joi.array().items(Joi.string().valid('damaged', 'destroyed', 'upgrade', 'repair', 'secret'))
 		});
 
+		geoDMSSchema = Joi.object({
+			latDMS: Joi.string().min(7).max(13),
+			lngDMS: Joi.string().min(7).max(14)
+		});
+
+		geoDecimalSchema = Joi.object({
+			lat: Joi.number().min(-90).max(90),
+			lng: Joi.number().min(-180).max(180)
+		});
+
 		break;
 
 	default:
@@ -112,12 +130,14 @@ SiteSchema.methods.validateSite = async function () {
 	for await (const fac of this.facilities) {
 		await validFacility(fac);
 	}
-	if (this.type === 'Ground') {
-		const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
-		if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
 
-		const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
-		if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
+	const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
+	if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
+
+	const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
+	if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
+
+	if (this.type === 'Ground') {
 
 		for await (const fav of this.favor) {
 		  await validTeam(fav.team._id);
@@ -143,14 +163,6 @@ const GroundSite = Site.discriminator(
 		repression: { type: Number, min: 0, max: 100, default: 0 },
 		morale: { type: Number, min: 0, max: 100, default: 50 },
 		favor: [FavorSchema],
-		geoDMS: {
-			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
-			lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
-		},
-		geoDecimal: {
-			lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
-			lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
-		},
 		tags: [{ type: String, enum: ['coastal', 'capital']} ],
 		dateline: { type: String, default: 'Dateline' },
 		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
