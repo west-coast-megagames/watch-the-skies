@@ -36,7 +36,7 @@ module.exports = async function (client, req) {
 		}
 	}
 	catch (error) {
-		client.emit('alert', { type: 'error', error: error.message });
+		client.emit('alert', { type: 'error', message: error.message });
 		console.log(error);
 	}
 };
