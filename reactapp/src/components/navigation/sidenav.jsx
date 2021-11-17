@@ -62,9 +62,9 @@ class SideNav extends Component {
 								<Nav.Item eventKey="4" to="/dip" componentClass={NavLink} icon={<Icon icon="handshake-o" />}>Diplomacy</Nav.Item>
 								<Nav.Item eventKey="6" to="/news" componentClass={NavLink} icon={<Icon icon="newspaper-o" />}>News</Nav.Item>
 								<Nav.Item eventKey="7" to="/home" componentClass={NavLink} icon={<Icon icon="info-circle" />}>Info</Nav.Item>
-								<Whisper placement="right" trigger="click" speaker={clock}>
+								{(this.props.user.roles.some(el => el === 'Control') || this.props.team.type === 'Control') && <Whisper placement="right" trigger="click" speaker={clock}>
 									<Nav.Item eventKey="8" icon={<Icon icon="clock-o"/>}>Game Clock</Nav.Item>
-								</Whisper>
+								</Whisper>}
 								{(this.props.user.roles.some(el => el === 'Control') || this.props.team.type === 'Control') ? <Nav.Item eventKey="9" to="/control" componentClass={NavLink} icon={<Icon icon="ge" />}>Control</Nav.Item> : null}
 							</Nav>
 						</Sidenav.Body>
