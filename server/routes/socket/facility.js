@@ -2,10 +2,11 @@ const { logger } = require('../../middleware/log/winston'); // middleware/error.
 
 module.exports = async function (client, req) {
 	try {
+		let message;
 		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
 		switch(req.action) {
 		default: {
-			let message = `No ${req.action} is in the ${req.route} route.`;
+			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
 		}
 		}
