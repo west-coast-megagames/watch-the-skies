@@ -14,6 +14,7 @@ import {getMapIcon, getAircraftIcon, getMilitaryIcon, getSatIcon} from '../../..
 import { getDeployed, getMobilized } from '../../../store/entities/military';
 import socket from '../../../socket';
 import { getMyTeam } from '../../../store/entities/teams';
+import Menu from '../../map/MenuSvg';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -129,10 +130,10 @@ function PrototypeMap(props) {
 			zoom={4}
 			center={props.center}
 			options={options}
-			// onClick={mapClick.event}
+			onClick={onCloseMenu}
 			onLoad={onMapLoad}>
 			{menu && <OverlayView position={{lat: geo.lat, lng: geo.lng}} mapPaneName='floatPane'>
-			<OpsMenu info={menu} closeMenu={onCloseMenu} />
+				<OpsMenu info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 
 			{/* The site clusterer... */}
