@@ -16,7 +16,7 @@ async function upgradeValue (upgradeArray, desiredStat) {
 	let total = 0;
 	for(const element of upgradeArray) {// for every upgrade in the upgrade array and for every element in the stat object of the upgrade
 		for(const stat of element.effects) {
-			if(stat.type === desiredStat) total = total + stat.effect; // if the key (stat) is the stat we want add it to total
+			if(stat.type === desiredStat) total = total + stat.value; // if the key (stat) is the stat we want add it to total
 		}
 	}
 	return total;
@@ -53,10 +53,10 @@ async function addUpgrade (data) {
 		for (const element of upgrade.effects) {// add all unit types and effects here
 			switch (element.type) {
 			case 'attack':
-				unit.stats.attack += element.effect;
+				unit.stats.attack += element.value;
 				break;
 			case 'defense':
-				unit.stats.defense += element.effect;
+				unit.stats.defense += element.value;
 				break;
 			default: break;
 			}
@@ -99,10 +99,10 @@ async function removeUpgrade (data) {
 		for (const element of upgrade.effects) {
 			switch (element.type) {
 			case 'attack':
-				unit.stats.attack -= element.effect;
+				unit.stats.attack -= element.value;
 				break;
 			case 'defense':
-				unit.stats.defense -= element.effect;
+				unit.stats.defense -= element.value;
 				break;
 			default: break;
 			}

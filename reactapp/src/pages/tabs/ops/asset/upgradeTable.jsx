@@ -64,7 +64,7 @@ return (
 						/>}
 					<div>
 						<h5 style={{ margin: '5px' }}>{up.name}</h5>
-						{up.effects.map(effect => (<b style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.effect}  {effect.type}</b>))}						
+						{up.effects.map(effect => (<b style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</b>))}						
 					</div>
 
 				</div>
