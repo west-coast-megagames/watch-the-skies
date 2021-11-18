@@ -20,7 +20,7 @@ const UpgradeDrawer = (props) => {
     for (let up of props.upgrades) {
 			let effects = '';
 			for (const effect of up.effects) {
-				effects = effects.concat(` (${effect.type} + ${effect.effect})`)
+				effects = effects.concat(` (${effect.type} + ${effect.value})`)
 			}
       //console.log(up)
       let data = { 
@@ -117,7 +117,7 @@ const UpgradeDrawer = (props) => {
 								<div style={{ border: "2px solid green", }}>
 									<h5 style={{ margin: '5px' }}>{up.name} {up.status.map(tag => (<Tag color='blue' style={{ textTransform: 'capitalize' }}>{tag}</Tag>))}</h5>
 									
-									{up.effects.map(effect => (<p style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.effect}  {effect.type}</p>))}
+									{up.effects.map(effect => (<p style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</p>))}
 								</div>
 							) 
 						})}

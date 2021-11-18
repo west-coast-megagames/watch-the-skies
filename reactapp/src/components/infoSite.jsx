@@ -29,13 +29,13 @@ class InfoSite extends Component {
             </ FlexboxGrid.Item>
 						<FlexboxGrid.Item colspan={12}>
 							<b>Status:</b>
-							<TagGroup>
+							{tags && <TagGroup>
 								{ !status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
 								{ status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
 								{ status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
 								{ tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
 								{ tags.some(el => el === 'capital') && <Tag color='violet'>Capital</Tag> }
-							</TagGroup>									
+							</TagGroup>	}								
 						</FlexboxGrid.Item>
 						<hr />
             <FlexboxGrid.Item colspan={12}>

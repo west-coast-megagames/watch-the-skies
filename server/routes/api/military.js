@@ -94,13 +94,13 @@ router.post('/', async (req, res) => {
 				for (const element of upgrade.effects) {
 					switch (element.type) {
 					case 'health':
-						newMilitary.stats.health += element.effect;
+						newMilitary.stats.health += element.value;
 						break;
 					case 'attack':
-						newMilitary.stats.attack += element.effect;
+						newMilitary.stats.attack += element.value;
 						break;
 					case 'defense':
-						newMilitary.stats.defense += element.effect;
+						newMilitary.stats.defense += element.value;
 						break;
 					default: break;
 					}
