@@ -41,7 +41,7 @@ const OpsMenu = (props) => {
 
 	return (
 		<React.Fragment>
-			<MenuSvg disabled handleInfo={handleInfo} closeMenu={() => props.closeMenu} assignAir={assignAir} agentAssign={() => Alert.warning('Assigning an Agent mission is not possible yet..')} deployMilitary={deployMilitary}/>
+			<MenuSvg disabledLeft={props.info.type === 'Space'} disabledRight={props.info.type === 'Space'} handleInfo={handleInfo} closeMenu={() => props.closeMenu} assignAir={assignAir} agentAssign={() => Alert.warning('Assigning an Agent mission is not possible yet..')} deployMilitary={deployMilitary}/>
 			{/* <div className="menu" id="menu"
 				style={{
 					display: 'grid', 

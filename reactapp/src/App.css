@@ -118,6 +118,10 @@
 	opacity: .6;
 }
 
+.disabled {
+	cursor: not-allowed;
+}
+
 
 @keyframes App-logo-spin {
   from {

@@ -130,7 +130,6 @@ function PrototypeMap(props) {
 			zoom={4}
 			center={props.center}
 			options={options}
-			onClick={onCloseMenu}
 			onLoad={onMapLoad}>
 			{menu && <OverlayView position={{lat: geo.lat, lng: geo.lng}} mapPaneName='floatPane'>
 				<OpsMenu info={menu} closeMenu={onCloseMenu} />
