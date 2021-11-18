@@ -16,7 +16,7 @@ const BlueprintSchema = new Schema({
 	desc: { type: String, min: 1, maxlength: 255, default: 'Blueprint' },
 	prereq: [],
 	hidden: { type: Boolean, default: false },
-	tags: [{ type: String, enum: ['']} ],
+	tags: [{ type: String, enum: [''] } ]
 });
 
 // validateBlueprint method

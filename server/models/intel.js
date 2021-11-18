@@ -21,7 +21,7 @@ const IntelSchema = new Schema({
 	source: { type: Schema.Types.Mixed, default: {} },
 	lastUpdate: { type: Date, default: Date.now() },
 	dateCreated: { type: Date, default: Date.now() },
-	tags: [{ type: String, enum: ['']} ]
+	tags: [{ type: String, enum: [''] } ]
 });
 
 IntelSchema.methods.reconIntel = async function (doc, source = undefined) {

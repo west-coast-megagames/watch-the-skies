@@ -24,13 +24,13 @@ const UpgradeSchema = new Schema({
 			code: { type: String }
 		}
 	],
-	status: [ {type: String, enum: ['building', 'salvage', 'damaged', 'destroyed', 'storage']} ],
+	status: [ { type: String, enum: ['building', 'salvage', 'damaged', 'destroyed', 'storage'] } ],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	tags: [{ type: String, enum: ['']} ],
+	tags: [{ type: String, enum: [''] } ],
 	effects: [
 		{
 			type: { type: String },
-			effect: { type: Number }
+			value: { type: Number }
 		}
 	]
 });

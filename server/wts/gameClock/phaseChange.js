@@ -4,7 +4,6 @@ const { resolveMissions } = require('../intercept/missions'); // IMPORT - Interc
 const { runMilitary } = require('../military/military');
 // const { startResearch, assignKnowledgeCredit } = require('../research/research');
 // const { techCheck } = require('../../wts/research/technology');
-const repairSequence = require('../construction/repair');
 const clock = require('./gameClock');
 
 const { logger } = require('../../middleware/log/winston'); // IMPORT - Winston error logging
@@ -36,8 +35,6 @@ async function teamPhase() {
 async function actionPhase() {
 	phaseChangeDebugging(`Now changing to the action phase for ${clock.currentTurn}...`);
 	await resolveMissions(); // Resolve Interceptions that have been sent [coded]
-	await runMilitary(); // Resolve all Battles
-	setTimeout(async () => { await repairSequence(); }, 14000);
 	// nexusEvent.emit('updateAircrafts'); // TODO re-add update broadcasts
 	// nexusEvent.emit('updateSites');
 	// nexusEvent.emit('updateReports');
@@ -47,6 +44,7 @@ async function actionPhase() {
 
 async function freePhase() {
 	phaseChangeDebugging(`Now changing to the FREE phase ${clock.currentTurn}...`);
+	await runMilitary(); // Resolve all Battles
 	// await startResearch(); // Resolve available research...
 	// await assignKnowledgeCredit();
 	// await techCheck(); // Checks the availibility of new research...
