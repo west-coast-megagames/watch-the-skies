@@ -96,7 +96,7 @@ function PrototypeMap(props) {
 		setSites(sites);
 		setContacts(contacts);
 		setMilitary(military);
-	}, [props.display]);
+	}, [props.display, props.sites, props.military, props.contacts]);
 
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')
