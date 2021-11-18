@@ -63,7 +63,7 @@ class OpsMenu extends Component {
 					/>
 					<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.handleInfo()} style={{...menu, top: '1px', left:'30px'}} />
 					<IconButton icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type !== undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
-					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning a Recon mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
+					<IconButton icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning an Agent mission is not possible yet..')} style={{...menu, right: '1px', top:'30px'}} />
 					<IconButton icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
 				</div>
 			</React.Fragment>
