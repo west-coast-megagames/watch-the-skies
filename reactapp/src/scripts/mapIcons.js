@@ -5,10 +5,10 @@ const icon = {
 	FFG: 'https://cdn.discordapp.com/attachments/481529413482315777/774161302259892234/UFO_generic.png',
 	Unknown: 'https://cdn.discordapp.com/attachments/481529413482315777/774161297972527104/unknown_generic.png',
 	PoI: 'https://cdn.discordapp.com/attachments/483851642605928449/775640807738310666/interest_site2.png',
-	Satellite: 'https://cdn.discordapp.com/attachments/857862435096100884/910396164862533633/test.png',
+	Satellite: '',
 	City: 'https://cdn.discordapp.com/attachments/483851642605928449/774234464548945940/City_site.png',
 	Crash: 'https://cdn.discordapp.com/attachments/483851642605928449/775640725400453120/crash_site2.png',
-	USA: 'https://cdn.discordapp.com/attachments/582043597281427466/776279382368845824/USA_fighter.png',
+	USA: 'https://cdn.discordapp.com/attachments/857862435096100884/910704936839442462/USA_fighter.png',
 	TUK: 'https://cdn.discordapp.com/attachments/582043597281427466/776290186580590612/UK_Fighter_v2.png',
 	RSA: 'https://cdn.discordapp.com/attachments/582043597281427466/776290198027108352/SA_Fighter_v2.png',
 	RFD: 'https://cdn.discordapp.com/attachments/582043597281427466/776290979430793236/RFD_Fighter_v2.png',
@@ -37,6 +37,21 @@ const milIcons = {
 	AUS: 'https://cdn.discordapp.com/attachments/582043597281427466/783189080258248735/AUS_tank_v5.1.png'
 }
 
+const satIcons = {
+	USA: 'https://cdn.discordapp.com/attachments/582043597281427466/910698183649292348/Satellites_v0.png',
+	TUK: 'https://cdn.discordapp.com/attachments/857862435096100884/910703086123749376/uk.png',
+	RSA: 'https://cdn.discordapp.com/attachments/857862435096100884/910703048094023740/rsa.png',
+	RFD: 'https://cdn.discordapp.com/attachments/857862435096100884/910703033418141756/rfd.png',
+	JPN: 'https://cdn.discordapp.com/attachments/857862435096100884/910703009791619102/jpn.png',
+	IRN: 'https://cdn.discordapp.com/attachments/857862435096100884/910702998043369502/irn.png',
+	IND: 'https://cdn.discordapp.com/attachments/857862435096100884/910702984105721936/ind.png',
+	TFR: 'https://cdn.discordapp.com/attachments/857862435096100884/910703071502405642/tfr.png',
+	EPT: 'https://cdn.discordapp.com/attachments/857862435096100884/910702970524549150/ept.png',
+	PRC: 'https://cdn.discordapp.com/attachments/857862435096100884/910703022508769280/prc.png',
+	BRZ: 'https://cdn.discordapp.com/attachments/857862435096100884/910702957538979890/brz.png',
+	AUS: 'https://cdn.discordapp.com/attachments/857862435096100884/910702943311896586/aus.png'
+}
+
 const fleetIcons = {
 	USA: 'https://cdn.discordapp.com/attachments/806050237931978822/820547277068304434/submarine_V2.png'
 }
@@ -52,6 +67,11 @@ export const getMapIcon = (site) => {
 
 export const getAircraftIcon = (aircraft) => {
 	return icon[aircraft];
+}
+
+export const getSatIcon = (sat) => {
+	if (!milIcons[sat] || milIcons[sat] === null) return ('https://cdn.discordapp.com/attachments/857862435096100884/910699833784942653/unknown.png'); //the default '?'
+	return satIcons[sat];
 }
 
 export const getMilitaryIcon = (unit) => {

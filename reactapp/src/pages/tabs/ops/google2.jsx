@@ -10,9 +10,10 @@ import { showLaunch } from '../../../store/entities/infoPanels';
 import { getCities, getGround, getPoI, getCrash, getCapitol, getSatellites } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
 import { getContacts } from '../../../store/entities/aircrafts';
-import {getMapIcon, getAircraftIcon, getMilitaryIcon} from '../../../scripts/mapIcons';
+import {getMapIcon, getAircraftIcon, getMilitaryIcon, getSatIcon} from '../../../scripts/mapIcons';
 import { getDeployed, getMobilized } from '../../../store/entities/military';
 import socket from '../../../socket';
+import { getMyTeam } from '../../../store/entities/teams';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -210,15 +211,13 @@ function PrototypeMap(props) {
 				},
 			]}
 			>
-				
-			{/*The Marker*/}
 			{(clusterer) => props.satellites.map(satellite => 
 				<Marker
 					title={satellite.name}
 					key={satellite._id}
 					clusterer={clusterer}
 					position={{ lat: satellite.geoDecimal.lat, lng: satellite.geoDecimal.lng }}
-					draggable
+					draggable={(satellite.team._id === props.team._id)}
 					onDragEnd={(data) => handleOnDragEnd(data, satellite)}
 					onClick={()=> {
 						setGeo(satellite.geoDecimal)
@@ -226,23 +225,23 @@ function PrototypeMap(props) {
 						// setMapClick({event: undefined});
 					}}
 					icon={{
-						url: getMapIcon(satellite),
+						url: getSatIcon(satellite.team.code),
 						scaledSize: new window.google.maps.Size(55, 55),
 						origin: new window.google.maps.Point(0,0),
 						anchor: new window.google.maps.Point(10, 10)
 					}}
 				>
-					{satellite.subType === 'Satellite' &&  <div>
+					{(satellite.team._id === props.team._id) && <div>
 						<Circle
     				  // required
     				  center={ (dragGeo && dragGeo.id === satellite._id) ? dragGeo.geoDecimal :  satellite.geoDecimal}
     				  // required
     				  options={{
-								strokeColor: '#FF0000',
+								strokeColor: '#61ff00',
 								strokeOpacity: 0.8,
 								strokeWeight: 2,
-								fillColor: '#FF0000',
-								fillOpacity: 0.35,
+								fillColor: '#61ff00',
+								fillOpacity: 0.15,
 								clickable: false,
 								draggable: false,
 								editable: false,
@@ -290,11 +289,12 @@ function PrototypeMap(props) {
 				>
 				{(clusterer) => contacts.map(contact => 
 					<Marker
+						title={contact.name}
 						key={contact._id}
 						clusterer={clusterer}
 						position={contact.location}
 						onClick={()=> {
-							setGeo(contact.location.lat, contact.location.lng)
+							setGeo(contact.location)
 							setMenu(contact);
 							// setMapClick({event: undefined});
 						}}
@@ -311,6 +311,7 @@ function PrototypeMap(props) {
 			{<MarkerClusterer options={clusterOptions}>
 				{(clusterer) => military.map(unit => 
 					<Marker
+						title={unit.name}
 						key={unit._id}
 						clusterer={clusterer}
 						position={unit.location}
@@ -369,7 +370,7 @@ function PrototypeMap(props) {
 const mapStateToProps = (state, props) => ({
   login: state.auth.login,
   lastFetch: state.entities.aircrafts.lastFetch,
-  team: state.auth.team,
+  team: getMyTeam(state),
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
 	military: state.entities.military.list,

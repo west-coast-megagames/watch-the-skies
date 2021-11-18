@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
 	try {
 		const sites = await Site.find()
 			.populate('organization', 'name')
-			.populate('team', 'shortName name')
+			.populate('team', 'shortName name code')
 			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
 			.populate('occupier', 'name shortName code')

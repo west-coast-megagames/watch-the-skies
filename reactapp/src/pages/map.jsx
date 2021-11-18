@@ -12,7 +12,7 @@ import PrototypeMap from './tabs/ops/google2'
 
 const MapPage = (props) => {
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
-	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts']);
+	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
 
 	const handleThing = (value) => {
 		const site = props.sites.find(el => el._id === value);

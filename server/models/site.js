@@ -66,6 +66,7 @@ SiteSchema.methods.geoPosition = async function (geoDecimal) {
 	};
 
 	const site = await this.save();
+	await site.populateMe();
 	nexusEvent.emit('request', 'update', [ site ]);
 
 	return;
@@ -166,6 +167,17 @@ SiteSchema.methods.validateSite = async function () {
 		}
 	}
 };
+
+SiteSchema.methods.populateMe = async function () {
+	return this.populate('team', 'name shortName code')
+		.populate('organization', 'name')
+		.populate('team', 'shortName name code')
+		.populate('facilities', 'name type')
+		.populate('zone', 'model name code')
+		.populate('occupier', 'name shortName code')
+		.execPopulate();
+};
+
 
 const Site = mongoose.model('Site', SiteSchema);
 
