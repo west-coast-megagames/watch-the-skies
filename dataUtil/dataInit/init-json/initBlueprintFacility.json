@@ -217,11 +217,22 @@
     "cost": 2,
     "buildTime": 1,
     "unitType": ["Organization"],
-    "desc": "Standard National Base",
-    "capacity": 2,
-    "facilityStats": {
-      "effect": []
-    },
+    "desc": "Standard National Land Base",
+		"buildings": ["lab-01", "hanger-lg", "store-sm", "work-01", "mil-lg"],
+    "hidden": false
+	},
+	{  
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "facility",
+    "name": "Base Template",
+    "type": "Base",
+    "code": "BT-2",
+    "cost": 2,
+    "buildTime": 1,
+    "unitType": ["Organization"],
+    "desc": "Standard National Navy Base",
+		"buildings": ["lab-01", "hanger-lg", "store-sm", "work-01", "mil-md", "navy-lg"],
     "prereq": [],
 		"status": [],
     "hidden": false,
@@ -238,10 +249,7 @@
     "buildTime": 1,
     "unitType": ["Organization"],
     "desc": "Hidden National Base",
-    "capacity": 2,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": ["lab-01", "lab-01", "hanger-sm", "store-sm", "work-01"],
     "prereq": [],
 		"status": [],
     "hidden": false,
