@@ -10,17 +10,18 @@ const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const BuildingSchema = new Schema({
 	type: { type: String },
 	stats: {
-		funding: { type: Number, default: 0 },
-		range: { type: Number, default: 0 },
-		rate: { type: Number, default: 0 },
-		bonus: { type: Number, default: 0 }
+		copacity: { type: Number },
+		funding: { type: Number },
+		range: { type: Number },
+		rate: { type: Number },
+		bonus: { type: Number }
 
 	},
 	damaged: { type: Boolean, default: false, required: true },
 	research: { type: ObjectId, ref: 'Research' },
-	aircraft: { type: ObjectId, ref: 'Aircraft' },
-	upgrade: { type: ObjectId, ref: 'Upgrade' },
-	units: { type: ObjectId, ref: 'Military' }
+	aircrafts: [{ type: ObjectId, ref: 'Aircraft' }],
+	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
+	units: [{ type: ObjectId, ref: 'Military' }]
 });
 
 // type can be: "Civilian", "Crises", "Hanger", "Research", "Base" currently
