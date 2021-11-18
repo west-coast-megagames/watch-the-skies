@@ -104,10 +104,10 @@ async function resolveBattle(attackers, defenders) {
 						for (const element of up.effects) {
 							switch (element.type) {
 							case 'attack':
-								unit.stats.attack -= element.effect;
+								unit.stats.attack -= element.value;
 								break;
 							case 'defense':
-								unit.stats.defense -= element.effect;
+								unit.stats.defense -= element.value;
 								break;
 							default: break;
 							}
@@ -125,10 +125,10 @@ async function resolveBattle(attackers, defenders) {
 				for (const element of hit.effects) {
 					switch (element.type) {
 					case 'attack':
-						unit.stats.attack -= element.effect;
+						unit.stats.attack -= element.value;
 						break;
 					case 'defense':
-						unit.stats.defense -= element.effect;
+						unit.stats.defense -= element.value;
 						break;
 					default: break;
 					}
@@ -169,10 +169,10 @@ async function resolveBattle(attackers, defenders) {
 						for (const element of up.effects) {
 							switch (element.type) {
 							case 'attack':
-								unit.stats.attack -= element.effect;
+								unit.stats.attack -= element.value;
 								break;
 							case 'defense':
-								unit.stats.defense -= element.effect;
+								unit.stats.defense -= element.value;
 								break;
 							default: break;
 							}
@@ -190,10 +190,10 @@ async function resolveBattle(attackers, defenders) {
 				for (const element of hit.effects) {
 					switch (element.type) {
 					case 'attack':
-						unit.stats.attack -= element.effect;
+						unit.stats.attack -= element.value;
 						break;
 					case 'defense':
-						unit.stats.defense -= element.effect;
+						unit.stats.defense -= element.value;
 						break;
 					default: break;
 					}
