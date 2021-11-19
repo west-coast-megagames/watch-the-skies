@@ -27,7 +27,8 @@ const slice = createSlice({
       info.showMilitary = true
     },
     militaryClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+      console.log(`${action.type} Dispatched...`);
+			info.Military = null;
       info.showMilitary = false
 		},
 		showSite: (info, action) => {
@@ -36,7 +37,8 @@ const slice = createSlice({
       info.showSite = true
 		},
 		siteClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+      console.log(`${action.type} Dispatched...`);
+			info.Site = null;
       info.showSite = false
 		},
     showAircraft: (info, action) => {
@@ -45,7 +47,8 @@ const slice = createSlice({
       info.showAircraft = true
     },
     aircraftClosed: (info, action) => {
-      console.log(`${action.type} Dispatched...`)
+      console.log(`${action.type} Dispatched...`);
+			info.Aircraft = null;
       info.showAircraft = false
     },
     showLaunch: (info, action) => {

@@ -113,7 +113,7 @@ const Operations  = (props) => {
 					)}/>
 
 					<Route path={`${url}/assets`} render={() => (
-						<AssetsTab selected={selected} />
+						<AssetsTab selected={selected} history={props.history}/>
 					)}/>
 					<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
 				</Switch>

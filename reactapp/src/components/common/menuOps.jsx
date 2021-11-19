@@ -22,7 +22,7 @@ const OpsMenu = (props) => {
 	}
 
 	const handleInfo = () => {
-		//console.log(props.info.model)
+		props.setCenter(props.info._id);
 		switch (props.info.model) {
 			case 'Site': 
 				props.showSite(props.info);
@@ -42,30 +42,6 @@ const OpsMenu = (props) => {
 	return (
 		<React.Fragment>
 			<MenuSvg disabledLeft={props.info.type === 'Space'} disabledRight={props.info.type === 'Space'} handleInfo={handleInfo} closeMenu={() => props.closeMenu} assignAir={assignAir} agentAssign={() => Alert.warning('Assigning an Agent mission is not possible yet..')} deployMilitary={deployMilitary}/>
-			{/* <div className="menu" id="menu"
-				style={{
-					display: 'grid', 
-					background: '#fff',
-					height: '100px',
-					width: '100px',
-					borderRadius: '50%',
-					position: 'absolute',
-					top: 0,
-					left: '-50px',
-					bottom: 0,
-					margin: 'auto',
-					textAlign: 'center',
-					border: '2px solid black'
-					}}>
-				<IconButton icon={<Icon icon="close" />} size="sm" color="red" circle 
-					style={{...menu, top: '33px', left: '33px'}}
-					onClick={() => this.props.closeMenu()}
-				/>
-				<IconButton icon={<Icon icon='info-circle' />} size="md" appearance='link' onClick={() => this.handleInfo()} style={{...menu, top: '1px', left:'30px'}} />
-				<IconButton disabled={this.props.info.type === 'Space'} icon={<Icon icon='fighter-jet' />} size="md" appearance='link' onClick={() => this.props.info.type !== undefined ? this.assign() : Alert.warning(`You can only deploy to a site currently!`)} style={{...menu, left: '1px', top:'30px'}} />
-				<IconButton disabled={this.props.info.type === 'Space'} icon={<Icon icon='eye' />} size="md" appearance='link' onClick={() => Alert.warning('Assigning an Agent mission is not possible yet..')} style={{...menu, right: '1px', top:'30px',}} />
-				<IconButton disabled={this.props.info.type === 'Space'} icon={<Icon icon='crosshairs' />} size="md" appearance='link' onClick={() => this.deployMilitary()} style={{...menu, bottom: '1px', left:'30px'}} />
-			</div> */}
 		</React.Fragment>
 		);
 	

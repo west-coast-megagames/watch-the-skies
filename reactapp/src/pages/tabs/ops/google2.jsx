@@ -127,12 +127,12 @@ function PrototypeMap(props) {
 	return (
 		<GoogleMap
 			mapContainerStyle={mapContainerStyle}
-			zoom={4}
+			zoom={7}
 			center={props.center}
 			options={options}
 			onLoad={onMapLoad}>
 			{menu && <OverlayView position={{lat: geo.lat, lng: geo.lng}} mapPaneName='floatPane'>
-				<OpsMenu info={menu} closeMenu={onCloseMenu} />
+				<OpsMenu setCenter={props.setCenter} info={menu} closeMenu={onCloseMenu} />
 			</OverlayView>}
 
 			{/* The site clusterer... */}
