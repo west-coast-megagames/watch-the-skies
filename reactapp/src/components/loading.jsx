@@ -27,17 +27,17 @@ const LoadingPage = (props) => {
 		for (let team of props.entities.teams.list) {
 			if (team.users.some(el => el === props.appState.auth.user._id)) myTeam = team;
 		}
-		// if (myTeam) {
-		// 	props.isControl(controlTeam.users.some(el => el === props.entities.auth))
-		// 	props.debugTeam(myTeam); // Forces your TEAM to USA
-		// 	props.finishLoading();
-		// 	history.push('/home');
-		// } else {
-			// Leave this in just in case login fucks up again
-			props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
+		if (myTeam) {
+			props.isControl(controlTeam.users.some(el => el === props.entities.auth))
+			props.debugTeam(myTeam); // Forces your TEAM to USA
 			props.finishLoading();
 			history.push('/home');
-	
+		} else {
+			// Leave this in just in case login fucks up again
+			// props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
+			// props.finishLoading();
+			// history.push('/home');
+			
 			Alert.error('You do not have an assigned team!', 1000);
 			return (
 				<div style={{ display: 'flex', justifyContent: 'center', }}>
@@ -46,7 +46,7 @@ const LoadingPage = (props) => {
 					
 				</div>
 			)
-		
+			}
 	} 
 
 	return (
