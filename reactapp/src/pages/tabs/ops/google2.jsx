@@ -53,7 +53,7 @@ function PrototypeMap(props) {
 	
 	const [dragGeo, setDragGeo] = React.useState(null);
 
-	// const onMapClick = React.useCallback((event) => {
+	// const onMapClick = React.useCallback((event) => {props.center
 	// 	setMenu({
 	// 			lat: event.latLng.lat(),
 	// 			lng: event.latLng.lng()
@@ -177,10 +177,31 @@ function PrototypeMap(props) {
 					icon={{
 						url: getMapIcon(site),
 						scaledSize: new window.google.maps.Size(55, 55),
-						origin: new window.google.maps.Point(0,0),
-						anchor: new window.google.maps.Point(10, 10)
+						anchor: new window.google.maps.Point(27, 27)
 					}}
 				>
+
+					{geo === site.geoDecimal && <div>
+						<Circle
+    				  // required
+    				  center={site.geoDecimal}
+    				  // required
+    				  options={{
+								strokeColor: '#ffffff',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								fillColor: '#ffffff',
+								fillOpacity: 0.15,
+								clickable: false,
+								draggable: false,
+								editable: false,
+								visible: true,
+								radius: 30000,
+								zIndex: 1
+							}}
+    				/>
+					</div>}
+
 				</Marker>
 			)}
 			</MarkerClusterer>}
@@ -231,6 +252,28 @@ function PrototypeMap(props) {
 						anchor: new window.google.maps.Point(10, 10)
 					}}
 				>
+
+					{geo === satellite.geoDecimal && <div>
+						<Circle
+    				  // required
+    				  center={satellite.geoDecimal}
+    				  // required
+    				  options={{
+								strokeColor: '#ffffff',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								fillColor: '#ffffff',
+								fillOpacity: 0.15,
+								clickable: false,
+								draggable: false,
+								editable: false,
+								visible: true,
+								radius: 30000,
+								zIndex: 1
+							}}
+    				/>
+					</div>}
+
 					{(satellite.team._id === props.team._id) && <div>
 						<Circle
     				  // required
@@ -254,7 +297,6 @@ function PrototypeMap(props) {
 				</Marker>
 			)}
 			</MarkerClusterer>}
-
 
 			{/*The Contact Clusterer*/}
 			{<MarkerClusterer options={clusterOptions}
@@ -304,7 +346,28 @@ function PrototypeMap(props) {
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					></Marker>)}
+					>
+						{geo === contact.location && <div>
+						<Circle
+    				  // required
+    				  center={contact.location}
+    				  // required
+    				  options={{
+								strokeColor: '#ffffff',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								fillColor: '#ffffff',
+								fillOpacity: 0.15,
+								clickable: false,
+								draggable: false,
+								editable: false,
+								visible: true,
+								radius: 30000,
+								zIndex: 1
+							}}
+    				/>
+					</div>}
+					</Marker>)}
 			</MarkerClusterer>}
 
 			{/*The Military Clusterer*/}
@@ -324,7 +387,7 @@ function PrototypeMap(props) {
 							url: getMilitaryIcon(unit),
 							scaledSize: new window.google.maps.Size(70, 70),
 							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
+							anchor: new window.google.maps.Point(35, 35)
 						}}
 					>
 					<Polyline
@@ -352,6 +415,26 @@ function PrototypeMap(props) {
 							zIndex: 1
 						}}
    				 />
+						{geo === unit.location && <div>
+						<Circle
+    				  // required
+    				  center={unit.location}
+    				  // required
+    				  options={{
+								strokeColor: '#ffffff',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								fillColor: '#ffffff',
+								fillOpacity: 0.15,
+								clickable: false,
+								draggable: false,
+								editable: false,
+								visible: true,
+								radius: 30000,
+								zIndex: 1
+							}}
+    				/>
+					</div>}
 					</Marker>
 					)}
 			</MarkerClusterer>}
