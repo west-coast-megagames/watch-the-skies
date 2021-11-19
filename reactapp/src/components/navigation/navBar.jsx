@@ -94,7 +94,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 					Project Nexus
 			</Link>
 			<div className="collapse navbar-collapse" id="navbarNav" />
-			<Icon spin={loading} onClick={() => { clockRequested(); socket.emit('request', {route: 'clock', action:'getState'}); }} style={{ marginRight: '5px', cursor: 'pointer' }} icon="refresh" />
+			{ login && <Icon spin={loading} onClick={() => { clockRequested(); socket.emit('request', {route: 'clock', action:'getState'}); }} style={{ marginRight: '5px', cursor: 'pointer' }} icon="refresh" />}
 			{ login && <span className="navbar-text mr-md-5">{info.phase} {time} <FontAwesomeIcon icon={faClock} /> | {info.turnNum >= 0 ? `${info.turn} ${info.year}` : `${info.turn}`}</span> }
 			{ login && <span className="navbar-text mr-1">{pr}</span> }
 			{ login && <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span> }
