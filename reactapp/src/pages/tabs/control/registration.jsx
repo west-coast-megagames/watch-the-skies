@@ -103,10 +103,8 @@ class Registration extends Component {
 	}
 
 	filter = (fil) => {
-			const unfiltered = this.state.users.filter(user => user.name.first.toLowerCase().includes(fil.toLowerCase()) ||
-			user.name.last.toLowerCase().includes(fil.toLowerCase()) ||
-			user.email.toLowerCase().includes(fil.toLowerCase()));
-			this.setState({ unfiltered });		
+			const unfiltered = this.props.teams.filter(user => user.name.toLowerCase().includes(fil.toLowerCase()) );
+			this.setState({ teams: unfiltered });		
 		}
 
 	handleReg = async () => {
