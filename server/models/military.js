@@ -317,8 +317,8 @@ MilitarySchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemov
 	// Mechanics: Changes out existing upgrades with anything currently stored.
 	try {
 		let unit = this;
-		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
 		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
+		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
 		return unit;
 	}
 	catch (err) {
