@@ -72,7 +72,7 @@ return (
 			<ButtonGroup>
 				{!edit && 						
 					<Whisper placement="top" speaker={editSpeaker} trigger="hover">
-						<IconButton color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
+						<IconButton disabled={(props.unit.missions + props.unit.actions) <= 0} color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
 					</Whisper>}
 				{edit && 
 					<Whisper placement="top" speaker={cancelSpeaker} trigger="hover">
