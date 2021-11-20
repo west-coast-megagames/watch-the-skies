@@ -12,7 +12,7 @@ import MilitaryStats from './asset/militaryStats';
 import AircraftStats from './asset/AircraftStats';
 import SatelliteStats from './asset/SatelliteStats';
 import { getAircrafts } from '../../../store/entities/aircrafts';
-import { getMySatellites } from '../../../store/entities/sites';
+import { getMySatellites, getSatellites } from '../../../store/entities/sites';
 import { showSite, showMilitary, showAircraft } from '../../../store/entities/infoPanels';
 
 const { HeaderCell, Cell, Column } = Table;
@@ -327,7 +327,7 @@ const mapStateToProps = (state, props)=> ({
 	sites: state.entities.sites.list,
 	account: getOpsAccount(state),
 	aircrafts: props.control ? state.entities.aircrafts.list : getAircrafts(state),
-	satellites: props.control ? state.entities.satellites.list : getMySatellites(state),
+	satellites: props.control ? getSatellites(state) : getMySatellites(state),
 	units: props.control ? state.entities.military.list : getMilitary(state),
 	upgrades: props.control ? state.entities.upgrades.list : getUpgrades(state),
 	facilities: props.control ? state.entities.facilities.list : getFacilites(state),

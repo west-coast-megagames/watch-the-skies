@@ -14,7 +14,7 @@ const UnitControl = (props) => {
 
 	return (
 		<Container>
-			<AssetTab handleTransfer={props.handleTransfer} control={true} selected={props.selected}/>
+			<AssetTab history={props.history} handleTransfer={props.handleTransfer} control={true} selected={props.selected}/>
 		</Container>
 	);
 	
