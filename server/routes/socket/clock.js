@@ -30,6 +30,10 @@ module.exports = async function (client, req) {
 			masterClock.reset();
 			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
+		case('edit'):
+			masterClock.setSeconds(req.data.seconds);
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
 		default:
 			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
