@@ -10,6 +10,7 @@ require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 const { validUnitType } = require('../util/validateUnitType');
+const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
 const app = express();
@@ -180,13 +181,13 @@ async function createFleet(iData, rCounts, bpData) {
 			logger.error(`New Fleet Military Invalid Base: ${iData.name} ${iData.origin}`);
 			return;
 		}
-		else if (bData.capability.naval.capacity > 0) {
+		else if (await inArray(bData.capabilities, 'port')) {
 			newFleet.origin = bData._id;
 			newFleet.site = bData.site;
 		}
 		else {
 			++rCounts.loadErrCount;
-			logger.error(`New Fleet Military Base does not have positive naval capacity: ${iData.name} ${iData.origin}`);
+			logger.error(`New Fleet Military Base does not have port capabilities: ${iData.name} ${iData.origin}`);
 			return;
 		}
 	}
@@ -268,13 +269,13 @@ async function createCorps(iData, rCounts, bpData) {
 			logger.error(`New Corps Military Invalid Base: ${iData.name} ${iData.origin}`);
 			return;
 		}
-		else if (bData.capability.ground.capacity > 0) {
+		else if (await inArray(bData.capabilities, 'garrison')) {
 			newCorps.origin = bData._id;
 			newCorps.site = bData.site;
 		}
 		else {
 			++rCounts.loadErrCount;
-			logger.error(`New Corps Military Base does not have positive ground capacity: ${iData.name} ${iData.origin}`);
+			logger.error(`New Corps Military Base does not have garrison capabilites: ${iData.name} ${iData.origin}`);
 			return;
 		}
 	}

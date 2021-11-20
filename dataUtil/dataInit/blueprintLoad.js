@@ -2,11 +2,12 @@ const fs = require('fs');
 const config = require('config');
 
 const aircraftBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintAircraft.json', 'utf8'));
+const buildingBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintBuilding.json', 'utf8'));
 const facilityBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintFacility.json', 'utf8'));
 const upgradeBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintUpgrade.json', 'utf8'));
 const squadBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintSquad.json', 'utf8'));
 const militaryBPData = JSON.parse(fs.readFileSync(config.get('initPath') + 'init-json/initBlueprintMilitary.json', 'utf8'));
-const blueprintDataIn = [...aircraftBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData, ...militaryBPData];
+const blueprintDataIn = [...aircraftBPData, ...buildingBPData, ...facilityBPData, ...upgradeBPData, ...squadBPData, ...militaryBPData];
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
@@ -65,6 +66,9 @@ async function loadBlueprint (bpData, rCounts) {
 			// New Blueprint here
 
 			switch (bpData.buildModel) {
+			case 'building':
+				await newBuildingBP(bpData, rCounts);
+				break;
 			case 'facility':
 				await newFacilityBP(bpData, rCounts);
 				break;
@@ -161,6 +165,23 @@ async function newMilitaryBP (bpData, rCounts) {
 
 }
 
+async function newBuildingBP (bpData, rCounts) {
+
+	// New Building Blueprint here
+	const bpBuilding = bpData;
+	try {
+		bpBuilding.tags = [];
+		bpBuilding.status = [];
+		await axios.post(`${gameServer}api/blueprints`, bpBuilding);
+		++rCounts.loadCount;
+		logger.debug(`${bpBuilding.name} add saved to Building Blueprint collection.`);
+	}
+	catch (err) {
+		++rCounts.loadErrCount;
+		logger.error(`New Building Blueprint Save Error: ${err.message}`, { meta: err.stack });
+	}
+}
+
 async function newFacilityBP (bpData, rCounts) {
 
 	// New Facility Blueprint here
@@ -190,7 +211,6 @@ async function newFacilityBP (bpData, rCounts) {
 		}
 
 		bpFacility.tags = [];
-		bpFacility.status = [];
 		await axios.post(`${gameServer}api/blueprints`, bpFacility);
 		++rCounts.loadCount;
 		logger.debug(`${bpFacility.name} add saved to Facility Blueprint collection.`);

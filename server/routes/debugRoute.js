@@ -3,7 +3,7 @@ const router = express.Router();
 const nexusEvent = require('../middleware/events/events');
 const routeDebugger = require('debug')('app:routes:debug');
 const { logger } = require('../middleware/log/winston');
-const { clearArrayValue } = require('../middleware/util/arrayCalls');
+const { clearArrayValue, inArray } = require('../middleware/util/arrayCalls');
 
 const { startResearch, assignKnowledgeCredit } = require('../wts/research/research');
 
@@ -87,8 +87,10 @@ router.patch('/knowledge', async function (req, res) {
 router.patch('/fixFacilities', async function (req, res) {
 	let count = 0;
 	for await (const facility of Facility.find()) {
-		const { research, airMission, storage, manufacturing, naval, ground } = facility.capability;
-		if (research.capacity > 0) {
+		// old code: const { research, airMission, storage, manufacturing, naval, ground } = facility.capabilities;
+		if (await inArray(facility.capabilities, 'research')) {
+			// TODO John ... need to reset stats on building with research type???
+			/*
 			research.status.damage = [];
 			research.status.pending = [];
 			research.funding = [];
@@ -100,21 +102,27 @@ router.patch('/fixFacilities', async function (req, res) {
 			research.active = true;
 			research.sciRate = rand(25);
 			research.sciBonus = 0;
+			*/
 		}
-		if (airMission.capacity > 0) airMission.active = true;
-		if (storage.capacity > 0) storage.active = true;
-		if (manufacturing.capacity > 0) manufacturing.active = true;
-		if (naval.capacity > 0) naval.active = true;
-		if (ground.capacity > 0) ground.active = true;
+		// TODO John .. reset what?
+		/*
+		if (await inArray(facility.capabilities, 'hanger')) airMission.active = true;
+		if (await inArray(facility.capabilities, 'storage') storage.active = true;
+		if (await inArray(facility.capabilities, 'manufacturing') manufacturing.active = true;
+		if (await inArray(facility.capabilities, 'port') naval.active = true;
+		if (await inArray(facility.capabilities, 'garrison') ground.active = true;
+		*/
 
-		routeDebugger(facility.capability);
+		routeDebugger(facility.capabilities);
 
+		/* TODO John
 		logger.info(`${facility.name} - research: ${research.active}`);
 		logger.info(`${facility.name} - airMission: ${airMission.active}`);
 		logger.info(`${facility.name} - storage: ${storage.active}`);
 		logger.info(`${facility.name} - manufacturing: ${manufacturing.active}`);
 		logger.info(`${facility.name} - naval: ${naval.active}`);
 		logger.info(`${facility.name} - ground: ${ground.active}`);
+		*/
 
 		await facility.save();
 		count++;
