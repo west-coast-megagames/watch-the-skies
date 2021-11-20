@@ -31,6 +31,8 @@ const MilitaryStats = (props) => {
 					<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
 							<img 
 								src={getMilitaryIcon(props.unit)} width="90%" alt='Failed to Load'
+								style={{ cursor: 'pointer' }}
+								onClick={() => props.handleTransfer(props.unit)}
 							/>		
 						</div>		
 						<StatusBar  control={props.control} unit={props.unit}/>

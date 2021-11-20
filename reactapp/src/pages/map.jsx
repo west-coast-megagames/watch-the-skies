@@ -7,6 +7,7 @@ import BalanceHeader from '../components/common/BalanceHeader';
 // import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
 import { getOpsAccount } from '../store/entities/accounts';
+import { showSite } from '../store/entities/infoPanels';
 import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
 
@@ -14,10 +15,18 @@ const MapPage = (props) => {
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
 
-	const handleThing = (value) => {
+	const handleCenter = (value) => {
+		const military = props.military.find(el => el._id === value);
 		const site = props.sites.find(el => el._id === value);
+		const air = props.aircrafts.find(el => el._id === value);
 		if ( site && site.geoDecimal && site.geoDecimal.lat && site.geoDecimal.lng) {
 			setCenter({ lat: site.geoDecimal.lat, lng:  site.geoDecimal.lng });
+		}
+		else if ( military && military.location && military.location.lat && military.location.lng) {
+			setCenter(military.location);
+		}
+		else if ( air && air.location && air.location.lat && air.location.lng) {
+			setCenter(air.location);
 		}
 		else {
 			Alert.error('No Geo Data Found', 6000);
@@ -31,6 +40,25 @@ const MapPage = (props) => {
 		}
 	}, []);
 
+	useEffect(() => {
+		if (props.site && props.site.geoDecimal) {
+			setCenter({ lat: props.site.geoDecimal.lat, lng:  props.site.geoDecimal.lng });
+		}
+	}, [props.site]);
+
+	useEffect(() => {
+		if (props.milTransfer) {
+			setCenter(props.milTransfer.location);
+		}
+	}, [props.milTransfer]);
+
+	useEffect(() => {
+		if (props.airTransfer) {
+			setCenter(props.airTransfer.location);
+		}
+	}, [props.airTransfer]);
+
+
 	const handleDis = (dis) => {
 		setDisplay(dis);
 	};
@@ -39,7 +67,7 @@ const MapPage = (props) => {
 		props.history.push('/');
 		return <LoginLink history={props.history} />
 	}
-  return (
+  else return (
 		<Container>
 				<FlexboxGrid justify="space-around" align="middle">
 					<FlexboxGrid.Item colspan={12}>
@@ -61,7 +89,7 @@ const MapPage = (props) => {
 						appearance="default"
 						placeholder="Find a Site"
 						style={{ width: 224 }}
-						onChange={(value) => handleThing(value)}
+						onChange={(value) => handleCenter(value)}
 					/>
 					</FlexboxGrid.Item>
 
@@ -71,7 +99,7 @@ const MapPage = (props) => {
 					
 				</FlexboxGrid>
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
-				<PrototypeMap display={display} center={center}></PrototypeMap>
+				<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} center={center}></PrototypeMap>
 			</Content>
 		</Container>
     );
@@ -143,8 +171,11 @@ const mapStateToProps = state => ({
 	sites: state.entities.sites.list,
 	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : undefined,
 	military: state.entities.military.list,
-	aircraft: state.entities.aircrafts.list,
-	account: getOpsAccount(state)
+	aircrafts: state.entities.aircrafts.list,
+	account: getOpsAccount(state),
+	site: state.info.Site,
+	milTransfer: state.info.Military,
+	airTransfer: state.info.Aircraft
 });
 
 const mapDispatchToProps = dispatch => ({});

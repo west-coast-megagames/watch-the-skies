@@ -311,6 +311,21 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 	}
 };
 
+MilitarySchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemove = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		let unit = this;
+		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
+		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
+
 // Method - Equip
 // IN: VOID | OUT: VOID
 // PROCESS: Changes the equipment of the unit
@@ -345,11 +360,15 @@ MilitarySchema.methods.unequip = async function (upgrades = []) {
 
 	try {
 		let temp = [ ... this.upgrades];
-		temp.filter(t => !upgrades.some(u => u == t._id));
+		for (const up of upgrades) {
+			const index = temp.findIndex(el => el === up);
+			temp.splice(index, 1);
+		}
 
-		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
-		// this.populate('upgrades').execPopulate(); // Populates the upgrads
 		this.upgrades = temp;
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end

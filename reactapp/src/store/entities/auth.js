@@ -32,7 +32,7 @@ const slice = createSlice({
 
       localStorage.setItem('nexusAuth', jwt);
       const user = jwtDecode(jwt);
-			console.log(user);
+			// console.log(user);
       // playTrack('login');
       // auth.team = user.team;
       auth.user = user;

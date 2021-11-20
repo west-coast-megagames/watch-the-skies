@@ -16,6 +16,8 @@ import { getTreasuryAccount } from '../../store/entities/accounts';
 
 // Scripts
 import playTrack from '../../scripts/audio';
+import { Icon } from 'rsuite';
+import { clockRequested } from '../../store/entities/clock';
 
 function getTimeRemianing(clock, deadline) {
 	const now = new Date(Date.now());
@@ -45,7 +47,7 @@ function getTimeRemianing(clock, deadline) {
 
 let interval = undefined;
 
-const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastFetch }) => {
+const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastFetch, clockRequested, loading }) => {
 	const [time, setTime] = React.useState('');
 	const [clock, setClock] = React.useState({ hours: 0, minutes: 0, seconds: 0, });
 
@@ -92,7 +94,8 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 					Project Nexus
 			</Link>
 			<div className="collapse navbar-collapse" id="navbarNav" />
-			{ login && <span className="navbar-text mr-md-5">{info.phase} {time} <FontAwesomeIcon icon={faClock} style={{ cursor: 'pointer' }} onClick={() => socket.emit('request', {route: 'clock', action:'getState'})}/> | {info.turnNum >= 0 ? `${info.turn} ${info.year}` : `${info.turn}`}</span> }
+			{ login && <Icon spin={loading} onClick={() => { clockRequested(); socket.emit('request', {route: 'clock', action:'getState'}); }} style={{ marginRight: '5px', cursor: 'pointer' }} icon="refresh" />}
+			{ login && <span className="navbar-text mr-md-5">{info.phase} {time} <FontAwesomeIcon icon={faClock} /> | {info.turnNum >= 0 ? `${info.turn} ${info.year}` : `${info.turn}`}</span> }
 			{ login && <span className="navbar-text mr-1">{pr}</span> }
 			{ login && <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span> }
 			<span className="navbar-text mr-1"> {!team ? <Link to="/login">Sign In</Link> : team.name} </span>
@@ -105,7 +108,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 const mapStateToProps = state => ({
     team: state.auth.team,
     login: state.auth.login,
-
+		loading: state.entities.clock.loading,
 		gameClock: state.entities.clock.gameClock,
 		info: state.entities.clock.info,
 		paused: state.entities.clock.paused,
@@ -115,6 +118,8 @@ const mapStateToProps = state => ({
     account: state.auth.team ? getTreasuryAccount(state) : undefined
 });
   
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	clockRequested: (payload) => dispatch(clockRequested(payload)),
+});
   
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

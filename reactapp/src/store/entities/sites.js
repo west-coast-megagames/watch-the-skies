@@ -118,3 +118,9 @@ export const addsite = site =>
     state => state.entities.sites.list,
 		sites => sites.filter(site => (site.subType === 'Satellite'))
   );
+
+	export const getMySatellites = createSelector(
+		state => state.entities.sites.list,
+		state => state.auth.team,
+		(sites, team) => sites.filter( site => (site.team === team._id || site.team._id === team._id) && site.subType === 'Satellite' )
+	);

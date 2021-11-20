@@ -23,10 +23,10 @@ const Agreements = (props) => {
 		return(
 			<div style={{ cursor: 'pointer' }} onClick={() => setThing({ type, team: otherTeam})}>
 				<Whisper placement="top" trigger="hover" speaker={<Tooltip>{props.team.shortName} has approved {type}</Tooltip>}>
-					<TeamAvatar size={'sm'} code={!myAgreement ? 'none' : props.team.code} /> 					
+					<TeamAvatar size={'sm'} code={props.team.code} grey={!myAgreement}/> 					
 				</Whisper>
 				<Divider vertical />
-				<TeamAvatar size={'sm'} code={!theyAgreement ? 'none' : otherTeam.code} />
+				<TeamAvatar size={'sm'} code={otherTeam.code} grey={!theyAgreement}/>
 			</div>
 		)
 }

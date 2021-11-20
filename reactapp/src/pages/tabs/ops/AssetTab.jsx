@@ -10,18 +10,17 @@ import { getUpgrades } from '../../../store/entities/upgrades';
 import { socket } from '../../../api';
 import MilitaryStats from './asset/militaryStats';
 import AircraftStats from './asset/AircraftStats';
+import SatelliteStats from './asset/SatelliteStats';
 import { getAircrafts } from '../../../store/entities/aircrafts';
+import { getMySatellites, getSatellites } from '../../../store/entities/sites';
+import { showSite, showMilitary, showAircraft } from '../../../store/entities/infoPanels';
 
 const { HeaderCell, Cell, Column } = Table;
 
 const AssetTab = (props) => {
 	const [selected, setSelected] = React.useState(props.selected);
 	const [filter, setFilter] = React.useState('');
-	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades' ]);
-	const [military, setMilitary] = React.useState(true);
-	const [facilites, setFacilities] = React.useState(true);
-	const [upgrades, setUpgrades] = React.useState(true);
-	const [aircraft, setAircraft] = React.useState(true);
+	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades', 'Satellites' ]);
 
 	const listStyle = (item) => {
 		if (selected && selected._id === item._id)
@@ -36,16 +35,40 @@ const AssetTab = (props) => {
 
 	useEffect(() => {
 		if (props.units && selected) {
-			const combined = [ ...props.units, ...props.aircraft, ...props.facilities ]
+			const combined = [ ...props.units, ...props.aircrafts, ...props.facilities ]
 			let updated = combined.find(el => el._id === selected._id);		
 			setSelected(updated);
 		}
-	}, [props.units, props.aircraft, props.facilities]);
+	}, [props.units, props.aircrafts, props.facilities]);
 
 	const handleTags = (units) => {
 		setTags(units);
 	};
 
+	const handleTransfer = (thing) => {
+		switch (thing.model) {
+			case 'Site':
+				props.showSite(thing);
+				props.history.push('/map/');
+				break;
+			case 'Military':
+				if (thing.status.some(el => el === 'mobilized')) {
+					props.showMilitary(thing);
+				}
+				else {
+					const site = props.sites.find(el => el._id === thing.site._id);
+					props.showSite(site);
+				}
+				props.history.push('/map/');
+				break;
+			case 'Aircraft':
+				props.showAircraft(thing);
+				props.history.push('/map/');
+				break;
+			default:
+				Alert.error('Bad Transfer', 6000);
+		}
+	}
 
 	const repair = async (upgrade) => {
 		try {
@@ -100,15 +123,18 @@ const AssetTab = (props) => {
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Asset???</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
-						<MilitaryStats upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
+						<MilitaryStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected}/>
 						<ServiceRecord owner={selected} />
 				</React.Fragment>
+				}
+				{ selected && selected.type === 'Space' && 
+					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected}/>
 				}
 				{ selected && selected.model === 'Facility' && 
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<AircraftStats upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircraft} unit={selected}/>
+					<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected}/>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>
@@ -182,6 +208,7 @@ const AssetTab = (props) => {
 					</Table>
 					</Panel>
 				}
+				
       </Content>
 			<Sidebar>
 					<PanelGroup>
@@ -201,8 +228,8 @@ const AssetTab = (props) => {
 						</Panel>
 						<div bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
 						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
-								{props.aircraft.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.aircrafts.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
+								{props.aircrafts.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (
 									<List.Item key={upgrade._id}  index={index} size={'md'} style={listStyle(upgrade)} onClick={()=> setSelected(upgrade)}>
 										{upgrade.name}
 									</List.Item>
@@ -218,6 +245,15 @@ const AssetTab = (props) => {
 									</List.Item>
 								))}
 							</List>	}	
+
+							{tags.some(el => el === 'Satellites') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Satellites ({props.satellites.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
+								{props.satellites.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((sat, index) => (
+									<List.Item key={sat._id}  index={index} size={'md'} style={listStyle(sat)} onClick={()=> setSelected(sat)}>
+										{sat.name}
+									</List.Item>
+								))}
+							</List>}	
 
 							{tags.some(el => el === 'Facilities') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
@@ -277,6 +313,9 @@ const checkerData = [
 	{
 		name: 'Upgrades'
 	},
+	{
+		name: 'Satellites'
+	},
 ]
 
 
@@ -285,14 +324,21 @@ const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
+	sites: state.entities.sites.list,
 	account: getOpsAccount(state),
-	aircraft: props.control ? state.entities.aircrafts.list : getAircrafts(state),
+	aircrafts: props.control ? state.entities.aircrafts.list : getAircrafts(state),
+	satellites: props.control ? getSatellites(state) : getMySatellites(state),
 	units: props.control ? state.entities.military.list : getMilitary(state),
 	upgrades: props.control ? state.entities.upgrades.list : getUpgrades(state),
 	facilities: props.control ? state.entities.facilities.list : getFacilites(state),
 	lastFetch: state.entities.military.lastFetch
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+	showSite: (payload) => dispatch(showSite(payload)),
+	showMilitary: (payload) => dispatch(showMilitary(payload)),
+	showAircraft: (payload) => dispatch(showAircraft(payload)),
+
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AssetTab);

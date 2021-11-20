@@ -10,7 +10,7 @@ class InfoSite extends Component {
 	state = {}
 
   render() {
-    if (this.props.site !== null) {
+    if (this.props.site !== null && this.props.site !== undefined) {
       let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = this.props.site;
     
       return(

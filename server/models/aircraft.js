@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
@@ -340,6 +341,74 @@ AircraftSchema.methods.populateMe = function () {
 		.populate('site', 'name geoDecimal')
 		.populate('origin', 'name')
 		.execPopulate();
+};
+
+AircraftSchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemove = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		const unit = this;
+		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
+		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
+
+// Method - Equip
+// IN: VOID | OUT: VOID
+// PROCESS: Changes the equipment of the unit
+AircraftSchema.methods.equip = async function (upgrades = []) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		for (const upgrade of upgrades) {
+			if (!this.upgrades.some(el => el === upgrade)) await addArrayValue(this.upgrades, upgrade); // Adds the MOBILIZED status into the STATUS array;
+		}
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
+
+// Method - Unequip
+// IN: VOID | OUT: VOID
+// PROCESS: Changes the equipment of the unit
+AircraftSchema.methods.unequip = async function (upgrades = []) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	// console.log(this.upgrades)
+
+	try {
+		let temp = [ ... this.upgrades];
+		for (const up of upgrades) {
+			const index = temp.findIndex(el => el === up);
+			temp.splice(index, 1);
+		}
+
+		this.upgrades = temp;
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		return unit; // unit;
+	}
+	catch (err) {
+		throw err;
+	}
 };
 
 const Aircraft = mongoose.model('Aircraft', AircraftSchema);

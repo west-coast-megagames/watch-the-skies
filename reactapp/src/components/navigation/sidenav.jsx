@@ -82,7 +82,7 @@ class SideNav extends Component {
 const mapStateToProps = state => ({
   login: state.auth.login,
 	user: state.auth.user,
-	team: getMyTeam(state),
+	// team: getMyTeam(state),
 	loadComplete: state.auth.loadComplete
 });
 

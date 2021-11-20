@@ -97,6 +97,32 @@
 	stroke-linejoin: round;
 }
 
+
+.bottom:hover {  
+	opacity: .5;
+}
+
+.top:hover {  
+	opacity: .5;
+}
+
+.left:hover {  
+	opacity: .5;
+}
+
+.right:hover {  
+	opacity: .5;
+}
+
+.middle:hover {  
+	opacity: .6;
+}
+
+.disabled {
+	cursor: not-allowed;
+}
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

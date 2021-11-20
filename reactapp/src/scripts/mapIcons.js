@@ -53,7 +53,18 @@ const satIcons = {
 }
 
 const fleetIcons = {
-	USA: 'https://cdn.discordapp.com/attachments/806050237931978822/820547277068304434/submarine_V2.png'
+	USA: 'https://cdn.discordapp.com/attachments/806050237931978822/820547277068304434/submarine_V2.png',
+	TUK: 'https://cdn.discordapp.com/attachments/857862435096100884/911400852793745408/uk.png',
+	RSA: 'https://cdn.discordapp.com/attachments/857862435096100884/911399538466652211/sa.png',
+	RFD: 'https://cdn.discordapp.com/attachments/857862435096100884/911399526802280458/rfd.png',
+	JPN: 'https://cdn.discordapp.com/attachments/857862435096100884/911399506308923412/jpn.png',
+	IRN: 'https://cdn.discordapp.com/attachments/857862435096100884/911399496355831818/irn.png',
+	IND: 'https://cdn.discordapp.com/attachments/857862435096100884/911399487111581727/ind.png',
+	TFR: 'https://cdn.discordapp.com/attachments/857862435096100884/911399555545858098/tfr.png',
+	EPT: 'https://cdn.discordapp.com/attachments/857862435096100884/911399475803734088/ept.png',
+	PRC: 'https://cdn.discordapp.com/attachments/857862435096100884/911399516396220416/prc.png',
+	BRZ: 'https://cdn.discordapp.com/attachments/857862435096100884/911399467029266462/brz.png',
+	AUS: 'https://cdn.discordapp.com/attachments/857862435096100884/911399454886744114/aus.png',
 }
 
 export const getMapIcon = (site) => {
@@ -81,7 +92,7 @@ export const getMilitaryIcon = (unit) => {
 		else return milIcons[unit.team.code];		
 	}
 	else 	if (unit.type === 'Fleet') {
-		if (!fleetIcons[unit.team.code] || fleetIcons[unit.team.code] === null) return ('https://cdn.discordapp.com/attachments/582043597281427466/783190980333273128/UNKOWN_tank_v5.1.png'); //the default '?' tank
+		if (!fleetIcons[unit.team.code] || fleetIcons[unit.team.code] === null) return ('https://cdn.discordapp.com/attachments/857862435096100884/911401587451232326/unknown.png'); //the default '?' tank
 		else return fleetIcons[unit.team.code];		
 	}
 }
