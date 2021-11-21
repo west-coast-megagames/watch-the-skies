@@ -92,7 +92,7 @@
     "name": "UK Modern Attack Sub Fleet 1",
     "team": "TUK",
     "organization": "GB",
-    "origin": "GBBA",
+    "origin": "GBBB",
     "bpCode": "SUB-MA"
   },
   {
@@ -100,7 +100,7 @@
     "name": "South Africa Standard Attack Sub Fleet 1",
     "team": "RSA",
     "organization": "ZA",
-    "origin": "ZABA",
+    "origin": "ZABB",
     "bpCode": "SUB-SA"
   },
   {
@@ -348,7 +348,7 @@
     "name": "UK Surface Fleet 1",
     "team": "TUK",
     "organization": "GB",
-    "origin": "GBBA",
+    "origin": "GBBB",
     "bpCode": "SUR-SS"
 
   },
@@ -541,7 +541,7 @@
     "name": "UK Carrier Fleet 1",
     "team": "TUK",
     "organization": "GB",
-    "origin": "GBBA",
+    "origin": "GBBB",
     "bpCode": "CAR-SC"
   },
   {

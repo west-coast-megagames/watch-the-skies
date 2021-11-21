@@ -8,14 +8,13 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const BuildingSchema = new Schema({
-	type: { type: String },
+	type: { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] },
 	stats: {
-		copacity: { type: Number },
+		capacity: { type: Number },
 		funding: { type: Number },
 		range: { type: Number },
 		rate: { type: Number },
 		bonus: { type: Number }
-
 	},
 	damaged: { type: Boolean, default: false, required: true },
 	research: { type: ObjectId, ref: 'Research' },
@@ -63,25 +62,27 @@ FacilitySchema.methods.validateFacility = async function () {
 	if (this.team) {
 		await validTeam(this.team);
 	}
-
+	
 	for await (const upg of this.upgrade) {
 		await validUpgrade(upg);
 	}
-	for await (const rsrch of this.capability.research.projects) {
-		await validResearch(rsrch);
+
+	if (this.buildings.research) {
+		await validResearch(this.buildings.research);
+  }
+	
+  if (this.buildings.aircrafts) {
+	  for await (const aircrft of this.buildings.aircrafts) {
+	  	await validAircraft(aircrft);
+		}
 	}
 
-	for await (const aircrft of this.capability.airMission.aircraft) {
-		await validAircraft(aircrft);
+	if (this.buildings.units) {
+	  for await (const milUnit of this.buildings.units) {
+		  await validMilitary(milUnit);
+		}
 	}
 
-	for await (const nav of this.capability.naval.fleet) {
-		await validMilitary(nav);
-	}
-
-	for await (const cor of this.capability.ground.corps) {
-		await validMilitary(cor);
-	}
 };
 
 const Facility = mongoose.model('Facility', FacilitySchema);

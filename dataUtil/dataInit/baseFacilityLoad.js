@@ -6,6 +6,7 @@ const file = fs.readFileSync(
 );
 const baseDataIn = JSON.parse(file);
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
+const { addArrayValue } = require('../middleware/util/arrayCalls');
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
@@ -69,117 +70,14 @@ async function loadBase(iData, rCounts) {
 				code: iData.code,
 				type: iData.type,
 				serviceRecord: [],
-				baseDefenses: iData.baseDefenses,
-				public: iData.public,
-				capability: iData.capability,
+				buildings: [],
 				tags: [],
 				status: []
 			};
-			newFacility.status.push('repair');
 
 			if (iData.coastal) {
 				newFacility.tags.push('coastal');
 			}
-
-			// John's additional settings
-			const {
-				research,
-				airMission,
-				storage,
-				manufacturing,
-				naval,
-				ground
-			} = newFacility.capability;
-
-			if (research) {
-				research.status.damage = [];
-				research.status.pending = [];
-				research.funding = [];
-				if (research.capacity > 0) {
-					for (let i = 0; i < research.capacity; i++) {
-						research.status.damage.push(false);
-						research.funding.push(0);
-
-						research.status.pending.push(false);
-					}
-
-					research.active = true;
-
-					research.sciRate = Math.floor(Math.random() * 26);
-
-					research.sciBonus = 0;
-				}
-				else {
-					research.capacity = 0;
-					research.active = false;
-					research.sciBonus = 0;
-					research.sciRate = 0;
-					research.projects = [];
-				}
-			}
-
-			if (airMission) {
-				if (airMission.capacity > 0) {
-					airMission.active = true;
-				}
-				else {
-					airMission.active = false;
-					airMission.capacity = 0;
-					airMission.aircraft = [];
-					airMission.damage = [];
-				}
-			}
-
-			if (storage) {
-				if (storage.capacity > 0) {
-					storage.active = true;
-				}
-				else {
-					storage.active = false;
-					storage.capacity = 0;
-					storage.equipment = [];
-					storage.damage = [];
-				}
-			}
-
-			if (manufacturing) {
-				if (manufacturing.capacity > 0) {
-					manufacturing.active = true;
-				}
-				else {
-					manufacturing.active = false;
-					manufacturing.capacity = 0;
-					manufacturing.equipment = [];
-					manufacturing.damage = [];
-				}
-			}
-
-			if (naval) {
-				if (naval.capacity > 0) {
-					naval.active = true;
-				}
-				else {
-					naval.active = false;
-					naval.capacity = 0;
-					naval.fleet = [];
-					naval.damage = [];
-				}
-			}
-
-			if (ground) {
-				if (ground.capacity > 0) {
-					ground.active = true;
-				}
-				else {
-					ground.active = false;
-					ground.capacity = 0;
-					ground.corps = [];
-					ground.damage = [];
-				}
-			}
-
-			// end of John's additional settings
-
 
 			if (iData.teamCode != '') {
 				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);
@@ -209,6 +107,31 @@ async function loadBase(iData, rCounts) {
 				else {
 					newFacility.site = sData._id;
 				}
+
+				newFacility.capabilities = [];
+	      // find buildings from blueprint code
+				const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${iData.bpCode}`);
+				const bpData = blueprint.data;
+			
+				if (!bpData.desc) {
+					++rCounts.loadErrCount;
+					logger.error(`New Facility Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
+					return;
+				} else {
+					for (const blds of bpData.buildings) {
+						const bldBlueprint = await axios.get(`${gameServer}init/initBlueprints/code/${blds}`);
+						const bldBpData = bldBlueprint.data;
+						if (!bldBpData.desc) {
+							++rCounts.loadErrCount;
+							logger.error(`New Facility Invalid Building Blueprint: ${iData.name} ${iData.bpCode} {$blds}`);
+							return;
+					  } else {
+							  const bldObj = { "type": bldBpData.type, "stats": bldBpData.stats, "damaged": false };
+							  newFacility.buildings.push(bldObj);	
+								await addArrayValue(newFacility.capabilities, bldBpData.type);
+						}
+					}
+	      }
 
 				try {
 					await axios.post(`${gameServer}api/facilities`, newFacility);

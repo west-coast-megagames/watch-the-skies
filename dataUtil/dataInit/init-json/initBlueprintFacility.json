@@ -10,10 +10,7 @@
     "buildTime": 1,
     "unitType": ["City"],
     "desc": "Civilian Improvment Facility",
-    "capacity": 2,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": [],
     "prereq": [],
     "status": [],
     "hidden": false,
@@ -30,10 +27,7 @@
     "buildTime": 1,
     "unitType": ["City"],
     "desc": "Civilian Improvment Facility",
-    "capacity": 2,
-    "facilityStats": {
-      "effect": [{ "type": "pr", "effect": 1 }]
-    },
+    "buildings": [],
     "prereq": [],
 		"status": [],
     "hidden": false,
@@ -50,10 +44,7 @@
     "buildTime": 1,
     "unitType": ["Crisis"],
     "desc": "Mobile Crisis Control Facility",
-    "capacity": 2,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": [],
     "prereq": [],
 		"status": [],
     "hidden": false,
@@ -70,16 +61,10 @@
     "buildTime": 1,
     "unitType": ["Base"],
     "desc": "Standard Base Lab Facility",
-    "capacity": 1,
-    "facilityStats": {
-      "effect": []
-    },
+    "buildings": ["LAB-01","LAB-01","LAB-01"],
     "prereq": [],
 		"status": [],
     "hidden": false,
-    "sciRate": 3,
-    "sciBonus": 0,
-    "funding": 0,
     "site": ""
   },
   {
@@ -93,13 +78,11 @@
     "buildTime": 1,
     "unitType": ["Base"],
     "desc": "Standard Base Hanger Facility",
-    "capacity": 5,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": ["HANGER-LG","HANGER-LG","HANGER-LG"],
     "prereq": [],
 		"status": [],
-    "hidden": false
+    "hidden": false,
+    "site": ""
   },
   {
     "loadType": "blueprint",
@@ -112,16 +95,11 @@
     "buildTime": 1,
     "unitType": ["Base"],
     "desc": "Secret Base Lab Facility",
-    "capacity": 1,
-    "facilityStats": {
-      "effect": []
-    },
+    "buildings": ["LAB-01","LAB-01"],
     "prereq": [],
-		"status": [],
+		"status": ["secret"],
     "hidden": true,
-    "sciRate": 3,
-    "sciBonus": 0,
-    "funding": 0
+    "site": ""
   },
   {
     "loadType": "blueprint",
@@ -134,13 +112,11 @@
     "buildTime": 1,
     "unitType": ["Base"],
     "desc": "Base Factory Facility",
-    "capacity": 1,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": ["WORK-01","WORK-01"],
     "prereq": [],
 		"status": [],
-    "hidden": false
+    "hidden": false,
+    "site": ""
   },
   {
     "loadType": "blueprint",
@@ -153,16 +129,11 @@
     "buildTime": 1,
     "unitType": ["Spacecraft"],
     "desc": "Standard Spacecraft Lab Facility",
-    "capacity": 1,
-    "facilityStats": {
-      "effect": []
-    },
+    "buildings": ["LAB-01","LAB-01"],
     "prereq": [],
 		"status": [],
     "hidden": false,
-    "sciRate": 3,
-    "sciBonus": 0,
-    "funding": 0
+    "site": ""
   },
   {
     "loadType": "blueprint",
@@ -175,13 +146,11 @@
     "buildTime": 1,
     "unitType": ["Spacecraft"],
     "desc": "Standard Spacecraft Hanger Facility",
-    "capacity": 3,
-    "facilityStats": {
-      "effect": []
-    },
+  	"buildings": ["HANGER-LG","HANGER-LG","HANGER-LG"],
     "prereq": [],
 		"status": [],
-    "hidden": false
+    "hidden": false,
+    "site": ""
   },
   {
     "loadType": "blueprint",
@@ -194,45 +163,41 @@
     "buildTime": 1,
     "unitType": ["Crash"],
     "desc": "Mobile Research Lab Facility",
-    "capacity": 1,
-    "facilityStats": {
-      "effect": []
-    },
+		"buildings": ["LAB-01"],
     "prereq": [],
-    "status": {
-      "secret": false
-    },
+    "status": [],
     "hidden": false,
-    "sciRate": 3,
-    "sciBonus": 0,
-    "funding": 0
+    "site": ""
 	},
 	{  
     "loadType": "blueprint",
     "loadFlag": "true",
     "buildModel": "facility",
-    "name": "Base Template",
+    "name": "Land Base Template",
     "type": "Base",
     "code": "BT-1",
     "cost": 2,
     "buildTime": 1,
     "unitType": ["Organization"],
     "desc": "Standard National Land Base",
-		"buildings": ["lab-01", "hanger-lg", "store-sm", "work-01", "mil-lg"],
-    "hidden": false
+		"buildings": ["LAB-01", "HANGER-LG", "STORE-SM", "WORK-01", "MIL-LG"],
+		"prereq": [],
+		"status": [],
+    "hidden": false,
+    "site": ""
 	},
 	{  
     "loadType": "blueprint",
     "loadFlag": "true",
     "buildModel": "facility",
-    "name": "Base Template",
+    "name": "Naval Base Template",
     "type": "Base",
     "code": "BT-2",
     "cost": 2,
     "buildTime": 1,
     "unitType": ["Organization"],
     "desc": "Standard National Navy Base",
-		"buildings": ["lab-01", "hanger-lg", "store-sm", "work-01", "mil-md", "navy-lg"],
+		"buildings": ["LAB-01", "HANGER-LG", "STORE-SM", "WORK-01", "MIL-MD", "NAVY-LG"],
     "prereq": [],
 		"status": [],
     "hidden": false,
@@ -249,10 +214,10 @@
     "buildTime": 1,
     "unitType": ["Organization"],
     "desc": "Hidden National Base",
-		"buildings": ["lab-01", "lab-01", "hanger-sm", "store-sm", "work-01"],
+		"buildings": ["LAB-01", "LAB-01", "HANGER-SM", "STORE-SM", "WORK-01"],
     "prereq": [],
 		"status": [],
-    "hidden": false,
+    "hidden": true,
     "site": ""
 	}
 ]

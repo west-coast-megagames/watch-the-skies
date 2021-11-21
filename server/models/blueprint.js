@@ -40,6 +40,17 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 		});
 		break;
 
+	case 'building':
+		schema = Joi.object({
+			code: Joi.string().min(2).max(20).required().uppercase(),
+			name: Joi.string().min(2).max(50).required(),
+			cost: Joi.number().min(0).required(),
+			buildTime: Joi.number().min(0).required(),
+			desc: Joi.string().min(1).max(255).required(),
+			buildModel: Joi.string() .min(1) .required()
+		});
+		break;
+
 	case 'facility':
 		schema = Joi.object({
 			code: Joi.string().min(2).max(20).required().uppercase(),
@@ -48,7 +59,7 @@ BlueprintSchema.methods.validateBlueprint = async function () {
 			buildTime: Joi.number().min(0).required(),
 			desc: Joi.string().min(1).max(255).required(),
 			buildModel: Joi.string() .min(1) .required(),
-			status: Joi.array().items(Joi.string().valid(''))
+			status: Joi.array().items(Joi.string().valid('secret', ''))
 		});
 		break;
 
@@ -114,13 +125,9 @@ const FacilityBlueprint = Blueprint.discriminator(
 		buildModel: { type: String, required: true, default: 'facility' },
 		type: { type: String },
 		site: { type: ObjectId, ref: 'Site' },
-		upgrades: [Schema.Types.Mixed],
-		capacity: { type: Number, default: 0 },
-		status: [ { type: String, enum:  [''] } ],
-		unitType: [{ type: String, min: 2, maxlength: 50 }],
-		funding: [Number],
-		sciRate: { type: Number, default: 0 },
-		sciBonus: { type: Number, default: 0 }
+		buildings: [ { type: String }],
+		status: [ { type: String, enum:  ['secret', ''] } ],
+		unitType: [{ type: String, min: 2, maxlength: 50 }]
 	})
 );
 
@@ -162,4 +169,13 @@ const UpgradeBlueprint = Blueprint.discriminator(
 	})
 );
 
-module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint, MilitaryBlueprint };
+const BuildingBlueprint = Blueprint.discriminator(
+	'Buildinglueprint',
+	new Schema({
+		buildModel: { type: String, required: true, default: 'building' },
+		type: { type: String },
+		stats: { type: Schema.Types.Mixed }
+	})
+);
+
+module.exports = { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint, MilitaryBlueprint, BuildingBlueprint };

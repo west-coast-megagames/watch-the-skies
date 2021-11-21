@@ -9,6 +9,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
 
@@ -110,13 +111,13 @@ async function loadSquad(iData, rCounts) {
 					logger.error(`New Squad Invalid Base: ${iData.name} ${iData.origin}`);
 					return;
 				}
-				else if (bData.capability.ground.capacity > 0) {
+				else if (await inArray(bData.capabilities, 'garrison')) {
 					newSquad.origin = bData._id;
 					newSquad.site = bData.site;
 				}
 				else {
 					++rCounts.loadErrCount;
-					logger.error(`New Squad Base does not have positive ground capacity: ${iData.name} ${iData.origin}`);
+					logger.error(`New Squad Base does not have garrison capabilities: ${iData.name} ${iData.origin}`);
 					return;
 				}
 			}
