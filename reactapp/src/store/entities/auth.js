@@ -40,7 +40,6 @@ const slice = createSlice({
       auth.loading = false
       auth.login = true;
       // socket.emit('new user', { team: user.team.shortName, user: user.username });
-      initConnection(auth.user, auth.team, auth.version);
     },
 		signOut: (auth, action) => {
 			console.log(`${action.type} Dispatched`);
@@ -78,6 +77,7 @@ const slice = createSlice({
 		},
 		debugTeam: (auth, action) => {
 			auth.team = action.payload;
+			initConnection(auth.user, auth.team, auth.version);
 		}
   }
 });

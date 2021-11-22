@@ -35,10 +35,11 @@ module.exports = function (server) {
 
 	io.use((client, next) => {
 		//     console.log(client.handshake);
-		const { username, character, version } = client.handshake.auth;
+		const { username, team: teamName, version } = client.handshake.auth;
 		if (!username) return next(new Error('Invalid Username'));
+		console.log(`${username} connected - Client v${version} | Team: ${teamName}`);
 		client.username = username;
-		client.character = character;
+		client.team = teamName;
 		client.version = version;
 		next();
 	});
@@ -85,7 +86,7 @@ module.exports = function (server) {
 		const socketArray = Array.from(io.sockets.sockets.values());
 		let socket = null;
 		for (const sock of socketArray) {
-			if (sock.character === data.characterName) socket = sock;
+			if (sock.team === data.team) socket = sock;
 		}
 		switch(req) {
 		case 'update':
@@ -104,7 +105,7 @@ module.exports = function (server) {
 			socket ? socket.emit('alert', data) : console.log(`${data.characterName} was not online to get their mail`);
 			break;
 		default: 
-			console.log(`Error: ${req} was not found in nexusEvent`); // phaseChange
+			console.log(`Error: ${req} was not found in nexusEvent request call`);
 		}
 	});
 
@@ -123,7 +124,7 @@ module.exports = function (server) {
 			users.push({
 				userID: id,
 				username: socket.username,
-				character: socket.character ? socket.character : 'Unassigned',
+				team: socket.team ? socket.team : 'Unassigned',
 				clientVersion: socket.version ? socket.version : 'Old Client'
 			});
 		}
