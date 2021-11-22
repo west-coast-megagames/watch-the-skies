@@ -240,15 +240,18 @@ const InterceptLog = props => {
 		}
 		return (					
 			<Grid fluid>
-				<Row >
-					{array.length > 0 && array.map((el, index) => (
-						<Col md={6} sm={6} >
+				{array.length > 0 &&<Row >
+					{array.map((el, index) => (
+						<Col index={index} md={6} sm={6} >
 							<Tag color={'red'} style={{ 'textTransform': 'capitalize'}}>{el.stat}</Tag>
 							<p>{el.before} -> {el.after}</p>
 						
 						</Col>
 					))}
-				</Row>
+				</Row>}
+				{array.length === 0 && <Row>
+					<Col style={{ textAlign: 'center'}} md={24} sm={24} >No stat changes</Col>	
+				</Row>}
 			</Grid>)
 
 	}
@@ -264,8 +267,8 @@ const InterceptLog = props => {
 						/>
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={16}>
-						<p style={{ width: '90%', height: '6vh' }} > <b>{report ? report : 'No Report...'}</b></p>
-						<Divider />
+						<p style={{ width: '90%', height: 'auto', }} > <b>{report ? report : 'No Report...'}</b></p>
+						<Divider>Stat Changes</Divider>
 						{renderDifference(stats[0], stats[stats.length - 1])}
 					</FlexboxGrid.Item>
 				</FlexboxGrid>
