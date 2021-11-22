@@ -162,7 +162,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 			<div style={{ width: '40%' }}>
 				{ login && <span className="navbar-text mr-md-5">
 					<Button style={{ marginBottom: '5px', color: 'silver' }} appearance="link" size='xs'>
-					<Dropdown title={info.phase}>
+					<Dropdown trigger="hover" title={info.phase}>
     			<Dropdown.Item style={{ zIndex: 999 }}>
 						{renderDropdown()}
 					</Dropdown.Item>
@@ -178,7 +178,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 					</span> }								
 			</div>
 
-			<div style={{  display: 'flex', justifyContent: 'right',  alignItems: 'center', width: '20%' }} colspan={5}>
+			<div style={{  display: 'flex', justifyContent: 'right',  alignItems: 'center', width: '20%', marginRight: '10px' }} colspan={5}>
 				{ login && <span className="navbar-text mr-1">{pr}</span> }
 			 	{ login && <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span> }
 				<span className="navbar-text mr-1" > {!team ? <Link style={{color: 'white' }} to="/login">Sign In</Link> : team.name} </span>

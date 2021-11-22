@@ -37,7 +37,7 @@ const MobilizeForm = (props) => {
 			<Drawer.Body>
 					<h6>Select Units</h6>
 					{<CheckPicker block placeholder='Select Units'
-							data={ props.military.filter(el => !el.status.some(el2 => el2 === 'mobilized')) }
+							data={ props.military.filter(el => !el.status.some(el2 => el2 === 'mobilized') && el.missions + el.actions > 0 ) }
 							onChange={handleUnits}
 							valueKey='_id'
 							labelKey='name'

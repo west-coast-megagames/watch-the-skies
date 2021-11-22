@@ -6,6 +6,7 @@ import axios from 'axios';
 import { launchClosed } from '../store/entities/infoPanels';
 import { getAircrafts } from '../store/entities/aircrafts';
 import socket from '../socket';
+import { getOpsAccount } from '../store/entities/accounts';
 
 let missions = [
   { value: "Interception", label: "Intercept | Attack target aircraft", aircraft: true, site: false, ground: false, type: 'Fighter' },
@@ -53,6 +54,7 @@ const InfoAircraftDeploy = (props) => {
 	const handleType = (value) => { 
 		setMission(value);
 		setUnits([]);
+		setCost(0); 
 	};
 
 	const handleUnits = (units) => {
@@ -63,7 +65,7 @@ const InfoAircraftDeploy = (props) => {
 		// 	if (unit.zone.name !== props.target.zone.name) { tempCost += unit.stats.globalDeploy }; 
 		// }
 		setUnits(units);
-		setCost(tempCost); 
+		setCost(units.length); 
 	};
 
 	const handleExit = () => {
@@ -78,37 +80,37 @@ const InfoAircraftDeploy = (props) => {
 			case 'interception':
 				return (
 				<Panel bordered >
-					<b>Intercept</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Intercept</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Engage a target in combat and attempt to shoot it down</p>
 				</Panel>)
 			case 'escort':
 				return (
 				<Panel bordered >
-					<b>Escort</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Escort</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Protect a target from hostile interceptions</p>
 				</Panel>)
 			case 'patrol':
 				return (
 				<Panel bordered >
-					<b>Patrol</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Patrol</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Protect target site from any hostile air missions.</p>
 				</Panel>)
 			case 'recon site':
 				return (
 				<Panel bordered >
-					<b>Recon Site</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Recon Site</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Investigate a site and generate intel on it.</p>
 				</Panel>)
 			case 'recon aircraft':
 				return (
 				<Panel bordered >
-					<b>Recon Aircraft</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Recon Aircraft</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Investigate an aircraft and generate intel on it.</p>
 				</Panel>)
 			case 'transport':
 				return (
 				<Panel bordered >
-					<b>Transport</b> | <Tag color={'green'}>$1M</Tag>
+					<b>Transport</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Move troops or equiptment between atmospheres</p>
 				</Panel>)
 			default: 
@@ -178,7 +180,7 @@ const InfoAircraftDeploy = (props) => {
 									{/* <Button appearance={mission !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
 									<Button disabled={model === "Aircraft"} appearance={mission !== 'patrol' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('patrol')} >Patrol</Button>
 									<Button disabled={model === "Aircraft"} appearance={mission !== 'recon site' ? 'ghost' : 'primary'} color={'cyan'} onClick={() => handleType('recon site')} >Recon</Button>
-									<Button disabled={model === "Aircraft"} appearance={mission !== 'transport' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transport')} >Transport</Button>
+									{/* <Button disabled={model === "Aircraft"} appearance={mission !== 'transport' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transport')} >Transport</Button> */}
 								</ButtonGroup>
 						</FlexboxGrid.Item>
 					</FlexboxGrid>
@@ -205,7 +207,10 @@ const InfoAircraftDeploy = (props) => {
 
           </Drawer.Body>
           <Drawer.Footer>
-            <Button disabled={disable || units === null || units.length < 1} onClick={ handleSubmit } appearance="primary">Confirm</Button>
+						{units && units.length === 0 && <Tag color='red'>Select one more more units</Tag>}
+						{props.account.resources.find(el => el.type === 'Megabucks').balance < cost && <Tag color='red'>{cost - props.account.resources.find(el => el.type === 'Megabucks').balance} more megabucks needed in Ops account</Tag>}
+
+            <Button disabled={disable || units === null || units.length < 1 || props.account.resources.find(el => el.type === 'Megabucks').balance < cost } onClick={ handleSubmit } appearance="primary">Confirm</Button>
             <Button onClick={ () => handleExit() } appearance="subtle">Cancel</Button>
           </Drawer.Footer>
         </Drawer> 
@@ -236,6 +241,7 @@ const mapStateToProps = state => ({
   aircrafts: getAircrafts(state),
 	team: state.auth.team,
   unit: state.info.Aircraft,
+	account: getOpsAccount(state),
   target: state.info.Target,
   show: state.info.showLaunch
 });

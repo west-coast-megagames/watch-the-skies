@@ -27,6 +27,8 @@ const options = {
 	styles: mapStyle,
 	disableDefaultUI: true,
 	zoomControl: true,
+	minZoom: 3, 
+	maxZoom: 8, 
 	mapTypeId: 'terrain'
 }
 
@@ -108,8 +110,6 @@ function PrototypeMap(props) {
 	const handleOnDragEnd = (data, sat) => {
 		// setDragGeo({ id: sat._id, geoDecimal: data.latLng.toJSON()})
 		socket.emit('request', { route: 'site', action: 'space', actionType: 'geoPosition', data: { _id: sat._id, geoPosition: data.latLng.toJSON() }});
-		console.log(sat.geoDecimal)
-		console.log(data.latLng.toJSON())
 	}
 
 	const handlenDrag = (data) => {
@@ -127,7 +127,7 @@ function PrototypeMap(props) {
 	return (
 		<GoogleMap
 			mapContainerStyle={mapContainerStyle}
-			zoom={7}
+			zoom={6}
 			center={props.center}
 			options={options}
 			onLoad={onMapLoad}>
@@ -274,7 +274,7 @@ function PrototypeMap(props) {
     				/>
 					</div>}
 
-					{(satellite.team._id === props.team._id) && <div>
+					{(satellite.team._id === props.team._id || satellite.code === 'ISS') && <div>
 						<Circle
     				  // required
     				  center={ (dragGeo && dragGeo.id === satellite._id) ? dragGeo.geoDecimal :  satellite.geoDecimal}

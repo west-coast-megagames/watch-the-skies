@@ -6,7 +6,9 @@ import AutoTransfers from '../../../components/transfersTable';
 import { Container, Content, Loader, Sidebar, SelectPicker, Button, Modal, Input, InputGroup, Icon, Alert } from 'rsuite';
 import { getTreasuryAccount, getAccountsForTeam } from '../../../store/entities/accounts';
 import socket from '../../../socket';
+import AccountGraph from '../../../components/common/GraphAccounts';
 // import AccountGraph from '../../../components/common/GraphAccounts';
+
 
 let count = 0;
 
@@ -100,16 +102,16 @@ const BudgetTab = (props) => {
 			<Container className="transfers">
 				<Content>
 					<h4>{account.name} Account</h4>
-					{/* <AccountGraph
-						account={this.state.account}
-					/> */}
+					{account && <AccountGraph
+						account={account}
+					/>}
 					<h4>Automatic Transfers</h4>
 					<AutoTransfers
 						accounts={ props.accounts }
 						Alert={ props.alert }
 					/>
 				</Content>
-					{/* Left Container - Holds account information */}
+					{/* Right Container - Holds account information */}
 					<Sidebar>
 						<SelectPicker
 							block
