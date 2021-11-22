@@ -55,7 +55,7 @@ const Governance = (props) => {
 						)}/>
 
 						<Route path={`${url}/timeline`} render={() => (
-							<GameTimeline />
+							<GameTimeline control={false}/>
 						)}/>
 						<Route path={`${url}/budget`}  render={() => (
 							<BudgetTab />
