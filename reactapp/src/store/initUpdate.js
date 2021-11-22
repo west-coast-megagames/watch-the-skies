@@ -78,7 +78,7 @@ const initUpdates = () => {
     console.log('updateClients');
     for (const el of data) {
         // console.log(el)
-        if (el) {
+        if (el && el.model) {
 					let func = updaterFunctions[el.model.toLowerCase()];
 					func ? store.dispatch(func(el)) : console.log(`ERROR INVALID UPDATE FUNCTION: ${el.model.toLowerCase()} - ${func}`);
         }

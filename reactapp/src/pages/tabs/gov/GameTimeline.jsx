@@ -15,7 +15,7 @@ const GameTimeline = (props) => {
 		let reports = props.reports;
 		let postTeams = [];
 		for (let team of teamFilter) {
-			let teamReports = reports.filter(el => el.team.code === team);
+			let teamReports = reports.filter(el => el.team._id === team._id);
 			postTeams = [...postTeams,...teamReports];
 		}
 
@@ -66,14 +66,14 @@ const GameTimeline = (props) => {
 			{count === 0 && <h4>No timeline for the game.</h4>}
 			{count > 0 && <Timeline className='game-timeline'>
 				{filteredReports.map(report => {
-					if (report.type === 'Interception') return (<InterceptLog key={report._id} report={report} />);
-					if (report.type === 'Transaction') return (<TransactionLog key={report._id} report={report} />);
-					if (report.type === 'Research') return (<ResearchLog key={report._id} report={report} />);
-					if (report.type === 'Deploy') return (<DeployLog key={report._id} report={report} />);
-					if (report.type === 'Aircraft Repair') return (<RepairLog key={report._id} report={report} />);
-					if (report.type === 'Recon') return (<ReconLog key={report._id} report={report} />);
-					if (report.type === 'Battle') return (<BattleLog key={report._id} report={report} />);
-					if (report.type === 'Failure') return (<FailedLog key={report._id} report={report} />);
+					if (report.type === 'Interception') return (<InterceptLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Transaction') return (<TransactionLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Research') return (<ResearchLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Deploy') return (<DeployLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Aircraft Repair') return (<RepairLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Recon') return (<ReconLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Battle') return (<BattleLog key={report._id} report={report} teams={props.teams}/>);
+					if (report.type === 'Failure') return (<FailedLog key={report._id} report={report} teams={props.teams}/>);
 				})}
 			</Timeline>}
 	</React.Fragment>

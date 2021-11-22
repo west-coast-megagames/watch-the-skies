@@ -181,7 +181,7 @@ const NavBar = ({ team, login, account, paused, gameClock, deadline, info, lastF
 			<div style={{  display: 'flex', justifyContent: 'right',  alignItems: 'center', width: '20%', marginRight: '10px' }} colspan={5}>
 				{ login && <span className="navbar-text mr-1">{pr}</span> }
 			 	{ login && <span className="navbar-text mr-1"> <FontAwesomeIcon icon={faMoneyBillAlt} /> {megabuckDisplay}</span> }
-				<span className="navbar-text mr-1" > {!team ? <Link style={{color: 'white' }} to="/login">Sign In</Link> : team.name} </span>
+				<span className="navbar-text mr-1" > {!team ? <Link style={{color: 'white' }} to="/login">Sign In</Link> : team.shortName} </span>
 				<audio ref={React.createRef()} src="./fifteen-minutes.ogg" autoPlay/>
 		 		<TeamAvatar size={'xs'} code={!team ? null : team.code} />
 			</div>
