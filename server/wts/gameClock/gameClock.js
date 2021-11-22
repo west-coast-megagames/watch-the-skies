@@ -128,6 +128,7 @@ class GameTimer {
 	}
 
 	nextPhase() {
+		const lastPhase = this.getTimeStamp();
 		if (this.phaseNum % this.phaseNames.length === this.phaseNames.length - 1) {
 			this.nextTurn();
 		}
@@ -135,7 +136,7 @@ class GameTimer {
 		this.phaseNum++;
 		this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
 		this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
-		nexusEvent.emit('phaseChange', this.currentPhase);
+		nexusEvent.emit('phaseChange', { phase: this.currentPhase, lastPhase });
 		logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
 		this.broadcastClock();
 

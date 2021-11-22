@@ -14,22 +14,16 @@ const ReportSchema = new Schema({
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	tags: [{ type: String, enum: ['']} ],
-	status: [ {type: String, enum: ['complete', 'hidden']} ],
+	tags: [{ type: String, enum: [''] }],
+	status: [{ type: String, enum: ['complete', 'hidden'] }]
 });
 
-ReportSchema.methods.createTimestamp = (report) => {
+ReportSchema.methods.createTimestamp = function () {
 	const Gameclock = require('../wts/gameClock/gameClock');
-	const { turn, phase, turnNum, minutes, seconds } = Gameclock.getTimeRemaining();
-	report.timestamp = {
-		turn,
-		phase,
-		turnNum,
-		clock: `${minutes}:${seconds}`
-	};
-	report.date = Date.now();
+	this.timestamp = Gameclock.getTimeStamp();
+	this.date = Date.now();
 
-	return report;
+	return;
 };
 
 ReportSchema.methods.validateReport = async function () {
@@ -42,6 +36,19 @@ ReportSchema.methods.validateReport = async function () {
 	const { error } = schema.validate(this, { allowUnknown: true });
 	if (error != undefined) nexusError(`${error}`, 400);
 
+};
+
+ReportSchema.methods.populateMe = function () {
+	return this
+		.populate('team')
+		.populate('organization', 'name')
+		.populate('zone')
+		.populate('project')
+		.populate('lab')
+		.populate('theory')
+		.populate('units')
+		.populate('site', 'name team')
+		.execPopulate();
 };
 
 const Report = mongoose.model('Report', ReportSchema);

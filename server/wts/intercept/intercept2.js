@@ -36,8 +36,8 @@ async function intercept(atkUnit, atkReport, defUnit, defReport) {
 			outcomes: [],
 			stats: [],
 			dmg: {
+				hull: 0,
 				armor: 0,
-				frame: 0,
 				system: 0
 			}
 		},
@@ -48,7 +48,7 @@ async function intercept(atkUnit, atkReport, defUnit, defReport) {
 			stats: [],
 			dmg: {
 				armor: 0,
-				frame: 0,
+				hull: 0,
 				system: 0
 			}
 		},
@@ -142,11 +142,11 @@ async function intercept(atkUnit, atkReport, defUnit, defReport) {
 	while (combat);
 
 	attackReport.interception = interception;
-	attackReport = attackReport.createTimestamp(attackReport);
+	attackReport.createTimestamp();
 	await attackReport.save();
 
 	defenseReport.interception = interception;
-	defenseReport = defenseReport.createTimestamp(defenseReport);
+	defenseReport.createTimestamp();
 	await defenseReport.save();
 
 	await applyDmg(attacker); // Saves the effects of the combat for the attacker
@@ -245,6 +245,7 @@ async function dmgAircraft(unit, opposition, side, criticalHit) {
 
 		for (let i = 0; i < hits; i++) {
 			const index = rand(systemKeys.length) - 1; // Selects a random system
+			interception[side].dmg.system += hits; // Adds system hits to report
 
 			const sysName = systemKeys[index];
 			const upgrade = unit.upgrades.find(upG => upG.type === sysName);

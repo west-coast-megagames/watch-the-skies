@@ -119,7 +119,7 @@ async function runInterceptions() {
 
 		const aircraft = await Aircraft.findById(interception.aircraft); // Gets the Initiator from the DB
 		await aircraft.populateMe();
-		let atkReport = new AirMission({
+		const atkReport = new AirMission({
 			type: 'Interception', 					// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: interception.mission,	// Mission type from the attacking unit
@@ -138,7 +138,7 @@ async function runInterceptions() {
 			atkReport.type = 'Failure';
 			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
 			await addArrayValue(atkReport.status, 'complete');
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 			continue;
 		}
@@ -157,7 +157,7 @@ async function runInterceptions() {
 			atkReport.type = 'Failure';
 			atkReport.report += ' Mission target was destroyed prior to intercept.',
 			await addArrayValue(atkReport.status, 'complete');
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 			continue;
 		}
@@ -186,7 +186,7 @@ async function runTransports() {
 		const target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
 		missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
 
-		let atkReport = new AirMission({
+		const atkReport = new AirMission({
 			type: 'Transport', 							// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: transport.mission,			// Mission type from the attacking unit
@@ -206,7 +206,7 @@ async function runTransports() {
 		if (patrolCheck.continue === true) {
 			atkReport.report = `${atkReport.report} ${aircraft.name} arrived safely at ${target.name}.`;
 			missionDebugger(`${aircraft.name} arrived safely at ${target.name}`);
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 
 			// Schedule a ground mission.
@@ -251,7 +251,7 @@ async function runRecon() {
 
 			if (target.status.some(el => el === 'destroyed') || target.systems.length < 1) {
 				atkReport.report = `${atkReport.report} Target has been shot down prior to recon.`;
-				atkReport = atkReport.createTimestamp(atkReport);
+				atkReport.createTimestamp();
 				await atkReport.save();
 				continue;
 			}
@@ -289,7 +289,7 @@ async function runRecon() {
 		if (aircraft.mission === 'Recon Site') {
 			const target = await Site.findById(recon.target); // Loading Site that the recon is heading to.
 
-			let atkReport = new AirMission({
+			const atkReport = new AirMission({
 				type: 'Recon', 							// Records the After Action Report Type
 				code: missionCode, 							// Unique code for this encounter
 				mission: recon.mission,			// Mission type from the attacking unit
@@ -313,7 +313,7 @@ async function runRecon() {
 				// eslint-disable-next-line no-unused-vars
 				const roll = d6();
 
-				atkReport = atkReport.createTimestamp(atkReport);
+				atkReport.createTimestamp();
 				await atkReport.save();
 
 				await aircraft.recall();
@@ -334,7 +334,7 @@ async function runDiversions() {
 
 		const target = await Site.findById(mission.target); // Loading Site that the rdiversion is heading to.
 
-		let atkReport = new AirMission({
+		const atkReport = new AirMission({
 			type: 'Diversion', 							// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: mission.mission,			// Mission type from the attacking unit
@@ -353,7 +353,7 @@ async function runDiversions() {
 
 			atkReport.report = `${atkReport.report} ${aircraft.name} distracted over target site without interference.`;
 
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 
 			await aircraft.recall();
@@ -436,7 +436,7 @@ async function checkEscort(target, defReport, atkReport) {
 			// Saves the old units aar if there is one
 			if (defReport) {
 				defReport.report = `${defReport.report} Our escort is intercepting incoming units!`;
-				defReport = await defReport.createTimestamp(defReport);
+				defReport.createTimestamp();
 				await defReport.save();
 			}
 

@@ -9,6 +9,7 @@ const clock = require('./gameClock');
 const { logger } = require('../../middleware/log/winston'); // IMPORT - Winston error logging
 const nexusEvent = require('../../middleware/events/events');
 const { Team } = require('../../models/team');
+const { Report } = require('../../models/report');
 
 /* This file handles all the events triggered on phase change.
     Each phase has a function that handles that phase. */
@@ -17,7 +18,7 @@ const { Team } = require('../../models/team');
 // FUNCTION - teamPhase
 // ARGS - Void | RETURN 0
 // DESC - Does initial calculations at the start of the phase, then reports them to players
-async function teamPhase() {
+async function teamPhase(lastPhase) {
 	phaseChangeDebugging(`Now changing to the team phase for ${clock.currentTurn}...`);
 	// PR is rolled (Finances) [Coded] | Income is given (Treasury, based on PR) [Implemented]
 	setTimeout(async () => {
@@ -32,17 +33,28 @@ async function teamPhase() {
 	return 0;
 }
 
-async function actionPhase() {
+async function actionPhase(lastPhase) {
 	phaseChangeDebugging(`Now changing to the action phase for ${clock.currentTurn}...`);
 	await resolveMissions(); // Resolve Interceptions that have been sent [coded]
 	// nexusEvent.emit('updateAircrafts'); // TODO re-add update broadcasts
 	// nexusEvent.emit('updateSites');
-	// nexusEvent.emit('updateReports');
+
+	const reports = await Report.find()
+		.where('timestamp.turn').equals(lastPhase.turn)
+		.where('timestamp.phase').equals(lastPhase.phase);
+	const update = [];
+	if (reports.length > 0) {
+		for (let report of reports) {
+			report = await report.populateMe();
+			update.push(report);
+		}
+		nexusEvent.emit('request', 'update', update);
+	}
 	phaseChangeDebugging(`Done with action phase change for ${clock.currentTurn}!`);
 	logger.info(`Turn ${clock.currentTurn} action phase has begun...`);
 }
 
-async function freePhase() {
+async function freePhase(lastPhase) {
 	phaseChangeDebugging(`Now changing to the FREE phase ${clock.currentTurn}...`);
 	await runMilitary(); // Resolve all Battles
 	// await startResearch(); // Resolve available research...
@@ -53,19 +65,19 @@ async function freePhase() {
 	return 0;
 }
 
-nexusEvent.on('phaseChange', (phase) => {
-	switch(phase) {
+nexusEvent.on('phaseChange', (data) => {
+	switch(data.phase) {
 	case ('Team Phase'):
-		teamPhase();
+		teamPhase(data.lastPhase);
 		break;
 	case ('Action Phase'):
-		actionPhase();
+		actionPhase(data.lastPhase);
 		break;
 	case ('Free Phase'):
-		freePhase();
+		freePhase(data.lastPhase);
 		break;
 	default:
-		throw new Error(`${phase} is not a phase...`);
+		throw new Error(`${data.phase} is not a phase...`);
 	}
 });
 
