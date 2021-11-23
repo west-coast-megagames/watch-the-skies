@@ -17,10 +17,6 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "test": "jest --detectOpenHandles --coverage"
   },
-  "engines": {
-    "node": "12.18.3",
-    "npm": "6.14.6"
-  },
   "author": "John T. Cleveland",
   "license": "ISC",
   "dependencies": {
