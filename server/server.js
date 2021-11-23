@@ -27,6 +27,8 @@ require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
 require('./wts/gameClock/gameClock'); // Initialize the gameClock class
 require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
 
+require('./routes/routes')(app); // Bootup for Express routes
+
 app.use(express.static('public'));
 
 // Server listner callback
@@ -34,8 +36,6 @@ server.listen(port, host, () => {
 	logger.info(`WTS Server started on port ${port}...`);
 	debug(`WTS Server started on port ${port}...`);
 });
-
-require('./routes/routes')(app); // Bootup for Express routes
 
 debug('WTS Server load completed!');
 
