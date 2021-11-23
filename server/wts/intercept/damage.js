@@ -1,6 +1,7 @@
 const interceptDebugger = require('debug')('app:intercept - damage');
 const { generateSalvage } = require('./salvage');
 const { d6, rand } = require('../../util/systems/dice');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Intercepter Model
 const { Aircraft } = require('../../models/aircraft');
@@ -107,14 +108,14 @@ async function dmgCalc (unit, report) {
 				unit.systems[systemKeys[index]].damaged ? unit.systems[systemKeys[index]].destroyed = true : unit.systems[systemKeys[index]].damaged = true;
 				hullDmg += 1;
 			}
-			else if (upgrade.status.damaged === false) {
-				upgrade.status.damaged = true;
-				upgrade.status.salvage = true;
+			else if (!upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'damaged');
+				await addArrayValue(upgrade.status, 'salvage');
 				salvageArray.push(upgrade._id);
 				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
 			}
-			else if (upgrade.status.damaged === true) {
-				upgrade.status.destroyed = true;
+			else if (upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'destroyed');
 				// no salvage from destroyed systems? idk, might want to prevent "double dipping"
 			}
 		}
@@ -142,14 +143,14 @@ async function dmgCalc (unit, report) {
 
 	if (unit.stats.hull <= 0 || crash === true) {
 		interceptDebugger(`${unit.name} shot down in combat...`);
-		unit.status.destroyed = true;
+		await addArrayValue(unit.status, 'destroyed');
 		dmgReport.outcome = `${unit.name} shot down in combat...`;
 		dmgReport.destroyed = true,
 		dmgReport.aarUnit = `${dmgReport.aar}${unit.name} shot down in combat...`;
 		dmgReport.aarOpponent = `${dmgReport.aar}Target shot down in combat...`;
 		for (const upgrade of unit.upgrades) {
-			upgrade.status.damaged = true;
-			upgrade.status.destroyed = true;
+			await addArrayValue(upgrade.status, 'damaged');
+			await addArrayValue(upgrade.status, 'destroyed');
 			salvageArray.push(upgrade._id);
 		}
 		// a few default salvage
@@ -177,11 +178,12 @@ async function applyDmg (unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = unit.status.destroyed;
+	// TODO - Revisit when update model status is changed
+	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;
-	update.country = origin.country;
+	update.organization = origin.organization;
 	update.site = update.origin._id;
 	update.zone = origin.zone;
 

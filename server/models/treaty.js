@@ -30,14 +30,8 @@ const TreatySchema = new Schema({
 	violation: { type: String },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() },
-	status: {
-		draft: { type: Boolean, default: true },
-		proposal: { type: Boolean, default: false },
-		rejected: { type: Boolean, default: false },
-		complete: { type: Boolean, default: false },
-		deleted: { type: Boolean, default: false }
-	}
-
+	tags: [{ type: String, enum: [''] } ],
+	status: [ { type: String, enum: ['draft', 'proposal', 'rejected', 'complete', 'deleted'] } ],
 });
 
 // validateTreaty method
@@ -45,7 +39,10 @@ TreatySchema.methods.validateTreaty = async function () {
 	const { validTeam } = require('../middleware/util/validateDocument');
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
-		name: Joi.string().min(2).max(50).required()
+		name: Joi.string().min(2).max(50).required(),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('draft', 'proposal', 'rejected', 'complete', 'deleted'))
+
 		// TODO: Add code rules to Joi validation schema
 	});
 
@@ -65,14 +62,13 @@ TreatySchema.methods.validateTreaty = async function () {
 	for await (const sigs of this.signatories) {
 		await validTeam(sigs);
 	}
-
 };
 
 TreatySchema.methods.saveActivity = async (treaty, incHeader) => {
 	const activity = {
 		header: incHeader,
 		date: new Date(),
-		timestamp: Gameclock.makeTimestamp()
+		timestamp: Gameclock.getTimeStamp()
 	};
 
 	treaty.activityFeed.push(activity);

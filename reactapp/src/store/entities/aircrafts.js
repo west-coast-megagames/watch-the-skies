@@ -21,7 +21,7 @@ const slice = createSlice({
     },
     aircraftsReceived: (aircrafts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Aircraft State Loaded!', 3000);
+      // Alert.info('Aircraft State Loaded!', 3000);
       aircrafts.list = action.payload;
       aircrafts.loading = false;
       aircrafts.lastFetch = Date.now();
@@ -35,11 +35,16 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       aircrafts.list.push(action.payload);
     },
-    aircraftsUpdated: (aircrafts, action) => {
+    aircraftUpdated: (aircrafts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Aircrafts updated!', 2000);
-      aircrafts.list = action.payload;
+      const index = aircrafts.list.findIndex(el => el._id === action.payload._id);
+			aircrafts.list[index] = action.payload;
       aircrafts.lastFetch = Date.now();
+    },
+		aircraftDeleted: (aircrafts, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = aircrafts.list.findIndex(el => el._id === action.payload._id);
+      aircrafts.list.splice(index, 1);
     },
   }
 });
@@ -47,10 +52,11 @@ const slice = createSlice({
 // Action Export
 export const {
   aircraftAdded,
-  aircraftsUpdated,
+  aircraftUpdated,
+	aircraftDeleted,
   aircraftsReceived,
   aircraftsRequested,
-  aircraftsRequestFailed
+  aircraftsRequestFailed,
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
@@ -85,7 +91,7 @@ export const getContacts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   (aircrafts, team) => aircrafts.filter(
-    aircraft => aircraft.status.deployed === true && aircraft.status.destroyed === false
+    aircraft => (aircraft.status.some(el => el === 'deployed') && (!aircraft.status.some(el => el === 'destroyed')))
   )
 );
 
@@ -93,5 +99,5 @@ export const getAircrafts = createSelector(
   state => state.entities.aircrafts.list,
   state => state.auth.team,
   state => state.auth.login,
-  (aircrafts, team, login) => login === true ? aircrafts.filter(aircraft => aircraft.team.name === team.name && aircraft.status.destroyed === false) : []
+  (aircrafts, team, login) => aircrafts.filter(aircraft => aircraft.team.name === team.name && (!aircraft.status.some(el => el === 'destroyed')))
 );

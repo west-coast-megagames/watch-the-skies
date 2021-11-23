@@ -12,22 +12,24 @@ function subscribeToClock (cb) {
 };
 
 function pauseGame () {
-  socket.emit('pauseGame');
+  socket.emit( 'clockSocket', 'pauseGame');
 };
 
 function startGame () {
-  socket.emit('startGame');
+  socket.emit('clockSocket', 'startGame');
 };
 
 function resetClock () {
-  socket.emit('resetClock');
+  socket.emit('clockSocket', 'resetClock');
 };
 
 function skipPhase () {
-  socket.emit('skipPhase');
+  socket.emit('clockSocket', 'skipPhase');
 };
 
 let gameClock = { subscribeToClock, pauseGame, startGame, resetClock, skipPhase };
+
+// Asset Sockets
 
 
 // Banking Socket Events and Event Listners
@@ -40,6 +42,8 @@ function autoTransfer (transfer) {
 };
 
 let banking = { bankingTransfer, autoTransfer };
+
+// Update Sockets
 
 function updateAircrafts (cb) {
   console.log('Listing for current aircrafts...')

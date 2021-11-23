@@ -11,16 +11,13 @@ const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runArticleLoad (runFlag) {
+async function runArticleLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -35,7 +32,7 @@ async function runArticleLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	let recReadCount = 0;
@@ -50,7 +47,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadArticle (iData, rCounts) {
+async function loadArticle(iData, rCounts) {
 	try {
 		// there is no article key field or updates ... just new ones
 		// New Article/Article here
@@ -64,7 +61,6 @@ async function loadArticle (iData, rCounts) {
 			date: Date.now(),
 			agency: iData.publisher
 		};
-		newArticle.gameState = [];
 
 		if (iData.publisher != '') {
 			const team = await axios.get(`${gameServer}init/initTeams/code/${iData.publisher}`);
@@ -120,7 +116,7 @@ async function loadArticle (iData, rCounts) {
 	}
 }
 
-async function deleteAllArticles (doLoad) {
+async function deleteAllArticles(doLoad) {
 	if (!doLoad) return;
 
 	try {

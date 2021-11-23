@@ -21,7 +21,7 @@ function getTechTree () {
 }
 
 async function techSeed () {
-	for await (const research of await Research.find({ 'status.completed': true })) {
+	for await (const research of await Research.find({ 'status': 'completed' })) {
 		for await (const tech of research.unlocks) {
 			const newTech = techTree.find(el => el.code === tech.code);
 			await newTech.checkAvailable();

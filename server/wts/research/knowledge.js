@@ -2,6 +2,7 @@ const fs = require('fs');
 const file = fs.readFileSync(require.resolve('../json/knowledge.json'));
 const knowledgeData = JSON.parse(file);
 const knowledgeDebugger = require('debug')('app:knowledge');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Team } = require('../../models/team'); // Team Model
 const { Research, KnowledgeResearch } = require('../../models/research'); // Research model and Knowledge Discriminator
@@ -87,10 +88,7 @@ async function knowledgeSeed () {
 			}
 		}
 	}
-	// for await (let knowledge of await Research.find({'status.completed': true}, 'name credit progress status')) {
-	//     console.log(knowledge);
-	// }
-
+	
 	knowledgeDebugger('Knowledge seed complete...');
 	return;
 }
@@ -119,13 +117,12 @@ function KnowledgeClass (knowledge) {
 			code: this.code,
 			unlocks: this.unlocks,
 			progress: knowledgeCost[this.level],
-			status: {
-				available: false,
-				completed: true,
-				published: true
-			},
 			teamProgress: this.teamProgress
 		});
+		await addArrayValue(newKnowledge.status, 'completed');
+		await addArrayValue(newKnowledge.status, 'published');
+		await clearArrayValue(newKnowledge.status, 'available');
+
 		await newKnowledge.save();
 		knowledgeDebugger(`${newKnowledge.name} seeded...`);
 		knowledgeDebugger(`${newKnowledge.name} has been completed pre-game...`);
@@ -144,13 +141,11 @@ function KnowledgeClass (knowledge) {
 			field: this.field,
 			code: this.code,
 			unlocks: this.unlocks,
-			status: {
-				available: true,
-				completed: false,
-				published: false
-			},
 			teamProgress: this.teamProgress
 		});
+		await clearArrayValue(newKnowledge.status, 'completed');
+		await clearArrayValue(newKnowledge.status, 'published');
+		await addArrayValue(newKnowledge.status, 'available');
 
 		newKnowledge = await newKnowledge.save();
 
@@ -162,8 +157,8 @@ function KnowledgeClass (knowledge) {
 
 async function completeKnowledge (research) {
 	knowledgeDebugger(`Enough progress has been made to complete ${research.name}...`);
-	research.status.available = false;
-	research.status.completed = true;
+	await addArrayValue(research.status, 'completed');
+	await clearArrayValue(research.status, 'available');
 
 	const highestProgress = 0;
 	for await (const team of research.teamProgress) {
@@ -188,7 +183,7 @@ async function completeKnowledge (research) {
 async function publishKnowledge (research) {
 	const team = await Team.findById(research.credit);
 	knowledgeDebugger(`${team.name} is publishing ${research.name}...`);
-	research.status.published = true;
+	await addArrayValue(research.status, 'published');
 
 	research = await research.save();
 

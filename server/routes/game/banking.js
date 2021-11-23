@@ -1,3 +1,4 @@
+// TO-DO:  This route needs to be updated to use the transaction system encapalated in the ACCOUNT model and then turned into a debug route
 const nexusEvent = require('../../middleware/events/events');
 const express = require('express');
 const router = express.Router();
@@ -8,7 +9,6 @@ const { logger } = require('../../middleware/log/winston'); // Import of winston
 // Account Model - Using Mongoose Model
 const { Account, validateAccount } = require('../../models/account');
 const { Team } = require('../../models/team');
-const banking = require('../../wts/banking/banking');
 
 // @route   GET api/banking/accounts
 // @Desc    Get all Accounts
@@ -24,8 +24,9 @@ router.get('/accounts', async function (req, res) {
 // @route   POST api/banking/account
 // @Desc    Post a new account
 // @access  Public
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 router.post('/account', async function (req, res) {
-	const { teamId, name, code, balance, deposits, withdrawals, autoTransfers } = req.body;
+	const { teamId, name, code, resources, queue } = req.body;
 
 	const team = await Team.findById({ _id: teamId });
 	if (!team) {
@@ -35,7 +36,7 @@ router.post('/account', async function (req, res) {
 
 	const newAccount = new Account(
 		// eslint-disable-next-line no-undef
-		{ team: teamId, name, code, balance, deposits, withdrawals, autoTransfers, owner }
+		{ team: teamId, name, code, resources, queue, owner }
 	);
 	const { error } = validateAccount(newAccount);
 	if (error) return res.status(400).send(error.details[0].message);
@@ -100,15 +101,19 @@ router.get('/accounts/:id', validateObjectId, async function (req, res) {
 	res.json(account);
 });
 
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 // @route   PATCH api/banking/accounts
 // @desc    Update all teams to base income and PR
 // @access  Public
 router.patch('/accounts', async function (req, res) {
 	for await (const account of Account.find()) {
-		{
-			account.balance = 1000;
-			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		account.resources = [];
+		const resource = 'Megabucks';
+		if (account.code === "TRE") {
+	  	account.resources.push({ type: resource, balance: 1000 });
+		}
+		else {
+			account.resources.push({ type: resource, balance: 0 });
 		}
 
 		await account.save();
@@ -131,13 +136,13 @@ router.patch('/delAutoTransfer', async function (req, res) {
 	logger.info(`${req.body}`);
 	const { account_id, transfer_id } = req.body;
 	const account = await Account.findOne({ _id: account_id });
-	logger.info(`${account.autoTransfers}`);
-	const indexOf = account.autoTransfers.findIndex((t => t._id == transfer_id));
+	logger.info(`${account.queue}`);
+	const indexOf = account.queue.findIndex((t => t._id == transfer_id));
 	logger.info(`${indexOf}`);
-	account.autoTransfers.splice(indexOf, 1);
-	logger.info(`${account.autoTransfers.length}`);
+	account.queue.splice(indexOf, 1);
+	logger.info(`${account.queue.length}`);
 
-	account.markModified('autoTransfers');
+	account.markModified('queue');
 	await account.save();
 	res.status(200).send('Automatic transfer deleted!');
 	nexusEvent.emit('updateAccounts');

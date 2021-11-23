@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Drawer, Button, FlexboxGrid,  Table } from 'rsuite'
+import { Drawer, Button, FlexboxGrid,  Table, Tag, TagGroup } from 'rsuite'
 import { siteClosed } from '../store/entities/infoPanels';
 import { getFacilites } from '../store/entities/facilities';
 
@@ -10,8 +10,8 @@ class InfoSite extends Component {
 	state = {}
 
   render() {
-    if (this.props.site !== null) {
-      let { name, subType, type, geoDMS, status, country, zone, _id, occupier } = this.props.site;
+    if (this.props.site !== null && this.props.site !== undefined) {
+      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = this.props.site;
     
       return(
         <Drawer
@@ -24,19 +24,29 @@ class InfoSite extends Component {
           </Drawer.Header>
           <Drawer.Body>
           <FlexboxGrid>
-            <FlexboxGrid.Item colspan={24}>
-              <h6>{`${subType}`} - Information</h6>
-              <hr />
-            </ FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
-							<p><b>Country:</b> {`${country.name}`}</p>
-              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.longDMS}`}</p>
+              <h6>{`${subType}`} - Information</h6>
+            </ FlexboxGrid.Item>
+						<FlexboxGrid.Item colspan={12}>
+							<b>Status:</b>
+							{tags && <TagGroup>
+								{ !status.some(el => el === 'occupied') && <Tag color='green'>Un-Occupied</Tag> }
+								{ status.some(el => el === 'occupied') && <Tag color='red'>Occupied</Tag> }
+								{ status.some(el => el === 'warzone') && <Tag color='orange'>Warzone</Tag> }
+								{ tags.some(el => el === 'coastal') && <Tag color='blue'>Coastal</Tag> }
+								{ tags.some(el => el === 'capital') && <Tag color='violet'>Capital</Tag> }
+							</TagGroup>	}								
+						</FlexboxGrid.Item>
+						<hr />
+            <FlexboxGrid.Item colspan={12}>
+							<p><b>Organization:</b> {`${organization.name}`}</p>
+              <p><b>Location:</b> {`${geoDMS.latDMS} ${geoDMS.lngDMS}`}</p>
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={12}>
 							<p><b>Zone:</b> {`${zone.name}`}</p>
 							<p><b>Unrest:</b> 0</p> 
             </FlexboxGrid.Item>
-						{status.occupied && <FlexboxGrid.Item colspan={12}>
+						{status.some(el => el === 'occupied') && <FlexboxGrid.Item colspan={12}>
 							<p><b>Occupier:</b> {`${occupier.shortName}`}</p>
             </FlexboxGrid.Item>}
             </FlexboxGrid>

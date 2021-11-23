@@ -3,6 +3,7 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Toggle, Tag, Button } from 'rsuite';
 import { gameServer } from '../config';
 import axios from 'axios';
+import { socket } from '../api';
 
 class InvasionModal extends Component {
     state = {
@@ -114,7 +115,7 @@ class InvasionModal extends Component {
         let sites = this.props.sites;
         for (let site of sites) {
             site.checkZone = site.zone.name;
-            site.info = `${site.country.name} - ${site.name} | ${site.team.shortName}`
+            site.info = `${site.organization.name} - ${site.name} | ${site.team.shortName}`
             data.push(site);
         }
             
@@ -128,15 +129,14 @@ class InvasionModal extends Component {
         let invasion = { cost, units, destination, team };
 
         try {
-            let { data } = await axios.put(`${gameServer}game/tempMil/deploy`, invasion); // Axios call to deploy units
-            Alert.success(data)
+						socket.emit( 'militarySocket', 'deploy', invasion);
         } catch (err) {
             Alert.error(`Error: ${err.body} ${err.message}`, 5000)
         }
         this.props.closeDeploy();
     }   
 }
- 
+
 const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,

@@ -4,6 +4,7 @@ import axios from "axios";
 import { gameServer } from "../../../config";
 import TeamAvatar from "../../../components/common/teamAvatar";
 import { Alert, Form, FormGroup, FormControl, Button, ButtonToolbar, SelectPicker, TreePicker, Input, Modal, Toggle, Divider } from "rsuite";
+import socket from "../../../socket";
 
 class SubNews extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class SubNews extends React.Component {
 
   handleInput = (value, id) => {
     if (id === 'location') {
-      let options = [...this.props.sites, ...this.props.countries, ...this.props.zones];
+      let options = [...this.props.sites, ...this.props.organizations, ...this.props.zones];
       let location = options.find(el => el._id === value);
       if (location.model !== 'Site') {
         Alert.warning(`You choose a ${location.model}, you must choose a site.`);
@@ -38,31 +39,44 @@ class SubNews extends React.Component {
     this.setState({ article });
   };
 
-  handleSubmit = async e => {
-    e.preventDefault();
+  handleSubmit = () => {
+    // e.preventDefault(); // ????????
     let edit = this.props.edit;
-    let resArticle = this.state.article;
+		const data = { 
+			id: this.state.article._id,
+			article: this.state.article,
+			team: this.props.team,
+			// publisher: props.user,
+			// location: getLocation(),
+			// headline: Same as old
+			// body: Same as old
+			// tags: Same as old
+			// imageSrc: Same as old
+		}
     try {
-      if (edit) {
-        resArticle = await axios.put(`${gameServer}game/news/${this.state.article._id}`, this.state.article);
-      } else if (!edit) {
-        resArticle = await axios.post(`${gameServer}game/news`, this.state.article);
+      if (!edit) {
+				socket.emit('request', { route: 'article', action: 'post', data });
+        // resArticle = await axios.put(`${gameServer}game/news/${this.state.article._id}`, this.state.article);
+      } 
+			else {
+				socket.emit('request', { route: 'article', action: 'edit', data });
+        // resArticle = await axios.post(`${gameServer}game/news`, this.state.article);
       }
-      Alert.success(`News article submitted: ${resArticle.data.headline}`);
-      this.setState({article: {
-        publisher: this.props.team._id,
-        agency: this.props.team.code,
-        location: '',
-        headline: '',
-        body: '',
-        tags: [],
-        imageSrc: ''
-      }})
+      // this.setState({article: {
+      //   publisher: this.props.team._id,
+      //   agency: this.props.team.code,
+      //   location: '',
+      //   headline: '',
+      //   body: '',
+      //   tags: [],
+      //   imageSrc: ''
+      // }})
       this.props.onClose();
     } catch (err) {
       Alert.error(`Failed to create news item - Error: ${err.message}`);
     }
   };
+
 
   handlePreview = (value) => { this.setState({preview: value})};
 
@@ -145,7 +159,10 @@ class SubNews extends React.Component {
           </FormGroup>
             <ButtonToolbar>
               <Button disabled={disabled} appearance="primary" onClick={this.handleSubmit}>
-                Submit {this.props.team.type === 'National' && 'Press Release'}{this.props.team.type === 'Media' && 'Article'}
+                {body.length < 50 ? <b>Body needs {50 - body.length} characters</b> : 
+								headline.length < 10 ? <b>Healine needs {10 - headline.length} characters</b>  : 
+								this.state.article.location === '' ? <b>Please select a valid location</b>  : 
+								<b>Submit {this.props.team.type === 'National' && 'Press Release'}{this.props.team.type === 'Media' && 'Article'}</b>}
               </Button>
             </ButtonToolbar>
           </Form> }
@@ -167,15 +184,15 @@ class SubNews extends React.Component {
   formatPickerData = () => {
     console.log('Formatting Picker...')
     let zones = this.props.zones.filter(el => el.type !== 'Space').map((item) => Object.assign({}, item, {selected:false}));
-    let countries = this.props.countries.map((item) => Object.assign({}, item, {selected:false}));
+    let organizations = this.props.organizations.map((item) => Object.assign({}, item, {selected:false}));
     let sites = this.props.sites.map((item) => Object.assign({}, item, {selected:false}));
     
-    for (let country of countries) {
-      country.children = sites.filter(el => el.country.name === country.name);
+    for (let organization of organizations) {
+      organization.children = sites.filter(el => el.organization.name === organization.name);
     };
 
     for (let zone of zones) {
-      zone.children = countries.filter(el => el.zone.name === zone.name);
+      zone.children = organizations.filter(el => el.zone.name === zone.name);
     };
     this.setState({ data: zones })
   }
@@ -186,7 +203,7 @@ const mapStateToProps = state => ({
   user: state.auth.user.username,
   team: state.auth.team,
   zones: state.entities.zones.list,
-  countries: state.entities.countries.list,
+  organizations: state.entities.organizations.list,
   sites: state.entities.sites.list
 });
 

@@ -2,10 +2,10 @@ const techDebugger = require('debug')('app:tech');
 const { Team } = require('../../models/team');
 const { Research, TechResearch } = require('../../models/research');
 
-const { TheoryReport } = require('../reports/reportClasses');
+const { TheoryReport } = require('../../models/report');
 
 // Technology Constructor Function
-function Technology (tech) {
+function Technology(tech) {
 	this.name = tech.name;
 	this.type = tech.type;
 	this.level = tech.level;
@@ -29,15 +29,15 @@ function Technology (tech) {
 				let unlock = false;
 				for await (const req of this.prereq) {
 					techDebugger(`${this.name}: Checking for prereq ${req.code}...`);
-					const checkTech = await Research.findOne({ code: req.code, team: team._id, 'status.completed': true });
+					const checkTech = await Research.findOne({ code: req.code, team: team._id, 'status': 'completed'});
 					let checkKnowledge = await Research.findOne({ code: req.code });
 					// console.log("checkKnowledge here ", checkKnowledge);
 					if (checkKnowledge !== null) {
-						if (checkKnowledge.status.completed) {
+						if (checkKnowledge.status.some(el => el === 'completed')) {
 							if (checkKnowledge.credit.toHexString() === team._id.toHexString()) {
 								techDebugger(`COMPLETED - ${this.name} is available to research for ${team.name}...`);
 							}
-							else if (checkKnowledge.status.published) {
+							else if (checkKnowledge.status.some(el => el === 'published')) {
 								techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
 							}
 							else {
@@ -73,11 +73,9 @@ function Technology (tech) {
 						field: this.field,
 						team: team._id,
 						unlocks: this.unlocks,
-						knowledge: this.knowledge,
-						status: {
-							available: true
-						}
+						knowledge: this.knowledge
 					});
+					await addArrayValue(newTech.status, 'available');
 
 					const theories = [];
 					for await (const item of newTech.unlocks) {
@@ -178,16 +176,16 @@ function Technology (tech) {
 	};// this.unlock
 }
 
-async function techCheck () {
+async function techCheck() {
 	for await (const research of Research.find().populate('team')) {
-		if (research.status.visible && !research.status.available) {
+		if (research.status.some(el => el === 'visible') && !research.status.some(el => el === 'available')) {
 			let count = 0;
 			for await (const req of research.prereq) {
 				techDebugger(`${research.name}: Checking for prereq ${req.code}...`);
-				const checkTech = await Research.findOne({ code: req.code, team: research.team._id, 'status.completed': true, type: 'Technology' });
+				const checkTech = await Research.findOne({ code: req.code, team: research.team._id, 'status': 'completed', type: 'Technology' });
 				let checkKnowledge = await Research.findOne({ code: req.code, type: 'Knowledge' }).populate('credit');
 				if (checkKnowledge !== null) {
-					if (checkKnowledge.status.completed) {
+					if (checkKnowledge.status.some(el => el === 'completed')) {
 						console.log(`${research.name} vs. ${checkKnowledge.name}`);
 						// console.log(`${research.team.name}`)
 						// console.log(checkKnowledge);
@@ -196,7 +194,7 @@ async function techCheck () {
 						if (checkKnowledge.credit.name === research.team.name) {
 							techDebugger(`COMPLETED - ${research.name} is available to research for ${research.team.name}...`);
 						}
-						else if (checkKnowledge.status.published) {
+						else if (checkKnowledge.status.some(el => el === 'published')) {
 							techDebugger(`PUBLISHED - ${checkKnowledge.name} is public information...`);
 						}
 						else {
@@ -217,7 +215,7 @@ async function techCheck () {
 			}
 
 			if (count === research.prereq.length) {
-				research.status.available = true;
+				await addArrayValue(research.status, 'available');
 			}
 
 			await research.save();

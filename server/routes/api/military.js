@@ -20,8 +20,8 @@ router.get('/', async function (req, res) {
 		const military = await Military.find()
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
-			.populate('site', 'name')
+			.populate('organization', 'name')
+			.populate('site', 'name geoDecimal')
 			.populate('origin')
 			.populate('upgrades', 'name effects')
 			.sort({ team: 1 });
@@ -45,7 +45,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
 		const military = await Military.findById(id)
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('gear', 'name category')
 			.populate('site', 'name')
 			.populate('origin', 'name')
@@ -94,13 +94,13 @@ router.post('/', async (req, res) => {
 				for (const element of upgrade.effects) {
 					switch (element.type) {
 					case 'health':
-						newMilitary.stats.health += element.effect;
+						newMilitary.stats.health += element.value;
 						break;
 					case 'attack':
-						newMilitary.stats.attack += element.effect;
+						newMilitary.stats.attack += element.value;
 						break;
 					case 'defense':
-						newMilitary.stats.defense += element.effect;
+						newMilitary.stats.defense += element.value;
 						break;
 					default: break;
 					}

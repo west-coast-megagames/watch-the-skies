@@ -34,7 +34,7 @@
 		"space-before-blocks": "error",
 		"space-before-function-paren": ["error", {
 			"anonymous": "always",
-			"named": "always",
+			"named": "never",
 			"asyncArrow": "always"
 		}],
 		"space-in-parens": "error",

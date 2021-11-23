@@ -30,14 +30,19 @@ const slice = createSlice({
     },
     reportsUpdated: (reports, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('reports updated!', 2000);
-      reports.list = action.payload;
+      const index = reports.list.findIndex(el => el._id === action.payload._id);
+			reports.list[index] = action.payload;
       reports.lastFetch = Date.now();
     },
     reportAdded: (reports, action) => {
       console.log(`${action.type} Dispatched`)
       reports.list.push(action.payload);
-    }
+    },
+		reportDeleted: (report, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = report.list.findIndex(el => el._id === action.payload._id);
+      report.list.splice(index, 1);
+    },
   }
 });
 
@@ -47,7 +52,8 @@ export const {
   reportsReceived,
   reportsRequested,
   reportsRequestFailed,
-  reportsUpdated
+  reportsUpdated,
+	reportDeleted
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
@@ -86,3 +92,30 @@ export const getTransactionReports = createSelector(
   state => state.entities.reports.list,
   reports => reports.filter(report => report.type === 'Transaction')
 );
+
+export const getAllGovReports = createSelector(
+  state => state.entities.reports.list,
+  (reports) => reports.filter(report => report.type === 'Transaction')
+);
+
+export const getGovReports = createSelector(
+  state => state.entities.reports.list,
+	state => state.auth.team,
+  (reports, team)=> reports.filter(report => report.type === 'Transaction' && report.team._id === team._id)
+);
+
+export const getAllOpsReports = createSelector(
+  state => state.entities.reports.list,
+  (reports) => reports.filter(report => (report.type === 'Interception' || 
+	report.type === 'Aircraft Repair' || report.type === 'Recon' ||
+	report.type === 'Battle'
+	))
+);
+
+export const getOpsReports = createSelector(
+  state => state.entities.reports.list,
+	state => state.auth.team,
+  (reports, team)=> reports.filter(report => report.type === 'Interception' && report.team._id === team._id)
+);
+
+

@@ -3,17 +3,104 @@ const routeDebugger = require('debug')('app:routes');
 const { Account } = require('../../models/account');
 const { Aircraft } = require ('../../models/aircraft');
 const { Upgrade } = require ('../../models/upgrade');
-const { deposit, withdrawal } = require ('../../wts/banking/banking');
-const { TradeReport } = require ('../../wts/reports/reportClasses');
+const { TradeReport } = require ('../../models/report');
 
 const { Trade } = require('../../models/trade');
 const { Research } = require('../../models/research');
 const { techTree } = require('../../wts/research/techTree');
+const { Team } = require('../../models/team');
+const nexusEvent = require('../../middleware/events/events');
 
+async function createTrade(data) {
+	let { initiator, tradePartner } = data;
+	initiator = await Team.findById(initiator);
+	tradePartner = await Team.findById(tradePartner);
 
-async function resolveTrade (req, res) {// I have not tested this much at all will need reviewing
-	const { initiator, tradePartner } = req.body;
-	let trade = await Trade.findById({ _id: req.body._id });
+	let newTrade = new Trade();
+	newTrade.initiator.team = initiator;
+	newTrade.tradePartner.team = tradePartner;
+	await newTrade.save();
+	newTrade = await Trade.findById(newTrade._id)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code'); 
+
+	nexusEvent.emit('request', 'create', [ newTrade ]); //
+	return { message : `${initiator.shortName} created a new Trade...`, type: 'success' };
+}
+
+async function editTrade(data) {
+	let { offer, editor, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+
+	trade.initiator.team._id.toHexString() === editor ? trade.initiator.offer = offer : trade.tradePartner.offer = offer;
+	trade.initiator.ratified = false;
+	trade.tradePartner.ratified = false;
+
+	trade.status = 'Draft';
+
+	trade = await trade.save();
+	trade = await trade
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function approveTrade(data) {
+	let { ratifier, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+
+	trade.initiator.team._id.toHexString() == ratifier ? trade.initiator.ratified = true : trade.tradePartner.ratified = true;
+
+	if (trade.initiator.ratified && trade.tradePartner.ratified) {
+		resolveTrade(trade._id);
+	}
+	else {
+		trade = await trade.save();
+		nexusEvent.emit('request', 'update', [ trade ]);
+	}
+
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function rejectTrade(data) {
+	let { rejecter, trade } = data;
+	trade = await Trade.findById(trade)
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+
+	trade.initiator.team._id == rejecter ? trade.initiator.ratified = false : trade.tradePartner.ratified = false;
+	trade = await trade.save();
+	// console.log(trade.initiator.ratified);
+	// console.log(trade.tradePartner.ratified);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `Trade Edited...`, type: 'success' };
+}
+
+async function trashTrade(data) {
+	let { trade } = data;
+	trade = await Trade.findById(trade);
+
+	trade.status = 'Trashed';
+
+	trade = await trade.save();
+	trade = await trade.populateMe();
+	console.log(trade);
+	nexusEvent.emit('request', 'update', [ trade ]); //
+	return { message : `${data.trasher} trashed a Trade...`, type: 'success' };
+}
+
+async function resolveTrade(id) {// I have not tested this much at all will need reviewing
+	console.log(`Resolving Trade ${id}`);
+	let trade = await Trade.findById(id);
+	const { initiator, tradePartner } = trade;
 
 	const initiatorReport = new TradeReport;
 	const tradePartnerReport = new TradeReport;
@@ -26,22 +113,34 @@ async function resolveTrade (req, res) {// I have not tested this much at all wi
 	initiatorReport.trade = initiator.offer;
 	tradePartnerReport.trade = tradePartner.offer;
 
+	// add check to see if the owner of something is still it's owner at time of transaction
+	if (tradePartner.offer.aircraft && tradePartner.offer.aircraft.length > 0) {
+		await checkThing(tradePartner.team, tradePartner.offer.aircraft);
+	}
+	if (initiator.offer.aircraft && initiator.offer.aircraft.length > 0) {
+		await checkThing(initiator.team, initiator.offer.aircraft);
+	}
+
+
 	await resolveOffer(initiator.offer, initiator.team, tradePartner.team);
 	await resolveOffer(tradePartner.offer, tradePartner.team, initiator.team);
 
-	initiatorReport.saveReport(initiator.team, initiator.offer);
-	tradePartnerReport.saveReport(tradePartner.team, tradePartner.offer);
-
-	trade.status.complete = true;
-	trade.status.pending = false;
-	trade.status.proposal = false;
+	trade.status = 'Completed';
+	trade.initiator.ratified = true;
+	trade.tradePartner.ratified = true;
 	trade = await trade.save();
+	trade = await trade
+		.populate('initiator.team', 'shortName name code')
+		.populate('tradePartner.team', 'shortName name code');
 
-	res.status(200).send('ok done now');
-
+	// TODO: John re-implement reports
+	// initiatorReport.saveReport(initiator.team, initiator.offer);
+	// tradePartnerReport.saveReport(tradePartner.team, tradePartner.offer);
+	nexusEvent.emit('request', 'broadcast', { type: 'success', message: 'Trade deal Completed!' });
+	nexusEvent.emit('request', 'update', [ trade ]); //
 }// resolveTrade
 
-async function exchangeUpgrade (transferred, newOwner) {
+async function exchangeUpgrade(transferred, newOwner) {
 	for await (const thing of transferred) {
 		// check what currently has the upgrade
 		try{
@@ -56,15 +155,29 @@ async function exchangeUpgrade (transferred, newOwner) {
 	}// for thing
 }// exchangeUpgrade
 
-async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
+async function checkThing(owner, objects) {
+	owner = await Team.findById(owner);
+	for (const el of objects) {
+		if (el.team._id !== owner._id.toHexString()) {
+			throw Error(`${el.name} DOES NOT belongs to ${owner.shortName}!`);
+		}
+		else {
+			console.log(`${el.name} belongs to ${owner.shortName}!`);
+		}
+	}
+	return true;
+}
+
+async function resolveOffer(senderOffer, senderTeam, opposingTeam) {
+	let modified = [];
 	// case "megabucks":
 	routeDebugger('Working on Megabucks');
 	if (senderOffer.megabucks > 0) {
 		try{
 			const accountFrom = await Account.findOne({ 'team' : senderTeam, 'name' : 'Treasury' });
 			const accountTo = await Account.findOne({ 'team' : opposingTeam, 'name' : 'Treasury' });
-			await withdrawal(accountFrom, senderOffer.megabucks, 'Trade with so and so');
-			await deposit(accountTo, senderOffer.megabucks, 'Stuff');
+			modified.push(await accountFrom.withdrawal({ resource: 'Megabucks', amount: senderOffer.megabucks, note: `Trade with ${opposingTeam.shortName}` }));
+			modified.push(await accountTo.deposit({ resource: 'Megabucks', amount: senderOffer.megabucks, note: `Trade with ${senderTeam.shortName}` }));
 		}
 		catch(err) {
 			console.log(`ERROR WITH MEGABUCK TRADE: ${err}`);
@@ -75,10 +188,11 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	// case "aircraft" :
 	for await (const plane of senderOffer.aircraft) {
 		routeDebugger('Working on Aircraft Transfer');
-		const aircraft = await Aircraft.findById(plane);
+		const aircraft = await Aircraft.findById(plane._id);
 		aircraft.team = opposingTeam; // change the aircraft's team
-		exchangeUpgrade(aircraft.systems, opposingTeam); // change the aircraft's Upgrade
+		exchangeUpgrade(aircraft.upgrades, opposingTeam); // change the aircraft's Upgrade
 		await aircraft.save();
+		modified.push(aircraft);
 	}// for plane
 
 	// case "research" :
@@ -100,6 +214,8 @@ async function resolveOffer (senderOffer, senderTeam, opposingTeam) {
 	for await (const target of senderOffer.upgrade) {
 		exchangeUpgrade(target, opposingTeam);
 	}
+	// console.log(modified);
+	nexusEvent.emit('request', 'update', modified); //
 }
 
-module.exports = { resolveTrade };
+module.exports = { resolveTrade, createTrade, trashTrade, editTrade, approveTrade, rejectTrade };

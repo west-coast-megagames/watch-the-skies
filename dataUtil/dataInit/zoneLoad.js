@@ -12,22 +12,19 @@ require('winston-mongodb');
 const axios = require('axios');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runZoneLoad (runFlag) {
+async function runZoneLoad(runFlag) {
 	if (!runFlag) return false;
 	if (runFlag) await initLoad(runFlag);
 	return true;
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	// delete all records every time
@@ -62,7 +59,7 @@ async function initLoad (doLoad) {
 	return;
 }
 
-async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
+async function loadZone(zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 	let loadName = '';
 
 	try {
@@ -92,7 +89,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 					code: zCode,
 					name: zName,
 					serviceRecord: [],
-					gameState: [],
+					tags: [],
 					type: 'Space'
 				};
 
@@ -113,7 +110,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 					name: zName,
 					terror: randomTerror, // zTerror
 					serviceRecord: [],
-					gameState: [],
+					tags: [],
 					type: 'Ground'
 				};
 				try {
@@ -150,7 +147,7 @@ async function loadZone (zName, zCode, zLoadFlg, zTerror, zType, rCounts) {
 	}
 }
 
-async function deleteAllZones () {
+async function deleteAllZones() {
 	try {
 		let delErrorFlag = false;
 

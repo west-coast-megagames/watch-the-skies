@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     militaryReceived: (military, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Military State Loaded!', 3000);
+      // Alert.info('Military State Loaded!', 3000);
       military.list = action.payload;
       military.loading = false;
       military.lastFetch = Date.now();
@@ -36,9 +36,14 @@ const slice = createSlice({
     },
     militaryUpdated: (military, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('military updated!', 2000);
-      military.list = action.payload;
+      const index = military.list.findIndex(el => el._id === action.payload._id);
+			military.list[index] = action.payload;
       military.lastFetch = Date.now();
+    },
+		militaryDeleted: (military, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = military.list.findIndex(el => el._id === action.payload._id);
+      military.list.splice(index, 1);
     },
   }
 });
@@ -49,7 +54,8 @@ export const {
   militaryReceived,
   militaryRequested,
 	militaryRequestFailed,
-	militaryUpdated
+	militaryUpdated,
+	militaryDeleted
 } = slice.actions;
 
 export default slice.reducer; // Reducer Export
@@ -70,16 +76,6 @@ export const loadmilitary = () => (dispatch, getState) => {
   );
 };
 
-// Add a military to the list of military
-export const addmilitary = military =>
-  apiCallBegan({
-    url,
-    method: "post",
-    data: military,
-    onSuccess: militaryAdded.type
-	});
-	
-
 	// Selector
 	export const getMilitary = createSelector(
 		state => state.entities.military.list,
@@ -91,6 +87,14 @@ export const addmilitary = military =>
 		state => state.entities.military.list,
 		state => state.auth.team,
 		(military, team) => military.filter(
-			military => military.status.deployed === true
+			military => military.status.some(el => el === 'deployed')
+		)
+	);
+
+	export const getMobilized = createSelector(
+		state => state.entities.military.list,
+		state => state.auth.team,
+		(military, team) => military.filter(
+			military => military.status.some(el => el === 'mobilized')
 		)
 	);

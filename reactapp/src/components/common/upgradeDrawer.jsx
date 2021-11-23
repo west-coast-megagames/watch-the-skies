@@ -1,25 +1,41 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Button, Alert, Table, Drawer, List, Popover, Whisper, Icon, IconButton, Panel } from 'rsuite';
-import ListItem from 'rsuite/lib/List/ListItem';
-import { gameServer } from '../../config';
+import { Button, Alert, Table, Drawer, List, Popover, Whisper, Icon, IconButton, Panel, TagGroup, Tag, InputGroup, Input, CheckPicker } from 'rsuite';
 import { getStored } from '../../store/entities/upgrades';
-import axios from 'axios';
+import socket from "../../socket";
 
 const { HeaderCell, Cell, Column } = Table;
 
-class UpgradeDrawer extends Component {
-	state = { 
-		selected: null,
-		eligibleUps: []
-	 }
+const UpgradeDrawer = (props) => {
+	const [selected, setSelected] = React.useState([]);
+	const [formatted, setFormatted] = React.useState([]);
 
-	 componentDidMount() { //
-		this.setState({ eligibleUps: this.props.upgrades });
-		console.log(this.state.eligibleUps)
-	};
+	useEffect(() => {
+		filterOptions();
+	}, [props.uphrades]);
 
-	whisperSelector = (rowData) => {
+	
+  const filterOptions = () => {
+    let ups = [];
+    for (let up of props.upgrades) {
+			let effects = '';
+			for (const effect of up.effects) {
+				effects = effects.concat(` (${effect.type} + ${effect.value})`)
+			}
+      //console.log(up)
+      let data = { 
+        name: up.name,
+				effects,
+				label: `${up.name} - ${effects}`,
+        value: up._id
+      }
+      ups.push(data);
+    }
+  
+    setFormatted(ups);
+  }
+
+	const whisperSelector = (rowData) => {
 		let speak;
 		let img;
 		switch (rowData.type) {
@@ -45,7 +61,7 @@ class UpgradeDrawer extends Component {
 				speak = (
 					<Popover title="Unkown">
 						<p>
-							Who knows what this does. Better not touch it. Or maybe.... No. Best not. 
+							Who knows what does. Better not touch it. Or maybe.... No. Best not. 
 						</p>
 					</Popover>
 				);
@@ -57,76 +73,65 @@ class UpgradeDrawer extends Component {
 		)
 		}
 
-	handleSubmit = async (blueprint) => {
-		// 1) make a new upgrade from blueprint
+	const handleSubmit = async (blueprint) => {
 		try{
-			await axios.put(`${gameServer}game/upgrades/add`, {upgrade: this.state.selected._id, unit: this.props.unit._id })
+			socket.emit('request', { route: props.unit.model.toLowerCase(), action: 'action', type: 'equip', data: { units: [ props.unit._id ], aircrafts: [ props.unit._id ], upgrades: selected }});
 			
-			this.props.closeUpgrade()
+			// props.closeUpgrade()
 		}
 		catch (err) {
 			Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 		}
 	}
 
-	render() { 
-		return ( 
-			<Drawer
-				size='sm'  
-				placement='right' 
-				show={this.props.show} 
-				onHide={() => this.props.closeUpgrade()}>
-					<Drawer.Header>
-						<Drawer.Title>Add an Upgrade from storage:</Drawer.Title>
-					</Drawer.Header>
-					<Drawer.Body>
-						<List height={400} hover autoScroll bordered>
-							{this.state.eligibleUps.map((upgrade, index) => (
-								<List.Item key={index} index={index} onClick={() => this.setState({ selected: upgrade })}>
-									{upgrade.name}
-								</List.Item>
-							))}
-						</List>
-						{this.state.selected && <Panel header="Panel title">
-						 <Table height={200} data={this.state.selected.effects}>
-							<Column verticalAlign='middle' align="left" fixed>
-								<HeaderCell>Type</HeaderCell>
-								<Cell>
-									{rowData => {
-										switch (rowData.type) {
-											case 'attack': 
-												return (<b>Attack</b>)
-											case 'defense': 
-												return (<b>Defense</b>)
-											case 'terror': 
-												return (<b>Terror</b>)
-											case 'pr': 
-												return (<b>Public Relations (PR)</b>)
-											default:
-												return(<b>Unknown</b>)
-										}
-									}}
-								</Cell>
-							</Column>
-							<Column verticalAlign='middle' align="center" flexGrow={1}>
-								<HeaderCell>Effect</HeaderCell>
-								<Cell dataKey="effect" />
-							</Column>
-							<Column verticalAlign='middle' align="center" flexGrow={1}>
-								<HeaderCell>Description</HeaderCell>
-								<Cell>
-								{rowData => {
-                  return this.whisperSelector(rowData)
-                }}
-								</Cell>
-							</Column>
-						</Table>
-						<Button color="green" style={{ marginLeft: "auto" }} onClick={this.handleSubmit}>Add</Button>		
-					 </Panel>}
-					</Drawer.Body>
-			</Drawer>
-		 );
-	}
+	const handleUps = (ups) => {
+		setSelected(ups); 
+	};
+
+	return ( 
+		<Drawer
+			size='sm'  
+			placement='right' 
+			show={props.show} 
+			onHide={() => props.closeUpgrade()}>
+				<Drawer.Header>
+					<Drawer.Title>Add an Upgrade from storage:</Drawer.Title>
+				</Drawer.Header>
+				<Drawer.Body>
+					<div>
+						<CheckPicker block placeholder='Select Upgrades'
+								data={ formatted }
+								onChange={handleUps}
+								valueKey='value'
+								labelKey='label'
+								value={ selected }
+						/>							
+					</div>
+					{selected.length > 0 && <div>
+						Add the following:
+						{selected.map((upgrade, index) => {
+							let up = upgrade;
+							if (!up.name) up = props.upgrades.find(el => el._id === upgrade); 
+
+							return( // if the upgrade is not populated from the unit we gotta find
+								<div style={{ border: "2px solid green", }}>
+									<h5 style={{ margin: '5px' }}>{up.name} {up.status.map(tag => (<Tag color='blue' style={{ textTransform: 'capitalize' }}>{tag}</Tag>))}</h5>
+									
+									{up.effects.map(effect => (<p style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</p>))}
+								</div>
+							) 
+						})}
+					</div>}
+
+
+				</Drawer.Body>
+				<Drawer.Footer>	
+					<Button color="green" onClick={handleSubmit}>Add</Button>					
+				</Drawer.Footer>
+
+		</Drawer>
+	 );
+	
 }
  
 const mapStateToProps = state => ({

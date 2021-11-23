@@ -1,9 +1,8 @@
 const runDropAll = require('../dataInit/initDropAll');
 const runBluePrintLoad = require('../dataInit/blueprintLoad');
 const runZoneLoad = require('../dataInit/zoneLoad');
-const runUserLoad = require('../dataInit/userLoad');
 const runTeamLoad = require('../dataInit/teamLoad');
-const runCountryLoad = require('../dataInit/countryLoad');
+const runOrganizationLoad = require('../dataInit/organizationLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
@@ -16,13 +15,12 @@ const runResearchLoad = require('../dataInit/researchLoad');
 
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
-async function fullInit (selStr) {
+async function fullInit(selStr) {
 	let dropAllDone = false;
 	let blueprintDone = false;
 	let zoneDone = false;
-	let userDone = false;
 	let teamDone = false;
-	let countryDone = false;
+	let organizationDone = false;
 	let citySiteDone = false;
 	let baseFacilityDone = false;
 	let spacecraftDone = false;
@@ -50,8 +48,8 @@ async function fullInit (selStr) {
 		teamDone = await runTeamLoad(true); // load Team fields from initTeams.json
 		logger.debug(`Team Load Done: ${teamDone}`);
 
-		countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
-		logger.debug(`Country Load Done: ${countryDone}`);
+		organizationDone = await runOrganizationLoad(true); // load Organization fields from initOrganization.json
+		logger.debug(`Organization Load Done: ${organizationDone}`);
 
 		citySiteDone = await runCitySiteLoad(true); // load expanded City Sites fields
 		logger.debug(`City Sites Load Done: ${citySiteDone}`);
@@ -80,9 +78,6 @@ async function fullInit (selStr) {
 		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
 		logger.debug(`Research Load Done: ${researchDone}`);
 
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
-
 		break;
 
 	case 'DropAll':
@@ -109,9 +104,9 @@ async function fullInit (selStr) {
 
 		break;
 
-	case 'Country':
-		countryDone = await runCountryLoad(true); // load Country fields from initCountry.json
-		logger.debug(`Country Load Done: ${countryDone}`);
+	case 'Organization':
+		organizationDone = await runOrganizationLoad(true); // load Organization fields from initOrganization.json
+		logger.debug(`Organization Load Done: ${organizationDone}`);
 
 		break;
 
@@ -166,12 +161,6 @@ async function fullInit (selStr) {
 	case 'Research':
 		researchDone = await runResearchLoad(true); // load expanded Research fields initResearch.json
 		logger.debug(`Research Load Done: ${researchDone}`);
-
-		break;
-
-	case 'User':
-		userDone = await runUserLoad(true); // load expanded User fields
-		logger.debug(`User Load Done: ${userDone}`);
 
 		break;
 

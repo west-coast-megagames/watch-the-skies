@@ -1,66 +1,181 @@
-import React, { Component } from 'react'; // React import
+import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker } from 'rsuite';
+import BalanceHeader from '../components/common/BalanceHeader';
 // import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
+import { getOpsAccount } from '../store/entities/accounts';
+import { showSite } from '../store/entities/infoPanels';
+import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
 
-class MapPage extends Component {
-  constructor() {
-		super();
-		this.state = {
-			tab: 'dashboard',
-			account: {},
-			markers: []
-		};
-		this.handleSelect = this.handleSelect.bind(this);
-		this.setAccount = this.setAccount.bind(this);
-	}
+const MapPage = (props) => {
+	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
+	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
 
-	componentDidMount() {
-		// this.setAccount();
-	}
-
-  setAccount() {
-		let indexOf = this.props.accounts.findIndex(el => el.name === 'Operations');
-		let account = this.props.accounts[indexOf];
-		this.setState({ account })
-  }
-
-	handleSelect(activeKey) {
-		this.setState({ tab: activeKey })
-	}
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
+	const handleCenter = (value) => {
+		const military = props.military.find(el => el._id === value);
+		const site = props.sites.find(el => el._id === value);
+		const air = props.aircrafts.find(el => el._id === value);
+		if ( site && site.geoDecimal && site.geoDecimal.lat && site.geoDecimal.lng) {
+			setCenter({ lat: site.geoDecimal.lat, lng:  site.geoDecimal.lng });
 		}
-		const { tab } = this.state; 
+		else if ( military && military.location && military.location.lat && military.location.lng) {
+			setCenter(military.location);
+		}
+		else if ( air && air.location && air.location.lat && air.location.lng) {
+			setCenter(air.location);
+		}
+		else {
+			Alert.error('No Geo Data Found', 6000);
+		}
+		
+	}
 
-    return (
-			<Container>
-				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
-						<Nav.Item eventKey="excom" icon={<Icon icon='fighter-jet' />}> Filter</Nav.Item>
-					</Nav>
-				</Header>
-				<Content className='tabContent' style={{ paddingLeft: 20 }}>
-					<PrototypeMap></PrototypeMap>
-				</Content>
-			</Container>
+	useEffect(() => {
+		if (props.capitol) {
+				setCenter({ lat: props.capitol.geoDecimal.lat, lng: props.capitol.geoDecimal.lng });
+		}
+	}, []);
+
+	useEffect(() => {
+		if (props.site && props.site.geoDecimal) {
+			setCenter({ lat: props.site.geoDecimal.lat, lng:  props.site.geoDecimal.lng });
+		}
+	}, [props.site]);
+
+	useEffect(() => {
+		if (props.milTransfer) {
+			setCenter(props.milTransfer.location);
+		}
+	}, [props.milTransfer]);
+
+	useEffect(() => {
+		if (props.airTransfer) {
+			setCenter(props.airTransfer.location);
+		}
+	}, [props.airTransfer]);
+
+
+	const handleDis = (dis) => {
+		setDisplay(dis);
+	};
+
+	if (!props.login) {
+		props.history.push('/');
+		return <LoginLink history={props.history} />
+	}
+  else return (
+		<Container>
+				<FlexboxGrid justify="space-around" align="middle">
+					<FlexboxGrid.Item colspan={12}>
+						<CheckTreePicker 
+							defaultExpandAll
+							data={data}
+							defaultValue={display}
+							placeholder="Select Map Elements"
+							valueKey='value'
+							onChange={handleDis}
+						/>
+					</FlexboxGrid.Item>
+
+					<FlexboxGrid.Item colspan={8}>
+					<SelectPicker
+   				  data={props.sites}
+						valueKey='_id'
+						labelKey='name'
+						appearance="default"
+						placeholder="Find a Site"
+						style={{ width: 224 }}
+						onChange={(value) => handleCenter(value)}
+					/>
+					</FlexboxGrid.Item>
+
+					<FlexboxGrid.Item colspan={4}>
+						<BalanceHeader account={props.account} />
+					</FlexboxGrid.Item>
+					
+				</FlexboxGrid>
+			<Content className='tabContent' style={{ paddingLeft: 20 }}>
+				<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} center={center}></PrototypeMap>
+			</Content>
+		</Container>
     );
-  }
 }
+
+const data = [
+	{
+		label: "Sites",
+    value: "sites",
+    "children": [
+			{
+        label: "Cities",
+        value: 'City'
+      },
+			{
+        label: "Points of Interest",
+        value: 'Point of Interest'
+      },
+			{
+        label: "Crash Sites",
+        value: 'Crash'
+      },
+		]
+	},
+	{
+		label: "Air Contacts",
+    value: "contacts",
+    "children": [
+			{
+        label: "Interceptors",
+        value: 'interceptors'
+      },
+			{
+        label: "Aliens",
+        value: 'aliens'
+      },
+		]
+	},
+	{
+		label: "Satellites",
+		value: 'Satellite'
+	},
+	{
+		label: "Intel",
+    value: "intel",
+    "children": [
+
+		]
+	},
+	{
+		label: "Military",
+    value: "military",
+    // "children": [
+		// 	{
+    //     label: "Deployed",
+    //     value: 'deployed'
+    //   },
+		// 	{
+    //     label: "Un-Deployed",
+    //     value: 'undeployed'
+    //   },
+		// ]
+	},
+]
 
 const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: state.auth.team,
 	sites: state.entities.sites.list,
+	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : undefined,
 	military: state.entities.military.list,
-	aircraft: state.entities.aircrafts.list
+	aircrafts: state.entities.aircrafts.list,
+	account: getOpsAccount(state),
+	site: state.info.Site,
+	milTransfer: state.info.Military,
+	airTransfer: state.info.Aircraft
 });
 
 const mapDispatchToProps = dispatch => ({});

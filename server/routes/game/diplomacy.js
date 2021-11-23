@@ -3,6 +3,7 @@ const router = express.Router();
 const routeDebugger = require('debug')('app:routes');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const { resolveTrade } = require('../../wts/trades/trade');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Trade } = require('../../models/trade');
 const { Treaty } = require('../../models/treaty');
@@ -67,11 +68,11 @@ router.put('/trade/modify', async function (req, res) {
 	trade.initiator = initiator;
 	trade.tradePartner = tradePartner;
 
-	// set status flags
-	trade.status.draft = false;
-	trade.status.rejected = false;
-	trade.status.deleted = false;
-	trade.status.proposal = true;
+	// set status 
+	await addArrayValue(trade.status, 'proposal');
+	await clearArrayValue(trade.status, 'draft');
+	await clearArrayValue(trade.status, 'rejected');
+	await clearArrayValue(trade.status, 'deleted');
 
 	trade = await trade.saveActivity(trade, `Trade Modified By ${mName}`);
 	res.status(200).send(`Trade deal modified successfully by ${mName}`);
@@ -105,9 +106,10 @@ router.put('/trade/reject', async function (req, res) {
 	trade.tradePartner.ratified = false;
 
 	// set status flags
-	trade.status.draft = false;
-	trade.status.rejected = true;
-	trade.status.proposal = false;
+	await clearArrayValue(trade.status, 'draft');
+	await addArrayValue(trade.status, 'rejected');
+	await clearArrayValue(trade.status, 'proposal');
+
 	trade = await trade.saveActivity(trade, `Trade Rejected By ${mName}`);
 
 	res.status(200).send('Trade Deal Rejected');
@@ -127,7 +129,8 @@ router.delete('/trade/id', async function (req, res) {
 			}
 		}
 		let trade = await Trade.findById({ _id: req.body._id });
-		trade.status.deleted = true;
+		await addArrayValue(trade.status, 'deleted');
+		
 		trade = await trade.saveActivity(trade, `Trade Closed By ${removalTeam.name}`);
 
 		res.status(200).send(`We killed trade: ${req.body.tradeID}`);
@@ -162,7 +165,7 @@ router.delete('/trade/id', async function (req, res) {
 router.put('/treaties/modify', async function (req, res) {
 	let { treaty, modifier } = req.body;
 	const { changes } = req.body;
-	if (treaty.status.draft === false) {
+	if (!treaty.status.some(el => el === 'draft')) {
 		res.status(400).send('Cannot modify a treaty that is in the proposal state');
 	}
 	try{
@@ -208,7 +211,7 @@ router.put('/treaties/modify', async function (req, res) {
 					cNum++;
 				}
 				break;
-			case 'excluded':// block country from ratifying this treaty
+			case 'excluded':// block organization from ratifying this treaty
 				// COME BACK AND DO THIS CODE YOU COWARD
 				break;
 			case 'expiration':// change the expiration date
@@ -284,16 +287,16 @@ router.put('/treaties/status', async function (req, res) {
 		if(modifier != treaty.creator) {
 			res.status(400).send('Cannot modify treaty status if you are not it\'s creator');
 		}
-		treaty.status.draft = false;
-		treaty.status.proposal = false;
-		treaty.status.deleted = false;
+		await clearArrayValue(treaty.status, 'draft');
+		await clearArrayValue(treaty.status, 'proposal');
+		await clearArrayValue(treaty.status, 'deleted');
 
 		switch(status) {
 		case 'draft':
-			treaty.status.draft = true;
+			await addArrayValue(treaty.status, 'draft');
 			break;
 		case 'proposal':
-			treaty.status.proposal = true;
+			await addArrayValue(treaty.status, 'proposal');
 			break;
 		}// switch(status)
 		treaty = await treaty.saveActivity(treaty, `Treaty Status Changed ${modifier.name}`);

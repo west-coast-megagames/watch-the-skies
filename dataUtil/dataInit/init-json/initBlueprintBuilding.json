@@ -1,0 +1,130 @@
+[
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Lab",
+    "type": "research",
+    "code": "LAB-01",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Science Lab",
+		"stats": {
+			"funding": 0,
+			"rate": 12,
+			"bonus": 0
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Hanger Small",
+    "type": "hanger",
+    "code": "HANGER-SM",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Small Hanger",
+		"stats": {
+			"capacity": 4
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Hanger Large",
+    "type": "hanger",
+    "code": "HANGER-LG",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Large Hanger",
+		"stats": {
+			"capacity": 8
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Storage Small",
+    "type": "storage",
+    "code": "STORE-SM",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Small Storage",
+		"stats": {
+			"capacity": 4
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Workshop",
+    "type": "manufacturing",
+    "code": "WORK-01",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Upgrade Workshop",
+		"stats": {
+			"capacity": 1
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Garrison Small",
+    "type": "garrison",
+    "code": "MIL-SM",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Small Military Garrison",
+		"stats": {
+			"capacity": 4
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Garrison Medium",
+    "type": "garrison",
+    "code": "MIL-MD",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Medium Military Garrison",
+		"stats": {
+			"capacity": 6
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Garrison Large",
+    "type": "garrison",
+    "code": "MIL-LG",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Large Military Garrison",
+		"stats": {
+			"capacity": 8
+		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Naval Dock Large",
+    "type": "port",
+    "code": "NAVY-LG",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Large Navy Dock",
+		"stats": {
+			"capacity": 12
+		}
+  }
+]

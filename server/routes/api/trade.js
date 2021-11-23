@@ -16,7 +16,8 @@ router.get('/', async function (req, res) {
 	logger.info('GET Route: api/trade requested...');
 	try {
 		const trade = await Trade.find()
-			.sort({ team: 1 });
+			.populate('initiator.team', 'shortName name code')
+			.populate('tradePartner.team', 'shortName name code');
 		res.status(200).json(trade);
 	}
 	catch (err) {
@@ -33,7 +34,9 @@ router.get('/:id', validateObjectId, async (req, res) => {
 	const id = req.params.id;
 
 	try {
-		const trade = await Trade.findById(id);
+		const trade = await Trade.findById(id)
+			.populate('initiator.team', 'shortName name code')
+			.populate('tradePartner.team', 'shortName name code');
 		if (trade != null) {
 			res.status(200).json(trade);
 		}

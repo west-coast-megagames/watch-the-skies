@@ -10,17 +10,15 @@ require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 const { validUnitType } = require('../util/validateUnitType');
+const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runMilitaryLoad (runFlag) {
+async function runMilitaryLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -35,7 +33,7 @@ async function runMilitaryLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// militaryLoadDebugger("Jeff in initLoad", doLoad, militaryDataIn.length);
 	if (!doLoad) return;
 
@@ -52,7 +50,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadMilitary (iData, rCounts) {
+async function loadMilitary(iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/name/${iData.name}`);
 		// type is now on the blueprint
@@ -100,7 +98,7 @@ async function loadMilitary (iData, rCounts) {
 	}
 }
 
-async function deleteAllMilitarys (doLoad) {
+async function deleteAllMilitarys(doLoad) {
 	if (!doLoad) return;
 
 	try {
@@ -125,14 +123,17 @@ async function deleteAllMilitarys (doLoad) {
 	}
 }
 
-async function createFleet (iData, rCounts, bpData) {
+async function createFleet(iData, rCounts, bpData) {
 	// New Fleet/Military here
 	const newFleet = iData;
 	newFleet.serviceRecord = [];
-	newFleet.gameState = [];
 	newFleet.blueprint = bpData._id;
 	newFleet.stats = bpData.stats;
 	newFleet.type = bpData.type;
+	newFleet.status = [];
+	newFleet.tags = [];
+	newFleet.status.push('action');
+	newFleet.status.push('mission');
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -151,23 +152,23 @@ async function createFleet (iData, rCounts, bpData) {
 		newFleet.team = undefined;
 	}
 
-	if (iData.country != '') {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-		const countryData = country.data;
+	if (iData.organization != '') {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Fleet Military Invalid Country: ${iData.name} ${iData.country}`);
+			logger.error(`New Fleet Military Invalid Organization: ${iData.name} ${iData.organization}`);
 			return;
 		}
 		else {
-			newFleet.country = countryData._id;
-			newFleet.zone = countryData.zone;
+			newFleet.organization = organizationData._id;
+			newFleet.zone = organizationData.zone;
 		}
 	}
 	else {
-		newFleet.country = undefined;
+		newFleet.organization = undefined;
 		newFleet.zone = undefined;
 	}
 
@@ -180,13 +181,13 @@ async function createFleet (iData, rCounts, bpData) {
 			logger.error(`New Fleet Military Invalid Base: ${iData.name} ${iData.origin}`);
 			return;
 		}
-		else if (bData.capability.naval.capacity > 0) {
+		else if (await inArray(bData.capabilities, 'port')) {
 			newFleet.origin = bData._id;
 			newFleet.site = bData.site;
 		}
 		else {
 			++rCounts.loadErrCount;
-			logger.error(`New Fleet Military Base does not have positive naval capacity: ${iData.name} ${iData.origin}`);
+			logger.error(`New Fleet Military Base does not have port capabilities: ${iData.name} ${iData.origin}`);
 			return;
 		}
 	}
@@ -209,14 +210,18 @@ async function createFleet (iData, rCounts, bpData) {
 	}
 }
 
-async function createCorps (iData, rCounts, bpData) {
+async function createCorps(iData, rCounts, bpData) {
 	// New Corps/Military here
 	const newCorps = iData;
 	newCorps.serviceRecord = [];
-	newCorps.gameState = [];
 	newCorps.blueprint = bpData._id;
 	newCorps.stats = bpData.stats;
 	newCorps.type = bpData.type;
+	newCorps.status = [];
+	newCorps.tags = [];
+	newCorps.status.push('action');
+	newCorps.status.push('mission');
+	
 
 	if (iData.team != '') {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -235,23 +240,23 @@ async function createCorps (iData, rCounts, bpData) {
 		newCorps.team = undefined;
 	}
 
-	if (iData.country != '') {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-		const countryData = country.data;
+	if (iData.organization != '') {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Corps Military Invalid Country: ${iData.name} ${iData.country}`);
+			logger.error(`New Corps Military Invalid Organization: ${iData.name} ${iData.organization}`);
 			return;
 		}
 		else {
-			newCorps.country = countryData._id;
-			newCorps.zone = countryData.zone;
+			newCorps.organization = organizationData._id;
+			newCorps.zone = organizationData.zone;
 		}
 	}
 	else {
-		newCorps.country = undefined;
+		newCorps.organization = undefined;
 		newCorps.zone = undefined;
 	}
 
@@ -264,13 +269,13 @@ async function createCorps (iData, rCounts, bpData) {
 			logger.error(`New Corps Military Invalid Base: ${iData.name} ${iData.origin}`);
 			return;
 		}
-		else if (bData.capability.ground.capacity > 0) {
+		else if (await inArray(bData.capabilities, 'garrison')) {
 			newCorps.origin = bData._id;
 			newCorps.site = bData.site;
 		}
 		else {
 			++rCounts.loadErrCount;
-			logger.error(`New Corps Military Base does not have positive ground capacity: ${iData.name} ${iData.origin}`);
+			logger.error(`New Corps Military Base does not have garrison capabilites: ${iData.name} ${iData.origin}`);
 			return;
 		}
 	}
@@ -293,7 +298,7 @@ async function createCorps (iData, rCounts, bpData) {
 	}
 }
 
-async function findUpgrades (upgrades, unitType, unitName, team, facility) {
+async function findUpgrades(upgrades, unitType, unitName, team, facility) {
 	const upgIds = [];
 	for (const upg of upgrades) {
 		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);

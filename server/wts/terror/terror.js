@@ -1,7 +1,7 @@
 const { d6 } = require('../../util/systems/dice');
 
 const { Zone } = require('../../models/zone');
-const { Country } = require('../../models/country');
+const { Organization } = require('../../models/organization');
 const { Site } = require('../../models/site');
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error logging
 const { TerrorLog } = require('../../models/logs/log');
@@ -14,7 +14,7 @@ async function crisis (zoneId, crisis) {
 	const terror = d6(); // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
-	const countryId = null;
+	const organizationId = null;
 	const teamId = null;
 	const siteId = null;
 	let reason = '';
@@ -28,7 +28,7 @@ async function crisis (zoneId, crisis) {
 		await zone.save();
 
 		reason = `Crisis: ${crisis.name} has caused ${terror}pts in ${zone.name}. Current Terror: ${zone.terror}`;
-		TerrorLog(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+		TerrorLog(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 		logger.info(`${reason}`);
 		// await console.log(`${reason}`);
 		return reason;
@@ -41,7 +41,7 @@ async function crisis (zoneId, crisis) {
 	}
 }
 
-async function battle (countryId) {
+async function battle (organizationId) {
 
 	const terror = 10; // Initial Terror caused by this event
 	let newTerror = 0;
@@ -51,9 +51,9 @@ async function battle (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	let country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
+	let organization = await Organization.findById(organizationId);
+	if (organization) {
+		zoneId = organization.zone;
 		let zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
@@ -62,8 +62,8 @@ async function battle (countryId) {
 			newTerror = zone.terror;
 			zoneId = zone._id;
 			await zone.save();
-			reason = `A battle in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `A battle in ${organization.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			logger.info(`${reason}`);
 			// await console.log(`${reason}`);
 			return reason;
@@ -76,14 +76,14 @@ async function battle (countryId) {
 		}
 	}
 	else {
-		reason = `Country not available for terror battle function: terror change ${terror}pts `;
+		reason = `Organization not available for terror battle function: terror change ${terror}pts `;
 		logger.error(`${reason}`);
 		// await console.log(`${reason}`);
 		return reason;
 	}
 }
 
-async function invasion (countryId) {
+async function invasion (organizationId) {
 	const terror = 2; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
@@ -92,9 +92,9 @@ async function invasion (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	const country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
+	const organization = await Organization.findById(organizationId);
+	if (organization) {
+		zoneId = organization.zone;
 		const zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
@@ -102,8 +102,8 @@ async function invasion (countryId) {
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `An invasion in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `An invasion in ${organization.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			logger.info(`${reason}`);
 			// await console.log(${reason});
 			return reason;
@@ -116,7 +116,7 @@ async function invasion (countryId) {
 		}
 	}
 	else {
-		reason = `Country not available for terror invasion function: terror change ${terror}pts `;
+		reason = `Organization not available for terror invasion function: terror change ${terror}pts `;
 		logger.error(`${reason}`);
 		// await console.log(`${reason}`);
 		return reason;
@@ -126,7 +126,7 @@ async function invasion (countryId) {
 async function publicAnnouncement () {
 	let newTerror = 0;
 	let oldTerror = 0;
-	const countryId = null;
+	const organizationId = null;
 	const teamId = null;
 	const siteId = null;
 	let zoneId = null;
@@ -143,7 +143,7 @@ async function publicAnnouncement () {
 		zoneId = zone._id;
 		await zone.save(); // Saves Terror to Database
 		reason = `The public announcement of aliens has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-		logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+		logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 		logger.info(`${reason}`);
 		// console.log(`${reason}`);
 	}
@@ -153,7 +153,7 @@ async function publicAnnouncement () {
 async function coverage () {
 	let newTerror = 0;
 	let oldTerror = 0;
-	const countryId = null;
+	const organizationId = null;
 	const teamId = null;
 	const siteId = null;
 	let zoneId = null;
@@ -170,7 +170,7 @@ async function coverage () {
 			zoneId = zone._id;
 			await zone.save(); // Saves Terror to Database
 			reason = `Lack of satellite coverage over has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			logger.info(`${reason}`);
 			report = `${report} ${reason} | `;
 		}
@@ -182,19 +182,19 @@ async function nuclearStrike (siteId) {
 	const terror = 15; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
-	let countryId = null;
+	let organizationId = null;
 	const teamId = null;
 	let zoneId = null;
 	let reason = '';
-	let countryName = '';
+	let organizationName = '';
 
 	site = await Site.findById(siteId);
 	if (site) {
 		zoneId = site.zone;
-		countryId = site.country;
-		country = await Country.findById(countryId);
-		if (country) {
-			countryName = country.name;
+		organizationId = site.organization;
+		organization = await Organization.findById(organizationId);
+		if (organization) {
+			organizationName = organization.name;
 		}
 		zone = await Zone.findById(zoneId);
 		if (zone) {
@@ -203,8 +203,8 @@ async function nuclearStrike (siteId) {
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `A nuclear strike on the ${site.name} in ${countryName} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `A nuclear strike on the ${site.name} in ${organizationName} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			logger.info(`${reason}`);
 			return reason;
 		}
@@ -227,19 +227,19 @@ async function cityDestruction (siteId) {
 	const terror = 20; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
-	let countryId = null;
+	let organizationId = null;
 	const teamId = null;
 	let zoneId = null;
 	let reason = '';
-	let countryName = '';
+	let organizationName = '';
 
 	site = await Site.findById(siteId);
 	if (site) {
 		zoneId = site.zone;
-		countryId = site.country;
-		country = await Country.findById(countryId);
-		if (country) {
-			countryName = country.name;
+		organizationId = site.organization;
+		organization = await Organization.findById(organizationId);
+		if (organization) {
+			organizationName = organization.name;
 		}
 		zone = await Zone.findById(zoneId);
 		if (zone) {
@@ -249,7 +249,7 @@ async function cityDestruction (siteId) {
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
 			reason = `The destruction of ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			logger.info(`${reason}`);
 			return reason;
 		}
@@ -268,7 +268,7 @@ async function cityDestruction (siteId) {
 	}
 }
 
-async function industryDestruction (countryId) {
+async function industryDestruction (organizationId) {
 	const terror = 15; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
@@ -277,9 +277,9 @@ async function industryDestruction (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
+	organization = await Organization.findById(organizationId);
+	if (organization) {
+		zoneId = organization.zone;
 		zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
@@ -287,19 +287,19 @@ async function industryDestruction (countryId) {
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `The destruction of industry in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			reason = `The destruction of industry in ${organization.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
 			logger.info(`${reason}`);
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			return reason;
 		}
 		else {
-			reason = `Zone not available for terror industryDestruction function in ${country.name}: terror change ${terror}pts `;
+			reason = `Zone not available for terror industryDestruction function in ${organization.name}: terror change ${terror}pts `;
 			logger.error(`${reason}`);
 			return reason;
 		}
 	}
 	else {
-		reason = `Country not available for terror industryDestruction function: terror change ${terror}pts country Id: ${countryId}`;
+		reason = `Organization not available for terror industryDestruction function: terror change ${terror}pts organization Id: ${organizationId}`;
 		logger.error(`${reason}`);
 		// await console.log(`${reason}`);
 		return reason;
@@ -332,7 +332,7 @@ async function alienActivity (siteID, mission) {
 			let log = new TerrorLog({
 				date: Date.now(),
 				team: site.team._id,
-				country: site.country._id,
+				organization: site.organization._id,
 				zone: site.zone._id,
 				site: site._id,
 				startTerror: oldTerror,
@@ -352,13 +352,13 @@ async function alienActivity (siteID, mission) {
 		}
 	}
 	else {
-		reason = `Country not available for terror alienActivity function: terror change ${terror}pts site Id: ${siteId}`;
+		reason = `Organization not available for terror alienActivity function: terror change ${terror}pts site Id: ${siteId}`;
 		logger.error(`${reason}`);
 		return reason;
 	}
 }
 
-async function alienRaid (countryId) {
+async function alienRaid (organizationId) {
 	const terror = gonePublic ? 3 : 2; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
@@ -367,9 +367,9 @@ async function alienRaid (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
+	organization = await Organization.findById(organizationId);
+	if (organization) {
+		zoneId = organization.zone;
 		zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
@@ -377,24 +377,24 @@ async function alienRaid (countryId) {
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `Alien raid in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `Alien raid in ${organization.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			return reason;
 		}
 		else {
-			reason = `Zone not available for terror alienRaid function in ${country.name}: terror change ${terror}pts `;
+			reason = `Zone not available for terror alienRaid function in ${organization.name}: terror change ${terror}pts `;
 			logger.error(`${reason}`);
 			return reason;
 		}
 	}
 	else {
-		reason = `Country not available for terror alienRaid function: terror change ${terror}pts country Id: ${countryId}`;
+		reason = `Organization not available for terror alienRaid function: terror change ${terror}pts organization Id: ${organizationId}`;
 		logger.error(`${reason}`);
 		return reason;
 	}
 }
 
-async function alienGroundForces (countryId) {
+async function alienGroundForces (organizationId) {
 	const terror = gonePublic ? 4 : 3; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
@@ -403,9 +403,9 @@ async function alienGroundForces (countryId) {
 	const siteId = null;
 	let reason = '';
 
-	country = await Country.findById(countryId);
-	if (country) {
-		zoneId = country.zone;
+	organization = await Organization.findById(organizationId);
+	if (organization) {
+		zoneId = organization.zone;
 		zone = await Zone.findById(zoneId);
 		if (zone) {
 			oldTerror = zone.terror;
@@ -413,18 +413,18 @@ async function alienGroundForces (countryId) {
 			zone.terror = Math.min(zone.terror, 250); // don't go beyond 250
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
-			reason = `Alien ground troops in ${country.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			reason = `Alien ground troops in ${organization.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			return reason;
 		}
 		else {
-			reason = `Zone not available for terror alienGroundForces function in ${country.name}: terror change ${terror}pts `;
+			reason = `Zone not available for terror alienGroundForces function in ${organization.name}: terror change ${terror}pts `;
 			logger.error(`${reason}`);
 			return reason;
 		}
 	}
 	else {
-		reason = `Country not available for terror alienGroundForces function: terror change ${terror}pts country Id: ${countryId}`;
+		reason = `Organization not available for terror alienGroundForces function: terror change ${terror}pts organization Id: ${organizationId}`;
 		logger.error(`${reason}`);
 		return reason;
 	}
@@ -434,19 +434,19 @@ async function orbitalStrike (siteId) {
 	const terror = 20; // Initial Terror caused by this event
 	let newTerror = 0;
 	let oldTerror = 0;
-	let countryId = null;
+	let organizationId = null;
 	const teamId = null;
 	let zoneId = null;
 	let reason = '';
-	let countryName = '';
+	let organizationName = '';
 
 	site = await Site.findById(siteId);
 	if (site) {
 		zoneId = site.zone;
-		countryId = site.country;
-		country = await Country.findById(countryId);
-		if (country) {
-			countryName = country.name;
+		organizationId = site.organization;
+		organization = await Organization.findById(organizationId);
+		if (organization) {
+			organizationName = organization.name;
 		}
 		zone = await Zone.findById(zoneId);
 		if (zone) {
@@ -456,7 +456,7 @@ async function orbitalStrike (siteId) {
 			newTerror = zone.terror;
 			await zone.save(); // Saves Terror to Database
 			reason = `An orbital strike on ${site.name} has caused ${terror}pts of terror in ${zone.name}. Current Terror: ${zone.terror}`;
-			logTerror(oldTerror, terror, newTerror, reason, zoneId, countryId, teamId, siteId);
+			logTerror(oldTerror, terror, newTerror, reason, zoneId, organizationId, teamId, siteId);
 			return reason;
 		}
 		else {

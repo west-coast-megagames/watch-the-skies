@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { Zone } = require('../../../../models/zone');
-const { Country } = require('../../../../models/country');
+const { Organization } = require('../../../../models/organization');
 const { Site, CitySite } = require('../../../../models/sites/site');
 const { Team, National } = require('../../../../models/team');
 const mongoose = require('mongoose');
@@ -47,26 +47,26 @@ describe('wts terrror', () => {
 		await Zone.deleteOne({ code: 'Q9' });
 		await Zone.deleteOne({ code: 'K1' });
 		await Zone.deleteOne({ code: 'K2' });
-		await Country.deleteOne({ code: 'C1' });
-		await Country.deleteOne({ code: 'C2' });
-		await Country.deleteOne({ code: 'C3' });
-		await Country.deleteOne({ code: 'C4' });
-		await Country.deleteOne({ code: 'C5' });
-		await Country.deleteOne({ code: 'C6' });
-		await Country.deleteOne({ code: 'C7' });
-		await Country.deleteOne({ code: 'C8' });
-		await Country.deleteOne({ code: 'C9' });
-		await Country.deleteOne({ code: 'Q1' });
-		await Country.deleteOne({ code: 'Q2' });
-		await Country.deleteOne({ code: 'Q3' });
-		await Country.deleteOne({ code: 'Q4' });
-		await Country.deleteOne({ code: 'Q5' });
-		await Country.deleteOne({ code: 'Q6' });
-		await Country.deleteOne({ code: 'Q7' });
-		await Country.deleteOne({ code: 'Q8' });
-		await Country.deleteOne({ code: 'Q9' });
-		await Country.deleteOne({ code: 'K1' });
-		await Country.deleteOne({ code: 'K2' });
+		await Organization.deleteOne({ code: 'C1' });
+		await Organization.deleteOne({ code: 'C2' });
+		await Organization.deleteOne({ code: 'C3' });
+		await Organization.deleteOne({ code: 'C4' });
+		await Organization.deleteOne({ code: 'C5' });
+		await Organization.deleteOne({ code: 'C6' });
+		await Organization.deleteOne({ code: 'C7' });
+		await Organization.deleteOne({ code: 'C8' });
+		await Organization.deleteOne({ code: 'C9' });
+		await Organization.deleteOne({ code: 'Q1' });
+		await Organization.deleteOne({ code: 'Q2' });
+		await Organization.deleteOne({ code: 'Q3' });
+		await Organization.deleteOne({ code: 'Q4' });
+		await Organization.deleteOne({ code: 'Q5' });
+		await Organization.deleteOne({ code: 'Q6' });
+		await Organization.deleteOne({ code: 'Q7' });
+		await Organization.deleteOne({ code: 'Q8' });
+		await Organization.deleteOne({ code: 'Q9' });
+		await Organization.deleteOne({ code: 'K1' });
+		await Organization.deleteOne({ code: 'K2' });
 		await CitySite.deleteOne({ siteCode: 'test site 1' });
 		await CitySite.deleteOne({ siteCode: 'test site 2' });
 		await CitySite.deleteOne({ siteCode: 'test site 3' });
@@ -84,12 +84,12 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Z1', name: 'Zone Test 1', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C1',
-				name: 'Country Test 1',
+				name: 'Organization Test 1',
 				zone: zone._id
 			});
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
 			crisisObj = { name: 'Bio-Scare' };
@@ -104,16 +104,16 @@ describe('wts terrror', () => {
 		});
 
 		it('It should send message if invalid zone passed in', async () => {
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C2',
-				name: 'Country Test 2',
+				name: 'Organization Test 2',
 				zone: zone._id
 			});
-			await country.save();
-			testId = country._id;
+			await organization.save();
+			testId = organization._id;
 
 			crisisObj = { name: 'Bio-Scare' };
-			const reason = await crisis(country._id, crisisObj);
+			const reason = await crisis(organization._id, crisisObj);
 
 			expect(reason).toMatch(/Zone not available/);
 		});
@@ -124,16 +124,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Z3', name: 'Zone Test 3', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C3',
-				name: 'Country Test 3',
+				name: 'Organization Test 3',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await battle(country._id);
+			const reason = await battle(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -142,27 +142,27 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/A battle/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await battle(testId);
 
 			// starts out at 0  + 10
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q5',
-				name: 'Country Test Q5',
+				name: 'Organization Test Q5',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await battle(country._id);
+			const reason = await battle(organization._id);
 
 			// starts out at 0  + 10
 			expect(reason).toMatch(/Zone not available/);
@@ -174,16 +174,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Z4', name: 'Zone Test 4', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C4',
-				name: 'Country Test 4',
+				name: 'Organization Test 4',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await invasion(country._id);
+			const reason = await invasion(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -192,27 +192,27 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/An invasion/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await invasion(testId);
 
 			// starts out at 0  + 2
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C5',
-				name: 'Country Test 5',
+				name: 'Organization Test 5',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await invasion(country._id);
+			const reason = await invasion(organization._id);
 
 			// starts out at 0  + 2
 			expect(reason).toMatch(/Zone not available/);
@@ -263,12 +263,12 @@ describe('wts terrror', () => {
 		it('it should return message and zone terror updated', async () => {
 			const zone = new Zone({ code: 'Z8', name: 'Zone Test 8', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C8',
-				name: 'Country Test 8',
+				name: 'Organization Test 8',
 				zone: zone._id
 			});
-			await country.save();
+			await organization.save();
 			const team = new National({
 				name: 'Test Team 1',
 				shortName: 'TT 1',
@@ -279,7 +279,7 @@ describe('wts terrror', () => {
 			const citySite = new CitySite({
 				siteCode: 'test site 1',
 				name: 'City of Screams',
-				country: country._id,
+				organization: organization._id,
 				zone: zone._id
 			});
 			await citySite.save();
@@ -321,12 +321,12 @@ describe('wts terrror', () => {
 		it('it should return message and zone terror updated', async () => {
 			const zone = new Zone({ code: 'Z9', name: 'Zone Test 9', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'C9',
-				name: 'Country Test 9',
+				name: 'Organization Test 9',
 				zone: zone._id
 			});
-			await country.save();
+			await organization.save();
 			const team = new National({
 				name: 'Test Team 2',
 				shortName: 'TT 2',
@@ -337,7 +337,7 @@ describe('wts terrror', () => {
 			const citySite = new CitySite({
 				siteCode: 'test site 3',
 				name: 'City of Dust',
-				country: country._id,
+				organization: organization._id,
 				zone: zone._id
 			});
 			await citySite.save();
@@ -379,16 +379,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Q1', name: 'Zone Test Q1', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q1',
-				name: 'Country Test Q1',
+				name: 'Organization Test Q1',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await industryDestruction(country._id);
+			const reason = await industryDestruction(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -397,26 +397,26 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/destruction of industry/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await industryDestruction(testId);
 
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q2',
-				name: 'Country Test Q2',
+				name: 'Organization Test Q2',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await industryDestruction(country._id);
+			const reason = await industryDestruction(organization._id);
 
 			expect(reason).toMatch(/Zone not available/);
 		});
@@ -427,16 +427,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Q3', name: 'Zone Test Q3', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q3',
-				name: 'Country Test Q3',
+				name: 'Organization Test Q3',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await alienActivity(country._id);
+			const reason = await alienActivity(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -445,26 +445,26 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/Alien activity/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await alienActivity(testId);
 
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q4',
-				name: 'Country Test Q4',
+				name: 'Organization Test Q4',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await alienActivity(country._id);
+			const reason = await alienActivity(organization._id);
 
 			expect(reason).toMatch(/Zone not available/);
 		});
@@ -475,16 +475,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Q6', name: 'Zone Test Q6', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q6',
-				name: 'Country Test Q6',
+				name: 'Organization Test Q6',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await alienRaid(country._id);
+			const reason = await alienRaid(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -493,26 +493,26 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/Alien raid/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await alienRaid(testId);
 
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q7',
-				name: 'Country Test Q7',
+				name: 'Organization Test Q7',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await alienRaid(country._id);
+			const reason = await alienRaid(organization._id);
 
 			expect(reason).toMatch(/Zone not available/);
 		});
@@ -523,16 +523,16 @@ describe('wts terrror', () => {
 		it('it should return updated terror', async () => {
 			const zone = new Zone({ code: 'Q8', name: 'Zone Test Q8', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q8',
-				name: 'Country Test Q8',
+				name: 'Organization Test Q8',
 				zone: zone._id
 			});
 
-			await country.save();
+			await organization.save();
 
 			const saveId = zone._id;
-			const reason = await alienGroundForces(country._id);
+			const reason = await alienGroundForces(organization._id);
 
 			zoneUpd = await Zone.findById(saveId);
 
@@ -541,26 +541,26 @@ describe('wts terrror', () => {
 			expect(reason).toMatch(/Alien ground troops/);
 		});
 
-		it('It should send message if invalid country passed in', async () => {
+		it('It should send message if invalid organization passed in', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
 			const reason = await alienGroundForces(testId);
 
-			expect(reason).toMatch(/Country not available/);
+			expect(reason).toMatch(/Organization not available/);
 		});
 
-		it('It should send message if country does not have valid zone ', async () => {
+		it('It should send message if organization does not have valid zone ', async () => {
 			// pass in invalid id ... don't need to create a record
 			testId = new mongoose.Types.ObjectId();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'Q9',
-				name: 'Country Test Q9',
+				name: 'Organization Test Q9',
 				zone: testId
 			});
 
-			await country.save();
+			await organization.save();
 
-			const reason = await alienGroundForces(country._id);
+			const reason = await alienGroundForces(organization._id);
 
 			expect(reason).toMatch(/Zone not available/);
 		});
@@ -571,12 +571,12 @@ describe('wts terrror', () => {
 		it('it should return message and zone terror updated', async () => {
 			const zone = new Zone({ code: 'K1', name: 'Zone Test K1', terror: 5 });
 			await zone.save();
-			const country = new Country({
+			const organization = new Organization({
 				code: 'K1',
-				name: 'Country Test K1',
+				name: 'Organization Test K1',
 				zone: zone._id
 			});
-			await country.save();
+			await organization.save();
 			const team = new National({
 				name: 'Test Team K1',
 				shortName: 'TT K1',
@@ -587,7 +587,7 @@ describe('wts terrror', () => {
 			const citySite = new CitySite({
 				siteCode: 'test site K1',
 				name: 'City of Groans',
-				country: country._id,
+				organization: organization._id,
 				zone: zone._id
 			});
 			await citySite.save();

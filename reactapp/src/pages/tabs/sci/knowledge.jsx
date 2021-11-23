@@ -43,9 +43,9 @@ class Knowledge extends Component {
 			object.research_id = ''
 			let fieldResearch = knowledge.filter(el => el.field === field);
 			for (let el of fieldResearch) {
-				if (el.status.completed === true) {
+				if (el.status.some(el2 => el2 === 'completed')) {
 					object.complete.push(el)
-				} else if (el.status.completed === false) {
+				} else if (!el.status.some(el2 => el2 === 'completed')) {
 					object.research = el
 					object.research_id = el._id
 				}

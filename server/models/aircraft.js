@@ -1,10 +1,12 @@
+/* eslint-disable no-useless-catch */
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const nexusEvent = require('../middleware/events/events');
+const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCalls');
 
 // Global Constants
-const banking = require('../wts/banking/banking'); // WTS Banking system
 const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
@@ -30,19 +32,13 @@ const AircraftSchema = new Schema({
 	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },
-	country: { type: Schema.Types.ObjectId, ref: 'Country', required: true },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization', required: true },
 	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
-	mission: { type: String, default: 'Docked' },
+	mission: { type: String, default: 'docked' },
 	stance: { type: String, default: 'neutral', enum: ['aggresive', 'evasive', 'neutral'] },
-	status: {
-		damaged: { type: Boolean, default: false },
-		deployed: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		ready: { type: Boolean, default: true },
-		upgrade: { type: Boolean, default: false },
-		repair: { type: Boolean, default: false },
-		secret: { type: Boolean, default: false }
-	},
+	status: [ { type: String, enum: ['damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action'] } ],
+	actions: { type: Number, default: 1 },
+	missions: { type: Number, default: 1 },
 	upgrades: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
 	systems: {
 		cockpit: {
@@ -82,19 +78,21 @@ const AircraftSchema = new Schema({
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 }
 	},
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-	gameState: []
+	tags: [ { type: String, enum: [''] } ],
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 
 // validateAircraft Method
 AircraftSchema.methods.validateAircraft = async function () {
-	const { validTeam, validFacility, validSite, validZone, validCountry, validUpgrade, validLog } = require('../middleware/util/validateDocument');
+	const { validTeam, validFacility, validSite, validZone, validOrganization, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
 		type: Joi.string().min(2).max(50).required().valid('Recon', 'Transport', 'Decoy', 'Fighter'),
-		mission: Joi.string().required()
+		mission: Joi.string().required(),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('damaged', 'deployed', 'destroyed', 'ready', 'upgrade', 'repair', 'secret', 'mission', 'action'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });
@@ -104,7 +102,7 @@ AircraftSchema.methods.validateAircraft = async function () {
 	await validFacility(this.origin);
 	await validSite(this.site);
 	await validZone(this.zone);
-	await validCountry(this.country);
+	await validOrganization(this.organization);
 	for await (const upg of this.upgrades) {
 		await validUpgrade(upg);
 	}
@@ -113,20 +111,68 @@ AircraftSchema.methods.validateAircraft = async function () {
 	}
 };
 
+// METHOD - Control
+// IN - string of what is getting reset | OUT: VOID
+// PROCESS: reset aspect based on type, Control only
+AircraftSchema.methods.reset = async function (type) {
+	let unit = this;
+	try {
+		switch(type) {
+		case 'mission':
+			// do mission reset logic
+			(unit.missions <= 0) ? unit.missions = 1 : unit.missions = 0; // Reduces the availible missions by 1
+			unit.mission = 'docked'; // Sets assignment as current mission TODO update when John redoes missions for aircraft
+			await this.recall(true);
+			break;
+		case 'action':
+			// do mission reset logic
+			(unit.actions <= 0) ? unit.actions = 1 : unit.actions = 0; // Reduces the availible missions by 1
+			break;
+		case 'mobilized':
+			// do mission reset logic
+			await this.recall(true);
+			break;
+		default:
+			throw new Error(`ERROR ${type}.`);
+		}
+
+		unit = await unit.save(); // Saves the UNIT
+		await unit.populateMe();
+		nexusEvent.emit('request', 'update', [ unit ]);
+		return unit;
+	}
+	catch (error) {
+		console.log(error);
+	}
+};
+
 // Launch Method - Changes the status of the craft and pays for the launch.
 AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);
 
 	try {
-		this.status.deployed = true;
-		this.status.ready = false;
+
+		await addArrayValue(this.status, 'deployed');
+		await clearArrayValue(this.status, 'ready');
 		this.mission = mission;
+		await clearArrayValue(this.status, 'mission');
 
 		const account = await Account.findOne({ name: 'Operations', 'team': this.team });
-		if (account.balance < 1) nexusError('Insefficient Funds to launch', 400);
-		await banking.withdrawal(account, 1, `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`);
+		const resource = 'Megabucks';
+		const index = account.resources.findIndex(el => el.type === resource);
+		if (index < 0) {
+			nexusError('Balance Not Found to launch', 400);
+		}
+		else if (account.resources[index].balance < 1) {nexusError('Insefficient Funds to launch', 400);}
+		else {
+			await account.withdrawal({ amount: 1, resource, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+		}
 
 		const aircraft = await this.save();
+		await aircraft.populateMe();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 		return aircraft;
 	}
 	catch (err) {
@@ -139,7 +185,6 @@ AircraftSchema.methods.launch = async function (mission) {
 	}
 };
 
-
 // Recall method - Returns the craft to origin
 AircraftSchema.methods.recall = async function () {
 	logger.info(`Recalling ${this.name} to base...`);
@@ -150,20 +195,96 @@ AircraftSchema.methods.recall = async function () {
 			.populate('site');
 
 		this.mission = 'Docked';
-		this.status.ready = true;
-		this.status.deployed = false;
-		this.location = randomCords(home.site.geoDecimal.latDecimal, home.site.geoDecimal.longDecimal);
+
+		await addArrayValue(this.status, 'ready');
+		await clearArrayValue(this.status, 'deployed');
+		this.location = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
 		this.site = home.site;
-		this.country = home.site.country;
+		this.organization = home.site.organization;
 		this.zone = home.site.zone;
 
+		await clearArrayValue(this.status, 'mission');
+		await clearArrayValue(this.status, 'action');
+
 		const aircraft = await this.save();
+		await aircraft.populateMe();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
+
 		logger.info(`${this.name} returned to ${home.name}...`);
 
 		return aircraft;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
+	}
+};
+
+// METHOD - Transfer
+// IN: Target Facility | OUT: VOID
+// PROCESS: Transfers aircraft to a new facility
+AircraftSchema.methods.transfer = async function (facility) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+
+	// Mechanics: Re-bases a military unit to a friendly facility around the world and sets the destination as the new home base.
+	try {
+		this.origin = facility; // Changes origin to target SITE
+		const home = await Facility.findById(facility)
+			.populate('site'); // Finds the new home site
+
+		logger.info(`Transferring ${this.name} to ${home.name}...`);
+
+		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
+		const { lat, lng } = randomCords(home.site.geoDecimal.lat, home.site.geoDecimal.lng);
+		this.location.lat = lat; // Updates LAT
+		this.location.lng = lng; // Updates LNG
+		this.site = home.site; // Updates current site
+		this.organization = home.site.organization; // Updates the current organization
+		this.zone = home.site.zone; // Updates current site
+
+		this.markModified('status'); // Marks the STATUS array as modified so it will save
+
+		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		const message = `${this.name} transferred to ${this.site.name}.`;
+		return message;
+	}
+	catch (err) {
+		logger.error(`${err.message}`, { meta: err.stack });
+		throw err;
+	}
+};
+
+// Method - Repair
+// IN: VOID | OUT: VOID
+// PROCESS: Repairs units hull (Does it repair upgrades?) not currently
+AircraftSchema.methods.repair = async function (upgrades = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// eslint-disable-next-line no-useless-catch
+	try {
+		// Mechanics: Repairs damage to a military unit when they are at a facility with repair capabilities.
+		const cost = 1 + upgrades.length;
+		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
+		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
+
+		this.stats.hull = this.stats.hullMax; // Restores the units hull to max
+
+		for (const item of upgrades) {
+			const upgrade = await Upgrade.findById(item);
+			// upgrade.repair() // Call repair method of upgrade | TODO - Make repair method of upgrade
+			console.log(`${upgrade.name} has been repaired while equiped to ${this.name}`);
+		}
+
+		const unit = await this.save(); // Saves the unit into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
+		return unit;
+	}
+	catch (err) {
+		throw err;
 	}
 };
 
@@ -177,7 +298,7 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	for (let upgrade of this.upgrades) {
 		try {
 			upgrade = await Upgrade.findById(upgrade);
-			upgrade.status.storage = true;
+			await addArrayValue(upgrade.status, 'storage');
 			await upgrade.save();
 		}
 		catch (err) {
@@ -186,9 +307,127 @@ AircraftSchema.methods.stripUpgrades = async function () {
 	}
 	this.upgrades = [];
 	const aircraft = await this.save();
+	await aircraft.populateMe();
+
+	// Notify/Update team via socket-event
+	nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 	return aircraft;
+};
+
+// METHOD - takeAction
+// IN: VOID | OUT: VOID
+// PROCESS: Expends mission/action pts or errors if there are none
+AircraftSchema.methods.takeAction = async function () {
+	if (this.actions < 1) {
+		// Trigger user check?
+		if (this.missions < 1) {
+			throw Error(`${this.name} has no mission or action pts left this turn.`);
+		}
+		else {
+			this.missions -= 1;
+		}
+	}
+	else {
+		this.actions -= 1;
+	}
+};
+
+AircraftSchema.methods.populateMe = function () {
+	return this
+		.populate('team', 'name shortName code')
+		.populate('upgrades')
+		.populate('zone', 'name')
+		.populate('organization', 'name')
+		.populate('site', 'name geoDecimal')
+		.populate('origin', 'name')
+		.execPopulate();
+};
+
+AircraftSchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemove = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		const unit = this;
+		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
+		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
+
+// Method - Equip
+// IN: VOID | OUT: VOID
+// PROCESS: Changes the equipment of the unit
+AircraftSchema.methods.equip = async function (upgrades = []) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		for (const upgrade of upgrades) {
+			if (!this.upgrades.some(el => el === upgrade)) await addArrayValue(this.upgrades, upgrade); // Adds the MOBILIZED status into the STATUS array;
+		}
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
+
+// Method - Unequip
+// IN: VOID | OUT: VOID
+// PROCESS: Changes the equipment of the unit
+AircraftSchema.methods.unequip = async function (upgrades = []) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	// console.log(this.upgrades)
+
+	try {
+		let temp = [ ... this.upgrades];
+		for (const up of upgrades) {
+			const index = temp.findIndex(el => el === up);
+			temp.splice(index, 1);
+		}
+
+		this.upgrades = temp;
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		return unit; // unit;
+	}
+	catch (err) {
+		throw err;
+	}
 };
 
 const Aircraft = mongoose.model('Aircraft', AircraftSchema);
 
-module.exports = { Aircraft };
+// { Aircraft Selectior Functions }
+const getAircrafts = async function () {
+	try {
+		const aircrafts = await Aircraft.find()
+			.sort({ team: 1 })
+			.populate('team', 'name shortName code')
+			.populate('zone', 'name')
+			.populate('organization', 'name')
+			.populate('site', 'name geoDecimal')
+			.populate('origin', 'name');
+		return aircrafts;
+	}
+	catch (err) {
+		logger.error(err.message, { meta: err.stack });
+	}
+};
+
+module.exports = { Aircraft, getAircrafts };

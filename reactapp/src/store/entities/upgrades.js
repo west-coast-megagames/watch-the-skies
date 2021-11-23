@@ -17,7 +17,7 @@ const slice = createSlice({
 		},
 		upgradesReceived: (upgrades, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Upgrade State Loaded!', 3000);
+      // Alert.info('Upgrade State Loaded!', 3000);
       upgrades.list = action.payload;
       upgrades.loading = false;
       upgrades.lastFetch = Date.now();
@@ -31,11 +31,16 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       upgrades.list.push(action.payload);
     },
-    upgradesUpdated: (upgrades, action) => {
+    upgradeUpdated: (upgrades, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Upgrade updated!', 2000);
-      upgrades.list = action.payload;
+      const index = upgrades.list.findIndex(el => el._id === action.payload._id);
+			upgrades.list[index] = action.payload;
       upgrades.lastFetch = Date.now();
+    },
+		upgradeDeleted: (upgrade, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = upgrade.list.findIndex(el => el._id === action.payload._id);
+      upgrade.list.splice(index, 1);
     },
 	}
 });
@@ -43,7 +48,8 @@ const slice = createSlice({
 // Action Export
 export const {
   upgradeAdded,
-  upgradesUpdated,
+  upgradeUpdated,
+	upgradeDeleted,
   upgradesReceived,
   upgradesRequested,
   upgradesRequestFailed
@@ -85,5 +91,5 @@ export const addUpgrades = upgrade =>
 	export const getStored = createSelector(
 		state => state.entities.upgrades.list,
 		state => state.auth.team,
-		(upgrade, team) => upgrade.filter(upgrade => (upgrade.team === team._id || upgrade.team._id === team._id) && upgrade.status.storage === true &&  upgrade.status.damaged === false && upgrade.status.destroyed === false)
+		(upgrade, team) => upgrade.filter(upgrade => (upgrade.team === team._id || upgrade.team._id === team._id) &&  upgrade.status.some(el => el === 'storage'))
 	);

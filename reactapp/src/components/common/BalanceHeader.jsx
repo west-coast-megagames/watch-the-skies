@@ -21,15 +21,11 @@ const BalanceHeader = (props) => {
 			</Affix>
 	);
 
-	account.balance < 1 ? color = 'red' : color = 'green';
+	account.resources.find(el => el.type === 'Megabucks').balance < 1 ? color = 'red' : color = 'green';
 	return(
-		<div>
-			<Affix>
-				<h5 style={{display: 'inline'}}>{ props.title }</h5>
-				<Tag style={{display: 'inline', float: 'right'}} color={ color }>$ { account.balance } MB</Tag>
+		<div>	
+				<Tag style={{display: 'inline', float: 'right', marginRight: '15px'}} color={ color }>$ { account.resources.find(el => el.type === 'Megabucks').balance } MB</Tag>
 				<h6 style={{display: 'inline', float: 'right', padding: '0 15px 0 0' }} > { account.name } Balance:</h6>
-				<hr />
-			</Affix>
 		</div>
 	);
 }

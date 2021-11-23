@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Fleet', 'Corps'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkMilitary (runFlag) {
+async function chkMilitary(runFlag) {
 	let mFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initMilitaries/lean`);
@@ -29,12 +29,6 @@ async function chkMilitary (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(military, 'model')) {
 			logger.error(
 				`model missing for Military ${military.name} ${military._id}`
-			);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(military, 'gameState')) {
-			logger.error(
-				`gameState missing for Military ${military.name} ${military._id}`
 			);
 		}
 
@@ -65,9 +59,9 @@ async function chkMilitary (runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(military, 'country')) {
+		if (!Object.prototype.hasOwnProperty.call(military, 'organization')) {
 			logger.error(
-				`country missing for Military ${military.name} ${military._id}`
+				`organization missing for Military ${military.name} ${military._id}`
 			);
 		}
 
@@ -76,11 +70,25 @@ async function chkMilitary (runFlag) {
 				`site missing for Military ${military.name} ${military._id}`
 			);
 		}
+		else if (
+			military.site === '' ||
+				military.site == undefined ||
+				military.site == null
+		) {
+			logger.error(`site is null for Military ${military.name} ${military._id}`);
+		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'origin')) {
 			logger.error(
 				`origin missing for Military ${military.name} ${military._id}`
 			);
+		}
+		else if (
+			military.origin === '' ||
+				military.origin == undefined ||
+				military.origin == null
+		) {
+			logger.error(`origin is null for Military ${military.name} ${military._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'status')) {
@@ -88,32 +96,11 @@ async function chkMilitary (runFlag) {
 				`status missing for Military ${military.name} ${military._id}`
 			);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'repair')) {
-				logger.error(
-					`status.repair missing for Military ${military.name} ${military._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(military.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Military ${military.name} ${military._id}`
-				);
-			}
+
+		if (!Object.prototype.hasOwnProperty.call(military, 'tags')) {
+			logger.error(
+				`tags missing for Military ${military.name} ${military._id}`
+			);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(military, 'hidden')) {
@@ -180,11 +167,6 @@ async function chkMilitary (runFlag) {
 					if (!Object.prototype.hasOwnProperty.call(military.stats, 'globalDeploy')) {
 						logger.error(
 							`stats.globalDeploy missing for Military ${military.name} ${military._id}`
-						);
-					}
-					if (!Object.prototype.hasOwnProperty.call(military.stats, 'invasion')) {
-						logger.error(
-							`stats.invasion missing for Military ${military.name} ${military._id}`
 						);
 					}
 				}

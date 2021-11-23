@@ -112,7 +112,7 @@ class Contacts extends Component {
 						status:'Unknown',
 						type: site.type,
 						info: `...information about site?`,
-						owner: site.country.name,
+						owner: site.organization.name,
 						target: site,
 						deploy: this.props.assignTarget
 					}

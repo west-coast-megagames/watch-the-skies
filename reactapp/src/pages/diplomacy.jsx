@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, Icon, Tag, FlexboxGrid } from 'rsuite';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileContract, faHandsHelping, faUniversity, faUserTie } from '@fortawesome/free-solid-svg-icons'
 import { Switch, Route, NavLink, Redirect } from 'react-router-dom';
@@ -10,42 +10,37 @@ import Trade from './tabs/dip/trade'
 import { getPolAccount } from '../store/entities/accounts';
 import BalanceHeader from '../components/common/BalanceHeader';
 
-class Diplomacy extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			tab: 'dashboard',
-			account: this.props.account,
-			title: 'Placeholder'
-		};
-		this.handleSelect = this.handleSelect.bind(this);
-	}
+const Diplomacy = (props) => {
+	const [tab, setTab] = React.useState('dashboard');
+	const [selected, setSelected] = React.useState(undefined);
+	const url = props.match.path;
 
-	handleSelect(activeKey) {
-		this.setState({ tab: activeKey, title: activeKey })
-	}
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
+		if (!props.login) {
+			props.history.push('/');
+			return <LoginLink history={props.history} />
 		}
-		const url = this.props.match.path;
-		const { tab } = this.state; 
 
 		return (
 			<Container>
 				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10, zIndex: 999 }}>
-						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
-						<Nav.Item eventKey="envoys" to={`${url}/envoys`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUserTie} />}> Envoys</Nav.Item>
-						<Nav.Item eventKey="trades" to={`${url}/trades`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faHandsHelping} />}> Trades</Nav.Item>
-						<Nav.Item eventKey="treaties" to={`${url}/treaties`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFileContract} />}> Treaties</Nav.Item>
-						<Nav.Item eventKey="united-nations" to={`${url}/un`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUniversity} />}> UN Security Council</Nav.Item>
-					</Nav>
+					<FlexboxGrid align="middle">
+						<FlexboxGrid.Item colspan={20} >
+							<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10, zIndex: 999 }}>
+								<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
+								<Nav.Item eventKey="envoys" to={`${url}/envoys`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUserTie} />}> Envoys</Nav.Item>
+								<Nav.Item eventKey="trades" to={`${url}/trades`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faHandsHelping} />}> Trades</Nav.Item>
+								<Nav.Item eventKey="treaties" to={`${url}/treaties`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFileContract} />}> Treaties</Nav.Item>
+								<Nav.Item eventKey="united-nations" to={`${url}/un`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUniversity} />}> UN Security Council</Nav.Item>
+							</Nav>							
+						</FlexboxGrid.Item>
+						<FlexboxGrid.Item colspan={4}>
+							<BalanceHeader account={props.account} />
+						</FlexboxGrid.Item>
+					</FlexboxGrid>
+
 				</Header>
 				<Content className='tabContent'>
-					<BalanceHeader title={ this.state.title } account={ this.state.account } />
+					
 						<Switch>
 							<Route path={`${url}/dashboard`} render={() => (
 							<div>
@@ -81,7 +76,7 @@ class Diplomacy extends Component {
 				</Content>
 			</Container>
 		);
-	}
+	
 }
 
 const mapStateToProps = state => ({

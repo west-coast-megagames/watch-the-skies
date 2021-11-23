@@ -1,18 +1,20 @@
 const interceptDebugger = require('debug')('app:intercept');
 const { d10, rand } = require('../../util/systems/dice');
 const dynReport = require('./battleDetails');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
 
-let attackReport = undefined;
-let defenseReport = undefined;
-let interception = {};
+let attackReport = undefined; // Report for the mission member
+let defenseReport = undefined; // Report for the mission target
+let interception = {}; // Interception object
 
-let attacker = undefined;
-let defender = undefined;
+let attacker = undefined; // Aircraft on the mission
+let defender = undefined; // Target of the interception
 
-async function intercept (atkUnit, atkReport, defUnit, defReport) {
+// Intercept Function: Initiates an interception
+async function intercept(atkUnit, atkReport, defUnit, defReport) {
 	interceptDebugger('Beginning intercept...');
 	attackReport = atkReport; // Assigns the Attack Report to global variable
 	defenseReport = defReport; // Assigns the Defense Report to global variable
@@ -34,8 +36,8 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 			outcomes: [],
 			stats: [],
 			dmg: {
+				hull: 0,
 				armor: 0,
-				frame: 0,
 				system: 0
 			}
 		},
@@ -46,7 +48,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 			stats: [],
 			dmg: {
 				armor: 0,
-				frame: 0,
+				hull: 0,
 				system: 0
 			}
 		},
@@ -128,7 +130,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 		}
 
 		// Combat ends if either aircraft is destroyed and a crash is generated for each destroyed aircraft
-		if (attacker.status.destroyed || defender.status.destroyed) {
+		if ((attacker.status.some(el => el === 'destroyed')) || (defender.status.some(el => el === 'destroyed'))) {
 			// Generate Crash Site
 			combat = false;
 		}
@@ -140,11 +142,11 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	while (combat);
 
 	attackReport.interception = interception;
-	attackReport = attackReport.createTimestamp(attackReport);
+	attackReport.createTimestamp();
 	await attackReport.save();
 
 	defenseReport.interception = interception;
-	defenseReport = defenseReport.createTimestamp(defenseReport);
+	defenseReport.createTimestamp();
 	await defenseReport.save();
 
 	await applyDmg(attacker); // Saves the effects of the combat for the attacker
@@ -158,17 +160,17 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	return;
 }
 
-
 // Looks through the upgrades, system damage, and stance of a craft and adjusts the combat stats accordingly
-function combatBonus (unit) {
+function combatBonus(unit) {
 	interceptDebugger(`Recalculating Combat Bonuses for ${unit.name}!`);
 	const	stats = unit.stats.toObject();
 
 	// Give stat bonus based on upgrades
 	for (const upgrade of unit.upgrades) {
-		for (const effect of upgrade.effects) {
-
-			if (effect.type in stats) stats[effect.type] += effect.value;
+		if (upgrade.effects.length > 0) {
+			for (const effect of upgrade.effects) {
+				if (effect.type in stats) stats[effect.type] += effect.value;
+			}
 		}
 	}
 
@@ -222,7 +224,7 @@ function combatBonus (unit) {
 }
 
 // Damages an aircraft due to the current side
-async function dmgAircraft (unit, opposition, side, criticalHit) {
+async function dmgAircraft(unit, opposition, side, criticalHit) {
 	interceptDebugger(`Damaging ${side} ${unit.name}...`);
 	const { stats } = unit;
 	let hits = 0;
@@ -243,6 +245,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 
 		for (let i = 0; i < hits; i++) {
 			const index = rand(systemKeys.length) - 1; // Selects a random system
+			interception[side].dmg.system += hits; // Adds system hits to report
 
 			const sysName = systemKeys[index];
 			const upgrade = unit.upgrades.find(upG => upG.type === sysName);
@@ -253,15 +256,15 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 				interceptDebugger(`Damaging ${sysName} system...`);
 				// TODO: Add dynamic report of system hit and status of system
 			}
-			else if (upgrade.status.damaged === false) {
-				upgrade.status.damaged = true;
-				upgrade.status.salvage = true;
+			else if (!upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'damaged');
+				await addArrayValue(upgrade.status, 'salvage');
 				interception.salvage.push(upgrade._id);
 				interceptDebugger(`Damaging Upgrade ${upgrade.name}...`);
 				// TODO: Add dynamic report of upgrade loss and status of system
 			}
-			else if (upgrade.status.damaged === true) {
-				upgrade.status.destroyed = true;
+			else if (upgrade.status.some(el => el === 'damaged')) {
+				await addArrayValue(upgrade.status, 'destroyed');
 				// TODO: add dynamic of upgrade destruction of the upgrade and status of the system
 			}
 		}
@@ -273,11 +276,11 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 
 	if (unit.stats.hull <= 0 || crash === true) {
 		interceptDebugger(`${unit.name} shot down in combat...`);
-		unit.status.destroyed = true;
+		await addArrayValue(unit.status, 'destroyed');
 		// TODO: Add dynamic report for crash
 		for (const upgrade of unit.upgrades) {
-			upgrade.status.damaged = true;
-			upgrade.status.salvage = true;
+			await addArrayValue(upgrade.status, 'damaged');
+			await addArrayValue(upgrade.status, 'salvage');
 			interception.salvage.push(upgrade._id);
 		}
 	}
@@ -286,7 +289,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 }
 
 // Update Aircrafts with Damage
-async function applyDmg (unit) {
+async function applyDmg(unit) {
 	interceptDebugger(`Applying damage to ${unit.name}...`);
 	const update = await Aircraft.findById(unit._id)
 		.populate('team')
@@ -296,11 +299,11 @@ async function applyDmg (unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = unit.status.destroyed;
+	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
 	update.status.ready = true;
 	update.status.deployed = false;
-	update.country = origin.country;
+	update.organization = origin.organization;
 	update.site = update.origin._id;
 	update.zone = origin.zone;
 

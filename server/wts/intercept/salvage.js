@@ -23,30 +23,30 @@ async function generateSalvage (system, status) {
 }
 
 async function generateCrash (salvage, site) {
-	const currentSite = await Site.findById({ _id: site }).populate('country');
+	const currentSite = await Site.findById({ _id: site }).populate('organization');
 
 	salvageDebugger(currentSite);
 	salvageDebugger(salvage);
 
-	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
+	const newDecimal = randomCords(currentSite.geoDecimal.lat, currentSite.geoDecimal.lng);
 
 	const newNewDecimal = {
-		latDecimal: newDecimal.lat,
-		longDecimal: newDecimal.lng
+		lat: newDecimal.lat,
+		lng: newDecimal.lng
 	};
 
 	const newDMS = {
 		latDMS: geo.convertToDms(newDecimal.lat, false),
-		longDMS: geo.convertToDms(newDecimal.lng, true)
+		lngDMS: geo.convertToDms(newDecimal.lng, true)
 	};
 
 	const c0de = await genSiteCode();
 
 	let crash = {
-		name: `${currentSite.country.code} Crash - ${c0de}`,
+		name: `${currentSite.organization.code} Crash - ${c0de}`,
 		team: currentSite.team,
 		subType: 'Crash',
-		country: currentSite.country,
+		organization: currentSite.organization,
 		zone: currentSite.zone,
 		code: c0de,
 		geoDMS: newDMS,
@@ -64,7 +64,6 @@ async function generateCrash (salvage, site) {
 	crash = await crash.save();
 	console.log(crash);
 }
-
 
 function decimalCrash (dd, isLng) {
 	const rand = d4();

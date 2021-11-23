@@ -30,7 +30,18 @@ const slice = createSlice({
     siteAdded: (sites, action) => {
       console.log(`${action.type} Dispatched`)
       sites.list.push(action.payload);
-    }
+    },
+		siteDeleted: (site, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = site.list.findIndex(el => el._id === action.payload._id);
+      site.list.splice(index, 1);
+    },
+		siteUpdated: (site, action) => {
+      console.log(`${action.type} Dispatched...`);
+      const index = site.list.findIndex(el => el._id === action.payload._id);
+			site.list[index] = action.payload;
+      site.lastFetch = Date.now();
+    },
   }
 });
 
@@ -38,6 +49,8 @@ const slice = createSlice({
 export const {
   siteAdded,
   sitesReceived,
+	siteDeleted,
+	siteUpdated,
   sitesRequested,
   sitesRequestFailed
 } = slice.actions;
@@ -69,6 +82,12 @@ export const addsite = site =>
     onSuccess: siteAdded.type
   });
 
+	export const getCapitol = createSelector(
+    state => state.entities.sites.list.filter(el => el.tags),
+		state => state.auth.team,
+    (sites, team) => sites.find(site => site.tags.some(el=> el === 'capital') && site.team._id === team._id)
+  );
+
   export const getCities = createSelector(
     state => state.entities.sites.list,
     sites => sites.filter(site => site.subType === 'City')
@@ -94,3 +113,14 @@ export const addsite = site =>
     state => state.entities.sites.list,
 		sites => sites.filter(site => (site.subType === 'Crash'))
   );
+
+	export const getSatellites = createSelector(
+    state => state.entities.sites.list,
+		sites => sites.filter(site => (site.subType === 'Satellite' || site.subType === 'Station'))
+  );
+
+	export const getMySatellites = createSelector(
+		state => state.entities.sites.list,
+		state => state.auth.team,
+		(sites, team) => sites.filter( site => (site.team === team._id || site.team._id === team._id) && site.subType === 'Satellite' )
+	);

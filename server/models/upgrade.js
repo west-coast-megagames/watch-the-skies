@@ -24,19 +24,13 @@ const UpgradeSchema = new Schema({
 			code: { type: String }
 		}
 	],
-	status: {
-		building: { type: Boolean, default: true },
-		salvage: { type: Boolean, default: false },
-		damaged: { type: Boolean, default: false },
-		destroyed: { type: Boolean, default: false },
-		storage: { type: Boolean, default: true }
-	},
+	status: [ { type: String, enum: ['building', 'salvage', 'damaged', 'destroyed', 'storage'] } ],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	gameState: [],
+	tags: [{ type: String, enum: [''] } ],
 	effects: [
 		{
 			type: { type: String },
-			effect: { type: Number }
+			value: { type: Number }
 		}
 	]
 });
@@ -47,7 +41,9 @@ UpgradeSchema.methods.validateUpgrade = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 
 	const schema = Joi.object({
-		name: Joi.string().min(2).max(50).required()
+		name: Joi.string().min(2).max(50).required(),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('building', 'salvage', 'damaged', 'destroyed', 'storage'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });

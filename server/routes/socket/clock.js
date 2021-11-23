@@ -1,30 +1,46 @@
-const SocketServer = require('../../util/systems/socketServer'); // Client Tracking Object
+const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const masterClock = require('../../wts/gameClock/gameClock');
 
-const gameClock = require('../../wts/gameClock/gameClock');
-
-module.exports = function (io) {
-	const ClockClients = new SocketServer;
-
-	io.of('/clock').on('connection', (client) => {
-		logger.info(`New client subscribing to clock... ${client.id}`);
-		ClockClients.connections.push(client);
-		logger.info(`${ClockClients.connections.length} ${ClockClients.connections.length === 1 ? 'client' : 'clients'} subscribed to game clock...`);
-
-		client.on('new user', (data) => {
-			ClockClients.saveUser(data, client);
-			logger.info(`${data.user} for the ${data.team} have been registered as gameclock subscribers...`);
-		});
-
-		const gClock = setInterval(() => {
-			client.emit('gameClock', gameClock.getTimeRemaining());
-		}, 1000);
-
-		client.on('disconnect', () => {
-			logger.info(`Client disconnecting from game clock... ${client.id}`);
-			ClockClients.delClient(client);
-			console.log(`${ClockClients.connections.length} clients connected`);
-			clearInterval(gClock);
-		});
-	});
+module.exports = async function (client, req) {
+	try {
+		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
+		let message;
+		switch(req.action) {
+		case('getState'):
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('play'):
+			masterClock.unpause();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('pause'):
+			masterClock.pause();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('skip'):
+			masterClock.turnNum < 0 ? masterClock.startGame() : masterClock.nextPhase();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('revert'):
+			masterClock.revertPhase();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('reset'):
+			masterClock.reset();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('edit'):
+			masterClock.setSeconds(req.data.seconds);
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		default:
+			message = `No ${req.action} is in the ${req.route} route.`;
+			throw new Error(message);
+		}
+	}
+	catch (error) {
+		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
+		console.log(error);
+	}
 };

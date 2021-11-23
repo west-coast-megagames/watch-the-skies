@@ -8,46 +8,36 @@ import NewsFeed from './tabs/news/newsfeed';
 import LoginLink from '../components/common/loginLink';
 
 
-class News extends Component {
-	state = {
-		tab: 'feed',
-	};
+const News = (props) => {
+	const [tab, setTab] = React.useState('feed');
+	const url = props.match.path;
 
-	handleSelect = (activeKey) => {
-			this.setState({ tab: activeKey })
+	if (!props.login) {
+		props.history.push('/');
+		return <LoginLink history={props.history} />
 	}
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
-		}
-
-		const url = this.props.match.path;
-		const { tab } = this.state; 
-
-		return (
-			<Container>
-				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
-						<Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> News feed</Nav.Item>
-					</Nav>
-				</Header>
-				<Content className='tabContent' style={{ paddingLeft: 20 }}>
-					<Switch>
-						<Route path={`${url}/feed`} render={() => (
-							<NewsFeed 
-								agency='All' 
-								articles={ this.props.articles } 
-								teams={this.props.teams}  
-							/>
-						)}/>
-						<Redirect from={`${url}/`} exact to={`${url}/feed`} />
-					</Switch>
-				</Content>
-			</Container>
-		);
-	}
+	else return (
+		<Container>
+			<Header>
+				<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
+					<Nav.Item eventKey="feed" to={`${url}/feed`} componentClass={NavLink}  icon={<FontAwesomeIcon icon={faRssSquare} />}> News feed</Nav.Item>
+				</Nav>
+			</Header>
+			<Content className='tabContent' style={{ paddingLeft: 20 }}>
+				<Switch>
+					<Route path={`${url}/feed`} render={() => (
+						<NewsFeed 
+							agency='All' 
+							articles={ props.articles } 
+							teams={props.teams}  
+						/>
+					)}/>
+					<Redirect from={`${url}/`} exact to={`${url}/feed`} />
+				</Switch>
+			</Content>
+		</Container>
+	);
+	
 }
 
 const mapStateToProps = state => ({
@@ -57,7 +47,7 @@ const mapStateToProps = state => ({
     team: state.auth.team,
     sites: state.entities.sites.list,
     zones: state.entities.zones.list,
-    countries: state.entities.countries.list
+    organizations: state.entities.organizations.list
 });
   
 const mapDispatchToProps = dispatch => ({});

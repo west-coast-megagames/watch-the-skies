@@ -2,12 +2,11 @@
 const runBlueprintCheck = require('../dataCheck/blueprintCheck');
 const runZoneCheck = require('../dataCheck/zoneCheck');
 const runTeamCheck = require('../dataCheck/teamCheck');
-const runCountryCheck = require('../dataCheck/countryCheck');
+const runOrganizationCheck = require('../dataCheck/organizationCheck');
 const runFacilityCheck = require('../dataCheck/facilityCheck');
 const runSiteCheck = require('../dataCheck/siteCheck');
 const runUpgradeCheck = require('../dataCheck/upgradeCheck');
 const runAircraftCheck = require('../dataCheck/aircraftCheck');
-const runUserCheck = require('../dataCheck/userCheck');
 const runAccountsCheck = require('../dataCheck/accountsCheck');
 const runMilitaryCheck = require('../dataCheck/militaryCheck');
 const runSquadCheck = require('../dataCheck/squadCheck');
@@ -17,16 +16,15 @@ const runResearchCheck = require('../dataCheck/researchCheck');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-async function fullInitCheck (selStr) {
+async function fullInitCheck(selStr) {
 	let blueprintCheckDone = false;
 	let zoneCheckDone = false;
-	let countryCheckDone = false;
+	let organizationCheckDone = false;
 	let teamCheckDone = false;
 	let facilityCheckDone = false;
 	let siteCheckDone = false;
 	let upgradeCheckDone = false;
 	let aircraftCheckDone = false;
-	let userCheckDone = false;
 	let accountsCheckDone = false;
 	let militaryCheckDone = false;
 	let squadCheckDone = false;
@@ -46,8 +44,8 @@ async function fullInitCheck (selStr) {
 		teamCheckDone = await runTeamCheck(true); // check team records
 		logger.info(`Team Check Done: ${teamCheckDone}`);
 
-		countryCheckDone = await runCountryCheck(true); // check country records
-		logger.info(`Country Check Done: ${countryCheckDone}`);
+		organizationCheckDone = await runOrganizationCheck(true); // check organization records
+		logger.info(`Organization Check Done: ${organizationCheckDone}`);
 
 		facilityCheckDone = await runFacilityCheck(true); // check facility records
 		logger.info(`Facility Check Done: ${facilityCheckDone}`);
@@ -76,9 +74,6 @@ async function fullInitCheck (selStr) {
 		researchCheckDone = await runResearchCheck(true); // check research records
 		logger.info(`Research Check Done: ${researchCheckDone}`);
 
-		userCheckDone = await runUserCheck(true); // check user records
-		logger.info(`User Check Done: ${userCheckDone}`);
-
 		break;
 		// end of case All
 
@@ -100,9 +95,9 @@ async function fullInitCheck (selStr) {
 
 		break;
 
-	case 'Country':
-		countryCheckDone = await runCountryCheck(true); // check country records
-		logger.info(`Country Check Done: ${countryCheckDone}`);
+	case 'Organization':
+		organizationCheckDone = await runOrganizationCheck(true); // check organization records
+		logger.info(`Organization Check Done: ${organizationCheckDone}`);
 
 		break;
 
@@ -157,12 +152,6 @@ async function fullInitCheck (selStr) {
 	case 'Research':
 		researchCheckDone = await runResearchCheck(true); // check research records
 		logger.info(`Research Check Done: ${researchCheckDone}`);
-
-		break;
-
-	case 'User':
-		userCheckDone = await runUserCheck(true); // check user records
-		logger.info(`User Check Done: ${userCheckDone}`);
 
 		break;
 

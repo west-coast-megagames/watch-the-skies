@@ -5,6 +5,7 @@ const slice = createSlice({
   name: "notifications",
   initialState: {
     list: [],
+		modalNotification: false // todo: create open modal functions, and data saved into local state 
   },
   // Reducers - Events
   reducers: {

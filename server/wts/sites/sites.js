@@ -5,27 +5,27 @@ const geo = require('../../util/systems/geo');
 let count = 0; // How many sites have happened in the game.
 
 async function generateSite (site) {
-	const currentSite = await Site.findById({ _id: site }).populate('country');
+	const currentSite = await Site.findById({ _id: site }).populate('organization');
 
-	const newDecimal = randomCords(currentSite.geoDecimal.latDecimal, currentSite.geoDecimal.longDecimal);
+	const newDecimal = randomCords(currentSite.geoDecimal.lat, currentSite.geoDecimal.lng);
 
 	const newNewDecimal = {
-		latDecimal: newDecimal.lat,
-		longDecimal: newDecimal.lng
+		lat: newDecimal.lat,
+		lng: newDecimal.lng
 	};
 
 	const newDMS = {
 		latDMS: geo.convertToDms(newDecimal.lat, false),
-		longDMS: geo.convertToDms(newDecimal.lng, true)
+		lngDMS: geo.convertToDms(newDecimal.lng, true)
 	};
 
 	const c0de = await genSiteCode();
 
 	let newSite = {
-		name: `${currentSite.country.code} Site - ${c0de}`,
+		name: `${currentSite.organization.code} Site - ${c0de}`,
 		team: currentSite.team,
 		subType: 'Point of Interest',
-		country: currentSite.country,
+		organization: currentSite.organization,
 		zone: currentSite.zone,
 		code: c0de,
 		geoDMS: newDMS,
@@ -41,7 +41,7 @@ async function generateSite (site) {
 	console.log(newSite);
 }
 
-async function genSiteCode () {
+async function genSiteCode() {
 	const phoneticArray = ['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot', 'Golf', 'Hotel', 'India', 'Juliet', 'Kilo', 'Lima', 'Mike', 'November', 'Oscar', 'Papa', 'Quebec', 'Romeo', 'Sierra', 'Tango', 'Uniform', 'Victor', 'Whiskey', 'Xray', 'Yankee', 'Zulu'];
 	const desArray = ['Yellow', 'Red', 'Blue', 'Green', 'Cyan', 'Magenta', 'Ruby', 'Sapphire', 'Emerald', 'Violet', 'Purple', 'Brown', 'Almond', 'Gold', 'Silver', 'Platnum'];
 

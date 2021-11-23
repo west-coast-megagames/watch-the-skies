@@ -3,7 +3,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "SUB-MA"
   },
@@ -11,7 +11,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "SUB-MA"
   },
@@ -19,7 +19,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "SUB-MA"
   },
@@ -27,7 +27,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "SUB-MA"
   },
@@ -35,7 +35,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "SUB-MA"
   },
@@ -43,7 +43,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 6",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "SUB-MA"
   },
@@ -51,7 +51,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 7",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "SUB-MA"
   },
@@ -59,7 +59,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 8",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "SUB-MA"
   },
@@ -67,7 +67,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 9",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "SUB-MA"
   },
@@ -75,7 +75,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 10",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "SUB-MA"
   },
@@ -83,7 +83,7 @@
     "model": "Military",
     "name": "USA Modern Attack Sub Fleet 11",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "SUB-MA"
   },
@@ -91,23 +91,23 @@
     "model": "Military",
     "name": "UK Modern Attack Sub Fleet 1",
     "team": "TUK",
-    "country": "GB",
-    "origin": "GBBA",
+    "organization": "GB",
+    "origin": "GBBB",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "South Africa Standard Attack Sub Fleet 1",
     "team": "RSA",
-    "country": "ZA",
-    "origin": "ZABA",
+    "organization": "ZA",
+    "origin": "ZABB",
     "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
     "name": "Russia Modern Attack Sub Fleet 1",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "SUB-MA"
   },
@@ -115,7 +115,7 @@
     "model": "Military",
     "name": "Russia Modern Attack Sub Fleet 2",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "SUB-MA"
   },
@@ -123,7 +123,7 @@
     "model": "Military",
     "name": "Russia Modern Attack Sub Fleet 3",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBB",
     "bpCode": "SUB-MA"
 	},
@@ -131,15 +131,15 @@
     "model": "Military",
     "name": "Russia Modern Attack Sub Fleet 4",
     "team": "RFD",
-    "country": "RU",
-    "origin": "RUNBB",
+    "organization": "RU",
+    "origin": "RUNBC",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "Japan Modern Attack Sub Fleet 1",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBA",
     "bpCode": "SUB-MA"
   },
@@ -147,23 +147,23 @@
     "model": "Military",
     "name": "Japan Modern Attack Sub Fleet 2",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBA",
+    "organization": "JP",
+    "origin": "JPBC",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "Japan Modern Attack Sub Fleet 3",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBA",
+    "organization": "JP",
+    "origin": "JPBD",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "Japan Modern Attack Sub Fleet 4",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBB",
     "bpCode": "SUB-MA"
   },
@@ -171,15 +171,15 @@
     "model": "Military",
     "name": "Japan Modern Attack Sub Fleet 5",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBB",
+    "organization": "JP",
+    "origin": "JPBA",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "Japan Standard Attack Sub Fleet 1",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBB",
     "bpCode": "SUB-SA"
   },
@@ -187,7 +187,7 @@
     "model": "Military",
     "name": "Japan Standard Attack Sub Fleet 2",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBA",
     "bpCode": "SUB-SA"
   },
@@ -195,15 +195,15 @@
     "model": "Military",
     "name": "Japan Standard Attack Sub Fleet 3",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBA",
+    "organization": "JP",
+    "origin": "JPBD",
     "bpCode": "SUB-SA"
   },
   {
     "model": "Military",
     "name": "Iran Standard Attack Sub Fleet 1",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "SUB-SA"
   },
@@ -211,7 +211,7 @@
     "model": "Military",
     "name": "India Small Modern Attack Sub Fleet 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "SUB-MA"
   },
@@ -219,7 +219,7 @@
     "model": "Military",
     "name": "India Standard Attack Sub Fleet 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "SUB-SA"
   },
@@ -227,7 +227,7 @@
     "model": "Military",
     "name": "India Standard Attack Sub Fleet 2",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "SUB-SA"
   },
@@ -235,7 +235,7 @@
     "model": "Military",
     "name": "India Standard Attack Sub Fleet 3",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "SUB-SA"
   },
@@ -243,7 +243,7 @@
     "model": "Military",
     "name": "France Modern Attack Sub Fleet 1",
     "team": "TFR",
-    "country": "FR",
+    "organization": "FR",
     "origin": "FRBA",
     "bpCode": "SUB-MA"
   },
@@ -251,7 +251,7 @@
     "model": "Military",
     "name": "Egypt Standard Attack Sub Fleet 1",
     "team": "EPT",
-    "country": "EG",
+    "organization": "EG",
     "origin": "EGBA",
     "bpCode": "SUB-SA"
   },
@@ -259,7 +259,7 @@
     "model": "Military",
     "name": "China Modern Attack Sub Fleet 1",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "SUB-MA"
   },
@@ -267,15 +267,15 @@
     "model": "Military",
     "name": "China Modern Attack Sub Fleet 2",
     "team": "PRC",
-    "country": "CN",
-    "origin": "CNBA",
+    "organization": "CN",
+    "origin": "CNBC",
     "bpCode": "SUB-MA"
   },
   {
     "model": "Military",
     "name": "China Modern Attack Sub Fleet 3",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "SUB-MA"
   },
@@ -283,7 +283,7 @@
     "model": "Military",
     "name": "China Modern Attack Sub Fleet 4",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "SUB-MA"
   },
@@ -291,7 +291,7 @@
     "model": "Military",
     "name": "Brazil Standard Attack Sub Fleet 1",
     "team": "BRZ",
-    "country": "BR",
+    "organization": "BR",
     "origin": "BRBA",
     "bpCode": "SUB-SA"
   },
@@ -299,7 +299,7 @@
     "model": "Military",
     "name": "Australia Standard Attack Sub Fleet 1",
     "team": "AUS",
-    "country": "AU",
+    "organization": "AU",
     "origin": "AUBA",
     "bpCode": "SUB-SA"
   },
@@ -307,7 +307,7 @@
     "model": "Military",
     "name": "USA Surface Fleet 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "SUR-SS"
   },
@@ -315,7 +315,7 @@
     "model": "Military",
     "name": "USA Surface Fleet 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "SUR-SS"
   },
@@ -323,7 +323,7 @@
     "model": "Military",
     "name": "USA Surface Fleet 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "SUR-SS"
   },
@@ -331,7 +331,7 @@
     "model": "Military",
     "name": "USA Surface Fleet 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "SUR-SS"
 	},
@@ -339,7 +339,7 @@
     "model": "Military",
     "name": "USA Surface Fleet 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "SUR-SS"
   },
@@ -347,8 +347,8 @@
     "model": "Military",
     "name": "UK Surface Fleet 1",
     "team": "TUK",
-    "country": "GB",
-    "origin": "GBBA",
+    "organization": "GB",
+    "origin": "GBBB",
     "bpCode": "SUR-SS"
 
   },
@@ -356,7 +356,7 @@
     "model": "Military",
     "name": "Russia Surface Fleet 1",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "SUR-SS"
 	},
@@ -364,15 +364,23 @@
     "model": "Military",
     "name": "Russia Surface Fleet 2",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBB",
+    "bpCode": "SUR-SS"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Surface Fleet 3",
+    "team": "RFD",
+    "organization": "RU",
+    "origin": "RUNBC",
     "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
     "name": "Japan Surface Fleet 1",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBA",
     "bpCode": "SUR-SS"
   },
@@ -380,7 +388,7 @@
     "model": "Military",
     "name": "Japan Surface Fleet 2",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBA",
     "bpCode": "SUR-SS"
   },
@@ -388,7 +396,7 @@
     "model": "Military",
     "name": "Japan Surface Fleet 3",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBB",
     "bpCode": "SUR-SS"
   },
@@ -396,23 +404,23 @@
     "model": "Military",
     "name": "Japan Surface Fleet 4",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBB",
+    "organization": "JP",
+    "origin": "JPBD",
     "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
     "name": "Japan Surface Fleet 5",
     "team": "JPN",
-    "country": "JP",
-    "origin": "JPBA",
+    "organization": "JP",
+    "origin": "JPBC",
     "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
     "name": "Iran Surface Fleet 1",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "SUR-SS"
   },
@@ -420,7 +428,7 @@
     "model": "Military",
     "name": "India Surface Fleet 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "SUR-SS"
   },
@@ -428,7 +436,7 @@
     "model": "Military",
     "name": "France Surface Fleet 1",
     "team": "TFR",
-    "country": "FR",
+    "organization": "FR",
     "origin": "FRBA",
     "bpCode": "SUR-SS"
   },
@@ -436,7 +444,7 @@
     "model": "Military",
     "name": "Egypt Surface Fleet 1",
     "team": "EPT",
-    "country": "EG",
+    "organization": "EG",
     "origin": "EGBA",
     "bpCode": "SUR-SS"
   },
@@ -444,7 +452,7 @@
     "model": "Military",
     "name": "China Surface Fleet 1",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "SUR-SS"
   },
@@ -452,15 +460,15 @@
     "model": "Military",
     "name": "China Surface Fleet 2",
     "team": "PRC",
-    "country": "CN",
-    "origin": "CNBA",
+    "organization": "CN",
+    "origin": "CNBC",
     "bpCode": "SUR-SS"
   },
   {
     "model": "Military",
     "name": "China Surface Fleet 3",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "SUR-SS"
   },
@@ -468,7 +476,7 @@
     "model": "Military",
     "name": "China Surface Fleet 4",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "SUR-SS"
   },
@@ -476,7 +484,7 @@
     "model": "Military",
     "name": "China Surface Fleet 5",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "SUR-SS"
   },
@@ -484,7 +492,7 @@
     "model": "Military",
     "name": "Australia Surface Fleet 1",
     "team": "AUS",
-    "country": "AU",
+    "organization": "AU",
     "origin": "AUBA",
     "bpCode": "SUR-SS"
   },
@@ -492,7 +500,7 @@
     "model": "Military",
     "name": "USA Carrier Fleet 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "CAR-SC"
   },
@@ -500,7 +508,7 @@
     "model": "Military",
     "name": "USA Carrier Fleet 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "CAR-SC"
   },
@@ -508,7 +516,7 @@
     "model": "Military",
     "name": "USA Carrier Fleet 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "CAR-SC"
   },
@@ -516,7 +524,7 @@
     "model": "Military",
     "name": "USA Carrier Fleet 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "CAR-SC"
   },
@@ -524,7 +532,7 @@
     "model": "Military",
     "name": "USA Carrier Fleet 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "CAR-SC"
   },
@@ -532,15 +540,15 @@
     "model": "Military",
     "name": "UK Carrier Fleet 1",
     "team": "TUK",
-    "country": "GB",
-    "origin": "GBBA",
+    "organization": "GB",
+    "origin": "GBBB",
     "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
     "name": "Russia Carrier Fleet 1",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "CAR-SC"
 	},
@@ -548,15 +556,23 @@
     "model": "Military",
     "name": "Russia Carrier Fleet 2",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBB",
+    "bpCode": "CAR-SC"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Carrier Fleet 3",
+    "team": "RFD",
+    "organization": "RU",
+    "origin": "RUNBC",
     "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
     "name": "India Carrier Fleet 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "CAR-SC"
   },
@@ -564,7 +580,7 @@
     "model": "Military",
     "name": "France Carrier Fleet 1",
     "team": "TFR",
-    "country": "FR",
+    "organization": "FR",
     "origin": "FRBA",
     "bpCode": "CAR-SC"
   },
@@ -572,7 +588,7 @@
     "model": "Military",
     "name": "China Carrier Fleet 1",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "CAR-SC"
   },
@@ -580,15 +596,15 @@
     "model": "Military",
     "name": "China Carrier Fleet 2",
     "team": "PRC",
-    "country": "CN",
-    "origin": "CNBA",
+    "organization": "CN",
+    "origin": "CNBC",
     "bpCode": "CAR-SC"
   },
   {
     "model": "Military",
     "name": "China Carrier Fleet 3",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "CAR-SC"
   },
@@ -596,7 +612,7 @@
     "model": "Military",
     "name": "China Carrier Fleet 4",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "CAR-SC"
   },
@@ -604,7 +620,7 @@
     "model": "Military",
     "name": "China Carrier Fleet 5",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "CAR-SC"
   },
@@ -612,7 +628,7 @@
     "model": "Military",
     "name": "Brazil Carrier Fleet 1",
     "team": "BRZ",
-    "country": "BR",
+    "organization": "BR",
     "origin": "BRBA",
     "bpCode": "CAR-SC"
   },
@@ -620,7 +636,7 @@
     "model": "Military",
     "name": "USA Marine Corps 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "MAR-SMC"
 	},
@@ -628,7 +644,7 @@
     "model": "Military",
     "name": "USA Marine Corps 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "MAR-SMC"
 	},
@@ -636,7 +652,7 @@
     "model": "Military",
     "name": "USA Marine Corps 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "MAR-SMC"
 	},
@@ -644,7 +660,7 @@
     "model": "Military",
     "name": "USA Marine Corps 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "MAR-SMC"
 	},
@@ -652,7 +668,7 @@
     "model": "Military",
     "name": "USA Marine Corps 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "MAR-SMC"
 	},
@@ -660,7 +676,7 @@
     "model": "Military",
     "name": "USA Old Technology Corps 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "COR-OTC"
   },
@@ -668,7 +684,7 @@
     "model": "Military",
     "name": "USA Old Technology Corps 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "COR-OTC"
   },
@@ -676,7 +692,7 @@
     "model": "Military",
     "name": "USA Old Technology Corps 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "COR-OTC"
   },
@@ -684,7 +700,7 @@
     "model": "Military",
     "name": "USA Old Technology Corps 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "COR-OTC"
   },
@@ -692,7 +708,7 @@
     "model": "Military",
     "name": "USA Old Technology Corps 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "COR-OTC"
   },
@@ -700,7 +716,7 @@
     "model": "Military",
     "name": "UK Old Technology Corps 1",
     "team": "TUK",
-    "country": "GB",
+    "organization": "GB",
     "origin": "GBBA",
     "bpCode": "COR-OTC"
   },
@@ -708,7 +724,7 @@
     "model": "Military",
     "name": "South Africa Old Technology Corps 1",
     "team": "RSA",
-    "country": "ZA",
+    "organization": "ZA",
     "origin": "ZABA",
     "bpCode": "COR-OTC"
   },
@@ -716,7 +732,7 @@
     "model": "Military",
     "name": "Russia Old Technology Corps 1",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "COR-OTC"
   },
@@ -724,7 +740,7 @@
     "model": "Military",
     "name": "Russia Old Technology Corps 2",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "COR-OTC"
   },
@@ -732,7 +748,7 @@
     "model": "Military",
     "name": "Russia Old Technology Corps 3",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBB",
     "bpCode": "COR-OTC"
   },
@@ -740,15 +756,15 @@
     "model": "Military",
     "name": "Russia Old Technology Corps 4",
     "team": "RFD",
-    "country": "RU",
-    "origin": "RUNBB",
+    "organization": "RU",
+    "origin": "RUNBC",
     "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
     "name": "Iran Old Technology Corps 1",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "COR-OTC"
   },
@@ -756,7 +772,7 @@
     "model": "Military",
     "name": "India Old Technology Corps 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "COR-OTC"
   },
@@ -764,7 +780,7 @@
     "model": "Military",
     "name": "India Old Technology Corps 2",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "COR-OTC"
   },
@@ -772,7 +788,7 @@
     "model": "Military",
     "name": "India Old Technology Corps 3",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "COR-OTC"
   },
@@ -780,7 +796,7 @@
     "model": "Military",
     "name": "India Old Technology Corps 4",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "COR-OTC"
   },
@@ -788,7 +804,7 @@
     "model": "Military",
     "name": "France Old Technology Corps 1",
     "team": "TFR",
-    "country": "FR",
+    "organization": "FR",
     "origin": "FRBA",
     "bpCode": "COR-OTC"
   },
@@ -796,7 +812,7 @@
     "model": "Military",
     "name": "Egypt Old Technology Corps 1",
     "team": "EPT",
-    "country": "EG",
+    "organization": "EG",
     "origin": "EGBA",
     "bpCode": "COR-OTC"
   },
@@ -804,7 +820,7 @@
     "model": "Military",
     "name": "China Old Technology Corps 1",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "COR-OTC"
   },
@@ -812,15 +828,15 @@
     "model": "Military",
     "name": "China Old Technology Corps 2",
     "team": "PRC",
-    "country": "CN",
-    "origin": "CNBA",
+    "organization": "CN",
+    "origin": "CNBC",
     "bpCode": "COR-OTC"
   },
   {
     "model": "Military",
     "name": "China Old Technology Corps 3",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "COR-OTC"
   },
@@ -828,7 +844,7 @@
     "model": "Military",
     "name": "China Old Technology Corps 4",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
     "bpCode": "COR-OTC"
   },
@@ -836,7 +852,7 @@
     "model": "Military",
     "name": "Brazil Old Technology Corps 1",
     "team": "BRZ",
-    "country": "BR",
+    "organization": "BR",
     "origin": "BRBA",
     "bpCode": "COR-OTC"
   },
@@ -844,7 +860,7 @@
     "model": "Military",
     "name": "Australia Old Technology Corps 1",
     "team": "AUS",
-    "country": "AU",
+    "organization": "AU",
     "origin": "AUBA",
     "bpCode": "COR-OTC"
   },
@@ -852,7 +868,7 @@
     "model": "Military",
     "name": "USA Modern Technology Corps 1",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSFO",
     "bpCode": "COR-MTC"
   },
@@ -860,7 +876,7 @@
     "model": "Military",
     "name": "USA Modern Technology Corps 2",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USSAN",
     "bpCode": "COR-MTC"
 	},
@@ -868,7 +884,7 @@
     "model": "Military",
     "name": "USA Modern Technology Corps 3",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USHNL",
     "bpCode": "COR-MTC"
 	},
@@ -876,7 +892,7 @@
     "model": "Military",
     "name": "USA Modern Technology Corps 4",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USJAX",
     "bpCode": "COR-MTC"
 	},
@@ -884,7 +900,7 @@
     "model": "Military",
     "name": "USA Modern Technology Corps 5",
     "team": "USA",
-    "country": "US",
+    "organization": "US",
     "origin": "USVAB",
     "bpCode": "COR-MTC"
   },
@@ -892,7 +908,7 @@
     "model": "Military",
     "name": "UK Modern Technology Corps 1",
     "team": "TUK",
-    "country": "GB",
+    "organization": "GB",
     "origin": "GBBA",
     "bpCode": "COR-MTC"
   },
@@ -900,7 +916,7 @@
     "model": "Military",
     "name": "Japan Modern Technology Corps 1",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBA",
     "bpCode": "COR-MTC"
   },
@@ -908,7 +924,7 @@
     "model": "Military",
     "name": "Japan Modern Technology Corps 2",
     "team": "JPN",
-    "country": "JP",
+    "organization": "JP",
     "origin": "JPBB",
     "bpCode": "COR-MTC"
   },
@@ -916,7 +932,7 @@
     "model": "Military",
     "name": "India Modern Technology Corps 1",
     "team": "IND",
-    "country": "IN",
+    "organization": "IN",
     "origin": "INBA",
     "bpCode": "COR-MTC",
     "training": "Corps"
@@ -925,7 +941,7 @@
     "model": "Military",
     "name": "France Modern Technology Corps 1",
     "team": "TFR",
-    "country": "FR",
+    "organization": "FR",
     "origin": "FRBA",
     "bpCode": "COR-MTC"
   },
@@ -933,7 +949,7 @@
     "model": "Military",
     "name": "China Modern Technology Corps 1",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBA",
     "bpCode": "COR-MTC"
   },
@@ -941,8 +957,17 @@
     "model": "Military",
     "name": "China Modern Technology Corps 2",
     "team": "PRC",
-    "country": "CN",
+    "organization": "CN",
     "origin": "CNBB",
+    "bpCode": "COR-MTC",
+    "training": "Corps"
+	},
+	{
+    "model": "Military",
+    "name": "China Modern Technology Corps 3",
+    "team": "PRC",
+    "organization": "CN",
+    "origin": "CNBC",
     "bpCode": "COR-MTC",
     "training": "Corps"
   },
@@ -950,7 +975,7 @@
     "model": "Military",
     "name": "Australia Modern Technology Corps 1",
     "team": "AUS",
-    "country": "AU",
+    "organization": "AU",
     "origin": "AUBA",
     "bpCode": "COR-MTC"
   },
@@ -958,7 +983,7 @@
     "model": "Military",
     "name": "South Africa Modern Technology Corps 1",
     "team": "RSA",
-    "country": "ZA",
+    "organization": "ZA",
     "origin": "ZABA",
     "bpCode": "COR-MTC"
   },
@@ -966,7 +991,7 @@
     "model": "Military",
     "name": "Russia Modern Technology Corps 1",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "COR-MTC"
   },
@@ -974,7 +999,7 @@
     "model": "Military",
     "name": "Russia Modern Technology Corps 2",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBA",
     "bpCode": "COR-MTC"
   },
@@ -982,15 +1007,23 @@
     "model": "Military",
     "name": "Russia Modern Technology Corps 3",
     "team": "RFD",
-    "country": "RU",
+    "organization": "RU",
     "origin": "RUNBB",
+    "bpCode": "COR-MTC"
+	},
+	{
+    "model": "Military",
+    "name": "Russia Modern Technology Corps 4",
+    "team": "RFD",
+    "organization": "RU",
+    "origin": "RUNBC",
     "bpCode": "COR-MTC"
   },
   {
     "model": "Military",
     "name": "Iran Modern Technology Corps 1",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "COR-MTC"
   },
@@ -998,7 +1031,7 @@
     "model": "Military",
     "name": "Iran Modern Technology Corps 2",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "COR-MTC"
   },
@@ -1006,7 +1039,7 @@
     "model": "Military",
     "name": "Iran Modern Technology Corps 3",
     "team": "IRN",
-    "country": "IR",
+    "organization": "IR",
     "origin": "IRBA",
     "bpCode": "COR-MTC"
   },
@@ -1014,7 +1047,7 @@
     "model": "Military",
     "name": "Egypt Modern Technology Corps 1",
     "team": "EPT",
-    "country": "EG",
+    "organization": "EG",
     "origin": "EGBA",
     "bpCode": "COR-MTC"
   },
@@ -1022,7 +1055,7 @@
     "model": "Military",
     "name": "Egypt Modern Technology Corps 2",
     "team": "EPT",
-    "country": "EG",
+    "organization": "EG",
     "origin": "EGBA",
     "bpCode": "COR-MTC"
   },
@@ -1030,7 +1063,7 @@
     "model": "Military",
     "name": "Brazil Modern Technology Corps 1",
     "team": "BRZ",
-    "country": "BR",
+    "organization": "BR",
     "origin": "BRBA",
     "bpCode": "COR-MTC"
   },
@@ -1038,7 +1071,7 @@
     "model": "Military",
     "name": "Brazil Modern Technology Corps 2",
     "team": "BRZ",
-    "country": "BR",
+    "organization": "BR",
     "origin": "BRBA",
     "bpCode": "COR-MTC"
   }

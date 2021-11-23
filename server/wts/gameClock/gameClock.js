@@ -1,170 +1,284 @@
 const { logger } = require('../../middleware/log/winston'); // IMPORT - Server logger
-const { teamPhase, actionPhase, freePhase } = require('./phaseChange'); // IMPORT - Phase change functions
+const nexusEvent = require('../../middleware/events/events'); // Local event triggers
 
-let gameActive = false; // Current state of master game clock
+class GameTimer {
+	constructor() {
+		this.model = 'Clock';
+		this.roundEnd = new Date(Date.now() + (1000 * this.seconds) + (1000 * 60 * this.minutes) + (1000 * 60 * 60 * this.hours));
+		this.paused = true; // Current state of game clock
 
-let minutes = 40; // Starting minutes on master game clock
-let seconds = 0; // Starting seconds on master game clock
+		this.hours = 1; // Remaining hours on master game clock (Only when paused)
+		this.minutes = 0; // Remaining minutes on master game clock (Only when paused)
+		this.seconds = 0; // Remaining seconds on master game clock (Only when paused)
 
-const phaseTimes = [10, 12, 8]; // The amount of minutes in each phase
-let phaseTime = 0; // Current time left in the Phase
-let currentTime = Date.parse(new Date()); // Current Computer Date
-let deadline = new Date(currentTime + phaseTime * 60 * 1000); // Time for End of Phase
+		this.phaseNum = -1; // Current Phase Number
+		this.turnNum = -1; // Current Turn Number
+		this.currentTurn = 'Pre-Briefing'; // Current Turn Name
+		this.currentPhase = 'Tech-Support'; // Current Phase Name
+		this.year = 2024; // In game year
 
-const gamePhases = ['Team Phase', 'Action Phase', 'Free Phase']; // Game Phases
-let phaseNum = -1; // Current Phase Number
-let currentPhase = 'Briefing'; // Current Phase Name
+		this.phaseTimes = [10, 12, 8]; // The amount of minutes in each phase
+		this.phaseNames = ['Team Phase', 'Action Phase', 'Free Phase']; // Game Phase Names
+		this.turnNames = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec']; // Turn Phase Names
 
-const quarters = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec']; // Quarter Names
-let year = 2024; // Current Game Year
-let quarter = -1; // Current Quarter
-let currentTurn = 'Pre-Game'; // Current Turn Name
-let turnNum = 0; // Current turn Number
-
-// Console Log of the Game Clock
-// setInterval(() => {
-//     let timeRemaining = getTimeRemaining();
-//     let { minutes, seconds, phase, turn } = timeRemaining;
-//     clockDebugger(`Current Time: ${minutes}:${seconds} | ${phase} ${turn}`)
-// }, 1000);
-
-// FUNCTION - startClock { IN: N/A, OUT: N/A }
-// PROCESS: Sets gameActive state to true, and increments the turn if the clock is at 00:00
-function startClock () {
-	logger.info('Game has been started...');
-	if(minutes <= 0 && seconds <= 0 && gameActive) {
-		incrementPhase();
-	}
-	gameActive = true;
-}
-
-
-// FUNCTION - pauseClock { IN: N/A, OUT: N/A }
-// PROCESS: Sets gameActive state to false, and updates current time and deadline to maintain the same time.
-function pauseClock () {
-	logger.info('Game has been paused...');
-	gameActive = false;
-	currentTime = Date.parse(new Date());
-	deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60));
-}
-
-// FUNCTION - skipPhase { IN: N/A, OUT: N/A }
-// PROCESS: Sets game state to the next phase sets the clock to that phases turn length
-function skipPhase () {
-	logger.info('Skipping to next phase...');
-	incrementPhase();
-	minutes = phaseTimes[phaseNum];
-	seconds = 0;
-}
-
-// FUNCTION - resetClock { IN: N/A, OUT: N/A }
-// PROCESS: Resets game state to the starting state
-function resetClock () {
-	logger.info('The game clock has been reset!');
-	gameActive = false;
-	minutes = 40;
-	seconds = 0;
-
-	phaseNum = 0;
-	currentPhase = 'Briefing';
-
-	year = 2024;
-	quarter = 0;
-	currentTurn = 'Pre-Game';
-	turnNum = 0;
-}
-
-// FUNCTION - getTimeRemaining [RENAME] { IN: N/A, OUT: clock Object { seconds, minutes, phase, turn, turnNum } }
-// PROCESS: Gives the current time, phase, turn, and turn number from the game clock
-function getTimeRemaining () {
-	// const days = 0; // Starting days on master game clock
-	// let hours = 0; // Starting hours on master game clock
-
-	if(!gameActive) {
-		currentTime = Date.parse(new Date());
-		deadline = new Date(currentTime + (seconds * 1000) + (minutes * 1000 * 60));
+		this.interval = undefined;
 	}
 
-	const t = Date.parse(deadline) - Date.parse(new Date());
-	seconds = Math.floor((t / 1000) % 60);
-	minutes = Math.floor((t / 1000 / 60) % 60);
-	// hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-	// let days = Math.floor( t/(1000*60*60*24) );
+	// [- Game Timer Methods -]
 
-	if (minutes <= 0 && seconds <= 0 && gameActive) {
-		incrementPhase();
+	// gameTick - Checks to see if the round is over;
+	gameTick() {
+		const now = new Date();
+		if (this.roundEnd.getTime() < now.getTime()) {
+			this.nextPhase();
+		}
 	}
 
-	seconds = seconds < 10 ? '0' + seconds : seconds;
-	minutes = minutes < 10 ? '0' + minutes : minutes;
-
-	return {
-		'minutes': minutes,
-		'seconds': seconds,
-		'phase': currentPhase,
-		'turn': currentTurn,
-		'turnNum': turnNum
-	};
-}
-
-// Function that makes a timestamp for log files
-function makeTimestamp () {
-	const remTimeStamp = getTimeRemaining();
-	const { turn, phase } = remTimeStamp;
-	turnNum = remTimeStamp.turnNum;
-	minutes = remTimeStamp.minutes;
-	seconds = remTimeStamp.seconds;
-	const timestamp = { turn, phase, turnNum, clock: `${minutes}:${seconds}` };
-	return timestamp;
-}
-
-// FUNCTION - incrementPhase { IN: N/A, OUT: N/A }
-// PROCESS: Changes the game state to the next phase
-function incrementPhase () {
-	if (currentPhase === 'Briefing' || currentTurn === 'Pre-Game') {
-		logger.info('Watch the Skies has begun!');
-		quarter = 0;
-		phaseNum = 0;
-		turnNum++;
-		currentTurn = `${quarters[quarter]} ${year}`;
-
-		currentPhase = gamePhases[phaseNum];
-		phaseTime = phaseTimes[phaseNum];
+	// Starts gameTicks at the set interval (Default to 1 second)
+	go(interval = 1000) {
+		this.interval = setInterval(() => {
+			this.gameTick();
+		}, interval);
+		return;
 	}
-	else {
-		if (phaseNum == 2) {
-			phaseNum = 0;
-			incrementTurn();
+
+	// Stops gameTicks event
+	stop() {
+		clearInterval(this.interval);
+		return;
+	}
+
+	pause() {
+		if (!this.paused) {
+			this.paused = true;
+			this.stop();
+
+			const now = new Date(Date.now());
+			const t = Date.parse(this.roundEnd) - Date.parse(now);
+			this.seconds = Math.floor((t / 1000) % 60);
+			this.minutes = Math.floor((t / 1000 / 60) % 60);
+			this.hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+
+			logger.info(`Game paused - ${this.getTimeRemaining()} remains on the clock!`);
+
+			return;
 		}
 		else {
-			phaseNum++;
+			throw Error('Game is already paused!');
 		}
-		currentPhase = gamePhases[phaseNum];
-		phaseTime = phaseTimes[phaseNum];
 	}
 
-	if (currentPhase === 'Team Phase') teamPhase(currentTurn);
-	if (currentPhase === 'Action Phase') actionPhase(currentTurn);
-	if (currentPhase === 'Free Phase') freePhase(currentTurn);
+	unpause() {
+		if (this.paused) {
+			this.paused = false;
+			this.setHours(this.hours);
+			this.addMinutes(this.minutes);
+			this.addSeconds(this.seconds);
+			this.go();
 
-	currentTime = Date.parse(new Date());
-	deadline = new Date(currentTime + phaseTime * 60 * 1000);
+			logger.info(`Game unpaused - ${this.getTimeRemaining()} on the clock!`);
+
+			return;
+		}
+		else {
+			throw Error('Game is already running!');
+		}
+	}
+
+	reset() {
+		this.model = 'Clock';
+		this.paused = true; // Current state of game clock
+
+		this.hours = 1; // Remaining hours on master game clock (Only when paused)
+		this.minutes = 0; // Remaining minutes on master game clock (Only when paused)
+		this.seconds = 0; // Remaining seconds on master game clock (Only when paused)
+
+		this.roundEnd = new Date(Date.now());
+		this.phaseNum = -1; // Current Phase Number
+		this.turnNum = -1; // Current Turn Number
+		this.currentTurn = 'Pre-Briefing'; // Current Turn Name
+		this.currentPhase = 'Tech-Support'; // Current Phase Name
+		this.year = 2024; // In game year
+
+		this.phaseTimes = [10, 12, 8]; // The amount of minutes in each phase
+		this.phaseNames = ['Team Phase', 'Action Phase', 'Free Phase']; // Game Phase Names
+		this.turnNames = ['Jan-Mar', 'Apr-Jun', 'Jul-Sept', 'Oct-Dec']; // Turn Phase Names
+
+		this.interval = undefined;
+		logger.info('The game clock has been reset!');
+
+		return;
+	}
+
+	startGame() {
+		if (this.turnNum < 0) {
+			this.nextTurn();
+			this.nextPhase();
+
+			this.paused = false;
+
+			this.go();
+			logger.info(`The game has begun - ${this.getTimeRemaining()} on the clock!`);
+
+			return;
+		}
+		else {
+			throw Error('Game has already started!');
+		}
+	}
+
+	nextPhase() {
+		const lastPhase = this.getTimeStamp();
+		if (this.phaseNum % this.phaseNames.length === this.phaseNames.length - 1) {
+			this.nextTurn();
+		}
+
+		this.phaseNum++;
+		this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
+		this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
+		nexusEvent.emit('phaseChange', { phase: this.currentPhase, lastPhase });
+		logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
+		this.broadcastClock();
+
+		return;
+	}
+
+	revertPhase() {
+		if (this.phaseNum > 0) {
+			if (this.phaseNum % this.phaseNames.length === 0) {
+				this.revertTurn();
+			}
+			this.phaseNum--;
+			this.currentPhase = this.phaseNames[this.phaseNum % this.phaseNames.length];
+			this.setSeconds(this.phaseTimes[this.phaseNum % this.phaseTimes.length] * 60);
+			logger.info(`${this.currentPhase} - ${this.getTimeRemaining()} on the clock!`);
+			this.broadcastClock();
+
+			return;
+		}
+		else {
+			throw Error('Cannot revert, at start of game');
+		}
+	}
+
+	nextTurn() {
+		this.turnNum++;
+		this.currentTurn = `${this.turnNames[this.turnNum % this.turnNames.length]}`;
+		logger.info(`${this.currentTurn} has begun!`);
+
+		return;
+	}
+
+	revertTurn() {
+		if (this.turnNum > 0) {
+			this.turnNum--;
+			this.currentTurn = `${this.turnNames[this.turnNum % this.turnNames.length]} ${this.year}`;
+			logger.info(`Reverted to ${this.currentTurn}`);
+		}
+		else {
+			throw Error('Cannot revert, at start of game');
+		}
+
+		return;
+	}
+
+	getTimeRemaining() {
+		const now = new Date(Date.now());
+		let hours = this.hours;
+		let minutes = this.minutes;
+		let seconds = this.seconds;
+
+		if(!this.paused) {
+			const t = Date.parse(this.roundEnd) - Date.parse(now);
+			seconds = Math.floor((t / 1000) % 60);
+			minutes = Math.floor((t / 1000 / 60) % 60);
+			hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+			// let days = Math.floor( t/(1000*60*60*24) );
+		}
+		seconds = seconds < 10 ? '0' + seconds : seconds;
+		minutes = minutes < 10 ? '0' + minutes : minutes;
+		hours = hours < 10 ? '0' + hours : hours;
+
+		return `${hours > 0 ? `${hours}:` : '' }${minutes}:${seconds}`;
+	}
+
+	getTimeStamp() {
+		return { turn: this.currentTurn, phase: this.currentPhase, turnNum: this.turnNum, year: this.year, clock: this.getTimeRemaining() };
+	}
+
+	getClockState() {
+		return {
+			model: this.model,
+			paused: this.paused,
+			hours: this.hours,
+			minutes: this.minutes,
+			seconds: this.seconds,
+			turn: this.currentTurn,
+			phase: this.currentPhase,
+			turnNum: this.turnNum,
+			year: this.year,
+			gameClock: this.getTimeRemaining(),
+			deadline: this.roundEnd
+		};
+	}
+
+	setSeconds(secs = 0) {
+		this.roundEnd = new Date(Date.now());
+		this.roundEnd.setSeconds(this.roundEnd.getSeconds() + secs);
+
+		return;
+	}
+
+	setHours(hours = 0) {
+		if (this.paused) {
+			this.hours = hours;
+		}
+		else {
+			this.setSeconds(hours * 60 * 60);
+		}
+	}
+
+	setMinutes(mins = 0) {
+		if (this.paused) {
+			this.hours = mins;
+		}
+		else {
+			this.setSeconds(mins * 60);
+		}
+	}
+
+	addSeconds(secs = 0) {
+		if (this.paused) {
+			this.seconds += this.secs;
+		}
+		else {
+			this.roundEnd.setSeconds(this.roundEnd.getSeconds() + secs);
+		}
+	}
+
+	addMinutes(mins = 0) {
+		if (this.paused) {
+			this.minutes += this.mins;
+		}
+		else {
+			this.addSeconds(mins * 60);
+		}
+	}
+
+	addHours(hours = 0) {
+		if (this.paused) {
+			this.hours += hours;
+		}
+		else {
+			this.addSeconds(hours * 60 * 60);
+		}
+	}
+
+	broadcastClock() {
+		nexusEvent.emit('request', 'clock', [ this.getClockState() ]);
+	}
 }
 
-// FUNCTION - incrementTurn { IN: N/A, OUT: N/A }
-// PROCESS: Changes the game state to the next turn
-function incrementTurn () {
-	turnNum++;
-	if (quarter == 3) {
-		quarter = 0;
-		year++;
-	}
-	else {
-		quarter++;
-	}
+const clock = new GameTimer();
 
-	currentTurn = `${quarters[quarter]} ${year}`;
-	return 0;
-}
-
-module.exports = { getTimeRemaining, pauseClock, startClock, skipPhase, resetClock, makeTimestamp };
+module.exports = clock;

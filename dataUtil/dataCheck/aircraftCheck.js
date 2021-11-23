@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Interceptor', 'Transport', 'Decoy', 'Fighter'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkAircraft (runFlag) {
+async function chkAircraft(runFlag) {
 	let aFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initAircrafts/lean`);
@@ -38,9 +38,9 @@ async function chkAircraft (runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(aircraft, 'country')) {
+		if (!Object.prototype.hasOwnProperty.call(aircraft, 'organization')) {
 			logger.error(
-				`Country missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				`Organization missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
 		}
 
@@ -53,11 +53,25 @@ async function chkAircraft (runFlag) {
 					`origin missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
 			}
+			else if (
+				aircraft.origin === '' ||
+					aircraft.origin == undefined ||
+					aircraft.origin == null
+			) {
+				logger.error(`origin is null for Aircraft ${aircraft.name} ${aircraft._id}`);
+			}
 
 			if (!Object.prototype.hasOwnProperty.call(aircraft, 'site')) {
 				logger.error(
 					`site missing for Aircraft ${aircraft.name} ${aircraft._id}`
 				);
+			}
+			else if (
+				aircraft.site === '' ||
+					aircraft.site == undefined ||
+					aircraft.site == null
+			) {
+				logger.error(`site is null for Aircraft ${aircraft.name} ${aircraft._id}`);
 			}
 		}
 
@@ -73,10 +87,22 @@ async function chkAircraft (runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(aircraft, 'gameState')) {
+		if (!Object.prototype.hasOwnProperty.call(aircraft, 'location')) {
 			logger.error(
-				`gameState missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				`location missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
+		}
+		else {
+			if (!Object.prototype.hasOwnProperty.call(aircraft.location, 'lat')) {
+				logger.error(
+					`location.lat missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
+			if (!Object.prototype.hasOwnProperty.call(aircraft.location, 'lng')) {
+				logger.error(
+					`locaton.lng missing for Aircraft ${aircraft.name} ${aircraft._id}`
+				);
+			}
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'type')) {
@@ -111,43 +137,6 @@ async function chkAircraft (runFlag) {
 			logger.error(
 				`status missing for Aircraft ${aircraft.name} ${aircraft._id}`
 			);
-		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'ready')) {
-				logger.error(
-					`status.ready missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'upgrade')) {
-				logger.error(
-					`status.upgrade missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'repair')) {
-				logger.error(
-					`status.repair missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
-			if (!Object.prototype.hasOwnProperty.call(aircraft.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Aircraft ${aircraft.name} ${aircraft._id}`
-				);
-			}
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(aircraft, 'upgrades')) {

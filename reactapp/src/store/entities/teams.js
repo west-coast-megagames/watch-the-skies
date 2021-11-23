@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"; // Import from reactjs toolkit
+import { createSelector } from 'reselect'
 import { apiCallBegan } from "../api"; // Import Redux API call
 
 // Create entity slice of the store
@@ -29,14 +30,28 @@ const slice = createSlice({
     teamAdded: (teams, action) => {
       console.log(`${action.type} Dispatched`)
       teams.list.push(action.payload);
-    }
+    },
+		teamUpdated: (team, action) => {
+      console.log(`${action.type} Dispatched...`);
+      const index = team.list.findIndex(el => el._id === action.payload._id);
+			team.list[index] = action.payload;
+      team.lastFetch = Date.now();
+      team.loading = false;
+    },
+		teamDeleted: (team, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = team.list.findIndex(el => el._id === action.payload._id);
+      team.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   teamAdded,
+	teamUpdated,
   teamsReceived,
+	teamDeleted,
   teamsRequested,
   teamsRequestFailed
 } = slice.actions;
@@ -67,3 +82,14 @@ export const addteam = team =>
     data: team,
     onSuccess: teamAdded.type
   });
+
+	export const getNational = createSelector(
+    state => state.entities.teams.list,
+    (teams) => teams.filter(team => team.type === 'National')
+  );
+
+	export const getMyTeam = createSelector(
+    state => state.entities.teams.list,
+		state => state.auth.user,
+    (teams, user) => teams.find(team => team.users.some(el => el === user._id)   )
+  );

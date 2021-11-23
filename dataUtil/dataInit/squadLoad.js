@@ -9,18 +9,17 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runSquadLoad (runFlag) {
+
+async function runSquadLoad(runFlag) {
 	try {
 		// squadLoadDebugger("Jeff in runSquadLoad", runFlag);
 		if (!runFlag) return false;
@@ -36,7 +35,7 @@ async function runSquadLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// squadLoadDebugger("Jeff in initLoad", doLoad, squadDataIn.length);
 	if (!doLoad) return;
 
@@ -53,7 +52,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadSquad (iData, rCounts) {
+async function loadSquad(iData, rCounts) {
 
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSquads/name/${iData.name}`);
@@ -62,7 +61,9 @@ async function loadSquad (iData, rCounts) {
 			// New Squad/Squad here
 			const newSquad = iData;
 			newSquad.serviceRecord = [];
-			newSquad.gameState = [];
+			newSquad.tags = [];
+			newSquad.status = [];
+			newSquad.status.push('ready');
 
 			if (iData.team != '') {
 				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -81,23 +82,23 @@ async function loadSquad (iData, rCounts) {
 				newSquad.team = undefined;
 			}
 
-			if (iData.country != '') {
-				const country = await axios.get(`${gameServer}init/initCountries/code/${iData.country}`);
-				const countryData = country.data;
+			if (iData.organization != '') {
+				const organization = await axios.get(`${gameServer}init/initOrganizations/code/${iData.organization}`);
+				const organizationData = organization.data;
 
-				if (!countryData.type) {
+				if (!organizationData.type) {
 
 					++rCounts.loadErrCount;
-					logger.error(`New Squad Invalid Country: ${iData.name} ${iData.country}`);
+					logger.error(`New Squad Invalid Organization: ${iData.name} ${iData.organization}`);
 					return;
 				}
 				else {
-					newSquad.country = countryData._id;
-					newSquad.zone = countryData.zone;
+					newSquad.organization = organizationData._id;
+					newSquad.zone = organizationData.zone;
 				}
 			}
 			else {
-				newSquad.country = undefined;
+				newSquad.organization = undefined;
 				newSquad.zone = undefined;
 			}
 
@@ -110,13 +111,13 @@ async function loadSquad (iData, rCounts) {
 					logger.error(`New Squad Invalid Base: ${iData.name} ${iData.origin}`);
 					return;
 				}
-				else if (bData.capability.ground.capacity > 0) {
+				else if (await inArray(bData.capabilities, 'garrison')) {
 					newSquad.origin = bData._id;
 					newSquad.site = bData.site;
 				}
 				else {
 					++rCounts.loadErrCount;
-					logger.error(`New Squad Base does not have positive ground capacity: ${iData.name} ${iData.origin}`);
+					logger.error(`New Squad Base does not have garrison capabilities: ${iData.name} ${iData.origin}`);
 					return;
 				}
 			}
@@ -152,7 +153,7 @@ async function loadSquad (iData, rCounts) {
 	}
 }
 
-async function deleteAllSquads (doLoad) {
+async function deleteAllSquads(doLoad) {
 	if (!doLoad) return;
 
 	try {

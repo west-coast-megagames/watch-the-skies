@@ -2,13 +2,13 @@ const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 
-async function dropAll (doDrop) {
+async function dropAll(doDrop) {
 	if (!doDrop) return;
 
 	// tables/collections not loaded cleared on full init
 	try {
 		await axios.patch(`${gameServer}api/reports/deleteAll`);
-		logger.info('Delete of All reportss done (initDropAll).');
+		logger.info('Delete of All reports done (initDropAll).');
 	}
 	catch (err) {
 		logger.error(`Catch deleteAll Reports in initDropAll: ${err.message}`, { meta: err.stack });
@@ -72,11 +72,11 @@ async function dropAll (doDrop) {
 	}
 
 	try {
-		await axios.patch(`${gameServer}api/countries/deleteAll`);
-		logger.info('Delete of All Country done (initDropAll).');
+		await axios.patch(`${gameServer}api/organizations/deleteAll`);
+		logger.info('Delete of All Organization done (initDropAll).');
 	}
 	catch (err) {
-		logger.error(`Catch deleteAll Country in initDropAll: ${err.message}`, { meta: err.stack });
+		logger.error(`Catch deleteAll Organization in initDropAll: ${err.message}`, { meta: err.stack });
 	}
 
 	try {
@@ -142,15 +142,6 @@ async function dropAll (doDrop) {
 	catch (err) {
 		logger.error(`Catch deleteAll Research in initDropAll: ${err.message}`, { meta: err.stack });
 	}
-
-	try {
-		await axios.patch(`${gameServer}api/user/deleteAll`);
-		logger.info('Delete of All users done (initDropAll).');
-	}
-	catch (err) {
-		logger.error(`Catch deleteAll Users in initDropAll: ${err.message}`, { meta: err.stack });
-	}
-
 
 	return true;
 }

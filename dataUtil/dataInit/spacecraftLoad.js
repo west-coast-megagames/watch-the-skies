@@ -10,18 +10,16 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { convertToDms } = require('../systems/geo');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runSpacecraftLoad (runFlag) {
+async function runSpacecraftLoad(runFlag) {
 	try {
 		// spacecraftDebugger("Jeff in runSpacecraftLoad", runFlag);
 		if (!runFlag) return false;
@@ -40,7 +38,7 @@ async function runSpacecraftLoad (runFlag) {
 	}
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 	let recReadCount = 0;
 	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
@@ -55,7 +53,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadSpacecraft (iData, rCounts) {
+async function loadSpacecraft(iData, rCounts) {
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSites/code/${iData.code}`);
 
@@ -78,7 +76,7 @@ async function loadSpacecraft (iData, rCounts) {
 	}
 }
 
-async function deleteAllSpacecraft (doLoad) {
+async function deleteAllSpacecraft(doLoad) {
 	// logger.debug('Jeff in deleteAllSpacecrafts');
 	if (!doLoad) return;
 
@@ -104,18 +102,45 @@ async function deleteAllSpacecraft (doLoad) {
 	}
 }
 
-async function newSpacecraft (sData, rCounts) {
+async function newSpacecraft(sData, rCounts) {
 
 	// New Spacecraft(space) Site here
 
 	const SpaceSite = sData;
 	SpaceSite.type = 'Space';
 	SpaceSite.serviceRecord = [];
-	SpaceSite.gameState = [];
+
 	SpaceSite.subType = sData.shipType;
-	SpaceSite.status = sData.status;
+	SpaceSite.status = [];
 	SpaceSite.hidden = sData.hidden;
 	SpaceSite.facilities = [];
+	const newLatDMS = convertToDms(sData.lat, false);
+	const newLongDMS = convertToDms(sData.lng, true);
+	SpaceSite.geoDMS = {
+		latDMS: newLatDMS,
+		lngDMS: newLongDMS
+	};
+	SpaceSite.geoDecimal = {
+		lat: sData.lat,
+		lng: sData.lng
+	};
+
+	// current valid status to push   ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']
+  if (sData.status.damaged) {
+		SpaceSite.status.push('damaged');
+	}
+	if (sData.status.destroyed) {
+		SpaceSite.status.push('destroyed');
+	}
+	if (sData.status.upgrade) {
+		SpaceSite.status.push('upgrade');
+	}
+	if (sData.status.repair) {
+		SpaceSite.status.push('repair');
+	}
+	if (sData.status.secret) {
+		SpaceSite.status.push('secret');
+	}
 
 	if (sData.teamCode) {
 		const team = await axios.get(`${gameServer}init/initTeams/code/${sData.teamCode}`);
@@ -137,23 +162,23 @@ async function newSpacecraft (sData, rCounts) {
 		return;
 	}
 
-	if (sData.countryCode) {
-		const country = await axios.get(`${gameServer}init/initCountries/code/${sData.countryCode}`);
-		const countryData = country.data;
+	if (sData.organizationCode) {
+		const organization = await axios.get(`${gameServer}init/initOrganizations/code/${sData.organizationCode}`);
+		const organizationData = organization.data;
 
-		if (!countryData.type) {
+		if (!organizationData.type) {
 
 			++rCounts.loadErrCount;
-			logger.error(`New Spacecraft Site Invalid Country: ${sData.name} ${sData.countryCode}`);
+			logger.error(`New Spacecraft Site Invalid Organization: ${sData.name} ${sData.organizationCode}`);
 			return;
 		}
 		else {
-			SpaceSite.country = countryData._id;
+			SpaceSite.organization = organizationData._id;
 		}
 	}
 	else {
 		++rCounts.loadErrCount;
-		logger.error(`New Spacecraft Site Blank Country: ${sData.name} ${sData.countryCode}`);
+		logger.error(`New Spacecraft Site Blank Organization: ${sData.name} ${sData.organizationCode}`);
 		return;
 	}
 

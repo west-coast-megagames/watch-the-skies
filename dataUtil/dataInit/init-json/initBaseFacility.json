@@ -1,51 +1,11 @@
 [
-  {
+	{
     "loadType": "baseFacility",
     "type": "Base",
     "name": "USA Base Alpha",
 		"code": "USBA",
-		"bpCode": "",
-		"baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-1",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": false,
     "siteCode": "US CHI"
@@ -55,54 +15,8 @@
     "type": "Base",
     "name": "USA SFO Base Alpha",
 		"code": "USSFO",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 7,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 20,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-2",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US SFO"
@@ -112,54 +26,8 @@
     "type": "Base",
     "name": "USA SAN Diego Base Alpha",
 		"code": "USSAN",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 7,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 20,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-2",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US SAN"
@@ -169,54 +37,8 @@
     "type": "Base",
     "name": "USA Honolulu Base Alpha",
 		"code": "USHNL",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 7,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 20,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-2",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US HNL"
@@ -226,54 +48,8 @@
     "type": "Base",
     "name": "USA Jacksonville FL Base Alpha",
 		"code": "USJAX",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 7,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 20,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-2",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US JAX"
@@ -283,54 +59,8 @@
     "type": "Base",
     "name": "USA Virginia Beach VA Base Alpha",
 		"code": "USVAB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "manufacturing": {
-        "capacity": 1,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 7,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 20,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-2",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
     "siteCode": "US VAB"
@@ -340,42 +70,8 @@
     "type": "Base",
     "name": "USA Base Beta",
 		"code": "USBB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 5,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "US",
+		"bpCode": "BT-1",
+    "organizationCode": "US",
     "teamCode": "USA",
     "coastal": false,
     "siteCode": "US BNA"
@@ -385,144 +81,52 @@
     "type": "Base",
     "name": "TUK Base Alpha",
 		"code": "GBBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 3,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 2,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 3,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "GB",
+		"bpCode": "BT-1",
+    "organizationCode": "GB",
     "teamCode": "TUK",
     "coastal": false,
     "siteCode": "GB LHR"
+  },
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "TUK Base Beta",
+		"code": "GBBB",
+		"bpCode": "BT-2",
+    "organizationCode": "GB",
+    "teamCode": "TUK",
+    "coastal": true,
+    "siteCode": "GB LIV"
   },
   {
     "loadType": "baseFacility",
     "type": "Base",
     "name": "RSA Base Alpha",
 		"code": "ZABA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 20,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 2,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "ZA",
+		"bpCode": "BT-1",
+    "organizationCode": "ZA",
     "teamCode": "RSA",
     "coastal": false,
     "siteCode": "ZA JNB"
+  },
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RSA Base Beta",
+		"code": "ZABB",
+		"bpCode": "BT-2",
+    "organizationCode": "ZA",
+    "teamCode": "RSA",
+    "coastal": true,
+    "siteCode": "ZA CPT"
   },
   {
     "loadType": "baseFacility",
     "type": "Base",
     "name": "RFD Base Alpha",
 		"code": "RUBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 2,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 6,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "RU",
+		"bpCode": "BT-1",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU BKA"
@@ -532,48 +136,8 @@
     "type": "Base",
     "name": "RFD Naval Base Alpha",
 		"code": "RUNBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 2,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 8,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 6,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "RU",
+		"bpCode": "BT-2",
+    "organizationCode": "RU",
     "teamCode": "RFD",
     "coastal": false,
     "siteCode": "RU NOI"
@@ -583,99 +147,30 @@
     "type": "Base",
     "name": "RFD Naval Base Beta",
 		"code": "RUNBB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 2,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 8,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 6,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "RU",
+		"bpCode": "BT-2",
+    "organizationCode": "RU",
     "teamCode": "RFD",
-    "coastal": false,
+    "coastal": true,
     "siteCode": "RU SRM"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "RFD Naval Base Charlie",
+		"code": "RUNBC",
+		"bpCode": "BT-2",
+    "organizationCode": "RU",
+    "teamCode": "RFD",
+    "coastal": true,
+    "siteCode": "RU GRH"
   },
   {
     "loadType": "baseFacility",
     "type": "Base",
     "name": "JPN Base Alpha",
 		"code": "JPBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 7,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 2,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 15,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "JP",
+		"bpCode": "BT-2",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP OSA"
@@ -685,101 +180,43 @@
     "type": "Base",
     "name": "JPN Base Beta",
 		"code": "JPBB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 7,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 2,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 15,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "JP",
+		"bpCode": "BT-2",
+    "organizationCode": "JP",
     "teamCode": "JPN",
     "coastal": true,
     "siteCode": "JP NRT"
-  },
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Charlie",
+		"code": "JPBC",
+		"bpCode": "BT-2",
+    "organizationCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP SPK"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "JPN Base Delta",
+		"code": "JPBD",
+		"bpCode": "BT-2",
+    "organizationCode": "JP",
+    "teamCode": "JPN",
+    "coastal": true,
+    "siteCode": "JP FUK"
+	},
   {
     "loadType": "baseFacility",
     "type": "Base",
     "name": "IRN Base Alpha",
 		"code": "IRBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 3,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "IR",
+		"bpCode": "BT-2",
+    "organizationCode": "IR",
     "teamCode": "IRN",
-    "coastal": false,
+    "coastal": true,
     "siteCode": "IR BND"
   },
   {
@@ -787,48 +224,8 @@
     "type": "Base",
     "name": "IND Base Alpha",
 		"code": "INBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 14,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 6,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 8,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 6,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "IN",
+		"bpCode": "BT-2",
+    "organizationCode": "IN",
     "teamCode": "IND",
     "coastal": true,
     "siteCode": "IN BOM"
@@ -838,48 +235,8 @@
     "type": "Base",
     "name": "TFR Base Alpha",
 		"code": "FRBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 8,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 4,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "FR",
+		"bpCode": "BT-2",
+    "organizationCode": "FR",
     "teamCode": "TFR",
     "coastal": true,
     "siteCode": "FR MRS"
@@ -889,48 +246,8 @@
     "type": "Base",
     "name": "EPT Base Alpha",
 		"code": "EGBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 5,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 2,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "EG",
+		"bpCode": "BT-2",
+    "organizationCode": "EG",
     "teamCode": "EPT",
     "coastal": true,
     "siteCode": "EG ALY"
@@ -940,48 +257,8 @@
     "type": "Base",
     "name": "PRC Base Alpha",
 		"code": "CNBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 9,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 15,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 10,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "CN",
+		"bpCode": "BT-2",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN SHA"
@@ -991,99 +268,30 @@
     "type": "Base",
     "name": "PRC Base Beta",
 		"code": "CNBB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 9,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 15,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 10,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "CN",
+		"bpCode": "BT-2",
+    "organizationCode": "CN",
     "teamCode": "PRC",
     "coastal": true,
     "siteCode": "CN TPE"
+	},
+	{
+    "loadType": "baseFacility",
+    "type": "Base",
+    "name": "PRC Base Charlie",
+		"code": "CNBC",
+		"bpCode": "BT-2",
+    "organizationCode": "CN",
+    "teamCode": "PRC",
+    "coastal": true,
+    "siteCode": "CN SY1"
   },
   {
     "loadType": "baseFacility",
     "type": "Base",
     "name": "BRZ Base Alpha",
 		"code": "BRBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 16,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 2,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "BZ",
+		"bpCode": "BT-2",
+    "organizationCode": "BZ",
     "teamCode": "BRZ",
     "coastal": true,
     "siteCode": "BR FOR"
@@ -1093,48 +301,8 @@
     "type": "Base",
     "name": "AUS Base Alpha",
 		"code": "AUBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 22,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 2,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 4,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "AU",
+		"bpCode": "BT-2",
+    "organizationCode": "AU",
     "teamCode": "AUS",
     "coastal": true,
     "siteCode": "AU MEL"
@@ -1144,42 +312,8 @@
     "type": "Base",
     "name": "FFG Base Alpha",
 		"code": "FFGBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 10,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "PE",
+		"bpCode": "BT-1",
+    "organizationCode": "PE",
     "teamCode": "FFG",
     "coastal": false,
     "siteCode": "PE LIM"
@@ -1189,42 +323,8 @@
     "type": "Base",
     "name": "FFG Base Beta",
 		"code": "FFGBB",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 10,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 8,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "MN",
+		"bpCode": "BT-1",
+    "organizationCode": "MN",
     "teamCode": "FFG",
     "coastal": false,
     "siteCode": "MN ULN"
@@ -1234,48 +334,8 @@
     "type": "Base",
     "name": "TCN Base Alpha",
 		"code": "TCNBA",
-		"bpCode": "",
-    "baseDefenses": false,
-    "public": false,
-    "capability": {
-      "research": {
-        "capacity": 1,
-        "projects": [],
-        "active": true,
-        "sciRate": 12,
-        "sciBonus": 0,
-        "funding": [],
-        "status": {
-          "damage": [],
-          "pending": []
-        }
-      },
-      "airMission": {
-        "capacity": 4,
-        "aircraft": [],
-        "active": true,
-        "damage": []
-      },
-      "storage": {
-        "capacity": 3,
-        "upgrade": [],
-        "active": true,
-        "damage": []
-      },
-      "ground": {
-        "capacity": 4,
-        "corps": [],
-        "active": true,
-        "damage": []
-      },
-      "naval": {
-        "capacity": 4,
-        "fleet": [],
-        "active": true,
-        "damage": []
-      }
-    },
-    "countryCode": "MX",
+		"bpCode": "BT-1",
+    "organizationCode": "MX",
     "teamCode": "TCN",
     "coastal": false,
     "siteCode": "MX MEX"

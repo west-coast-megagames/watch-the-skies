@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Input, InputNumber, ButtonGroup, Button, Alert, Modal, ControlLabel } from 'rsuite';
 import { banking } from '../api';
+import socket from '../socket';
 import Select from './common/selectPicker';
 import notify from '../scripts/notify';
 
-const formatPickerData = (accounts) => {
+const formatPickerData = (accounts, type) => {
 	let data = [];
+	
 	for (let account of accounts) {
+		let wallet = account.resources.find(el => el.type === type);
 		let option = {
 			_id: account._id,
-			name: `${account.name} | Balance: $M${account.balance}`
+			name: `${account.team.code} | ${account.name} | Balance: ${wallet ? wallet.balance : 'N/A'}`
 		}
 			data.push(option);
 	}
@@ -20,10 +23,11 @@ class TransferForm extends Component {
 	state = {
 		transfer: {
 			to: null,
-			from: null
-		},
-		account: {},
-		schedule: false
+			from: null,
+			resource: 'Megabucks',
+			account: {},
+			schedule: false
+		}
 	}
 
 	handleSubmit = e => {
@@ -38,7 +42,7 @@ class TransferForm extends Component {
 				banking.autoTransfer(this.state.transfer);
 				console.log('Submitted automatic transfer');
 			} else {
-				banking.bankingTransfer(this.state.transfer);
+				socket.emit('request', { route: 'transaction', action: 'transfer', data: this.state.transfer });
 				console.log('Submitted transfer');
 			}
 			notify({catagory: 'action',type: 'success', title: 'Submitted Transfer', body: `Placeholder notification for your transfer of ${this.state.transfer.amount}`})
@@ -87,7 +91,7 @@ class TransferForm extends Component {
 	}
 
 	render() {
-			let accounts = formatPickerData(this.props.accounts);
+			let accounts = formatPickerData(this.props.accounts, this.props.transfer.resource);
 			let max = this.state.account !== undefined ? this.state.account.balance : 0;
 			let { schedule } = this.state.transfer
 			
@@ -100,6 +104,7 @@ class TransferForm extends Component {
 					<Modal.Title>{schedule === true ? "Scheduled Transfer Form" : "Immediate Transfer Form"}</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
+					<p><b>Resource:</b> {this.props.transfer.resource}</p>
 					<Select
 						id='from'
 						data={accounts}

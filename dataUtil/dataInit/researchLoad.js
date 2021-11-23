@@ -12,18 +12,15 @@ const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
 const teamArray = [];
 
-async function runResearchLoad (runFlag) {
+async function runResearchLoad(runFlag) {
 	try {
 		if (!runFlag) return false;
 		if (runFlag) {
@@ -40,7 +37,7 @@ async function runResearchLoad (runFlag) {
 	}
 }
 
-async function loadTeams () {
+async function loadTeams() {
 	const team = await axios.get(`${gameServer}api/team/type/National`);
 	const tData = team.data;
 
@@ -50,7 +47,7 @@ async function loadTeams () {
 	logger.debug(`Number of National Teams Loaded: ${teamArray.length}`);
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	// logger.debug("Jeff in initLoad", doLoad, researchDataIn.length);
 	if (!doLoad) return;
 
@@ -67,7 +64,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadResearch (iData, rCounts) {
+async function loadResearch(iData, rCounts) {
 	try {
 
 		const { data } = await axios.get(`${gameServer}init/initResearch/code/${iData.code}`);
@@ -122,7 +119,7 @@ async function loadResearch (iData, rCounts) {
 	}
 }
 
-async function deleteAllResearchs (doLoad) {
+async function deleteAllResearchs(doLoad) {
 	if (!doLoad) return;
 
 	try {
@@ -147,12 +144,14 @@ async function deleteAllResearchs (doLoad) {
 	}
 }
 
-async function createTechnology (iData, teamId, rCounts) {
+async function createTechnology(iData, teamId, rCounts) {
 	// New Tech Research here
 	const techResearch = iData;
 	techResearch.team = teamId;
-	techResearch.gameState = [];
 	techResearch.researchHistory = [];
+	techResearch.tags = [];
+	techResearch.status = [];
+	techResearch.status.push('visible');
 
 	try {
 		await axios.post(`${gameServer}api/research`, techResearch);
@@ -165,10 +164,12 @@ async function createTechnology (iData, teamId, rCounts) {
 	}
 }
 
-async function createKnowledge (iData, rCounts) {
+async function createKnowledge(iData, rCounts) {
 	// New Knowledge Research here
 	const knowledgeResearch = iData;
-	knowledgeResearch.gameState = [];
+	knowledgeResearch.tags = [];
+	knowledgeResearch.status = [];
+	knowledgeResearch.status.push('available');
 
 	const teamCode = iData.credit;
 	if (iData.credit != '') {
@@ -209,11 +210,12 @@ async function createKnowledge (iData, rCounts) {
 
 }
 
-async function createAnalysis (iData, rCounts) {
+async function createAnalysis(iData, rCounts) {
 	// New Analysis Research here
 	const analysisResearch = iData;
-	analysisResearch.gameState = [];
 	analysisResearch.salvage = [];
+	analysisResearch.tags = [];
+	analysisResearch.status = [];
 
 	if (iData.teamCode != '') {
 		const tData = await axios.get(`${gameServer}init/initTeams/code/${iData.teamCode}`);

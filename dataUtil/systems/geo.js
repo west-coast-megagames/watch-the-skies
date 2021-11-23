@@ -27,7 +27,7 @@ function parseDMS(fullDMS) {
   let lat = ConvertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
   let lng = ConvertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
 
-  return { latDecimal: lat, longDecimal: lng }
+  return { lat: lat, lng: lng }
 }
 
 function ConvertDMSToDD(degrees, minutes, seconds, direction) {
@@ -44,9 +44,9 @@ function ConvertDMSToDD(degrees, minutes, seconds, direction) {
 // console.log(response)
 
 // let latDMS = convertToDms(11.5622, false)
-// let longDMS = convertToDms(43.1428, true)
+// let lngDMS = convertToDms(43.1428, true)
 
-// console.log(`Lat: ${latDMS}, Long: ${longDMS}`);
+// console.log(`Lat: ${latDMS}, Long: ${lngDMS}`);
 
 function convertToDms(dd, isLng) {
   if (!dd || isNaN(dd)) {

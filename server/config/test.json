@@ -3,5 +3,8 @@
     "initPath": "./util/dataInit/",
     "initPathWTS": "../../",
     "dbName": "auto-test",
-    "loadSel": "All"
+    "loadSel": "All",
+		"clientURL": "http://localhost:3000/",
+		"serverURL": "http://localhost:5000/",
+		"socketCORS": "http://localhost:3000"
 }

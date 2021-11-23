@@ -4,6 +4,7 @@ const router = express.Router(); // Destructure of HTTP router for server
 const { logger } = require('../../middleware/log/winston'); // Import of winston for error/info logging
 
 const nexusEvent = require('../../middleware/events/events');
+const { clearArrayValue } = require('../../middleware/util/arrayCalls');
 
 // Mongoose Models - Database models
 const { Aircraft } = require('../../models/aircraft');
@@ -15,24 +16,6 @@ const { loadTech, techSeed } = require('../../wts/research/techTree');
 const { loadKnowledge, knowledgeSeed } = require('../../wts/research/knowledge');
 const { Site } = require('../../models/site');
 
-// Game State - Server side template items
-
-// MUST BUILD - Initiation
-router.get('/initialteGame', async (req, res) => {
-	try {
-		// Load Knowledge
-		// Load Tech
-		// Seed Research
-		// Load upgrades
-		// Load Facilities
-		// Log Game state
-		res.status(200).send('Successful Initiation...');
-	}
-	catch (err) {
-		res.send(err);
-	}
-});
-
 // @route   PATCH game/admin/resethull
 // @desc    Update all aircrafts to max health
 // @access  Public
@@ -40,7 +23,7 @@ router.patch('/resethull', async function (req, res) {
 	for await (const aircraft of Aircraft.find()) {
 		console.log(`${aircraft.name} has ${aircraft.stats.hull} hull points`);
 		aircraft.stats.hull = aircraft.stats.hullMax;
-		aircraft.status.destroyed = false;
+		await clearArrayValue(aircraft.status, 'destroyed');
 		console.log(`${aircraft.name} now has ${aircraft.stats.hull} hull points`);
 		await aircraft.save();
 	}
@@ -90,15 +73,20 @@ router.patch('/load/tech', async function (req, res) {
 	return res.status(200).send(response);
 });
 
+// TODO John Review if balance, deposits and withdrawals need to be swithed to resources
 // @route   PATCH game/admin/accounts/reset
 // @desc    Update all teams to base income and PR
 // @access  Public
 router.patch('/accounts/reset', async function (req, res) {
 	for await (const account of Account.find()) {
-		{
-			account.balance = 0;
-			account.deposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-			account.withdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+		account.resources = [];
+		const resource = 'Megabucks';
+		if (account.code === "TRE") {
+	  	account.resources.push({ type: resource, balance: 1000 });
+		}
+		else {
+			account.resources.push({ type: resource, balance: 0 });
 		}
 
 		await account.save();
@@ -138,7 +126,7 @@ router.patch('/load/tech/seed', async function (req, res) {
 
 router.get('/test', async function (req, res) {
 	let count = 0;
-	for (const site of await Site.find({ 'status.warzone': true, 'hidden': false })) {
+	for (const site of await Site.find({ 'status': 'warzone', 'hidden': false })) {
 		console.log(site);
 		count++;
 		if (site.subType === 'Point of Interest') {
@@ -146,8 +134,9 @@ router.get('/test', async function (req, res) {
 			console.log('Site hidden');
 		}
 		else {
-			site.stats.warzone = false;
-			console.log('Site De-Warzoned');
+			await clearArrayValue(site.status, 'warzone');
+			
+	  	console.log('Site De-Warzoned');
 		}
 		await site.save();
 	}

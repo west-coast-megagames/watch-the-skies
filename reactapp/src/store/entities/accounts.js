@@ -15,15 +15,16 @@ const slice = createSlice({
   // Reducers - Events
   reducers: {
     accountsRequested: (accounts, action) => {
-      console.log(`${action.type} Dispatched...`)
+      console.log(`${action.type} Dispatched...`);
       accounts.loading = true;
     },
     accountsReceived: (accounts, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('account State Loaded!', 3000);
+      // Alert.info('account State Loaded!', 3000);
       accounts.list = action.payload;
       accounts.loading = false;
       accounts.lastFetch = Date.now();
+      accounts.loading = true;
     },
     accountsRequestFailed: (accounts, action) => {
       console.log(`${action.type} Dispatched`)
@@ -34,18 +35,25 @@ const slice = createSlice({
       console.log(`${action.type} Dispatched`)
       accounts.list.push(action.payload);
     },
-    accountsUpdated: (accounts, action) => {
+    accountUpdated: (accounts, action) => {
       console.log(`${action.type} Dispatched`)
-      accounts.list = action.payload;
+      const index = accounts.list.findIndex(el => el._id === action.payload._id);
+			accounts.list[index] = action.payload;
       accounts.lastFetch = Date.now();
-    }
+    },
+		accountDeleted: (accounts, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = accounts.list.findIndex(el => el._id === action.payload._id);
+      accounts.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
-  accountsAdded,
-  accountsUpdated,
+  accountAdded,
+  accountUpdated,
+	accountDeleted,
   accountsReceived,
   accountsRequested,
   accountsRequestFailed

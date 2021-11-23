@@ -6,14 +6,14 @@ require('winston-mongodb');
 
 const typeVals = ['Raid', 'Assault', 'Infiltration', 'Envoy', 'Science'];
 
-function inArray (array, value) {
+function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] == value) return true;
 	}
 	return false;
 }
 
-async function chkSquad (runFlag) {
+async function chkSquad(runFlag) {
 	let sFinds = [];
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSquads/lean`);
@@ -30,10 +30,6 @@ async function chkSquad (runFlag) {
 			logger.error(`model missing for Squad ${squad.name} ${squad._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(squad, 'gameState')) {
-			logger.error(`gameState missing for Squad ${squad.name} ${squad._id}`);
-		}
-
 		if (!Object.prototype.hasOwnProperty.call(squad, 'zone')) {
 			logger.error(`zone missing for Squad ${squad.name} ${squad._id}`);
 		}
@@ -42,16 +38,30 @@ async function chkSquad (runFlag) {
 			logger.error(`team missing for Squad ${squad.name} ${squad._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(squad, 'country')) {
-			logger.error(`country missing for Squad ${squad.name} ${squad._id}`);
+		if (!Object.prototype.hasOwnProperty.call(squad, 'organization')) {
+			logger.error(`organization missing for Squad ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'origin')) {
 			logger.error(`origin missing for Squad ${squad.name} ${squad._id}`);
 		}
+		else if (
+			squad.origin === '' ||
+				squad.origin == undefined ||
+				squad.origin == null
+		) {
+			logger.error(`origin is null for Squad ${squad.name} ${squad._id}`);
+		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'site')) {
 			logger.error(`site missing for Squad ${squad.name} ${squad._id}`);
+		}
+		else if (
+			squad.site === '' ||
+				squad.site == undefined ||
+				squad.site == null
+		) {
+			logger.error(`site is null for Squad ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'name')) {
@@ -64,70 +74,9 @@ async function chkSquad (runFlag) {
 		if (!Object.prototype.hasOwnProperty.call(squad, 'status')) {
 			logger.error(`Squad status is missing ${squad.name} ${squad._id}`);
 		}
-		else {
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'damaged')) {
-				logger.error(
-					`status.damaged missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (
-				squad.status.damaged === undefined ||
-          squad.status.damaged === null
-			) {
-				logger.error(
-					`Squad status.damaged is not set ${squad.name} ${squad._id}`
-				);
-			}
 
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'deployed')) {
-				logger.error(
-					`status.deployed missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (
-				squad.status.deployed === undefined ||
-          squad.status.deployed === null
-			) {
-				logger.error(
-					`Squad status.deployed is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'destroyed')) {
-				logger.error(
-					`status.destroyed missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (
-				squad.status.destroyed === undefined ||
-          squad.status.destroyed === null
-			) {
-				logger.error(
-					`Squad status.destroyed is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'repair')) {
-				logger.error(
-					`status.repair missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (squad.status.repair === undefined || squad.status.repair === null) {
-				logger.error(
-					`Squad status.repair is not set ${squad.name} ${squad._id}`
-				);
-			}
-
-			if (!Object.prototype.hasOwnProperty.call(squad.status, 'secret')) {
-				logger.error(
-					`status.secret missing for Squad ${squad.name} ${squad._id}`
-				);
-			}
-			else if (squad.status.repair === undefined || squad.status.repair === null) {
-				logger.error(
-					`Squad status.secret is not set ${squad.name} ${squad._id}`
-				);
-			}
+		if (!Object.prototype.hasOwnProperty.call(squad, 'tags')) {
+			logger.error(`Squad tags is missing ${squad.name} ${squad._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(squad, 'type')) {

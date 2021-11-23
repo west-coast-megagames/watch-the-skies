@@ -25,6 +25,7 @@ Adds Enviornment Variable for DEBUG to display each namespace with a seperate co
 
 * server - Node.js Server
     * config - Any keys or configuration files for the server
+		* middleware
     * models - All Mongoose document models
         * gov - Models pertaining to the GOVERNANCE sub-game
         * logs - Models pertaining to the in-game logging documents
@@ -32,18 +33,28 @@ Adds Enviornment Variable for DEBUG to display each namespace with a seperate co
         * ops - Models pertaining to the OPERATIONS sub-game
     * routes - All Express routes
         * api - Currently the main routes folder (Unlear why)
-    * startup - All functions imported and run at server start
-    * test - Jest testing suite for development
+				* game - Depreciated folder of game logic routes
+				* init - Routes for init of DB
+				* log - Routes for error logging
+				* public - Routes for HTML pages
+				* socket - Socket.io routes
+    * tests - Jest testing suite for development
         * integration - Home for all integration tests
         * unit - Home for all unit tests
     * util - Application functions
-        * dataInit - Initialization server for seeding init data
-            * config - Enviornment variable for init server
-            * init-json - Initial Load data
         * systems - Server level game functions
         * wts - Watch the Skies game functions
-            * banking - The financial systems for WTS
-            * gameClock - The main gameClock and turn/phase change processing for WTS
-            * intercept - The Interception system for WTS
-            * notifications - Temp notifications system for WTS
-            * pr - The PR system for WTS
+					* construction
+          * gameClock - The main gameClock and turn/phase change processing for WTS
+          * governance
+					* intercept - The Interception system for WTS
+          * json
+					* military
+					* notifications - Temp notifications system for WTS
+          * research
+					* pr - The PR system for WTS
+					* sites
+					* terror
+					* trades
+					* upgrades
+					* util

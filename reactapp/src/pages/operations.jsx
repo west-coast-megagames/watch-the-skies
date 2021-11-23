@@ -1,119 +1,157 @@
-import React, { Component } from 'react'; // React import
+import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Button } from 'rsuite';
+import { Nav, Container, Header, Content, Button, Divider, Panel, FlexboxGrid, ButtonToolbar, ButtonGroup } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
-import GlobalOps from './tabs/ops/global';
 import LoginLink from '../components/common/loginLink'
-import playTrack from './../scripts/audio';
-import ExcomOps from './tabs/ops/excom';
-import PrototypeMap from './tabs/ops/google2';
-import AssetsTab from './tabs/ops/assets';
+import AssetsTab from './tabs/ops/AssetTab';
+import { getFacilites } from '../store/entities/facilities';
+import AircraftTable from './tabs/ops/asset/AircraftTable';
+import FacilitiesTable from './tabs/ops/asset/FacilitiesTable';
+import MilitaryTable from './tabs/ops/asset/MilitaryTable';
+import BalanceHeader from '../components/common/BalanceHeader';
+import { getOpsAccount } from '../store/entities/accounts';
+import { getMilitary } from '../store/entities/military';
+import MobilizeForm from './tabs/ops/asset/MobilizeForm';
+import TransferForm from '../components/common/TransferForm';
+import RecallForm from './tabs/ops/asset/RecallForm';
+import { getAircrafts } from '../store/entities/aircrafts';
 
-class Operations extends Component {
-  constructor() {
-		super();
-		this.state = {
-			tab: 'dashboard',
-			account: {},
-			markers: []
-		};
-		this.handleSelect = this.handleSelect.bind(this);
-		this.setAccount = this.setAccount.bind(this);
+/*
+TODO CHECKLIST
+[X] Players can assign Upgrades
+[X] Players can un-assign Upgrades
+[] Players can make Upgrades (? Possibly outside the scope of planned test) 
+[X] Players can repair units
+[X] Transfer Units
+[X] Deploy Units
+[X] Aggress Units
+[] connect battles with alliances && multiple opposing armies 
+*/
+
+const Operations  = (props) => {
+	const [tab, setTab] = React.useState('dashboard');
+	const [selected, setSelected] = React.useState(undefined);
+	const [show, setShow] = React.useState(false);
+	const url = props.match.path;
+
+	const handleTransfer = (thing) => {
+		setSelected(thing);
+		setTab('assets');
+		props.history.push('/ops/assets');
 	}
 
-	componentDidMount() {
-		this.setAccount();
+	if (!props.login) {
+		props.history.push('/');
+		return <LoginLink history={props.history} />
 	}
-
-  setAccount() {
-		let indexOf = this.props.accounts.findIndex(el => el.name === 'Operations');
-		let account = this.props.accounts[indexOf];
-		this.setState({ account })
-  }
-
-	handleSelect(activeKey) {
-		this.setState({ tab: activeKey })
-	}
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
-		}
-		const url = this.props.match.path;
-		const { tab } = this.state; 
-
-    return (
-			<Container>
-				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10 }}>
+  else return (
+		<Container>
+			<Header>
+			<FlexboxGrid align="middle">
+				<FlexboxGrid.Item colspan={20} >
+					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
 						<Nav.Item eventKey="assets" to={`${url}/assets`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtlas} />}> Asset Manager</Nav.Item>
-						<Nav.Item eventKey="globe" to={`${url}/excom`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faGlobe} />}> Global Ops</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
-					</Nav>
-				</Header>
-				<Content className='tabContent' style={{ paddingLeft: 20 }}>
-					<Switch>
-						<Route path={`${url}/dashboard`} render={() => (
-							<div>
-									<h5>No dashboard has been coded for the Operations Module!</h5>
-									<hr />
-									<u><b>Implemented Features</b></u>
-									<ul>
-										<li>Aircraft List [Global Ops]</li>
-										<li>Air Missions [Map]</li>
-									</ul>
-									<u><b>Unimplemented Features</b></u>
-									<ul>
-										<li>Nuclear Launch [Nuclear]</li>
-										<li>Ground Military [Global Ops]</li>
-										<li>Satillites</li>
-									</ul>
-									<u><b>Test Features</b></u>
-									<ul>
-									</ul>
-							</div>
-						)}/>
+					</Nav>							
+				</FlexboxGrid.Item>
+				<FlexboxGrid.Item colspan={4}>
+					<BalanceHeader account={props.account} />
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
+			</Header>
+			
+			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
+				<Switch>
+					<Route path={`${url}/dashboard`} render={() => (
+						<FlexboxGrid justify="center">
+							<FlexboxGrid.Item justify="center" style={{ 	textAlign: 'center'}} colspan={24} >
+								<Panel bodyFill bordered style={{ border: "2px solid black", borderRadius: '0px',	textAlign: 'center'}}>
+									<ButtonToolbar style={{ margin: '10px' }}>
+										<ButtonGroup>
+											<Button size='md' color={'green'} onClick={() => setShow('transfer')}>
+												Transfer Units
+											</Button>		
+											<Button size='md' color={'orange'} style={{ color: 'black'}} onClick={() => setShow('mobilize')}>
+												Mobilize Military
+											</Button>			
+											<Button size='md' color={'violet'} onClick={() => setShow('recall')}>
+												Recall Military
+											</Button>	
+											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>	
+											<RecallForm hide={() => setShow(false)} show={show === 'recall'}/>			
+											<TransferForm 
+												units={props.military}
+												aircrafts={props.aircrafts}
+												show={show === 'transfer'} 
+												closeTransfer={() => setShow(false)}
+												unit={props.unit} />		
+										</ButtonGroup>
+									</ButtonToolbar>
+								</Panel>
 
-						<Route path={`${url}/excom`} render={() => (
-							<ExcomOps /> 
-						)}/>
+							</FlexboxGrid.Item>
+							<FlexboxGrid.Item colspan={13} >
+								<Panel bodyFill bordered style={cardStyle}>
+									<h5>Aircraft Operations</h5>
+									<AircraftTable handleTransfer={handleTransfer} aircrafts={props.aircrafts}/>
+								</Panel>
+								<Panel bodyFill bordered style={cardStyle2}>
+									<h5>Facilities</h5>
+									<FacilitiesTable handleTransfer={handleTransfer}/>
+								</Panel>
+							</FlexboxGrid.Item>
+							<FlexboxGrid.Item colspan={11} >
+								<Panel bodyFill bordered style={cardStyle3}>
+									<h5>Military</h5>
+									<MilitaryTable handleTransfer={handleTransfer} military={props.military}/>
+								</Panel>
+							</FlexboxGrid.Item>
+						</FlexboxGrid>
+					)}/>
 
-						<Route path={`${url}/globe`} render={() => (
-							<GlobalOps />
-						)}/>
+					<Route path={`${url}/assets`} render={() => (
+						<AssetsTab selected={selected} history={props.history}/>
+					)}/>
+					<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
+				</Switch>
+			</Content>
+		</Container>
+  );
+  
+}
 
-						<Route path={`${url}/google`} render={() => (
-							<PrototypeMap />
-						)}/>
+const cardStyle = {
+  border: "2px solid black",
+	height: '45vh',
+	borderRadius: '0px',
+	textAlign: 'center'
+}
 
-						<Route path={`${url}/assets`} render={() => (
-							<AssetsTab />
-						)}/>
+const cardStyle2 = {
+  border: "2px solid black",
+	height: '35vh',
+	borderRadius: '0px',
+	textAlign: 'center'
+}
 
-						<Route path={`${url}/nuclear`} render={() => (
-							<div style={{verticalAlign:'middle', position: 'relative'}}>
-								<Button block size='lg' color='red' onClick={() => playTrack('nuclear')} >DO NOT PRESS!</Button>
-							</div>
-						)}/>
-
-						<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
-					</Switch>
-				</Content>
-			</Container>
-    );
-  }
+const cardStyle3 = {
+  border: "2px solid black",
+	height: '80vh',
+	borderRadius: '0px',
+	textAlign: 'center'
 }
 
 const mapStateToProps = state => ({
-login: state.auth.login,
-team: state.auth.team,
-sites: state.entities.sites.list,
-military: state.entities.military.list,
-aircraft: state.entities.aircrafts.list
+	login: state.auth.login,
+	team: state.auth.team,
+	sites: state.entities.sites.list,
+	military: getMilitary(state),
+	aircrafts: getAircrafts(state),
+	facilities: getFacilites(state),
+	account: getOpsAccount(state)
 });
 
 const mapDispatchToProps = dispatch => ({});

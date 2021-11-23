@@ -18,6 +18,7 @@ const team = {
   BRZ: 'https://cdn.countryflags.com/thumbs/brazil/flag-square-250.png',
   AUS: 'https://cdn.countryflags.com/thumbs/australia/flag-square-250.png',
   RSA: 'https://cdn.countryflags.com/thumbs/south-africa/flag-square-250.png',
+	none: '/images/xmark.png',
   BNC: BNC_logo,
   GNN: GNN_logo
 };
@@ -26,7 +27,7 @@ class TeamAvatar extends Component {
   state = {};
   render() {
     return (
-      <Avatar size={this.props.size} circle src={team[this.props.code]}>
+      <Avatar style={{ border: '1.5px solid #3c3f43', opacity: this.props.grey ? '0.4' : 1}} size={this.props.size} circle src={team[this.props.code]}>
         !
       </Avatar>
     );

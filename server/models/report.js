@@ -11,32 +11,26 @@ const ReportSchema = new Schema({
 	model: { type: String, default: 'Report', required: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
-	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	site: { type: Schema.Types.ObjectId, ref: 'Site' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
-	status: {
-		complete: { type: Boolean, default: false },
-		hidden: { type: Boolean, default: false }
-	}
+	tags: [{ type: String, enum: [''] }],
+	status: [{ type: String, enum: ['complete', 'hidden'] }]
 });
 
-ReportSchema.methods.createTimestamp = (report) => {
+ReportSchema.methods.createTimestamp = function () {
 	const Gameclock = require('../wts/gameClock/gameClock');
-	const { turn, phase, turnNum, minutes, seconds } = Gameclock.getTimeRemaining();
-	report.timestamp = {
-		turn,
-		phase,
-		turnNum,
-		clock: `${minutes}:${seconds}`
-	};
-	report.date = Date.now();
+	this.timestamp = Gameclock.getTimeStamp();
+	this.date = Date.now();
 
-	return report;
+	return;
 };
 
 ReportSchema.methods.validateReport = async function () {
 	const schema = Joi.object({
-		model: Joi.string().min(1).max(3)
+		model: Joi.string().min(1).max(3),
+		tags: Joi.array().items(Joi.string().valid('')),
+		status: Joi.array().items(Joi.string().valid('complete', 'hidden'))
 	});
 
 	const { error } = schema.validate(this, { allowUnknown: true });
@@ -44,7 +38,26 @@ ReportSchema.methods.validateReport = async function () {
 
 };
 
+ReportSchema.methods.populateMe = function () {
+	return this
+		.populate('team')
+		.populate('organization', 'name')
+		.populate('zone')
+		.populate('project')
+		.populate('lab')
+		.populate('theory')
+		.populate('units')
+		.populate('site', 'name team')
+		.execPopulate();
+};
+
 const Report = mongoose.model('Report', ReportSchema);
+
+const AgentAction = Report.discriminator('AgentAction', new Schema({
+	missionType: { type: String, default: 'Awaiting Mission', enum: ['Awaiting Mission', 'Counter-Espionage', 'Gather Intel', 'Sabotage', 'Heist'] },
+	priorities: [{ type: String, enum: ['clandestine', 'effectiveness', 'survivability'] }],
+	result: { type: Number }
+}));
 
 const AircraftAction = Report.discriminator('AircraftAction', new Schema({
 	type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
@@ -141,13 +154,14 @@ const TradeReport = Report.discriminator('TradeReport', new Schema({
 	trade: { type: Schema.Types.ObjectId, ref: 'Trade' }
 }));
 
-const Transaction = Report.discriminator('Transaction', new Schema({
+const Transaction = Report.discriminator('TransactionReport', new Schema({
 	type: { type: String, default: 'Transaction' },
-	transaction: { type: String, enum: ['Deposit', 'Withdrawal'] },
-	currency: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
+	transaction: { type: String, enum: ['Deposit', 'Withdrawal', 'Expense'] },
+	counterparty:{ type: Schema.Types.ObjectId, ref: 'Team' },
+	resource: { type: String, required: true, default: 'Megabucks', enum: ['Megabucks', 'Red Mercury', 'Rare Crustal Minerals'] },
 	account: { type: String, required: true },
 	amount: { type: Number, required: true },
 	note: { type: String }
 }));
 
-module.exports = { Report, AircraftAction, AirMission, CrashReport, MilitaryAction, MilitaryMission, ResearchReport, TerrorReport, TheoryReport, TradeReport, Transaction };
+module.exports = { Report, AgentAction, AircraftAction, AirMission, CrashReport, MilitaryAction, MilitaryMission, ResearchReport, TerrorReport, TheoryReport, TradeReport, Transaction };

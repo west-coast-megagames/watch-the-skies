@@ -18,7 +18,7 @@ router.get('/', async function (req, res) {
 	try {
 		const reports = await Report.find()
 			.populate('team')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('zone')
 			.populate('project')
 			.populate('lab')
@@ -42,7 +42,7 @@ router.get('/:id', validateObjectId, async function (req, res) {
 	try {
 		const report = await Report.findById({ _id: req.params.id })
 			.populate('team')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('zone')
 			.populate('project')
 			.populate('lab')

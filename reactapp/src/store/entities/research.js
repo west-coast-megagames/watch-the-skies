@@ -20,7 +20,7 @@ const slice = createSlice({
     },
     researchReceived: (research, action) => {
       console.log(`${action.type} Dispatched...`);
-      Alert.info('Research State Loaded!', 3000);
+      // Alert.info('Research State Loaded!', 3000);
       research.list = action.payload;
       research.loading = false;
       research.lastFetch = Date.now();
@@ -32,13 +32,26 @@ const slice = createSlice({
     researchAdded: (research, action) => {
       console.log(`${action.type} Dispatched`)
       research.list.push(action.payload);
-    }
+    },
+		researchUpdated: (research, action) => {
+      console.log(`${action.type} Dispatched...`);
+      const index = research.list.findIndex(el => el._id === action.payload._id);
+			research.list[index] = action.payload;
+      research.lastFetch = Date.now();
+    },
+		researchDeleted: (research, action) => {
+      console.log(`${action.type} Dispatched`)
+      const index = research.list.findIndex(el => el._id === action.payload._id);
+      research.list.splice(index, 1);
+    },
   }
 });
 
 // Action Export
 export const {
   researchAdded,
+	researchUpdated,
+	researchDeleted,
   researchReceived,
   researchRequested,
   researchRequestFailed
@@ -67,7 +80,7 @@ export const getCompletedResearch = createSelector(
   state => state.entities.research.list,
   state => state.auth.team,
   (research, team) => research.filter(
-    tech => tech.status.completed === true && tech.team === team._id
+    tech => tech.status.some(el => el === 'completed') && tech.team === team._id
   )
 );
 
@@ -76,7 +89,7 @@ export const getAvailibleResearch = createSelector(
   state => state.entities.research.list,
   state => state.auth.team,
   (research, team) => research.filter(
-    tech => tech.status.available === true && tech.team === team._id
+    tech => tech.status.some(el => el === 'available') && tech.team === team._id
   )
 );
 

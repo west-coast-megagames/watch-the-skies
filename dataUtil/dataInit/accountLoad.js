@@ -11,16 +11,13 @@ const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-// Bodyparser Middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-async function runAccountLoad (runFlag) {
+async function runAccountLoad(runFlag) {
 	if (!runFlag) return false;
 	if (runFlag) await initLoad(runFlag);
 	return true;
@@ -28,7 +25,7 @@ async function runAccountLoad (runFlag) {
 
 const accounts = [];
 
-async function loadAccounts () {
+async function loadAccounts() {
 	let count = 0;
 
 	for await (const acct of accountDataIn) {
@@ -36,9 +33,7 @@ async function loadAccounts () {
 		const newAccount = {
 			name: acct.name,
 			code: acct.code,
-			balance: acct.balance,
-			deposits: acct.deposits,
-			withdrawals: acct.withdrawals
+			balance: acct.balance
 		};
 
 		accounts[count] = newAccount;
@@ -48,7 +43,7 @@ async function loadAccounts () {
 	logger.info(`${count} generic accounts available for loading`);
 }
 
-async function initLoad (doLoad) {
+async function initLoad(doLoad) {
 	if (!doLoad) return;
 
 	// load generic accounts json records into internal array
@@ -67,13 +62,14 @@ async function initLoad (doLoad) {
 	for await (const team of data) {
 		const found_team_id = team._id;
 		const found_owner = team.shortName;
+		const found_owner_type = team.type;
 
 		let recReadCount = 0;
 		const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
 		for (let i = 0; i < accounts.length; ++i) {
 			++recReadCount;
-			await loadAccount(found_team_id, found_owner, accounts[i], recCounts);
+			await loadAccount(found_team_id, found_owner, found_owner_type, accounts[i], recCounts);
 		}
 		totRecReadCount += recReadCount;
 		totRecCounts.loadCount += recCounts.loadCount;
@@ -89,7 +85,7 @@ async function initLoad (doLoad) {
 	);
 }
 
-async function loadAccount (t_id, tName, aData, rCounts) {
+async function loadAccount(t_id, tName, tType, aData, rCounts) {
 	let loadName = '';
 
 	try {
@@ -104,13 +100,18 @@ async function loadAccount (t_id, tName, aData, rCounts) {
 			const newAccount = {
 				code: bigCode,
 				name: aData.name,
-				balance: aData.balance,
-				deposits: aData.deposits,
-				withdrawals: aData.withdrawals,
 				owner: tName,
 				team: t_id,
-				gameState: []
+				resources: [],
+				queue: [],
+				tags: []
 			};
+			const resource = 'Megabucks';
+			let postBal = aData.balance;
+			if (tType === 'Control' && newAccount.code === 'TRE' ) {
+				postBal = 999999999999999;
+			}
+			newAccount.resources.push({ type: resource, balance: postBal });
 			try {
 				await axios.post(`${gameServer}api/accounts`, newAccount);
 				++rCounts.loadCount;
@@ -136,7 +137,7 @@ async function loadAccount (t_id, tName, aData, rCounts) {
 	}
 }
 
-async function deleteAccount () {
+async function deleteAccount() {
 	try {
 		let delErrorFlag = false;
 		try {

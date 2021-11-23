@@ -9,6 +9,7 @@ const nexusError = require('../../middleware/util/throwError');
 const httpErrorHandler = require('../../middleware/util/httpError'); // Middleware that parses errors and status for Express responses
 const { Team } = require('../../models/team');
 const { Facility } = require('../../models/facility');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 // @route   GET api/upgrades
 // @Desc    Get all Upgrades
@@ -46,6 +47,9 @@ router.post('/', async function (req, res) {
 		upgrade.desc = blue.desc;
 		upgrade.prereq = blue.prereq;
 		upgrade.effects = blue.effects;
+		// default status
+		await addArrayValue(upgrade.status, 'building');
+		await addArrayValue(upgrade.status, 'storage');
 
 		upgrade = await upgrade.save();
 

@@ -24,7 +24,7 @@ async function newUnit (name, facility, type, team) {
 			name,
 			team,
 			zone: base.site.zone._id,
-			country: base.site.country._id,
+			organization: base.site.organization._id,
 			site: base.site._id,
 			origin: facility,
 			mission: 'Under Construction',
@@ -48,9 +48,9 @@ async function newUnit (name, facility, type, team) {
 }
 
 // construction function for making a new upgrade
-async function newUpgrade (code, team, facility) {
+async function newUpgrade (data) {
 	// await loadBlueprints(); // this can me taken out when you implement the init loadBlueprints
-
+	const { code, team, facility } = data; // please give me these things
 	// const x = await UpgradeBlueprint.find();
 	const blue = await UpgradeBlueprint.findOne({ code: code });
 	if (!blue) return (`Could not find Blueprint of ${code}`);
@@ -65,6 +65,8 @@ async function newUpgrade (code, team, facility) {
 	upgrade.code = blue.code;
 	upgrade.manufacturer = team;
 	upgrade.effects = blue.effects;
+
+	await upgrade.save();
 
 	return upgrade;
 }

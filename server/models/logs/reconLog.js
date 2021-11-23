@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const ReconLog = Log.discriminator('ReconLog', new Schema({
 	type: { type: String, default: 'Recon' },
-	country: { type: Schema.Types.ObjectId, ref: 'Country' },
+	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	targetSite: { type: Schema.Types.ObjectId, ref: 'Site' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	report: { type: String, required: true },

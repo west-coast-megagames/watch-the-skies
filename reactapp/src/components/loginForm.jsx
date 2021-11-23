@@ -8,7 +8,7 @@ import notify from "../scripts/notify";
 
 class LoginForm extends Component {
   state = {
-    account: { login: "", password: "" },
+    account: { user: "", password: "" },
 		errors: {},
 		isLoading: false
   };
@@ -24,10 +24,10 @@ class LoginForm extends Component {
     }
     if (this.props.login !== prevProps.login) {
       notify({catagory: 'app', type: 'success', title: 'Login Successful...', body: `Welcome to the game ${this.props.user.username}...`})
-      notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
+      // notify({catagory: 'app', type: 'success', title: 'Team Login', body: `Logged in as ${this.props.team.name}...`})
+
       this.props.close();
     }
-
   }
 
   // validate = () => {
@@ -84,11 +84,11 @@ class LoginForm extends Component {
     const { account, errors, isLoading } = this.state;
     return (
       <div>
-        <form >
+        <form>
           <TxtInput
-            name="login"
+            name="user"
             value={account.login}
-            label="login"
+            label="Username"
             onChange={this.handleChange}
             error={errors.login}
           />

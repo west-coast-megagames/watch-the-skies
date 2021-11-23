@@ -1,39 +1,28 @@
 import React, { Component } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, Icon } from 'rsuite';
+import { Nav, Container, Header, Content, Icon, Button } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFistRaised } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink';
 
-import Budget from './tabs/gov/budget';
-import Timeline from '../components/timeline';
+import BudgetTab from './tabs/gov/BudgetTab';
+import GameTimeline from './tabs/gov/GameTimeline';
+import Agreements from './tabs/gov/Agreements';
+import socket from '../socket';
 
-class Governance extends Component {
-	constructor() {
-		super();
-		this.state = {
-			tab: 'dashboard'
-		};
-		this.handleSelect = this.handleSelect.bind(this);
-	}
+const Governance = (props) => {
+	const [tab, setTab] = React.useState('dashboard');
+	const url = props.match.path;
 
-	handleSelect(activeKey) {
-		this.setState({ tab: activeKey })
-	};
-
-	render() {
-		if (!this.props.login) {
-			this.props.history.push('/');
-			return <LoginLink history={this.props.history} />
+		if (!props.login) {
+			props.history.push('/');
+			return <LoginLink history={props.history} />
 		}
-		const url = this.props.match.path;
-		const { tab } = this.state; 
-
-    return (
+    else return (
 			<Container>
 				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={this.handleSelect} style={{ marginBottom: 10, zIndex: 999 }}>
+					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10, }}>
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
 						<Nav.Item eventKey="timeline" to={`${url}/timeline`} componentClass={NavLink} icon={<Icon icon="hourglass" />}>Timeline</Nav.Item>
 						<Nav.Item eventKey="budget" to={`${url}/budget`} componentClass={NavLink} icon={<Icon icon="money" />}>Budget</Nav.Item>
@@ -66,16 +55,16 @@ class Governance extends Component {
 						)}/>
 
 						<Route path={`${url}/timeline`} render={() => (
-							<Timeline />
+							<GameTimeline control={false}/>
 						)}/>
 						<Route path={`${url}/budget`}  render={() => (
-							<Budget />
+							<BudgetTab />
 						)}/>
 						<Route path={`${url}/espionage`}  render={() => (
 							<h5>The espionage system for the Governance Module has not been created!</h5>
 						)}/>
 						<Route path={`${url}/ratification`}  render={() => (
-							<h5>The treaty system for the Governance Module has not been created!</h5>
+							<Agreements/>
 						)}/>
 						<Route path={`${url}/unrest`}  render={() => (
 							<h5>The unrest system for the Governance Module has not been created!</h5>
@@ -85,7 +74,7 @@ class Governance extends Component {
 				</Content>
 			</Container>
 		);
-	}
+	
 }
 
 const mapStateToProps = state => ({

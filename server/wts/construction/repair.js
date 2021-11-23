@@ -1,20 +1,22 @@
 const { Aircraft } = require('../../models/aircraft');
 const { Facility } = require('../../models/facility');
 const nexusEvent = require('../../middleware/events/events');
-const { RepairReport } = require('../reports/reportClasses');
+const { RepairReport } = require('../../models/report');
 const Debugger = require('debug')('app:construction:repair');
+const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 
 async function repairSequence () {
 	for await (const aircraft of await Aircraft.find({ 'status.repair': true })) {
-		if (aircraft.status.repair) {
+		if (aircraft.status.some(el => el === 'repair')) {
 			Debugger(`${aircraft.name} is being repaired...`);
 			const report = new RepairReport;
 			report.type = 'Aircraft Repair';
 			report.dmgRepaired = aircraft.stats.hullMax - aircraft.stats.hull;
 			aircraft.stats.hull = aircraft.stats.hullMax;
-			aircraft.status.damaged = false;
-			aircraft.status.ready = true;
-			aircraft.status.repair = false;
+
+			await clearArrayValue(aircraft.status, 'damaged');
+			await addArrayValue(aircraft.status, 'ready');
+			await clearArrayValue(aircraft.status, 'repair');
 			aircraft.mission = 'Ready';
 
 			await aircraft.save();
@@ -25,9 +27,9 @@ async function repairSequence () {
 			await report.saveReport();
 		}
 	}
-	for await (const structure of await Facility.find({ 'status.repair': true })) {
-		if (structure.status.repair) {
-			structure.status.repair = false;
+	for await (const structure of await Facility.find({ 'status': 'repair' })) {
+		if (structure.status.some(el => el === 'repair')) {
+			await clearArrayValue(structure.status, 'repair');
 			structure.save();
 			Debugger(`${structure.name} is being repaired...`);
 		}

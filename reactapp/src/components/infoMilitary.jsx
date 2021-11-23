@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress } from "rsuite";
+import { Drawer, Button, FlexboxGrid, Icon, IconButton, Badge, Tag, TagGroup, Alert, Panel, Whisper, Popover, SelectPicker, Progress, ButtonGroup, Tooltip } from "rsuite";
 import axios from "axios";
 import { militaryClosed } from "../store/entities/infoPanels";
 import { gameServer } from "../config";
 import ServiceRecord from "./common/serviceRecord";
 import { getOpsAccount } from "../store/entities/accounts";
+import TransferForm from "./common/TransferForm";
+import StatusBar from "../pages/tabs/ops/asset/StatusBar";
 
 class InfoMilitary extends Component {
   constructor(props) {
     super(props);
     this.state = {
       update: false,
-      hideTransfer: true,
+      hideTransfer: false,
     };
     this.toggleTransfer = this.toggleTransfer(this);
     this.unitStats = this.unitStats.bind(this);
@@ -36,7 +38,7 @@ class InfoMilitary extends Component {
                   <b>Name:</b> {this.props.unit.name}
                 </p>
                 <p>
-                  <b>Location:</b> {this.props.unit.country.name} |{" "}
+                  <b>Location:</b> {this.props.unit.organization.name} |{" "}
                   {this.props.unit.zone.name} zone
                 </p>
               </FlexboxGrid.Item>
@@ -46,38 +48,25 @@ class InfoMilitary extends Component {
                 </p>
                 <p>
                   <b>Base:</b> {this.props.unit.origin.name}{" "}
-                  <IconButton
+                  {/* <IconButton
                     size="xs"
-                    onClick={() =>
-                      Alert.warning(`Base transfers have not been implemented`)
-                    }
+                    onClick={()=> this.setState({ hideTransfer: !this.state.hideTransfer })}
                     icon={<Icon icon="send" />}
                   >
                     Transfer Unit
-                  </IconButton>
+                  </IconButton> */}
                 </p>
                 {this.hideTransfer === false && <SelectPicker block disabled />}
               </FlexboxGrid.Item>
             </FlexboxGrid>
             <br />
-            <FlexboxGrid>
-              <FlexboxGrid.Item colspan={12}>
-                <p>Health Bar</p>
-                <Progress.Line
-                  percent={100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={12}>
-                <p>Placeholder Bar</p>
-                <Progress.Line
-                  percent={100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
+              <Progress.Line
+                percent={100}
+                strokeColor="#32a844"
+                showInfo={false}
+              />
+							<StatusBar control={this.props.control} unit={this.props.unit}/>
+
             {this.unitStats(this.props.unit)}
             <br />
             <ServiceRecord owner={this.props.unit} />
@@ -99,12 +88,21 @@ class InfoMilitary extends Component {
           </Button>
         </Drawer.Footer>
         <SelectPicker />
+				{/* {<TransferForm 
+				show={this.state.hideTransfer} 
+				closeTransfer={this.closeTransfer}
+				aircrafts={this.props.aircrafts}
+				units={this.props.units} />} */}
       </Drawer>
     );
   }
 
+	closeTransfer = () => { 
+		this.setState({hideTransfer: false}) 
+	};
+
   toggleTransfer() {
-    // console.log(`Toggle`);
+    console.log(`Toggle`);
     this.setState({ hideTransfer: !this.state.hideTransfer });
   }
 
@@ -130,7 +128,7 @@ class InfoMilitary extends Component {
                         `Repairs for military units has not been implemented yet...`
                       )
                     }
-                    disabled={stats.hull === stats.hullMax || status.repair}
+                    disabled={stats.hull === stats.hullMax || status.some(el => el === 'repair')}
                     icon={<Icon icon="wrench" />}
                   >
                     Repair
@@ -174,11 +172,11 @@ class InfoMilitary extends Component {
           <FlexboxGrid.Item colspan={24}>
             <br />
             <TagGroup>
-              {status.ready && <Tag color="green">Mission Ready</Tag>}
-              {status.deployed && <Tag color="yellow">Deployed</Tag>}
-              {status.repair && <Tag color="yellow">Repairing</Tag>}
-              {status.upgrade && <Tag color="yellow">Upgrading</Tag>}
-              {status.destroyed && <Tag color="red">Destroyed</Tag>}
+              {status.some(el => el === 'ready') && <Tag color="green">Mission Ready</Tag>}
+              {status.some(el => el === 'deployed ')&& <Tag color="yellow">Deployed</Tag>}
+              {status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+              {status.some(el => el === 'upgrade') && <Tag color="yellow">Upgrading</Tag>}
+              {status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
             </TagGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
@@ -258,6 +256,8 @@ const invadeSpeaker = (
 
 const mapStateToProps = (state) => ({
   unit: state.info.Military,
+	units: state.entities.military.list,
+	aircrafts: state.entities.aircrafts.list,
   lastFetch: state.entities.military.lastFetch,
   show: state.info.showMilitary,
   account: getOpsAccount(state),

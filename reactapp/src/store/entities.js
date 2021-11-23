@@ -8,17 +8,20 @@ import articleReducer from './entities/articles';
 import zoneReducer from './entities/zones';
 import militaryReducer from './entities/military';
 import facilityReducer from './entities/facilities';
-import countryReducer from './entities/countries';
+import organizationReducer from './entities/organizations';
+import clockReducer from './entities/clock';
 import researchReducer from './entities/research';
 import accountReducer from './entities/accounts';
 import blueprintReducer from './entities/blueprints';
- import upgradeReducer from './entities/upgrades';
+import upgradeReducer from './entities/upgrades';
+import tradeReducer from './entities/trades';
+import intelReducer from './entities/intel';
 
 
 
 // Combined Store reducers for the 'Entities' slice
 export default combineReducers({
-  bugs: bugsReducer,
+  // bugs: bugsReducer,
   reports: reportReducer,
   sites: siteReducer,
   teams: teamReducer,
@@ -27,9 +30,12 @@ export default combineReducers({
   zones: zoneReducer,
   military: militaryReducer,
   facilities: facilityReducer,
-  countries: countryReducer,
+	clock: clockReducer,
+  organizations: organizationReducer,
   research: researchReducer,
 	accounts: accountReducer,
 	blueprints: blueprintReducer,
-	upgrades: upgradeReducer
+	upgrades: upgradeReducer,
+	trades: tradeReducer,
+	intel: intelReducer
 });

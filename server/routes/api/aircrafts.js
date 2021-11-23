@@ -21,9 +21,10 @@ router.get('/', async function (req, res) {
 			.sort({ team: 1 })
 			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
-			.populate('site', 'name geoDecimal')
-			.populate('origin', 'name');
+			.populate('organization', 'name')
+			.populate('systems', 'name category')
+			.populate('site', 'name')
+			.populate('base', 'name');
 		res.status(200).json(aircrafts);
 	}
 	catch (err) {
@@ -41,9 +42,9 @@ router.get('/:id', validateObjectId, async (req, res) => {
 	try {
 		const aircraft = await Aircraft.findById(id)
 			.sort({ team: 1 })
-			.populate('team', 'name shortName')
+			.populate('team', 'name shortName code')
 			.populate('zone', 'name')
-			.populate('country', 'name')
+			.populate('organization', 'name')
 			.populate('systems', 'name category')
 			.populate('site', 'name')
 			.populate('base', 'name');
@@ -75,22 +76,22 @@ router.post('/', async function (req, res) {
 				for (const element of upgrade.effects) {
 					switch (element.type) {
 					case 'health':
-						newAircraft.stats.health += element.effect;
+						newAircraft.stats.health += element.value;
 						break;
 					case 'attack':
-						newAircraft.stats.attack += element.effect;
+						newAircraft.stats.attack += element.value;
 						break;
 					case 'defense':
-						newAircraft.stats.defense += element.effect;
+						newAircraft.stats.defense += element.value;
 						break;
 					case 'range':
-						newAircraft.stats.range += element.effect;
+						newAircraft.stats.range += element.value;
 						break;
 					case 'evade':
-						newAircraft.stats.evade += element.effect;
+						newAircraft.stats.evade += element.value;
 						break;
 					case 'penetration':
-						newAircraft.stats.penetration += element.effect;
+						newAircraft.stats.penetration += element.value;
 						break;
 					default: break;
 					}

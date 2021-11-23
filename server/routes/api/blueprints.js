@@ -7,7 +7,7 @@ const httpErrorHandler = require('../../middleware/util/httpError'); // Middlewa
 const nexusError = require('../../middleware/util/throwError'); // Project Nexus middleware for error handling
 
 // Mongoose Model Import
-const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint, MilitaryBlueprint } = require('../../models/blueprint');
+const { Blueprint, FacilityBlueprint, AircraftBlueprint, SquadBlueprint, UpgradeBlueprint, MilitaryBlueprint, BuildingBlueprint } = require('../../models/blueprint');
 
 // @route   GET api/blueprints
 // @Desc    Get all blueprints
@@ -64,6 +64,10 @@ router.post('/', async (req, res) => {
 
 		case('military'):
 			newBlueprint = new MilitaryBlueprint(req.body);
+			break;
+
+		case('building'):
+			newBlueprint = new BuildingBlueprint(req.body);
 			break;
 
 		case('facility'):

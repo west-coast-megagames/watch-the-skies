@@ -4,7 +4,7 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-async function chkZone (runFlag) {
+async function chkZone(runFlag) {
 
 	let zFinds = [];
 	try {
@@ -25,6 +25,10 @@ async function chkZone (runFlag) {
 			logger.error(`Model is not 'Zone' ${zone.name} ${zone._id}`);
 		}
 
+		if (!Object.prototype.hasOwnProperty.call(zone, 'tags')) {
+			logger.error(`tags missing for zone ${zone.name} ${zone._id}`);
+		}
+
 		if (!Object.prototype.hasOwnProperty.call(zone, 'code')) {
 			logger.error(`code missing for zone ${zone.name} ${zone._id}`);
 		}
@@ -37,10 +41,6 @@ async function chkZone (runFlag) {
 		}
 		else if (zone.name === '' || zone.name == undefined || zone.name == null) {
 			logger.error(`name is blank for Zone ${zone.code} ${zone._id}`);
-		}
-
-		if (!Object.prototype.hasOwnProperty.call(zone, 'gameState')) {
-			logger.error(`gameState missing for zone ${zone.name} ${zone._id}`);
 		}
 
 		if (!Object.prototype.hasOwnProperty.call(zone, 'serviceRecord')) {
