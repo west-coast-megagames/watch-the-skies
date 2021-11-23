@@ -23,7 +23,7 @@ require('./config/config')(); // Bootup for special configurations
 require('./middleware/production/prod')(app); // Production compression and middleware
 require('./middleware/log/logging')(); // Bootup for error handling
 require('./routes/sockets')(server); // Starts websocket
-require('./routes/routes')(app); // Bootup for Express routes
+// require('./routes/routes')(app); // Bootup for Express routes
 require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
 require('./wts/gameClock/gameClock'); // Initialize the gameClock class
 require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
