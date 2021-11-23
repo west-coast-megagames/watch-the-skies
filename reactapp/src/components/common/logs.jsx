@@ -11,6 +11,23 @@ const TransactionLog = props => {
   let { report } = props;
   let date = new Date(report.date);
 
+	const getTeamCode = (id) => {
+		if (id) {
+			const account = props.accounts.find(el => el._id === id);
+			return account ? `${account.owner} ${account.name}` : '???';			
+		}
+		else return('Control')
+	}
+
+	const getEnglish = (report) => {
+		switch(report.transaction) {
+			case 'Deposit': return `Sent ${report.amount} ${report.resource} to`;
+			case 'Expense': return `Spent ${report.amount} ${report.resource} from`;
+			case 'Withdrawal': return `Withdrew ${report.amount} ${report.resource} from`;
+			default: return 'did something'
+		}
+	}
+
   return (
     <Timeline.Item
       key={report._id}
@@ -21,9 +38,7 @@ const TransactionLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d4efdf, #fff)"
         }}
-        header={`${report.transaction} - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+				header={<div><b>{report.transaction} - {getTeamCode(report.counterparty)} {getEnglish(report)}  {report.account} Account (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <FlexboxGrid>
@@ -221,7 +236,6 @@ const BattleLog = props => {
   );
 };
 
-// TODO - Look of an Intercept log should be fleshed out for march.
 const InterceptLog = props => {
   let { report, interception } = props;
 	let { unit, opponent } = report;
@@ -267,7 +281,7 @@ const InterceptLog = props => {
 						/>
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={16}>
-						<p style={{ width: '90%', height: 'auto', }} > <b>{report ? report : 'No Report...'}</b></p>
+						<p style={{ width: '90%', height: '10VH', overflow: 'auto' }} > <b>{report ? report : 'No Report...'}</b></p>
 						<Divider>Stat Changes</Divider>
 						{renderDifference(stats[0], stats[stats.length - 1])}
 					</FlexboxGrid.Item>
