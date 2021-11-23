@@ -203,7 +203,7 @@ class GameTimer {
 	}
 
 	getTimeStamp() {
-		return { turn: this.currentTurn, phase: this.currentPhase, turnNum: this.turnNum, year: this.year, clock: this.getTimeRemaining() };
+		return { turn: this.currentTurn, phase: this.currentPhase, turnNum: this.turnNum + 1, year: this.year, clock: this.getTimeRemaining() };
 	}
 
 	getClockState() {
@@ -215,7 +215,7 @@ class GameTimer {
 			seconds: this.seconds,
 			turn: this.currentTurn,
 			phase: this.currentPhase,
-			turnNum: this.turnNum,
+			turnNum: this.turnNum + 1,
 			year: this.year,
 			gameClock: this.getTimeRemaining(),
 			deadline: this.roundEnd
