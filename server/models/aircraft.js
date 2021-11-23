@@ -151,7 +151,6 @@ AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);
 
 	try {
-
 		await addArrayValue(this.status, 'deployed');
 		await clearArrayValue(this.status, 'ready');
 		this.mission = mission;

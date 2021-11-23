@@ -269,7 +269,7 @@ const Control = (props) => {
 										Wipe Research
 									</Button>
 										<Button color="red" size="sm" onClick={ () => delLogs() }>
-											Wipe Logs
+											Wipe Reports
 									</Button>
 								</ButtonGroup>
 							</div>

@@ -299,17 +299,15 @@ async function applyDmg(unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
-	update.status.ready = true;
-	update.status.deployed = false;
 	update.organization = origin.organization;
 	update.site = update.origin._id;
 	update.zone = origin.zone;
 
-	if (unit.stats.hull != unit.stats.hullMax) {
-		update.status.damaged = true;
+	for (const status of unit.status) {
+		await addArrayValue(update.status, status);
 	}
+	await clearArrayValue(update.status, 'deployed');
 
 	await update.save();
 	interceptDebugger(`Damage applied to ${unit.name}...`);

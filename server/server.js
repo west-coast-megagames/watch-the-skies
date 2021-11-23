@@ -3,16 +3,16 @@ const http = require('http'); // Import of the NODE HTTP module to create the ht
 const debug = require('debug')('app:boot'); // Import and initialization of DEBUG console log
 const { logger } = require('./middleware/log/winston'); // Import of winston for error logging
 
-logger.info('Starting boot-up for WTS Game server...'); 
+logger.info('Starting boot-up for WTS Game server...');
 
 require('supports-color'); // Allows colors for debug console messages
 
 // Start up proceesses
 logger.info('Loading Start-up proceesses...');
-debug('Loading Start-up proceesses...'); 
+debug('Loading Start-up proceesses...');
 const app = express(); // Init for express
-logger.info('Express app started...'); 
-debug('Express app started...'); 
+logger.info('Express app started...');
+debug('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
 logger.info('HTTP server created...');
 debug('HTTP server created...');
