@@ -8,12 +8,18 @@ logger.info('Starting boot-up for WTS Game server...');
 require('supports-color'); // Allows colors for debug console messages
 
 // Start up proceesses
+const port = process.env.PORT || 5000; // Server entry point - Node Server
 logger.info('Loading Start-up proceesses...');
 debug('Loading Start-up proceesses...');
-const app = express(); // Init for express
+const app = express().listen(port, ); // Init for express
 logger.info('Express app started...');
 debug('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
+// Server listner callback
+server.listen(port, () => {
+	logger.info(`WTS Server started on port ${port}...`);
+	debug(`WTS Server started on port ${port}...`);
+});
 logger.info('HTTP server created...');
 debug('HTTP server created...');
 
@@ -28,11 +34,6 @@ require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
 
 app.use(express.static('public'));
 
-const port = process.env.PORT || 5000; // Server entry point - Node Server
-// Server listner callback
-server.listen(port, () => {
-	logger.info(`WTS Server started on port ${port}...`);
-	debug(`WTS Server started on port ${port}...`);
-});
+debug('WTS Server load completed!');
 
 module.exports = server; // Export of Server for JEST testing
