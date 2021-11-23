@@ -1,5 +1,6 @@
 // Error handling and Logging
 const { routeError, logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const express = require('express');
 const debugBoot = require('debug')('app:boot');
 const cors = require('cors');
 
@@ -58,15 +59,14 @@ debugBoot('INIT routes initiated...');
 // Desc - Game routes serve as the HTTP access point to game functions
 const admin = require('./game/admin');
 const control = require('./game/control');
-const diplomacy = require('./game/diplomacy');
+// const diplomacy = require('./game/diplomacy');
 const science = require('./game/science');
-const aircrafts = require('./game/aircrafts');
+// const aircrafts = require('./game/aircrafts');
 const news = require('./game/news');
-const shared = require('./game/shared');
-const upgrades = require('./game/upgrades');
-const tempMil = require('./game/tempMil');
+// const shared = require('./game/shared');
+// const upgrades = require('./game/upgrades');
+// const tempMil = require('./game/tempMil');
 const debug = require('./debugRoute');
-const express = require('express');
 debugBoot('Game routes initiated...')
 
 module.exports = function (app) {
@@ -82,12 +82,12 @@ module.exports = function (app) {
 	app.use('/', home);
 	app.use('/game/admin', admin);
 	app.use('/game/control', control);
-	app.use('/game/diplomacy', diplomacy);
-	app.use('/game/upgrades', upgrades);
+	// app.use('/game/diplomacy', diplomacy);
+	// app.use('/game/upgrades', upgrades);
 	app.use('/science', science);
-	app.use('/game/aircrafts', aircrafts);
+	// app.use('/game/aircrafts', aircrafts);
 	app.use('/game/news', news); // Route for the news desks
-	app.use('/game/shared', shared);
+	// app.use('/game/shared', shared);
 	app.use('/debug', debug); // Route for debug triggering
 	app.use('/api/accounts', account); // Route for inputing accounts
 	app.use('/api/clock', clock); // Route for inputing accounts
@@ -123,7 +123,7 @@ module.exports = function (app) {
 	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
 	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
 
-	app.use('/game/tempMil', tempMil);
+	// app.use('/game/tempMil', tempMil);
 
 	app.use('/api/zones', zones); // Route for inputing zones
 
