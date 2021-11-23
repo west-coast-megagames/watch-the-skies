@@ -134,7 +134,10 @@ const AssetTab = (props) => {
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected}/>
 				}
 				{ selected && selected.model === 'Aircraft' && 
-					<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected}/>
+					<div>
+						<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected}/>
+						<ServiceRecord owner={selected} />						
+					</div>
 				}
 				{ selected && selected.model === 'Upgrade' && 
 					<Panel>
@@ -226,7 +229,7 @@ const AssetTab = (props) => {
 							/>								
 							</InputGroup>
 						</Panel>
-						<div bodyFill style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+						<div style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
 						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.aircrafts.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.aircrafts.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((upgrade, index) => (

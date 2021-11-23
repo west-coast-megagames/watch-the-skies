@@ -53,7 +53,7 @@ const ViewArticle = (props) => {
 
 					<List hover>
 						{article.comments.map((comment, index) => (
-							<List.Item index={index}>
+							<List.Item key={index}>
 								<FlexboxGrid align='middle' >
 									<FlexboxGrid.Item colspan={1}>
 										<TeamAvatar size={'sm'} code={'none'} /> 

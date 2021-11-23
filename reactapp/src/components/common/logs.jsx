@@ -290,7 +290,7 @@ const InterceptLog = props => {
 					<h5 style={{  display: 'flex', justifyContent: 'center',  alignItems: 'center', marginBottom: '5px' }}>Damage report
 						</h5>
 					{outcomes.map((el, index) => (
-					<div index={index} style={{ border: "1px solid black", textAlign: 'center', height: '7vh'  }} >
+					<div key={index} style={{ border: "1px solid black", textAlign: 'center', height: '7vh'  }} >
 						<div style={{ margin: '10px' }}>
 							Round {index+1} - <Tag color={el === 'hit' ? 'red' : el === 'critical' ? 'violet' : 'blue'} style={{ 'textTransform': 'capitalize'}}>{el}</Tag>
 							{el === 'hit' && <p style={{ color: 'brown' }}>{unit.name} took some damage!</p>}			
