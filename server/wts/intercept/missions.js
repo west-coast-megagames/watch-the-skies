@@ -133,10 +133,10 @@ async function runInterceptions() {
 		});
 
 		// Skips mission if the current aircraft is dead
-		if (aircraft.status.some(el => el === 'destroyed')) {
+		if (aircraft.status.some(el => el === 'destroyed') || aircraft.stats.hull <= 0) {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
 			atkReport.type = 'Failure';
-			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
+			atkReport.report += `${aircraft.name} was destroyed prior to intercept.`,
 			await addArrayValue(atkReport.status, 'complete');
 			atkReport.createTimestamp();
 			await atkReport.save();
