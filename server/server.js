@@ -23,7 +23,6 @@ require('./config/config')(); // Bootup for special configurations
 require('./middleware/production/prod')(app); // Production compression and middleware
 require('./middleware/log/logging')(); // Bootup for error handling
 require('./routes/sockets')(server); // Starts websocket
-// require('./routes/routes')(app); // Bootup for Express routes
 require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
 require('./wts/gameClock/gameClock'); // Initialize the gameClock class
 require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
@@ -35,6 +34,8 @@ server.listen(port, host, () => {
 	logger.info(`WTS Server started on port ${port}...`);
 	debug(`WTS Server started on port ${port}...`);
 });
+
+require('./routes/routes')(app); // Bootup for Express routes
 
 debug('WTS Server load completed!');
 
