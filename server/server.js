@@ -15,11 +15,6 @@ const app = express(); // Init for express
 logger.info('Express app started...');
 debug('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
-// Server listner callback
-server.listen(port, () => {
-	logger.info(`WTS Server started on port ${port}...`);
-	debug(`WTS Server started on port ${port}...`);
-});
 logger.info('HTTP server created...');
 debug('HTTP server created...');
 
@@ -33,6 +28,12 @@ require('./wts/gameClock/gameClock'); // Initialize the gameClock class
 require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
 
 app.use(express.static('public'));
+
+// Server listner callback
+server.listen(port, () => {
+	logger.info(`WTS Server started on port ${port}...`);
+	debug(`WTS Server started on port ${port}...`);
+});
 
 debug('WTS Server load completed!');
 
