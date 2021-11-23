@@ -11,7 +11,7 @@ require('supports-color'); // Allows colors for debug console messages
 const port = process.env.PORT || 5000; // Server entry point - Node Server
 logger.info('Loading Start-up proceesses...');
 debug('Loading Start-up proceesses...');
-const app = express().listen(port, ); // Init for express
+const app = express(); // Init for express
 logger.info('Express app started...');
 debug('Express app started...');
 const server = http.createServer(app); // Creation of an HTTP server
