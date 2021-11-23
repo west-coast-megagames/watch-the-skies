@@ -11,7 +11,6 @@
     "test": "tests"
   },
   "scripts": {
-		"postinstall": "npm run build",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix ../reactapp",
