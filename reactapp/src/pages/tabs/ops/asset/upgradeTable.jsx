@@ -128,7 +128,7 @@ return (
 						<Button style={{ height: '3vh', margin: '5px' }} color='red' size='sm' onClick={() => handleRemove(up._id)}><b>X</b></Button>
 						<div>
 							<h5 style={{ margin: '5px' }}>{up.name} {up.status.map(tag => (<Tag color='blue' style={{ textTransform: 'capitalize' }}>{tag}</Tag>))}</h5>			
-							{up.effects.map(effect => (<b style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</b>))}
+							{up.effects.map(effect => (<b key={effect._id} style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</b>))}
 						</div>
 					</div>
 				) 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'; // React
 import { connect } from 'react-redux';
-import { Timeline, CheckPicker, CheckTreePicker } from 'rsuite';
+import { Timeline, CheckPicker, CheckTreePicker, Divider } from 'rsuite';
 import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog, FailedLog, BattleLog } from '../../../components/common/logs'
 import { getAllGovReports, getAllOpsReports, getGovReports, getOpsReports } from '../../../store/entities/reports';
 
@@ -81,10 +81,12 @@ const GameTimeline = (props) => {
 				valueKey='value'
 				onChange={value => handleTypeFilter(value)}
 			/>
+			{filteredReports.length === 0 && <h5>No Reports...</h5>}
 			{filteredReports.length > 0 && <Timeline className='game-timeline'>
 				{filteredReports.map(report => 
 					renderReport(report)
 				)}
+				<Divider>End of List</Divider>
 			</Timeline>}
 	</React.Fragment>
 	);

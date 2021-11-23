@@ -141,6 +141,7 @@ const AircraftStats = (props) => {
 						</FlexboxGrid.Item>
 
 				 </FlexboxGrid>
+				 
 					<br />
 				</Panel>
 
