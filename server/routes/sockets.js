@@ -26,12 +26,7 @@ const routes = { clock, treaty, military, transaction, trade, article, aircraft,
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
 	logger.info('Socket.io servers initialized...');
-	const io = require('socket.io')(server, {
-		cors: {
-			origin: config.get('socketCORS'),
-			methods: ['GET', 'POST']
-		}
-	}); // Creation of websocket Server
+	const io = require('socket.io')(server); // Creation of websocket Server
 
 	io.use((client, next) => {
 		//     console.log(client.handshake);
