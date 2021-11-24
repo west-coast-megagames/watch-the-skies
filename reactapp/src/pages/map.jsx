@@ -16,8 +16,8 @@ const MapPage = (props) => {
 	const [tab, setTab] = React.useState('earth');
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
 	const [showRange, setShowRange] = React.useState(true);
-	const [showSearch, setShowSearch] = React.useState(true);
-	const [showFilter, setShowFilter] = React.useState(true);
+	const [showSearch, setShowSearch] = React.useState(false);
+	const [showFilter, setShowFilter] = React.useState(false);
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
 	const url = props.match.path;
 
@@ -197,7 +197,7 @@ const mapStateToProps = state => ({
 	login: state.auth.login,
 	team: getMyTeam(state),
 	sites: state.entities.sites.list,
-	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : state.enteties.sites.list[0],
+	capitol: getCapitol(state),
 	military: state.entities.military.list,
 	aircrafts: state.entities.aircrafts.list,
 	account: getOpsAccount(state),
