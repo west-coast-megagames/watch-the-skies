@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker, Toggle, Icon, Button } from 'rsuite';
+import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker, Toggle, Icon, Button, ButtonToolbar, ButtonGroup, IconButton, Panel } from 'rsuite';
 import BalanceHeader from '../components/common/BalanceHeader';
-// import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
+import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShieldAlt, faRadiation, faGlobe, faFighterJet, faMap } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
@@ -10,11 +10,16 @@ import { getOpsAccount } from '../store/entities/accounts';
 import { showSite } from '../store/entities/infoPanels';
 import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
+import { getMyTeam } from '../store/entities/teams';
 
 const MapPage = (props) => {
+	const [tab, setTab] = React.useState('earth');
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
 	const [showRange, setShowRange] = React.useState(true);
+	const [showSearch, setShowSearch] = React.useState(true);
+	const [showFilter, setShowFilter] = React.useState(true);
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
+	const url = props.match.path;
 
 	const handleCenter = (value) => {
 		const military = props.military.find(el => el._id === value);
@@ -70,39 +75,59 @@ const MapPage = (props) => {
 	}
   else return (
 		<Container>
-				<FlexboxGrid justify="center" align="middle">
-					<FlexboxGrid.Item colspan={12}>
-						<CheckTreePicker 
+			<Header>
+			<FlexboxGrid align="middle">
+				<FlexboxGrid.Item colspan={6} >
+					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
+						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon={'globe'} />}>Earth</Nav.Item>
+					</Nav>							
+				</FlexboxGrid.Item>
+
+				<FlexboxGrid.Item  style={{ textAlign: 'right' }} colspan={5}>
+					{showSearch && <SelectPicker
+						data={props.sites}
+						valueKey='_id'
+						labelKey='name'
+						appearance="default"
+						placeholder="Find a Site"
+						style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}
+						onChange={(value) => handleCenter(value)}
+					/> }	
+				</FlexboxGrid.Item>
+				
+					<ButtonGroup>
+						<IconButton style={!showSearch ? {  } : { borderRadius: '0px', }} onClick={() => setShowSearch(!showSearch)} appearance={showSearch ? 'primary' : "ghost"} icon={<Icon icon='search' /> } ></IconButton>
+						<IconButton color='green' onClick={() => setShowRange(!showRange)} appearance={showRange ? 'primary' : "ghost"} icon={showRange ? <Icon icon='eye-slash' /> : <Icon icon='eye' /> } ></IconButton>
+						<IconButton style={!showFilter ? {  } : { borderRadius: '0px' }} onClick={() => setShowFilter(!showFilter)} appearance={showFilter ? 'primary' : "ghost"} icon={<Icon icon='filter' />} ></IconButton>
+					</ButtonGroup>
+
+				<FlexboxGrid.Item colspan={5}>
+						{showFilter && <CheckTreePicker 
+							style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}
 							defaultExpandAll
 							data={data}
 							defaultValue={display}
 							placeholder="Select Map Elements"
 							valueKey='value'
 							onChange={handleDis}
-						/>
-					<Button onClick={() => setShowRange(!showRange)} appearance={showRange ? 'primary' : "ghost"}>{showRange ? 'Hide' : 'Show'} Surveillance Range</Button>
-					</FlexboxGrid.Item>
+						/>}
+						{!showFilter && <div style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}></div>}
+				</FlexboxGrid.Item>
 
-					<FlexboxGrid.Item colspan={8}>
-					<SelectPicker
-   				  data={props.sites}
-						valueKey='_id'
-						labelKey='name'
-						appearance="default"
-						placeholder="Find a Site"
-						style={{ width: 224 }}
-						onChange={(value) => handleCenter(value)}
-					/> 
-				
+				<FlexboxGrid.Item colspan={6}>
+					<BalanceHeader account={props.account} />
 					</FlexboxGrid.Item>
-
-					<FlexboxGrid.Item colspan={4}>
-						<BalanceHeader account={props.account} />
-					</FlexboxGrid.Item>
-					
 				</FlexboxGrid>
+			</Header>
+
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
-				<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} showRange={showRange} center={center}></PrototypeMap>
+			<Switch>
+					<Route path={`${url}/earth`} render={() => (
+						<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} showRange={showRange} center={center}></PrototypeMap>
+					)}/>
+					<Redirect from={`${url}/`} exact to={`${url}/earth`} />
+				</Switch>
+				
 			</Content>
 		</Container>
     );
@@ -170,9 +195,9 @@ const data = [
 
 const mapStateToProps = state => ({
 	login: state.auth.login,
-	team: state.auth.team,
+	team: getMyTeam(state),
 	sites: state.entities.sites.list,
-	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : undefined,
+	capitol: state.auth.team.type !== 'Control' ? getCapitol(state) : state.enteties.sites.list[0],
 	military: state.entities.military.list,
 	aircrafts: state.entities.aircrafts.list,
 	account: getOpsAccount(state),

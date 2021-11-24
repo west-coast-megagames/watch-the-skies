@@ -27,6 +27,8 @@ const options = {
 	styles: mapStyle,
 	disableDefaultUI: true,
 	zoomControl: true,
+  mapTypeControl: true,
+
 	minZoom: 3, 
 	maxZoom: 9, 
 	mapTypeId: 'terrain'
@@ -112,13 +114,9 @@ function PrototypeMap(props) {
 		socket.emit('request', { route: 'site', action: 'space', actionType: 'geoPosition', data: { _id: sat._id, geoPosition: data.latLng.toJSON() }});
 	}
 
-	const handlenDrag = (data) => {
-		console.log(dragGeo)
-	}
 
 	const mapRef = React.useRef();
 	const onMapLoad = React.useCallback((map) => {
-		// setMapClick({event: onMapClick})
 		mapRef.current = map;
 	}, []);
 	
@@ -283,8 +281,6 @@ function PrototypeMap(props) {
 								strokeColor: '#61ff00',
 								strokeOpacity: 0.8,
 								strokeWeight: 2,
-								fillColor: '#61ff00',
-								fillOpacity: 0.15,
 								clickable: false,
 								draggable: false,
 								editable: false,
@@ -406,12 +402,6 @@ function PrototypeMap(props) {
 							editable: false,
 							visible: true,
 							radius: 30000,
-							paths: [
-								{lat: 37.772, lng: -122.214},
-								{lat: 21.291, lng: -157.821},
-								{lat: -18.142, lng: 178.431},
-								{lat: -27.467, lng: 153.027}
-							],
 							zIndex: 1
 						}}
    				 />
