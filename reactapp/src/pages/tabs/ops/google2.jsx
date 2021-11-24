@@ -28,7 +28,7 @@ const options = {
 	disableDefaultUI: true,
 	zoomControl: true,
 	minZoom: 3, 
-	maxZoom: 8, 
+	maxZoom: 9, 
 	mapTypeId: 'terrain'
 }
 
@@ -288,7 +288,7 @@ function PrototypeMap(props) {
 								clickable: false,
 								draggable: false,
 								editable: false,
-								visible: true,
+								visible: props.showRange,
 								radius: 2000000,
 								zIndex: 1
 							}}
@@ -478,13 +478,13 @@ function PrototypeMap(props) {
 }
 
 const mapStateToProps = (state, props) => ({
-  login: state.auth.login,
+  login: state.auth.login,	
   lastFetch: state.entities.aircrafts.lastFetch,
   team: getMyTeam(state),
   zones: state.entities.zones.list,
   sites: state.entities.sites.list,
-	military: state.entities.military.list,
-	deployedMil: getDeployed(state),
+	military: state.entities.military.list.filter(el => !el.status.some(el => el === 'destroyed')), // filters out destroyed units
+	// deployedMil: getDeployed(state),
 	mobilizedMil: getMobilized(state),
 	contacts: getContacts(state),
 	cities:  getCities(state),

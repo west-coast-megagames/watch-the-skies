@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker } from 'rsuite';
+import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker, Toggle, Icon, Button } from 'rsuite';
 import BalanceHeader from '../components/common/BalanceHeader';
 // import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ import PrototypeMap from './tabs/ops/google2'
 
 const MapPage = (props) => {
 	const [center, setCenter] = React.useState({ lat: 0,	lng: 0	});
+	const [showRange, setShowRange] = React.useState(true);
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
 
 	const handleCenter = (value) => {
@@ -69,7 +70,7 @@ const MapPage = (props) => {
 	}
   else return (
 		<Container>
-				<FlexboxGrid justify="space-around" align="middle">
+				<FlexboxGrid justify="center" align="middle">
 					<FlexboxGrid.Item colspan={12}>
 						<CheckTreePicker 
 							defaultExpandAll
@@ -79,6 +80,7 @@ const MapPage = (props) => {
 							valueKey='value'
 							onChange={handleDis}
 						/>
+					<Button onClick={() => setShowRange(!showRange)} appearance={showRange ? 'primary' : "ghost"}>{showRange ? 'Hide' : 'Show'} Surveillance Range</Button>
 					</FlexboxGrid.Item>
 
 					<FlexboxGrid.Item colspan={8}>
@@ -90,7 +92,8 @@ const MapPage = (props) => {
 						placeholder="Find a Site"
 						style={{ width: 224 }}
 						onChange={(value) => handleCenter(value)}
-					/>
+					/> 
+				
 					</FlexboxGrid.Item>
 
 					<FlexboxGrid.Item colspan={4}>
@@ -99,7 +102,7 @@ const MapPage = (props) => {
 					
 				</FlexboxGrid>
 			<Content className='tabContent' style={{ paddingLeft: 20 }}>
-				<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} center={center}></PrototypeMap>
+				<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} showRange={showRange} center={center}></PrototypeMap>
 			</Content>
 		</Container>
     );
