@@ -102,9 +102,9 @@ const BudgetTab = (props) => {
 			<Container className="transfers">
 				<Content>
 					<h4>{account.name} Account</h4>
-					{account && <AccountGraph
+					{/* {account && <AccountGraph
 						account={account}
-					/>}
+					/>} */}
 					<h4>Automatic Transfers</h4>
 					<AutoTransfers
 						accounts={ props.accounts }

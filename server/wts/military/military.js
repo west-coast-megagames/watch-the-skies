@@ -308,7 +308,7 @@ async function runMilitary() {
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
 				if (unit.status.some(el => el === 'destroyed') || (liberated && unit.team.toHexString() === site.team.toHexString())) {
-					await unit.recall();
+					await unit.recall(true);
 				}
 			}
 
@@ -352,7 +352,7 @@ async function runMilitary() {
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
 				if (attackerTeams.some(el => el.toHexString() === unit.team.toHexString()) || unit.status.some(el => el === 'destroyed')) {
-					await unit.recall();
+					await unit.recall(true);
 				}
 			}
 		}

@@ -185,7 +185,7 @@ const DeployMilitary = (props) => {
 						<FlexboxGrid.Item colspan={12}>
 						<h5>Missions</h5>
 							<ButtonGroup>
-								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'invade' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('invade')} >Invade</Button>
+								<Button disabled={props.target ? (props.target.team._id === props.team._id && !props.target.status.some(el => el === 'occupied')) : true} appearance={deployType !== 'invade' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('invade')} >Invade</Button>
 								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'siege' ? 'ghost' : 'primary'} color={'violet'} onClick={() => handleType('siege')} >Siege</Button>
 								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'terrorize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('terrorize')} >Terrorize</Button>
 								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'raze' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('raze')} >Raze</Button>
@@ -263,7 +263,7 @@ const DeployMilitary = (props) => {
 			</Drawer.Body>}
 			<Drawer.Footer>
 				{units.length === 0 && <Tag color='red'>Select one more more units</Tag>}
-				{props.account.resources.find(el => el.type === 'Megabucks').balance < cost && <Tag color='red'>{cost - props.account.resources.find(el => el.type === 'Megabucks').balance} more megabucks needed in Ops account</Tag>}
+				{props.account && props.account.resources.find(el => el.type === 'Megabucks').balance < cost && <Tag color='red'>{cost - props.account.resources.find(el => el.type === 'Megabucks').balance} more megabucks needed in Ops account</Tag>}
 				
 				<Button disabled={deployType === '' || props.account.resources.find(el => el.type === 'Megabucks').balance < cost || units.length === 0} onClick={submitDeployment} appearance="primary">Confirm</Button>
 				<Button onClick={handleExit} appearance="subtle">Cancel</Button>
