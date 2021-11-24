@@ -41,7 +41,7 @@ const BudgetTab = (props) => {
 			}
 		}
 		setResourceList(accountOptions);
-	}, []);
+	}, [props.accounts]);
 
 	useEffect(() => {
 		setOptions(formatPickerData(props.accounts))
