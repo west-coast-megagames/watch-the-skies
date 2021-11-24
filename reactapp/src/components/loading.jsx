@@ -32,7 +32,14 @@ const LoadingPage = (props) => {
 			props.debugTeam(myTeam); // Forces your TEAM to USA
 			props.finishLoading();
 			history.push('/home');
-		} else {
+		} 
+		else if (props.roles.some(el => el=== 'Control')) {
+				// Leave this in just in case login fucks up again
+			props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
+			props.finishLoading();
+			history.push('/home');
+		}
+		else {
 			// Leave this in just in case login fucks up again
 			// props.debugTeam(props.entities.teams.list[0]); // Forces your TEAM to USA
 			// props.finishLoading();
@@ -42,6 +49,7 @@ const LoadingPage = (props) => {
 			return (
 				<div style={{ display: 'flex', justifyContent: 'center', }}>
 					<h5>Could not find a team with id {props.appState.auth.user.username}</h5>
+
 					{/* <img height={500} src='https://live.staticflickr.com/4782/40236389964_fe77df66a3_b.jpg' alt='failed to find team assigned'/> */}
 					
 				</div>
@@ -74,6 +82,7 @@ const LoadingPage = (props) => {
 
 const mapStateToProps = (state) => ({
 	appState: state,
+	roles: state.auth.user.roles,
 	entities: state.entities
 });
 
