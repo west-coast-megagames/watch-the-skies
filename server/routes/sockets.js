@@ -1,5 +1,6 @@
 /* eslint-disable no-trailing-spaces */
 const { logger } = require('../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const debug = require('debug')('app:boot'); // Import and initialization of DEBUG console log
 const config = require('config'); // Import of config modules to pull config variables
 
 const nexusEvent = require('../middleware/events/events'); // Local NODE event trigger
@@ -26,6 +27,7 @@ const routes = { clock, treaty, military, transaction, trade, article, aircraft,
 // Function for initializing the Socket.io socket server
 module.exports = function (server) {
 	logger.info('Socket.io servers initialized...');
+	debug('Socket.io servers initialized...');
 	const io = require('socket.io')(server, {
 		cors: {
 			origin: config.get('socketCORS'),
@@ -132,4 +134,5 @@ module.exports = function (server) {
 	}
 
 	logger.info('Sockets Online...');
+	debug('Sockets Online...');
 };

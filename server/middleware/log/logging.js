@@ -17,4 +17,6 @@ module.exports = function () {
 		error.logger.error(`${err.message}`, { meta: err.stack });
 		// process.exit(1);
 	});
+
+	debug('Logger Module loaded...');
 };
