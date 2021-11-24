@@ -14,6 +14,7 @@ const mongoOptions = {
 };
 
 module.exports = function () {
+	debug('Establishing connection to MongoDB...');
 	// Connect to MongoDB with Mongoose
 	mongoose.connect(dbURI, mongoOptions)
 		.then(() => {
