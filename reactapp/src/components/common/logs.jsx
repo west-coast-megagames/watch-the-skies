@@ -157,11 +157,9 @@ const BattleLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #fff, #f8f9f9)"
+          backgroundImage: "linear-gradient(to bottom right, #fff)"
         }}
-        header={`Battle report - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`Battle report - ${report.team.code} | (Turn ${report.timestamp.turnNum})`}
         collapsible
       >
         <p>
@@ -172,45 +170,11 @@ const BattleLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.site.name} 
+          <b>Location:</b> {report.site.name} W
         </p>
 				<p>
           <b>Result:</b> {report.winner} 
         </p>
-				<br/>
-				{report.results[0] && 
-				<div>
-					<p>
-					<b>Round 1:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[0].attackerHits} out of {report.results[0].attackerRolls} || {report.results[0].defendersDamaged.length} Defenders damaged, {report.results[0].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[0].defenderHits} out of {report.results[0].defenderRolls} || {report.results[0].attackersDamaged.length} Attackers damaged, {report.results[0].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
-				{report.results[1] && 
-				<div>
-					<p>
-					<b>Round 2:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[1].attackerHits} out of {report.results[1].attackerRolls} || {report.results[1].defendersDamaged.length} Defenders damaged, {report.results[1].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[1].defenderHits} out of {report.results[1].defenderRolls} || {report.results[1].attackersDamaged.length} Attackers damaged, {report.results[1].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
-				{report.results[2] && 
-				<div>
-					<p>
-					<b>Round 3:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[2].attackerHits} out of {report.results[2].attackerRolls} || {report.results[2].defendersDamaged.length} Defenders damaged, {report.results[2].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[2].defenderHits} out of {report.results[2].defenderRolls} || {report.results[2].attackersDamaged.length} Attackers damaged, {report.results[2].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
 				<br/>
 				<FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>Attackers
@@ -231,6 +195,20 @@ const BattleLog = props => {
 					</FlexboxGrid.Item>
 					<br/>
 				</FlexboxGrid>
+				{report.results.map((result, index) => (
+				<div key={index}>
+					<Divider><b>Round 1:</b></Divider>
+					<p>
+						<b>Attackers Hit {result.attackerHits} out of {result.attackerRolls} || {result.defendersDamaged.length} Defenders damaged, {result.defendersDestroyed.length} destroyed</b>
+					</p>
+					<p>
+						<b>Defenders Hit {result.defenderHits} out of {result.defenderRolls} || {result.attackersDamaged.length} Attackers damaged, {result.attackersDestroyed.length} destroyed</b>
+					</p>					
+				</div>
+				))}
+
+				<br/>
+
       </Panel>
     </Timeline.Item>
   );

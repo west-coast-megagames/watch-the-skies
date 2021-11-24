@@ -68,7 +68,7 @@ const AircraftStats = (props) => {
 								<b>Name:</b> {name}
 							</p>
 							<p>
-								<b>Location:</b> {site.name} |{" "}
+								<b>Location:</b> {site ? site.name : "The Void"} |{" "}
 								{zone.name} zone
 							</p>
 							<p>
@@ -134,7 +134,7 @@ const AircraftStats = (props) => {
 						<FlexboxGrid.Item colspan={12}>
 								<Panel style={{ height: '100%'}} bordered>
 									<h5>Current Mission</h5>
-									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site.name}
+									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site ? site.name : "The Void"} |{" "}
 								</Panel>
 
 								<UpgradeTable upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />

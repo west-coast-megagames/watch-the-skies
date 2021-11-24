@@ -89,11 +89,14 @@ const AircraftTable = (props) => {
         <Cell>
           {rowData => {
 						let { site } = rowData
-						return( 
+						if (site){ return( 
 							<div>
 								{site.name}
-							</div>)
-          }}
+							</div>)}
+          
+					else return(<b>"The Void"</b>)
+					}}
+
         </Cell>
       </Column>
 

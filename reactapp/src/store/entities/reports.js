@@ -115,7 +115,10 @@ export const getAllOpsReports = createSelector(
 export const getOpsReports = createSelector(
   state => state.entities.reports.list,
 	state => state.auth.team,
-  (reports, team)=> reports.filter(report => report.type === 'Interception' && report.team._id === team._id)
+  (reports, team)=> reports.filter(report => (report.type === 'Interception' || 
+	report.type === 'Aircraft Repair' || report.type === 'Recon' ||
+	report.type === 'Battle'
+	) && report.team._id === team._id)
 );
 
 
