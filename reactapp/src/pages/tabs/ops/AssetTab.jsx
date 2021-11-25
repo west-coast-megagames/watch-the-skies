@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { FlexboxGrid, Popover, Container, Whisper, Content, Alert, Sidebar,  IconButton, Icon, Panel, PanelGroup, List, Table, TagGroup, Tag, Input, CheckboxGroup, Checkbox, CheckPicker, InputGroup } from 'rsuite';
-import FacilityStats from '../../../components/common/facilityStats';
+import FacilityStats from './asset/facilityStats';
 import ServiceRecord from '../../../components/common/serviceRecord';
 import { getOpsAccount } from '../../../store/entities/accounts';
 import { getFacilites } from '../../../store/entities/facilities';
@@ -116,7 +116,7 @@ const AssetTab = (props) => {
 			<IconButton size="xs" icon={<Icon icon="info-circle" />} />
 		</Whisper>
 		)
-	}
+	} 
 
 	return (
 		<Container style={{padddingRight: '0px', }}>
