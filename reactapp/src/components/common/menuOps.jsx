@@ -43,7 +43,7 @@ const OpsMenu = (props) => {
 		<React.Fragment>
 			<MenuSvg 
 				disabledLeft={props.info.type === 'Space' || props.info.type === 'Fleet' || props.info.type === 'Corps'} 
-				disabledRight={!props.info.type === 'Site'} 
+				disabledRight={props.info.type === 'Space' || props.info.type === 'Fleet' || props.info.type === 'Corps'} 
 				handleInfo={handleInfo} 
 				closeMenu={() => props.closeMenu} 
 				assignAir={assignAir} 

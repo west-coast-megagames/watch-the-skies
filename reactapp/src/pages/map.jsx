@@ -79,7 +79,7 @@ const MapPage = (props) => {
 			<FlexboxGrid align="middle">
 				<FlexboxGrid.Item colspan={6} >
 					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
-						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon={'globe'} />}>Earth</Nav.Item>
+						<Nav.Item eventKey="earth" to={`${url}/earth`} componentClass={NavLink} icon={<Icon icon={'globe'} />}>Earth</Nav.Item>
 					</Nav>							
 				</FlexboxGrid.Item>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { IconButton, Icon, Badge, Whisper, Popover, Tag } from 'rsuite'; // rsuite components
+import TeamAvatar from './teamAvatar';
 
 
 
@@ -24,11 +25,12 @@ const UserList = () => {
                 {(uncredentialed > 0) ? <span>{uncredentialed} not signed in</span> : null }
                 {userList.length > 0 && myUser !== null ? 
                 <React.Fragment>
-                    <ul>
-                        {userList.map(user => (
-                            <li id={user.userID}>{user.username} | {user.username === myUser.username && <Tag color='green'>Me</Tag>}</li>
-                        ))}
-                    </ul>
+                      {userList.map(user => (
+                          <b style={{   display: 'flex', justifyContent: 'center',	alignItems: 'center'  }} id={user.userID}>
+														<TeamAvatar code={user.team}  size={'xs'} /> - 
+														{user.username}   {user.username === myUser.username && <Tag color='green'>Me</Tag>}
+													</b>
+                      ))}
                 </React.Fragment> : null }
             </Popover>} >
             <Badge content={online} >
