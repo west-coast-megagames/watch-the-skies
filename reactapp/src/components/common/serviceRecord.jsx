@@ -4,7 +4,18 @@ import { Timeline, Panel, Divider } from 'rsuite'
 import { connect, useSelector } from 'react-redux'
 
 const ServiceRecord = ({ reports, owner, teams, accounts}) => {
-	reports = reports.filter(log => owner._id === log.unit || owner._id === log.aircraft);
+	switch(owner.model) {
+		case 'Aircraft':
+			reports = reports.filter(log => log.aircraft);
+			reports = reports.filter(log => owner._id === log.aircraft._id);
+			break;
+		case 'Military':
+			reports = reports.filter(log => owner._id === log.unit);
+			break;
+		default: 
+		break;
+	}
+
 
 	let s = reports.length !== 1 ? 's' : '';
 
@@ -18,7 +29,7 @@ const ServiceRecord = ({ reports, owner, teams, accounts}) => {
 				return (<ResearchLog key={report._id} report={report} teams={teams}/>); // sci     
 			case 'Deploy':
 				return (<DeployLog key={report._id} report={report} teams={teams}/>); // ops
-			case 'Aircraft Repair':
+			case 'Repair':
 				return (<RepairLog key={report._id} report={report} teams={teams}/>); // ops
 			case 'Recon':
 				return (<ReconLog key={report._id} report={report} teams={teams}/>); // ops

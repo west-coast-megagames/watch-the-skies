@@ -114,8 +114,7 @@ const initUpdates = () => {
        }
    });
 
-	 socket.on('clients', (users) => {
-		console.log('clients', users)					
+	 socket.on('clients', (users) => {			
 		let func = updaterFunctions['users'];
 		func ? store.dispatch(func(users)) : console.log(`ERROR INVALID UPDATE FUNCTION:  - ${func}`);
 	});

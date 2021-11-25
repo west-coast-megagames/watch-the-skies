@@ -527,9 +527,7 @@ const RepairLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
         }}
-        header={`Aircraft Repaired - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+				header={<div><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <p>
@@ -537,7 +535,7 @@ const RepairLog = props => {
           Turn {report.timestamp.turnNum}
         </p>
         <p><b>Team:</b> {report.team.name}</p>
-        <p><b>Damage Repaired:</b> {report.dmgRepaired}</p>
+        <p><b>Damage Repaired:</b> {report.repair.dmgRepaired}</p>
         <p><b>Cost:</b> {report.cost}</p>
       </Panel>
     </Timeline.Item>

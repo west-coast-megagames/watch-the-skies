@@ -11,7 +11,10 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
+const { AircraftAction } = require('./report'); // WTS Game log function
+
 const randomCords = require('../util/systems/lz');
+const clock = require('../wts/gameClock/gameClock');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -270,6 +273,7 @@ AircraftSchema.methods.repair = async function (upgrades = []) {
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
+		const repaired = this.stats.hullMax - this.stats.hull;
 		this.stats.hull = this.stats.hullMax; // Restores the units hull to max
 
 		for (const item of upgrades) {
@@ -279,6 +283,7 @@ AircraftSchema.methods.repair = async function (upgrades = []) {
 		}
 
 		const unit = await this.save(); // Saves the unit into a new variable
+		await this.report({ repair: { dmgRepaired: repaired, cost } }, 'Repair');
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
 		return unit;
 	}
@@ -340,6 +345,48 @@ AircraftSchema.methods.populateMe = function () {
 		.populate('site', 'name geoDecimal')
 		.populate('origin', 'name')
 		.execPopulate();
+};
+
+AircraftSchema.methods.report = async function (action, type) {
+	const { repair, transfer, cost } = action;
+	try {
+		let report = new AircraftAction ({
+			date: Date.now(),
+			timestamp: clock.getTimeStamp(),
+			team: this.team,
+			aircraft: this._id,
+			// site: this.site._id,
+			type,
+			repair,
+			transfer,
+			cost
+		});
+
+		// team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
+		// aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
+		// site: { type: Schema.Types.ObjectId, ref: 'Site' },
+
+		// type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
+		// repair: {
+		// 	dmgRepaired: { type: Number }
+		// },
+		// transfer: {
+		// 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
+		// 	destination: { type: Schema.Types.ObjectId, ref: 'Facility' }
+		// },
+		// cost: { type: Number }
+
+		report = await report.save();
+		report = report.populateMe();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'create', [ report ]); // Scott Note: Untested does not work
+		console.log(`${type} report created...`);
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
 };
 
 AircraftSchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemove = []) {

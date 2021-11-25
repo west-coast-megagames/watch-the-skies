@@ -40,13 +40,14 @@ ReportSchema.methods.validateReport = async function () {
 
 ReportSchema.methods.populateMe = function () {
 	return this
-		.populate('team')
+		.populate('team', 'name code shortName')
 		.populate('organization', 'name')
 		.populate('zone')
 		.populate('project')
 		.populate('lab')
 		.populate('theory')
 		.populate('units')
+		.populate('aircraft', 'name')
 		.populate('site', 'name team')
 		.execPopulate();
 };
