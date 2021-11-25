@@ -283,7 +283,7 @@ AircraftSchema.methods.repair = async function (upgrades = []) {
 		}
 
 		const unit = await this.save(); // Saves the unit into a new variable
-		await this.report({ repair: { dmgRepaired: repaired, cost } }, 'Repair');
+		await this.report({ repair: { dmgRepaired: repaired }, cost }, 'Repair');
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
 		return unit;
 	}
@@ -351,8 +351,6 @@ AircraftSchema.methods.report = async function (action, type) {
 	const { repair, transfer, cost } = action;
 	try {
 		let report = new AircraftAction ({
-			date: Date.now(),
-			timestamp: clock.getTimeStamp(),
 			team: this.team,
 			aircraft: this._id,
 			// site: this.site._id,
@@ -361,6 +359,8 @@ AircraftSchema.methods.report = async function (action, type) {
 			transfer,
 			cost
 		});
+
+		await report.createTimestamp();
 
 		// team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 		// aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
@@ -377,7 +377,7 @@ AircraftSchema.methods.report = async function (action, type) {
 		// cost: { type: Number }
 
 		report = await report.save();
-		report = report.populateMe();
+		report = await report.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'create', [ report ]); // Scott Note: Untested does not work
