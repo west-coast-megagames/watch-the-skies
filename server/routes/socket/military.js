@@ -36,6 +36,10 @@ module.exports = async function (client, req) {
 				await unit.populateMe();
 				// Switch for the Military Actions, triggered off of the TYPE of action being done
 				switch (req.type) {
+				case('aid'): // Aid Action Trigger
+					// unit = await unit.aid(req.data.target)
+					client.emit('alert', { type: 'info', message: `Our military is not prepaired to aid the local populace until D10` });
+					break;
 				case('equip'): // Equip Action Trigger
 					unit = await unit.equip(req.data.upgrades)
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
