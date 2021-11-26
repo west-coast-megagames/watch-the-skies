@@ -90,6 +90,6 @@ export const addteam = team =>
 
 	export const getMyTeam = createSelector(
     state => state.entities.teams.list,
-		state => state.auth.team,
-    (teams, team) => teams.find(el => el._id === team._id)
+		state => state.auth.user,
+    (teams, user) => teams.find(team => team.users.some(el => el === user._id)   )
   );

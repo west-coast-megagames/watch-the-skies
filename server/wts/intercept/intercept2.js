@@ -14,7 +14,7 @@ let attacker = undefined; // Aircraft on the mission
 let defender = undefined; // Target of the interception
 
 // Intercept Function: Initiates an interception
-async function intercept (atkUnit, atkReport, defUnit, defReport) {
+async function intercept(atkUnit, atkReport, defUnit, defReport) {
 	interceptDebugger('Beginning intercept...');
 	attackReport = atkReport; // Assigns the Attack Report to global variable
 	defenseReport = defReport; // Assigns the Defense Report to global variable
@@ -36,8 +36,8 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 			outcomes: [],
 			stats: [],
 			dmg: {
+				hull: 0,
 				armor: 0,
-				frame: 0,
 				system: 0
 			}
 		},
@@ -48,7 +48,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 			stats: [],
 			dmg: {
 				armor: 0,
-				frame: 0,
+				hull: 0,
 				system: 0
 			}
 		},
@@ -142,11 +142,11 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 	while (combat);
 
 	attackReport.interception = interception;
-	attackReport = attackReport.createTimestamp(attackReport);
+	attackReport.createTimestamp();
 	await attackReport.save();
 
 	defenseReport.interception = interception;
-	defenseReport = defenseReport.createTimestamp(defenseReport);
+	defenseReport.createTimestamp();
 	await defenseReport.save();
 
 	await applyDmg(attacker); // Saves the effects of the combat for the attacker
@@ -161,7 +161,7 @@ async function intercept (atkUnit, atkReport, defUnit, defReport) {
 }
 
 // Looks through the upgrades, system damage, and stance of a craft and adjusts the combat stats accordingly
-function combatBonus (unit) {
+function combatBonus(unit) {
 	interceptDebugger(`Recalculating Combat Bonuses for ${unit.name}!`);
 	const	stats = unit.stats.toObject();
 
@@ -224,7 +224,7 @@ function combatBonus (unit) {
 }
 
 // Damages an aircraft due to the current side
-async function dmgAircraft (unit, opposition, side, criticalHit) {
+async function dmgAircraft(unit, opposition, side, criticalHit) {
 	interceptDebugger(`Damaging ${side} ${unit.name}...`);
 	const { stats } = unit;
 	let hits = 0;
@@ -245,6 +245,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 
 		for (let i = 0; i < hits; i++) {
 			const index = rand(systemKeys.length) - 1; // Selects a random system
+			interception[side].dmg.system += hits; // Adds system hits to report
 
 			const sysName = systemKeys[index];
 			const upgrade = unit.upgrades.find(upG => upG.type === sysName);
@@ -288,7 +289,7 @@ async function dmgAircraft (unit, opposition, side, criticalHit) {
 }
 
 // Update Aircrafts with Damage
-async function applyDmg (unit) {
+async function applyDmg(unit) {
 	interceptDebugger(`Applying damage to ${unit.name}...`);
 	const update = await Aircraft.findById(unit._id)
 		.populate('team')
@@ -298,17 +299,15 @@ async function applyDmg (unit) {
 
 	update.systems = unit.systems;
 	update.stats.hull = unit.stats.hull;
-	update.status.destroyed = (unit.status.some(el => el === 'destroyed'));
 	update.mission = 'Docked';
-	update.status.ready = true;
-	update.status.deployed = false;
 	update.organization = origin.organization;
 	update.site = update.origin._id;
 	update.zone = origin.zone;
 
-	if (unit.stats.hull != unit.stats.hullMax) {
-		update.status.damaged = true;
+	for (const status of unit.status) {
+		await addArrayValue(update.status, status);
 	}
+	await clearArrayValue(update.status, 'deployed');
 
 	await update.save();
 	interceptDebugger(`Damage applied to ${unit.name}...`);

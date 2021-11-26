@@ -12,6 +12,7 @@ const randomCords = require('../../util/systems/lz');
 const { DeploymentReport } = require('../../models/report');
 const { clearArrayValue, addArrayValue } = require('../../middleware/util/arrayCalls');
 const { logger } = require('../../middleware/log/winston');
+const clock = require('../gameClock/gameClock');
 
 async function resolveBattle(attackers, defenders) {
 	let attackerTotal = 0;
@@ -103,10 +104,10 @@ async function resolveBattle(attackers, defenders) {
 						for (const element of up.effects) {
 							switch (element.type) {
 							case 'attack':
-								unit.stats.attack -= element.effect;
+								unit.stats.attack -= element.value;
 								break;
 							case 'defense':
-								unit.stats.defense -= element.effect;
+								unit.stats.defense -= element.value;
 								break;
 							default: break;
 							}
@@ -124,10 +125,10 @@ async function resolveBattle(attackers, defenders) {
 				for (const element of hit.effects) {
 					switch (element.type) {
 					case 'attack':
-						unit.stats.attack -= element.effect;
+						unit.stats.attack -= element.value;
 						break;
 					case 'defense':
-						unit.stats.defense -= element.effect;
+						unit.stats.defense -= element.value;
 						break;
 					default: break;
 					}
@@ -168,10 +169,10 @@ async function resolveBattle(attackers, defenders) {
 						for (const element of up.effects) {
 							switch (element.type) {
 							case 'attack':
-								unit.stats.attack -= element.effect;
+								unit.stats.attack -= element.value;
 								break;
 							case 'defense':
-								unit.stats.defense -= element.effect;
+								unit.stats.defense -= element.value;
 								break;
 							default: break;
 							}
@@ -189,10 +190,10 @@ async function resolveBattle(attackers, defenders) {
 				for (const element of hit.effects) {
 					switch (element.type) {
 					case 'attack':
-						unit.stats.attack -= element.effect;
+						unit.stats.attack -= element.value;
 						break;
 					case 'defense':
-						unit.stats.defense -= element.effect;
+						unit.stats.defense -= element.value;
 						break;
 					default: break;
 					}
@@ -307,7 +308,7 @@ async function runMilitary() {
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
 				if (unit.status.some(el => el === 'destroyed') || (liberated && unit.team.toHexString() === site.team.toHexString())) {
-					await unit.recall();
+					await unit.recall(true);
 				}
 			}
 
@@ -332,10 +333,10 @@ async function runMilitary() {
 
 			// send the defeated units to a nearby site/facility
 		}
-		else if (attackers.length == 0) {		// else the defenders are victorius and there anre no more attackers?
+		else if (attackers.length === 0) {		// else the defenders are victorius and there anre no more attackers?
 			report += 'The Defenders are victorious!\n';
 			militaryReport.winner = 'The Defenders are victorious';
-			
+
 			await clearArrayValue(site.status, 'warzone');
 
 			if (data.spoils && data.spoils.length > 0) {
@@ -351,7 +352,7 @@ async function runMilitary() {
 			for (let unit of army) {
 				unit = await Military.findById(unit._id);
 				if (attackerTeams.some(el => el.toHexString() === unit.team.toHexString()) || unit.status.some(el => el === 'destroyed')) {
-					await unit.recall();
+					await unit.recall(true);
 				}
 			}
 		}
@@ -373,7 +374,7 @@ async function runMilitary() {
 
 		militaryReport.battleRecord = report;
 		militaryReport.spoils = data.spoils;
-		militaryReport = militaryReport.createTimestamp(militaryReport);
+		militaryReport.timestamp = clock.getTimeStamp();
 
 		for (const team of attackerTeams) {
 			let newReport = new MilitaryMission({
@@ -388,8 +389,7 @@ async function runMilitary() {
 				winner: militaryReport.winner,
 				spoils: militaryReport.spoils
 			});
-
-			newReport = newReport.createTimestamp(newReport);
+			newReport.timestamp = clock.getTimeStamp();
 			newReport = await newReport.save();
 		}
 
@@ -411,27 +411,25 @@ async function repairUnit(data) {
 	});
 
 	// TODO John Review how to update for resources
-	let resource = 'Megabucks';
-	let index = account.resources.findIndex(el => el.type === resource);
+	const resource = 'Megabucks';
+	const index = account.resources.findIndex(el => el.type === resource);
 	if (index < 0) {
 		// error send here
 		return ({ message : `Balance not found for operations account to repair ${unit.name}.`, type: 'error' });
-	} 
+	}
+	else if (account.balance < 2) {
+		// error send here
+		return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
+	}
 	else {
-		if (account.balance < 2) {
-			// error send here
-			return ({ message : `No Funding! Assign more money to your operations account to repair ${unit.name}.`, type: 'error' });
-		}
-		else {
-			account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
-	
-			await addArrayValue(unit.status, 'ready');
-			await clearArrayValue(unit.status, 'destroyed');
-			await clearArrayValue(unit.status, 'damaged');
-			unit.stats.health = unit.stats.healthMax;
-			await unit.save();
-			return ({ message : `${unit.name} repaired!`, type: 'success' });
-		}
+		account = await account.withdrawal({ from: account, amount: 2, note: `Repairs for ${unit.name}` });
+
+		await addArrayValue(unit.status, 'ready');
+		await clearArrayValue(unit.status, 'destroyed');
+		await clearArrayValue(unit.status, 'damaged');
+		unit.stats.health = unit.stats.healthMax;
+		await unit.save();
+		return ({ message : `${unit.name} repaired!`, type: 'success' });
 	}
 }
 

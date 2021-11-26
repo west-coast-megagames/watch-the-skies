@@ -8,6 +8,7 @@ import { getFacilites } from '../../../../store/entities/facilities';
 import { getMilitary } from '../../../../store/entities/military';
 import MobilizeForm from './MobilizeForm';
 import StatusBar from './StatusBar';
+import socket from '../../../../socket';
 
 const { HeaderCell, Cell, Column, } = Table;
 
@@ -33,6 +34,10 @@ const MilitaryTable = (props) => {
 		setPage(1);
 		setDisplayLength(dataKey);
   }
+
+	const submitCancel = (id) => {
+		socket.emit('request', { route: 'military', action: 'reset', data: { units: [ id ], type: 'mission' }});
+  }
   
   if (props.military.length === 0)
       return <h4>No military found</h4>
@@ -55,7 +60,23 @@ const MilitaryTable = (props) => {
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-			<Column flexGrow={2} >
+			<Column flexGrow={1}>
+        <HeaderCell >Mission</HeaderCell>
+        <Cell style={{ padding: 0 }} verticalAlign='middle' >
+          {rowData => {
+            let { assignment, _id, name } = rowData
+            return( 
+						<div>
+							{assignment.type}
+							{assignment.type !== 'Garrison' && <Whisper placement="top" speaker={<Tooltip>Cancel {name}'s mission (does not recall)</Tooltip>} trigger="hover">
+								<IconButton size="xs" icon={<Icon icon="exit" />} onClick={() => submitCancel(_id)} color="red"/>
+							</Whisper>}
+						</div>)
+          }}
+        </Cell>
+      </Column>
+
+			<Column flexGrow={1} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
@@ -75,48 +96,6 @@ const MilitaryTable = (props) => {
         </Cell>
       </Column>
 
-						{/* 		<div>
-								<ButtonGroup size='sm'>
-									<Whisper placement="top" speaker={mobilizedSpeaker} trigger="click">
-										{status.some(el => el === 'mobilized') && <IconButton icon={<Icon icon="check"/>} color="blue"/>}
-										{!status.some(el => el === 'mobilized') && <IconButton icon={<Icon icon="close"/>} color="red"/>}
-									</Whisper>	
-								</ButtonGroup>								
-							</div> */}
-
-      {/* <Column flexGrow={2}>
-        <HeaderCell >Integrity</HeaderCell>
-        <Cell style={{ padding: 0 }} verticalAlign='middle' >
-          {rowData => {
-            let { stats } = rowData
-            return(
-							<FlexboxGrid justify="center" align='middle'>
-								<FlexboxGrid.Item colspan={20}>
-									<Progress.Line percent={stats.hull / stats.hullMax * 100} showInfo={false}/>	
-								</FlexboxGrid.Item>
-								<FlexboxGrid.Item colspan={4} >
-									<b>{stats.hull} / {stats.hullMax}</b>
-								</FlexboxGrid.Item>
-							</FlexboxGrid>
-            )
-          }}
-        </Cell>
-      </Column> */}
-
-      {/* <Column flexGrow={1} >
-        <HeaderCell>Location</HeaderCell>
-        <Cell>
-          {rowData => {
-            return getLocation(rowData)
-          }}
-        </Cell>
-      </Column>
-
-      <Column flexGrow={1} >
-          <HeaderCell>Status</HeaderCell>
-          <Cell dataKey='mission' />
-      </Column>*/}
-
       <Column flexGrow={1}>
         <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
@@ -130,8 +109,8 @@ const MilitaryTable = (props) => {
           }}    
         </Cell>
       </Column> 
+			
       </Table>
-
 			<Table.Pagination
           lengthMenu={[
             {

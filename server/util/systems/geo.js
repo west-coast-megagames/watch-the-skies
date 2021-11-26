@@ -1,5 +1,5 @@
 // Function to get the distance between two lat/lon points using the ‘haversine’ formula
-function getDistance (lat1, lon1, lat2, lon2) {
+function getDistance(lat1, lon1, lat2, lon2) {
 	const R = 6371; // Radius of the earth in km
 	const dLat = deg2rad(lat2 - lat1); // deg2rad below
 	const dLon = deg2rad(lon2 - lon1); // deg2rad below
@@ -15,14 +15,14 @@ function getDistance (lat1, lon1, lat2, lon2) {
 	return d; // Return Distance
 }
 
-function deg2rad (deg) {
+function deg2rad(deg) {
 	return deg * (Math.PI / 180);
 }
 
 // let test = getDistance(50, 4, 44, 7)
 // console.log(`Distance is ${test}`);
 
-function parseDMS (fullDMS) {
+function parseDMS(fullDMS) {
 	const parts = fullDMS.split(/[^\d\w\.]+/);
 	const lat = ConvertDMSToDD(parts[0], parts[1], parts[2], parts[3]);
 	const lng = ConvertDMSToDD(parts[4], parts[5], parts[6], parts[7]);
@@ -30,7 +30,7 @@ function parseDMS (fullDMS) {
 	return { lat: lat, lng: lng };
 }
 
-function ConvertDMSToDD (degrees, minutes, seconds, direction) {
+function ConvertDMSToDD(degrees, minutes, seconds, direction) {
 	let dd = Number(degrees) + Number(minutes) / 60 + Number(seconds) / (60 * 60);
 
 	if (direction == 'S' || direction == 'W') {
@@ -48,7 +48,7 @@ function ConvertDMSToDD (degrees, minutes, seconds, direction) {
 
 // console.log(`Lat: ${latDMS}, Long: ${lngDMS}`);
 
-function convertToDms (dd, isLng) {
+function convertToDms(dd, isLng) {
 	if (!dd || isNaN(dd)) {
 		dd = 0;
 	}

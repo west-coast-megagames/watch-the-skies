@@ -8,13 +8,13 @@ const StatusBar = (props) => {
 	const [displayLength, setDisplayLength] = React.useState(10);
 
 	const handleControl = (type) => { 
-		socket.emit('request', { route: 'military', action: 'reset', data: { id: props.unit._id, type  }});
+		socket.emit('request', { route: props.unit.model.toLowerCase(), action: 'reset', data: { units: [props.unit._id], type  }});
 	};
 
 	let { status, name, actions, missions, model } = props.unit;
   return (
 		<div >
-		<ButtonGroup justified size='sm'>
+		<ButtonGroup style={{ padding: 0 }} justified size='sm'>
 
 			{status.some(el => el === 'mobilized') && model === 'Military' && <Whisper placement="top" speaker={<Tooltip>{name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
 				{<Button onClick={() => props.control ? handleControl('mobilized') : console.log('nope')} style={{ cursor: 'help',  }} color='orange'><Icon icon="plane"/></Button>}

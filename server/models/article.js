@@ -25,7 +25,6 @@ const ArticleSchema = new Schema({
 	dateline: { type: String },
 	headline: { type: String, required: true, minlength: 1, maxlength: 100 },
 	body: { type: String, minlength: 1, maxlength: 1000 },
-	likes: { type: Number, default: 0 },
 	tags: [{ type: String }],
 	imageSrc: { type: String },
 	gameState: [],

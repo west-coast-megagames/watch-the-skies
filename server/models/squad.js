@@ -8,7 +8,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const clock = require('../wts/gameClock/gameClock');
-const nexusEvent = require('../middleware/events/events');
+// const nexusEvent = require('../middleware/events/events');
 const die = require('../util/systems/dice');
 const { AgentAction } = require('../models/report');
 
@@ -40,8 +40,8 @@ const SquadSchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
-	status: [ {type: String, enum: ['deployed', 'destroyed', 'ready', 'captured', 'damaged']} ],
-	tags: [ {type: String, enum: ['']} ]
+	status: [ { type: String, enum: ['deployed', 'destroyed', 'ready', 'captured', 'damaged'] } ],
+	tags: [ { type: String, enum: [''] } ]
 });
 
 SquadSchema.methods.runMission = async function () {

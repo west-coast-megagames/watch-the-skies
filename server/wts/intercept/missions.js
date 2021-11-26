@@ -57,27 +57,27 @@ async function start(aircraft, target, mission) {
 	// SWITCH Sorts the mission into the correct mission
 	const newMission = [{ aircraft, target, distance, origin, mission }]; // Saves the mission combination
 	switch (true) {
-	case mission === 'Interception':
+	case mission === 'interception':
 		interceptionMissions = [...interceptionMissions, ...newMission]; // Adds Interception to be resolved
 		missionDebugger(interceptionMissions);
 		break;
-	case mission === 'Escort':
+	case mission === 'escort':
 		escortMissions = [...escortMissions, ...newMission]; // Adds Escort to be resolved
 		missionDebugger(escortMissions);
 		break;
-	case mission === 'Patrol':
+	case mission === 'patrol':
 		patrolMissions = [...patrolMissions, ...newMission]; // Adds Patrol to be resolved
 		missionDebugger(patrolMissions);
 		break;
-	case mission === 'Transport':
+	case mission === 'transport':
 		transportMissions = [...transportMissions, ...newMission]; // Adds Transport to be resolved
 		missionDebugger(transportMissions);
 		break;
-	case mission === 'Recon Site' || mission === 'Recon Aircraft':
+	case mission === 'recon site' || mission === 'recon aircraft':
 		reconMissions = [...reconMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(reconMissions);
 		break;
-	case mission === 'Diversion':
+	case mission === 'diversion':
 		diversionMissions = [...diversionMissions, ...newMission]; // Adds Recon to be resolved
 		missionDebugger(diversionMissions);
 		break;
@@ -111,13 +111,15 @@ async function resolveMissions() {
 
 // Iterate over all submitted Interceptions in range order
 async function runInterceptions() {
+	missionDebugger('Running Interceptions...');
 	for await (const interception of interceptionMissions.sort((a, b) => a.distance - b.distance)) {
 		count++; // Count iteration for each interception
 		const missionCode = randCode(5); // Generates a unique code for this interception
 		missionDebugger(`Mission #${count} - Interception`);
 
-		const aircraft = await Aircraft.findById(interception.aircraft).populate('organization', 'name').populate('team', 'name').populate('upgrades'); // Gets the Initiator from the DB
-		let atkReport = new AirMission({
+		const aircraft = await Aircraft.findById(interception.aircraft); // Gets the Initiator from the DB
+		await aircraft.populateMe();
+		const atkReport = new AirMission({
 			type: 'Interception', 					// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: interception.mission,	// Mission type from the attacking unit
@@ -131,17 +133,18 @@ async function runInterceptions() {
 		});
 
 		// Skips mission if the current aircraft is dead
-		if (aircraft.status.some(el => el === 'destroyed')) {
+		if (aircraft.status.some(el => el === 'destroyed') || aircraft.stats.hull <= 0) {
 			missionDebugger(`DEAD Aircraft Flying: ${aircraft.name}`);
 			atkReport.type = 'Failure';
-			atkReport.report += ` ${aircraft.name} was destroyed prior to intercept.`,
+			atkReport.report += `${aircraft.name} was destroyed prior to intercept.`,
 			await addArrayValue(atkReport.status, 'complete');
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 			continue;
 		}
 
-		let target = await Aircraft.findById(interception.target).populate('organization', 'name').populate('upgrades').populate('team'); // Gets the Target from the DB
+		let target = await Aircraft.findById(interception.target); // Gets the Target from the DB
+		await target.populateMe();
 		missionDebugger(`${aircraft.name} vs. ${target.name}`);
 
 		const escortCheck = await checkEscort(interception.target, undefined, atkReport); // Checks to see if the target is escorted
@@ -154,7 +157,7 @@ async function runInterceptions() {
 			atkReport.type = 'Failure';
 			atkReport.report += ' Mission target was destroyed prior to intercept.',
 			await addArrayValue(atkReport.status, 'complete');
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 			continue;
 		}
@@ -172,7 +175,8 @@ async function runTransports() {
 		const missionCode = randCode(5); // Generates a unique code for this transport
 		missionDebugger(`Mission #${count} - Transport Mission`);
 
-		const aircraft = await Aircraft.findById(transport.aircraft).populate('organization', 'name').populate('upgrades').populate('team');
+		const aircraft = await Aircraft.findById(transport.aircraft);
+		await aircraft.populateMe();
 
 		if (aircraft.status.some(el => el === 'destroyed')) {
 			console.log(`DEAD Aircraft Flying: ${aircraft.name}`);
@@ -182,7 +186,7 @@ async function runTransports() {
 		const target = await Site.findById(transport.target); // Loading Site that the transport is heading to.
 		missionDebugger(`${aircraft.name} transporting cargo to ${target.name}`);
 
-		let atkReport = new AirMission({
+		const atkReport = new AirMission({
 			type: 'Transport', 							// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: transport.mission,			// Mission type from the attacking unit
@@ -202,7 +206,7 @@ async function runTransports() {
 		if (patrolCheck.continue === true) {
 			atkReport.report = `${atkReport.report} ${aircraft.name} arrived safely at ${target.name}.`;
 			missionDebugger(`${aircraft.name} arrived safely at ${target.name}`);
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 
 			// Schedule a ground mission.
@@ -223,15 +227,13 @@ async function runRecon() {
 		count++; // Count iteration for each mission
 		const missionCode = randCode(5); // Generates a unique code for this recon mission
 		missionDebugger(`Mission #${count} - Recon Mission`);
-		const aircraft = await Aircraft.findById(recon.aircraft)
-			.populate('organization', 'name')
-			.populate('upgrades')
-			.populate('origin')
-			.populate('team');
+		const aircraft = await Aircraft.findById(recon.aircraft);
+		await aircraft.populateMe();
 		// let atkReport = `${aircraft.name} conducting surveillance in ${aircraft.organization.name}.`;
 
 		if (aircraft.mission === 'Recon Aircraft') {
 			let target = await Aircraft.findById(recon.target); // Loading Aircraft that the recon is heading to.
+			await target.populateMe();
 
 			let atkReport = new AirMission({
 				type: 'Recon', 							// Records the After Action Report Type
@@ -249,7 +251,7 @@ async function runRecon() {
 
 			if (target.status.some(el => el === 'destroyed') || target.systems.length < 1) {
 				atkReport.report = `${atkReport.report} Target has been shot down prior to recon.`;
-				atkReport = atkReport.createTimestamp(atkReport);
+				atkReport.createTimestamp();
 				await atkReport.save();
 				continue;
 			}
@@ -287,7 +289,7 @@ async function runRecon() {
 		if (aircraft.mission === 'Recon Site') {
 			const target = await Site.findById(recon.target); // Loading Site that the recon is heading to.
 
-			let atkReport = new AirMission({
+			const atkReport = new AirMission({
 				type: 'Recon', 							// Records the After Action Report Type
 				code: missionCode, 							// Unique code for this encounter
 				mission: recon.mission,			// Mission type from the attacking unit
@@ -311,7 +313,7 @@ async function runRecon() {
 				// eslint-disable-next-line no-unused-vars
 				const roll = d6();
 
-				atkReport = atkReport.createTimestamp(atkReport);
+				atkReport.createTimestamp();
 				await atkReport.save();
 
 				await aircraft.recall();
@@ -327,15 +329,12 @@ async function runDiversions() {
 		count++; // Count iteration for each mission
 		const missionCode = randCode(5); // Generates a unique code for this recon mission
 
-		const aircraft = await Aircraft.findById(mission.aircraft)
-			.populate('organization', 'name')
-			.populate('upgrades')
-			.populate('origin')
-			.populate('team');
+		const aircraft = await Aircraft.findById(mission.aircraft);
+		await aircraft.populateMe();
 
 		const target = await Site.findById(mission.target); // Loading Site that the rdiversion is heading to.
 
-		let atkReport = new AirMission({
+		const atkReport = new AirMission({
 			type: 'Diversion', 							// Records the After Action Report Type
 			code: missionCode, 							// Unique code for this encounter
 			mission: mission.mission,			// Mission type from the attacking unit
@@ -354,7 +353,7 @@ async function runDiversions() {
 
 			atkReport.report = `${atkReport.report} ${aircraft.name} distracted over target site without interference.`;
 
-			atkReport = atkReport.createTimestamp(atkReport);
+			atkReport.createTimestamp();
 			await atkReport.save();
 
 			await aircraft.recall();
@@ -379,7 +378,8 @@ async function checkPatrol(target, defReport, aircraft) {
 			// toHexString allows checking equality for _id
 			missionDebugger('Patrol engaging!');
 
-			target = await Aircraft.findById(patrol.aircraft).populate('site');
+			target = await Aircraft.findById(patrol.aircraft);
+			await target.populateMe();
 			patrolMissions.splice(patrolMissions.indexOf(patrol), 1);
 
 			const atkReport = new AirMission({
@@ -427,18 +427,16 @@ async function checkEscort(target, defReport, atkReport) {
 			const missionCode = randCode(5); // Generates a unique code for this recon mission
 			missionDebugger('Escort engaging!');
 			target = await Aircraft.findById(target); // Gets the original target of the interception
+			await target.populateMe();
 
-			const newTarget = await Aircraft.findById(escort.aircraft)
-				.populate('organization', 'name')
-				.populate('upgrades')
-				.populate('team')
-				.populate('site'); // Gets the escorter for the target
+			const newTarget = await Aircraft.findById(escort.aircraft); // Gets the escorter for the target
+			await newTarget.populateMe();
 			escortMissions.splice(escortMissions.indexOf(escort), 1); // Removes the current escort from the missions array
 
 			// Saves the old units aar if there is one
 			if (defReport) {
 				defReport.report = `${defReport.report} Our escort is intercepting incoming units!`;
-				defReport = await defReport.createTimestamp(defReport);
+				defReport.createTimestamp();
 				await defReport.save();
 			}
 
@@ -462,7 +460,8 @@ async function checkEscort(target, defReport, atkReport) {
 		}
 	}
 
-	target = await Aircraft.findById(target).populate('organization'); // Loads original target in for interception
+	target = await Aircraft.findById(target); // Loads original target in for interception
+	await target.populateMe();
 	defReport = new AirMission({
 		type: 'Interception',
 		code: atkReport.missionCode,
@@ -484,11 +483,11 @@ async function clearMissions() {
 	}
 
 	// TODO: this coding logic needs to be verified
-	for (const aircraft of await Aircraft.find( !({ 'status': 'action' }) )) {
+	for (const aircraft of await Aircraft.find({ 'status': '-action' })) {
 		await addArrayValue(aircraft.status, 'action');
 		await aircraft.save();
 	}
-	for (const aircraft of await Aircraft.find( !({ 'status': 'mission' }) )) {
+	for (const aircraft of await Aircraft.find({ 'status': '-mission' })) {
 		await addArrayValue(aircraft.status, 'mission');
 		await aircraft.save();
 	}

@@ -1,14 +1,32 @@
 import React from "react";
-import { Timeline, Icon, Panel, FlexboxGrid, Table, List } from "rsuite";
+import { Timeline, Icon, Panel, FlexboxGrid, Table, List, Row, Col, Grid, Tag, Progress, Divider } from "rsuite";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Col from "rsuite/lib/Carousel";
 import FlexboxGridItem from "rsuite/lib/FlexboxGrid/FlexboxGridItem";
+import TeamAvatar from "./teamAvatar";
+import { getAircraftIcon } from "../../scripts/mapIcons";
 const { HeaderCell, Cell, Column } = Table;
 
 // TIMELINE - Log for Transactions for a timeline component
 const TransactionLog = props => {
   let { report } = props;
   let date = new Date(report.date);
+
+	const getTeamCode = (id) => {
+		if (id) {
+			const account = props.accounts.find(el => el._id === id);
+			return account ? `${account.owner} ${account.name}` : '???';			
+		}
+		else return('Control')
+	}
+
+	const getEnglish = (report) => {
+		switch(report.transaction) {
+			case 'Deposit': return `Sent ${report.amount} ${report.resource} to`;
+			case 'Expense': return `Spent ${report.amount} ${report.resource} from`;
+			case 'Withdrawal': return `Withdrew ${report.amount} ${report.resource} from`;
+			default: return 'did something'
+		}
+	}
 
   return (
     <Timeline.Item
@@ -20,9 +38,7 @@ const TransactionLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #d4efdf, #fff)"
         }}
-        header={`${report.transaction} - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date: ${date.toLocaleTimeString()} - ${date.toDateString()}`}
+				header={<div><b>{report.transaction} - {getTeamCode(report.counterparty)} {getEnglish(report)}  {report.account} Account (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <FlexboxGrid>
@@ -141,11 +157,9 @@ const BattleLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #fff, #f8f9f9)"
+          backgroundImage: "linear-gradient(to bottom right, #fff)"
         }}
-        header={`Battle report - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={`Battle report - ${report.team.code} | (Turn ${report.timestamp.turnNum})`}
         collapsible
       >
         <p>
@@ -156,45 +170,11 @@ const BattleLog = props => {
           <b>Team:</b> {report.team.name}
         </p>
         <p>
-          <b>Location:</b> {report.site.name} 
+          <b>Location:</b> {report.site.name} W
         </p>
 				<p>
           <b>Result:</b> {report.winner} 
         </p>
-				<br/>
-				{report.results[0] && 
-				<div>
-					<p>
-					<b>Round 1:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[0].attackerHits} out of {report.results[0].attackerRolls} || {report.results[0].defendersDamaged.length} Defenders damaged, {report.results[0].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[0].defenderHits} out of {report.results[0].defenderRolls} || {report.results[0].attackersDamaged.length} Attackers damaged, {report.results[0].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
-				{report.results[1] && 
-				<div>
-					<p>
-					<b>Round 2:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[1].attackerHits} out of {report.results[1].attackerRolls} || {report.results[1].defendersDamaged.length} Defenders damaged, {report.results[1].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[1].defenderHits} out of {report.results[1].defenderRolls} || {report.results[1].attackersDamaged.length} Attackers damaged, {report.results[1].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
-				{report.results[2] && 
-				<div>
-					<p>
-					<b>Round 3:</b>
-					</p>
-					<p>
-						Attackers Hit {report.results[2].attackerHits} out of {report.results[2].attackerRolls} || {report.results[2].defendersDamaged.length} Defenders damaged, {report.results[2].defendersDestroyed.length} destroyed</p>
-					<p>
-						Defenders Hit {report.results[2].defenderHits} out of {report.results[2].defenderRolls} || {report.results[2].attackersDamaged.length} Attackers damaged, {report.results[2].attackersDestroyed.length} destroyed</p>					
-				</div>
-				}
 				<br/>
 				<FlexboxGrid>
 					<FlexboxGrid.Item colspan={12}>Attackers
@@ -215,16 +195,91 @@ const BattleLog = props => {
 					</FlexboxGrid.Item>
 					<br/>
 				</FlexboxGrid>
+				{report.results.map((result, index) => (
+				<div key={index}>
+					<Divider><b>Round 1:</b></Divider>
+					<p>
+						<b>Attackers Hit {result.attackerHits} out of {result.attackerRolls} || {result.defendersDamaged.length} Defenders damaged, {result.defendersDestroyed.length} destroyed</b>
+					</p>
+					<p>
+						<b>Defenders Hit {result.defenderHits} out of {result.defenderRolls} || {result.attackersDamaged.length} Attackers damaged, {result.attackersDestroyed.length} destroyed</b>
+					</p>					
+				</div>
+				))}
+
+				<br/>
+
       </Panel>
     </Timeline.Item>
   );
 };
 
-// TODO - Look of an Intercept log should be fleshed out for march.
 const InterceptLog = props => {
-  let { report } = props;
+  let { report, interception } = props;
+	let { unit, opponent } = report;
   let date = new Date(report.date);
 
+	const getTeamCode = (id) => {
+		const team = props.teams.find(el => el._id === id);
+		return team ? team.code : '???';
+	}
+
+	const renderDifference = (before, after) => {
+		let array = [];
+		for (const el in before) {
+			if (before[el] !== after[el]) 
+				array.push({ stat: el, before: before[el], after: after[el] })
+		}
+		return (					
+			<Grid fluid>
+				{array.length > 0 &&<Row >
+					{array.map((el, index) => (
+						<Col index={index} md={6} sm={6} >
+							<Tag color={'red'} style={{ 'textTransform': 'capitalize'}}>{el.stat}</Tag>
+							<p>{el.before} -> {el.after}</p>
+						
+						</Col>
+					))}
+				</Row>}
+				{array.length === 0 && <Row>
+					<Col style={{ textAlign: 'center'}} md={24} sm={24} >No stat changes</Col>	
+				</Row>}
+			</Grid>)
+
+	}
+
+	const renderReport = (unit, outcomes, stats, report) => {
+		return (
+			<div>
+				<FlexboxGrid  style={{ textAlign: 'left' }}>
+					<FlexboxGrid.Item colspan={8}>
+						<h6>{unit.name}</h6>
+						<img 
+							src={getAircraftIcon(getTeamCode(unit.team))} width="80%" alt='Failed to Load'
+						/>
+					</FlexboxGrid.Item>
+					<FlexboxGrid.Item colspan={16}>
+						<p style={{ width: '90%', height: '10VH', overflow: 'auto' }} > <b>{report ? report : 'No Report...'}</b></p>
+						<Divider>Stat Changes</Divider>
+						{renderDifference(stats[0], stats[stats.length - 1])}
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
+				
+					<h5 style={{  display: 'flex', justifyContent: 'center',  alignItems: 'center', marginBottom: '5px' }}>Damage report
+						</h5>
+					{outcomes.map((el, index) => (
+					<div key={index} style={{ border: "1px solid black", textAlign: 'center', height: '7vh'  }} >
+						<div style={{ margin: '10px' }}>
+							Round {index+1} - <Tag color={el === 'hit' ? 'red' : el === 'critical' ? 'violet' : 'blue'} style={{ 'textTransform': 'capitalize'}}>{el}</Tag>
+							{el === 'hit' && <p style={{ color: 'brown' }}>{unit.name} took some damage!</p>}			
+							{el === 'critical' && <p style={{ color: 'brown' }}>{unit.name} took some damage!</p>}			
+							{el === 'miss' && <p style={{ color: 'green' }}>{unit.name} took no damage!</p>}						
+						</div>
+					</div>							
+				))}
+			</div>
+		)
+	}
   // let iconStyle = { background: '#ff4d4d', color: '#fff' };
   return (
     <Timeline.Item key={report._id} dot={<Icon icon="fighter-jet" size="2x" />}>
@@ -233,12 +288,19 @@ const InterceptLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
         }}
-        header={`After Action Report - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+        header={<div><b>{report.unit.name} Interception of {report.opponent.name} (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
-        <p>
+				<FlexboxGrid>
+					<FlexboxGrid.Item colspan={12} >
+						{renderReport(report.unit, report.interception.defender.outcomes, report.interception.attacker.stats, report.report)}
+					</FlexboxGrid.Item>
+					<FlexboxGrid.Item colspan={12}>
+						{renderReport(report.opponent, report.interception.attacker.outcomes, report.interception.defender.stats)}
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
+				{/* <TeamAvatar size={'xs'} code={report.team.code} /> */}
+        {/* <p>
           {report.timestamp.clock} {report.timestamp.turn} - {report.timestamp.phase} -
           Turn {report.timestamp.turnNum}
         </p>
@@ -253,7 +315,7 @@ const InterceptLog = props => {
         </p>
         <p>
           <b>Report:</b> {report.report}
-        </p>
+        </p> */}
       </Panel>
     </Timeline.Item>
   );
@@ -465,9 +527,7 @@ const RepairLog = props => {
           padding: "0px",
           backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
         }}
-        header={`Aircraft Repaired - ${report.team.code} | ${
-          report.timestamp.turn
-        } ${report.timestamp.phase} - ${report.timestamp.clock} Date:${date.toLocaleTimeString()} - ${date.toDateString()}`}
+				header={<div><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <p>
@@ -475,7 +535,7 @@ const RepairLog = props => {
           Turn {report.timestamp.turnNum}
         </p>
         <p><b>Team:</b> {report.team.name}</p>
-        <p><b>Damage Repaired:</b> {report.dmgRepaired}</p>
+        <p><b>Damage Repaired:</b> {report.repair.dmgRepaired}</p>
         <p><b>Cost:</b> {report.cost}</p>
       </Panel>
     </Timeline.Item>

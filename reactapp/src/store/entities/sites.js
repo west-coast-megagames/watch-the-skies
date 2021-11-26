@@ -83,7 +83,7 @@ export const addsite = site =>
   });
 
 	export const getCapitol = createSelector(
-    state => state.entities.sites.list,
+    state => state.entities.sites.list.filter(el => el.tags),
 		state => state.auth.team,
     (sites, team) => sites.find(site => site.tags.some(el=> el === 'capital') && site.team._id === team._id)
   );
@@ -113,3 +113,14 @@ export const addsite = site =>
     state => state.entities.sites.list,
 		sites => sites.filter(site => (site.subType === 'Crash'))
   );
+
+	export const getSatellites = createSelector(
+    state => state.entities.sites.list,
+		sites => sites.filter(site => (site.subType === 'Satellite' || site.subType === 'Station'))
+  );
+
+	export const getMySatellites = createSelector(
+		state => state.entities.sites.list,
+		state => state.auth.team,
+		(sites, team) => sites.filter( site => (site.team === team._id || site.team._id === team._id) && site.subType === 'Satellite' )
+	);

@@ -30,8 +30,8 @@ const TreatySchema = new Schema({
 	violation: { type: String },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() },
-	tags: [{ type: String, enum: ['']} ],
-	status: [ {type: String, enum: ['draft', 'proposal', 'rejected', 'complete', 'deleted']} ],
+	tags: [{ type: String, enum: [''] } ],
+	status: [ { type: String, enum: ['draft', 'proposal', 'rejected', 'complete', 'deleted'] } ],
 });
 
 // validateTreaty method

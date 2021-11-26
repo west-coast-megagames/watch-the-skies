@@ -11,6 +11,8 @@ import UnitControl from './tabs/control/UnitControl';
 import LoginLink from '../components/common/loginLink';
 import Registration from './tabs/control/registration';
 import BudgetTab from './tabs/gov/BudgetTab';
+import AircraftControl from './tabs/control/AircraftControl';
+import socket from '../socket';
 
 const Control = (props) => {
 	const [tab, setTab] = React.useState('feed');
@@ -180,6 +182,7 @@ const Control = (props) => {
 				<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
 					<Nav.Item eventKey="game" to={`${url}/game`} componentClass={NavLink}  icon={<Icon icon="game" />}> Game Control</Nav.Item>
 					<Nav.Item eventKey="national" to={`${url}/national`} componentClass={NavLink}> National Control</Nav.Item>
+					<Nav.Item eventKey="aircraft" to={`${url}/aircraft`} componentClass={NavLink} > Aircraft Control</Nav.Item>
 					<Nav.Item eventKey="military" to={`${url}/military`} componentClass={NavLink} > Military Control</Nav.Item>
 					<Nav.Item eventKey="alien" to={`${url}/alien`} componentClass={NavLink} > Alien Control</Nav.Item>
 					<Nav.Item eventKey="unit" to={`${url}/unit`} componentClass={NavLink} > Unit Control</Nav.Item>
@@ -195,7 +198,10 @@ const Control = (props) => {
 							<hr />
 							<div>
 								<h5>Interception Controls</h5>
-								<ButtonGroup>
+								<ButtonGroup>									
+									<Button color="blue" size="sm" onClick={ () => socket.emit('request', { route: 'aircraft', action: 'runMissions' }) }>
+										Run Interceptions
+									</Button>
 									<Button color="blue" size="sm" onClick={ () => deployAliens() }>
 										Deploy Aliens
 									</Button>
@@ -263,7 +269,7 @@ const Control = (props) => {
 										Wipe Research
 									</Button>
 										<Button color="red" size="sm" onClick={ () => delLogs() }>
-											Wipe Logs
+											Wipe Reports
 									</Button>
 								</ButtonGroup>
 							</div>
@@ -272,6 +278,9 @@ const Control = (props) => {
 					
 					<Route path={`${url}/national`}  render={() => (
 						<BudgetTab control={true}  {...props} />
+					)}/>
+					<Route path={`${url}/aircraft`}  render={() => (
+						<AircraftControl  handleTransfer={handleTransfer} {...props}/>
 					)}/>
 					<Route path={`${url}/military`}  render={() => (
 						<MilitaryControl  handleTransfer={handleTransfer} {...props}/>

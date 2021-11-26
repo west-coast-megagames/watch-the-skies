@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader, Row, Col } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader, Row, Col, Whisper } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
@@ -27,7 +27,7 @@ const DeployMilitary = (props) => {
 		if (props.target && deployType === 'invade') {
 			let cost = 0 // Gets the current displayed cost
 			let target = props.sites.find(el => el._id === props.target._id); // Looks up the target site via the stored _id
-			Alert.warning(target.name) // Gives me site name
+			// Alert.warning(target.name) // Gives me site name
 			for (let unit of units) {
 					unit = props.military.find(el => el._id === unit) // Looks up current unit
 					if (unit.zone.name === target.zone.name) { cost += unit.stats.localDeploy };
@@ -185,9 +185,12 @@ const DeployMilitary = (props) => {
 						<FlexboxGrid.Item colspan={12}>
 						<h5>Missions</h5>
 							<ButtonGroup>
-									<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'invade' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('invade')} >Invade</Button>
-								</ButtonGroup>
-							</FlexboxGrid.Item>
+								<Button disabled={props.target ? (props.target.team._id === props.team._id && !props.target.status.some(el => el === 'occupied')) : true} appearance={deployType !== 'invade' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('invade')} >Invade</Button>
+								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'siege' ? 'ghost' : 'primary'} color={'violet'} onClick={() => handleType('siege')} >Siege</Button>
+								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'terrorize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('terrorize')} >Terrorize</Button>
+								<Button disabled={props.target ? props.target.team._id === props.team._id : true} appearance={deployType !== 'raze' ? 'ghost' : 'primary'} color={'red'} onClick={() => handleType('raze')} >Raze</Button>
+							</ButtonGroup>
+						</FlexboxGrid.Item>
 					</FlexboxGrid>
 
 					<Divider />
@@ -259,8 +262,11 @@ const DeployMilitary = (props) => {
 
 			</Drawer.Body>}
 			<Drawer.Footer>
-					<Button disabled={deployType === ''} onClick={submitDeployment} appearance="primary">Confirm</Button>
-					<Button onClick={handleExit} appearance="subtle">Cancel</Button>
+				{units.length === 0 && <Tag color='red'>Select one more more units</Tag>}
+				{props.account && props.account.resources.find(el => el.type === 'Megabucks').balance < cost && <Tag color='red'>{cost - props.account.resources.find(el => el.type === 'Megabucks').balance} more megabucks needed in Ops account</Tag>}
+				
+				<Button disabled={deployType === '' || props.account.resources.find(el => el.type === 'Megabucks').balance < cost || units.length === 0} onClick={submitDeployment} appearance="primary">Confirm</Button>
+				<Button onClick={handleExit} appearance="subtle">Cancel</Button>
 			</Drawer.Footer>
 	</Drawer>
 	);

@@ -4,7 +4,7 @@
     "initPathWTS": "../../",
     "dbName": "deployed",
     "loadSel": "All",
-		"clientURL": "http://localhost:3000/",
-		"serverURL": "http://localhost:5000/",
-		"socketCORS": "http://localhost:3000"
+		"clientURL": "https://wts-prototype-national.herokuapp.com/",
+		"serverURL": "https://project-nexus-prototype.herokuapp.com/",
+		"socketCORS": "https://wts-prototype-national.herokuapp.com"
 }

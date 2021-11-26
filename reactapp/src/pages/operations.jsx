@@ -15,6 +15,8 @@ import { getOpsAccount } from '../store/entities/accounts';
 import { getMilitary } from '../store/entities/military';
 import MobilizeForm from './tabs/ops/asset/MobilizeForm';
 import TransferForm from '../components/common/TransferForm';
+import RecallForm from './tabs/ops/asset/RecallForm';
+import { getAircrafts } from '../store/entities/aircrafts';
 
 /*
 TODO CHECKLIST
@@ -36,7 +38,7 @@ const Operations  = (props) => {
 
 	const handleTransfer = (thing) => {
 		setSelected(thing);
-		setTab('unit');
+		setTab('assets');
 		props.history.push('/ops/assets');
 	}
 
@@ -75,10 +77,14 @@ const Operations  = (props) => {
 											<Button size='md' color={'orange'} style={{ color: 'black'}} onClick={() => setShow('mobilize')}>
 												Mobilize Military
 											</Button>			
-											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>				
+											<Button size='md' color={'violet'} onClick={() => setShow('recall')}>
+												Recall Military
+											</Button>	
+											<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>	
+											<RecallForm hide={() => setShow(false)} show={show === 'recall'}/>			
 											<TransferForm 
 												units={props.military}
-												aircrafts={props.aircraft}
+												aircrafts={props.aircrafts}
 												show={show === 'transfer'} 
 												closeTransfer={() => setShow(false)}
 												unit={props.unit} />		
@@ -90,7 +96,7 @@ const Operations  = (props) => {
 							<FlexboxGrid.Item colspan={13} >
 								<Panel bodyFill bordered style={cardStyle}>
 									<h5>Aircraft Operations</h5>
-									<AircraftTable handleTransfer={handleTransfer} />
+									<AircraftTable handleTransfer={handleTransfer} aircrafts={props.aircrafts}/>
 								</Panel>
 								<Panel bodyFill bordered style={cardStyle2}>
 									<h5>Facilities</h5>
@@ -107,7 +113,7 @@ const Operations  = (props) => {
 					)}/>
 
 					<Route path={`${url}/assets`} render={() => (
-						<AssetsTab selected={selected} />
+						<AssetsTab selected={selected} history={props.history}/>
 					)}/>
 					<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
 				</Switch>
@@ -119,21 +125,21 @@ const Operations  = (props) => {
 
 const cardStyle = {
   border: "2px solid black",
-	height: '50vh',
+	height: '45vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }
 
 const cardStyle2 = {
   border: "2px solid black",
-	height: '39vh',
+	height: '35vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }
 
 const cardStyle3 = {
   border: "2px solid black",
-	height: '89vh',
+	height: '80vh',
 	borderRadius: '0px',
 	textAlign: 'center'
 }
@@ -143,7 +149,7 @@ const mapStateToProps = state => ({
 	team: state.auth.team,
 	sites: state.entities.sites.list,
 	military: getMilitary(state),
-	aircraft: state.entities.aircrafts.list,
+	aircrafts: getAircrafts(state),
 	facilities: getFacilites(state),
 	account: getOpsAccount(state)
 });

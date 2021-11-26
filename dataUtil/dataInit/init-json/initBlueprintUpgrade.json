@@ -10,7 +10,7 @@
     "buildTime": 1,
     "desc": "Other nations have implemented better preservation techniques, and have donated food to alleviate shortages",
     "prereq": [{ "type": "Technology", "code": "Agr2A" }],
-		"effects": [{ "type": "terror", "effect": -5 }]
+		"effects": [{ "type": "terror", "value": -5 }]
   },
   {
     "loadType": "blueprint",
@@ -22,7 +22,7 @@
     "cost": 3,
     "buildTime": 1,
     "desc": "Better water supply techniques have been implemented, so water is more readily available than in the past.",
-    "effects": [{ "type": "terror", "effect": -5 }],
+    "effects": [{ "type": "terror", "value": -5 }],
     "prereq": [{ "type": "Technology", "code": "Agr2B" }]
   },
   {
@@ -35,7 +35,7 @@
     "cost": 2,
     "buildTime": 1,
     "desc": "Farming techinques have been come easier to track and implement.",
-    "effects": [{ "type": "terror", "effect": -8 }],
+    "effects": [{ "type": "terror", "value": -8 }],
     "prereq": [{ "type": "Technology", "code": "Agr3C" }]
   },
   {
@@ -48,7 +48,7 @@
     "cost": 8,
     "buildTime": 2,
     "desc": "Large food synthesizers to help feed this nation. Food insecurity has been greatly reduce as there are many of them around your nation.",
-    "effects": [{ "type": "terror", "effect": -10 }],
+    "effects": [{ "type": "terror", "value": -10 }],
     "prereq": [{ "type": "Technology", "code": "Agr4C" }],
     "stats": { "dummy": 0 }
   },
@@ -62,7 +62,7 @@
     "cost": 15,
     "buildTime": 1,
     "desc": "Terraforming a distressed area in order to create a more beneficial environment.",
-    "effects": [{ "type": "terror", "effect": -15 }],
+    "effects": [{ "type": "terror", "value": -15 }],
     "prereq": [{ "type": "Technology", "code": "Agr5A" }],
     "stats": { "dummy": 0 }
   },
@@ -76,7 +76,7 @@
     "cost": 25,
     "buildTime": 2,
     "desc": "Individualized food synthesizers to help feed every citizen. Food insecurity is nearly a thing of the past in this nation.",
-    "effects": [{ "type": "terror", "effect": -15 }],
+    "effects": [{ "type": "terror", "value": -15 }],
     "prereq": [{ "type": "Technology", "code": "Agr5B" }],
     "stats": { "dummy": 0 }
   },
@@ -90,7 +90,7 @@
     "cost": 3,
     "buildTime": 1,
     "desc": "Major breakthoughs in Anti-Radiation Treatments are now able to be deployed to Crisis.",
-    "effects": [{ "type": "terror", "effect": -5 }],
+    "effects": [{ "type": "terror", "value": -5 }],
     "prereq": [{ "type": "Technology", "code": "Bio3A" }],
     "stats": { "dummy": 0 }
   },
@@ -118,7 +118,7 @@
     "cost": 25,
     "buildTime": 1,
     "desc": "Robot nurses are sent into crisis. This allows for safer, easier, and quicker response, distributing medical care.",
-    "effects": [{ "type": "terror", "effect": -20 }],
+    "effects": [{ "type": "terror", "value": -20 }],
     "prereq": [{ "type": "Technology", "code": "Bio5B" }],
     "stats": { "dummy": 0 }
   },
@@ -132,7 +132,7 @@
     "cost": 30,
     "buildTime": 2,
     "desc": "Stable, always available Urgent Care centers have opened nation-wide, equipped with amazing robotic doctors with Baymax levels of diagnosing.",
-    "effects": [{ "type": "terror", "effect": -15 }],
+    "effects": [{ "type": "terror", "value": -15 }],
     "prereq": [{ "type": "Technology", "code": "Bio5D" }],
     "stats": { "dummy": 0 }
   },
@@ -161,8 +161,8 @@
     "buildTime": 2,
     "desc": "Materials deconstructed eats away at landfills.",
     "effects": [
-      { "type": "terror", "effect": -5 },
-      { "type": "$M", "effect": 1 }
+      { "type": "terror", "value": -5 },
+      { "type": "$M", "value": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf2F" }],
     "stats": { "dummy": 0 }
@@ -192,8 +192,8 @@
     "buildTime": 1,
     "desc": "Local weather patterns change in your favor. Unknown global effects.",
     "effects": [
-      { "type": "terror", "effect": -40 },
-      { "type": "pr", "effect": -2 }
+      { "type": "terror", "value": -40 },
+      { "type": "pr", "value": -2 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4B" }],
     "stats": { "dummy": 0 }
@@ -209,8 +209,8 @@
     "buildTime": 2,
     "desc": "Like the early Holodeck, these centers allow for life like interactions with digital enities. They also allow for those seperated by distance to have in-person interactions.",
     "effects": [
-      { "type": "terror", "effect": -15 },
-      { "type": "$M", "effect": -1 }
+      { "type": "terror", "value": -15 },
+      { "type": "$M", "value": -1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4D" }],
     "stats": { "dummy": 0 }
@@ -226,8 +226,8 @@
     "buildTime": 3,
     "desc": "ARC-like cities, these structures hold entire large communities with every small ecological and physical footprint.",
     "effects": [
-      { "type": "terror", "effect": -30 },
-      { "type": "pr", "effect": 1 }
+      { "type": "terror", "value": -30 },
+      { "type": "pr", "value": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4F" }],
     "stats": { "dummy": 0 }
@@ -243,8 +243,8 @@
     "buildTime": 3,
     "desc": "Monolithic structures that can hold many more things than we can think of.",
     "effects": [
-      { "type": "terror", "effect": -30 },
-      { "type": "pr", "effect": 3 }
+      { "type": "terror", "value": -30 },
+      { "type": "pr", "value": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
     "stats": { "dummy": 0 }
@@ -260,8 +260,8 @@
     "buildTime": 3,
     "desc": "Monolithic structures which attempt to bridge Space to the very Earth.",
     "effects": [
-      { "type": "terror", "effect": -30 },
-      { "type": "pr", "effect": 3 }
+      { "type": "terror", "value": -30 },
+      { "type": "pr", "value": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
     "stats": { "dummy": 0 }
@@ -291,8 +291,8 @@
     "buildTime": 3,
     "desc": "As you watch them, the particles are constantly changing where they are.",
     "effects": [
-      { "type": "terror", "effect": -30 },
-      { "type": "pr", "effect": 3 }
+      { "type": "terror", "value": -30 },
+      { "type": "pr", "value": 3 }
     ],
     "prereq": [{ "type": "Technology", "code": "Inf4G" }],
     "stats": { "dummy": 0 }
@@ -307,7 +307,7 @@
     "cost": 10,
     "buildTime": 2,
     "desc": "You are slowly helping make the world a safer place, a place free from communter nightmares and far fewer crashes.",
-    "effects": [{ "type": "terror", "effect": -10 }],
+    "effects": [{ "type": "terror", "value": -10 }],
     "prereq": [{ "type": "Technology", "code": "Mil2E" }],
     "stats": { "dummy": 0 }
   },
@@ -322,8 +322,8 @@
     "buildTime": 2,
     "desc": "Robots programmed reminiscent of the 3 Laws are now integrated and optimized into your workforce.",
     "effects": [
-      { "type": "terror", "effect": -10 },
-      { "type": "$M", "effect": 1 }
+      { "type": "terror", "value": -10 },
+      { "type": "$M", "value": 1 }
     ],
     "prereq": [{ "type": "Technology", "code": "Mil3E" }],
     "stats": { "dummy": 0 }
@@ -341,7 +341,7 @@
     "category": "Weapon",
 		"desc": "Laser designed to cut through material and do damage to systems",
 		"effects": [
-      { "type": "attack", "effect": 1 }
+      { "type": "attack", "value": 1 }
     ]
   },
   {
@@ -357,7 +357,7 @@
     "category": "Weapon",
     "desc": "Basic terrestrial mounted railgun",
 		"effects": [
-      { "type": "attack", "effect": 1 }
+      { "type": "attack", "value": 1 }
     ]
   },
   {
@@ -373,7 +373,7 @@
     "category": "Sensor",
     "desc": "Basic terrestrial sensor system",
 		"effects": [
-      { "type": "evade", "effect": 0 }
+      { "type": "evade", "value": 0 }
     ]
   },
   {
@@ -389,7 +389,7 @@
     "category": "Compartment",
     "desc": "Basic single seater cock-pit",
 		"effects": [
-      { "type": "cargo", "effect": 0 }
+      { "type": "cargo", "value": 0 }
     ]
   },
   {
@@ -405,8 +405,8 @@
     "category": "Engine",
 		"desc": "Basic terrestrial sensor system",
 		"effects": [
-			{ "type": "range", "effect": 3000 },
-			{ "type": "evade", "effect": 1 }
+			{ "type": "range", "value": 3000 },
+			{ "type": "evade", "value": 1 }
     ]
   },
   {
@@ -437,7 +437,7 @@
     "category": "Util",
 		"desc": "Basic terrestrial sensor system",
 		"effects": [
-			{ "type": "penetration", "effect": 1 }
+			{ "type": "penetration", "value": 1 }
     ]
 	},
 	{
@@ -475,7 +475,7 @@
     "category": "Vehicles",
 		"desc": "Old Tech Vehicle",
 		"effects": [
-			{ "type": "attack", "effect": 1 }
+			{ "type": "attack", "value": 1 }
     ]
 },
 {
@@ -491,9 +491,9 @@
     "category": "Vehicles",
 		"desc": "Modern Tech Vehicle",
 		"effects": [
-			{ "type": "attack", "effect": 4 },
-			{ "type": "defense", "effect": 3 },
-			{ "type": "health", "effect": 1 }
+			{ "type": "attack", "value": 4 },
+			{ "type": "defense", "value": 3 },
+			{ "type": "health", "value": 1 }
     ]
 },
 {
@@ -509,8 +509,8 @@
     "category": "Vehicles",
 		"desc": "Vehicles that allow for amphibious assults",
 		"effects": [
-			{ "type": "attack", "effect": 4 },
-			{ "type": "defense", "effect": 2 }
+			{ "type": "attack", "value": 4 },
+			{ "type": "defense", "value": 2 }
     ]
 },
 {
@@ -526,8 +526,8 @@
     "category": "Vehicles",
 		"desc": "Marine Vehicle",
 		"effects": [
-			{ "type": "attack", "effect": 4 },
-			{ "type": "defense", "effect": 2 }
+			{ "type": "attack", "value": 4 },
+			{ "type": "defense", "value": 2 }
     ]
 },
 {
@@ -543,8 +543,8 @@
     "category": "Vehicles",
 		"desc": "Fleet Carrier Group",
 		"effects": [
-			{ "type": "attack", "effect": 6 },
-			{ "type": "defense", "effect": 2 }
+			{ "type": "attack", "value": 6 },
+			{ "type": "defense", "value": 2 }
     ]
 },
 {
@@ -560,8 +560,8 @@
     "category": "Vehicles",
 		"desc": "Fleet Submarine Group",
 		"effects": [
-			{ "type": "attack", "effect": 5 },
-			{ "type": "defense", "effect": 1 }
+			{ "type": "attack", "value": 5 },
+			{ "type": "defense", "value": 1 }
     ]
 },
 {
@@ -577,8 +577,8 @@
     "category": "Vehicles",
 		"desc": "Fleet Surface Group",
 		"effects": [
-			{ "type": "attack", "effect": 4 },
-			{ "type": "defense", "effect": 1 }
+			{ "type": "attack", "value": 4 },
+			{ "type": "defense", "value": 1 }
     ]
 },
 {
@@ -594,7 +594,7 @@
     "category": "Training",
 		"desc": "Militia Training",
 		"effects": [
-			{ "type": "health", "effect": 2 }
+			{ "type": "health", "value": 2 }
     ]
 },
 {
@@ -610,8 +610,8 @@
     "category": "Training",
 		"desc": "Insurgent Training",
 		"effects": [
-			{ "type": "defense", "effect": 1 },
-			{ "type": "health", "effect": 2 }
+			{ "type": "defense", "value": 1 },
+			{ "type": "health", "value": 2 }
     ]
 },
 {
@@ -627,7 +627,7 @@
     "category": "Training",
 		"desc": "Corps Training",
 		"effects": [
-			{ "type": "health", "effect": 2 }
+			{ "type": "health", "value": 2 }
     ]
 },
 {
@@ -643,8 +643,8 @@
     "category": "Training",
 		"desc": "Marine Training",
 		"effects": [
-			{ "type": "defense", "effect": 1 },
-			{ "type": "health", "effect": 1 }
+			{ "type": "defense", "value": 1 },
+			{ "type": "health", "value": 1 }
     ]
 }
 ]

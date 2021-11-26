@@ -1,5 +1,6 @@
 import socket from '../socket'
 import store from './store';
+import { usersRecieved } from './entities/auth';
 import { accountAdded, accountDeleted, accountUpdated } from './entities/accounts';
 import { aircraftAdded, aircraftDeleted, aircraftUpdated } from './entities/aircrafts';
 import { articleAdded, articleDeleted, articleUpdated } from './entities/articles';
@@ -32,7 +33,8 @@ const updaterFunctions = {
 	team: teamUpdated,
 	trade: tradeUpdated,
 	upgrade: upgradeUpdated,
-	zone: zoneUpdated
+	zone: zoneUpdated,
+	users: usersRecieved
 }
 
 const adderFunctions = {
@@ -76,7 +78,7 @@ const initUpdates = () => {
     console.log('updateClients');
     for (const el of data) {
         // console.log(el)
-        if (el) {
+        if (el && el.model) {
 					let func = updaterFunctions[el.model.toLowerCase()];
 					func ? store.dispatch(func(el)) : console.log(`ERROR INVALID UPDATE FUNCTION: ${el.model.toLowerCase()} - ${func}`);
         }
@@ -111,6 +113,11 @@ const initUpdates = () => {
         	console.log(`Defined Error: Unable to createClients Redux for ${el}`);
        }
    });
+
+	 socket.on('clients', (users) => {			
+		let func = updaterFunctions['users'];
+		func ? store.dispatch(func(users)) : console.log(`ERROR INVALID UPDATE FUNCTION:  - ${func}`);
+	});
 }
 
 

@@ -11,6 +11,7 @@ require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
 const { validUnitType } = require('../util/validateUnitType');
+const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
 
@@ -164,12 +165,12 @@ async function newAircraftCreate(aData, rCounts) {
 			logger.error(`New Aircraft Invalid Base: ${aData.name} ${aData.base}`);
 			return;
 		}
-		else if (bData.capability.airMission.capacity > 0) {
+		else if (await inArray(bData.capabilities, 'hanger')) {
 			newAircraft.origin = bData._id;
 			baseSite = bData.site;
 		}
 		else {
-			logger.error(`New Aircraft Base does not have positive airMission capacity. ${aData.base}`);
+			logger.error(`New Aircraft Base does not have hanger capabilities. ${aData.base}`);
 			return;
 		}
 	}

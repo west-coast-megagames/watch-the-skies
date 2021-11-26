@@ -64,19 +64,20 @@ TeamSchema.methods.prRoll = async function () {
 	const { turnNum } = clock.getTimeStamp();
 	const prRoll = die.d8();
 	let prLevel = this.prLevel;
+	const prModifier = 0;
 
 	console.log(`Current PR: ${this.prLevel}`);
 	console.log(`PR Roll: ${prRoll}`);
 
 	if (turnNum > 1) {
 		if (prRoll < this.prLevel) {
-			prLevel = this.prLevel + this.prModifier - Math.floor(((this.prLevel - prRoll) / 1.5));
+			prLevel = this.prLevel + prModifier - Math.floor(((this.prLevel - prRoll) / 1.5));
 		}
 		else if (prRoll > this.prLevel) {
-			prLevel = this.prLevel + this.prModifier + 1;
+			prLevel = this.prLevel + prModifier + 1;
 		}
 		else {
-			prLevel = this.prLevel + this.prModifier;
+			prLevel = this.prLevel + prModifier;
 		}
 
 		prLevel = prLevel > 8 ? 8 : prLevel;
@@ -112,13 +113,8 @@ TeamSchema.methods.assignIncome = async function () {
 
 // TODO - Correctly assign user to ROLE~!
 TeamSchema.methods.assignUsers = async function (users) {
-	for (let id of users) {
-		if (!this.users.some(el => el === id)) {
-			await addArrayValue(this.users, id);
-		} else {
-			await clearArrayValue(this.users, id);
-		}
-	}
+	this.users = users;
+
 
 	this.markModified('users');
 

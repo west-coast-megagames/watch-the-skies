@@ -92,3 +92,33 @@ export const getTransactionReports = createSelector(
   state => state.entities.reports.list,
   reports => reports.filter(report => report.type === 'Transaction')
 );
+
+export const getAllGovReports = createSelector(
+  state => state.entities.reports.list,
+  (reports) => reports.filter(report => report.type === 'Transaction')
+);
+
+export const getGovReports = createSelector(
+  state => state.entities.reports.list,
+	state => state.auth.team,
+  (reports, team)=> reports.filter(report => report.type === 'Transaction' && report.team._id === team._id)
+);
+
+export const getAllOpsReports = createSelector(
+  state => state.entities.reports.list,
+  (reports) => reports.filter(report => (report.type === 'Interception' || 
+	report.type === 'Aircraft Repair' || report.type === 'Recon' ||
+	report.type === 'Battle'
+	))
+);
+
+export const getOpsReports = createSelector(
+  state => state.entities.reports.list,
+	state => state.auth.team,
+  (reports, team)=> reports.filter(report => (report.type === 'Interception' || 
+	report.type === 'Aircraft Repair' || report.type === 'Recon' ||
+	report.type === 'Battle'
+	) && report.team._id === team._id)
+);
+
+

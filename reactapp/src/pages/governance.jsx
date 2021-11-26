@@ -22,7 +22,7 @@ const Governance = (props) => {
     else return (
 			<Container>
 				<Header>
-					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10, zIndex: 999 }}>
+					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10, }}>
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
 						<Nav.Item eventKey="timeline" to={`${url}/timeline`} componentClass={NavLink} icon={<Icon icon="hourglass" />}>Timeline</Nav.Item>
 						<Nav.Item eventKey="budget" to={`${url}/budget`} componentClass={NavLink} icon={<Icon icon="money" />}>Budget</Nav.Item>
@@ -55,7 +55,7 @@ const Governance = (props) => {
 						)}/>
 
 						<Route path={`${url}/timeline`} render={() => (
-							<GameTimeline />
+							<GameTimeline control={false}/>
 						)}/>
 						<Route path={`${url}/budget`}  render={() => (
 							<BudgetTab />

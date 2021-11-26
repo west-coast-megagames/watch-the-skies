@@ -10,6 +10,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { convertToDms } = require('../systems/geo');
 
 const express = require('express');
 
@@ -113,6 +114,16 @@ async function newSpacecraft(sData, rCounts) {
 	SpaceSite.status = [];
 	SpaceSite.hidden = sData.hidden;
 	SpaceSite.facilities = [];
+	const newLatDMS = convertToDms(sData.lat, false);
+	const newLongDMS = convertToDms(sData.lng, true);
+	SpaceSite.geoDMS = {
+		latDMS: newLatDMS,
+		lngDMS: newLongDMS
+	};
+	SpaceSite.geoDecimal = {
+		lat: sData.lat,
+		lng: sData.lng
+	};
 
 	// current valid status to push   ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']
   if (sData.status.damaged) {

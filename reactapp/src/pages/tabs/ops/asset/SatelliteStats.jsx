@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
 import TransferForm from "../../../../components/common/TransferForm";
-import { getAircraftIcon } from "../../../../scripts/mapIcons";
+import { getSatIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
 import socket from "../../../../socket";
 import UpgradeTable from "./UpgradeTable";
 
-const AircraftStats = (props) => {
+const SatelliteStats = (props) => {
 	const [showTransfer, setShowTransfer] = React.useState(false);
 
 	const repair = async () => {
@@ -19,7 +19,7 @@ const AircraftStats = (props) => {
 		}
 	};
 
-		let { stats, status, name, zone, type, origin, site, team, mission, upgrades, actions, missions } = props.unit;
+		let { stats, status, name, zone, type, origin, site, team, mission, upgrades, geoDecimal, subType } = props.unit;
 		return (
 			<Container>
 				<Panel>
@@ -27,12 +27,12 @@ const AircraftStats = (props) => {
 						<FlexboxGrid.Item colspan={4} style={{  }}>
 							<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
 								<img 
-									src={getAircraftIcon(team.code)} width="90%" alt='Failed to Load'
+									src={getSatIcon(team.code)} width="90%" alt='Failed to Load'
 									style={{ cursor: 'pointer' }}
 									onClick={() => props.handleTransfer(props.unit)}
 								/>		
 							</div>
-							<StatusBar control={props.control} unit={props.unit}/>
+							{/* <StatusBar control={props.control} unit={props.unit}/>
 							<div>
 							<Whisper placement="top" speaker={healthSpeaker} trigger="click">
 								<IconButton size="xs" icon={<Icon icon="info-circle" />} />
@@ -59,7 +59,7 @@ const AircraftStats = (props) => {
 									strokeColor={(stats.hull/stats.hullMax) * 100 < 40 ? 'red' : (stats.hull/stats.hullMax) * 100 < 90 ? 'orange' : "#32a844"}
 									showInfo={false}
 								/>
-						</div>			
+						</div>			 */}
 						</FlexboxGrid.Item>
 
 						<FlexboxGrid.Item colspan={8}>
@@ -68,20 +68,14 @@ const AircraftStats = (props) => {
 								<b>Name:</b> {name}
 							</p>
 							<p>
-								<b>Location:</b> {site ? site.name : "The Void"} |{" "}
-								{zone.name} zone
+								<b>Location:</b> {zone.name} ( {geoDecimal.lat} - {geoDecimal.lng} )
+								
 							</p>
 							<p>
-								<b>Type:</b> {type}
-							</p>
-							<p>
-								<b>Base:</b> {origin.name}{" "}
-								<IconButton disabled={(actions + missions <= 0) || status.some(el => el === 'deployed')} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true) } icon={<Icon icon="send" />}>
-									Transfer Unit
-								</IconButton>
+								<b>Type:</b> {subType}
 							</p>
 							</Panel>
-							<Panel bordered>
+							{/* <Panel bordered>
 								<FlexboxGrid>
 									<FlexboxGrid.Item colspan={12}>
 
@@ -121,27 +115,24 @@ const AircraftStats = (props) => {
 									<FlexboxGrid.Item colspan={24}>
 										<br />
 										<TagGroup>
-											{/* {!status.some(el => el === 'damaged') && !status.some(el => el === 'deployed') && <Tag color="green">Mission Ready</Tag>}
-											{status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>} */}
 											{status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
 											{status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
 										</TagGroup>
 									</FlexboxGrid.Item>
 								</FlexboxGrid>
-							</Panel>
+							</Panel> */}
 						</FlexboxGrid.Item>
 
-						<FlexboxGrid.Item colspan={12}>
+						{/* <FlexboxGrid.Item colspan={12}>
 								<Panel style={{ height: '100%'}} bordered>
 									<h5>Current Mission</h5>
-									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site ? site.name : "The Void"} |{" "}
+									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site.name}
 								</Panel>
 
 								<UpgradeTable upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />
-						</FlexboxGrid.Item>
+						</FlexboxGrid.Item> */}
 
 				 </FlexboxGrid>
-				 
 					<br />
 				</Panel>
 
@@ -216,4 +207,4 @@ const invadeSpeaker = (
   </Popover>
 );
 
-export default AircraftStats;
+export default SatelliteStats;

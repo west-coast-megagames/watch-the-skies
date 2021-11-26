@@ -17,7 +17,7 @@ const ZoneSchema = new Schema({
 		unique: true
 	},
 	name: { type: String, required: true, minlength: 3, maxlength: 50 },
-	tags: [{ type: String, enum: ['']} ],
+	tags: [{ type: String, enum: [''] } ],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
 });
 

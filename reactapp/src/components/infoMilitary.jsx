@@ -7,6 +7,7 @@ import { gameServer } from "../config";
 import ServiceRecord from "./common/serviceRecord";
 import { getOpsAccount } from "../store/entities/accounts";
 import TransferForm from "./common/TransferForm";
+import StatusBar from "../pages/tabs/ops/asset/StatusBar";
 
 class InfoMilitary extends Component {
   constructor(props) {
@@ -47,55 +48,25 @@ class InfoMilitary extends Component {
                 </p>
                 <p>
                   <b>Base:</b> {this.props.unit.origin.name}{" "}
-                  <IconButton
+                  {/* <IconButton
                     size="xs"
                     onClick={()=> this.setState({ hideTransfer: !this.state.hideTransfer })}
                     icon={<Icon icon="send" />}
                   >
                     Transfer Unit
-                  </IconButton>
+                  </IconButton> */}
                 </p>
                 {this.hideTransfer === false && <SelectPicker block disabled />}
               </FlexboxGrid.Item>
             </FlexboxGrid>
             <br />
-            <FlexboxGrid>
-              <FlexboxGrid.Item colspan={12}>
-                <p>Health Bar</p>
-                <Progress.Line
-                  percent={100}
-                  strokeColor="#32a844"
-                  showInfo={false}
-                />
-              </FlexboxGrid.Item>
-              <FlexboxGrid.Item colspan={12}>
-							<div>
-								<ButtonGroup size='sm'>
-									{this.props.unit.status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name} is <b style={{ backgroundColor: 'green' }} >Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} color='orange' 
-										 />
-									</Whisper>}	
-									{!this.props.unit.status.some(el => el === 'mobilized') && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name} is <b>Not Mobilized!</b></Tooltip>} trigger="hover">
-										<IconButton icon={<Icon icon="plane"/>} appearance="ghost" style={{ cursor: 'help', color: 'grey' }} color="orange"/>
-									</Whisper>}
+              <Progress.Line
+                percent={100}
+                strokeColor="#32a844"
+                showInfo={false}
+              />
+							<StatusBar control={this.props.control} unit={this.props.unit}/>
 
-									{this.props.unit.actions > 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Action is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='blue' style={{ cursor: 'help' }}><b>A</b></Button>
-									</Whisper>}	
-									{this.props.unit.actions <= 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Action is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='blue' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>A</b></Button>
-									</Whisper>}
-
-									{this.props.unit.missions > 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Mission is <b style={{ backgroundColor: 'green' }} >Ready!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' style={{ cursor: 'help' }}><b>M</b></Button>
-									</Whisper>}	
-									{this.props.unit.missions <= 0 && <Whisper placement="top" speaker={<Tooltip>{this.props.unit.name}'s Mission is <b style={{ backgroundColor: 'red' }} >Exhausted!</b></Tooltip>} trigger="hover">
-										<Button color='cyan' appearance="ghost"  style={{ cursor: 'help', color: 'grey' }}><b>M</b></Button>
-									</Whisper>}
-								</ButtonGroup>								
-							</div> 
-              </FlexboxGrid.Item>
-            </FlexboxGrid>
             {this.unitStats(this.props.unit)}
             <br />
             <ServiceRecord owner={this.props.unit} />
@@ -117,10 +88,11 @@ class InfoMilitary extends Component {
           </Button>
         </Drawer.Footer>
         <SelectPicker />
-				{this.state.hideTransfer && <TransferForm 
+				{/* {<TransferForm 
 				show={this.state.hideTransfer} 
 				closeTransfer={this.closeTransfer}
-				unit={this.props.unit} />}
+				aircrafts={this.props.aircrafts}
+				units={this.props.units} />} */}
       </Drawer>
     );
   }
@@ -284,6 +256,8 @@ const invadeSpeaker = (
 
 const mapStateToProps = (state) => ({
   unit: state.info.Military,
+	units: state.entities.military.list,
+	aircrafts: state.entities.aircrafts.list,
   lastFetch: state.entities.military.lastFetch,
   show: state.info.showMilitary,
   account: getOpsAccount(state),

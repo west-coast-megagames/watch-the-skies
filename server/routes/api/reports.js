@@ -17,13 +17,14 @@ router.get('/', async function (req, res) {
 	logger.info('GET Route: api/reports requested...');
 	try {
 		const reports = await Report.find()
-			.populate('team')
+			.populate('team', 'name code shortName')
 			.populate('organization', 'name')
 			.populate('zone')
 			.populate('project')
 			.populate('lab')
 			.populate('theory')
 			.populate('units')
+			.populate('aircraft', 'name')
 			.populate('site', 'name team')
 			.sort({ date: 1 });
 		res.status(200).json(reports);

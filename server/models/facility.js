@@ -7,6 +7,22 @@ const nexusError = require('../middleware/util/throwError'); // Costom error han
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
+const BuildingSchema = new Schema({
+	type: { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] },
+	stats: {
+		capacity: { type: Number },
+		funding: { type: Number },
+		range: { type: Number },
+		rate: { type: Number },
+		bonus: { type: Number }
+	},
+	damaged: { type: Boolean, default: false, required: true },
+	research: { type: ObjectId, ref: 'Research' },
+	aircrafts: [{ type: ObjectId, ref: 'Aircraft' }],
+	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
+	units: [{ type: ObjectId, ref: 'Military' }]
+});
+
 // type can be: "Civilian", "Crises", "Hanger", "Research", "Base" currently
 const FacilitySchema = new Schema({
 	model: { type: String, default: 'Facility' },
@@ -14,60 +30,14 @@ const FacilitySchema = new Schema({
 	name: { type: String, required: true, min: 2, maxlength: 50 },
 	team: { type: ObjectId, ref: 'Team' },
 	site: { type: ObjectId, ref: 'Site' },
-	code: {
-		type: String,
-		minlength: 2,
-		maxlength: 20,
-		required: true,
-		unique: true
-	},
-	status: [ {type: String, enum: ['repair','damaged', 'destroyed', 'secret', 'defenses']} ],
+	code: { type: String, minlength: 2, maxlength: 20, required: true, unique: true },
+	status: [ { type: String, enum: ['repair', 'damaged', 'destroyed', 'secret', 'defenses'] } ],
 	hidden: { type: Boolean, default: false },
 	upgrade: [{ type: ObjectId, ref: 'Upgrade' }],
-	capability: {
-		research: {
-			capacity: { type: Number, default: 0 },
-			projects: [{ type: ObjectId, ref: 'Research' }],
-			funding: [Number],
-			sciRate: { type: Number, default: 0 },
-			sciBonus: { type: Number, default: 0 },
-			active: { type: Boolean },
-			status: {
-				damage: [Boolean],
-				pending: [Boolean]
-			}
-		},
-		airMission: {
-			capacity: { type: Number, default: 0 },
-			damage: [Boolean],
-			aircraft: [{ type: ObjectId, ref: 'Aircraft' }],
-			active: { type: Boolean, default: false }
-		},
-		storage: {
-			capacity: { type: Number, default: 0 },
-			damage: [Boolean],
-			active: { type: Boolean, default: false }
-		},
-		manufacturing: {
-			capacity: { type: Number, default: 0 },
-			damage: [Boolean],
-			active: { type: Boolean, default: false }
-		},
-		naval: {
-			capacity: { type: Number, default: 0 },
-			damage: [Boolean],
-			fleet: [{ type: ObjectId, ref: 'Military' }],
-			active: { type: Boolean, default: false }
-		},
-		ground: {
-			capacity: { type: Number, default: 0 },
-			damage: [Boolean],
-			corps: [{ type: ObjectId, ref: 'Military' }],
-			active: { type: Boolean, default: false }
-		}
-	},
+	buildings: [BuildingSchema],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	tags: [ {type: String, enum: ['coastal']} ]
+	tags: [ { type: String, enum: ['coastal'] } ],
+	capabilities: [ { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] }]
 });
 
 FacilitySchema.methods.validateFacility = async function () {
@@ -92,25 +62,27 @@ FacilitySchema.methods.validateFacility = async function () {
 	if (this.team) {
 		await validTeam(this.team);
 	}
-
+	
 	for await (const upg of this.upgrade) {
 		await validUpgrade(upg);
 	}
-	for await (const rsrch of this.capability.research.projects) {
-		await validResearch(rsrch);
+
+	if (this.buildings.research) {
+		await validResearch(this.buildings.research);
+  }
+	
+  if (this.buildings.aircrafts) {
+	  for await (const aircrft of this.buildings.aircrafts) {
+	  	await validAircraft(aircrft);
+		}
 	}
 
-	for await (const aircrft of this.capability.airMission.aircraft) {
-		await validAircraft(aircrft);
+	if (this.buildings.units) {
+	  for await (const milUnit of this.buildings.units) {
+		  await validMilitary(milUnit);
+		}
 	}
 
-	for await (const nav of this.capability.naval.fleet) {
-		await validMilitary(nav);
-	}
-
-	for await (const cor of this.capability.ground.corps) {
-		await validMilitary(cor);
-	}
 };
 
 const Facility = mongoose.model('Facility', FacilitySchema);

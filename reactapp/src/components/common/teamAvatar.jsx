@@ -10,6 +10,8 @@ const team = {
   RFD: "https://cdn.countryflags.com/thumbs/russia/flag-square-250.png",
   PRC: "https://cdn.countryflags.com/thumbs/china/flag-square-250.png",
   TUK: "https://cdn.countryflags.com/thumbs/united-kingdom/flag-square-250.png",
+	
+  UK: "https://cdn.countryflags.com/thumbs/united-kingdom/flag-square-250.png",
   TFR: "https://cdn.countryflags.com/thumbs/france/flag-square-250.png",
   JPN: 'https://cdn.countryflags.com/thumbs/japan/flag-square-250.png',
   IRN: 'https://cdn.countryflags.com/thumbs/iran/flag-square-250.png',
@@ -27,7 +29,7 @@ class TeamAvatar extends Component {
   state = {};
   render() {
     return (
-      <Avatar style={{ border: '1.5px solid #3c3f43', }} size={this.props.size} circle src={team[this.props.code]}>
+      <Avatar style={{ border: '1.5px solid #3c3f43', opacity: this.props.grey ? '0.4' : 1}} size={this.props.size} circle src={team[this.props.code]}>
         !
       </Avatar>
     );

@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
@@ -11,7 +12,7 @@ const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
-const { Upgrade } = require('./upgrade') // Import of Upgrade model [Mongoose]
+const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 
 // Utility Imports
 const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
@@ -40,7 +41,7 @@ const MilitarySchema = new Schema({
 		lng: { type: Number }
 	},
 	status: [{ type: String, enum:  ['damaged', 'deployed', 'destroyed', 'repair', 'mobilized', 'operational', 'action', 'mission'] } ],
-	tags: { 
+	tags: {
 		type: [String],
 		enum: ['secret']
 	}
@@ -85,9 +86,9 @@ MilitarySchema.methods.reset = async function (type) {
 // IN - Mission Object { target, type } | OUT: VOID
 // PROCESS: Checks to see if the UNIT is able to go on the mission, pays the cost.
 MilitarySchema.methods.mission = async function (assignment) {
-	if (!this.status.some(el => el === 'mobilized')) throw new Error(`${this.name} is not mobilized.`) // Checks if the UNIT is mobalized
+	if (!this.status.some(el => el === 'mobilized')) throw new Error(`${this.name} is not mobilized.`); // Checks if the UNIT is mobalized
 	if (this.missions < 1) throw new Error(`${this.name} cannot deploy for another mission this turn.`); // Checks if the UNIT has a mission availible
-	
+
 	let unit = this;
 	unit.assignment = assignment; // Sets assignment as current mission
 	if (this.site._id.toString() !== assignment.target) unit = await unit.deploy(assignment.target);
@@ -97,12 +98,12 @@ MilitarySchema.methods.mission = async function (assignment) {
 
 		unit = await unit.save(); // Saves the UNIT
 		await unit.populateMe();
-		
+
 		nexusEvent.emit('request', 'update', [ unit ]);
 
 		return unit;
 	}
- catch (error) {
+	catch (error) {
 		console.log(error);
 	}
 };
@@ -112,17 +113,17 @@ MilitarySchema.methods.mission = async function (assignment) {
 // PROCESS: Deploys a UNIT to a site.
 MilitarySchema.methods.deploy = async function (site) {
 	// Mechanics: Allows a mobilized military unit to go to any site that currently has friendly units with the encampment status. (Status gained by being in the site last turn regardless of site ownership)
-	
+
 	const target = await Site.findById(site).populate('country').populate('zone'); // Finds deployment target in the DB
 	logger.info(`Deploying ${this.name} to ${target.name} in the ${target.zone.name} zone`);
-	
+
 	try {
 		let cost = 0;
 		const distance = getDistance(this.location.lat, this.location.lng, target.geoDecimal.lat, target.geoDecimal.lng); // Get distance to target in KM
 		// if (distance > this.range * 4) throw new Error(`${target.name} is beyond the deployment range of ${this.name}.`); // Error for beyond operational range
 		distance < this.range ? cost = this.stats.localDeploy : cost = this.stats.globalDeploy;
 
-		if (!this.status.some(el => el === 'deployed')) { 
+		if (!this.status.some(el => el === 'deployed')) {
 			addArrayValue(this.status, 'deployed');
 			this.markModified('status');
 		}
@@ -131,7 +132,7 @@ MilitarySchema.methods.deploy = async function (site) {
 		this.country = target.country;
 		this.zone = target.zone;
 		const { lat, lng } = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
-	
+
 		this.location.lat = lat;
 		this.location.lng = lng;
 
@@ -162,7 +163,7 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		const home = await Facility.findById(origin)
 			.populate('site'); // Finds the new home site
 
-		logger.info(`${this.name} is being recalled to ${home.name}...`);
+		// logger.info(`${this.name} is being recalled to ${home.name}...`);
 
 		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
 		await clearArrayValue(this.status, 'mobilized'); // Clears the MOBILIZED status if it exists
@@ -172,14 +173,15 @@ MilitarySchema.methods.recall = async function (forced = false) {
 		this.site = home.site; // Updates current site
 		this.organization = home.site.organization; // Updates the current organization
 		this.zone = home.site.zone; // Updates current site
+		this.assignment = { type: 'Garrison' }; // Sets assignment as current mission
 
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
-		
+
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		logger.info(`${this.name} returned to ${home.name}...`);
 
-		return;
+		return unit;
 	}
 	catch (err) {
 		nexusError(`${err.message}`, 500);
@@ -202,7 +204,6 @@ MilitarySchema.methods.mobilize = async function (forced = false) {
 		this.location.lat = lat; // Updates LAT
 		this.location.lng = lng; // Updates LNG
 		const unit = await this.save(); // Saves the UNIT into a new variable
-		await unit.populateMe();
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
 		return unit;
@@ -234,14 +235,13 @@ MilitarySchema.methods.transfer = async function (facility) {
 		this.site = home.site; // Updates current site
 		this.organization = home.site.organization; // Updates the current organization
 		this.zone = home.site.zone; // Updates current site
-	
+
 		this.markModified('status'); // Marks the STATUS array as modified so it will save
 
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
-		await unit.populateMe();
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
 		return unit;
@@ -266,22 +266,22 @@ MilitarySchema.methods.recon = async function (site) {
 		// Mechanics: Allows a mobilized military unit to produce intel on things in the site they are currently in.
 		// Generates INTEL on the SITE automatically
 
-		const units = await Military.find({ site: target._id, team: { $ne: this.team._id } }) // Finds all UNITS that don't belong to us.
-		const facilities = await Facilities.find({ site: target._id, team: { $ne: this.team._id } }) // Finds all Facilities that don't belong to us.
-		const squads = await Squads.find({ site: target._id, team: { $ne: this.team._id } }) // Finds all Squads at the site that don't belong to us.
+		const units = await Military.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all UNITS that don't belong to us.
+		const facilities = await Facilities.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Facilities that don't belong to us.
+		const squads = await Squads.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Squads at the site that don't belong to us.
 
 		for (const item of [...units, ...facilities, ...squads]) {
 			// Options
 		}
 		// TODO - Create algorytmic method to translate a RECON stat to actual INTEL
 		for (let i; i < this.stats.recon; i++) {
-			console.log('Attempting to generate INTEL')
+			console.log('Attempting to generate INTEL');
 		}
 	}
 	catch (err) {
 		throw err;
 	}
-}
+};
 
 // Method - Repair
 // IN: VOID | OUT: VOID
@@ -304,35 +304,80 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 
 		const unit = await this.save(); // Saves the unit into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
+		return unit;
 	}
 	catch (err) {
 		throw err;
 	}
-}
+};
+
+MilitarySchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemove = []) {
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	try {
+		let unit = this;
+		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
+		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		return unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
 
 // Method - Equip
 // IN: VOID | OUT: VOID
 // PROCESS: Changes the equipment of the unit
 MilitarySchema.methods.equip = async function (upgrades = []) {
-	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
 	// TODO add the mechanics of adding things to the UNIT
 	// Mechanics: Changes out existing upgrades with anything currently stored.
 	try {
 		for (const upgrade of upgrades) {
-			if (this.upgrades.some( el => el.toString() !== upgrade )) this.upgrades.push();
+			if (!this.upgrades.some(el => el === upgrade)) await addArrayValue(this.upgrades, upgrade); // Adds the MOBILIZED status into the STATUS array;
 		}
-
 		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
 		this.populate('upgrades').execPopulate(); // Populates the upgrads
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
-		return
+		return unit;
 	}
 	catch (err) {
 		throw err;
 	}
-}
+};
+
+// Method - Unequip
+// IN: VOID | OUT: VOID
+// PROCESS: Changes the equipment of the unit
+MilitarySchema.methods.unequip = async function (upgrades = []) {
+	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	// TODO add the mechanics of adding things to the UNIT
+	// Mechanics: Changes out existing upgrades with anything currently stored.
+	// console.log(this.upgrades)
+
+	try {
+		let temp = [ ... this.upgrades];
+		for (const up of upgrades) {
+			const index = temp.findIndex(el => el === up);
+			temp.splice(index, 1);
+		}
+
+		this.upgrades = temp;
+		this.markModified('upgrades'); // Marks the UPGRADES array as modified so it will save.
+		this.populate('upgrades').execPopulate(); // Populates the upgrads
+
+
+		const unit = await this.save(); // Saves the UNIT into a new variable
+		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		return unit; // unit;
+	}
+	catch (err) {
+		throw err;
+	}
+};
 
 // Method - Aid
 // IN: VOID | OUT: VOID
@@ -352,7 +397,7 @@ MilitarySchema.methods.aid = async function (site) {
 	catch (err) {
 		throw err;
 	}
-}
+};
 
 // METHOD - takeAction
 // IN: VOID | OUT: VOID
@@ -363,11 +408,11 @@ MilitarySchema.methods.takeAction = async function () {
 		if (this.missions < 1) {
 			throw Error(`${this.name} has no mission or action pts left this turn.`);
 		}
- else {
+		else {
 			this.missions -= 1;
 		}
 	}
- else {
+	else {
 		this.actions -= 1;
 	}
 };
@@ -389,7 +434,6 @@ MilitarySchema.methods.endTurn = async function () {
 
 MilitarySchema.methods.populateMe = async function () {
 	return this.populate('team', 'name shortName code')
-		.populate('team', 'name shortName code')
 		.populate('zone', 'name')
 		.populate('organization', 'name')
 		.populate('site', 'name geoDecimal')
@@ -421,7 +465,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 		await validLog(servRec);
 	}
 };
-
 
 
 const Military = mongoose.model('Military', MilitarySchema);

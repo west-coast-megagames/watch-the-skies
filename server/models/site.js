@@ -2,7 +2,10 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validOrganization, validZone, validLog, validFacility, validUpgrade } = require('../middleware/util/validateDocument');
+const { validTeam, validOrganization, validZone, validLog, validFacility } = require('../middleware/util/validateDocument');
+const { addArrayValue } = require('../middleware/util/arrayCalls');
+const nexusEvent = require('../middleware/events/events');
+const { convertToDms } = require('../util/systems/geo');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -33,19 +36,41 @@ const SiteSchema = new Schema({
 	},
 	hidden: { type: Boolean, default: false }, // just in case and to be consistent
 	facilities: [{ type: ObjectId, ref: 'Facility' }],
-	serviceRecord: [{ type: ObjectId, ref: 'Log' }]
+	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
+	geoDMS: {
+		latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
+		lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
+	},
+	geoDecimal: {
+		lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
+		lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
+	}
 });
 
-SiteSchema.methods.warzone = async function () {
-	const status = this.status.some(el => el === 'warzone')
-	if (!status) {
-		addArrayValue(this.status, 'warzone');
+SiteSchema.methods.addStatus = async function (status) {
+	const present = this.status.some(el => el === status);
+	if (!present) {
+		addArrayValue(this.status, status);
 		this.markModified('status');
-		let site = await target.save();
+		const site = await this.save();
 
 		nexusEvent.emit('request', 'update', [ site ]);
 	}
-}
+};
+
+SiteSchema.methods.geoPosition = async function (geoDecimal) {
+	this.geoDecimal = geoDecimal;
+	this.geoDMS = {
+		latDMS: convertToDms(geoDecimal.lat, false),
+		lngDMS: convertToDms(geoDecimal.lng, true)
+	};
+
+	const site = await this.save();
+	await site.populateMe();
+	nexusEvent.emit('request', 'update', [ site ]);
+
+	return;
+};
 
 // validateSite method
 SiteSchema.methods.validateSite = async function () {
@@ -79,9 +104,9 @@ SiteSchema.methods.validateSite = async function () {
 			status: Joi.string().valid('occupier', 'liberator', '')
 		});
 
-		favorTeamSchema = Joi.object({
-			name: Joi.string().required()
-		});
+		// favorTeamSchema = Joi.object({
+		// 	name: Joi.string().required()
+		// });
 
 		break;
 
@@ -91,6 +116,16 @@ SiteSchema.methods.validateSite = async function () {
 			code: Joi.string().min(2).max(20).required(),
 			subType: Joi.string().valid('Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station'),
 			status: Joi.array().items(Joi.string().valid('damaged', 'destroyed', 'upgrade', 'repair', 'secret'))
+		});
+
+		geoDMSSchema = Joi.object({
+			latDMS: Joi.string().min(7).max(13),
+			lngDMS: Joi.string().min(7).max(14)
+		});
+
+		geoDecimalSchema = Joi.object({
+			lat: Joi.number().min(-90).max(90),
+			lng: Joi.number().min(-180).max(180)
 		});
 
 		break;
@@ -112,24 +147,37 @@ SiteSchema.methods.validateSite = async function () {
 	for await (const fac of this.facilities) {
 		await validFacility(fac);
 	}
-	if (this.type === 'Ground') {
-		const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
-		if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
 
-		const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
-		if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
+	const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
+	if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
+
+	const geoDecimalCheck = geoDecimalSchema.validate(this.geoDecimal, { allowUnknown: true });
+	if (geoDecimalCheck.error != undefined) nexusError(`${geoDecimalCheck.error}`, 400);
+
+	if (this.type === 'Ground') {
 
 		for await (const fav of this.favor) {
-		  await validTeam(fav.team._id);
+			await validTeam(fav.team._id);
 
 			const favorCheck = favorSchema.validate(fav, { allowUnknown: true });
-		  if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
+			if (favorCheck.error != undefined) nexusError(`${favorCheck.error}`, 400);
 
 			const favorTeamCheck = favorSchema.validate(fav.team, { allowUnknown: true });
-		  if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
+			if (favorTeamCheck.error != undefined) nexusError(`${favorTeamCheck.error}`, 400);
 		}
 	}
 };
+
+SiteSchema.methods.populateMe = async function () {
+	return this.populate('team', 'name shortName code')
+		.populate('organization', 'name')
+		.populate('team', 'shortName name code')
+		.populate('facilities', 'name type')
+		.populate('zone', 'model name code')
+		.populate('occupier', 'name shortName code')
+		.execPopulate();
+};
+
 
 const Site = mongoose.model('Site', SiteSchema);
 
@@ -143,17 +191,9 @@ const GroundSite = Site.discriminator(
 		repression: { type: Number, min: 0, max: 100, default: 0 },
 		morale: { type: Number, min: 0, max: 100, default: 50 },
 		favor: [FavorSchema],
-		geoDMS: {
-			latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
-			lngDMS: { type: String, minlength: 7, maxlength: 14 } // format DDD MM SS.S E or W example 073 59 11.02 W
-		},
-		geoDecimal: {
-			lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
-			lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
-		},
-		tags: [{ type: String, enum: ['coastal', 'capital']} ],
+		tags: [{ type: String, enum: ['coastal', 'capital'] } ],
 		dateline: { type: String, default: 'Dateline' },
-		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied']} ]
+		status: [{ type: String, enum: ['public', 'warzone', 'secret', 'occupied'] } ]
 	})
 );
 
@@ -168,7 +208,7 @@ const SpaceSite = Site.discriminator(
 			maxlength: 50,
 			enum: ['Satellite', 'Cruiser', 'Battleship', 'Hauler', 'Station']
 		},
-		status: [ {type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret']} ]
+		status: [ { type: String, enum: ['damaged', 'destroyed', 'upgrade', 'repair', 'secret'] } ]
 	})
 );
 

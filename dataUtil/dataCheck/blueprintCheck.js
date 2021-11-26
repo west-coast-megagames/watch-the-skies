@@ -126,26 +126,9 @@ async function chkBlueprint (runFlag) {
             */
 				}
 
-				if (!Object.prototype.hasOwnProperty.call(blueprint, 'upgrades')) {
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'buildings')) {
 					logger.error(
-						`upgrades missing for facility blueprint ${blueprint.name} ${blueprint._id}`
-					);
-				}
-
-				if (!Object.prototype.hasOwnProperty.call(blueprint, 'capacity')) {
-					logger.error(
-						`capacity missing for facility blueprint ${blueprint.name} ${blueprint._id}`
-					);
-				}
-				else if (isNaN(blueprint.capacity)) {
-					logger.error(
-						`Blueprint ${blueprint.name} ${blueprint._id} capacity is not a number ${blueprint.capacity}`
-					);
-				}
-
-				if (!Object.prototype.hasOwnProperty.call(blueprint, 'status')) {
-					logger.error(
-						`status missing for facility blueprint ${blueprint.name} ${blueprint._id}`
+						`buildings missing for facility blueprint ${blueprint.name} ${blueprint._id}`
 					);
 				}
 
@@ -153,36 +136,6 @@ async function chkBlueprint (runFlag) {
 					logger.error(
 						`unitType missing for facility blueprint ${blueprint.name} ${blueprint._id}`
 					);
-				}
-
-				if (blueprint.type === 'Lab') {
-					if (!Object.prototype.hasOwnProperty.call(blueprint, 'funding')) {
-						logger.error(
-							`funding missing for facility blueprint ${blueprint.name} ${blueprint._id}`
-						);
-					}
-
-					if (!Object.prototype.hasOwnProperty.call(blueprint, 'sciRate')) {
-						logger.error(
-							`sciRate missing for facility blueprint ${blueprint.name} ${blueprint._id}`
-						);
-					}
-					else if (isNaN(blueprint.sciRate)) {
-						logger.error(
-							`Blueprint ${blueprint.name} ${blueprint._id} sciRate is not a number ${blueprint.sciRate}`
-						);
-					}
-
-					if (!Object.prototype.hasOwnProperty.call(blueprint, 'sciBonus')) {
-						logger.error(
-							`sciBonus missing for facility blueprint ${blueprint.name} ${blueprint._id}`
-						);
-					}
-					else if (isNaN(blueprint.sciBonus)) {
-						logger.error(
-							`Blueprint ${blueprint.name} ${blueprint._id} sciBonus is not a number ${blueprint.sciBonus}`
-						);
-					}
 				}
 
 				break;
@@ -239,6 +192,21 @@ async function chkBlueprint (runFlag) {
 				if (!Object.prototype.hasOwnProperty.call(blueprint, 'effects')) {
 					logger.error(
 						`effects missing for upgrade blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+
+				break;
+
+				case 'building':
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'type')) {
+					logger.error(
+						`type missing for building blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'stats')) {
+					logger.error(
+						`stats missing for building blueprint ${blueprint.name} ${blueprint._id}`
 					);
 				}
 

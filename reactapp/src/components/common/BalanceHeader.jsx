@@ -21,7 +21,7 @@ const BalanceHeader = (props) => {
 			</Affix>
 	);
 
-	account.balance < 1 ? color = 'red' : color = 'green';
+	account.resources.find(el => el.type === 'Megabucks').balance < 1 ? color = 'red' : color = 'green';
 	return(
 		<div>	
 				<Tag style={{display: 'inline', float: 'right', marginRight: '15px'}} color={ color }>$ { account.resources.find(el => el.type === 'Megabucks').balance } MB</Tag>

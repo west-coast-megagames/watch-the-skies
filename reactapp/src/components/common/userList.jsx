@@ -1,36 +1,36 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
 import { IconButton, Icon, Badge, Whisper, Popover, Tag } from 'rsuite'; // rsuite components
+import TeamAvatar from './teamAvatar';
 
 
 
 const UserList = () => {
     let users = useSelector(state => state.auth.users);
-    let socket = useSelector(state => state.auth.socket);
+    let myUser = useSelector(state => state.auth.user);
     let userList = []
     let online = users.length;
     let uncredentialed = 0
     for (let el of users) {
-        uncredentialed = 0
-        if (el.name === undefined) {
-            uncredentialed++;
-        } else if (el.name !== undefined) {
-            userList.push(el)
-        }
-    };
+			uncredentialed = 0
+			 if (el.username !== undefined) {
+					userList.push(el)
+			}
+	};
 
     return (
-        <div style={{position: 'fixed', bottom: 5, left: 5}}>
-        <Whisper trigger="click" placement='autoVerticalStart' speaker={
+        <div style={{position: 'fixed', bottom: 5, left: 5, zIndex: 999 }}>
+        <Whisper trigger="hover" placement='autoVerticalStart' speaker={
             <Popover title="User List">
                 {(uncredentialed > 0) ? <span>{uncredentialed} not signed in</span> : null }
-                {userList.length > 0 && socket !== null ? 
+                {userList.length > 0 && myUser !== null ? 
                 <React.Fragment>
-                    <ul>
-                        {userList.map(user => (
-                            <li id={user.id}>{user.name} | {user.team} {user.id === socket.id && <Tag color='green'>Me</Tag>}</li>
-                        ))}
-                    </ul>
+                      {userList.map(user => (
+                          <b style={{   display: 'flex', justifyContent: 'center',	alignItems: 'center'  }} id={user.userID}>
+														<TeamAvatar code={user.team}  size={'xs'} /> - 
+														{user.username}   {user.username === myUser.username && <Tag color='green'>Me</Tag>}
+													</b>
+                      ))}
                 </React.Fragment> : null }
             </Popover>} >
             <Badge content={online} >

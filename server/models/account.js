@@ -282,7 +282,7 @@ AccountSchema.methods.report = async function (transaction, type) {
 		if (type === 'Withdrawal') report.counterparty = to;
 
 		report = await report.save();
-		// report = await report.populateMe();
+		report = report.populateMe();
 
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'create', [ report ]); // Scott Note: Untested might not work

@@ -4,7 +4,7 @@ import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGrou
 import { getMilitary } from '../../../../store/entities/military';
 import socket from '../../../../../src/socket';
 
-const MobilizeForm = (props) => {
+const RecallForm = (props) => {
 	const [mobilization, setMobilization] = React.useState([]); 
 
 
@@ -24,7 +24,7 @@ const MobilizeForm = (props) => {
 
 	const submitDeployment = async () => { 
 		try {
-			socket.emit('request', { route: 'military', action: 'action', type: 'mobilize', data: { units: mobilization }});
+			socket.emit('request', { route: 'military', action: 'action', type: 'recall', data: { units: mobilization }});
 				// socket.emit( 'militarySocket', state.deployType, deployment);
 		} catch (err) {
 				Alert.error(`Error: ${err.body} ${err.message}`, 5000)
@@ -34,10 +34,11 @@ const MobilizeForm = (props) => {
 
 	return (
 		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
+			<Drawer.Header><h5>Recall units</h5></Drawer.Header>
 			<Drawer.Body>
 					<h6>Select Units</h6>
 					{<CheckPicker block placeholder='Select Units'
-							data={ props.military.filter(el => !el.status.some(el2 => el2 === 'mobilized') && el.missions + el.actions > 0 ) }
+							data={ props.military.filter(el => el.status.some(el2 => el2 === 'mobilized')) }
 							onChange={handleUnits}
 							valueKey='_id'
 							labelKey='name'
@@ -58,4 +59,4 @@ const MobilizeForm = (props) => {
 	
 	const mapDispatchToProps = dispatch => ({
 	});
-export default connect(mapStateToProps, mapDispatchToProps)(MobilizeForm);
+export default connect(mapStateToProps, mapDispatchToProps)(RecallForm);

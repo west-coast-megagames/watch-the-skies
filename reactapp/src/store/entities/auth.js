@@ -32,7 +32,7 @@ const slice = createSlice({
 
       localStorage.setItem('nexusAuth', jwt);
       const user = jwtDecode(jwt);
-			console.log(user);
+			// console.log(user);
       // playTrack('login');
       // auth.team = user.team;
       auth.user = user;
@@ -40,7 +40,6 @@ const slice = createSlice({
       auth.loading = false
       auth.login = true;
       // socket.emit('new user', { team: user.team.shortName, user: user.username });
-      initConnection(auth.user, auth.team, auth.version);
     },
 		signOut: (auth, action) => {
 			console.log(`${action.type} Dispatched`);
@@ -66,7 +65,7 @@ const slice = createSlice({
     },
     usersRecieved: (auth, action) => {
       console.log(`${action.type} Dispatched`)
-      auth.users = action.payload
+      auth.users = action.payload;
     },
     loginSocket: (auth, action) => {
       console.log(`${action.type} Dispatched`);
@@ -78,6 +77,7 @@ const slice = createSlice({
 		},
 		debugTeam: (auth, action) => {
 			auth.team = action.payload;
+			initConnection(auth.user, auth.team, auth.version);
 		}
   }
 });

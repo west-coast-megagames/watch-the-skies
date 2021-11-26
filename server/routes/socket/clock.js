@@ -12,25 +12,35 @@ module.exports = async function (client, req) {
 			break;
 		case('play'):
 			masterClock.unpause();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
 		case('pause'):
 			masterClock.pause();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
 		case('skip'):
 			masterClock.turnNum < 0 ? masterClock.startGame() : masterClock.nextPhase();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
 		case('revert'):
 			masterClock.revertPhase();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
 		case('reset'):
 			masterClock.reset();
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
+			break;
+		case('edit'):
+			masterClock.setSeconds(req.data.seconds);
+			nexusEvent.emit('request', 'clock', [ masterClock.getClockState() ]);
 			break;
 		default:
 			message = `No ${req.action} is in the ${req.route} route.`;
 			throw new Error(message);
 		}
-	} catch (error) {
-		client.emit('alert', { type: 'error', error: error.message });
+	}
+	catch (error) {
+		client.emit('alert', { type: 'error', message: error.message ? error.message : error });
 		console.log(error);
 	}
 };

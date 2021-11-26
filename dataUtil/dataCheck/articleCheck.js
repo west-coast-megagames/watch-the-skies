@@ -106,12 +106,6 @@ async function chkArticle(runFlag) {
 			);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(article, 'likes')) {
-			logger.error(
-				`likes missing for Article ${article.headline} ${article._id}`
-			);
-		}
-
 		if (!Object.prototype.hasOwnProperty.call(article, 'tags')) {
 			logger.error(
 				`tags missing for Article ${article.headline} ${article._id}`
