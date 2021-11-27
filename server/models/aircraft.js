@@ -350,7 +350,7 @@ AircraftSchema.methods.populateMe = function () {
 };
 
 AircraftSchema.methods.report = async function (action, type) {
-	const { repair, transfer, cost, dmgRepaired } = action;
+	const { repair, transfer, cost, dmgRepaired, equipt } = action;
 	console.log(action)
 	try {
 		let report = new AircraftAction ({
@@ -360,6 +360,7 @@ AircraftSchema.methods.report = async function (action, type) {
 			type,
 			repair,
 			dmgRepaired,
+			equipt,
 			transfer,
 			cost
 		});
@@ -392,6 +393,8 @@ AircraftSchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemov
 		const unit = this;
 		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
 		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		const equipt = { upgradesRemove, upgradesAdd };
+		await this.report({ equipt }, 'Equip');
 		return unit;
 	}
 	catch (err) {

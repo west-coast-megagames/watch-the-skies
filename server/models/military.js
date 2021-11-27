@@ -324,6 +324,8 @@ MilitarySchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemov
 		let unit = this;
 		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
 		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		const equipt = { upgradesRemove, upgradesAdd };
+		await this.report({ equipt }, 'Equip');
 		return unit;
 	}
 	catch (err) {
@@ -438,7 +440,7 @@ MilitarySchema.methods.endTurn = async function () {
 };
 
 MilitarySchema.methods.report = async function (action, type) {
-	const { repair, transfer, cost, dmgRepaired } = action;
+	const { repair, transfer, equipt, cost, dmgRepaired } = action;
 	console.log(action);
 	try {
 		let report = new MilitaryAction ({
@@ -448,6 +450,7 @@ MilitarySchema.methods.report = async function (action, type) {
 			type,
 			repair,
 			transfer,
+			equipt,
 			dmgRepaired,
 			cost
 		});

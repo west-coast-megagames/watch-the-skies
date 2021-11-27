@@ -1,9 +1,9 @@
 import React from 'react';
-import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog, FailedLog, BattleLog, TransferLog } from './logs'
+import { TransactionLog, ResearchLog, InterceptLog, DeployLog, RepairLog, ReconLog, FailedLog, BattleLog, TransferLog, EquipLog } from './logs'
 import { Timeline, Panel, Divider } from 'rsuite'
 import { connect, useSelector } from 'react-redux'
 
-const ServiceRecord = ({ reports, owner, teams, accounts, sites}) => {
+const ServiceRecord = ({ reports, owner, teams, accounts, sites, upgrades}) => {
 	switch(owner.model) {
 		case 'Aircraft':
 			reports = reports.filter(log => log.aircraft);
@@ -37,6 +37,8 @@ const ServiceRecord = ({ reports, owner, teams, accounts, sites}) => {
 				return (<BattleLog key={report._id} report={report} teams={teams}/>); // ops 
 			case 'Transfer':
 				return (<TransferLog key={report._id} report={report} sites={sites} teams={teams}/>); // ops 
+			case 'Equip':
+				return (<EquipLog key={report._id} report={report} upgrades={upgrades} teams={teams}/>);
 			case 'Failure':
 				return (<FailedLog key={report._id} report={report} teams={teams}/>);
 			default: 
@@ -62,6 +64,7 @@ const mapStateToProps = (state, props)=> ({
 	reports: state.entities.reports.list.slice().sort((a, b) => new Date(b.date) - new Date(a.date)),
 	accounts: state.entities.accounts.list,
 	teams: state.entities.teams.list,
+	upgrades: state.entities.upgrades.list,
 	sites: state.entities.sites.list,
 });
 

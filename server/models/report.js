@@ -64,10 +64,14 @@ const AgentAction = Report.discriminator('AgentAction', new Schema({
 }));
 
 const AircraftAction = Report.discriminator('AircraftAction', new Schema({
-	type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
+	type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer', 'Equip'] },
 	transfer: {
 		origin: { type: Schema.Types.ObjectId, ref: 'Site' },
 		destination: { type: Schema.Types.ObjectId, ref: 'Site' }
+	},
+	equipt: {
+		upgradesRemove: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
+		upgradesAdd: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }]
 	},
 	dmgRepaired: { type: Number },
 	cost: { type: Number }
@@ -99,10 +103,14 @@ const CrashReport = Report.discriminator('CrashReport', new Schema({
 }));
 
 const MilitaryAction = Report.discriminator('MilitaryAction', new Schema({
-	type: { type: String, required: true, enum: ['Deploy', 'Repair', 'Transfer'] },
+	type: { type: String, required: true, enum: ['Deploy', 'Repair', 'Transfer', 'Equip'] },
 	transfer: {
 		origin: { type: Schema.Types.ObjectId, ref: 'Site' },
 		destination: { type: Schema.Types.ObjectId, ref: 'Site' }
+	},
+	equipt: {
+		upgradesRemove: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }],
+		upgradesAdd: [{ type: Schema.Types.ObjectId, ref: 'Upgrade' }]
 	},
 	cost: { type: Number },
 	dmgRepaired: { type: Number, default: 0 }
