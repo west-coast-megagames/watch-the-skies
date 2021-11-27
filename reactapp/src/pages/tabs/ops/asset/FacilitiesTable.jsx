@@ -37,7 +37,7 @@ const FacilityTable = (props) => {
     <React.Fragment>
       <p>You currently have {props.facilities.length} facilities</p>
       <Table 
-			style={{ textAlign: 'center',  backgroundColor: '#ecf0f1',}}
+			style={{ textAlign: 'center',  backgroundColor: 'inherit',}}
           rowKey='_id'
 					height={document.documentElement.clientHeight * 0.28}
           data={ getData() }

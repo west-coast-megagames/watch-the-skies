@@ -43,15 +43,15 @@ class SideNav extends Component {
 		else {
 			return (
 				<Sidebar
-					style={{ display: 'flex', flexDirection: 'column', zIndex: 999, }}
+					style={{ display: 'flex', flexDirection: 'column', zIndex: 999 }}
 					width={expand ? 200 : 56}
 					collapsible
 				>
 					<Sidenav
+					style={{ backgroundColor: 'inherit'}}
 						expanded={expand}
 						defaultOpenKeys={['9']}
 						appearance="subtle"
-						style={{ backgroundColor: '#ecf0f1' }}
 						activeKey={active}
 						onSelect={this.handleSelect}
 					>
@@ -70,7 +70,7 @@ class SideNav extends Component {
 							</Nav>
 						</Sidenav.Body>
 					</Sidenav>
-					<NavToggle  login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.logoff} />
+					<NavToggle login={this.props.login} expand={expand} onChange={this.handleToggle} signOut={this.props.logoff} />
 				</Sidebar>
 			);			
 		}
@@ -96,9 +96,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
 // Defines the side/panel taggle navigation
 const NavToggle = ({ login, expand, onChange, signOut }) => {
   return (
-    <Navbar
-		style={{ backgroundColor: '#ecf0f1' }} appearance="subtle" className="nav-toggle">
-      <Navbar.Body>
+    <Navbar style={{ backgroundColor: 'inherit'}} appearance="subtle" className="nav-toggle">
+      <Navbar.Body >
         <Nav>
           <Dropdown
             placement="topStart"
@@ -114,8 +113,7 @@ const NavToggle = ({ login, expand, onChange, signOut }) => {
             </React.Fragment>)}
           </Dropdown>
         </Nav>
-        <Nav
-						style={{ backgroundColor: '#ecf0f1' }} pullRight>
+        <Nav pullRight>
           <Nav.Item onClick={onChange} style={{ width: 56, textAlign: 'center' }}>
             <Icon icon={expand ? 'angle-left' : 'angle-right'} />
           </Nav.Item>
