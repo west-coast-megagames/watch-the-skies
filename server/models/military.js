@@ -13,6 +13,7 @@ const { Facility } = require('./facility'); // Import of Facility model [Mongoos
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
+const { MilitaryAction } = require('./report'); // WTS Game log function
 
 // Utility Imports
 const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
@@ -430,6 +431,41 @@ MilitarySchema.methods.endTurn = async function () {
 
 	if (this.status.some(el => el === 'recall')) await this.recall(true); // Recalls the unit to home base if nessesary.
 	await this.save();
+};
+
+MilitarySchema.methods.report = async function (action, type) {
+	const { repair, transfer, cost } = action;
+	try {
+		let report = new MilitaryAction ({
+			team: this.team,
+			aircraft: this._id,
+			// site: this.site._id,
+			type,
+			repair,
+			transfer,
+			cost
+		});
+
+		await report.createTimestamp();
+
+		// const MilitaryAction = Report.discriminator('MilitaryAction', new Schema({
+		// 	type: { type: String, required: true, enum: ['Deploy', 'Repair', 'Transfer'] },
+		// 	units: [{ type: Schema.Types.ObjectId, ref: 'Military' }],
+		// 	cost: { type: Number },
+		// 	dmgRepaired: { type: Number, default: 0 }
+		// }));
+
+		report = await report.save();
+		report = await report.populateMe();
+
+		// Notify/Update team via socket-event
+		nexusEvent.emit('request', 'create', [ report ]); // Scott Note: Untested does not work
+		console.log(`${type} report created...`);
+	}
+	catch (err) {
+		console.log(err); // TODO: Add error handling
+		return err;
+	}
 };
 
 MilitarySchema.methods.populateMe = async function () {

@@ -42,17 +42,17 @@ const AircraftTable = (props) => {
     <React.Fragment>
       <p>You currently have {props.aircrafts.length} aircraft in base.</p>
       <Table 
-			style={{ textAlign: 'center' }}
+			style={{ textAlign: 'center', backgroundColor: 'inherit', }}
           rowKey='_id'
 					height={props.control ? document.documentElement.clientHeight * 0.7 : document.documentElement.clientHeight * 0.34}
           data={ getData() }
       >
-      <Column  flexGrow={1}>
+      <Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
           <HeaderCell>Aircraft</HeaderCell>
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-      <Column flexGrow={1}>
+      <Column style={{backgroundColor: 'inherit',}}  flexGrow={1}>
         <HeaderCell >Integrity</HeaderCell>
         <Cell style={{ padding: 0 }} verticalAlign='middle' >
           {rowData => {
@@ -68,7 +68,7 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-			<Column  flexGrow={1}>
+			<Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
           <HeaderCell>Mission</HeaderCell>
           <Cell >
         	  {rowData => {
@@ -84,7 +84,7 @@ const AircraftTable = (props) => {
 					</Cell>
       </Column>
 
-      <Column flexGrow={1} >
+      <Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
@@ -100,7 +100,7 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-      <Column flexGrow={1} >
+      <Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
           <HeaderCell>Status</HeaderCell>
 					<Cell>
 					{rowData => {
@@ -111,7 +111,7 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-      <Column flexGrow={1}>
+      <Column  style={{backgroundColor: 'inherit',}} flexGrow={1}>
         <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {

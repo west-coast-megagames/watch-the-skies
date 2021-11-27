@@ -37,17 +37,17 @@ const FacilityTable = (props) => {
     <React.Fragment>
       <p>You currently have {props.facilities.length} facilities</p>
       <Table 
-			style={{ textAlign: 'center' }}
+			style={{ textAlign: 'center',  backgroundColor: '#ecf0f1',}}
           rowKey='_id'
 					height={document.documentElement.clientHeight * 0.28}
           data={ getData() }
       >
-      <Column  flexGrow={2}>
+      <Column style={{backgroundColor: 'inherit',}} flexGrow={2}>
           <HeaderCell>Name</HeaderCell>
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-			<Column flexGrow={2} >
+			<Column style={{backgroundColor: 'inherit',}}  flexGrow={2} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
@@ -56,7 +56,7 @@ const FacilityTable = (props) => {
         </Cell>
       </Column>
 
-      <Column flexGrow={1}>
+      <Column style={{backgroundColor: 'inherit',}}  flexGrow={1}>
         <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {

@@ -48,7 +48,7 @@ const GameTimeline = (props) => {
 				return (<ResearchLog key={report._id} report={report} teams={props.teams}/>); // sci     
 			case 'Deploy':
 				return (<DeployLog key={report._id} report={report} teams={props.teams}/>); // ops
-			case 'Aircraft Repair':
+			case 'Repair':
 				return (<RepairLog key={report._id} report={report} teams={props.teams}/>); // ops
 			case 'Recon':
 				return (<ReconLog key={report._id} report={report} teams={props.teams}/>); // ops

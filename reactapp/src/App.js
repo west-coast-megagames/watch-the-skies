@@ -67,7 +67,7 @@ const App = (props) => {
 	}, [])
 
   return(
-    <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%' }}>
+    <div className="App" style={{ position: 'fixed', top: 0, bottom: 0, width: '100%', backgroundColor: '#ecf0f1' }}>
       <Header>
         <NavBar />
       </Header>

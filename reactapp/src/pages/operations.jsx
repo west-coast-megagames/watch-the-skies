@@ -63,7 +63,7 @@ const Operations  = (props) => {
 				</FlexboxGrid>
 			</Header>
 			
-			<Content style={{ paddingLeft: '0px', overflow: 'auto' }}>
+			<Content style={{ paddingLeft: '0px', overflow: 'auto'  }}>
 				<Switch>
 					<Route path={`${url}/dashboard`} render={() => (
 						<FlexboxGrid justify="center">

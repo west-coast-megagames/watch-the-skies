@@ -27,7 +27,7 @@ const TransactionLog = props => {
 			default: return 'did something'
 		}
 	}
-
+	
   return (
     <Timeline.Item
       key={report._id}
@@ -36,9 +36,9 @@ const TransactionLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #d4efdf, #fff)"
+          backgroundColor: report.transaction === 'Deposit' ? "#b55690" : "#9b59b6", color: 'white'
         }}
-				header={<div><b>{report.transaction} - {getTeamCode(report.counterparty)} {getEnglish(report)}  {report.account} Account (Turn {report.timestamp.turnNum})</b></div>}
+				header={<div style={{  color: 'white' }}><b>{report.transaction} - {getTeamCode(report.counterparty)} {getEnglish(report)}  {report.account} Account (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <FlexboxGrid>
@@ -157,9 +157,9 @@ const BattleLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #fff)"
+          backgroundColor: "#1abc9c", color: 'black'
         }}
-        header={`Battle report - ${report.team.code} | (Turn ${report.timestamp.turnNum})`}
+        header={<b style={{  color: 'white' }}>Battle report - {report.team.code} | (Turn {report.timestamp.turnNum})</b>}
         collapsible
       >
         <p>
@@ -268,8 +268,8 @@ const InterceptLog = props => {
 					<h5 style={{  display: 'flex', justifyContent: 'center',  alignItems: 'center', marginBottom: '5px' }}>Damage report
 						</h5>
 					{outcomes.map((el, index) => (
-					<div key={index} style={{ border: "1px solid black", textAlign: 'center', height: '7vh'  }} >
-						<div style={{ margin: '10px' }}>
+					<div key={index} style={{ border: "1px solid black", textAlign: 'center', height: '7vh', backgroundColor: 'white'  }} >
+						<div style={{ margin: '10px',  }}>
 							Round {index+1} - <Tag color={el === 'hit' ? 'red' : el === 'critical' ? 'violet' : 'blue'} style={{ 'textTransform': 'capitalize'}}>{el}</Tag>
 							{el === 'hit' && <p style={{ color: 'brown' }}>{unit.name} took some damage!</p>}			
 							{el === 'critical' && <p style={{ color: 'brown' }}>{unit.name} took some damage!</p>}			
@@ -286,9 +286,9 @@ const InterceptLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #ebdef0, #fff)"
+          backgroundColor: "#3498db",  color: 'white'
         }}
-        header={<div><b>{report.unit.name} Interception of {report.opponent.name} (Turn {report.timestamp.turnNum})</b></div>}
+        header={<div style={{color: 'white'}}><b>{report.unit.name} Interception of {report.opponent.name} (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
 				<FlexboxGrid>
@@ -299,23 +299,6 @@ const InterceptLog = props => {
 						{renderReport(report.opponent, report.interception.attacker.outcomes, report.interception.defender.stats)}
 					</FlexboxGrid.Item>
 				</FlexboxGrid>
-				{/* <TeamAvatar size={'xs'} code={report.team.code} /> */}
-        {/* <p>
-          {report.timestamp.clock} {report.timestamp.turn} - {report.timestamp.phase} -
-          Turn {report.timestamp.turnNum}
-        </p>
-				<p>
-          <b>Mission:</b> {report.type} - {report.position}
-        </p>
-        <p>
-          <b>Team:</b> {report.team.name}
-        </p>
-        <p>
-          <b>Location:</b> {report.organization.name} - {report.zone.name}
-        </p>
-        <p>
-          <b>Report:</b> {report.report}
-        </p> */}
       </Panel>
     </Timeline.Item>
   );
@@ -525,9 +508,9 @@ const RepairLog = props => {
       <Panel
         style={{
           padding: "0px",
-          backgroundImage: "linear-gradient(to bottom right, #c7860e, #fff)"
+          backgroundColor: "#2980b9", color: 'white'
         }}
-				header={<div><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
+				header={<div style={{color: 'white'}}><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <p>

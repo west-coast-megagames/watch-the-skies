@@ -49,9 +49,9 @@ const FacilityStats = (props) => {
 								switch (building.type) {
 									case 'research':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #10B7E7', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#10B7E7', color: 'white' }}>Research Lab </h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#10B7E7', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #9b59b6', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#9b59b6', color: 'white' }}>Research Lab </h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#9b59b6', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 														<Whisper placement="top" speaker={fundingSpeaker} trigger="hover">
 																<Icon icon='money' />
@@ -74,9 +74,9 @@ const FacilityStats = (props) => {
 											</div>);
 									case 'hanger':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #228833', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#228833', color: 'white' }}>Aircraft Hanger</h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#228833', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #2980b9', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#2980b9', color: 'white' }}>Aircraft Hanger</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#2980b9', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 														<Whisper placement="top" speaker={capacitySpeaker} trigger="hover">
 															<b>0 /{" "}	{building.stats.capacity}</b>
@@ -87,9 +87,9 @@ const FacilityStats = (props) => {
 											</div>);
 									case 'storage':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #bbbbbb', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#bbbbbb', color: 'white' }}>Storage Facility</h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#bbbbbb', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #7f8c8d', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#7f8c8d', color: 'white' }}>Storage Facility</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#7f8c8d', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 															<Whisper placement="top" speaker={capacitySpeaker} trigger="hover">
 																<b>0 /{" "}	{building.stats.capacity}</b>
@@ -99,9 +99,9 @@ const FacilityStats = (props) => {
 											</div>);
 									case 'manufacturing':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #d55e00', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#d55e00', color: 'white' }}>Manufacturing Building</h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#d55e00', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #34495e', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#34495e', color: 'white' }}>Manufacturing Building</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#34495e', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 															<Whisper placement="top" speaker={capacitySpeaker} trigger="hover">
 																<b>0 /{" "}	{building.stats.capacity}</b>
@@ -111,9 +111,9 @@ const FacilityStats = (props) => {
 											</div>)
 									case 'garrison':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #e69f00', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#e69f00', color: 'white' }}>Garrison Building</h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#e69f00', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #16a085', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#16a085', color: 'white' }}>Garrison Building</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#16a085', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 															<Whisper placement="top" speaker={capacitySpeaker} trigger="hover">
 																<b>0 /{" "}	{building.stats.capacity}</b>
@@ -123,9 +123,9 @@ const FacilityStats = (props) => {
 											</div>)
 									case 'port':
 										return(		
-											<div key={building._id} style={{ border: '3px solid #065275', borderRadius: '5px', width: '100%', textAlign: "center" }}>
-												<h5 style={{ backgroundColor: '#065275', color: 'white' }}>Port Building</h5>
-													<FlexboxGrid align="middle" style={{ backgroundColor: '#065275', color: 'white' }} justify="center">
+											<div key={building._id} style={{ border: '3px solid #27ae60', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#27ae60', color: 'white' }}>Port Building</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#27ae60', color: 'white' }} justify="center">
 														<FlexboxGrid.Item colspan={8}>
 															<Whisper placement="top" speaker={capacitySpeaker} trigger="hover">
 																<b>0 /{" "}	{building.stats.capacity}</b>

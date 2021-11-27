@@ -50,17 +50,17 @@ const MilitaryTable = (props) => {
       
 			
       <Table 
-			style={{ textAlign: 'center' }}
+			style={{ backgroundColor: 'inherit', textAlign: 'center' }}
           rowKey='_id'
 					height={document.documentElement.clientHeight * 0.70}
           data={ getData() }
       >
-      <Column  flexGrow={2}>
+      <Column style={{backgroundColor: 'inherit',}}  flexGrow={2}>
           <HeaderCell>Name</HeaderCell>
           <Cell style={{ textAlign: 'left' }} dataKey='name' />
       </Column>
 
-			<Column flexGrow={1}>
+			<Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
         <HeaderCell >Mission</HeaderCell>
         <Cell style={{ padding: 0 }} verticalAlign='middle' >
           {rowData => {
@@ -76,7 +76,7 @@ const MilitaryTable = (props) => {
         </Cell>
       </Column>
 
-			<Column flexGrow={1} >
+			<Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
         <HeaderCell>Location</HeaderCell>
         <Cell>
           {rowData => {
@@ -85,7 +85,7 @@ const MilitaryTable = (props) => {
         </Cell>
       </Column>
 
-			<Column flexGrow={1} >
+			<Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
         <HeaderCell>Status</HeaderCell>
         <Cell>
 					{rowData => {
@@ -96,7 +96,7 @@ const MilitaryTable = (props) => {
         </Cell>
       </Column>
 
-      <Column flexGrow={1}>
+      <Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
         <HeaderCell>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{  }}>
           {rowData => {
