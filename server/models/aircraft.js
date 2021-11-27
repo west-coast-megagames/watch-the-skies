@@ -227,14 +227,14 @@ AircraftSchema.methods.recall = async function () {
 // IN: Target Facility | OUT: VOID
 // PROCESS: Transfers aircraft to a new facility
 AircraftSchema.methods.transfer = async function (facility) {
-	// await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
+	await this.takeAction(); // Attempts to use action, uses mission if no action, errors if neither is present
 
 	// Mechanics: Re-bases a military unit to a friendly facility around the world and sets the destination as the new home base.
 	try {
 		this.origin = facility; // Changes origin to target SITE
 		const home = await Facility.findById(facility)
 			.populate('site'); // Finds the new home site
-
+		const transfer = { origin: this.site._id, destination: home.site._id };
 		logger.info(`Transferring ${this.name} to ${home.name}...`);
 
 		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
@@ -251,7 +251,9 @@ AircraftSchema.methods.transfer = async function (facility) {
 		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
+
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+		await this.report({ cost: 1, transfer }, 'Transfer');
 		const message = `${this.name} transferred to ${this.site.name}.`;
 		return message;
 	}
@@ -273,7 +275,7 @@ AircraftSchema.methods.repair = async function (upgrades = []) {
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
-		const repaired = this.stats.hullMax - this.stats.hull;
+		const dmgRepaired = this.stats.hullMax - this.stats.hull;
 		this.stats.hull = this.stats.hullMax; // Restores the units hull to max
 
 		for (const item of upgrades) {
@@ -283,7 +285,7 @@ AircraftSchema.methods.repair = async function (upgrades = []) {
 		}
 
 		const unit = await this.save(); // Saves the unit into a new variable
-		await this.report({ repair: { dmgRepaired: repaired }, cost }, 'Repair');
+		await this.report({ dmgRepaired, cost }, 'Repair');
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
 		return unit;
 	}
@@ -348,7 +350,8 @@ AircraftSchema.methods.populateMe = function () {
 };
 
 AircraftSchema.methods.report = async function (action, type) {
-	const { repair, transfer, cost } = action;
+	const { repair, transfer, cost, dmgRepaired } = action;
+	console.log(action)
 	try {
 		let report = new AircraftAction ({
 			team: this.team,
@@ -356,25 +359,17 @@ AircraftSchema.methods.report = async function (action, type) {
 			// site: this.site._id,
 			type,
 			repair,
+			dmgRepaired,
 			transfer,
 			cost
 		});
 
-		await report.createTimestamp();
-
-		// team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
-		// aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
-		// site: { type: Schema.Types.ObjectId, ref: 'Site' },
-
-		// type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
-		// repair: {
-		// 	dmgRepaired: { type: Number }
-		// },
 		// transfer: {
-		// 	origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
-		// 	destination: { type: Schema.Types.ObjectId, ref: 'Facility' }
+			// origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
+			// destination: { type: Schema.Types.ObjectId, ref: 'Facility' }
 		// },
-		// cost: { type: Number }
+
+		await report.createTimestamp();
 
 		report = await report.save();
 		report = await report.populateMe();

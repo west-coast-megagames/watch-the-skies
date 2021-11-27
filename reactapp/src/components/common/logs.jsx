@@ -304,6 +304,50 @@ const InterceptLog = props => {
   );
 };
 
+const TransferLog = props => {
+  let { report } = props;
+	let { transfer } = report;
+	let { destination, origin } = transfer;
+  let date = new Date(report.date);
+	origin = props.sites.find(el => el._id === origin);
+	destination = props.sites.find(el => el._id === destination);
+
+	const renderSite = (site) => {
+		return (
+			<div>
+				<FlexboxGrid  style={{ textAlign: 'left' }}>
+					{site ? site.name : 'The Void'}
+					
+				</FlexboxGrid>
+			</div>
+		)
+	}
+	console.log(report)
+  // let iconStyle = { background: '#ff4d4d', color: '#fff' };
+  return (
+    <Timeline.Item key={report._id} dot={<Icon icon="fighter-jet" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundColor: "#3498db",  color: 'white'
+        }}
+        header={<div style={{color: 'white'}}><b>Transfer from {origin ? origin.name : 'The Void'} to {destination ? destination.name : 'The Void'} (Turn {report.timestamp.turnNum})</b></div>}
+        collapsible
+      >
+				Cost: {report.cost}
+				<FlexboxGrid>
+					<FlexboxGrid.Item colspan={12} >
+						{renderSite(destination)}
+					</FlexboxGrid.Item>
+					<FlexboxGrid.Item colspan={12}>
+						{renderSite(origin)}
+					</FlexboxGrid.Item>
+				</FlexboxGrid>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 // TODO - Look of an Construction log should be fleshed out for march.
 const ConstructionLog = props => {
   let { report } = props;
@@ -502,6 +546,7 @@ const TradeLog = props => {
 const RepairLog = props => {
   let { report } = props;
   let date = new Date(report.date);
+	const unit = report.aircraft ? report.aircraft : report.unit
 
   return (
     <Timeline.Item key={report._id} dot={<Icon icon="wrench" size="2x" />}>
@@ -510,7 +555,7 @@ const RepairLog = props => {
           padding: "0px",
           backgroundColor: "#2980b9", color: 'white'
         }}
-				header={<div style={{color: 'white'}}><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
+				header={<div style={{color: 'white'}}><b>{unit.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
         <p>
@@ -518,7 +563,7 @@ const RepairLog = props => {
           Turn {report.timestamp.turnNum}
         </p>
         <p><b>Team:</b> {report.team.name}</p>
-        <p><b>Damage Repaired:</b> {report.repair.dmgRepaired}</p>
+        <p><b>Damage Repaired:</b> {report.dmgRepaired}</p>
         <p><b>Cost:</b> {report.cost}</p>
       </Panel>
     </Timeline.Item>
@@ -601,5 +646,6 @@ export {
   DeployLog,
   RepairLog,
 	ConstructionLog,
-	FailedLog
+	FailedLog,
+	TransferLog
 };

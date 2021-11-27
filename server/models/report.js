@@ -11,6 +11,9 @@ const ReportSchema = new Schema({
 	model: { type: String, default: 'Report', required: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	aircraft: { type: Schema.Types.ObjectId, ref: 'Aircraft' },
+	unit: { type: Schema.Types.ObjectId, ref: 'Military' },
+	squad: { type: Schema.Types.ObjectId, ref: 'Squad' },
+	facility: { type: Schema.Types.ObjectId, ref: 'Facility' },
 	site: { type: Schema.Types.ObjectId, ref: 'Site' },
 	organization: { type: Schema.Types.ObjectId, ref: 'Organization' },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
@@ -62,13 +65,11 @@ const AgentAction = Report.discriminator('AgentAction', new Schema({
 
 const AircraftAction = Report.discriminator('AircraftAction', new Schema({
 	type: { type: String, required: true, enum: ['Launch', 'Repair', 'Transfer'] },
-	repair: {
-		dmgRepaired: { type: Number }
-	},
 	transfer: {
-		origin: { type: Schema.Types.ObjectId, ref: 'Facility' },
-		destination: { type: Schema.Types.ObjectId, ref: 'Facility' }
+		origin: { type: Schema.Types.ObjectId, ref: 'Site' },
+		destination: { type: Schema.Types.ObjectId, ref: 'Site' }
 	},
+	dmgRepaired: { type: Number },
 	cost: { type: Number }
 }));
 
@@ -99,7 +100,10 @@ const CrashReport = Report.discriminator('CrashReport', new Schema({
 
 const MilitaryAction = Report.discriminator('MilitaryAction', new Schema({
 	type: { type: String, required: true, enum: ['Deploy', 'Repair', 'Transfer'] },
-	units: [{ type: Schema.Types.ObjectId, ref: 'Military' }],
+	transfer: {
+		origin: { type: Schema.Types.ObjectId, ref: 'Site' },
+		destination: { type: Schema.Types.ObjectId, ref: 'Site' }
+	},
 	cost: { type: Number },
 	dmgRepaired: { type: Number, default: 0 }
 }));

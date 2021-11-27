@@ -8,7 +8,7 @@ const missionFunc = require('../../wts/intercept/missions');
 
 module.exports = async function (client, req) {
 	try {
-		logger.info(`${client.username} has made a ${req.action} request in the ${req.route} route!`);
+		logger.info(`${client.username} has made a ${req.action} request type ${req.type} in the ${req.route} route!`);
 		let message, target, result;
 		switch(req.action) {
 		case('action'):
