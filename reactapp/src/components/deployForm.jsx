@@ -123,6 +123,15 @@ const DeployMilitary = (props) => {
 				}
 				handleExit();
 				break;
+
+			case 'recon': 
+				try {
+					socket.emit('request', { route: 'military', action: 'action',  type: 'recon', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
+				} catch (err) {
+						Alert.error(`Error: ${err.body} ${err.message}`, 5000)
+				}
+				handleExit();
+				break;
 			default:
 				Alert.error(`Please select a valid Mission or Action`, 5000)
 		}
@@ -179,6 +188,7 @@ const DeployMilitary = (props) => {
 									{/* <Button appearance={deployType !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
 									<Button disabled={props.facilities.length === 0} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
 									<Button disabled={false} appearance={deployType !== 'mobilize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('mobilize')} >Mobilize</Button>
+									<Button disabled={false} appearance={deployType !== 'recon' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('recon')} >Recon</Button>					
 								</ButtonGroup>
 						</FlexboxGrid.Item>
 
@@ -225,6 +235,20 @@ const DeployMilitary = (props) => {
 								labelKey='name'
 								value={ units }
 						/>
+						</div>
+					}
+					{ deployType === 'recon' &&
+						<div>
+							<h6>Select Units to recon site {props.target.name}</h6>
+							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
+								data={ props.target.tags.some(el => el === 'coastal') ?  [...transferFleets, ...transferCorps] : transferCorps }
+								placement={'leftEnd'}
+								onChange={handleUnits}
+								valueKey='_id'
+								labelKey='info'
+								groupBy='checkZone'
+								value={ units }
+							/> 
 						</div>
 					}
 					{ props.target && deployType === 'invade' &&
