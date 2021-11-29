@@ -304,6 +304,108 @@ const InterceptLog = props => {
   );
 };
 
+const TransferLog = props => {
+  let { report } = props;
+	let { transfer } = report;
+	let { destination, origin } = transfer;
+  let date = new Date(report.date);
+	origin = props.sites.find(el => el._id === origin);
+	destination = props.sites.find(el => el._id === destination);
+
+	const renderSite = (site) => {
+		return (
+			<div>
+				<FlexboxGrid  style={{ textAlign: 'left' }}>
+					<h5>{site ? site.name : 'The Void'}</h5>
+				</FlexboxGrid>
+			</div>
+		)
+	}
+  // let iconStyle = { background: '#ff4d4d', color: '#fff' };
+  return (
+    <Timeline.Item key={report._id} dot={<Icon icon="fighter-jet" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundColor: "#3498db", 
+        }}
+        header={<div style={{color: 'white'}}><b>Transfer from {origin ? origin.name : 'The Void'} to {destination ? destination.name : 'The Void'} (Turn {report.timestamp.turnNum})</b></div>}
+        collapsible
+      >
+				<div style={{ backgroundColor: 'white', }}>
+					<Panel >
+						<FlexboxGrid>
+							<FlexboxGrid.Item colspan={12} >
+								<b>New Site: </b>
+								{renderSite(destination)}
+							</FlexboxGrid.Item>
+							<FlexboxGrid.Item colspan={12}>
+								<b>Old Site: </b>	
+								{renderSite(origin)}
+							</FlexboxGrid.Item>
+						</FlexboxGrid>		
+					</Panel>
+			
+				</div>
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
+const EquipLog = props => {
+  let { report } = props;
+	let { equipt } = report;
+	let { upgradesRemove, upgradesAdd } = equipt;
+  let date = new Date(report.date);
+
+	const renderUpgrades = (upgrade) => {
+		upgrade = props.upgrades.find(el => el._id === upgrade);
+		return (
+			<div>
+					<div index={upgrade._id} style={{ border: "2px solid black", display: 'flex', height: '8vh' }}>
+						<div>
+							<h5 style={{ margin: '5px' }}>{upgrade.name} {upgrade.status.map(tag => (<Tag color='blue' style={{ textTransform: 'capitalize' }}>{tag}</Tag>))}</h5>			
+							{upgrade.effects.map(effect => (<b key={effect._id} style={{ textTransform: 'capitalize', marginLeft: '15px',  marginTop: '5px', marginBottom: '5px'  }}>+{effect.value}  {effect.type}</b>))}
+						</div>
+					</div>
+			</div>
+		)
+	}
+  // let iconStyle = { background: '#ff4d4d', color: '#fff' };
+  return (
+    <Timeline.Item key={report._id} dot={<Icon icon="fighter-jet" size="2x" />}>
+      <Panel
+        style={{
+          padding: "0px",
+          backgroundColor: "#3498db", 
+        }}
+        header={<div style={{color: 'white'}}><b>Equip (Turn {report.timestamp.turnNum})</b></div>}
+        collapsible
+      >
+				<div style={{ backgroundColor: 'white', }}>
+					<Panel >
+						<FlexboxGrid>
+						{upgradesAdd.length > 0 && <FlexboxGrid.Item colspan={12} >
+							<b>Upgrades Added</b>
+							{upgradesAdd.map(up => 
+								renderUpgrades(up)
+							)}
+						</FlexboxGrid.Item>}
+						{upgradesRemove.length > 0 && <FlexboxGrid.Item colspan={12} >
+							<b>Upgrades Removed</b>
+							{upgradesRemove.map(up => 
+								renderUpgrades(up)
+							)}
+						</FlexboxGrid.Item>}
+						</FlexboxGrid>
+					</Panel>
+				</div>
+
+      </Panel>
+    </Timeline.Item>
+  );
+};
+
 // TODO - Look of an Construction log should be fleshed out for march.
 const ConstructionLog = props => {
   let { report } = props;
@@ -502,24 +604,30 @@ const TradeLog = props => {
 const RepairLog = props => {
   let { report } = props;
   let date = new Date(report.date);
+	const unit = report.aircraft ? report.aircraft : report.unit
 
   return (
     <Timeline.Item key={report._id} dot={<Icon icon="wrench" size="2x" />}>
       <Panel
         style={{
           padding: "0px",
-          backgroundColor: "#2980b9", color: 'white'
+          backgroundColor: "#2980b9", 
         }}
-				header={<div style={{color: 'white'}}><b>{report.aircraft.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
+				header={<div style={{color: 'white'}}><b>{unit.name} Repaired (Turn {report.timestamp.turnNum})</b></div>}
         collapsible
       >
-        <p>
-          {report.timestamp.clock} {report.timestamp.turn} - {report.timestamp.phase} -
-          Turn {report.timestamp.turnNum}
-        </p>
-        <p><b>Team:</b> {report.team.name}</p>
-        <p><b>Damage Repaired:</b> {report.repair.dmgRepaired}</p>
-        <p><b>Cost:</b> {report.cost}</p>
+				<div style={{ backgroundColor: 'white', }}>
+					<Panel >
+						<p>
+							{report.timestamp.clock} {report.timestamp.turn} - {report.timestamp.phase} -
+							Turn {report.timestamp.turnNum}
+						</p>
+						<p><b>Team:</b> {report.team.name}</p>
+						<p><b>Damage Repaired:</b> {report.dmgRepaired}</p>
+						<p><b>Cost:</b> {report.cost}</p>	
+					</Panel>
+				</div>
+
       </Panel>
     </Timeline.Item>
   );
@@ -601,5 +709,7 @@ export {
   DeployLog,
   RepairLog,
 	ConstructionLog,
-	FailedLog
+	FailedLog,
+	EquipLog,
+	TransferLog
 };

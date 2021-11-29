@@ -30,7 +30,7 @@ const TransferForm = (props) => {
 			for (let unit of props.units) {
 				let unitData = {
 					name: unit.name,
-					checkZone: unit.site.name,
+					checkZone: unit.site ? unit.site.name : 'The Void',
 					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Def: ${unit.stats.defense} | Upgrades: ${unit.upgrades.length}`,
 					_id: unit._id
 				}
@@ -41,11 +41,11 @@ const TransferForm = (props) => {
 			for (let unit of props.aircrafts) {
 				let unitData = {
 					name: unit.name,
-					checkZone: unit.site.name,
+					checkZone: unit.site ? unit.site.name : 'The Void (oh no!)',
 					info: `${unit.name} - Hlth: ${unit.stats.health}/${unit.stats.healthMax} | Atk: ${unit.stats.attack} | Upgrades: ${unit.upgrades.length}`,
 					_id: unit._id
 				}
-				if (!unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferAir.push(unitData);
+				if (!unit.status.some(el => el === 'deployed') && unit.actions + unit.missions  > 0) transferAir.push(unitData);
 			}
 
 			setTransferFleets(transferFleets);
@@ -80,7 +80,7 @@ const TransferForm = (props) => {
 
 		try{
 			socket.emit('request', { route: 'military', action: 'action', type: 'transfer', data: { destination: selected._id, units: milArray }});
-			socket.emit('request', { route: 'aircraft', action: 'action', type: 'transfer', data: { destination: selected._id, aircraft: airArray }});
+			socket.emit('request', { route: 'aircraft', action: 'action', type: 'transfer', data: { destination: selected._id, aircrafts: airArray }});
 			props.closeTransfer()
 		}
 		catch (err) {

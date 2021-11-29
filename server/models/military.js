@@ -13,6 +13,7 @@ const { Facility } = require('./facility'); // Import of Facility model [Mongoos
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
+const { Squad } = require('./squad'); // Import of Upgrade model [Mongoose]
 const { MilitaryAction } = require('./report'); // WTS Game log function
 
 // Utility Imports
@@ -226,7 +227,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 		this.origin = facility; // Changes origin to target SITE
 		const home = await Facility.findById(facility)
 			.populate('site'); // Finds the new home site
-
+		const transfer = { origin: this.site._id, destination: home.site._id };
 		logger.info(`Transferring ${this.name} to ${home.name}...`);
 
 		await clearArrayValue(this.status, 'deployed'); // Clears the DEPLOYED status if it exists
@@ -243,6 +244,7 @@ MilitarySchema.methods.transfer = async function (facility) {
 		await account.spend({ amount: 1, note: `${this.name} transferred to ${home.name}`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
 		const unit = await this.save(); // Saves the UNIT into a new variable
+		await this.report({ cost: 1, transfer }, 'Transfer');
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
 		return unit;
@@ -269,8 +271,8 @@ MilitarySchema.methods.recon = async function (site) {
 		
 
 		const units = await Military.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all UNITS that don't belong to us.
-		const facilities = await Facilities.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Facilities that don't belong to us.
-		const squads = await Squads.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Squads at the site that don't belong to us.
+		const facilities = await Facility.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Facilities that don't belong to us.
+		const squads = await Squad.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Squads at the site that don't belong to us.
 
 		for (const item of [...units, ...facilities, ...squads]) {
 			// Options
@@ -296,6 +298,7 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 		const account = await Account.findOne({ name: 'Operations', team: this.team }); // Finds the operations account for the owner of the UNIT
 		await account.spend({ amount: cost, note: `Repairing ${this.name} and ${upgrades.length} upgrades`, resource: 'Megabucks' }); // Attempt to spend the money to go
 
+		const dmgRepaired = this.stats.healthMax - this.stats.health;
 		this.stats.health = this.stats.healthMax; // Restores the units health to max
 
 		for (const item of upgrades) {
@@ -305,6 +308,7 @@ MilitarySchema.methods.repair = async function (upgrades = []) {
 		}
 
 		const unit = await this.save(); // Saves the unit into a new variable
+		await this.report({ dmgRepaired, cost }, 'Repair');
 		nexusEvent.emit('request', 'update', [ unit ]); // Updates the front-end
 		return unit;
 	}
@@ -321,6 +325,8 @@ MilitarySchema.methods.upgrade = async function (upgradesAdd = [], upgradesRemov
 		let unit = this;
 		upgradesRemove.length > 0 ? await unit.unequip(upgradesRemove) : undefined;
 		upgradesAdd.length > 0 ? await unit.equip(upgradesAdd) : undefined;
+		const equipt = { upgradesRemove, upgradesAdd };
+		await this.report({ equipt }, 'Equip');
 		return unit;
 	}
 	catch (err) {
@@ -435,15 +441,18 @@ MilitarySchema.methods.endTurn = async function () {
 };
 
 MilitarySchema.methods.report = async function (action, type) {
-	const { repair, transfer, cost } = action;
+	const { repair, transfer, equipt, cost, dmgRepaired } = action;
+	console.log(action);
 	try {
 		let report = new MilitaryAction ({
 			team: this.team,
-			aircraft: this._id,
+			unit: this._id,
 			// site: this.site._id,
 			type,
 			repair,
 			transfer,
+			equipt,
+			dmgRepaired,
 			cost
 		});
 
