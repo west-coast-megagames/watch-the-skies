@@ -8,6 +8,7 @@ import { getMilitaryIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
 import { connect } from "react-redux";
 import { getMilitary } from "../../../../store/entities/military";
+import { getAircrafts } from "../../../../store/entities/aircrafts";
 
 const MilitaryStats = (props) => {
 	const [showTransfer, setShowTransfer] = React.useState(false);
@@ -213,7 +214,6 @@ const invadeSpeaker = (
 const mapStateToProps = (state, props)=> ({
 	sites: state.entities.sites.list,
 	units: getMilitary(state),
-	aircrafts: state.entities.aircrafts.list,
 });
 
 const mapDispatchToProps = dispatch => ({});
