@@ -28,7 +28,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	this.lastUpdate = Date.now();
 	this.type = doc.model.toLowerCase();
 	if (!this.document.name) this.document.name = randCode(6);
-	const commonKeys = ['_id', 'model', 'team', '__t'];
+	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status'];
 	let modelKeys = [];
 	const randKeys = [];
 
@@ -63,7 +63,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		for (const prop in doc.systems) {
 			// Possible spot for partial information on systems
 			this.document.systems[prop] = doc.systems[prop];
-			if (source) this.source.systems[prop] = source;
+			if (source) this.source.systems[prop] = { source, timestamp: clock.getTimeStamp() };
 		}
 		break;
 	case 'Military':
@@ -76,15 +76,8 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
-		modelKeys = ['occupier', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subtype'];
+		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType'];
 
-		// this.document.buildings = [];
-		// this.source.buildings = [];
-		// for (const building of doc.buildings) {
-		// 	// Possible spot for partial information on facilities
-		// 	this.document.buildings.push(building);
-		// 	if (source) this.source.buildings.push(source)
-		// }
 		break;
 	default:
 		throw Error(`You can't get Recon Intel for a ${doc.model}`);
@@ -92,8 +85,10 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 
 	for (const key of [...commonKeys, ...modelKeys, ...randKeys]) {
 		this.document[key] = doc[key];
-		this.source[key] = source;
+		this.source[key] = { source, timestamp: clock.getTimeStamp() };
 	}
+	this.markModified('document');
+	this.markModified('source');
 
 	return await this.save();
 };
@@ -111,8 +106,10 @@ const Intel = mongoose.model('Intel', IntelSchema);
 // { Aircraft Selectior Functions }
 const generateIntel = async function (team, subject) {
 	try {
-		let doc = await Intel.findOne({ team, subject });
-		if (!doc && !doc.hidden) {
+		let doc = await Intel.findOne()
+			.where('team').equals(team)
+			.where('subject').equals(subject);
+		if (!doc) {
 			doc = new Intel({ team, subject });
 			doc = await doc.save();
 		}

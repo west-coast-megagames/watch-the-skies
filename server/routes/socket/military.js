@@ -46,9 +46,9 @@ module.exports = async function (client, req) {
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
 				case('recon'): // Recon Action Trigger
-					let intel = await generateIntel(unit.team, req.data.target);
-					let site = await Site.findById(req.data.target);
-					await intel.recon(site, `${unit.name} recon action`);
+					let site = await Site.findById(req.data.assignment.target);
+					let intel = await generateIntel(unit.team._id, site._id);
+					await intel.reconIntel(site.toObject(), `${unit.name} recon action`);
 					client.emit('alert', { type: 'success', message: `${unit.name} did at ${unit.site.name}.` });
 					break;
 				case('recall'): // Recon Action Trigger
