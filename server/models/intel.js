@@ -76,7 +76,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
-		modelKeys = ['occupier', 'zone', 'capabilities'];
+		modelKeys = ['occupier', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subtype'];
 
 		// this.document.buildings = [];
 		// this.source.buildings = [];
@@ -112,7 +112,7 @@ const Intel = mongoose.model('Intel', IntelSchema);
 const generateIntel = async function (team, subject) {
 	try {
 		let doc = await Intel.findOne({ team, subject });
-		if (!doc) {
+		if (!doc && !doc.hidden) {
 			doc = new Intel({ team, subject });
 			doc = await doc.save();
 		}
