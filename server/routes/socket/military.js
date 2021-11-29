@@ -1,5 +1,6 @@
 // const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
+const { generateIntel } = require('../../models/intel');
 // const masterClock = require('../../wts/gameClock/gameClock');
 
 const { Military } = require('../../models/military');
@@ -45,8 +46,9 @@ module.exports = async function (client, req) {
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
 				case('recon'): // Recon Action Trigger
-					unit = await unit.recon(req.data.target);
-					client.emit('alert', { type: 'success', message: `${unit.name} transferred to ${unit.site.name}.` });
+					let target = generateIntel(unit.team, target._id);
+					await target.recon(req.data.target, `${unit.name} recon action at ${target}`);
+					client.emit('alert', { type: 'success', message: `${unit.name} did at ${unit.site.name}.` });
 					break;
 				case('recall'): // Recon Action Trigger
 					unit = await unit.recall();

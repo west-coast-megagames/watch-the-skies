@@ -76,15 +76,15 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
-		modelKeys = ['occupier', 'zone'];
+		modelKeys = ['occupier', 'zone', 'capabilities'];
 
-		this.document.facilities = {};
-		this.source.facilities = {};
-		for (const prop in doc.facilities) {
-			// Possible spot for partial information on facilities
-			this.document.facilities[prop] = doc.facilities[prop];
-			if (source) this.source.systems[prop] = source;
-		}
+		// this.document.buildings = [];
+		// this.source.buildings = [];
+		// for (const building of doc.buildings) {
+		// 	// Possible spot for partial information on facilities
+		// 	this.document.buildings.push(building);
+		// 	if (source) this.source.buildings.push(source)
+		// }
 		break;
 	default:
 		throw Error(`You can't get Recon Intel for a ${doc.model}`);

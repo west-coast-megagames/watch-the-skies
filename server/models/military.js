@@ -266,6 +266,7 @@ MilitarySchema.methods.recon = async function (site) {
 		console.log(`${unit.name} is attempting to do recon in ${target.name}`);
 		// Mechanics: Allows a mobilized military unit to produce intel on things in the site they are currently in.
 		// Generates INTEL on the SITE automatically
+		
 
 		const units = await Military.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all UNITS that don't belong to us.
 		const facilities = await Facilities.find({ site: target._id, team: { $ne: this.team._id } }); // Finds all Facilities that don't belong to us.
