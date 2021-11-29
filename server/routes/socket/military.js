@@ -46,14 +46,14 @@ module.exports = async function (client, req) {
 					client.emit('alert', { type: 'success', message: `${unit.name} equip completed.` });
 					break;
 				case('recon'): // Recon Action Trigger
-					let target = generateIntel(unit.team, target._id);
+					let target = await generateIntel(unit.team, req.data.target);
 					await target.recon(req.data.target, `${unit.name} recon action at ${target}`);
 					client.emit('alert', { type: 'success', message: `${unit.name} did at ${unit.site.name}.` });
 					break;
 				case('recall'): // Recon Action Trigger
 					unit = await unit.recall();
 					client.emit('alert', { type: 'success', message: `${unit.name} recalled.` });
-					break;
+					break;``
 				case('repair'): // Repair Action Trigger
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });

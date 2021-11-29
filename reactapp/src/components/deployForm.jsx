@@ -136,7 +136,7 @@ const DeployMilitary = (props) => {
 
 			case 'recon': 
 				try {
-					socket.emit('request', { route: 'military', action: 'action',  type: 'recon', data: { assignment: { target: props.target._id, type: 'Invade'}, units: units, }});
+					socket.emit('request', { route: 'military', action: 'action',  type: 'recon', data: { assignment: { target: props.target._id,}, units: units, }});
 				} catch (err) {
 						Alert.error(`Error: ${err.body} ${err.message}`, 5000)
 				}
