@@ -19,6 +19,9 @@ const DeployMilitary = (props) => {
 	const [transferFleets, setTransferFleets] = React.useState([]); 
 	const [transferCorps, setTransferCorps] = React.useState([]); 
 
+	const [reconFleets, setReconFleets] = React.useState([]); 
+	const [reconCorps, setReconCorps] = React.useState([]); 
+
 	useEffect(() => {
 	filterUnits();
 	}, [])
@@ -57,6 +60,8 @@ const DeployMilitary = (props) => {
 			let corps = [];
 			let transferFleets = [];
 			let transferCorps = [];
+			let reconFleets = [];
+			let reconCorps = [];
 			for (let unit of props.military) {
 				if (team === unit.team.name) { // why
 						let unitData = {
@@ -69,11 +74,16 @@ const DeployMilitary = (props) => {
 						if (unit.type === 'Corps' && unit.status.some(el => el === 'mobilized') && unit.missions > 0) corps.push(unitData);
 						if (unit.type === 'Fleet' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferFleets.push(unitData);
 						if (unit.type === 'Corps' && !unit.status.some(el => el === 'mobilized') && unit.actions > 0) transferCorps.push(unitData);
+
+						if (unit.type === 'Fleet' && unit.status.some(el => el === 'mobilized') && unit.actions + unit.missions > 0) reconFleets.push(unitData);
+						if (unit.type === 'Corps' && unit.status.some(el => el === 'mobilized') && unit.actions + unit.missions > 0) reconCorps.push(unitData);
 					
 				}
 			}
 			setTransferFleets(transferFleets);
 			setTransferCorps(transferCorps);
+			setReconFleets(reconFleets);
+			setReconCorps(reconCorps);
 			setFleets(fleets);
 			setCorps(corps);
 		}
@@ -241,7 +251,7 @@ const DeployMilitary = (props) => {
 						<div>
 							<h6>Select Units to recon site {props.target.name}</h6>
 							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
-								data={ props.target.tags.some(el => el === 'coastal') ?  [...transferFleets, ...transferCorps] : transferCorps }
+								data={ props.target.tags.some(el => el === 'coastal') ?  [...reconFleets, ...reconCorps] : reconCorps }
 								placement={'leftEnd'}
 								onChange={handleUnits}
 								valueKey='_id'
