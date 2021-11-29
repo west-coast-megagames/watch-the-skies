@@ -53,6 +53,7 @@ const initArticles = require('./init/initArticles');
 const initResearch = require('./init/initResearch');
 const initTrades = require('./init/initTrades');
 const initTreaties = require('./init/initTreaties');
+const initServerInfo = require('./init/initServerInfo');
 debugBoot('INIT routes initiated...');
 
 // Game Routes - Using Express.js
@@ -122,6 +123,7 @@ module.exports = function (app) {
 	app.use('/init/initResearch', initResearch); // Route for init/check of Research
 	app.use('/init/initTrades', initTrades); // Route for init/check of Trades
 	app.use('/init/initTreaties', initTreaties); // Route for init/check of Treaties
+	app.use('/init/initServerInfo', initServerInfo); // Route for init/check get server info
 
 	// app.use('/game/tempMil', tempMil);
 

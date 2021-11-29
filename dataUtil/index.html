@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Init/Check Database</title>
+		<h13Database Init and Check Functions</h3>
+		<br>
+		You should have both initServer and Server running against same Database
+		<br>
+  </head>
+	<script src="/socket.io/socket.io.js"></script>
+
+  <body>
+    <div id="error-container"></div>
+		<br>
+		<p id="utilDB"></p>
+		<p id="serverDB"></p>
+		<p id="selFiles"></p>
+		<br>
+	  <form id="form">
+		<input type="radio" name="choice" value="initDB"> 
+		<label for="init-yes">Initialize DB</label>
+		<input type="radio" name="choice" value="checkDB">
+		<label for="choice-no">Data Check DB</label>
+    <br>
+		<br>
+    <button>Submit</button>
+	</form>
+
+	<script>
+		var socket = io();
+	
+		var form = document.getElementById('form');
+		var input = document.getElementsByName('choice');
+	
+		if (form) {
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			console.log(e);
+			if (utilDB === serverDB) {
+		 	  for (choice of input) {
+			  	if (choice.checked === true) {
+					  const doDBObj = {choice: choice.value, doLoad: loadSel};
+					  socket.emit("doDB", doDBObj)
+				  } 
+			  }
+	  	} else {
+				console.log("Server and initServer DB's do not match.");
+			}
+		});
+	} else {
+		console.log("form not defined");
+	}
+	
+		socket.on('headerInfo', (data) => {
+			console.log(data);
+			utilDB = data.utilDB;
+			loadSel = data.selFiles;
+			serverDB = data.serverDB;
+			document.getElementById("utilDB").innerHTML=`initServer DB: ${utilDB}`;
+			document.getElementById("serverDB").innerHTML=`Server DB: ${serverDB}`;
+			document.getElementById("selFiles").innerHTML=`Selected Files: ${loadSel}`;
+		});         // client handler for server-side event
+	
+	</script>
+  </body>
+</html>
