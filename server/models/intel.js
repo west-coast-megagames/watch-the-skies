@@ -25,8 +25,6 @@ const IntelSchema = new Schema({
 });
 
 IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
-	
-
 	this.lastUpdate = Date.now();
 	this.type = doc.model.toLowerCase();
 	if (!this.document.name) this.document.name = randCode(6);
