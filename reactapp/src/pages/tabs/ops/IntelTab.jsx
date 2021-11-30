@@ -75,21 +75,21 @@ const IntelTab = (props) => {
 		<Container style={{padddingRight: '0px', }}>
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Intel File</h4> }
-				{ selected.document && selected.document.model === 'Military' && <React.Fragment>
+				{ selected && selected.document && selected.document.model === 'Military' && <React.Fragment>
 						<MilitaryStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
 						<ServiceRecord owner={selected.document} />
 				</React.Fragment>
 				}
-				{ selected.document && selected.document.type === 'Space' && 
+				{selected && selected.document && selected.document.type === 'Space' && 
 					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected.document}/>
 				}
-				{ selected.document && selected.document.model === 'Site' && selected.document.type !== 'Space' &&
+				{selected && selected.document && selected.document.model === 'Site' && selected.document.type !== 'Space' &&
 					<SiteStats handleTransfer={handleTransfer} control={props.control} site={selected.document}/>
 				}
-				{ selected.document && selected.document.model === 'Facility' && 
+				{selected && selected.document && selected.document.model === 'Facility' && 
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected.document}/>
 				}
-				{ selected.document && selected.document.model === 'Aircraft' && 
+				{selected && selected.document && selected.document.model === 'Aircraft' && 
 					<div>
 						<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
 						<ServiceRecord owner={selected.document} />						
