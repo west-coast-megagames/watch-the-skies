@@ -95,23 +95,8 @@ router.delete('/:id', async function (req, res) {
 // @desc    Delete All intel
 // @access  Public
 router.patch('/deleteAll', async function (req, res) {
-	let airDelCount = 0;
-	for await (const intel of intel.find()) {
-		const id = intel.id;
-		try {
-			const intelDel = await intel.findByIdAndRemove(id);
-			if (intelDel == null) {
-				res.status(404).send(`The intel with the ID ${id} was not found!`);
-			}
-			else {
-				airDelCount += 1;
-			}
-		}
-		catch (err) {
-			nexusError(`${err.message}`, 500);
-		}
-	}
-	return res.status(200).send(`We wiped out ${airDelCount} intel! `);
+	const data = await Intel.deleteMany();
+	return res.status(200).json(data);
 });
 
 // @route   PATCH debug/intel

@@ -24,7 +24,7 @@ const AircraftStats = (props) => {
 			<Container>
 				<Panel>
 				<FlexboxGrid>
-						<FlexboxGrid.Item colspan={4} style={{  }}>
+						<FlexboxGrid.Item colspan={4} style={{ textAlign: 'center' }}>
 							<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
 								<img 
 									src={getAircraftIcon(team.code)} width="90%" alt='Failed to Load'

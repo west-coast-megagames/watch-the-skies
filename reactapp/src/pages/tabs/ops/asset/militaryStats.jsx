@@ -29,7 +29,7 @@ const MilitaryStats = (props) => {
 			<Panel>
 			<FlexboxGrid>
 					<FlexboxGrid.Item colspan={4}>
-					<div style={{ margin: '4px', backgroundColor: '#0e1626' }}>
+					<div style={{ margin: '4px', backgroundColor: '#0e1626', textAlign: 'center' }}>
 							<img 
 								src={getMilitaryIcon(props.unit)} width="90%" alt='Failed to Load'
 								style={{ cursor: 'pointer' }}

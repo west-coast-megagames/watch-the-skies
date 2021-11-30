@@ -3,7 +3,7 @@ import { connect } from 'react-redux'; // Redux store provider
 import { Nav, Container, Header, Content, Button, Divider, Panel, FlexboxGrid, ButtonToolbar, ButtonGroup } from 'rsuite';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShieldAlt, faRadiation, faGlobe, faAtlas } from '@fortawesome/free-solid-svg-icons'
+import { faShieldAlt, faRadiation, faBriefcase, faAtlas } from '@fortawesome/free-solid-svg-icons'
 import LoginLink from '../components/common/loginLink'
 import AssetsTab from './tabs/ops/AssetTab';
 import { getFacilites } from '../store/entities/facilities';
@@ -17,6 +17,7 @@ import MobilizeForm from './tabs/ops/asset/MobilizeForm';
 import TransferForm from '../components/common/TransferForm';
 import RecallForm from './tabs/ops/asset/RecallForm';
 import { getAircrafts } from '../store/entities/aircrafts';
+import IntelTab from './tabs/ops/IntelTab';
 
 /*
 TODO CHECKLIST
@@ -54,6 +55,7 @@ const Operations  = (props) => {
 					<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10 }}>
 						<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faShieldAlt} />}> Dashboard</Nav.Item>
 						<Nav.Item eventKey="assets" to={`${url}/assets`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faAtlas} />}> Asset Manager</Nav.Item>
+						<Nav.Item eventKey="intel" to={`${url}/intel`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faBriefcase} />}> Intel</Nav.Item>
 						<Nav.Item eventKey="nuclear" to={`${url}/nuclear`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faRadiation} />}> Nuclear</Nav.Item>
 					</Nav>							
 				</FlexboxGrid.Item>
@@ -114,6 +116,9 @@ const Operations  = (props) => {
 
 					<Route path={`${url}/assets`} render={() => (
 						<AssetsTab selected={selected} history={props.history}/>
+					)}/>
+					<Route path={`${url}/intel`} render={() => (
+						<IntelTab selected={selected} history={props.history}/>
 					)}/>
 					<Redirect from={`${url}/`} exact to={`${url}/dashboard`} />
 				</Switch>

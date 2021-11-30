@@ -12,15 +12,16 @@ import MilitaryStats from './asset/militaryStats';
 import AircraftStats from './asset/AircraftStats';
 import SatelliteStats from './asset/SatelliteStats';
 import { getAircrafts } from '../../../store/entities/aircrafts';
-import { getMySatellites, getSatellites } from '../../../store/entities/sites';
+import { getMySatellites, getMySites, getSatellites } from '../../../store/entities/sites';
 import { showSite, showMilitary, showAircraft } from '../../../store/entities/infoPanels';
+import SiteStats from './asset/SiteStats';
 
 const { HeaderCell, Cell, Column } = Table;
 
 const AssetTab = (props) => {
 	const [selected, setSelected] = React.useState(props.selected);
 	const [filter, setFilter] = React.useState('');
-	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades', 'Satellites' ]);
+	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades', 'Sites', 'Satellites' ]);
 
 	const listStyle = (item) => {
 		if (selected && selected._id === item._id)
@@ -129,6 +130,9 @@ const AssetTab = (props) => {
 				}
 				{ selected && selected.type === 'Space' && 
 					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected}/>
+				}
+				{ selected && selected.model === 'Site' && selected.type !== 'Space' &&
+					<SiteStats handleTransfer={handleTransfer} control={props.control} site={selected}/>
 				}
 				{ selected && selected.model === 'Facility' && 
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected}/>
@@ -258,6 +262,15 @@ const AssetTab = (props) => {
 								))}
 							</List>}	
 
+							{tags.some(el => el === 'Sites') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Sites ({props.sites.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
+								{props.sites.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((site, index) => (
+									<List.Item key={site._id}  index={index} size={'md'} style={listStyle(site)} onClick={()=> setSelected(site)}>
+										{site.name}
+									</List.Item>
+								))}
+							</List>}	
+
 							{tags.some(el => el === 'Facilities') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).length})</h6>
 								{props.facilities.filter(el => el.name.toLowerCase().includes(filter.toLowerCase())).map((facility, index) => (
@@ -311,6 +324,9 @@ const checkerData = [
 		name: 'Military'
 	},
 	{
+		name: 'Sites'
+	},
+	{
 		name: 'Facilities'
 	},
 	{
@@ -327,7 +343,7 @@ const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
-	sites: state.entities.sites.list,
+	sites: props.control ? state.entities.sites.list : getMySites(state),
 	account: getOpsAccount(state),
 	aircrafts: props.control ? state.entities.aircrafts.list : getAircrafts(state),
 	satellites: props.control ? getSatellites(state) : getMySatellites(state),

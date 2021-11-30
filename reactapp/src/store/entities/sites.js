@@ -82,6 +82,12 @@ export const addsite = site =>
     onSuccess: siteAdded.type
   });
 
+	export const getMySites = createSelector(
+		state => state.entities.sites.list,
+		state => state.auth.team,
+		(sites, team) => sites.filter( site => (site.team === team._id || site.team._id === team._id) && site.subType !== 'Satellite' )
+	);
+
 	export const getCapitol = createSelector(
     state => state.entities.sites.list.filter(el => el.tags),
 		state => state.auth.team,
