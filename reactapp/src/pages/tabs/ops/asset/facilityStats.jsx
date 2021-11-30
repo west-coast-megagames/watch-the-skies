@@ -43,7 +43,8 @@ const FacilityStats = (props) => {
 							
 
 						</FlexboxGrid.Item>
-						<FlexboxGrid.Item colspan={12}>
+						<FlexboxGrid.Item colspan={12} style={{ textAlign: "center"  }}>
+							<h5>Buildings</h5>
 							color scheme not final
 							{buildings.map((building) => {
 								switch (building.type) {

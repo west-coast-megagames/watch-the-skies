@@ -71,6 +71,10 @@ const AssetTab = (props) => {
 		}
 	}
 
+	const handleAssetTransfer = (thing) => {
+		setSelected(thing);
+	}
+
 	const repair = async (upgrade) => {
 		try {
 			socket.emit( 'upgradeSocket', 'repair', { _id: upgrade._id });
@@ -122,7 +126,7 @@ const AssetTab = (props) => {
 	return (
 		<Container style={{padddingRight: '0px', }}>
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
-        { !selected && <h4>Select an Asset???</h4> }
+        { !selected && <h4>Select an Asset</h4> }
 				{ selected && selected.model === 'Military' && <React.Fragment>
 						<MilitaryStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected}/>
 						<ServiceRecord owner={selected} />
@@ -132,7 +136,7 @@ const AssetTab = (props) => {
 					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected}/>
 				}
 				{ selected && selected.model === 'Site' && selected.type !== 'Space' &&
-					<SiteStats handleTransfer={handleTransfer} control={props.control} site={selected}/>
+					<SiteStats handleTransfer={handleTransfer} handleAssetTransfer={handleAssetTransfer} control={props.control} site={selected} facilities={props.facilities}/>
 				}
 				{ selected && selected.model === 'Facility' && 
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected}/>

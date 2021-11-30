@@ -99,14 +99,17 @@ const SiteStats = (props) => {
 							</Panel>
 						</FlexboxGrid.Item>
 
-						{/* <FlexboxGrid.Item colspan={12}>
+						<FlexboxGrid.Item colspan={12}>
 								<Panel style={{ height: '100%'}} bordered>
-									<h5>Current Mission</h5>
-									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site.name}
+									<h5>Facilities</h5>
+									{props.facilities.filter(el => el.site._id === props.site._id).length === 0 && <b>No Facilities at this site</b>}
+									{props.facilities.filter(el => el.site._id === props.site._id).map(facility => (
+										<div style={{ border: "2px solid black", display: 'flex', height: '8vh' }} onClick={() => props.handleAssetTransfer(facility)}>
+											{facility.name}
+										</div>
+									))}
 								</Panel>
-
-								<UpgradeTable upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />
-						</FlexboxGrid.Item> */}
+						</FlexboxGrid.Item>
 
 				 </FlexboxGrid>
 					<br />
