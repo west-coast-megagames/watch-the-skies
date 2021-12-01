@@ -25,7 +25,7 @@ const MilitaryControl = (props) => {
 			setUnit(props.military.filter(el => el.team._id === value))
 		}
 		else {
-			Alert.error('Whoops, scott fucked up!', 6000);
+			// Alert.error('Whoops, scott fucked up!', 6000);
 			setUnit(props.military)
 		}
 		setFilter(value)

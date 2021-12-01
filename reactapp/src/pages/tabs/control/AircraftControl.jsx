@@ -26,7 +26,7 @@ const AircraftControl = (props) => {
 			setUnit(props.aircraft.filter(el => el.team._id === value))
 		}
 		else {
-			Alert.error('Whoops, scott fucked up!', 6000);
+			// Alert.error('Whoops, scott fucked up!', 6000);
 			setUnit(props.aircraft)
 		}
 		setFilter(value);
