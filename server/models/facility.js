@@ -37,6 +37,7 @@ const FacilitySchema = new Schema({
 	buildings: [BuildingSchema],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	tags: [ { type: String, enum: ['coastal'] } ],
+	lastUpdate: { type: Date, default: Date.now() },
 	capabilities: [ { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] }]
 });
 

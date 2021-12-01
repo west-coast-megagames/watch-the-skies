@@ -9,6 +9,7 @@ import LoginLink from '../components/common/loginLink';
 import Trade from './tabs/dip/trade'
 import { getPolAccount } from '../store/entities/accounts';
 import BalanceHeader from '../components/common/BalanceHeader';
+import Agreements from './tabs/gov/Agreements';
 
 const Diplomacy = (props) => {
 	const [tab, setTab] = React.useState('dashboard');
@@ -27,8 +28,8 @@ const Diplomacy = (props) => {
 						<FlexboxGrid.Item colspan={20} >
 							<Nav appearance="tabs" activeKey={ tab } onSelect={(thing) => setTab(thing)} style={{ marginBottom: 10, zIndex: 999 }}>
 								<Nav.Item eventKey="dashboard" to={`${url}/dashboard`} componentClass={NavLink} icon={<Icon icon="dashboard" />}>Dashboard</Nav.Item>
-								<Nav.Item eventKey="envoys" to={`${url}/envoys`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUserTie} />}> Envoys</Nav.Item>
 								<Nav.Item eventKey="trades" to={`${url}/trades`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faHandsHelping} />}> Trades</Nav.Item>
+								<Nav.Item eventKey="envoys" to={`${url}/envoys`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUserTie} />}> Envoys</Nav.Item>
 								<Nav.Item eventKey="treaties" to={`${url}/treaties`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faFileContract} />}> Treaties</Nav.Item>
 								<Nav.Item eventKey="united-nations" to={`${url}/un`} componentClass={NavLink} icon={<FontAwesomeIcon icon={faUniversity} />}> UN Security Council</Nav.Item>
 							</Nav>							
@@ -66,7 +67,7 @@ const Diplomacy = (props) => {
 								<Trade />
 							)}/>
 							<Route path={`${url}/treaties`} render={() => (
-								<h5>The treaty system for the Diplomacy Module has not been created!</h5>
+								<Agreements/>
 							)}/>
 							<Route path={`${url}/un`} render={() => (
 								<h5>The United Nations system for the Diplomacy Module has not been created!</h5>

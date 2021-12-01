@@ -46,7 +46,8 @@ const MilitarySchema = new Schema({
 	tags: {
 		type: [String],
 		enum: ['secret']
-	}
+	},
+	lastUpdated: { type: Date, default: Date.now() }
 });
 
 // METHOD - Control

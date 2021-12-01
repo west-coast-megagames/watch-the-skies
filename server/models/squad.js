@@ -40,6 +40,7 @@ const SquadSchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
+	lastUpdate: { type: Date, default: Date.now() },
 	status: [ { type: String, enum: ['deployed', 'destroyed', 'ready', 'captured', 'damaged'] } ],
 	tags: [ { type: String, enum: [''] } ]
 });

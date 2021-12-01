@@ -35,6 +35,7 @@ const AccountSchema = new Schema({
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
 	queue: [TransferSchema],
+	lastUpdate: { type: Date, default: Date.now() },
 	tags: [{ type: String, enum: [''] } ]
 });
 
