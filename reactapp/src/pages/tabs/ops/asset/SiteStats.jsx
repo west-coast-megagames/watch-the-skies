@@ -5,6 +5,7 @@ import { getMapIcon, getSatIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
 import socket from "../../../../socket";
 import UpgradeTable from "./UpgradeTable";
+import { connect } from "react-redux";
 
 const SiteStats = (props) => {
 	const [showTransfer, setShowTransfer] = React.useState(false);
@@ -18,6 +19,35 @@ const SiteStats = (props) => {
 			Alert.error(`Error: ${err.response.data}`);
 		}
 	};
+
+	const getWhisperer = (type) => {
+		const source = props.source ? props.source[type] : undefined;
+		if (source) {
+			return(
+				<Popover title={<b style={{ textTransform: 'capitalize' }}>{type} Information</b>}>
+					<b>{source.source}</b>
+					<p>
+						{source.timestamp.turn} - {source.timestamp.phase} - {source.timestamp.clock}
+					</p>
+				</Popover>				
+			)
+		}
+		else {
+			return(
+				<Popover title="AAAAA">
+					<p>
+						AAAAA
+					</p>
+				</Popover>				
+			)
+		}
+					
+	}
+
+	const getTeamCode = (id) => {
+		const team = props.teams.find(el => el._id === id);
+		return team ? team.name : '???';
+	}
 
 		let { name, zone, type, team, unrest, loyalty, repression, morale, tags, status, geoDecimal, subType, occupier } = props.site;
 		return (
@@ -35,21 +65,24 @@ const SiteStats = (props) => {
 							{occupier && <b>Occupier: {occupier.shortName}</b>}
 						</FlexboxGrid.Item>
 
-						<FlexboxGrid.Item colspan={8}>
+						<FlexboxGrid.Item style={{ }} colspan={8}>
 							<Panel bordered >
-							<p>
-								<b>Name:</b> {name} {' '}									
-								{tags.some(el => el === 'capital') && <Tag color="blue">Capital</Tag>}
-								{status.some(el => el === 'warzone') && <Tag color="red">Warzone</Tag>}
-								{status.some(el => el === 'occupied') && <Tag color="orange">Occupied</Tag>}
+							<p style={{ cursor: props.intel ? 'help' : 'default', }}>
+								<Whisper placement="left" speaker={getWhisperer('name')} trigger={props.intel ? 'hover' : 'none'}>
+									<div>
+										<b>Name:</b> {name} {' '}									
+										{tags.some(el => el === 'capital') && <Tag color="blue">Capital</Tag>}
+										{status.some(el => el === 'warzone') && <Tag color="red">Warzone</Tag>}
+										{status.some(el => el === 'occupied') && <Tag color="orange">Occupied</Tag>}
+									</div>
+								</Whisper>
 							</p>
-							<p>
-								<b>Team:</b> {team.name}
-							
-							</p>
-							
-							<p>
-								<b>Location:</b> {zone.name} ( {geoDecimal.lat} - {geoDecimal.lng} )
+							<p style={{ cursor: props.intel ? 'help' : 'default', }}>
+								<Whisper enterable placement="left" speaker={getWhisperer('team')} trigger={props.intel ? 'hover' : 'none'}>
+									<div>
+										<b>Team:</b> {team.name ? team.name : getTeamCode(team)}
+									</div>
+								</Whisper>
 							</p>
 							<p>
 								<b>Type:</b> {type} - {subType}
@@ -99,7 +132,7 @@ const SiteStats = (props) => {
 							</Panel>
 						</FlexboxGrid.Item>
 
-						<FlexboxGrid.Item colspan={12}>
+						{props.facilities ? <FlexboxGrid.Item colspan={12}>
 								<Panel style={{ height: '100%'}} bordered>
 									<h5>Facilities</h5>
 									{props.facilities.filter(el => el.site._id === props.site._id).length === 0 && <b>No Facilities at this site</b>}
@@ -110,6 +143,8 @@ const SiteStats = (props) => {
 									))}
 								</Panel>
 						</FlexboxGrid.Item>
+						: <b>No Facilities</b>
+						}
 
 				 </FlexboxGrid>
 					<br />
@@ -158,6 +193,14 @@ const moraleSpeaker = (
   </Popover>
 );
 
+const mapStateToProps = (state, props)=> ({
+	login: state.auth.login,
+	team: state.auth.team,
+	teams: state.entities.teams.list,
+	lastFetch: state.entities.military.lastFetch
+});
 
+const mapDispatchToProps = dispatch => ({
+});
 
-export default SiteStats;
+export default connect(mapStateToProps, mapDispatchToProps)(SiteStats);

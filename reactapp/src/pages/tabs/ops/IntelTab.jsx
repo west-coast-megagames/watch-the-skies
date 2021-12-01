@@ -84,7 +84,7 @@ const IntelTab = (props) => {
 					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected.document}/>
 				}
 				{selected && selected.document && selected.document.model === 'Site' && selected.document.type !== 'Space' &&
-					<SiteStats handleTransfer={handleTransfer} control={props.control} site={selected.document}/>
+					<SiteStats handleTransfer={handleTransfer} control={props.control} intel={true} source={selected.source} site={selected.document}/>
 				}
 				{selected && selected.document && selected.document.model === 'Facility' && 
 					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected.document}/>

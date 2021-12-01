@@ -47,19 +47,19 @@ const AircraftTable = (props) => {
 					height={props.control ? document.documentElement.clientHeight * 0.7 : document.documentElement.clientHeight * 0.34}
           data={ getData() }
       >
-      <Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
-          <HeaderCell>Aircraft</HeaderCell>
-          <Cell style={{ textAlign: 'left' }} dataKey='name' />
+      <Column flexGrow={1}>
+          <HeaderCell style={{ textAlign: 'left',color: 'white',  backgroundColor: '#61342e'}} >Aircraft</HeaderCell>
+          <Cell style={{ backgroundColor: 'inherit', textAlign: 'left' }} dataKey='name' />
       </Column>
 
-      <Column style={{backgroundColor: 'inherit',}}  flexGrow={1}>
-        <HeaderCell >Integrity</HeaderCell>
-        <Cell style={{ padding: 0 }} verticalAlign='middle' >
+      <Column flexGrow={1}>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Integrity</HeaderCell>
+        <Cell style={{ padding: 0, backgroundColor: 'inherit', textAlign: 'left' }} verticalAlign='middle' >
           {rowData => {
             let { stats } = rowData
             return(
 							<div>
-								<b style={{position: 'absolute', bottom: '15px', left: '47%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
+								<b style={{ position: 'absolute', bottom: '15px', left: '47%', color: 'black' }}>{stats.hull} / {stats.hullMax}</b>
 									{/* <b>{stats.hull} / {stats.hullMax}</b> */}
 									<Progress.Line style={{ padding: 0 }}  percent={stats.hull / stats.hullMax * 100} strokeColor={(stats.hull / stats.hullMax * 100) < 100 ? '#ffc107' : "#4caf50"} showInfo={false}/>									
 							</div>
@@ -68,9 +68,9 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-			<Column style={{backgroundColor: 'inherit',}} flexGrow={1}>
-          <HeaderCell>Mission</HeaderCell>
-          <Cell >
+			<Column  flexGrow={1}>
+          <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Mission</HeaderCell>
+          <Cell style={{ backgroundColor: 'inherit', }}  >
         	  {rowData => {
         	    let { mission, name, _id } = rowData
         	    return( 
@@ -84,9 +84,9 @@ const AircraftTable = (props) => {
 					</Cell>
       </Column>
 
-      <Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
-        <HeaderCell>Location</HeaderCell>
-        <Cell>
+      <Column  flexGrow={1} >
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Location</HeaderCell>
+        <Cell style={{ backgroundColor: 'inherit', }}>
           {rowData => {
 						let { site } = rowData
 						if (site){ return( 
@@ -100,9 +100,9 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-      <Column style={{backgroundColor: 'inherit',}} flexGrow={1} >
-          <HeaderCell>Status</HeaderCell>
-					<Cell>
+      <Column flexGrow={1} >
+          <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Status</HeaderCell>
+					<Cell style={{ backgroundColor: 'inherit', }}>
 					{rowData => {
             return(
 							<StatusBar control={props.control} unit={rowData} />
@@ -111,9 +111,9 @@ const AircraftTable = (props) => {
         </Cell>
       </Column>
 
-      <Column  style={{backgroundColor: 'inherit',}} flexGrow={1}>
-        <HeaderCell>Info</HeaderCell>
-        <Cell verticalAlign='middle' style={{  }}>
+      <Column   flexGrow={1}>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Info</HeaderCell>
+        <Cell verticalAlign='middle' style={{ backgroundColor: 'inherit', }}>
           {rowData => {
             let aircraft = rowData;
             return (
