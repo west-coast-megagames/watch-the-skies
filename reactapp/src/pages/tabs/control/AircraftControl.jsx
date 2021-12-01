@@ -7,10 +7,11 @@ import AircraftTable from '../ops/asset/AircraftTable';
 
 const AircraftControl = (props) => {
 	const [units, setUnit] = React.useState(props.aircraft);
+	const [filter, setFilter] = React.useState(undefined);
 
 	useEffect(() => {
 		if (props.aircraft) {
-			setUnit(props.aircraft)
+			handleThing(filter)
 		}
 	}, [props.aircraft]);
 
@@ -28,6 +29,7 @@ const AircraftControl = (props) => {
 			Alert.error('Whoops, scott fucked up!', 6000);
 			setUnit(props.aircraft)
 		}
+		setFilter(value);
 	}
 
 	return (

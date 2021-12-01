@@ -6,10 +6,11 @@ import MilitaryTable from '../ops/asset/MilitaryTable';
 
 const MilitaryControl = (props) => {
 	const [units, setUnit] = React.useState(props.military);
+	const [filter, setFilter] = React.useState(undefined);
 
 	useEffect(() => {
 		if (props.military) {
-			setUnit(props.military)
+			handleThing(filter)
 		}
 	}, [props.military]);
 
@@ -27,6 +28,7 @@ const MilitaryControl = (props) => {
 			Alert.error('Whoops, scott fucked up!', 6000);
 			setUnit(props.military)
 		}
+		setFilter(value)
 	}
 
 	return (
