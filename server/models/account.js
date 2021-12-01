@@ -35,9 +35,8 @@ const AccountSchema = new Schema({
 	resources: [BalanceSchema],
 	reports: { type: Schema.Types.ObjectId, ref: 'Report' },
 	queue: [TransferSchema],
-	lastUpdate: { type: Date, default: Date.now() },
 	tags: [{ type: String, enum: [''] } ]
-});
+}, { timestamps: true });
 
 // METHOD - deposit
 AccountSchema.methods.deposit = async function (transaction) {

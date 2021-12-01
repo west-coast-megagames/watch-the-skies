@@ -46,9 +46,8 @@ const MilitarySchema = new Schema({
 	tags: {
 		type: [String],
 		enum: ['secret']
-	},
-	lastUpdated: { type: Date, default: Date.now() }
-});
+	}
+}, { timestamps: true });
 
 // METHOD - Control
 // IN - string of what is getting reset | OUT: VOID

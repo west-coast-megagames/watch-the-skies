@@ -50,7 +50,7 @@ const TradeSchema = new Schema({
 	status: { type: String, default: 'Draft', enum: ['Draft', 'Rejected', 'Trashed', 'Completed' ] },
 	activityFeed: [ActivitySchema],
 	lastUpdated: { type: Date, default: Date.now() }
-});// const TradeSchema
+}, { timestamps: true });// const TradeSchema
 
 // validateTrade method
 TradeSchema.methods.validateTrade = async function () {

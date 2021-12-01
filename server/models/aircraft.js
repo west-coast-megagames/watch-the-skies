@@ -82,9 +82,8 @@ const AircraftSchema = new Schema({
 		cargo: { type: Number, default: 0 }
 	},
 	tags: [ { type: String, enum: [''] } ],
-	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }],
-	lastUpdated: { type: Date, default: Date.now() }
-});
+	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
+}, { timestamps: true });
 
 // validateAircraft Method
 AircraftSchema.methods.validateAircraft = async function () {

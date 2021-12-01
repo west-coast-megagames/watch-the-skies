@@ -40,10 +40,9 @@ const SquadSchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
-	lastUpdate: { type: Date, default: Date.now() },
 	status: [ { type: String, enum: ['deployed', 'destroyed', 'ready', 'captured', 'damaged'] } ],
 	tags: [ { type: String, enum: [''] } ]
-});
+}, { timestamps: true });
 
 SquadSchema.methods.runMission = async function () {
 	if (!this.status.some(el => el === 'mission')) throw Error(`The ${this.name} squad has no misssion...`);
