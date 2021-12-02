@@ -70,10 +70,6 @@ async function chkSite(runFlag) {
 			logger.error(`serviceRecord missing for Sie ${site.name} ${site._id}`);
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(site, 'facilities')) {
-			logger.error(`facilities missing for Site ${site.name} ${site._id}`);
-		}
-
 		if (!Object.prototype.hasOwnProperty.call(site, 'hidden')) {
 			logger.error(`hidden missing for Site ${site.name} ${site._id}`);
 		}

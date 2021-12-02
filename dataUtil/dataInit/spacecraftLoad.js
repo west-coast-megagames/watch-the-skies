@@ -113,7 +113,6 @@ async function newSpacecraft(sData, rCounts) {
 	SpaceSite.subType = sData.shipType;
 	SpaceSite.status = [];
 	SpaceSite.hidden = sData.hidden;
-	SpaceSite.facilities = [];
 	const newLatDMS = convertToDms(sData.lat, false);
 	const newLongDMS = convertToDms(sData.lng, true);
 	SpaceSite.geoDMS = {
@@ -251,38 +250,4 @@ async function newSpacecraft(sData, rCounts) {
 	}
 }
 
-
 module.exports = runSpacecraftLoad;
-
-/*
-
-
-			spacecraft.facilities = [];
-
-			if (loadError) {
-				++rCounts.loadErrCount;
-				logger.error(
-					`Spacecraft skipped due to errors: ${loadCode} ${loadName} ${loadErrorMsg}`
-				);
-				return;
-			}
-			else {
-				try {
-					const spacecraftSave = await spacecraft.save();
-					++rCounts.loadCount;
-					spacecraftDebugger(
-						`${spacecraftSave.name} add saved to spacecraft collection.`
-					);
-
-					return;
-				}
-				catch (err) {
-					++rCounts.loadErrCount;
-					delFacilities(spacecraft.facilities);
-					logger.error(`New Spacecraft Save Catch Error: ${err.message}`, {
-						meta: err
-					});
-					return;
-				}
-			}
-			*/
