@@ -19,7 +19,6 @@ router.get('/', async function (req, res) {
 		const sites = await Site.find()
 			.populate('organization', 'name')
 			.populate('team', 'shortName name code')
-			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
 			.populate('occupier', 'name shortName code')
 			.sort({ name: -1 });
@@ -42,7 +41,6 @@ router.get('/:id', validateObjectId, async (req, res) => {
 		const site = await Site.findById(id)
 			.populate('organization', 'name')
 			.populate('team', 'shortName name')
-			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
 			.populate('occupier', 'name shortName code')
 			.sort({ team: 1 });
@@ -70,7 +68,6 @@ router.get('/type/:type', async function (req, res) {
 		const sites = await Site.find(type)
 			.populate('organization', 'name')
 			.populate('team', 'shortName name')
-			.populate('facilities', 'name type')
 			.populate('zone', 'model name code')
 			.sort({ name: -1 });
 		res.status(200).json(sites);

@@ -2,7 +2,7 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
-const { validTeam, validOrganization, validZone, validLog, validFacility } = require('../middleware/util/validateDocument');
+const { validTeam, validOrganization, validZone, validLog } = require('../middleware/util/validateDocument');
 const { addArrayValue } = require('../middleware/util/arrayCalls');
 const nexusEvent = require('../middleware/events/events');
 const { convertToDms } = require('../util/systems/geo');
@@ -35,7 +35,6 @@ const SiteSchema = new Schema({
 		unique: true
 	},
 	hidden: { type: Boolean, default: false }, // just in case and to be consistent
-	facilities: [{ type: ObjectId, ref: 'Facility' }],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	geoDMS: {
 		latDMS: { type: String, minlength: 7, maxlength: 13 }, // format DD MM SS.S N or S  example  40 44 55.02 N
@@ -144,9 +143,6 @@ SiteSchema.methods.validateSite = async function () {
 	for await (const servRec of this.serviceRecord) {
 		await validLog(servRec);
 	}
-	for await (const fac of this.facilities) {
-		await validFacility(fac);
-	}
 
 	const geoDMSCheck = geoDMSSchema.validate(this.geoDMS, { allowUnknown: true });
 	if (geoDMSCheck.error != undefined) nexusError(`${geoDMSCheck.error}`, 400);
@@ -172,7 +168,6 @@ SiteSchema.methods.populateMe = async function () {
 	return this.populate('team', 'name shortName code')
 		.populate('organization', 'name')
 		.populate('team', 'shortName name code')
-		.populate('facilities', 'name type')
 		.populate('zone', 'model name code')
 		.populate('occupier', 'name shortName code')
 		.execPopulate();
