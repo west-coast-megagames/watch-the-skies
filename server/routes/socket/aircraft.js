@@ -43,11 +43,13 @@ module.exports = async function (client, req) {
 				if (req.data.mission === 'interception' || req.data.mission === 'escort' || req.data.mission === 'recon aircraft') {
 					target = await Aircraft.findById(req.data.target).populate('upgrades').populate('site');
 					aircraft.site = target.site._id;
+					aircraft.target = target.location; // so I can draw a line on the map
 					aircraft.location = randomCords(target.site.geoDecimal.lat, target.site.geoDecimal.lng);
 				}
 				else if (req.data.mission === 'diversion' || req.data.mission === 'transport' || req.data.mission === 'recon site' || req.data.mission === 'patrol') {
 					target = await Site.findById(req.data.target);
 					aircraft.site = target._id;
+					aircraft.target = target.geoDecimal; // so I can draw a line on the map
 					aircraft.location = randomCords(target.geoDecimal.lat, target.geoDecimal.lng);
 				}
 

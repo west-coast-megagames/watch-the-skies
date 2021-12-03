@@ -327,7 +327,7 @@ function PrototypeMap(props) {
 				>
 				{(clusterer) => contacts.map(contact => 
 					<Marker
-						title={contact.name}
+						title={`${contact.name} - ${contact.mission}`}
 						key={contact._id}
 						clusterer={clusterer}
 						position={contact.location}
@@ -340,9 +340,28 @@ function PrototypeMap(props) {
 							url: getAircraftIcon(contact.team.code),
 							scaledSize: new window.google.maps.Size(65, 65),
 							origin: new window.google.maps.Point(0,0),
-							anchor: new window.google.maps.Point(10, 10)
+							anchor: new window.google.maps.Point(20, 30)
 						}}
 					>
+						{contact.target && <Polyline
+   				   path={[
+							contact.location,
+							contact.target,
+						]}
+   				   options={{
+							strokeColor: contact.mission === 'interception' ? 'red' : '#61ff00',
+							strokeOpacity: 0.8,
+							strokeWeight: 2,
+							fillOpacity: 0.35,
+							clickable: false,
+							draggable: false,
+							editable: false,
+							visible: true,
+							radius: 30000,
+							zIndex: 1
+						}}
+   				 />}
+
 						{geo === contact.location && <div>
 						<Circle
     				  // required
@@ -392,7 +411,7 @@ function PrototypeMap(props) {
 							unit.site.geoDecimal,
 						]}
    				   options={{
-							strokeColor: '#61ff00',
+							strokeColor: unit.assignment.type === 'Invade' ? 'red' : '#61ff00',
 							strokeOpacity: 0.8,
 							strokeWeight: 2,
 							fillColor: '#61ff00',

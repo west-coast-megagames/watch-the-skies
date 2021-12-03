@@ -32,6 +32,10 @@ const AircraftSchema = new Schema({
 		lat: { type: Number },
 		lng: { type: Number }
 	},
+	target: {
+		lat: { type: Number },
+		lng: { type: Number }
+	},
 	site: { type: Schema.Types.ObjectId, ref: 'Site', required: true },
 	origin: { type: Schema.Types.ObjectId, ref: 'Facility', required: true },
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone', required: true },

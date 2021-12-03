@@ -26,7 +26,7 @@ const UpgradeSchema = new Schema({
 	],
 	status: [ { type: String, enum: ['building', 'salvage', 'damaged', 'destroyed', 'storage'] } ],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
-	tags: [{ type: String, enum: [''] } ],
+	tags: [{ type: String, enum: ['Military', 'Aircraft', 'Facility', 'Squad' ] } ], // Can use this to allow/disallow units to have certain upgrades
 	effects: [
 		{
 			type: { type: String },
