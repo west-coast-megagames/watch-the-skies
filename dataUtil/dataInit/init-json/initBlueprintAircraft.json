@@ -23,6 +23,32 @@
 			"cargo": 0
     }
   },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "aircraft",
+    "name": "Stealth Recon Aircraft",
+    "type": "Fighter",
+    "code": "NX-003",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Stealth Recon Aircraft Blueprint",
+		"upgrades": ["W-RG1", "U-FTC1"],
+    "prereq": [],
+    "hidden": false,
+    "stats": {
+			"hull": 5,
+      "hullMax": 5,
+      "attack": 2,
+      "penetration": 0,
+      "armor": 1,
+      "evade": 1,
+			"detection": 20,
+      "stealth": 20,
+      "range": 4000,
+			"cargo": 0
+    }
+  },
   {
     "loadType": "blueprint",
     "loadFlag": "true",

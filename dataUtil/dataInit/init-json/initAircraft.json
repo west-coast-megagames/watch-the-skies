@@ -1,4 +1,34 @@
 [
+	{
+    "model": "Aircraft",
+    "name": "USA Stealth Recon 1",
+    "team": "USA",
+    "zone": "NA",
+    "organization": "US",
+    "site": "",
+		"base": "USSFO",
+		"bpCode": "NX-003" 
+  },
+	{
+    "model": "Aircraft",
+    "name": "USA Stealth Recon 2",
+    "team": "USA",
+    "zone": "NA",
+    "organization": "US",
+    "site": "",
+		"base": "USSFO",
+		"bpCode": "NX-003" 
+  },
+	{
+    "model": "Aircraft",
+    "name": "USA Stealth Recon 3",
+    "team": "USA",
+    "zone": "NA",
+    "organization": "US",
+    "site": "",
+		"base": "USSFO",
+		"bpCode": "NX-003" 
+  },
   {
     "model": "Aircraft",
     "name": "USA Air 1",
@@ -8,16 +38,6 @@
     "site": "",
 		"base": "USBA",
 		"bpCode": "NX-002"    
-  },
-  {
-    "model": "Aircraft",
-    "name": "USA Air Fighter 1",
-    "team": "USA",
-    "zone": "NA",
-    "organization": "US",
-    "site": "",
-		"base": "USSFO",
-		"bpCode": "NX-002" 
   },
   {
     "model": "Aircraft",
@@ -78,6 +98,36 @@
     "site": "",
 		"base": "USBB",
 		"bpCode": "NX-002"
+  },
+	{
+    "model": "Aircraft",
+    "name": "UK Stealth Recon 1",
+    "team": "UK",
+    "zone": "NA",
+    "organization": "GB",
+    "site": "",
+		"base": "GBBA",
+		"bpCode": "NX-003" 
+  },
+	{
+    "model": "Aircraft",
+    "name": "UK Stealth Recon 2",
+    "team": "UK",
+    "zone": "NA",
+    "organization": "GB",
+    "site": "",
+		"base": "GBBA",
+		"bpCode": "NX-003" 
+  },
+	{
+    "model": "Aircraft",
+    "name": "UK Stealth Recon 3",
+    "team": "UK",
+    "zone": "NA",
+    "organization": "GB",
+    "site": "",
+		"base": "GBBA",
+		"bpCode": "NX-003" 
   },
   {
     "model": "Aircraft",
