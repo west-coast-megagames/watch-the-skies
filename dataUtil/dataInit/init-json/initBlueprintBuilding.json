@@ -126,5 +126,20 @@
 		"stats": {
 			"capacity": 12
 		}
+  },
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "building",
+    "name": "Surveillance Building",
+    "type": "recon",
+    "code": "MIL-LG",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Passive Surveillance",
+		"stats": {
+			"range": 10000, 
+			"detection": 20
+		}
   }
 ]
