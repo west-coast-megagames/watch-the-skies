@@ -82,6 +82,7 @@ const AircraftSchema = new Schema({
 		armor: { type: Number, default: 0 },
 		evade: { type: Number, default: 0 },
 		detection: { type: Number, default: 1 },
+		stealth: { type: Number, default: 1 },
 		range: { type: Number, default: 0 },
 		cargo: { type: Number, default: 0 }
 	},

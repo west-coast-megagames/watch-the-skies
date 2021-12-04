@@ -8,6 +8,11 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 
 // Mongoose Model Import
 const { Facility } = require('../../models/facility');
+const { getDistance } = require('../../util/systems/geo');
+const { Aircraft } = require('../../models/aircraft');
+const { Site } = require('../../models/site');
+const { Military } = require('../../models/military');
+const { Squad } = require('../../models/squad');
 
 // @route   GET api/facilities
 // @Desc    Get all facilities
@@ -102,5 +107,48 @@ router.patch('/deleteAll', async function (req, res) {
 	console.log(data);
 	return res.status(200).send(`We wiped out ${data.deletedCount} Facilities!`);
 });
+
+router.patch('/test', async function (req, res) {
+	const { type, targetID } = req.body;
+	// 0 Get target
+	let geoDecimal;
+	let target;
+	switch(type) {
+	case 'Aircraft':
+		target = await Aircraft.findById(targetID);
+		geoDecimal = target.location;
+		break;
+	case 'Military':
+		target = await Military.findById(targetID)
+			.populate('site', 'geoDecimal');
+		geoDecimal = target.site.geoDecimal; // Military always do stuff at sites
+		break;
+	case 'Squad':
+		target = await Squad.findById(targetID)
+			.populate('site', 'geoDecimal');
+		geoDecimal = target.site.geoDecimal; // Squads are not completely figured out might get a location stat
+		break;
+	default:
+		console.log(`${type} not valid type`);
+		// throw new Error(`${type} not valid type`);
+	}
+
+	const facilities = await Facility.find()
+		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags TODO
+
+	// 2) for every facility
+	if (target) {
+		for (const facility of facilities) {
+			// 2.2) calculate distance between facility and target
+			const distance = getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng); // Get distance to target in KM
+			console.log(distance);
+			// 2.1) If distance <= facility.range Do a method call to see if Intel is generated for the facility
+			// distance < facility.stats.range ? cost = facility.doIntel(target.stats) : undefined;
+		}
+	}
+
+	return res.status(200).send(`found ${facilities.length} Facilities!`);
+});
+
 
 module.exports = router;

@@ -40,7 +40,8 @@
       "defense": 2,
       "localDeploy": 2,
       "globalDeploy": 5,
-      "invasion": 2
+      "invasion": 2,
+			"stealth": 20
     }
 	},
 	{

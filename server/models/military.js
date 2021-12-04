@@ -278,7 +278,7 @@ MilitarySchema.methods.recon = async function (site) {
 			// Options
 		}
 		// TODO - Create algorytmic method to translate a RECON stat to actual INTEL
-		for (let i; i < this.stats.recon; i++) {
+		for (let i; i < this.stats.detection; i++) {
 			console.log('Attempting to generate INTEL');
 		}
 	}
@@ -524,7 +524,8 @@ const Fleet = Military.discriminator(
 			healthMax: { type: Number, default: 4 },
 			attack: { type: Number, default: 0 },
 			defense: { type: Number, default: 2 },
-			recon: { type: Number, default: 1 },
+			detection: { type: Number, default: 1 },
+			stealth: { type: Number, default: 1 },
 			localDeploy: { type: Number, default: 2 },
 			globalDeploy: { type: Number, default: 4 },
 			range: { type: Number, default: 5000 }
@@ -541,6 +542,8 @@ const Corps = Military.discriminator(
 			healthMax: { type: Number, default: 2 },
 			attack: { type: Number, default: 0 },
 			defense: { type: Number, default: 2 },
+			detection: { type: Number, default: 1 },
+			stealth: { type: Number, default: 1 },
 			localDeploy: { type: Number, default: 2 },
 			globalDeploy: { type: Number, default: 5 },
 			range: { type: Number, default: 2000 }

@@ -23,7 +23,7 @@ module.exports = async function (client, req) {
 				if (req.data.assignment.type === 'Invade') {
 					console.log('Invade Time!');
 					const target = await Site.findById(req.data.assignment.target).populate('country').populate('zone'); // Finds deployment target in the DB
-					target.status.push('warzone');
+					!target.status.some(el => el === 'warzone') ? target.status.push('warzone') : undefined;
 					await target.save();
 				}
 
@@ -54,7 +54,7 @@ module.exports = async function (client, req) {
 				case('recall'): // Recon Action Trigger
 					unit = await unit.recall();
 					client.emit('alert', { type: 'success', message: `${unit.name} recalled.` });
-					break;``
+					break;
 				case('repair'): // Repair Action Trigger
 					unit = await unit.repair(req.data.upgrades);
 					client.emit('alert', { type: 'success', message: `${unit.name} repaired.` });
