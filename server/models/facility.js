@@ -8,7 +8,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
 
 const BuildingSchema = new Schema({
-	type: { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] },
+	type: { type: String, enum: [ 'port', 'manufacturing', 'surveillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] },
 	stats: {
 		capacity: { type: Number },
 		funding: { type: Number },
@@ -38,8 +38,28 @@ const FacilitySchema = new Schema({
 	buildings: [BuildingSchema],
 	serviceRecord: [{ type: ObjectId, ref: 'Log' }],
 	tags: [ { type: String, enum: ['coastal'] } ],
-	capabilities: [ { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] }]
+	capabilities: [ { type: String, enum: [ 'port', 'manufacturing', 'surveillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] }]
 }, { timestamps: true });
+
+FacilitySchema.virtual('range').get(function () {
+	let range = 0;
+	for (const building of this.buildings.filter(el => el.type === 'surveillance')) {
+		if (building.stats.range) {
+			range += building.stats.range;
+		}
+	}
+	return (range);
+});
+
+FacilitySchema.virtual('detection').get(function () {
+	let detection = 0;
+	for (const building of this.buildings.filter(el => el.type === 'surveillance')) {
+		if (building.stats.rate) {
+			detection += building.stats.rate;
+		}
+	}
+	return (detection);
+});
 
 FacilitySchema.methods.validateFacility = async function () {
 	const { validTeam, validSite, validUpgrade, validResearch, validAircraft, validMilitary } = require('../middleware/util/validateDocument');
@@ -70,9 +90,9 @@ FacilitySchema.methods.validateFacility = async function () {
 
 	if (this.buildings.research) {
 		await validResearch(this.buildings.research);
-  }
+	}
 	
-  if (this.buildings.aircrafts) {
+	if (this.buildings.aircrafts) {
 	  for await (const aircrft of this.buildings.aircrafts) {
 	  	await validAircraft(aircrft);
 		}

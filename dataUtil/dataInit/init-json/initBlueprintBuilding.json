@@ -132,14 +132,14 @@
     "loadFlag": "true",
     "buildModel": "building",
     "name": "Surveillance Building",
-    "type": "recon",
+    "type": "surveillance",
     "code": "SRV-PAS",
     "cost": 1,
     "buildTime": 1,
 		"desc": "Passive Surveillance",
 		"stats": {
 			"range": 2000000, 
-			"detection": 20
+			"rate": 20
 		}
   }
 ]
