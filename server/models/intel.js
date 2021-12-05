@@ -4,6 +4,7 @@ const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const { randCode } = require('../util/systems/codes');
 const clock = require('../wts/gameClock/gameClock');
 const { Facility } = require('./facility');
+const { Military } = require('./military');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -81,8 +82,9 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	case 'Site':
 		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType'];
 
+		// Generates Intel on Facilities currently at the target site
 		try {
-			const facilities  = await Facility.find()
+			const facilities = await Facility.find()
 				.where('site').equals(`${doc._id}`)
 			for (const facility of facilities) {
 				await facility.populateMe();
@@ -92,7 +94,21 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		}
 		catch(err) {
 			console.log(err);
+		};
+
+		// Generates Intel on Military currently at the target site
+		try {
+			const units = await Military.find()
+				.where('site').equals(`${doc._id}`)
+			for (const unit of units) {
+				await unit.populateMe();
+				let intel = await generateIntel(doc.team, unit._id);
+				await intel.reconIntel(unit.toObject(), source);
+			}
 		}
+		catch(err) {
+			console.log(err);
+		};
 
 		break;
 	default:
