@@ -72,7 +72,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		modelKeys = ['site,', 'origin', 'zone', 'organization'];
 		break;
 	case 'Facility':
-		modelKeys = ['name', 'buildings', 'capabilities'];
+		modelKeys = ['name', 'buildings', 'capabilities', 'site'];
 		console.log('Currently making facility intel');
 		break;
 	case 'Squad':
