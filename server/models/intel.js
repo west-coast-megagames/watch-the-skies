@@ -113,8 +113,73 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	return intel;
 };
 
-IntelSchema.methods.surveillanceIntel = async function () {
-	console.log('Rawr');
+IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined) {
+	logger.info(`Generating Surveillance...`);
+	this.type = doc.model.toLowerCase();
+	if (!this.document.name) this.document.name = randCode(6);
+	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status'];
+	let modelKeys = [];
+	const randKeys = [];
+
+	// If the subject document has status, collect status
+	if (doc.status) {
+		this.document.status = {};
+		this.source.status = {};
+
+		for (const prop in doc.status) {
+			// Possible spot for partial information on status --
+			this.document.status[prop] = doc.status[prop];
+			if (source) this.source.status[prop] = source;
+		}
+	}
+
+	if (doc.stats) {
+		this.document.stats = {};
+		this.source.stats = {};
+		for (const prop in doc.stats) {
+			// Possible spot for partial information on stats --
+			this.document.stats[prop] = doc.stats[prop];
+			if (source) this.source.stats[prop] = source;
+		}
+	}
+
+	switch (doc.model) {
+	case 'Aircraft':
+		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance'];
+
+		this.document.systems = {};
+		this.source.systems = {};
+		for (const prop in doc.systems) {
+			// Possible spot for partial information on systems
+			this.document.systems[prop] = doc.systems[prop];
+			if (source) this.source.systems[prop] = { source, timestamp: clock.getTimeStamp() };
+		}
+		break;
+	case 'Military':
+		modelKeys = ['site,', 'origin', 'zone', 'organization'];
+		break;
+	case 'Facility':
+		console.log('Currently remaking facility model');
+		break;
+	case 'Squad':
+		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
+		break;
+	case 'Site':
+		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType'];
+
+		break;
+	default:
+		throw Error(`You can't get Recon Intel for a ${doc.model}`);
+	}
+
+	for (const key of [...commonKeys, ...modelKeys, ...randKeys]) {
+		this.document[key] = doc[key];
+		this.source[key] = { source, timestamp: clock.getTimeStamp() };
+	}
+	this.markModified('document');
+	this.markModified('source');
+
+	return await this.save();
 };
 
 IntelSchema.methods.espionageIntel = async function () {

@@ -8,7 +8,7 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 
 // Mongoose Model Import
 const { Facility } = require('../../models/facility');
-const { getDistance } = require('../../util/systems/geo');
+const { getDistance, getInRangeFacilities } = require('../../util/systems/geo');
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
 const { Military } = require('../../models/military');
@@ -151,21 +151,20 @@ router.patch('/test', async function (req, res) {
 		// throw new Error(`${type} not valid type`);
 	}
 
-	const facilities = await Facility.find()
-		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags TODO
+	const facilities = await getInRangeFacilities(['recon'], geoDecimal);
 
-	// 2) for every facility
-	if (target) {
-		for (const facility of facilities) {
-			// 2.2) calculate distance between facility and target
-			const distance = getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng); // Get distance to target in KM
-			console.log(distance);
-			// 2.1) If distance <= facility.range Do a method call to see if Intel is generated for the facility
-			// distance < facility.stats.range ? cost = facility.doIntel(target.stats) : undefined;
-		}
-	}
+// 	// 2) for every facility
+// 	if (target) {
+// 		for (const facility of facilities) {
+// 			// 2.2) calculate distance between facility and target
+// 			const distance = getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng); // Get distance to target in KM
+// 			console.log(distance);
+// 			// 2.1) If distance <= facility.range Do a method call to see if Intel is generated for the facility
+// 			// distance < facility.stats.range ? cost = facility.doIntel(target.stats) : undefined;
+// 		}
+// 	}
 
-	return res.status(200).send(`found ${facilities.length} Facilities!`);
+	return res.status(200).json(facilities);
 });
 
 

@@ -14,10 +14,11 @@ const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 const { Squad } = require('./squad'); // Import of Upgrade model [Mongoose]
+const { Intel, generateIntel } = require('./intel'); // Import of Upgrade model [Mongoose]
 const { MilitaryAction } = require('./report'); // WTS Game log function
 
 // Utility Imports
-const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
+const { getDistance, getInRangeFacilities } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
 const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
 
 const MilitarySchema = new Schema({
@@ -207,6 +208,14 @@ MilitarySchema.methods.mobilize = async function (forced = false) {
 		this.location.lng = lng; // Updates LNG
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
+
+		// generate surveillance intel
+		const facilities = await getInRangeFacilities(['recon'], this.site.geoDecimal);
+		logger.info(`${facilities.length} Facilities in range`);
+		for (const facility of facilities) {
+			const intel = await generateIntel(facility.team, this._id);
+			intel.surveillanceIntel(this.toObject(), `${facility.name} surveillance`);
+		}
 
 		return unit;
 	}
