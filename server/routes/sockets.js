@@ -35,6 +35,7 @@ module.exports = function (server) {
 		}
 	}); // Creation of websocket Server
 
+	// Handshake with Client, used each time a client connects
 	io.use((client, next) => {
 		//     console.log(client.handshake);
 		const { username, team: teamName, version } = client.handshake.auth;
@@ -46,11 +47,13 @@ module.exports = function (server) {
 		next();
 	});
 
+	// Connection listner - Initial code that is triggered when a connection is made
 	io.on('connection', client => {
 		console.log(`${client.username} connected (${client.id}), ${io.of('/').sockets.size} clients connected.`);
 		client.emit('alert', { type: 'success', message: `${client.username} Connected to WTS server...` });
 		currentUsers();
 
+		// Request listner - a socket bus that sends a the req and client to one of the SOCKET routes
 		client.on('request', (req) => {
 			// Request object: { route, action, data }
 			if (!req.route) {
@@ -73,6 +76,7 @@ module.exports = function (server) {
 			currentUsers();
 		});
 
+		// Disconnecting Listner - Communicates why someone disconnected
 		client.on('disconnecting', reason => {
 			console.log(client.rooms);
 			console.log(reason);
@@ -111,6 +115,18 @@ module.exports = function (server) {
 		}
 	});
 
+	// Test Event
+	nexusEvent.on('personal', data => {
+		const users = currentUsers(); // List of the current
+		for (let object of data) {
+			client = users.find(el => el.team = object.team);
+			console.log('It works?')
+			io.to(client.userID).emit('alert', {type: 'info', message: "It's working, its working!"});
+			io.to(client.userID).emit('updateClients', [object])
+		}
+	})
+
+	// Suspected DEPRECIATED nexus event - John look into and remove from code
 	nexusEvent.on('broadcast', (data) => {
 		let message;
 		switch(data.action) {
@@ -131,6 +147,7 @@ module.exports = function (server) {
 			});
 		}
 		io.emit('clients', users);
+		return users;
 	}
 
 	logger.info('Sockets Online...');
