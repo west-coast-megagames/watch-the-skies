@@ -1,7 +1,9 @@
 const mongoose = require('mongoose'); // Mongo DB object modeling module
+const nexusEvent = require('../middleware/events/events');
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const { randCode } = require('../util/systems/codes');
 const clock = require('../wts/gameClock/gameClock');
+const { Facility } = require('./facility');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -30,7 +32,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	if (!this.document.name) this.document.name = randCode(6);
 	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status'];
 	let modelKeys = [];
-	const randKeys = [];
+	let randKeys = [];
 
 	// If the subject document has status, collect status
 	if (doc.status) {
@@ -70,13 +72,27 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		modelKeys = ['site,', 'origin', 'zone', 'organization'];
 		break;
 	case 'Facility':
-		console.log('Currently remaking facility model');
+		modelKeys = ['name', 'buildings', 'capabilities'];
+		console.log('Currently making facility intel');
 		break;
 	case 'Squad':
 		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
 		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType'];
+
+		try {
+			const facilities  = await Facility.find()
+				.where('site').equals(`${doc._id}`)
+			for (const facility of facilities) {
+				await facility.populateMe();
+				let intel = await generateIntel(doc.team, facility._id);
+				await intel.reconIntel(facility.toObject(), source)
+			}
+		}
+		catch(err) {
+			console.log(err);
+		}
 
 		break;
 	default:
@@ -90,7 +106,11 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 	this.markModified('document');
 	this.markModified('source');
 
-	return await this.save();
+	let intel = await this.save()
+
+	nexusEvent.emit('personal', [intel])
+
+	return intel;
 };
 
 IntelSchema.methods.surveillanceIntel = async function () {
