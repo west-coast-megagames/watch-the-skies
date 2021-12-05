@@ -43,12 +43,22 @@ const FacilitySchema = new Schema({
 
 FacilitySchema.virtual('range').get(function () {
 	let range = 0;
-	for (const building of this.buildings) {
+	for (const building of this.buildings.filter(el => el.type === 'survaillance')) {
 		if (building.stats.range) {
 			range += building.stats.range;
 		}
 	}
 	return (range);
+});
+
+FacilitySchema.virtual('detection').get(function () {
+	let detection = 0;
+	for (const building of this.buildings.filter(el => el.type === 'survaillance')) {
+		if (building.stats.rate) {
+			detection += building.stats.rate;
+		}
+	}
+	return (detection);
 });
 
 FacilitySchema.methods.validateFacility = async function () {
