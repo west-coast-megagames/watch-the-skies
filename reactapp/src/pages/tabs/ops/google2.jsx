@@ -213,6 +213,25 @@ function PrototypeMap(props) {
     				/>
 					</div>}
 
+					{(site.team._id === props.team._id && getRange(site) > 0) && <div>
+						<Circle
+    				  // required
+    				  center={site.geoDecimal}
+    				  // required
+    				  options={{
+								strokeColor: '#61ff00',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								clickable: false,
+								draggable: false,
+								editable: false,
+								visible: props.showRange,
+								radius: getRange(site),
+								zIndex: 1
+							}}
+    				/>
+					</div>}
+
 				</Marker>
 			)}
 			</MarkerClusterer>}
