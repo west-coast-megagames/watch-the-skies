@@ -29,7 +29,7 @@ async function runfacilityLoad(runFlag) {
 		return true;
 	}
 	catch (err) {
-		logger.error(`Catch runfacilityLoad Error: ${err.message}`, {
+		logger.error(`Catch Space runfacilityLoad Error: ${err.message}`, {
 			meta: err
 		});
 
@@ -51,7 +51,7 @@ async function initLoad(doLoad) {
 	}
 
 	logger.info(
-		`facility Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`
+		`Space Facility Load Counts Read: ${recReadCount} Errors: ${recCounts.loadErrCount} Saved: ${recCounts.loadCount} Updated: ${recCounts.updCount}`
 	);
 }
 
@@ -115,7 +115,7 @@ async function loadSpace(iData, rCounts) {
 			
 				if (!bpData.desc) {
 					++rCounts.loadErrCount;
-					logger.error(`New Facility Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
+					logger.error(`New Space Facility Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
 					return;
 				} else {
 					for (const blds of bpData.buildings) {
@@ -123,7 +123,7 @@ async function loadSpace(iData, rCounts) {
 						const bldBpData = bldBlueprint.data;
 						if (!bldBpData.desc) {
 							++rCounts.loadErrCount;
-							logger.error(`New Facility Invalid Building Blueprint: ${iData.name} ${iData.bpCode} {$blds}`);
+							logger.error(`New Space Facility Invalid Building Blueprint: ${iData.name} ${iData.bpCode} {$blds}`);
 							return;
 					  } else {
 							  const bldObj = { "type": bldBpData.type, "stats": bldBpData.stats, "damaged": false };
@@ -141,7 +141,7 @@ async function loadSpace(iData, rCounts) {
 					return;
 				}
 				catch (err) {
-					logger.error(`New Facility Save Error: ${err.message}`, {
+					logger.error(`New Space Facility Save Error: ${err.message}`, {
 						meta: err.stack
 					});
 
