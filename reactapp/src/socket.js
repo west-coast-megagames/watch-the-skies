@@ -13,7 +13,7 @@ socket.onAny((event, ...args) => {
 
 export function initConnection(user, team, version) {
   console.log('Socket Connecting....')
-  socket.auth = { username: user.username, team: team ? team.shortName : "Unassigned" , version }
+  socket.auth = { username: user.username, team: team ? team._id : "Unassigned" , version }
     
   console.log(socket);
   socket.connect();
