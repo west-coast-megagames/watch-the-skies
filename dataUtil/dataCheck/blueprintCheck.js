@@ -161,6 +161,27 @@ async function chkBlueprint (runFlag) {
 
 				break;
 
+			case 'squad':
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'type')) {
+					logger.error(
+						`type missing for squad blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'upgrades')) {
+					logger.error(
+						`upgrades missing for squad blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+	
+				if (!Object.prototype.hasOwnProperty.call(blueprint, 'stats')) {
+					logger.error(
+						`stats missing for squad blueprint ${blueprint.name} ${blueprint._id}`
+					);
+				}
+	
+				break;
+
 			case 'aircraft':
 				if (!Object.prototype.hasOwnProperty.call(blueprint, 'type')) {
 					logger.error(

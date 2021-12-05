@@ -6,6 +6,7 @@ const runOrganizationLoad = require('../dataInit/organizationLoad');
 const runCitySiteLoad = require('../dataInit/citySiteLoad');
 const runBaseFacilityLoad = require('../dataInit/baseFacilityLoad');
 const runSpacecraftLoad = require('../dataInit/spacecraftLoad');
+const runSpaceFacilityLoad = require('../dataInit/spaceFacilityLoad');
 const runAircraftLoad = require('../dataInit/aircraftLoad');
 const runAccountLoad = require('../dataInit/accountLoad');
 const runMilitaryLoad = require('../dataInit/militaryLoad');
@@ -24,6 +25,7 @@ async function fullInit(selStr) {
 	let citySiteDone = false;
 	let baseFacilityDone = false;
 	let spacecraftDone = false;
+	let spaceFacilityDone = false;
 	let aircraftDone = false;
 	let accountsDone = false;
 	let militaryDone = false;
@@ -59,6 +61,9 @@ async function fullInit(selStr) {
 
 		spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
 		logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
+
+		spaceFacilityDone = await runSpaceFacilityLoad(true); // load expanded Space Facility fields
+		logger.debug(`Space Facility Load Done: ${spaceFacilityDone}`);
 
 		aircraftDone = await runAircraftLoad(true); // load expanded Aircraft fields
 		logger.debug(`Aircraft Load Done: ${aircraftDone}`);
@@ -125,6 +130,12 @@ async function fullInit(selStr) {
 	case 'Spacecraft':
 		spacecraftDone = await runSpacecraftLoad(true); // load expanded Spacecraft fields
 		logger.debug(`Spacecraft Sites Load Done: ${spacecraftDone}`);
+
+		break;
+
+	case 'SpaceFacility':
+		spaceFacilityDone = await runSpaceFacilityLoad(true); // load expanded Space Facility fields
+		logger.debug(`Space Facility Load Done: ${spaceFacilityDone}`);
 
 		break;
 

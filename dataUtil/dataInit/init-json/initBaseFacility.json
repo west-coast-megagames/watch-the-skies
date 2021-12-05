@@ -13,9 +13,9 @@
   {
     "loadType": "baseFacility",
     "type": "Base",
-    "name": "USA SFO Base Alpha",
+    "name": "USA SFO Base Alpha (with Surveillance)",
 		"code": "USSFO",
-		"bpCode": "BT-2",
+		"bpCode": "BT-S2",
     "organizationCode": "US",
     "teamCode": "USA",
     "coastal": true,
@@ -79,9 +79,9 @@
   {
     "loadType": "baseFacility",
     "type": "Base",
-    "name": "TUK Base Alpha",
+    "name": "TUK Base Alpha (with Surveillance)",
 		"code": "GBBA",
-		"bpCode": "BT-1",
+		"bpCode": "BT-S1",
     "organizationCode": "GB",
     "teamCode": "TUK",
     "coastal": false,

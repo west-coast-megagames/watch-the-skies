@@ -14,7 +14,8 @@ const BuildingSchema = new Schema({
 		funding: { type: Number },
 		range: { type: Number },
 		rate: { type: Number },
-		bonus: { type: Number }
+		bonus: { type: Number },
+		detection: { type: Number }
 	},
 	damaged: { type: Boolean, default: false, required: true },
 	research: { type: ObjectId, ref: 'Research' },
@@ -23,7 +24,7 @@ const BuildingSchema = new Schema({
 	units: [{ type: ObjectId, ref: 'Military' }]
 });
 
-// type can be: "Civilian", "Crises", "Hanger", "Research", "Base" currently
+// type can be: "Civilian", "Crises", "Hanger", "Research", "Base", and "Space" (for spacecraft) currently
 const FacilitySchema = new Schema({
 	model: { type: String, default: 'Facility' },
 	type: { type: String, min: 2, maxlength: 50 },
@@ -46,7 +47,7 @@ FacilitySchema.methods.validateFacility = async function () {
 	logger.info(`Validating ${this.model.toLowerCase()} ${this.name}...`);
 	const schema = Joi.object({
 		name: Joi.string().min(2).max(50).required(),
-		type: Joi.string().min(2).max(50).valid('Civilian', 'Crises', 'Hanger', 'Research', 'Base'),
+		type: Joi.string().min(2).max(50).valid('Civilian', 'Crises', 'Hanger', 'Research', 'Base', 'Space'),
 		code: Joi.string().min(2).max(20).required(),
 		tags: Joi.array().items(Joi.string().valid('coastal')),
 		status: Joi.array().items(Joi.string().valid('repair', 'damaged', 'destroyed', 'secret', 'defenses'))

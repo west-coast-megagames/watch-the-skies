@@ -1,10 +1,10 @@
 const fs = require('fs');
 const config = require('config');
 const file = fs.readFileSync(
-	config.get('initPath') + 'init-json/initBaseFacility.json',
+	config.get('initPath') + 'init-json/initSpaceFacility.json',
 	'utf8'
 );
-const baseDataIn = JSON.parse(file);
+const spaceDataIn = JSON.parse(file);
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 const { addArrayValue } = require('../middleware/util/arrayCalls');
 require('winston-mongodb');
@@ -23,7 +23,7 @@ async function runfacilityLoad(runFlag) {
 		// logger.debug("Jeff in runfacilityLoad", runFlag);
 		if (!runFlag) return false;
 		if (runFlag) {
-			await deleteAllBases();
+			await deleteAllSpaces();
 			await initLoad(runFlag);
 		}
 		return true;
@@ -42,11 +42,11 @@ async function initLoad(doLoad) {
 	let recReadCount = 0;
 	const recCounts = { loadCount: 0, loadErrCount: 0, updCount: 0 };
 
-	for await (const data of baseDataIn) {
-		if (data.loadType === 'baseFacility') {
+	for await (const data of spaceDataIn) {
+		if (data.loadType === 'spaceFacility') {
 			++recReadCount;
 
-			await loadBase(data, recCounts);
+			await loadSpace(data, recCounts);
 		}
 	}
 
@@ -55,7 +55,7 @@ async function initLoad(doLoad) {
 	);
 }
 
-async function loadBase(iData, rCounts) {
+async function loadSpace(iData, rCounts) {
 	let loadName = '';
 
 	try {
@@ -64,7 +64,7 @@ async function loadBase(iData, rCounts) {
 		const { data } = await axios.get(`${gameServer}init/initFacilities/code/${iData.code}`);
 
 		if (!data.type) {
-			// New Base here
+			// New Space here
 			const newFacility = {
 				name: iData.name,
 				code: iData.code,
@@ -86,7 +86,7 @@ async function loadBase(iData, rCounts) {
 				if (!tData.type) {
 
 					++rCounts.loadErrCount;
-					logger.error(`New Base Facility Invalid Team: ${iData.name} ${iData.teamCode}`);
+					logger.error(`New Space Facility Invalid Team: ${iData.name} ${iData.teamCode}`);
 					return;
 				}
 				else {
@@ -101,7 +101,7 @@ async function loadBase(iData, rCounts) {
 				if (!sData.type) {
 
 					++rCounts.loadErrCount;
-					logger.error(`New Base Facility has Invalid Site: ${iData.name} ${iData.siteCode}`);
+					logger.error(`New Space Facility has Invalid Site: ${iData.name} ${iData.siteCode}`);
 					return;
 				}
 				else {
@@ -136,7 +136,7 @@ async function loadBase(iData, rCounts) {
 				try {
 					await axios.post(`${gameServer}api/facilities`, newFacility);
 					++rCounts.loadCount;
-					logger.debug(`${newFacility.name} add saved to Base Facility collection.`);
+					logger.debug(`${newFacility.name} add saved to Space Facility collection.`);
 
 					return;
 				}
@@ -151,45 +151,43 @@ async function loadBase(iData, rCounts) {
 			}
 		}
 		else {
-			// Existing Base Facility here ... no longer doing updates so this is now counted as an error
+			// Existing Space Facility here ... no longer doing updates so this is now counted as an error
 			logger.error(
-				`Base Facility skipped as code already exists in database: ${loadName} ${iData.code}`
+				`Space Facility skipped as code already exists in database: ${loadName} ${iData.code}`
 			);
 			++rCounts.loadErrCount;
 		}
 	}
 	catch (err) {
-		logger.error(`Catch Base Error: ${err.message}`, { meta: err });
+		logger.error(`Catch Space Error: ${err.message}`, { meta: err });
 
 		++rCounts.loadErrCount;
 		return;
 	}
 }
 
-async function deleteAllBases() {
+async function deleteAllSpaces() {
 	// logger.debug("Jeff in deleteAllFacilitys", doLoad);
 
 	try {
 		let delErrorFlag = false;
 		try {
-			// all facilities not just bases
-			// TODO: limit to just base type (?)
-			await axios.patch(`${gameServer}api/facilities/deleteAllBases`);
+			await axios.patch(`${gameServer}api/facilities/deleteAllSpaces`);
 		}
 		catch (err) {
-			logger.error(`Catch deleteAllBases Error 1: ${err.message}`, { meta: err.stack });
+			logger.error(`Catch deleteAllSpaces Error 1: ${err.message}`, { meta: err.stack });
 			delErrorFlag = true;
 		}
 
 		if (!delErrorFlag) {
-			logger.debug('All Facilities (Bases) succesfully deleted. (baseFacilityLoad');
+			logger.debug('All Facilities (Spaces) succesfully deleted. (spaceFacilityLoad');
 		}
 		else {
-			logger.error('Some Error In Facilities (Bases) delete (deleteAllBases):');
+			logger.error('Some Error In Facilities (Spaces) delete (deleteAllSpaces):');
 		}
 	}
 	catch (err) {
-		logger.error(`Catch deleteAllBases Error 2: ${err.message}`, { meta: err.stack });
+		logger.error(`Catch deleteAllSpaces Error 2: ${err.message}`, { meta: err.stack });
 	}
 }
 

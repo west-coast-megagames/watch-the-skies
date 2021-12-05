@@ -108,6 +108,24 @@ router.patch('/deleteAll', async function (req, res) {
 	return res.status(200).send(`We wiped out ${data.deletedCount} Facilities!`);
 });
 
+// @route   PATCH api/facilities/deleteAllBases
+// @desc    Delete All Base Facilities
+// @access  Public
+router.patch('/deleteAllBases', async function (req, res) {
+	const data = await Facility.deleteMany( {type: 'Base'} );
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Base Facilities!`);
+});
+
+// @route   PATCH api/facilities/deleteAllSpaces
+// @desc    Delete All Space Facilities
+// @access  Public
+router.patch('/deleteAllSpaces', async function (req, res) {
+	const data = await Facility.deleteMany( {type: 'Space'} );
+	console.log(data);
+	return res.status(200).send(`We wiped out ${data.deletedCount} Space Facilities!`);
+});
+
 router.patch('/test', async function (req, res) {
 	const { type, targetID } = req.body;
 	// 0 Get target

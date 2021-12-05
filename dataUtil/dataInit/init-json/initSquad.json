@@ -5,8 +5,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Raid",
-		"status": ["ready"]
+		"bpCode": "SQD-RAD"
   },
   {
     "model": "Squad",
@@ -14,8 +13,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Raid",
-		"status": ["ready"]
+    "bpCode": "SQD-RAD"
   },
   {
     "model": "Squad",
@@ -23,8 +21,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Raid",
-		"status": ["ready"]
+    "bpCode": "SQD-RAD"
   },
   {
     "model": "Squad",
@@ -32,8 +29,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Assault",
-		"status": ["ready"]
+    "bpCode": "SQD-AST"
   },
   {
     "model": "Squad",
@@ -41,8 +37,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Assault",
-		"status": ["ready"]
+    "bpCode": "SQD-AST"
   },
   {
     "model": "Squad",
@@ -50,8 +45,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Assault",
-		"status": ["ready"]
+    "bpCode": "SQD-AST"
   },
   {
     "model": "Squad",
@@ -59,8 +53,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Infiltration",
-		"status": ["ready"]
+    "bpCode": "SQD-INF"
   },
   {
     "model": "Squad",
@@ -68,8 +61,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Infiltration",
-		"status": ["ready"]
+    "bpCode": "SQD-INF"
   },
   {
     "model": "Squad",
@@ -77,8 +69,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Infiltration",
-		"status": ["ready"]
+    "bpCode": "SQD-INF"
   },
   {
     "model": "Squad",
@@ -86,8 +77,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Envoy",
-		"status": ["ready"]
+    "bpCode": "SQD-ENV"
   },
   {
     "model": "Squad",
@@ -95,8 +85,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Envoy",
-		"status": ["ready"]
+    "bpCode": "SQD-ENV"
   },
   {
     "model": "Squad",
@@ -104,8 +93,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Envoy",
-		"status": ["ready"]
+    "bpCode": "SQD-ENV"
   },
   {
     "model": "Squad",
@@ -113,8 +101,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Science",
-		"status": ["ready"]
+    "bpCode": "SQD-SCI"
   },
   {
     "model": "Squad",
@@ -122,8 +109,7 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBB",
-    "type": "Science",
-		"status": ["ready"]
+    "bpCode": "SQD-SCI"
   },
   {
     "model": "Squad",
@@ -131,7 +117,6 @@
     "team": "FFG",
     "organization": "F1",
     "origin": "FFGBA",
-    "type": "Science",
-		"status": ["ready"]
+    "bpCode": "SQD-SCI"
   }
 ]

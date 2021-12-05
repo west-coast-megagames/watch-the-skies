@@ -20,7 +20,9 @@
       "armor": 1,
       "evade": 1,
       "range": 4000,
-			"cargo": 0
+			"cargo": 0,
+			"detection": 5,
+			"stealth": 2
     }
   },
 	{
@@ -70,7 +72,9 @@
       "armor": 1,
       "evade": 2,
       "range": 16000,
-			"cargo": 1
+			"cargo": 1,
+			"detection": 10,
+      "stealth": 15
 		}
 	}
 ]

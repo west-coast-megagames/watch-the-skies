@@ -145,7 +145,9 @@ const SquadBlueprint = Blueprint.discriminator(
 	'SquadBlueprint',
 	new Schema({
 		buildModel: { type: String, required: true, default: 'squad' },
-		unknown: { type: Schema.Types.Mixed } // Squads don't exist yet...
+		stats: { type: Schema.Types.Mixed },
+		type: { type: Schema.Types.String },
+		upgrades: [Schema.Types.Mixed]
 	})
 );
 

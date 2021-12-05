@@ -1,0 +1,189 @@
+[
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Fed Mothership Alpha (Base) with Surveillance",
+		"code": "FFGMA-SRV",
+		"bpCode": "BT-S1",
+    "organizationCode": "F1",
+    "teamCode": "FFG",
+    "coastal": false,
+    "siteCode": "FFGMA"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "International Space Station Surveillance",
+		"code": "ISS-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "US",
+    "teamCode": "TCN",
+    "coastal": false,
+    "siteCode": "ISS"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "USA Satellite 1 Surveillance",
+		"code": "USS1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "US",
+    "teamCode": "USA",
+    "coastal": false,
+    "siteCode": "USA S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Control Satellite 1 Surveillance",
+		"code": "TCN1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "CL",
+    "teamCode": "TCN",
+    "coastal": false,
+    "siteCode": "TCN S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "FFG Satellite 1 Surveillance",
+		"code": "FFG1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "F1",
+    "teamCode": "FFG",
+    "coastal": false,
+    "siteCode": "FFG S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "British Satellite 1 Surveillance",
+		"code": "TUK1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "F1",
+    "teamCode": "FFG",
+    "coastal": false,
+    "siteCode": "TUK S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "South Africa Satellite 1 Surveillance",
+		"code": "RSA1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "ZA",
+    "teamCode": "RSA",
+    "coastal": false,
+    "siteCode": "RSA S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Russian Satellite 1 Surveillance",
+		"code": "RFD1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "RU",
+    "teamCode": "RFD",
+    "coastal": false,
+    "siteCode": "RFD S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Japan Satellite 1 Surveillance",
+		"code": "JPN1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "JP",
+    "teamCode": "JPN",
+    "coastal": false,
+    "siteCode": "JPN S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Iran Satellite 1 Surveillance",
+		"code": "IRN1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "IR",
+    "teamCode": "IRN",
+    "coastal": false,
+    "siteCode": "IRN S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "India Satellite 1 Surveillance",
+		"code": "IND1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "IN",
+    "teamCode": "IND",
+    "coastal": false,
+    "siteCode": "IND S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "French Satellite 1 Surveillance",
+		"code": "TFR1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "FR",
+    "teamCode": "TFR",
+    "coastal": false,
+    "siteCode": "TFR S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Egypt Satellite 1 Surveillance",
+		"code": "EPT1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "EG",
+    "teamCode": "EPT",
+    "coastal": false,
+    "siteCode": "EPT S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "China Satellite 1 Surveillance",
+		"code": "PRC1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "CN",
+    "teamCode": "PRC",
+    "coastal": false,
+    "siteCode": "PRC S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Brazil Satellite 1 Surveillance",
+		"code": "BRZ1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "BR",
+    "teamCode": "BRZ",
+    "coastal": false,
+    "siteCode": "BRZ S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "Australia Satellite 1 Surveillance",
+		"code": "AUS1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "AU",
+    "teamCode": "AUS",
+    "coastal": false,
+    "siteCode": "AUS S1"
+  },
+	{
+    "loadType": "spaceFacility",
+    "type": "Space",
+    "name": "NPC Satellite 1 Surveillance",
+		"code": "NPC1-SRV",
+		"bpCode": "PST-1",
+    "organizationCode": "BZ",
+    "teamCode": "NPC",
+    "coastal": false,
+    "siteCode": "NPC S1"
+  }
+]

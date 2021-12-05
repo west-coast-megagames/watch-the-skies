@@ -9,6 +9,7 @@ const { logger } = require('../middleware/log/winston'); // Import of winston fo
 require('winston-mongodb');
 const gameServer = require('../config/config').gameServer;
 const axios = require('axios');
+const { validUnitType } = require('../util/validateUnitType');
 const { inArray } = require('../middleware/util/arrayCalls');
 
 const express = require('express');
@@ -56,14 +57,26 @@ async function loadSquad(iData, rCounts) {
 
 	try {
 		const { data } = await axios.get(`${gameServer}init/initSquads/name/${iData.name}`);
+    // type is now on the blueprint
+    const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${iData.bpCode}`);
+    const bpData = blueprint.data;
 
 		if (!data.type) {
+			if (!bpData.desc) {
+				++rCounts.loadErrCount;
+				logger.error(`New Squad Invalid Blueprint: ${iData.name} ${iData.bpCode}`);
+				return;
+			}
+
 			// New Squad/Squad here
 			const newSquad = iData;
-			newSquad.serviceRecord = [];
+			//newSquad.serviceRecord = [];
 			newSquad.tags = [];
 			newSquad.status = [];
 			newSquad.status.push('ready');
+			newSquad.blueprint = bpData._id;
+	    newSquad.stats = bpData.stats;
+	    newSquad.type = bpData.type;
 
 			if (iData.team != '') {
 				const team = await axios.get(`${gameServer}init/initTeams/code/${iData.team}`);
@@ -126,7 +139,8 @@ async function loadSquad(iData, rCounts) {
 				newSquad.site = undefined;
 			}
 
-			newSquad.upgrade = [];
+			const upgrades = await findUpgrades(bpData.upgrades, 'Squad', iData.name, newSquad.team, newSquad.origin);
+	    newSquad.upgrades = upgrades;
 
 			try {
 				await axios.post(`${gameServer}api/squad`, newSquad);
@@ -176,6 +190,45 @@ async function deleteAllSquads(doLoad) {
 	catch (err) {
 		logger.error(`Catch deleteAll Squad Error 2: ${err.message}`, { meta: err.stack });
 	}
+}
+
+async function findUpgrades(upgrades, unitType, unitName, team, facility) {
+	const upgIds = [];
+	for (const upg of upgrades) {
+		const blueprint = await axios.get(`${gameServer}init/initBlueprints/code/${upg}`);
+		const bpData = blueprint.data;
+
+		if (!bpData.desc) {
+			logger.error(`New ${unitType} Invalid Upgrade Blueprint: ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!bpData.buildModel === 'upgrade') {
+			logger.error(`New ${unitType} Upgrade Blueprint not an upgrade build model : ${unitName} ${upg}`);
+			continue;
+		}
+
+		if (!validUnitType(bpData.unitType, unitType)) {
+			logger.error(`New ${unitType} not valid for upgrade : ${unitName} ${upg}`);
+			continue;
+		}
+
+		try {
+			const upgradeBody = { code: upg, team: team, facility: facility,
+				effects: bpData.effects, cost: bpData.cost, buildTime: bpData.buildTime,
+				name: bpData.name, manufacturer: team, desc: bpData.desc,
+				prereq: bpData.prereq };
+			const newUpgrade = await axios.post(`${gameServer}init/initUpgrades/build`, upgradeBody);
+			logger.debug(`New ${unitType} upgrade posted : ${unitName} ${upg} ${upgradeBody}`);
+			const newUpg = newUpgrade.data;
+
+			upgIds.push(newUpg._id);
+		}
+		catch (err) {
+			logger.error(`New ${unitType} Squad Upgrade Save Error: ${err.message}`, { meta: err.stack });
+		}
+	}
+	return upgIds;
 }
 
 module.exports = runSquadLoad;

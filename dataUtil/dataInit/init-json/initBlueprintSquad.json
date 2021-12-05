@@ -1,3 +1,122 @@
 [
-{} 
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "squad",
+    "name": "Standard Assault Squad",
+    "type": "Assault",
+    "code": "SQD-AST",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Assault Squad Blueprint",
+		"upgrades": ["V-MV1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2,
+			"detection": 1,
+			"stealth": 2
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "squad",
+    "name": "Standard Raid Squad",
+    "type": "Raid",
+    "code": "SQD-RAD",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Raid Squad Blueprint",
+		"upgrades": ["V-MV1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2,
+			"detection": 1,
+			"stealth": 3
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "squad",
+    "name": "Standard Infiltration Squad",
+    "type": "Infiltration",
+    "code": "SQD-INF",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Infiltration Squad Blueprint",
+		"upgrades": ["V-MV1", "COR-1"],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 2,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2,
+			"detection": 3,
+			"stealth": 7
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "squad",
+    "name": "Standard Envoy Squad",
+    "type": "Envoy",
+    "code": "SQD-ENV",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Envoy Squad Blueprint",
+		"upgrades": [],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 1,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2,
+			"detection": 1,
+			"stealth": 0
+    }
+	},
+	{
+    "loadType": "blueprint",
+    "loadFlag": "true",
+    "buildModel": "squad",
+    "name": "Standard Science Squad",
+    "type": "Envoy",
+    "code": "SQD-SCI",
+    "cost": 1,
+    "buildTime": 1,
+		"desc": "Generic Science Squad Blueprint",
+		"upgrades": [],
+    "hidden": false,
+    "stats": {
+			"health": 2,
+      "hullMax": 2,
+      "attack": 0,
+      "defense": 1,
+      "localDeploy": 2,
+      "globalDeploy": 5,
+      "invasion": 2,
+			"detection": 2,
+			"stealth": 1
+    }
+	}
 ]

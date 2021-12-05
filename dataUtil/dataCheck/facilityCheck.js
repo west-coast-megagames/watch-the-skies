@@ -4,7 +4,7 @@ const axios = require('axios');
 const { logger } = require('../middleware/log/winston'); // Import of winston for error logging
 require('winston-mongodb');
 
-const typeList = ['Hanger', 'Crisis', 'Civilian', 'Research', 'Base'];
+const typeList = ['Hanger', 'Crisis', 'Civilian', 'Research', 'Base', "Space"];
 
 function inArray(array, value) {
 	for (let i = 0; i < array.length; i++) {

@@ -21,12 +21,14 @@ const SquadSchema = new Schema({
 	},
 	name: { type: String, required: true, min: 2, maxlength: 50, unique: true },
 	team: { type: Schema.Types.ObjectId, ref: 'Team' },
+	blueprint: { type: Schema.Types.ObjectId, ref: 'Blueprint' },
 	rollBonus: { type: Number, required: true, default: 0 }, // possibly defunct
 	upgrades: [{ type: ObjectId, ref: 'Upgrade' }],
 	stats: {
 		clandestine: { type: Number, default: 0 },
 		effectiveness: { type: Number, default: 0 },
-		survivability: { type: Number, default: 0 }
+		survivability: { type: Number, default: 0 },
+		stealth: { type: Number, default: 1 }
 	},
 	missionType: { type: String, default: 'Awaiting Mission', enum: ['Awaiting Mission', 'Counter-Espionage', 'Gather Intel', 'Sabotage', 'Heist'] },
 	mission: {
