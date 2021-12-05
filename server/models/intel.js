@@ -5,6 +5,7 @@ const { randCode } = require('../util/systems/codes');
 const clock = require('../wts/gameClock/gameClock');
 const { Facility } = require('./facility');
 const { Military } = require('./military');
+const { Aircraft } = require('./aircraft');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -59,7 +60,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 
 	switch (doc.model) {
 	case 'Aircraft':
-		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance'];
+		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance', 'origin'];
 
 		this.document.systems = {};
 		this.source.systems = {};
@@ -70,10 +71,10 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		}
 		break;
 	case 'Military':
-		modelKeys = ['site,', 'origin', 'zone', 'organization'];
+		modelKeys = ['site,', 'origin', 'zone', 'organization', 'stance', 'origin'];
 		break;
 	case 'Facility':
-		modelKeys = ['name', 'buildings', 'capabilities', 'site'];
+		modelKeys = ['name', 'buildings', 'capabilities', 'site',  'assignment', 'type', 'upgrades'];
 		console.log('Currently making facility intel');
 		break;
 	case 'Squad':
@@ -99,6 +100,20 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		// Generates Intel on Military currently at the target site
 		try {
 			const units = await Military.find()
+				.where('site').equals(`${doc._id}`)
+			for (const unit of units) {
+				await unit.populateMe();
+				let intel = await generateIntel(doc.team, unit._id);
+				await intel.reconIntel(unit.toObject(), source);
+			}
+		}
+		catch(err) {
+			console.log(err);
+		};
+
+		// Temp addition for aircraft information for Scott, remove later!
+		try {
+			const units = await Aircraft.find()
 				.where('site').equals(`${doc._id}`)
 			for (const unit of units) {
 				await unit.populateMe();
@@ -161,7 +176,7 @@ IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined)
 
 	switch (doc.model) {
 	case 'Aircraft':
-		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance'];
+		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance', 'origin'];
 
 		this.document.systems = {};
 		this.source.systems = {};
@@ -172,7 +187,7 @@ IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined)
 		}
 		break;
 	case 'Military':
-		modelKeys = ['site,', 'origin', 'zone', 'organization'];
+		modelKeys = ['site,', 'origin', 'zone', 'organization', 'assignment', 'type', 'upgrades'];
 		break;
 	case 'Facility':
 		console.log('Currently remaking facility model');
