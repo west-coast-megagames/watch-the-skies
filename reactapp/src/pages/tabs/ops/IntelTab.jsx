@@ -21,7 +21,7 @@ const { HeaderCell, Cell, Column } = Table;
 const IntelTab = (props) => {
 	const [selected, setSelected] = React.useState(props.selected);
 	const [filter, setFilter] = React.useState('');
-	const [tags, setTags] = React.useState(['Sites',]);
+	const [tags, setTags] = React.useState(['Military', 'Aircraft', 'Facilities', 'Upgrades', 'Sites', 'Satellites']);
 
 	const listStyle = (item) => {
 		if (selected && selected._id === item._id)
@@ -76,8 +76,7 @@ const IntelTab = (props) => {
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
         { !selected && <h4>Select an Intel File</h4> }
 				{ selected && selected.document && selected.document.model === 'Military' && <React.Fragment>
-						<MilitaryStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
-						<ServiceRecord owner={selected.document} />
+						<MilitaryStats intel handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
 				</React.Fragment>
 				}
 				{selected && selected.document && selected.document.type === 'Space' && 
@@ -91,8 +90,7 @@ const IntelTab = (props) => {
 				}
 				{selected && selected.document && selected.document.model === 'Aircraft' && 
 					<div>
-						<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
-						<ServiceRecord owner={selected.document} />						
+						<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>				
 					</div>
 				}
 				
@@ -115,14 +113,42 @@ const IntelTab = (props) => {
 						</Panel>
 
 						<div style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+
+						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Aircraft').length})</h6>
+								{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Aircraft').map((aircraft, index) => (
+									<List.Item key={aircraft._id}  index={index} size={'md'} style={listStyle(aircraft)} onClick={()=> setSelected(aircraft)}>
+										{aircraft.document.name}
+									</List.Item>
+								))}
+							</List>}
+
+						{tags.some(el => el === 'Military') && <List hover size='sm'>
+							<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Military').length})</h6>
+							{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Military' ).map((intel, index) => (
+								<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
+									{intel.document.name}
+								</List.Item>
+							))}
+						</List>}	
+
 						{tags.some(el => el === 'Sites') && <List hover size='sm'>
-								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Sites ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase())).length})</h6>
-								{props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase())).map((intel, index) => (
+								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Sites ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Site').length})</h6>
+								{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Site' ).map((intel, index) => (
 									<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
 										{intel.document.name}
 									</List.Item>
 								))}
 							</List>}	
+
+						{tags.some(el => el === 'Facilities') && <List hover size='sm'>
+							<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Facility').length})</h6>
+							{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Facility' ).map((intel, index) => (
+								<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
+									{intel.document.name}
+								</List.Item>
+							))}
+						</List>}
 							
 
 							{tags.length === 0 && <div>
@@ -137,7 +163,22 @@ const IntelTab = (props) => {
 
 const checkerData = [
 	{
+		name: 'Aircraft'
+	},
+	{
+		name: 'Military'
+	},
+	{
 		name: 'Sites'
+	},
+	{
+		name: 'Facilities'
+	},
+	{
+		name: 'Upgrades'
+	},
+	{
+		name: 'Satellites'
 	},
 ]
 
@@ -147,9 +188,10 @@ const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
-	intel: state.entities.intel.list,
+	intel: state.entities.intel.list.filter(el => el.type),
 	sites: state.entities.sites.list,
 	account: getOpsAccount(state),
+	upgrades: state.entities.upgrades.list,
 	facilities: props.control ? state.entities.facilities.list : getFacilites(state),
 	lastFetch: state.entities.military.lastFetch
 });

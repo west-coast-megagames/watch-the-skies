@@ -29,7 +29,7 @@ const FacilityStats = (props) => {
 									<b>Name:</b> {name}
 								</p>
 								<p>
-									<b>Location:</b> {site.name} 
+									<b>Location:</b> {site ? site.name : '???'} 
 								</p>
 								<p>
 									<b>Type:</b> {type}
@@ -134,6 +134,25 @@ const FacilityStats = (props) => {
 														</FlexboxGrid.Item>
 													</FlexboxGrid>
 											</div>)
+									case 'surveillance':
+										return(		
+											<div key={building._id} style={{ border: '3px solid #27ae60', borderRadius: '5px', width: '100%', textAlign: "center" }}>
+												<h5 style={{ backgroundColor: '#27ae60', color: 'white' }}>Surveillance Building</h5>
+													<FlexboxGrid align="middle" style={{ backgroundColor: '#27ae60', color: 'white' }} justify="center">
+														<FlexboxGrid.Item colspan={8}>
+															<Whisper placement="top" 
+																speaker={(<Popover title="Building Range"> <p>The Range of what this building can see</p></Popover>)} trigger="hover">
+																<Icon icon='search' />
+															</Whisper>
+																<b>{building.stats.range} Meters</b>
+														</FlexboxGrid.Item>
+														<FlexboxGrid.Item colspan={8}>
+															<Whisper placement="top" speaker={(<Popover title="Building Rating"> <p>The ability rating of what this building when attempting to detect activity</p></Popover>)} trigger="hover">
+																<b>{building.stats.rate}</b>
+															</Whisper>
+														</FlexboxGrid.Item>
+													</FlexboxGrid>
+											</div>)
 									default:
 										return(								
 										<Panel key={building._id} style={{ height: '100%'}} bordered>
@@ -177,7 +196,7 @@ const fundingSpeaker = (
 const rateSpeaker = (
   <Popover title="Building Rate">
     <p>
-      Building does something that scott doesn't know yet. But there is a plan for it so
+      How effective this building is at it's task. Research Lab's rate shows how fast it is at completing research. Surveillance rate is how good the building is at seeing actions happen in range.
     </p>
   </Popover>
 );

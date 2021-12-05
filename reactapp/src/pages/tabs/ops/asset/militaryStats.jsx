@@ -36,7 +36,7 @@ const MilitaryStats = (props) => {
 								onClick={() => props.handleTransfer(props.unit)}
 							/>		
 						</div>		
-						<StatusBar  control={props.control} unit={props.unit}/>
+						{!props.intel && <StatusBar control={props.control} unit={props.unit}/>}
 						<div>
 						<Whisper placement="top" speaker={healthSpeaker} trigger="click">
 							<IconButton size="xs" icon={<Icon icon="info-circle" />} />
@@ -72,7 +72,7 @@ const MilitaryStats = (props) => {
 							<b>Name:</b> {name}
 						</p>
 						<p>
-							<b>Location:</b> {site.name} |{" "}
+							<b>Location:</b> {site ? site.name : '???'} |{" "}
 							{zone.name} zone
 						</p>
 						<p>
@@ -80,9 +80,9 @@ const MilitaryStats = (props) => {
 						</p>
 						<p>
 							<b>Base:</b> {origin.name}{" "}
-							<IconButton disabled={(actions + missions <= 0) || status.some(el => el === 'mobilized')} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true)} icon={<Icon icon="send" />}>
+							{!props.intel && <IconButton disabled={(actions + missions <= 0) || status.some(el => el === 'mobilized')} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true)} icon={<Icon icon="send" />}>
 								Transfer Unit
-							</IconButton>
+							</IconButton>}
 						</p>
 						</Panel>
 						<Panel bordered >
@@ -132,13 +132,19 @@ const MilitaryStats = (props) => {
 					</Panel>
 					</FlexboxGrid.Item>
 					<FlexboxGrid.Item colspan={12}>
-							<Panel style={{ height: '100%'}} bordered>
-								<h5>Current Mission</h5>
-								{assignment.type && <b>{assignment.type}</b>}
-								{assignment.target && <p>{assignment.target}</p>}
-							</Panel>
+							{assignment && <Panel style={{ height: '100%'}} bordered>
+								{assignment && <div>
+									<h5>Current Mission</h5>
+									{assignment.type && <b>{assignment.type}</b>}
+									{assignment.target && <p>{assignment.target}</p>}
+								</div>}
+								{!assignment && <div>
+									<h5>Current Mission</h5>
+									<h5>Assignment was not detected with Recon</h5>
+								</div>}
+							</Panel>}
 
-							<UpgradeTable unit={props.unit} upgrades={props.upgrades} upArray={upgrades} />
+							<UpgradeTable unit={props.unit} upgrades={props.upgrades} upArray={upgrades ? upgrades : []} />
 
 					</FlexboxGrid.Item>
 			 </FlexboxGrid>

@@ -75,7 +75,7 @@ const AircraftStats = (props) => {
 								<b>Type:</b> {type}
 							</p>
 							<p>
-								<b>Base:</b> {origin.name}{" "}
+								<b>Base:</b> {origin ? origin.name : '???'}{" "}
 								<IconButton disabled={(actions + missions <= 0) || status.some(el => el === 'deployed')} appearance={"ghost"}	size="xs"	onClick={() => setShowTransfer(true) } icon={<Icon icon="send" />}>
 									Transfer Unit
 								</IconButton>
@@ -143,7 +143,7 @@ const AircraftStats = (props) => {
 									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site ? site.name : "The Void"} |{" "}
 								</Panel>
 
-								<UpgradeTable upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />
+								<UpgradeTable upgrades={props.upgrades} upArray={upgrades ? upgrades : []} unit={props.unit} />
 						</FlexboxGrid.Item>
 
 				 </FlexboxGrid>

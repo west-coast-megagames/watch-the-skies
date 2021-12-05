@@ -17,6 +17,7 @@ import { upgradeAdded, upgradeDeleted, upgradeUpdated } from './entities/upgrade
 import { zoneAdded, zonesDeleted, zoneUpdated } from './entities/zones';
 import { tradeAdded, tradeDeleted, tradeUpdated } from './entities/trades';
 import { clockUpdated } from './entities/clock';
+import { intelAdded, intelUpdated } from './entities/intel';
 
 const updaterFunctions = {
 	account: accountUpdated,
@@ -26,6 +27,7 @@ const updaterFunctions = {
 	clock: clockUpdated,
 	organization: organizationUpdated,
 	facility: facilityUpdated,
+	intel: intelUpdated,
 	military: militaryUpdated,
 	report: reportsUpdated,
 	research: researchUpdated,
@@ -33,8 +35,8 @@ const updaterFunctions = {
 	team: teamUpdated,
 	trade: tradeUpdated,
 	upgrade: upgradeUpdated,
+	users: usersRecieved,
 	zone: zoneUpdated,
-	users: usersRecieved
 }
 
 const adderFunctions = {
@@ -44,6 +46,7 @@ const adderFunctions = {
 	blueprint: blueprintAdded,
 	organization: organizationAdded,
 	facility: facilityAdded,
+	intel: intelAdded,
 	military: militaryAdded,
 	report: reportAdded,
 	research: researchAdded,

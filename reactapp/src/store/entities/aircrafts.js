@@ -38,7 +38,7 @@ const slice = createSlice({
     aircraftUpdated: (aircrafts, action) => {
       console.log(`${action.type} Dispatched...`);
       const index = aircrafts.list.findIndex(el => el._id === action.payload._id);
-			aircrafts.list[index] = action.payload;
+			index > -1 ? aircrafts.list[index] = action.payload : aircrafts.list.push(action.payload);
       aircrafts.lastFetch = Date.now();
     },
 		aircraftDeleted: (aircrafts, action) => {

@@ -37,7 +37,7 @@ const slice = createSlice({
     intelUpdated: (intel, action) => {
       console.log(`${action.type} Dispatched`)
       const index = intel.list.findIndex(el => el._id === action.payload._id);
-			intel.list[index] = action.payload;
+			index > -1 ? intel.list[index] = action.payload : intel.list.push(action.payload);
       intel.lastFetch = Date.now();
     },
 		intelDeleted: (intel, action) => {
