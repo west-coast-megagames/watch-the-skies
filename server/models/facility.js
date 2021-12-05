@@ -41,6 +41,16 @@ const FacilitySchema = new Schema({
 	capabilities: [ { type: String, enum: [ 'port', 'manufacturing', 'survaillance', 'garrison', 'research', 'storage', 'recon', 'hanger', 'aid', 'production', 'defense', 'anti-nuke' ] }]
 }, { timestamps: true });
 
+FacilitySchema.virtual('range').get(function () {
+	let range = 0;
+	for (const building of this.buildings) {
+		if (building.stats.range) {
+			range += building.stats.range;
+		}
+	}
+	return (range);
+});
+
 FacilitySchema.methods.validateFacility = async function () {
 	const { validTeam, validSite, validUpgrade, validResearch, validAircraft, validMilitary } = require('../middleware/util/validateDocument');
 
@@ -70,9 +80,9 @@ FacilitySchema.methods.validateFacility = async function () {
 
 	if (this.buildings.research) {
 		await validResearch(this.buildings.research);
-  }
+	}
 	
-  if (this.buildings.aircrafts) {
+	if (this.buildings.aircrafts) {
 	  for await (const aircrft of this.buildings.aircrafts) {
 	  	await validAircraft(aircrft);
 		}
