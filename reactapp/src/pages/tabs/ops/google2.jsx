@@ -103,6 +103,19 @@ function PrototypeMap(props) {
 		setMilitary(military);
 	}, [props.display, props.sites, props.military, props.contacts]);
 
+	const getRange = (sat) => {
+		let range = 0;
+		let temp = props.facilities.filter(el => el.site._id === sat._id);
+		for (const facility of temp) {
+			for (const building of facility.buildings) {
+				if (building.stats.range) {
+					range += building.stats.range;
+				}
+			}
+		}
+		return range;
+	}
+
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')
 		// setMapClick({event: onMapClick});
@@ -266,7 +279,7 @@ function PrototypeMap(props) {
 								draggable: false,
 								editable: false,
 								visible: true,
-								radius: 30000,
+								radius: 10000,
 								zIndex: 1
 							}}
     				/>
@@ -285,7 +298,7 @@ function PrototypeMap(props) {
 								draggable: false,
 								editable: false,
 								visible: props.showRange,
-								radius: 2000000,
+								radius: getRange(satellite),
 								zIndex: 1
 							}}
     				/>
@@ -491,6 +504,7 @@ const mapStateToProps = (state, props) => ({
   lastFetch: state.entities.aircrafts.lastFetch,
   team: getMyTeam(state),
   zones: state.entities.zones.list,
+  facilities: state.entities.facilities.list,
   sites: state.entities.sites.list,
 	military: state.entities.military.list.filter(el => !el.status.some(el => el === 'destroyed')), // filters out destroyed units
 	// deployedMil: getDeployed(state),

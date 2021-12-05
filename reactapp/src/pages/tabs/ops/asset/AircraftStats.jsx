@@ -87,35 +87,41 @@ const AircraftStats = (props) => {
 
 										<div>
 											<Whisper placement="top" speaker={attackSpeaker} trigger="click">
-												<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
 											</Whisper>{" "}
 											<b> Attack Rating:</b> {stats.attack}
 										</div>
 										<div>
 											<Whisper placement="top" speaker={evadeSpeaker} trigger="click">
-												<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
 											</Whisper>
 											<b> Evade Rating:</b> {stats.evade}
+										</div>
+										<div>
+											<Whisper placement="top" speaker={detectionSpeaker} trigger="click">
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
+											</Whisper>{" "}
+											<b>Detection Rating:</b> {stats.detection}
 										</div>
 									</FlexboxGrid.Item>
 									<FlexboxGrid.Item colspan={12}>
 										<div>
 											<Whisper placement="top" speaker={armorSpeaker} trigger="click">
-												<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
 											</Whisper>{" "}
 											<b>Armor Rating:</b> {stats.armor}
 										</div>
 										<div>
 											<Whisper placement="top" speaker={penetrationSpeaker} trigger="click">
-												<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
 											</Whisper>{" "}
 											<b>Penetration Rating:</b> {stats.penetration}
 										</div>
 										<div>
-											<Whisper placement="top" speaker={detectionSpeaker} trigger="click">
-												<IconButton size="xs" icon={<Icon icon="info-circle" />} />
+											<Whisper placement="top" speaker={stealthSpeaker} trigger="click">
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
 											</Whisper>{" "}
-											<b>Detection Rating:</b> {stats.detection}
+											<b>Stealth Rating:</b> {stats.stealth}
 										</div>
 									</FlexboxGrid.Item>
 									<FlexboxGrid.Item colspan={24}>
@@ -184,9 +190,17 @@ const evadeSpeaker = (
 );
 
 const detectionSpeaker = (
-  <Popover title="Evasion Rating Information">
+  <Popover title="Detection Rating Information">
     <p>
-      How likely this aircraft can spot hostile asircraft, opposed by evade
+      How likely this aircraft can spot hostile aircraft, opposed by stealth
+    </p>
+  </Popover>
+);
+
+const stealthSpeaker = (
+  <Popover title="Stealth Rating Information">
+    <p>
+      How likely this aircraft can be detected by other factions, opposed by detection
     </p>
   </Popover>
 );

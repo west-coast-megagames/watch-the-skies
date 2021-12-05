@@ -6,18 +6,31 @@ import { getFacilites } from '../store/entities/facilities';
 
 const { HeaderCell, Cell, Column } = Table;
 
-class InfoSite extends Component {
-	state = {}
+const InfoSite = (props) => {
 
-  render() {
-    if (this.props.site !== null && this.props.site !== undefined) {
-      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = this.props.site;
+	const getStats = (buildings) => {
+		let range = 0;
+		let detection = 0;
+
+		for (const building of buildings) {
+			if (building.stats.detection) {
+				detection += building.stats.detection;
+			}
+			if (building.stats.range) {
+				range += building.stats.range;
+			}
+		}
+		return `Detection: ${detection}, Range: ${range}M`
+	}
+
+    if (props.site !== null && props.site !== undefined) {
+      let { name, subType, type, geoDMS, status, organization, zone, _id, occupier, tags } = props.site;
     
       return(
         <Drawer
           size='sm'
-          show={this.props.show}
-          onHide={() => this.props.hideSite()}
+          show={props.show}
+          onHide={() => props.hideSite()}
         >
           <Drawer.Header>
 						<Drawer.Title>{type} {subType} - {name}</Drawer.Title>
@@ -53,9 +66,9 @@ class InfoSite extends Component {
 						<hr />
 						<Table
 							virtualized
-							height={200}
+							height={300}
 							rowKey='_id'
-              data={ this.props.military.filter(el => el.origin.site === _id) }						
+              data={ props.military.filter(el => el.origin.site === _id) }						
 						>
 							<Column flexGrow={2}>
 								<HeaderCell>Unit</HeaderCell>
@@ -71,18 +84,28 @@ class InfoSite extends Component {
 						<hr />
 						<Table
 							virtualized
-							height={200}
+							height={300}
               rowKey='_id'
-              data={ this.props.facilities.filter(el => el.site._id === _id) }						
+              data={ props.facilities.filter(el => el.site._id === _id) }						
 						>
 							<Column flexGrow={2}>
 								<HeaderCell>Facility</HeaderCell>
 								<Cell dataKey='name' />
 							</Column>
+
+							<Column flexGrow={2}>
+								<HeaderCell>Stats</HeaderCell>
+								<Cell>
+								 	{rowData => 
+										getStats(rowData.buildings)
+					 				}									
+								</Cell>
+
+							</Column>
 						</Table>
           </Drawer.Body>
           <Drawer.Footer>
-            <Button onClick={ () => this.props.hideSite() } appearance="subtle">Close</Button>
+            <Button onClick={ () => props.hideSite() } appearance="subtle">Close</Button>
           </Drawer.Footer>
         </Drawer> 
       )
@@ -90,8 +113,8 @@ class InfoSite extends Component {
       return(
         <Drawer
           size='md'
-          show={this.props.show}
-          onHide={() => this.props.hideSite()}
+          show={props.show}
+          onHide={() => props.hideSite()}
         >
           <Drawer.Body>
             Nothing to see here...
@@ -99,14 +122,13 @@ class InfoSite extends Component {
         </Drawer>
       )
     }
-	};
 }	
 
 const mapStateToProps = state => ({
   site: state.info.Site,
 	show: state.info.showSite,
 	military: state.entities.military.list,
-	facilities: getFacilites(state),
+	facilities: state.entities.facilities.list// getFacilites(state),
 });
 
 const mapDispatchToProps = dispatch => ({

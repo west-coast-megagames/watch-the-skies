@@ -84,7 +84,7 @@ return (
 					</Whisper>}				
 			</ButtonGroup>
 		</h5>
-		{!edit && <b style={{ color: 'white' }}>Bazinga</b>}
+		{!edit && <b style={{ color: '#ecf0f1' }}>Bazinga</b>}
 		{edit && <b>Select Upgrades to remove</b>}
 		{props.upArray.map((upgrade, index) => {
 			let up = upgrade;
