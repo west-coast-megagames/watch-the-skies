@@ -80,7 +80,7 @@ const InfoAircraftDeploy = (props) => {
 			case 'interception':
 				return (
 				<Panel bordered >
-					{props.target.team.name === props.team.name && <h5 style={{ color: 'red' }} >WARNING THIS IS YOUR OWN AIRCRAFT DUMMY</h5> } 
+					{props.target.team.name === props.team.name && <h5 style={{ color: 'red' }} >WARNING THIS IS YOUR OWN AIRCRAFT</h5> } 
 					<b>Intercept {props.target.name}</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
 					<p>Engage a target in combat and attempt to shoot it down</p>
 				</Panel>)

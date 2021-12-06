@@ -34,6 +34,8 @@ const MobilizeForm = (props) => {
 
 	return (
 		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
+		<Drawer.Header><h5>Mobilize units</h5></Drawer.Header>
+
 			<Drawer.Body>
 					<h6>Select Units</h6>
 					{<CheckPicker block placeholder='Select Units'

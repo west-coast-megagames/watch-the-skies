@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'; // Redux store provider
-import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader, Row, Col, Whisper } from 'rsuite';
+import { Alert, Drawer, SelectPicker, CheckPicker, Divider, Tag, Button, TagGroup, FlexboxGrid, List, ButtonGroup, Loader, Row, Col, Whisper, Panel } from 'rsuite';
 
 import { getOpsAccount } from '../store/entities/accounts';
 import { deployClosed, nearestFacility, targetFacilities } from '../store/entities/infoPanels';
@@ -147,11 +147,46 @@ const DeployMilitary = (props) => {
 		}
 	}   
 
+	const renderMission = () => {
+		switch (deployType) {
+			case 'recon':
+				return (
+				<Panel bordered >
+					<b>Recon Site</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
+					<p>Investigate a site and generate intel on it. Military Unit must be present at a Site to Recon it.</p>
+				</Panel>)
+			case 'invade':
+				return (				
+				<Panel bordered >
+					<b>Invade Site</b> | <Tag color={props.account.resources.find(el => el.type === 'Megabucks').balance < cost ? 'red' : 'green'}>${cost} M</Tag>
+					<p>Hostilly invade a Site, initiating combat and attempt to seize control of the Site. Military Units must be Mobilized and have their Mission ready to use</p>
+					<div style={{ marginTop: '5px' }}>
+						<Row style={{ textAlign: 'center' }} >
+							<Col md={12}>
+							<p>Mobilized units:</p>
+							{props.target && props.target.tags.some(el => el === 'coastal') && <b>Fleets: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Fleet').length} | </b>}
+							<b>Corps: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Corps').length} </b>
+							</Col>
+							<Col md={12}>
+								<p>Invasion ready units:</p>
+								{props.target && props.target.tags.some(el => el === 'coastal') && 
+								<b>Fleets: {fleets.length} | </b>}
+								<b>	Corps: {corps.length} </b>	
+							</Col>
+						</Row>			
+					</div>
+
+
+				</Panel>
+
+				)
+			default: 
+				return (<Panel bordered style={cardStyle}>No Mission or Action Selected</Panel>)
+		}
+	}
+
 	return (
 		<Drawer size='sm' placement='right' show={props.show} onHide={handleExit}>
-			<Drawer.Header>
-				{ team && props.target && <Drawer.Title>{ deployType === 'deploy' ? 'Military Deployment' : deployType === 'invade' ?  `Invade ${props.target.name}` : `Transfer to facility in ${props.target.name}` } - { props.team.shortName }</Drawer.Title> }
-			</Drawer.Header>
 			{ !team && <Drawer.Body><Loader /></Drawer.Body>}
 			{ team && <Drawer.Body>
 					{ props.user.roles.some(el => el === 'Control') && <div>
@@ -196,8 +231,8 @@ const DeployMilitary = (props) => {
 							<h5>Actions</h5>
 							<ButtonGroup>
 									{/* <Button appearance={deployType !== 'deploy' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('deploy')} >Deploy</Button> */}
-									<Button disabled={props.facilities.length === 0} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
-									<Button disabled={false} appearance={deployType !== 'mobilize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('mobilize')} >Mobilize</Button>
+									<Button disabled={props.facilities.length === 0 || props.target.team._id !== props.team._id} appearance={deployType !== 'transfer' ? 'ghost' : 'primary'} color={'green'} onClick={() => handleType('transfer')} >Transfer</Button>
+									<Button disabled={props.target ? props.target.team._id !== props.team._id : true} appearance={deployType !== 'mobilize' ? 'ghost' : 'primary'} color={'orange'} onClick={() => handleType('mobilize')} >Mobilize</Button>
 									<Button disabled={false} appearance={deployType !== 'recon' ? 'ghost' : 'primary'} color={'blue'} onClick={() => handleType('recon')} >Recon</Button>					
 								</ButtonGroup>
 						</FlexboxGrid.Item>
@@ -212,7 +247,8 @@ const DeployMilitary = (props) => {
 							</ButtonGroup>
 						</FlexboxGrid.Item>
 					</FlexboxGrid>
-
+					<br/>
+					{renderMission()}
 					<Divider />
 
 					{ deployType === 'transfer' &&
@@ -262,26 +298,13 @@ const DeployMilitary = (props) => {
 						</div>
 					}
 					{ props.target && deployType === 'invade' &&
-						<div>
-							{/* <h6>Your facilities closest to {props.target.name} </h6>
-							<List>
-								{ props.nearestFacilities.slice(0, 3).map((facility, index) => (<List.Item key={index}>
-									{facility.name} - {`${Math.trunc(distance(props.target.geoDecimal.lat, props.target.geoDecimal.lng, facility.site.geoDecimal.lat, facility.site.geoDecimal.lng))}km away`}
-								</List.Item>))}
-							</List>
-							<Divider /> */}
-							<p>Mobilized units:</p>
-							<b>Fleets: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Fleet').length} | Corps: {props.myMil.filter(unit => unit.status.some(el => el === 'mobilized') && unit.type === 'Corps').length} </b>
-							<p>Mission ready units:</p>
-							<b>Fleets: {fleets.length} | Corps: {corps.length} </b>
+						<div>				
 							<div>
-								<Divider />
 								<Row>
 									<Col md={12}><h6>Select Units to invade {props.target.name}</h6></Col>
 									<Col md={12}><Tag style={{ float: 'right' }} color="green">{`Deployment Cost: $M${cost}`}</Tag></Col>
 								</Row>			
-							</div>
-							
+							</div>			
 							<CheckPicker block disabled={team == null || props.target == null} placeholder='Select Units'
 								data={ props.target.tags.some(el => el === 'coastal') ? [...fleets, ...corps] : corps }
 								placement={'leftEnd'}
@@ -305,6 +328,15 @@ const DeployMilitary = (props) => {
 	</Drawer>
 	);
 }
+
+const cardStyle = {
+	height: '10vh',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center' 
+}
+
+
 const mapStateToProps = state => ({
 	login: state.auth.login,
 	user: state.auth.user,

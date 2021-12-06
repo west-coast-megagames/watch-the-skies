@@ -57,18 +57,6 @@ function PrototypeMap(props) {
 	
 	const [dragGeo, setDragGeo] = React.useState(null);
 
-	// const onMapClick = React.useCallback((event) => {props.center
-	// 	setMenu({
-	// 			lat: event.latLng.lat(),
-	// 			lng: event.latLng.lng()
-	// 	})
-	// 	setMarkers(current => [...current, {
-	// 		lat: event.latLng.lat(),
-	// 		lng: event.latLng.lng(),
-	// 		time: new Date
-	// 	}])
-	// }, []);
-
 	useEffect(() => {
 		const site = props.groundSites ? props.groundSites.find(el => el.geoDecimal.lat === props.center.lat && el.geoDecimal.lng === props.center.lng ) : undefined;
 		//console.log(site)

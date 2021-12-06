@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'; // React import
 import { connect } from 'react-redux'; // Redux store provider
-import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker, Toggle, Icon, Button, ButtonToolbar, ButtonGroup, IconButton, Panel } from 'rsuite';
+import { Nav, Container, Header, Content, SelectPicker, CheckboxGroup, Checkbox, FlexboxGrid, Alert, CheckTreePicker, Toggle, Icon, Button, ButtonToolbar, ButtonGroup, IconButton, Panel, Whisper, Popover } from 'rsuite';
 import BalanceHeader from '../components/common/BalanceHeader';
 import { Route, Switch, NavLink, Redirect } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -11,6 +11,13 @@ import { showSite } from '../store/entities/infoPanels';
 import { getCapitol } from '../store/entities/sites';
 import PrototypeMap from './tabs/ops/google2'
 import { getMyTeam } from '../store/entities/teams';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import TransferForm from '../components/common/TransferForm';
+import { getMilitary } from '../store/entities/military';
+import { getAircrafts } from '../store/entities/aircrafts';
+import MobilizeForm from './tabs/ops/asset/MobilizeForm';
+import RecallForm from './tabs/ops/asset/RecallForm';
 
 const MapPage = (props) => {
 	const [tab, setTab] = React.useState('earth');
@@ -19,6 +26,7 @@ const MapPage = (props) => {
 	const [showSearch, setShowSearch] = React.useState(false);
 	const [showFilter, setShowFilter] = React.useState(false);
 	const [display, setDisplay] = React.useState(['sites', 'military', 'contacts', 'Satellite']);
+	const [show, setShow] = React.useState(false);
 	const url = props.match.path;
 
 	const handleCenter = (value) => {
@@ -69,6 +77,28 @@ const MapPage = (props) => {
 		setDisplay(dis);
 	};
 
+	const renderButtonPopup = () => {
+		return (
+			<Popover style={{ backgroundColor: '#090f1a'}}>
+				<ButtonGroup>
+					<Whisper delay={150} placement="bottom" speaker={(<Popover>Transfer Units</Popover>)} trigger="hover">
+					<Button color={'green'} onClick={() => setShow('transfer')}><FontAwesomeIcon icon={faExchangeAlt} /></Button>		
+				</Whisper> 
+
+				<Whisper delay={150} placement="bottom" speaker={(<Popover >Mobilize Military</Popover>)} trigger="hover">
+					<Button color={'orange'} onClick={() => setShow('mobilize')}><FontAwesomeIcon icon={faExchangeAlt} /></Button>		
+				</Whisper> 
+
+				<Whisper delay={150} placement="bottom" speaker={(<Popover >Recall Military</Popover>)} trigger="hover">
+					<Button color={'violet'} onClick={() => setShow('recall')}><FontAwesomeIcon icon={faExchangeAlt} /></Button>		
+				</Whisper> 					
+				</ButtonGroup>
+				
+			 </Popover>
+
+		)
+	}
+
 	if (!props.login) {
 		props.history.push('/');
 		return <LoginLink history={props.history} />
@@ -83,7 +113,7 @@ const MapPage = (props) => {
 					</Nav>							
 				</FlexboxGrid.Item>
 
-				<FlexboxGrid.Item  style={{ textAlign: 'right' }} colspan={5}>
+				<FlexboxGrid.Item  style={{ textAlign: 'right' }} colspan={4}>
 					{showSearch && <SelectPicker
 						data={props.sites}
 						valueKey='_id'
@@ -95,13 +125,26 @@ const MapPage = (props) => {
 					/> }	
 				</FlexboxGrid.Item>
 				
-					<ButtonGroup>
-						<IconButton style={!showSearch ? {  } : { borderRadius: '0px', }} onClick={() => setShowSearch(!showSearch)} appearance={showSearch ? 'primary' : "ghost"} icon={<Icon icon='search' /> } ></IconButton>
-						<IconButton color='green' onClick={() => setShowRange(!showRange)} appearance={showRange ? 'primary' : "ghost"} icon={showRange ? <Icon icon='eye-slash' /> : <Icon icon='eye' /> } ></IconButton>
-						<IconButton style={!showFilter ? {  } : { borderRadius: '0px' }} onClick={() => setShowFilter(!showFilter)} appearance={showFilter ? 'primary' : "ghost"} icon={<Icon icon='filter' />} ></IconButton>
+					<ButtonGroup >
+						<Whisper delay={150} placement="bottom" speaker={(<Popover>Search Sites</Popover>)} trigger="hover">
+							<IconButton style={!showSearch ? {  } : { borderRadius: '0px', }} onClick={() => setShowSearch(!showSearch)} appearance={showSearch ? 'primary' : "ghost"} icon={<Icon icon='search' /> } ></IconButton>	
+						</Whisper> 
+						
+						<Whisper placement="bottom" trigger="click" controlId="control-id-click" speaker={renderButtonPopup()}>
+							<Button color={'violet'} ><Icon icon="plane"/></Button>		
+						</Whisper> 
+
+
+						<Whisper delay={150} placement="bottom" speaker={(<Popover>{showRange ? "Hide Intel Range" : "Show Intel Range"}</Popover>)} trigger="hover">
+							<IconButton color='green' onClick={() => setShowRange(!showRange)} appearance={showRange ? 'primary' : "ghost"} icon={showRange ? <Icon icon='eye-slash' /> : <Icon icon='eye' /> } ></IconButton>	
+						</Whisper> 
+
+						<Whisper delay={150} placement="bottom" speaker={(<Popover>Filter Map</Popover>)} trigger="hover">
+							<IconButton style={!showFilter ? {  } : { borderRadius: '0px' }} onClick={() => setShowFilter(!showFilter)} appearance={showFilter ? 'primary' : "ghost"} icon={<Icon icon='filter' />} ></IconButton>
+						</Whisper> 
 					</ButtonGroup>
 
-				<FlexboxGrid.Item colspan={5}>
+				<FlexboxGrid.Item colspan={4}>
 						{showFilter && <CheckTreePicker 
 							style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}
 							defaultExpandAll
@@ -114,7 +157,7 @@ const MapPage = (props) => {
 						{!showFilter && <div style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}></div>}
 				</FlexboxGrid.Item>
 
-				<FlexboxGrid.Item colspan={6}>
+				<FlexboxGrid.Item colspan={7}>
 					<BalanceHeader account={props.account} />
 					</FlexboxGrid.Item>
 				</FlexboxGrid>
@@ -127,7 +170,15 @@ const MapPage = (props) => {
 					)}/>
 					<Redirect from={`${url}/`} exact to={`${url}/earth`} />
 				</Switch>
-				
+
+				<TransferForm 
+					units={props.military}
+					aircrafts={props.aircrafts}
+					show={show === 'transfer'} 
+					closeTransfer={() => setShow(false)}
+					unit={props.unit} />	
+				<MobilizeForm hide={() => setShow(false)} show={show === 'mobilize'}/>	
+				<RecallForm hide={() => setShow(false)} show={show === 'recall'}/>		
 			</Content>
 		</Container>
     );
@@ -198,8 +249,8 @@ const mapStateToProps = state => ({
 	team: getMyTeam(state),
 	sites: state.entities.sites.list,
 	capitol: getCapitol(state),
-	military: state.entities.military.list,
-	aircrafts: state.entities.aircrafts.list,
+	military: getMilitary(state),
+	aircrafts: getAircrafts(state),
 	account: getOpsAccount(state),
 	site: state.info.Site,
 	milTransfer: state.info.Military,
