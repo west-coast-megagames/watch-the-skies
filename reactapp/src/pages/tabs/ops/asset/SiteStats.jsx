@@ -34,9 +34,9 @@ const SiteStats = (props) => {
 		}
 		else {
 			return(
-				<Popover title="AAAAA">
+				<Popover title="Error ">
 					<p>
-						AAAAA
+						Could not find for {type}
 					</p>
 				</Popover>				
 			)
@@ -84,11 +84,8 @@ const SiteStats = (props) => {
 									</div>
 								</Whisper>
 							</p>
-							<p>
-								<b>Type:</b> {type} - {subType}
-							</p>
-							<p>
-								
+							<p >
+										<b>Type:</b>  {type} - {subType}
 							</p>
 							</Panel>
 							<Panel bordered>

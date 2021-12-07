@@ -42,23 +42,23 @@ const FacilityTable = (props) => {
 					height={document.documentElement.clientHeight * 0.28}
           data={ getData() }
       >
-      <Column style={{backgroundColor: 'inherit',}} flexGrow={2}>
-          <HeaderCell>Name</HeaderCell>
-          <Cell style={{ textAlign: 'left' }} dataKey='name' />
+      <Column flexGrow={2}>
+          <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Name</HeaderCell>
+          <Cell style={{backgroundColor: 'inherit',}} dataKey='name' />
       </Column>
 
-			<Column style={{backgroundColor: 'inherit',}}  flexGrow={2} >
-        <HeaderCell>Location</HeaderCell>
-        <Cell>
+			<Column flexGrow={2} >
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Location</HeaderCell>
+        <Cell style={{backgroundColor: 'inherit',}}>
           {rowData => {
             return getLocation(rowData)
           }}
         </Cell>
       </Column>
 
-      <Column style={{backgroundColor: 'inherit',}}  flexGrow={1}>
-        <HeaderCell>Info</HeaderCell>
-        <Cell verticalAlign='middle' style={{  }}>
+      <Column flexGrow={1}>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Info</HeaderCell>
+        <Cell verticalAlign='middle' style={{backgroundColor: 'inherit',}}>
           {rowData => {
             let facility = rowData;
             return (

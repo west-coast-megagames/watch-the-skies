@@ -144,7 +144,7 @@ const MilitaryStats = (props) => {
 								</div>}
 							</Panel>}
 
-							<UpgradeTable unit={props.unit} upgrades={props.upgrades} upArray={upgrades ? upgrades : []} />
+							<UpgradeTable intel={props.intel} unit={props.unit} upgrades={props.upgrades} upArray={upgrades ? upgrades : []} />
 
 					</FlexboxGrid.Item>
 			 </FlexboxGrid>

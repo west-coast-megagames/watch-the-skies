@@ -129,7 +129,7 @@ const SatelliteStats = (props) => {
 									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site.name}
 								</Panel>
 
-								<UpgradeTable upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />
+								<UpgradeTable intel={props.intel} upgrades={props.upgrades} upArray={upgrades} unit={props.unit} />
 						</FlexboxGrid.Item> */}
 
 				 </FlexboxGrid>

@@ -69,7 +69,7 @@ return (
 	<div>
 		<Panel bordered>
 		<h5 style={{ textAlign: 'center' }}>Upgrades ({props.upArray.length}) 
-			<ButtonGroup>
+			{!props.intel && <ButtonGroup>
 				{!edit && 						
 					<Whisper placement="top" speaker={editSpeaker} trigger="hover">
 						<IconButton disabled={(props.unit.missions + props.unit.actions) <= 0} color='blue' size='sm' icon={<Icon icon="wrench" />} onClick={() => setEdit(!edit)}></IconButton>
@@ -82,7 +82,7 @@ return (
 					<Whisper placement="top" speaker={submitSpeaker} trigger="hover">
 						<IconButton disabled={upgrades.length + selected.length === 0} color='orange' size='sm' icon={<Icon icon="send" />} onClick={() => handleSubmit()}></IconButton>
 					</Whisper>}				
-			</ButtonGroup>
+			</ButtonGroup>}
 		</h5>
 		{!edit && <b style={{ color: '#ecf0f1' }}>Bazinga</b>}
 		{edit && <b>Select Upgrades to remove</b>}

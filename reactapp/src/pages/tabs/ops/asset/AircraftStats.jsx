@@ -19,6 +19,33 @@ const AircraftStats = (props) => {
 		}
 	};
 
+	const getWhisperer = (type) => {
+		let source = props.source ? props.source[type] : undefined;
+		if (source === undefined) source = props.source.stats[type];
+		
+		if (source) {
+			const { source: temp } = source;
+			return(
+				<Popover title={<b style={{ textTransform: 'capitalize' }}>{type} Information</b>}>
+					<b>{temp}{source}</b>
+					{source.timestamp && <p>
+						{source.timestamp.turn} - {source.timestamp.phase} - {source.timestamp.clock}
+					</p>}
+				</Popover>				
+			)
+		}
+		else {
+			return(
+				<Popover title="Error ">
+					<p>
+						Could not find for {type}
+					</p>
+				</Popover>				
+			)
+		}
+					
+	}
+
 		let { stats, status, name, zone, type, origin, site, team, mission, upgrades, actions, missions } = props.unit;
 		return (
 			<Container>
@@ -84,43 +111,48 @@ const AircraftStats = (props) => {
 							<Panel bordered>
 								<FlexboxGrid>
 									<FlexboxGrid.Item colspan={12}>
-
 										<div>
-											<Whisper placement="top" speaker={attackSpeaker} trigger="click">
+											{!props.intel && <Whisper placement="top" speaker={attackSpeaker} trigger="click">
 												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
-											</Whisper>{" "}
-											<b> Attack Rating:</b> {stats.attack}
-										</div>
-										<div>
-											<Whisper placement="top" speaker={evadeSpeaker} trigger="click">
-												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
+											</Whisper>}
+											{" "}
+											<Whisper enterable placement="left" speaker={getWhisperer('attack')} trigger={props.intel ? 'hover' : 'none'}>
+												<div>
+													<b> Attack Rating:</b> {stats.attack}
+												</div>
 											</Whisper>
+										</div>
+										
+										<div>
+											{!props.intel && <Whisper placement="top" speaker={evadeSpeaker} trigger="click">
+												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
+											</Whisper>}
 											<b> Evade Rating:</b> {stats.evade}
 										</div>
 										<div>
-											<Whisper placement="top" speaker={detectionSpeaker} trigger="click">
+											{!props.intel && <Whisper placement="top" speaker={detectionSpeaker} trigger="click">
 												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
-											</Whisper>{" "}
+											</Whisper>}{" "}
 											<b>Detection Rating:</b> {stats.detection}
 										</div>
 									</FlexboxGrid.Item>
 									<FlexboxGrid.Item colspan={12}>
 										<div>
-											<Whisper placement="top" speaker={armorSpeaker} trigger="click">
+											{!props.intel && <Whisper placement="top" speaker={armorSpeaker} trigger="click">
 												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
-											</Whisper>{" "}
+											</Whisper>}{" "}
 											<b>Armor Rating:</b> {stats.armor}
 										</div>
 										<div>
-											<Whisper placement="top" speaker={penetrationSpeaker} trigger="click">
+											{!props.intel && <Whisper placement="top" speaker={penetrationSpeaker} trigger="click">
 												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
-											</Whisper>{" "}
+											</Whisper>}{" "}
 											<b>Penetration Rating:</b> {stats.penetration}
 										</div>
 										<div>
-											<Whisper placement="top" speaker={stealthSpeaker} trigger="click">
+											{!props.intel && <Whisper placement="top" speaker={stealthSpeaker} trigger="click">
 												<IconButton appearance='link' size="xs" icon={<Icon icon="info-circle" />} />
-											</Whisper>{" "}
+											</Whisper>}{" "}
 											<b>Stealth Rating:</b> {stats.stealth}
 										</div>
 									</FlexboxGrid.Item>
@@ -143,7 +175,7 @@ const AircraftStats = (props) => {
 									<b style={{ textTransform: 'capitalize' }}>{mission}</b> at {site ? site.name : "The Void"} |{" "}
 								</Panel>
 
-								<UpgradeTable upgrades={props.upgrades} upArray={upgrades ? upgrades : []} unit={props.unit} />
+								<UpgradeTable intel={props.intel} upgrades={props.upgrades} upArray={upgrades ? upgrades : []} unit={props.unit} />
 						</FlexboxGrid.Item>
 
 				 </FlexboxGrid>

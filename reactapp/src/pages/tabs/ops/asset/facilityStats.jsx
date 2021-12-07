@@ -162,7 +162,7 @@ const FacilityStats = (props) => {
 							})}
 
 
-							{/* <UpgradeTable unit={props.unit} upgrades={props.upgrades} upArray={upgrades} /> */}
+							{/* <UpgradeTable intel={props.intel} unit={props.unit} upgrades={props.upgrades} upArray={upgrades} /> */}
 
 					</FlexboxGrid.Item>
 					</FlexboxGrid>					

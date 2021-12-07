@@ -71,26 +71,41 @@ const IntelTab = (props) => {
 		}
 	}
 
+	const getTime = (date) => {
+		console.log(date)
+		let day = new Date(date).toDateString();
+		let time = new Date(date).toLocaleTimeString();
+		let countDownDate = new Date(date).getTime();
+		const now = new Date().getTime();
+		let distance =  countDownDate - now;
+		let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		let hours = Math.floor((distance % (1000 * 60 *60 * 24)) / (1000 * 60 *60));
+		
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		return (<b>{day} - {time} ({-minutes} minutes ago) </b>)
+	}
+
 	return (
 		<Container style={{padddingRight: '0px', }}>
 			<Content style={{ overflow: 'auto', height: 'calc(100vh - 100px)' }}>
-        { !selected && <h4>Select an Intel File</h4> }
+        <h4 style={{ textAlign: 'center' }}>Intel</h4> 
+				{selected && <h5 style={{ textAlign: 'center' }}>{getTime(selected.lastUpdate)}</h5>}
 				{ selected && selected.document && selected.document.model === 'Military' && <React.Fragment>
-						<MilitaryStats intel handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
+						<MilitaryStats intel handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} source={selected.source} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>
 				</React.Fragment>
 				}
 				{selected && selected.document && selected.document.type === 'Space' && 
-					<SatelliteStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected.document}/>
+					<SatelliteStats source={selected.source} intel handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} spaceUnits={props.spaceUnits} unit={selected.document}/>
 				}
 				{selected && selected.document && selected.document.model === 'Site' && selected.document.type !== 'Space' &&
 					<SiteStats handleTransfer={handleTransfer} control={props.control} intel={true} source={selected.source} site={selected.document}/>
 				}
 				{selected && selected.document && selected.document.model === 'Facility' && 
-					<FacilityStats upgrades={props.upgrades} control={props.control} facility={selected.document}/>
+					<FacilityStats source={selected.source} intel upgrades={props.upgrades} control={props.control} facility={selected.document}/>
 				}
 				{selected && selected.document && selected.document.model === 'Aircraft' && 
 					<div>
-						<AircraftStats handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>				
+						<AircraftStats source={selected.source} intel handleTransfer={handleTransfer} upgrades={props.upgrades} control={props.control} units={props.units} aircrafts={props.aircrafts} unit={selected.document}/>				
 					</div>
 				}
 				
