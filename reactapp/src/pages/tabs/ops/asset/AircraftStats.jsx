@@ -21,7 +21,7 @@ const AircraftStats = (props) => {
 
 	const getWhisperer = (type) => {
 		let source = props.source ? props.source[type] : undefined;
-		if (source === undefined) source = props.source.stats[type];
+		if (source === undefined) source = props.source ?  props.source.stats[type] : undefined;
 		
 		if (source) {
 			const { source: temp } = source;

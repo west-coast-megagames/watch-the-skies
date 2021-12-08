@@ -15,6 +15,8 @@ import { getAircrafts } from '../../../store/entities/aircrafts';
 import { getMySatellites, getSatellites } from '../../../store/entities/sites';
 import { showSite, showMilitary, showAircraft } from '../../../store/entities/infoPanels';
 import SiteStats from './asset/SiteStats';
+import TeamAvatar from '../../../components/common/teamAvatar';
+import { getMyIntel } from '../../../store/entities/intel';
 
 const { HeaderCell, Cell, Column } = Table;
 
@@ -71,15 +73,17 @@ const IntelTab = (props) => {
 		}
 	}
 
+	const getTeamCode = (id) => {
+		const team = props.teams.find(el => el._id === id);
+		return team ? team.code : '???';
+	}
+
 	const getTime = (date) => {
-		console.log(date)
 		let day = new Date(date).toDateString();
 		let time = new Date(date).toLocaleTimeString();
 		let countDownDate = new Date(date).getTime();
 		const now = new Date().getTime();
 		let distance =  countDownDate - now;
-		let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		let hours = Math.floor((distance % (1000 * 60 *60 * 24)) / (1000 * 60 *60));
 		
 		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 		return (<b>{day} - {time} ({-minutes} minutes ago) </b>)
@@ -110,7 +114,7 @@ const IntelTab = (props) => {
 				}
 				
       </Content>
-			<Sidebar>
+			<Sidebar >
 					<PanelGroup>
 						<Panel style={{ marginRight: '0', backgroundColor: "#262327", borderBottomLeftRadius: '0px', borderBottomRightRadius: '0px', borderTopRightRadius: '0px' }}>
 							<InputGroup>
@@ -127,13 +131,20 @@ const IntelTab = (props) => {
 							</InputGroup>
 						</Panel>
 
-						<div style={{ height: 'calc(100vh - 180px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
+						<div style={{  height: 'calc(100vh - 187px)', scrollbarWidth: 'none', overflow: 'auto', borderRadius: '0px', border: '1px solid #000000', textAlign: 'center' }}>
 
 						{tags.some(el => el === 'Aircraft') && <List hover size='sm'>
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Aircraft ({props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Aircraft').length})</h6>
-								{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Aircraft').map((aircraft, index) => (
-									<List.Item key={aircraft._id}  index={index} size={'md'} style={listStyle(aircraft)} onClick={()=> setSelected(aircraft)}>
-										{aircraft.document.name}
+								{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Aircraft').map((intel, index) => (
+									<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
+									<FlexboxGrid style={{ textOverflow: 'ellipsis' }}>
+										<FlexboxGrid.Item colspan={7}>
+											<TeamAvatar code={intel.document.team.code}  size={'xs'} /> 
+										</FlexboxGrid.Item>										
+										<FlexboxGrid.Item colspan={10}>
+											{intel.document.name}
+										</FlexboxGrid.Item>
+									</FlexboxGrid>
 									</List.Item>
 								))}
 							</List>}
@@ -142,7 +153,14 @@ const IntelTab = (props) => {
 							<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Military ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Military').length})</h6>
 							{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Military' ).map((intel, index) => (
 								<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
-									{intel.document.name}
+									<FlexboxGrid>
+										<FlexboxGrid.Item colspan={7}>
+											<TeamAvatar code={intel.document.team.code}  size={'xs'} /> 
+										</FlexboxGrid.Item>										
+										<FlexboxGrid.Item colspan={10}>
+											{intel.document.name}
+										</FlexboxGrid.Item>
+									</FlexboxGrid>
 								</List.Item>
 							))}
 						</List>}	
@@ -151,7 +169,14 @@ const IntelTab = (props) => {
 								<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Sites ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Site').length})</h6>
 								{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Site' ).map((intel, index) => (
 									<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
-										{intel.document.name}
+										<FlexboxGrid>
+										<FlexboxGrid.Item colspan={7}>
+											<TeamAvatar code={getTeamCode(intel.document.team)}  size={'xs'} /> 
+										</FlexboxGrid.Item>										
+										<FlexboxGrid.Item colspan={10}>
+											{intel.document.name}
+										</FlexboxGrid.Item>
+									</FlexboxGrid>
 									</List.Item>
 								))}
 							</List>}	
@@ -160,7 +185,14 @@ const IntelTab = (props) => {
 							<h6 style={{ backgroundColor: '#413938', color: 'white' }}>Facilities ({props.intel.filter(el => el.type.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Facility').length})</h6>
 							{props.intel.filter(el => el.document.name.toLowerCase().includes(filter.toLowerCase()) && el.document.model === 'Facility' ).map((intel, index) => (
 								<List.Item key={intel._id}  index={index} size={'md'} style={listStyle(intel)} onClick={()=> setSelected(intel)}>
-									{intel.document.name}
+									<FlexboxGrid style={{ textOverflow: 'ellipsis' }}>
+										<FlexboxGrid.Item colspan={7}>
+											<TeamAvatar code={getTeamCode(intel.document.team._id)}  size={'xs'} /> 
+										</FlexboxGrid.Item>										
+										<FlexboxGrid.Item colspan={15}>
+											{intel.document.name}
+										</FlexboxGrid.Item>
+									</FlexboxGrid>
 								</List.Item>
 							))}
 						</List>}
@@ -203,7 +235,7 @@ const mapStateToProps = (state, props)=> ({
 	login: state.auth.login,
 	team: state.auth.team,
 	teams: state.entities.teams.list,
-	intel: state.entities.intel.list.filter(el => el.type),
+	intel: getMyIntel(state),
 	sites: state.entities.sites.list,
 	account: getOpsAccount(state),
 	upgrades: state.entities.upgrades.list,

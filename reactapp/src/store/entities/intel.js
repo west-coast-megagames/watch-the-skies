@@ -83,3 +83,9 @@ export const getAccountsForTeam = createSelector(
     (intel, team) => intel.filter(intel => intel.team.name === team.name)
 );
 
+export const getMyIntel = createSelector(
+	state => state.entities.intel.list,
+	state => state.auth.team,
+	(intel, team) => intel.filter(intel => intel.team === team._id)
+);
+
