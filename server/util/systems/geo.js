@@ -71,7 +71,7 @@ function convertToDms(dd, isLng) {
 async function getInRangeFacilities(tags, geoDecimal) {
 	let facilities = await Facility.find()
 		.where('capabilities').in(tags)
-		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags TODO
+		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags
 
 	facilities = facilities.filter(facility => getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng) <= facility.range);
 	return facilities;

@@ -27,14 +27,14 @@ class InfoAircraft extends Component {
         onHide={() => this.props.hideAircraft()}
       >
         <Drawer.Header>
-          <Drawer.Title>Aircraft Information</Drawer.Title>
+          <Drawer.Title>Aircraft Information </Drawer.Title>
         </Drawer.Header>
         {this.props.aircraft != null ? (
           <Drawer.Body>
             <FlexboxGrid>
               <FlexboxGrid.Item colspan={12}>
                 <p>
-                  <b>Name:</b> {this.props.aircraft.name}
+                  <b>Name:</b> {this.props.aircraft.name} ({this.props.aircraft.model})
                 </p>
                 <p>
                   <b>Location:</b> {this.props.aircraft.organization.name ? this.props.aircraft.organization.name : 'Unknown'} |
@@ -47,7 +47,7 @@ class InfoAircraft extends Component {
                 </p>
                 <p>
                   <b>Base:</b> {this.props.aircraft.origin ? this.props.aircraft.origin.name : 'Unknown'}
-                  <IconButton
+                  {/* <IconButton
                     size="xs"
                     onClick={() =>
                       Alert.warning(`Base transfers have not been implemented`)
@@ -55,7 +55,7 @@ class InfoAircraft extends Component {
                     icon={<Icon icon="send" />}
                   >
                     Transfer Aircraft
-                  </IconButton>
+                  </IconButton> */}
                 </p>
                 {this.hideTransfer === false && <SelectPicker block disabled />}
               </FlexboxGrid.Item>
@@ -63,7 +63,7 @@ class InfoAircraft extends Component {
             <br />
             {this.aircraftStats(this.props.aircraft)}
             <br />
-            <ServiceRecord owner={this.props.aircraft} />
+            {this.props.aircraft.team._id === this.props.team._id && <ServiceRecord owner={this.props.aircraft} />}
           </Drawer.Body>
         ) : (
           <Drawer.Body>
@@ -93,8 +93,15 @@ class InfoAircraft extends Component {
 
   aircraftStats(aircraft) {
     let { stats, status } = aircraft;
-    return (
-      <Panel header="Aircraft Statistics" bordered>
+    if (stats) return (
+      <Panel bordered header={<div>
+				<b>Aircraft Statistics{' '}</b>
+			  {status.some(el => el === 'ready') && <Tag color="green">Mission Ready</Tag>}
+        {status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
+        {status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
+        {status.some(el => el === 'upgrade') && <Tag color="yellow">Upgrading</Tag>}
+        {status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
+			</div>}>
         <FlexboxGrid>
           <FlexboxGrid.Item colspan={12}>
             <div>
@@ -154,18 +161,13 @@ class InfoAircraft extends Component {
             </div>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={24}>
-            <br />
-            <TagGroup>
-              {status.some(el => el === 'ready') && <Tag color="green">Mission Ready</Tag>}
-              {status.some(el => el === 'deployed') && <Tag color="yellow">Deployed</Tag>}
-              {status.some(el => el === 'repair') && <Tag color="yellow">Repairing</Tag>}
-              {status.some(el => el === 'upgrade') && <Tag color="yellow">Upgrading</Tag>}
-              {status.some(el => el === 'destroyed') && <Tag color="red">Destroyed</Tag>}
-            </TagGroup>
           </FlexboxGrid.Item>
         </FlexboxGrid>
       </Panel>
     );
+		else return (
+			<Panel bordered header='No Stats Found...'></Panel>
+		)
   }
   repair = async () => {
     if (this.props.account.balance < 2) {
@@ -245,6 +247,7 @@ const mapStateToProps = (state) => ({
   lastFetch: state.entities.aircrafts.lastFetch,
   show: state.info.showAircraft,
   account: getOpsAccount(state),
+  team: state.auth.team,
 });
 
 const mapDispatchToProps = (dispatch) => ({

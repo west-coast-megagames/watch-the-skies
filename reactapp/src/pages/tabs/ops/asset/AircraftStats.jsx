@@ -27,10 +27,11 @@ const AircraftStats = (props) => {
 			const { source: temp } = source;
 			return(
 				<Popover title={<b style={{ textTransform: 'capitalize' }}>{type} Information</b>}>
-					<b>{temp}{source}</b>
+					<b>{source}</b>
 					{source.timestamp && <p>
 						{source.timestamp.turn} - {source.timestamp.phase} - {source.timestamp.clock}
 					</p>}
+					{!source.timestamp && <p>No Timestamp detected...</p>}
 				</Popover>				
 			)
 		}
@@ -43,7 +44,17 @@ const AircraftStats = (props) => {
 				</Popover>				
 			)
 		}
-					
+	};
+
+	const getTime = (date) => {
+		let day = new Date(date).toDateString();
+		let time = new Date(date).toLocaleTimeString();
+		let countDownDate = new Date(date).getTime();
+		const now = new Date().getTime();
+		let distance =  countDownDate - now;
+		
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		return (<b>{day} - {time} ({-minutes} minutes ago) </b>)
 	}
 
 		let { stats, status, name, zone, type, origin, site, team, mission, upgrades, actions, missions } = props.unit;

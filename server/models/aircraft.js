@@ -15,6 +15,8 @@ const { AircraftAction } = require('./report'); // WTS Game log function
 
 const randomCords = require('../util/systems/lz');
 const clock = require('../wts/gameClock/gameClock');
+const { getInRangeFacilities } = require('../util/systems/geo');
+const { generateIntel } = require('./intel');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -173,6 +175,14 @@ AircraftSchema.methods.launch = async function (mission) {
 		else if (account.resources[index].balance < 1) {nexusError('Insefficient Funds to launch', 400);}
 		else {
 			await account.withdrawal({ amount: 1, resource, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
+		}
+
+		// generate surveillance intel
+		const facilities = await getInRangeFacilities(['surveillance'], this.location);
+		logger.info(`${facilities.length} Facilities in range`);
+		for (const facility of facilities) {
+			const intel = await generateIntel(facility.team, this._id);
+			intel.surveillanceIntel(this.toObject(), `${facility.name} surveillance`);
 		}
 
 		const aircraft = await this.save();

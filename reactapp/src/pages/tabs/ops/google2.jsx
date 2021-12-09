@@ -9,12 +9,13 @@ import { Alert, Button } from 'rsuite';
 import { showLaunch } from '../../../store/entities/infoPanels';
 import { getCities, getGround, getPoI, getCrash, getCapitol, getSatellites } from '../../../store/entities/sites';
 import OpsMenu from '../../../components/common/menuOps';
-import { getContacts } from '../../../store/entities/aircrafts';
+import { getAircrafts, getContacts } from '../../../store/entities/aircrafts';
 import {getMapIcon, getAircraftIcon, getMilitaryIcon, getSatIcon} from '../../../scripts/mapIcons';
 import { getDeployed, getMobilized } from '../../../store/entities/military';
 import socket from '../../../socket';
 import { getMyTeam } from '../../../store/entities/teams';
 import Menu from '../../map/MenuSvg';
+import { getMyIntel } from '../../../store/entities/intel';
 
 const libraries = ['places'];
 const mapContainerStyle = {
@@ -28,6 +29,14 @@ const options = {
 	disableDefaultUI: true,
 	zoomControl: true,
   mapTypeControl: true,
+  // restriction: {
+  //   latLngBounds: {
+  //     north: 50,
+  //     south: -50,
+  //     east: 1600,
+  //     west: 1000,
+  //   },
+  // },
 
 	minZoom: 3, 
 	maxZoom: 9, 
@@ -68,28 +77,12 @@ function PrototypeMap(props) {
 
 	useEffect(() => { // props.display.some(el => el !== site.subType)
 		let sites = [ ...props.groundSites ];
-		let contacts = [ ...props.contacts ];
-		let military = [ ...props.military ];
 		if (!props.display.some(el => el === 'sites')) {
 			sites = sites.filter(site => props.display.some(el => el === site.subType));
 		}
-		if (!props.display.some(el => el === 'contacts')) {
-			// todo hook this up
-		}
-		if (!props.display.some(el => el === 'military')) {
-
-			if (!props.display.some(el => el === 'deployed')) {
-				military = military.filter(military => military.status.some(el => el === 'deployed'));
-			}
-			if (!props.display.some(el => el === 'undeployed')) {
-				military = military.filter(military => !military.status.some(el => el === 'deployed'));
-			}
-		}
 
 		setSites(sites);
-		setContacts(contacts);
-		setMilitary(military);
-	}, [props.display, props.sites, props.military, props.contacts]);
+	}, [props.groundSites, props.display]);
 
 	const getRange = (sat) => {
 		let range = 0;
@@ -106,7 +99,7 @@ function PrototypeMap(props) {
 
 	const onCloseMenu = () => {
 		// console.log('Closing the menu!')
-		// setMapClick({event: onMapClick});
+		setGeo({lat: geo.lat * 1.0001, lng: geo.lng})
 		setMenu(null);
 	}
 
@@ -127,6 +120,7 @@ function PrototypeMap(props) {
 		<GoogleMap
 			mapContainerStyle={mapContainerStyle}
 			zoom={6}
+			
 			center={props.center}
 			options={options}
 			onLoad={onMapLoad}>
@@ -314,8 +308,8 @@ function PrototypeMap(props) {
 			)}
 			</MarkerClusterer>}
 
-			{/*The Contact Clusterer*/}
-			{<MarkerClusterer options={clusterOptions}
+			{/*The Aircraft Clusterer*/}
+			{props.display.some(el => el === 'ourAir' || el === 'contacts') && <MarkerClusterer options={clusterOptions}
 				styles={[
 				{
 					url: "XD",
@@ -345,7 +339,7 @@ function PrototypeMap(props) {
 				},
 				]}
 				>
-				{(clusterer) => contacts.map(contact => 
+				{(clusterer) => props.contacts.filter(el => el.status.some(el => el === 'deployed')).map(contact => 
 					<Marker
 						title={`${contact.name} - ${contact.mission}`}
 						key={contact._id}
@@ -363,7 +357,7 @@ function PrototypeMap(props) {
 							anchor: new window.google.maps.Point(20, 30)
 						}}
 					>
-						{contact.target && <Polyline
+						{contact.target && contact.mission !== 'Docked' &&  <Polyline
    				   path={[
 							contact.location,
 							contact.target,
@@ -406,7 +400,7 @@ function PrototypeMap(props) {
 			</MarkerClusterer>}
 
 			{/*The Military Clusterer*/}
-			{<MarkerClusterer options={clusterOptions}>
+			{props.display.some(el => el === 'ourMil' || el === 'military') &&<MarkerClusterer options={clusterOptions}>
 				{(clusterer) => military.map(unit => 
 					<Marker
 						title={unit.name}
@@ -425,7 +419,7 @@ function PrototypeMap(props) {
 							anchor: new window.google.maps.Point(35, 35)
 						}}
 					>
-					<Polyline
+					{<Polyline
    				   path={[
 							unit.location,
 							unit.site.geoDecimal,
@@ -443,7 +437,7 @@ function PrototypeMap(props) {
 							radius: 30000,
 							zIndex: 1
 						}}
-   				 />
+   				 />}
 						{geo === unit.location && <div>
 						<Circle
     				  // required
@@ -468,11 +462,12 @@ function PrototypeMap(props) {
 					)}
 			</MarkerClusterer>}
 
-			{/*The Intel Clusterer*/}
-			 {/* {props.intelBoolean && <MarkerClusterer options={clusterOptions}>
-				{(clusterer) => props.intel.map(intel => 
+			{/*The Air Intel Clusterer*/}
+			 {props.display.some(el => el === 'theirAir' || el === 'contacts') && <MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.intel.filter(el => el.document.model === 'Aircraft').map(intel => 
 					<Marker
 						key={intel._id}
+						title={`${intel.document.name} - ${intel.document.mission ? intel.document.mission : 'Unknown Mission...'}`}
 						clusterer={clusterer}
 						position={intel.document.location}
 						onClick={()=> {
@@ -481,15 +476,54 @@ function PrototypeMap(props) {
 							// setMapClick({event: undefined});
 						}}
 						icon={{
-							url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Bananas.svg/1280px-Bananas.svg.png',
+							url: getMapIcon(intel.document),
 							scaledSize: new window.google.maps.Size(65, 65),
 							origin: new window.google.maps.Point(0,0),
 							anchor: new window.google.maps.Point(10, 10)
 						}}
-					/>)}
-			</MarkerClusterer>} */}
+					></Marker>)}
+			</MarkerClusterer>}
 
-
+			{/*The Military Intel Clusterer*/}
+			{props.display.some(el => el === 'theirMil' || el === 'military') && <MarkerClusterer options={clusterOptions}>
+				{(clusterer) => props.intel.filter(el => el.document.model === 'Military').map(intel => 
+					<Marker
+						key={intel._id}
+						title={`${intel.document.name} - ${intel.document.mission ? intel.document.mission : 'Unknown Mission...'}`}
+						clusterer={clusterer}
+						position={intel.document.location}
+						onClick={()=> {
+							setGeo({lat: intel.document.location.lat, lng: intel.document.location.lng})
+							setMenu(intel.document);
+							// setMapClick({event: undefined});
+						}}
+						icon={{
+							url: getMapIcon(intel.document),
+							scaledSize: new window.google.maps.Size(65, 65),
+							origin: new window.google.maps.Point(0,0),
+							anchor: new window.google.maps.Point(10, 10)
+						}}
+					>
+						{intel.document.target && intel.document.mission !== 'Docked' && <Polyline
+   				   path={[
+							intel.document.location,
+							intel.document.target,
+						]}
+   				   options={{
+							strokeColor: intel.document.mission === 'interception' ? 'red' : '#61ff00',
+							strokeOpacity: 0.8,
+							strokeWeight: 2,
+							fillOpacity: 0.35,
+							clickable: false,
+							draggable: false,
+							editable: false,
+							visible: true,
+							radius: 30000,
+							zIndex: 1
+						}}
+   				 />}
+					</Marker>)}
+			</MarkerClusterer>}
 			
 				{selected && !selected.time ? Alert.error('Target has no timestamp!', 400) : null}
 				{selected && selected.time ? (<InfoWindow 
@@ -516,14 +550,13 @@ const mapStateToProps = (state, props) => ({
 	military: state.entities.military.list.filter(el => !el.status.some(el => el === 'destroyed')), // filters out destroyed units
 	// deployedMil: getDeployed(state),
 	mobilizedMil: getMobilized(state),
-	contacts: getContacts(state),
+	contacts: getAircrafts(state),
 	cities:  getCities(state),
 	groundSites: getGround(state),
 	satellites: getSatellites(state),
 	crashes: getCrash(state),
 	poi: getPoI(state),
-
-	intel: state.entities.intel.list,
+	intel: getMyIntel(state),
 });
 
 const mapDispatchToProps = dispatch => ({

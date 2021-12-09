@@ -146,7 +146,8 @@ const MapPage = (props) => {
 
 				<FlexboxGrid.Item colspan={4}>
 						{showFilter && <CheckTreePicker 
-							style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '200px' }}
+							style={{ borderRadius: '0px', backgroundColor: '#3498ff', width: '300px' }}
+							menuStyle={{ width: '300px' }}
 							defaultExpandAll
 							data={data}
 							defaultValue={display}
@@ -163,7 +164,7 @@ const MapPage = (props) => {
 				</FlexboxGrid>
 			</Header>
 
-			<Content className='tabContent' style={{ paddingLeft: 20 }}>
+			<Content className='tabContent' style={{ paddingLeft: 0 }}>
 			<Switch>
 					<Route path={`${url}/earth`} render={() => (
 						<PrototypeMap setCenter={(value) => handleCenter(value)} display={display} showRange={showRange} center={center}></PrototypeMap>
@@ -185,6 +186,10 @@ const MapPage = (props) => {
 }
 
 const data = [
+	{
+		label: "Satellites",
+		value: 'Satellite'
+	},
 	{
 		label: "Sites",
     value: "sites",
@@ -208,39 +213,32 @@ const data = [
     value: "contacts",
     "children": [
 			{
-        label: "Interceptors",
-        value: 'interceptors'
+        label: "Our Interceptors",
+        value: 'ourAir'
       },
 			{
-        label: "Aliens",
-        value: 'aliens'
+        label: "Interceptors Intel",
+        value: 'theirAir'
       },
-		]
-	},
-	{
-		label: "Satellites",
-		value: 'Satellite'
-	},
-	{
-		label: "Intel",
-    value: "intel",
-    "children": [
-
+			// {
+      //   label: "Alien Intel",
+      //   value: 'aliens'
+      // },
 		]
 	},
 	{
 		label: "Military",
     value: "military",
-    // "children": [
-		// 	{
-    //     label: "Deployed",
-    //     value: 'deployed'
-    //   },
-		// 	{
-    //     label: "Un-Deployed",
-    //     value: 'undeployed'
-    //   },
-		// ]
+    "children": [
+			{
+        label: "Our Military",
+        value: 'ourMil'
+      },
+			{
+        label: "Military Intel",
+        value: 'theirMil'
+      },
+		]
 	},
 ]
 

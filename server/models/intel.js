@@ -196,7 +196,7 @@ IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined)
 		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
 		break;
 	case 'Site':
-		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType'];
+		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType', 'facilities'];
 
 		break;
 	default:

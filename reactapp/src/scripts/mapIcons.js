@@ -67,7 +67,21 @@ const fleetIcons = {
 	AUS: 'https://cdn.discordapp.com/attachments/857862435096100884/911399454886744114/aus.png',
 }
 
-export const getMapIcon = (site) => {
+export const getMapIcon = (thing) => {
+	switch (thing.model) {
+		case 'Site':
+			return getSiteIcon(thing);
+		case 'Aircraft':
+			return getAircraftIcon(thing.team.code);
+		case 'Military':
+			return getMilitaryIcon(thing);
+		default: 
+		console.log(thing.model)
+			return 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Bananas.svg/1280px-Bananas.svg.png'; // Banana
+	}
+}
+
+export const getSiteIcon = (site) => {
 	// console.log(site)
 	if (site.status.some(el => el === 'occupied')) return 'https://cdn.discordapp.com/attachments/582043597281427466/783202988109856809/City_site_occupied.png';
 	let type = site.subType;

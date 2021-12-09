@@ -81,12 +81,14 @@ const IntelTab = (props) => {
 	const getTime = (date) => {
 		let day = new Date(date).toDateString();
 		let time = new Date(date).toLocaleTimeString();
-		let countDownDate = new Date(date).getTime();
-		const now = new Date().getTime();
-		let distance =  countDownDate - now;
-		
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		return (<b>{day} - {time} ({-minutes} minutes ago) </b>)
+		const endTime = new Date();
+		const startTime = new Date(date);
+		var timeDiff = endTime - startTime; //in ms
+		timeDiff /= 1000; // strip the ms
+		const minutes = Math.round(timeDiff % (60 * 60) / (60));
+		const hours = Math.round(timeDiff % (60 * 60 * 24) / (60 * 60))
+
+		return (<b>{day} - {time} ({hours} hours,  {minutes} minutes ago) </b>)
 	}
 
 	return (
