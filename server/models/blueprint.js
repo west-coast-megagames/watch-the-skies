@@ -17,7 +17,7 @@ const BlueprintSchema = new Schema({
 	prereq: [],
 	hidden: { type: Boolean, default: false },
 	tags: [{ type: String, enum: [''] } ]
-});
+}, { timestamps: true });
 
 // validateBlueprint method
 BlueprintSchema.methods.validateBlueprint = async function () {

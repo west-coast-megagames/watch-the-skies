@@ -44,7 +44,7 @@ const OrganizationSchema = new Schema({
 	},
 	formalName: { type: String },
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
-});
+}, { timestamps: true });
 
 OrganizationSchema.methods.validateOrganization = async function () {
 	const { validTeam, validZone, validLog, validOrganization } = require('../middleware/util/validateDocument');

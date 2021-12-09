@@ -32,7 +32,7 @@ const TreatySchema = new Schema({
 	lastUpdated: { type: Date, default: Date.now() },
 	tags: [{ type: String, enum: [''] } ],
 	status: [ { type: String, enum: ['draft', 'proposal', 'rejected', 'complete', 'deleted'] } ],
-});
+}, { timestamps: true });
 
 // validateTreaty method
 TreatySchema.methods.validateTreaty = async function () {

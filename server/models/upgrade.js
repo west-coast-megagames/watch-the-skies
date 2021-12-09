@@ -33,7 +33,7 @@ const UpgradeSchema = new Schema({
 			value: { type: Number }
 		}
 	]
-});
+}, { timestamps: true });
 
 // validateUpgrade method
 UpgradeSchema.methods.validateUpgrade = async function () {

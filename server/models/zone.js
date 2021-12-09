@@ -19,7 +19,7 @@ const ZoneSchema = new Schema({
 	name: { type: String, required: true, minlength: 3, maxlength: 50 },
 	tags: [{ type: String, enum: [''] } ],
 	serviceRecord: [{ type: Schema.Types.ObjectId, ref: 'Log' }]
-});
+}, { timestamps: true });
 
 // validateZone Method
 ZoneSchema.methods.validateZone = async function () {

@@ -18,12 +18,12 @@ const TransferSchema = new Schema({
 	resource: { type: String },
 	amount: { type: Number },
 	note: { type: String }
-});
+}, { timestamps: true });
 
 const BalanceSchema = new Schema({
 	type: { type: String },
 	balance: { type: Number, default: 0 }
-});
+}, { timestamps: true });
 
 // Account Schema
 const AccountSchema = new Schema({

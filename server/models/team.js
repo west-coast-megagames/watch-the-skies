@@ -53,7 +53,7 @@ const TeamSchema = new Schema({
 	roles: [RoleSchema],
 	users:  [{ type: String, minlength: 2, maxlength: 30 }],
 	agreements: [ AgreementSchema ]
-});
+}, { timestamps: true });
 
 // METHOD - prRoll
 // IN - VOID

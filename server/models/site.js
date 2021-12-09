@@ -44,7 +44,7 @@ const SiteSchema = new Schema({
 		lat: { type: Number, min: -90, max: 90 }, // Positive is North, Negative is South
 		lng: { type: Number, min: -180, max: 180 } // Postive is East, Negative is West
 	}
-});
+}, { timestamps: true });
 
 SiteSchema.methods.addStatus = async function (status) {
 	const present = this.status.some(el => el === status);

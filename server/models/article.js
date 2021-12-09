@@ -14,7 +14,7 @@ const Schema = mongoose.Schema; // Destructure of Schema
 const ArticleSchema = new Schema({
 	model: { type: String, default: 'Article' },
 	publisher: { type: Schema.Types.ObjectId, ref: 'Team' },
-	date: { type: Date, required: true },
+	date: { type: Date, required: true }, // TODO - Remove once you switch to mongoose timestamps
 	timestamp: {
 		turn: { type: String },
 		phase: { type: String },
@@ -45,7 +45,7 @@ const ArticleSchema = new Schema({
 		}
 	}],
 	published: { type: Boolean, default: false }
-});
+}, { timestamps: true });
 
 ArticleSchema.statics.post = async function (article) {
 	const Article = mongoose.model('article');

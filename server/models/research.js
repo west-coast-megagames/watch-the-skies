@@ -48,7 +48,7 @@ const ResearchSchema = new Schema({
 	breakthrough: [BreakthroughSchema],
 	researchHistory: [{ type: ObjectId, ref: 'Log' }],
 	tags: [{ type: String, enum: ['']} ]
-});
+}, { timestamps: true });
 
 // validateResearch method
 ResearchSchema.methods.validateResearch = async function () {

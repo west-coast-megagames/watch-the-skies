@@ -23,12 +23,10 @@ const IntelSchema = new Schema({
 	team: { type: Schema.Types.ObjectId, ref: 'Team', required: true },
 	document: { type: Schema.Types.Mixed, default: {} },
 	source: { type: Schema.Types.Mixed, default: {} },
-	lastUpdate: { type: Date, default: Date.now() },
-	dateCreated: { type: Date, default: Date.now() },
-	tags: [{ type: String, enum: [''] } ]
-});
+	tags: [{ type: String, enum: [''] } ],
+	}, { timestamps: true });
 
-IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
+IntelSchema.methods.reconIntel = async function (doc, source = undefined, score = 0) {
 	this.lastUpdate = Date.now();
 	this.type = doc.model.toLowerCase();
 	if (!this.document.name) this.document.name = randCode(6);
@@ -58,6 +56,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 		}
 	}
 
+	// Switch that determines what fields are populated? - Likely place for Intel Score to apply
 	switch (doc.model) {
 	case 'Aircraft':
 		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance', 'origin'];
@@ -146,71 +145,7 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined) {
 
 IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined) {
 	logger.info(`Generating Surveillance...`);
-	this.type = doc.model.toLowerCase();
-	if (!this.document.name) this.document.name = randCode(6);
-	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status'];
-	let modelKeys = [];
-	const randKeys = [];
-
-	// If the subject document has status, collect status
-	if (doc.status) {
-		this.document.status = {};
-		this.source.status = {};
-
-		for (const prop in doc.status) {
-			// Possible spot for partial information on status --
-			this.document.status[prop] = doc.status[prop];
-			if (source) this.source.status[prop] = source;
-		}
-	}
-
-	if (doc.stats) {
-		this.document.stats = {};
-		this.source.stats = {};
-		for (const prop in doc.stats) {
-			// Possible spot for partial information on stats --
-			this.document.stats[prop] = doc.stats[prop];
-			if (source) this.source.stats[prop] = source;
-		}
-	}
-
-	switch (doc.model) {
-	case 'Aircraft':
-		modelKeys = ['location', 'site,', 'zone', 'organization', 'stance', 'origin'];
-
-		this.document.systems = {};
-		this.source.systems = {};
-		for (const prop in doc.systems) {
-			// Possible spot for partial information on systems
-			this.document.systems[prop] = doc.systems[prop];
-			if (source) this.source.systems[prop] = { source, timestamp: clock.getTimeStamp() };
-		}
-		break;
-	case 'Military':
-		modelKeys = ['site,', 'origin', 'zone', 'organization', 'assignment', 'type', 'upgrades'];
-		break;
-	case 'Facility':
-		console.log('Currently remaking facility model');
-		break;
-	case 'Squad':
-		modelKeys = ['location', 'site', 'origin', 'zone', 'organization'];
-		break;
-	case 'Site':
-		modelKeys = ['name', 'zone', 'geoDMS', 'geoDecimal', 'unrest', 'loyalty', 'repression', 'morale', 'subType', 'facilities'];
-
-		break;
-	default:
-		throw Error(`You can't get Recon Intel for a ${doc.model}`);
-	}
-
-	for (const key of [...commonKeys, ...modelKeys, ...randKeys]) {
-		this.document[key] = doc[key];
-		this.source[key] = { source, timestamp: clock.getTimeStamp() };
-	}
-	this.markModified('document');
-	this.markModified('source');
-
-	return await this.save();
+	// This method generates surveillance intel once the check for it is made
 };
 
 IntelSchema.methods.espionageIntel = async function () {

@@ -19,7 +19,7 @@ const ReportSchema = new Schema({
 	zone: { type: Schema.Types.ObjectId, ref: 'Zone' },
 	tags: [{ type: String, enum: [''] }],
 	status: [{ type: String, enum: ['complete', 'hidden'] }]
-});
+}, { timestamps: true });
 
 ReportSchema.methods.createTimestamp = function () {
 	const Gameclock = require('../wts/gameClock/gameClock');
