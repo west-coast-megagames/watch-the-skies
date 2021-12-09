@@ -48,12 +48,12 @@ const AircraftTable = (props) => {
           data={ getData() }
       >
       <Column flexGrow={1}>
-          <HeaderCell style={{ textAlign: 'left',color: 'white',  backgroundColor: '#61342e'}} >Aircraft</HeaderCell>
+          <HeaderCell style={{ textAlign: 'left',color: 'white',  backgroundColor: '#2980b9'}} >Aircraft</HeaderCell>
           <Cell style={{ backgroundColor: 'inherit', textAlign: 'left' }} dataKey='name' />
       </Column>
 
       <Column flexGrow={1}>
-        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Integrity</HeaderCell>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#2980b9'}} >Integrity</HeaderCell>
         <Cell style={{ padding: 0, backgroundColor: 'inherit', textAlign: 'left' }} verticalAlign='middle' >
           {rowData => {
             let { stats } = rowData
@@ -69,7 +69,7 @@ const AircraftTable = (props) => {
       </Column>
 
 			<Column  flexGrow={1}>
-          <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}} >Mission</HeaderCell>
+          <HeaderCell style={{ color: 'white',  backgroundColor: '#2980b9'}} >Mission</HeaderCell>
           <Cell style={{ backgroundColor: 'inherit', }}  >
         	  {rowData => {
         	    let { mission, name, _id } = rowData
@@ -85,7 +85,7 @@ const AircraftTable = (props) => {
       </Column>
 
       <Column  flexGrow={1} >
-        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Location</HeaderCell>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#2980b9'}}>Location</HeaderCell>
         <Cell style={{ backgroundColor: 'inherit', }}>
           {rowData => {
 						let { site } = rowData
@@ -101,7 +101,7 @@ const AircraftTable = (props) => {
       </Column>
 
       <Column flexGrow={1} >
-          <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Status</HeaderCell>
+          <HeaderCell style={{ color: 'white',  backgroundColor: '#2980b9'}}>Status</HeaderCell>
 					<Cell style={{ backgroundColor: 'inherit', }}>
 					{rowData => {
             return(
@@ -112,7 +112,7 @@ const AircraftTable = (props) => {
       </Column>
 
       <Column   flexGrow={1}>
-        <HeaderCell style={{ color: 'white',  backgroundColor: '#61342e'}}>Info</HeaderCell>
+        <HeaderCell style={{ color: 'white',  backgroundColor: '#2980b9'}}>Info</HeaderCell>
         <Cell verticalAlign='middle' style={{ backgroundColor: 'inherit', }}>
           {rowData => {
             let aircraft = rowData;
