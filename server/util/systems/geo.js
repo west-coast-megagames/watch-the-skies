@@ -1,5 +1,3 @@
-const { Facility } = require("../../models/facility");
-
 // Function to get the distance between two lat/lon points using the ‘haversine’ formula
 function getDistance(lat1, lon1, lat2, lon2) {
 	const R = 6371; // Radius of the earth in km
@@ -68,13 +66,4 @@ function convertToDms(dd, isLng) {
 	return deg + '°' + min + '\'' + sec + '"' + dir;
 }
 
-async function getInRangeFacilities(tags, geoDecimal) {
-	let facilities = await Facility.find()
-		.where('capabilities').in(tags)
-		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags
-
-	facilities = facilities.filter(facility => getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng) <= facility.range);
-	return facilities;
-}
-
-module.exports = { getDistance, parseDMS, convertToDms, ConvertDMSToDD, getInRangeFacilities };
+module.exports = { getDistance, parseDMS, convertToDms, ConvertDMSToDD };
