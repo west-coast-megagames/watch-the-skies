@@ -27,10 +27,9 @@ const IntelSchema = new Schema({
 	}, { timestamps: true });
 
 IntelSchema.methods.reconIntel = async function (doc, source = undefined, score = 0) {
-	this.lastUpdate = Date.now();
 	this.type = doc.model.toLowerCase();
 	if (!this.document.name) this.document.name = randCode(6);
-	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status'];
+	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status', 'name']; // TODO - Remove name
 	let modelKeys = [];
 	let randKeys = [];
 
@@ -143,9 +142,41 @@ IntelSchema.methods.reconIntel = async function (doc, source = undefined, score 
 	return intel;
 };
 
-IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined) {
+IntelSchema.methods.surveillanceIntel = async function (doc, source = undefined, score = 0) {
 	logger.info(`Generating Surveillance...`);
 	// This method generates surveillance intel once the check for it is made
+
+	this.type = doc.model.toLowerCase();
+	if (!this.document.name) this.document.name = randCode(6);
+	const commonKeys = ['_id', 'model', 'team', '__t', 'tags', 'status', 'name']; // TODO - Remove name
+	let modelKeys = [];
+	let randKeys = [];
+
+	// Switch that determines what fields are populated? - Likely place for Intel Score to apply
+	switch (doc.model) {
+	case 'Aircraft':
+		console.log('Currently making aircraft intel from Survaillance');
+		modelKeys = ['location', 'site,', 'zone'];
+		break;
+	case 'Military':
+		modelKeys = ['location', 'site,', 'zone'];
+		break;
+	default:
+		throw Error(`You can't get Recon Intel for a ${doc.model}`);
+	}
+
+	for (const key of [...commonKeys, ...modelKeys, ...randKeys]) {
+		this.document[key] = doc[key];
+		this.source[key] = { source, timestamp: clock.getTimeStamp() };
+	}
+	this.markModified('document');
+	this.markModified('source');
+
+	let intel = await this.save()
+
+	nexusEvent.emit('personal', [intel])
+
+	return intel;
 };
 
 IntelSchema.methods.espionageIntel = async function () {
@@ -154,7 +185,7 @@ IntelSchema.methods.espionageIntel = async function () {
 
 const Intel = mongoose.model('Intel', IntelSchema);
 
-// { Aircraft Selectior Functions }
+// generateIntel function, checks if the team has an intel object for the target and either pulls it up or creates one
 const generateIntel = async function (team, subject) {
 	try {
 		let doc = await Intel.findOne()
