@@ -119,10 +119,10 @@ module.exports = function (server) {
 	nexusEvent.on('personal', data => {
 		const users = currentUsers(); // List of the current
 		for (let object of data) {
-			client = users.find(el => el.team = object.team);
+			client = users.find(el => el.team === object.team.toHexString());
 			console.log('It works?')
-			io.to(client.userID).emit('alert', {type: 'info', message: "It's working, its working!"});
-			io.to(client.userID).emit('updateClients', [object])
+			if (client) io.to(client.userID).emit('alert', {type: 'info', message: "It's working, its working!"});
+			if (client) io.to(client.userID).emit('updateClients', [object])
 		}
 	})
 
