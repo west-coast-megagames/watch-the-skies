@@ -9,14 +9,11 @@ const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCall
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
-const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
+const { Facility, getInRangeFacilities } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 const { AircraftAction } = require('./report'); // WTS Game log function
 
 const randomCords = require('../util/systems/lz');
-const clock = require('../wts/gameClock/gameClock');
-const { getInRangeFacilities } = require('../util/systems/geo');
-const { generateIntel } = require('./intel');
 
 // Aircraft Schema
 const AircraftSchema = new Schema({
@@ -177,14 +174,6 @@ AircraftSchema.methods.launch = async function (mission) {
 			await account.withdrawal({ amount: 1, resource, note: `Mission funding for ${mission.toLowerCase()} flown by ${this.name}`, from: account._id });
 		}
 
-		// generate surveillance intel
-		const facilities = await getInRangeFacilities(['surveillance'], this.location);
-		logger.info(`${facilities.length} Facilities in range`);
-		for (const facility of facilities) {
-			const intel = await generateIntel(facility.team, this._id);
-			intel.surveillanceIntel(this.toObject(), `${facility.name} surveillance`);
-		}
-
 		const aircraft = await this.save();
 		await aircraft.populateMe();
 
@@ -229,6 +218,12 @@ AircraftSchema.methods.recall = async function () {
 		// Notify/Update team via socket-event
 		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 
+		// Generate surveillance intel - for all teams with in range facilities
+		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+		logger.info(`${facilities.length} Facilities in range`);
+		for (const facility of facilities) {
+			await facility.surveillance(this.toObject());
+		};
 		logger.info(`${this.name} returned to ${home.name}...`);
 
 		return aircraft;
@@ -270,6 +265,13 @@ AircraftSchema.methods.transfer = async function (facility) {
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 		await this.report({ cost: 1, transfer }, 'Transfer');
 		const message = `${this.name} transferred to ${this.site.name}.`;
+
+		// Generate surveillance intel - for all teams with in range facilities
+		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+			logger.info(`${facilities.length} Facilities in range`);
+		for (const facility of facilities) {
+			await facility.surveillance(this.toObject());
+		}
 		return message;
 	}
 	catch (err) {
