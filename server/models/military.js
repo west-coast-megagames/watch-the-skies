@@ -146,6 +146,13 @@ MilitarySchema.methods.deploy = async function (site) {
 		await unit.populateMe();
 
 		nexusEvent.emit('request', 'update', [ unit ]);
+
+		// Generate surveillance intel
+		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+		logger.info(`${facilities.length} Facilities in range`);
+		for (const facility of facilities) {
+			await facility.surveillance(this.toObject());
+		}
 		return unit;
 	}
 	catch (err) {
@@ -209,12 +216,11 @@ MilitarySchema.methods.mobilize = async function (forced = false) {
 		const unit = await this.save(); // Saves the UNIT into a new variable
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
-		// generate surveillance intel
-		const facilities = await getInRangeFacilities(['recon'], this.site.geoDecimal);
-		logger.info(`${facilities.length} Facilities in range`);
+		// Generate surveillance intel
+		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+			logger.info(`${facilities.length} Facilities in range`);
 		for (const facility of facilities) {
-			const intel = await generateIntel(facility.team, this._id);
-			intel.surveillanceIntel(this.toObject(), `${facility.name} surveillance`);
+			await facility.surveillance(this.toObject());
 		}
 
 		return unit;
@@ -497,6 +503,22 @@ MilitarySchema.methods.populateMe = async function () {
 		.execPopulate();
 };
 
+// METHOD - Surveillance
+// IN: Target (Site/Facility/Aircraft/Military) | OUT: VOID
+// PROCESS: Generates intel in the target site
+MilitarySchema.methods.surveillance = async function(target) {
+	try {
+		if (target.team !== this.team._id) {
+		// Add in Intel report - for service record
+			let intel = await generateIntel(this.team, target._id);
+			await intel.surveillanceIntel(target, `${this.name} surveillance...`); // Calls the surveillanceIntel method of the
+		}
+	} catch (err) {
+		console.log(`Military Surveillance - ${err.message}`);
+		logger.error(err.message, { meta: err.stack });
+	}
+}
+
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
 	const schema = Joi.object({
@@ -520,7 +542,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 		await validLog(servRec);
 	}
 };
-
 
 const Military = mongoose.model('Military', MilitarySchema);
 
