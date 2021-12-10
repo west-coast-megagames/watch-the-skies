@@ -2,6 +2,8 @@ const mongoose = require('mongoose'); // Mongo DB object modeling module
 const Joi = require('joi'); // Schema description & validation module
 const { logger } = require('../middleware/log/winston'); // Loging midddleware
 const nexusError = require('../middleware/util/throwError'); // Costom error handler util
+const { generateIntel } = require('./intel');
+const { getDistance } = require('../util/systems/geo');
 
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
@@ -61,6 +63,22 @@ FacilitySchema.virtual('detection').get(function () {
 	return (detection);
 });
 
+// METHOD - Surveillance
+// IN: Target (Site/Facility/Aircraft/Military) | OUT: VOID
+// PROCESS: Generates intel in the target site
+FacilitySchema.methods.surveillance = async function(target) {
+	try {
+		// Add in Intel report - for service record
+		if (target.team !== this.team._id) {
+			let intel = await generateIntel(this.team, target._id);
+			await intel.surveillanceIntel(target, `${this.name} surveillance...`) // Calls the surveillanceIntel method of the
+		}
+	} catch (err) {
+		console.log(`Facility Surveillance - ${err.message}`);
+		logger.error(err.message, { meta: err.stack });
+	}
+}
+
 FacilitySchema.methods.validateFacility = async function () {
 	const { validTeam, validSite, validUpgrade, validResearch, validAircraft, validMilitary } = require('../middleware/util/validateDocument');
 
@@ -117,4 +135,14 @@ return this
 
 const Facility = mongoose.model('Facility', FacilitySchema);
 
-module.exports = { Facility };
+// In range selector
+async function getInRangeFacilities(tags, geoDecimal) {
+	let facilities = await Facility.find()
+		.where('capabilities').in(tags)
+		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags
+
+	facilities = facilities.filter(facility => getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng) <= facility.range);
+	return facilities;
+}
+
+module.exports = { Facility, getInRangeFacilities };
