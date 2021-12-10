@@ -1,10 +1,12 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
+const { getInRangeFacilities } = require('../../models/facility')
 const randomCords = require('../../util/systems/lz');
 
 const terror = require('../../wts/terror/terror');
 const missionFunc = require('../../wts/intercept/missions');
+const { generateIntel } = require('../../models/intel');
 
 module.exports = async function (client, req) {
 	try {
@@ -64,6 +66,17 @@ module.exports = async function (client, req) {
 				result = `${result} ${aircraft.name} en route to attempt ${req.data.mission.toLowerCase()}.`;
 
 				await missionFunc.start(aircraft, target, req.data.mission);
+
+				// generate surveillance intel
+				const facilities = await getInRangeFacilities(['surveillance'], aircraft.location);
+				logger.info(`${facilities.length} Facilities in range`);
+				for (const facility of facilities) {
+					if (facility.team._id.toHexString() !== aircraft.team._id.toHexString()) {
+						console.log(`${facility.name} generating intel on ${aircraft.name}`);
+						const intel = await generateIntel(facility.team, aircraft._id);
+						intel.surveillanceIntel(aircraft.toObject(), `${facility.name} surveillance`);
+					}
+				}
 				client.emit('alert', { type: 'success', message: result });
 			}
 			break;
