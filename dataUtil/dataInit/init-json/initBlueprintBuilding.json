@@ -138,7 +138,7 @@
     "buildTime": 1,
 		"desc": "Passive Surveillance",
 		"stats": {
-			"range": 2000000, 
+			"range": 3500, 
 			"rate": 20
 		}
   }
