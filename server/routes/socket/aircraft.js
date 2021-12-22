@@ -84,8 +84,15 @@ module.exports = async function (client, req) {
 			// pass control method type for a unit
 			for (const _id of req.data.units) {
 				let unit = await Aircraft.findById(_id);
-				await unit.populateMe();
 				unit = await unit.reset(req.data.type);
+				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });
+			}
+			break;
+		case('edit'):
+		// pass control method type for a unit
+			for (const _id of req.data.units) {
+				let unit = await Aircraft.findById(_id);
+				unit = await unit.edit(req.data.type, req.data.incoming);
 				client.emit('alert', { type: 'success', message: `${unit.name} reset ${req.data.type}` });
 			}
 			break;

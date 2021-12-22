@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress} from 'rsuite';
+import { FlexboxGrid, Popover, Whisper, Tag, Badge, TagGroup, Alert, IconButton, Icon, Panel, Container, Progress, Input, InputGroup, ButtonGroup} from 'rsuite';
 import TransferForm from "../../../../components/common/TransferForm";
 import { getAircraftIcon } from "../../../../scripts/mapIcons";
 import StatusBar from "./StatusBar";
@@ -8,6 +8,11 @@ import UpgradeTable from "./UpgradeTable";
 
 const AircraftStats = (props) => {
 	const [showTransfer, setShowTransfer] = React.useState(false);
+	const [nameState, setNameState] = React.useState(props.unit.name);
+
+	useEffect(() => {
+		setNameState(props.unit.name)
+	}, [props.unit]);
 
 	const repair = async () => {
 		try {
@@ -102,8 +107,38 @@ const AircraftStats = (props) => {
 
 						<FlexboxGrid.Item colspan={8}>
 							<Panel bordered >
-							<p>
-								<b>Name:</b> {name}
+							<p>								
+								<InputGroup size='sm' style={{ marginBottom: 10, width: 300, backgroundColor: 'inherit', alignContent: 'center'}} >
+									{<Input plaintext style={{ width: 300, backgroundColor: 'inherit', alignContent: 'center', borderWidth: '0' }}  value={nameState} onChange={(value) => setNameState(value)}/>}
+
+								{name !== nameState &&  
+								<Whisper placement="top" speaker={
+									<Popover>
+									<p>
+										Cancel
+									</p>
+								</Popover>
+								} trigger="hover">
+									<InputGroup.Button size='sm' color='red'	onClick={() => setNameState(name) }>
+										{<Icon icon="close" />}
+    					 	 </InputGroup.Button>
+								</Whisper>}
+
+								{name !== nameState &&  
+								<Whisper placement="top" speaker={
+									<Popover>
+									<p>
+										Edit Name
+									</p>
+								</Popover>
+								} trigger="hover">
+									<InputGroup.Button size='sm' color='green' onClick={() => socket.emit('request', { route: props.unit.model.toLowerCase(), action: 'edit', data: { units: [props.unit._id], type: 'name', incoming: nameState }}) }>
+										{<Icon icon="send" />}
+      						</InputGroup.Button>
+								</Whisper>}
+   							 </InputGroup>
+
+								
 							</p>
 							<p>
 								<b>Location:</b> {site ? site.name : "The Void"} |{" "}
@@ -274,3 +309,6 @@ const invadeSpeaker = (
 );
 
 export default AircraftStats;
+
+
+// _id, target, value (value[target])

@@ -153,6 +153,27 @@ AircraftSchema.methods.reset = async function (type) {
 	}
 };
 
+// METHOD - Control
+// type - string of what is getting edited, incoming - actual data to override | OUT: VOID
+AircraftSchema.methods.edit = async function (type, incoming) {
+	let unit = this;
+	try {
+		if (incoming !== undefined && incoming !== '' && type !== '_id' && type !== 'status' && type !== 'model' && unit[type] !== incoming) {
+			unit[type] = incoming;
+			unit = await unit.save(); // Saves the UNIT
+			await unit.populateMe();
+			nexusEvent.emit('request', 'update', [ unit ]);
+		}
+		else {
+			logger.info(`${this.name} could not save its ${type} of ${incoming}...`);
+		}
+		return unit;
+	}
+	catch (error) {
+		console.log(error);
+	}
+};
+
 // Launch Method - Changes the status of the craft and pays for the launch.
 AircraftSchema.methods.launch = async function (mission) {
 	logger.info(`Attempting to launch ${this.name}...`);
