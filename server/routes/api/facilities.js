@@ -8,7 +8,7 @@ const nexusError = require('../../middleware/util/throwError'); // Project Nexus
 
 // Mongoose Model Import
 const { Facility } = require('../../models/facility');
-const { getDistance, getInRangeFacilities } = require('../../util/systems/geo');
+const { getDistance } = require('../../util/systems/geo');
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
 const { Military } = require('../../models/military');

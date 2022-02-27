@@ -1,11 +1,11 @@
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
 const { Aircraft } = require('../../models/aircraft');
 const { Site } = require('../../models/site');
-const { getInRangeFacilities } = require('../../models/facility')
 const randomCords = require('../../util/systems/lz');
 
 const terror = require('../../wts/terror/terror');
 const missionFunc = require('../../wts/intercept/missions');
+const { getFacilitiesInRange } = require('../../models/facility');
 const { generateIntel } = require('../../models/intel');
 
 module.exports = async function (client, req) {
@@ -68,7 +68,7 @@ module.exports = async function (client, req) {
 				await missionFunc.start(aircraft, target, req.data.mission);
 
 				// generate surveillance intel
-				const facilities = await getInRangeFacilities(['surveillance'], aircraft.location);
+				const facilities = await getFacilitiesInRange(['surveillance'], aircraft.location);
 				logger.info(`${facilities.length} Facilities in range`);
 				for (const facility of facilities) {
 					if (facility.team._id.toHexString() !== aircraft.team._id.toHexString()) {

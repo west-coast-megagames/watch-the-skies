@@ -9,7 +9,7 @@ const { clearArrayValue, addArrayValue } = require('../middleware/util/arrayCall
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 const { Account } = require('./account'); // Import of Account model [Mongoose]
-const { Facility, getInRangeFacilities } = require('./facility'); // Import of Facility model [Mongoose]
+const { Facility, getFacilitiesInRange } = require('./facility'); // Import of Facility model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 const { AircraftAction } = require('./report'); // WTS Game log function
 
@@ -219,7 +219,7 @@ AircraftSchema.methods.recall = async function () {
 		nexusEvent.emit('request', 'update', [ aircraft ]); // Scott Note: Untested might not work
 
 		// Generate surveillance intel - for all teams with in range facilities
-		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+		const facilities = await getFacilitiesInRange(['surveillance'], this.site.geoDecimal);
 		logger.info(`${facilities.length} Facilities in range`);
 		for (const facility of facilities) {
 			await facility.surveillance(this.toObject());
@@ -491,4 +491,9 @@ const getAircrafts = async function () {
 	}
 };
 
-module.exports = { Aircraft, getAircrafts };
+const getAircraftInSite = async function (site_id) {
+	return await Aircraft.find()
+		.where('site').equals(`${site_id}`);
+}
+
+module.exports = { Aircraft, getAircrafts, getAircraftInSite };

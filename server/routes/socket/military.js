@@ -1,10 +1,10 @@
 // const nexusEvent = require('../../middleware/events/events');
 const { logger } = require('../../middleware/log/winston'); // middleware/error.js which is running [npm] winston for error handling
-const { generateIntel } = require('../../models/intel');
 // const masterClock = require('../../wts/gameClock/gameClock');
 
 const { Military } = require('../../models/military');
 const { Site } = require('../../models/site');
+const { generateIntel } = require('../../models/intel');
 
 module.exports = async function (client, req) {
 	try {

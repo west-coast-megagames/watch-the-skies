@@ -132,17 +132,21 @@ return this
 	.execPopulate();
 };
 
-
 const Facility = mongoose.model('Facility', FacilitySchema);
 
-// In range selector
-async function getInRangeFacilities(tags, geoDecimal) {
+// In range selector - Facilities
+const getFacilitiesInRange = async function (tags, geoDecimal) {
 	let facilities = await Facility.find()
 		.where('capabilities').in(tags)
 		.populate('site', 'geoDecimal'); // 1) Find all Facilities with surviellence tags
 
 	facilities = facilities.filter(facility => getDistance(facility.site.geoDecimal.lat, facility.site.geoDecimal.lng, geoDecimal.lat, geoDecimal.lng) <= facility.range);
 	return facilities;
-}
+};
 
-module.exports = { Facility, getInRangeFacilities };
+const getFacilitiesInSite = async function (site_id) {
+	return await Facility.find()
+		.where('site').equals(`${site_id}`);
+};
+
+module.exports = { Facility, getFacilitiesInRange, getFacilitiesInSite };

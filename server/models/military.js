@@ -9,17 +9,17 @@ const nexusEvent = require('../middleware/events/events');
 // Global Constants
 const Schema = mongoose.Schema; // Destructure of Schema
 const ObjectId = mongoose.ObjectId; // Destructure of Object ID
-const { Facility } = require('./facility'); // Import of Facility model [Mongoose]
+const { Facility, getFacilitiesInRange } = require('./facility'); // Import of Facility model [Mongoose]
 const { Account } = require('./account'); // Import of Account model [Mongoose]
 const { Site } = require('./site'); // Import of Site model [Mongoose]
 const { Upgrade } = require('./upgrade'); // Import of Upgrade model [Mongoose]
 const { Squad } = require('./squad'); // Import of Upgrade model [Mongoose]
-const { Intel, generateIntel } = require('./intel'); // Import of Upgrade model [Mongoose]
 const { MilitaryAction } = require('./report'); // WTS Game log function
 
 // Utility Imports
-const { getDistance, getInRangeFacilities } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
+const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
 const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
+const { generateIntel } = require('../wts/intel/intel');
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
@@ -148,7 +148,7 @@ MilitarySchema.methods.deploy = async function (site) {
 		nexusEvent.emit('request', 'update', [ unit ]);
 
 		// Generate surveillance intel
-		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+		const facilities = await getFacilitiesInRange(['surveillance'], this.site.geoDecimal);
 		logger.info(`${facilities.length} Facilities in range`);
 		for (const facility of facilities) {
 			await facility.surveillance(this.toObject());
@@ -217,7 +217,7 @@ MilitarySchema.methods.mobilize = async function (forced = false) {
 		nexusEvent.emit('request', 'update', [ unit ]); // Triggers the update socket the front-end
 
 		// Generate surveillance intel
-		const facilities = await getInRangeFacilities(['surveillance'], this.site.geoDecimal);
+		const facilities = await getFacilitiesInRange(['surveillance'], this.site.geoDecimal);
 			logger.info(`${facilities.length} Facilities in range`);
 		for (const facility of facilities) {
 			await facility.surveillance(this.toObject());

@@ -12,7 +12,7 @@ const { Team } = require('../models/team');
 const { Facility } = require('../models/facility');
 const { Aircraft } = require('../models/aircraft');
 const { Military } = require('../models/military');
-const { Intel, generateIntel } = require('../models/intel');
+const { Intel } = require('../models/intel');
 const { upgradeValue, addUpgrade } = require('../wts/upgrades/upgrades');
 const badwordsArray = require('../middleware/badWords');
 
@@ -168,7 +168,7 @@ router.patch('/return/aliens', async function (req, res) {
 router.patch('/return/aircrafts', async function (req, res) {
 	routeDebugger('Returning all aircraft to base!');
 	let count = 0;
-	for await (const aircraft of await Aircraft.find()) {
+	for await (const aircraft of await Aircraft.find().where('status').in(['deployed'])) {
 		const response = await aircraft.recall();
 		routeDebugger(response);
 		count++;
