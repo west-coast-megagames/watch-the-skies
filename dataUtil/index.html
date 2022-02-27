@@ -21,6 +21,36 @@
 		<label for="init-yes">Initialize DB</label>
 		<input type="radio" name="choice" value="checkDB">
 		<label for="choice-no">Data Check DB</label>
+		<br>
+		<br>
+		<label for="selChoice">Choose DB File(s) to Initialize or Check:</label>
+    <select name="selChoice" id="selChoice">
+    <optgroup label="Load/Check File(s)">
+      <option value="All" selected>All</option>
+			<option value="BluePrint">Blue Print</option>
+			<option value="Zone">Zone</option>
+			<option value="Team">Team</option>
+			<option value="Organization">Organization</option>
+			<option value="Aircraft">Aircraft</option>
+			<option value="Accounts">Accounts</option>
+			<option value="Military">Military</option>
+			<option value="Squad">Squad</option>
+			<option value="Article">Article</option>
+			<option value="Research">Research</option>
+    </optgroup>
+		<optgroup label="initDB Only File(s)">
+			<option value="DropAll">Drop All</option>
+			<option value="CitySite">City Site</option>
+			<option value="BaseFacility">Base Facility</option>
+			<option value="Spacecraft">Spacecraft</option>
+			<option value="SpaceFacility">Space Facility</option>
+    </optgroup>
+    <optgroup label="checkDB Only File(s)">
+      <option value="Facility">Facility</option>
+      <option value="Site">Site</option>
+			<option value="Upgrade">Upgrade</option>
+    </optgroup>
+	  </select>
     <br>
 		<br>
     <button>Submit</button>
@@ -31,15 +61,20 @@
 	
 		var form = document.getElementById('form');
 		var input = document.getElementsByName('choice');
+		var dropFile = document.getElementById('selChoice');
 	
 		if (form) {
 		form.addEventListener('submit', function(e) {
 			e.preventDefault();
 			console.log(e);
+			var doLoad = dropFile.selectedOptions[0].value;
+			if (!doLoad) {
+				doLoad = loadSel;
+			}
 			if (utilDB === serverDB) {
 		 	  for (choice of input) {
 			  	if (choice.checked === true) {
-					  const doDBObj = {choice: choice.value, doLoad: loadSel};
+					  const doDBObj = {choice: choice.value, doLoad: doLoad};
 					  socket.emit("doDB", doDBObj)
 				  } 
 			  }
@@ -58,7 +93,7 @@
 			serverDB = data.serverDB;
 			document.getElementById("utilDB").innerHTML=`initServer DB: ${utilDB}`;
 			document.getElementById("serverDB").innerHTML=`Server DB: ${serverDB}`;
-			document.getElementById("selFiles").innerHTML=`Selected Files: ${loadSel}`;
+			document.getElementById("selFiles").innerHTML=`Default Selected Files: ${loadSel}`;
 		});         // client handler for server-side event
 	
 	</script>
