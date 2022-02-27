@@ -94,7 +94,7 @@ function PrototypeMap(props) {
 				}
 			}
 		}
-		return range;
+		return range * 1000;
 	}
 
 	const onCloseMenu = () => {

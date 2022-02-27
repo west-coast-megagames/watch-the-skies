@@ -124,12 +124,12 @@ FacilitySchema.methods.validateFacility = async function () {
 };
 
 FacilitySchema.methods.populateMe = function () {
-return this
-	.populate('site', 'name type geoDecimal')
-	.populate('team', 'shortName name sciRate')
-	.populate('research')
-	.populate('upgrade')
-	.execPopulate();
+	return this
+		.populate('site', 'name type geoDecimal')
+		.populate('team', 'shortName name sciRate')
+		.populate('research')
+		.populate('upgrade')
+		.execPopulate();
 };
 
 const Facility = mongoose.model('Facility', FacilitySchema);
