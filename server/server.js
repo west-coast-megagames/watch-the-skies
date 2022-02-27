@@ -24,6 +24,7 @@ require('./middleware/production/prod')(app); // Production compression and midd
 require('./middleware/log/logging')(); // Bootup for error handling
 require('./routes/sockets')(server); // Starts websocket
 require('./middleware/mongoDB/db')(); // Bootup of MongoDB through Mongoose
+require('./middleware/util/changeStream') // Initializes change stream tracking
 require('./wts/gameClock/gameClock'); // Initialize the gameClock class
 require('./wts/gameClock/phaseChange'); // Initialize the Phase change class
 
