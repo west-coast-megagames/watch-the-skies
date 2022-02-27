@@ -1,4 +1,10 @@
 // Main System document for the Intel system
+const clock = require('../../wts/gameClock/gameClock');
+const { Facility } = require('../../models/facility');
+const { Military } = require('../../models/military');
+const { Aircraft } = require('../../models/aircraft');
+
+const { randCode } = require('../../util/systems/codes');
 
 // Intel is how any TEAM <Mongoose Object> knows about other DATA <Mongoose Objects> that belong to other teams.
 
