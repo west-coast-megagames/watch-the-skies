@@ -19,6 +19,8 @@ const IntelSchema = new Schema({
 	document: { type: Schema.Types.Mixed, default: {} },
 	source: { type: Schema.Types.Mixed, default: {} },
 	tags: [{ type: String, enum: [''] } ],
-	}, { timestamps: true });
+}, { timestamps: true });
 
-module.exports = { Intel, generateIntel };
+const Intel = mongoose.model('Intel', IntelSchema);
+
+module.exports = { Intel };

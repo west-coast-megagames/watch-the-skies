@@ -24,7 +24,7 @@ const TradeSchema = new Schema({
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: Schema.Types.Mixed }], // [{ type: ObjectId, ref: 'Aircraft' }],
+			aircraft: [{ type: Schema.Types.Mixed }],
 			// TODO: Add intel here
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here
@@ -39,7 +39,7 @@ const TradeSchema = new Schema({
 		modified: { type: Boolean, default: false },
 		offer: {
 			megabucks: { type: Number, default: 0 },
-			aircraft: [{ type: Schema.Types.Mixed }], // [{ type: ObjectId, ref: 'Aircraft' }],
+			aircraft: [{ type: Schema.Types.Mixed }],
 			// TODO: Add intel here
 			research: [{ type: ObjectId, ref: 'Research' }],
 			// TODO: Add sites here

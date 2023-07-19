@@ -19,7 +19,7 @@ const { MilitaryAction } = require('./report'); // WTS Game log function
 // Utility Imports
 const { getDistance } = require('../util/systems/geo'); // Geographic UTIL responsible for handling lat/lng functions
 const randomCords = require('../util/systems/lz'); // Random coordinate UTIL responsible for giving a lat/lng seperate from target site
-const { generateIntel } = require('../wts/intel/intel');
+// const { generateIntel } = require('../wts/intel/intel');
 
 const MilitarySchema = new Schema({
 	model: { type: String, default: 'Military' },
@@ -524,21 +524,21 @@ MilitarySchema.methods.populateMe = async function () {
 		.execPopulate();
 };
 
-// METHOD - Surveillance
-// IN: Target (Site/Facility/Aircraft/Military) | OUT: VOID
-// PROCESS: Generates intel in the target site
-MilitarySchema.methods.surveillance = async function(target) {
-	try {
-		if (target.team !== this.team._id) {
-		// Add in Intel report - for service record
-			let intel = await generateIntel(this.team, target._id);
-			await intel.surveillanceIntel(target, `${this.name} surveillance...`); // Calls the surveillanceIntel method of the
-		}
-	} catch (err) {
-		console.log(`Military Surveillance - ${err.message}`);
-		logger.error(err.message, { meta: err.stack });
-	}
-}
+// // METHOD - Surveillance
+// // IN: Target (Site/Facility/Aircraft/Military) | OUT: VOID
+// // PROCESS: Generates intel in the target site
+// MilitarySchema.methods.surveillance = async function(target) {
+// 	try {
+// 		if (target.team !== this.team._id) {
+// 		// Add in Intel report - for service record
+// 			let intel = await generateIntel(this.team, target._id);
+// 			await intel.surveillanceIntel(target, `${this.name} surveillance...`); // Calls the surveillanceIntel method of the
+// 		}
+// 	} catch (err) {
+// 		console.log(`Military Surveillance - ${err.message}`);
+// 		logger.error(err.message, { meta: err.stack });
+// 	}
+// }
 
 MilitarySchema.methods.validateMilitary = async function () {
 	const { validTeam, validZone, validOrganization, validSite, validFacility, validUpgrade, validLog } = require('../middleware/util/validateDocument');
@@ -565,7 +565,6 @@ MilitarySchema.methods.validateMilitary = async function () {
 };
 
 const Military = mongoose.model('Military', MilitarySchema);
-
 const Fleet = Military.discriminator(
 	'Fleet',
 	new Schema({
