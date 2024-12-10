@@ -34,7 +34,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.7.2",
     "mongoose": "^5.13.11",
-    "socket.io": "^4.2.0",
+    "socket.io": "^4.5.3",
     "supports-color": "^7.2.0",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.7"
